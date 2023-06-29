@@ -27,12 +27,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected LayerMask flatGround;
 
 
-    protected virtual void Start()
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    protected virtual void Update()
+    void Update()
     {
         grounded = Physics.Raycast(transform.position, -transform.up, playerHeight * 0.5f + 0.2f, flatGround);
 
@@ -45,13 +45,13 @@ public class PlayerMovement : MonoBehaviour
         PlayerInput();
     }
 
-    protected virtual void FixedUpdate()
+    void FixedUpdate()
     {
         MovePlayer();
         SpeedControl();
     }
 
-    protected virtual void MovePlayer()
+    void MovePlayer()
     {
 
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
@@ -60,13 +60,13 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, transform.up), ForceMode.Force);
         }
     }
-    protected virtual void PlayerInput()
+    void PlayerInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
     }
-    protected virtual void SpeedControl()
+    void SpeedControl()
     {
         Vector3 flatVel = Vector3.ProjectOnPlane(rb.velocity, transform.up);
         Vector3 upVel = Vector3.Project(rb.velocity, transform.up);

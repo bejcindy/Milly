@@ -6,7 +6,6 @@ using UnityEngine;
 public class PickUpObject : LivableObject
 {
     public PlayerHolding playerHolding;
-    public MakeAlive activateLogic;
     Rigidbody rb;
 
     public Transform holdingPos;
@@ -16,7 +15,6 @@ public class PickUpObject : LivableObject
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
-        activateLogic = GetComponent<MakeAlive>();
         rb = GetComponent<Rigidbody>();
     }
     protected override void Update()
@@ -33,9 +31,9 @@ public class PickUpObject : LivableObject
                 if (Input.GetMouseButtonDown(0))
                 {
                     //activate if not yet
-                    if (!activateLogic.activated)
+                    if (!activated && matColorVal > 0)
                     {
-                        activateLogic.Activate();
+                        activated = true;
                     }
                     //set player side
                     playerHolding.isHolding = true;

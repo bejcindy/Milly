@@ -9,16 +9,27 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected bool isVisible;
     [SerializeField] protected float minDist;
 
-    // Start is called before the first frame update
+    protected Material mat;
+    [SerializeField] protected bool activated;
+    [SerializeField] protected float matColorVal;
+    [SerializeField] protected float fadeInterval;
+
+
     protected virtual void Start()
     {
         player = GameObject.Find("Player").transform;
+        mat = GetComponent<Renderer>().material;
+        mat.EnableKeyword("_WhiteDegree");
+        matColorVal = 1;
     }
 
-    // Update is called once per frame
     protected virtual void Update()
     {
         DetectInteractable();
+        if (activated)
+        {
+            TurnOn();
+        }
     }
 
     protected virtual void DetectInteractable()
@@ -33,6 +44,19 @@ public class LivableObject : MonoBehaviour
         else
         {
             interactable = false;
+        }
+    }
+
+    protected virtual void TurnOn()
+    {
+        if (matColorVal > 0)
+        {
+            matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
+            mat.SetFloat("_WhiteDegree", matColorVal);
+        }
+        else
+        {
+            matColorVal = 0;
         }
     }
 

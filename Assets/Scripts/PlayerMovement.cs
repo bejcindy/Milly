@@ -11,6 +11,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected float walkSpeed;
     [SerializeField] protected float groundDrag;
 
+    [Header("Jumping")]
+    [SerializeField] protected float jumpForce;
+    [SerializeField] protected float jumpCooldown;
+    [SerializeField] protected float airMultiplier;
+    [SerializeField] protected bool readyToJump;
+    [SerializeField] protected KeyCode jumpKey = KeyCode.Space;
+
     protected float horizontalInput;
     protected float verticalInput;
 
@@ -57,13 +64,30 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
         if (grounded)
         {
-            rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, transform.up), ForceMode.Force);
+            rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up), ForceMode.Force);
+        }
+        //in air
+        else if (!grounded)
+        {
+            rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f * airMultiplier, orientation.up), ForceMode.Force);
         }
     }
     void PlayerInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(jumpKey))
+        {
+
+            if (grounded && readyToJump)
+            {
+                readyToJump = false;
+                Jump();
+                Invoke(nameof(ResetJump), jumpCooldown);
+            }
+
+        }
 
     }
     void SpeedControl()
@@ -76,6 +100,18 @@ public class PlayerMovement : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = upVel + limitedVel;
         }
+    }
+
+    protected virtual void Jump()
+    {
+        Vector3 verticalV = Vector3.ProjectOnPlane(rb.velocity, transform.right);
+        Vector3 horizontalV = Vector3.ProjectOnPlane(rb.velocity, transform.up);
+        rb.velocity = horizontalV + transform.up * jumpForce;
+    }
+
+    protected virtual void ResetJump()
+    {
+        readyToJump = true;
     }
 
 }

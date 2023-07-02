@@ -7,10 +7,22 @@ public class SitableObject : LivableObject
 {
     [SerializeField] public KeyCode interactKey;
     public PlayerCam camController;
+    public PlayerMovement playerMovement;
+
+    Renderer playerBody;
+    public GameObject fixedCinemachine;
     public bool interacted;
     Vector3 fixedPosition = new Vector3 (0f, 0f, 1f);
     Vector3 fixedRotation = Vector3.zero;
 
+
+    protected override void Start()
+    {
+        base.Start();
+        fixedCinemachine = transform.GetChild(0).gameObject;
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerBody = player.GetChild(0).GetComponent<Renderer>();
+    }
     protected override void Update()
     {
         base.Update();
@@ -31,10 +43,10 @@ public class SitableObject : LivableObject
 
     public void PositionPlayer()
     {
-        player.SetParent(transform, true);
-        player.localPosition = Vector3.Lerp(player.localPosition, fixedPosition, 2f);
-        Quaternion target = Quaternion.Euler(0,0,0);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, target, Time.deltaTime * 2f);
+        playerMovement.enabled = false;
+        playerBody.enabled = false;
+        fixedCinemachine.SetActive(true);
+
     }
 
 }

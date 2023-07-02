@@ -11,7 +11,8 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected float minDist;
 
     protected Material mat;
-    [SerializeField] protected bool activated;
+    [SerializeField] public bool activated;
+    [SerializeField] protected bool firstActivated; 
     [SerializeField] protected float matColorVal;
     [SerializeField] protected float fadeInterval;
 
@@ -32,7 +33,8 @@ public class LivableObject : MonoBehaviour
         isVisible = IsInView();
         if (activated)
         {
-            TurnOnColor(mat);
+            if(!firstActivated)
+                TurnOnColor(mat);
 
         }
     }
@@ -62,13 +64,14 @@ public class LivableObject : MonoBehaviour
         else
         {
             matColorVal = 0;
+            firstActivated = true;
             if (hasParent)
             {
                 GroupMaster groupMaster = transform.parent.GetComponent<GroupMaster>();
                 groupMaster.activateAll = true;
             }
         }
-
+        
     }
 
 

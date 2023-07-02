@@ -30,9 +30,21 @@ public class GroupMaster : MonoBehaviour
     {
         foreach(Transform child in transform)
         {
-            Material childMat = child.GetComponent<Renderer>().material;
-            childMat.EnableKeyword("_WhiteDegree");
-            TurnOnColor(childMat);
+            if(child.GetComponent<LivableObject>() == null)
+            {
+                Material childMat = child.GetComponent<Renderer>().material;
+                childMat.EnableKeyword("_WhiteDegree");
+                TurnOnColor(childMat);
+            }
+            else
+            {
+                if (!child.GetComponent<LivableObject>().activated){
+                    Material childMat = child.GetComponent<Renderer>().material;
+                    childMat.EnableKeyword("_WhiteDegree");
+                    TurnOnColor(childMat);
+                }
+            }
+
         }
     }
 

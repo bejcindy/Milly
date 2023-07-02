@@ -36,7 +36,7 @@ public class SitableObject : LivableObject
                 interacted = true;
                 positionFixed = true;
                 activated = true;
-                camController.enabled = false;
+                //camController.enabled = false;
                 PositionPlayer();
             }
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 using static UnityEngine.GraphicsBuffer;
 
 public class SitableObject : LivableObject
@@ -8,10 +9,14 @@ public class SitableObject : LivableObject
     [SerializeField] public KeyCode interactKey;
     public PlayerCam camController;
     public PlayerMovement playerMovement;
-
     Renderer playerBody;
     public GameObject fixedCinemachine;
+
+    public CinemachineVirtualCamera fixedCamera;
+    public CinemachineVirtualCamera playerCamera;
+
     public bool interacted;
+    public bool positionFixed;
     Vector3 fixedPosition = new Vector3 (0f, 0f, 1f);
     Vector3 fixedRotation = Vector3.zero;
 
@@ -31,13 +36,25 @@ public class SitableObject : LivableObject
             if (Input.GetKeyDown(interactKey))
             {
                 interacted = true;
+                positionFixed = true;
                 activated = true;
                 camController.enabled = false;
+                PositionPlayer();
             }
         }
-        else
+        if (positionFixed)
         {
-            PositionPlayer();
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                positionFixed = false;
+                interacted = false;
+                playerCamera.m_Priority = 10;
+                fixedCamera.m_Priority = 9;
+                playerBody.enabled = true;
+                camController.enabled = true;
+                playerMovement.enabled = true;
+
+            }
         }
     }
 
@@ -45,7 +62,8 @@ public class SitableObject : LivableObject
     {
         playerMovement.enabled = false;
         playerBody.enabled = false;
-        fixedCinemachine.SetActive(true);
+        fixedCamera.m_Priority = 10;
+        playerCamera.m_Priority = 9;
 
     }
 

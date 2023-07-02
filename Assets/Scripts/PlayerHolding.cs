@@ -6,10 +6,17 @@ public class PlayerHolding : MonoBehaviour
 {
     public bool isHolding;
     public Vector3 holdingPosition;
-    public Vector2 throwForce = new Vector2(400f, 200f);
+    public Vector2 minThrowForce = new Vector2(100f, 50f);
+    public Vector2 maxThrowForce = new Vector2(500f, 200f);
     public Transform holdingObj;
 
     public bool firstClickDone;
+
+    float holdTime = 2f;
+    [SerializeField]
+    float holdTimer;
+    Vector2 throwForce;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +35,16 @@ public class PlayerHolding : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0))
             {
-                firstClickDone = true;
+                firstClickDone = !firstClickDone;
+                holdTimer = 0;
+                if (firstClickDone)
+                {
+                    isHolding = false;
+                    //firstClickDone = false;
+                    holdingObj.SetParent(null);
+                    holdingObj.GetComponent<Rigidbody>().isKinematic = false;
+                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * transform.forward + new Vector3(0, throwForce.y, 0));
+                }
             }
             if (Input.GetMouseButtonDown(1) && firstClickDone)
             {
@@ -37,13 +53,16 @@ public class PlayerHolding : MonoBehaviour
                 holdingObj.SetParent(null);
                 holdingObj.GetComponent<Rigidbody>().isKinematic = false;
             }
-            if (Input.GetMouseButtonDown(0) && firstClickDone)
+            if (Input.GetMouseButton(0) && !firstClickDone)
             {
-                isHolding = false;
-                firstClickDone = false;
-                holdingObj.SetParent(null);
-                holdingObj.GetComponent<Rigidbody>().isKinematic = false;
-                holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x*transform.forward+new Vector3(0,throwForce.y,0));
+                if (holdTimer < holdTime)
+                {
+                    holdTimer += Time.deltaTime;
+                    holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
+                }
+                float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
+                float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
+                throwForce = new Vector2(throwForceX, throwForceY);
             }
         }
     }

@@ -10,7 +10,6 @@ public class SitableObject : LivableObject
     public PlayerCam camController;
     public PlayerMovement playerMovement;
     Renderer playerBody;
-    public GameObject fixedCinemachine;
 
     public CinemachineVirtualCamera fixedCamera;
     public CinemachineVirtualCamera playerCamera;
@@ -24,7 +23,6 @@ public class SitableObject : LivableObject
     protected override void Start()
     {
         base.Start();
-        fixedCinemachine = transform.GetChild(0).gameObject;
         playerMovement = player.GetComponent<PlayerMovement>();
         playerBody = player.GetChild(0).GetComponent<Renderer>();
     }

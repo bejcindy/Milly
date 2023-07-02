@@ -44,14 +44,7 @@ public class SitableObject : LivableObject
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
-                positionFixed = false;
-                interacted = false;
-                playerCamera.m_Priority = 10;
-                fixedCamera.m_Priority = 9;
-                playerBody.enabled = true;
-                camController.enabled = true;
-                playerMovement.enabled = true;
-
+                StartCoroutine(UnfixPlayer());
             }
         }
     }
@@ -65,4 +58,16 @@ public class SitableObject : LivableObject
 
     }
 
+
+    IEnumerator UnfixPlayer()
+    {
+        positionFixed = false;
+        interacted = false;
+        playerCamera.m_Priority = 10;
+        fixedCamera.m_Priority = 9;
+        yield return new WaitForSeconds(2f);
+        playerBody.enabled = true;
+        camController.enabled = true;
+        playerMovement.enabled = true;
+    }
 }

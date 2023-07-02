@@ -61,13 +61,13 @@ public class SitableObject : LivableObject
 
     IEnumerator UnfixPlayer()
     {
-        positionFixed = false;
-        interacted = false;
         playerCamera.m_Priority = 10;
         fixedCamera.m_Priority = 9;
         yield return new WaitForSeconds(2f);
         playerBody.enabled = true;
         camController.enabled = true;
         playerMovement.enabled = true;
+        positionFixed = false;
+        interacted = false;
     }
 }

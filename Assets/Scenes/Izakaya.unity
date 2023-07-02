@@ -1811,9 +1811,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHolding: 0
   holdingPosition: {x: -0.5, y: 0, z: 1}
-  throwForce: {x: 400, y: 200}
+  minThrowForce: {x: 100, y: 50}
+  maxThrowForce: {x: 500, y: 200}
   holdingObj: {fileID: 0}
   firstClickDone: 0
+  holdTimer: 0
 --- !u!114 &890563935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1957,11 +1959,11 @@ MonoBehaviour:
   matColorVal: 1
   fadeInterval: 10
   interactKey: 101
-  camController: {fileID: 1308879913}
+  camController: {fileID: 890563935}
   playerMovement: {fileID: 0}
   fixedCinemachine: {fileID: 0}
   fixedCamera: {fileID: 462025748}
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 1005978787}
   interacted: 0
   positionFixed: 0
 --- !u!1 &901171871 stripped
@@ -2176,7 +2178,7 @@ MonoBehaviour:
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
-    m_InheritPosition: 0
+    m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -2837,7 +2839,6 @@ GameObject:
   - component: {fileID: 1308879910}
   - component: {fileID: 1308879909}
   - component: {fileID: 1308879912}
-  - component: {fileID: 1308879913}
   - component: {fileID: 1308879914}
   m_Layer: 0
   m_Name: PlayerCam
@@ -2965,21 +2966,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!114 &1308879913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308879908}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f5e9ec4cb9db1f4b82b711ff4a888f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensX: 400
-  sensY: 400
-  orientation: {fileID: 890563932}
 --- !u!114 &1308879914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2999,8 +2985,8 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 3
-    m_Time: 10
+    m_Style: 1
+    m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []

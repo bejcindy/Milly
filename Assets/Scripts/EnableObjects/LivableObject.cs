@@ -83,7 +83,7 @@ public class LivableObject : MonoBehaviour
         //Is in front
         if (pointOnScreen.z < 0)
         {
-            Debug.Log("Behind: " + gameObject.name);
+            //Debug.Log("Behind: " + gameObject.name);
             return false;
         }
 
@@ -91,7 +91,7 @@ public class LivableObject : MonoBehaviour
         if ((pointOnScreen.x < Screen.width * 0.3f) || (pointOnScreen.x > Screen.width * 0.7f) ||
                 (pointOnScreen.y < Screen.height * 0.3f) || (pointOnScreen.y > Screen.height * 0.7f))
         {
-            Debug.Log("OutOfBounds: " + gameObject.name);
+            //Debug.Log("OutOfBounds: " + gameObject.name);
             return false;
         }
 

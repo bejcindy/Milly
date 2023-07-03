@@ -10,7 +10,7 @@ public class PlayerHolding : MonoBehaviour
     public Vector2 maxThrowForce = new Vector2(500f, 200f);
     public Transform holdingObj;
 
-    public bool firstClickDone;
+    public bool noFirstThrow;
 
     float holdTime = 2f;
     [SerializeField]
@@ -35,9 +35,9 @@ public class PlayerHolding : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0))
             {
-                firstClickDone = !firstClickDone;
+                noFirstThrow = !noFirstThrow;
                 holdTimer = 0;
-                if (firstClickDone)
+                if (noFirstThrow)
                 {
                     isHolding = false;
                     //firstClickDone = false;
@@ -46,14 +46,14 @@ public class PlayerHolding : MonoBehaviour
                     holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * transform.forward + new Vector3(0, throwForce.y, 0));
                 }
             }
-            if (Input.GetMouseButtonDown(1) && firstClickDone)
+            if (Input.GetMouseButtonDown(1))
             {
                 isHolding = false;
-                firstClickDone = false;
+                noFirstThrow = true;
                 holdingObj.SetParent(null);
                 holdingObj.GetComponent<Rigidbody>().isKinematic = false;
             }
-            if (Input.GetMouseButton(0) && !firstClickDone)
+            if (Input.GetMouseButton(0) && !noFirstThrow)
             {
                 if (holdTimer < holdTime)
                 {

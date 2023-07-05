@@ -29,24 +29,28 @@ public class SitableObject : LivableObject
     protected override void Update()
     {
         base.Update();
-        if (!interacted)
+        if (isVisible)
         {
-            if (Input.GetKeyDown(interactKey))
+            if (!interacted)
             {
-                interacted = true;
-                positionFixed = true;
-                activated = true;
-                //camController.enabled = false;
-                PositionPlayer();
+                if (Input.GetKeyDown(interactKey))
+                {
+                    interacted = true;
+                    positionFixed = true;
+                    activated = true;
+                    //camController.enabled = false;
+                    PositionPlayer();
+                }
+            }
+            if (positionFixed)
+            {
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    StartCoroutine(UnfixPlayer());
+                }
             }
         }
-        if (positionFixed)
-        {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                StartCoroutine(UnfixPlayer());
-            }
-        }
+
     }
 
     public void PositionPlayer()

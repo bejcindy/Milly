@@ -11,7 +11,13 @@ public class FixedCameraObject : LivableObject
     [SerializeField] protected bool positionFixed;
     [SerializeField] protected bool showMouse;
 
+
+    [SerializeField] protected bool doubleSided;
+    [SerializeField] public bool onLeft;
+    [SerializeField] public bool onRight;
+
     [SerializeField] protected CinemachineVirtualCamera fixedCamera;
+    [SerializeField] protected CinemachineVirtualCamera otherCamera;
     [SerializeField] protected CinemachineVirtualCamera playerCamera;
 
     PlayerCam camController;
@@ -24,6 +30,7 @@ public class FixedCameraObject : LivableObject
         playerMovement = player.GetComponent<PlayerMovement>();
         camController = player.GetComponent<PlayerCam>();
         playerBody = player.GetChild(0).GetComponent<Renderer>();
+        playerCamera = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
     }
 
 
@@ -31,7 +38,7 @@ public class FixedCameraObject : LivableObject
     protected override void Update()
     {
         base.Update();
-        if (isVisible)
+        if (interactable)
         {
             if (!isInteracting)
             {
@@ -72,7 +79,21 @@ public class FixedCameraObject : LivableObject
     {
         playerMovement.enabled = false;
         playerBody.enabled = false;
-        fixedCamera.m_Priority = 10;
+        if (doubleSided)
+        {
+            if (onLeft)
+            {
+                fixedCamera.m_Priority = 10;
+            }
+            else if (onRight)
+            {
+                otherCamera.m_Priority = 10;
+            }
+        }
+        else
+        {
+            fixedCamera.m_Priority = 10;
+        }
         playerCamera.m_Priority = 9;
     }
 
@@ -80,7 +101,22 @@ public class FixedCameraObject : LivableObject
     IEnumerator UnfixPlayer()
     {
         playerCamera.m_Priority = 10;
-        fixedCamera.m_Priority = 9;
+        if (doubleSided)
+        {
+            if (onLeft)
+            {
+                fixedCamera.m_Priority = 9;
+            }
+            else if (onRight)
+            {
+                otherCamera.m_Priority = 9;
+            }
+        }
+        else
+        {
+            fixedCamera.m_Priority = 9;
+        }
+
         yield return new WaitForSeconds(2f);
         playerBody.enabled = true;
         camController.enabled = true;

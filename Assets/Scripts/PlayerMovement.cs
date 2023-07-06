@@ -114,4 +114,29 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("StoneLeft"))
+        {
+            other.transform.parent.GetComponent<FixedCameraObject>().onLeft = true;
+        }
+        if (other.CompareTag("StoneRight"))
+        {
+            other.transform.parent.GetComponent<FixedCameraObject>().onRight = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("StoneLeft"))
+        {
+            other.transform.parent.GetComponent<FixedCameraObject>().onLeft = false;
+        }
+        if (other.CompareTag("StoneRight"))
+        {
+            other.transform.parent.GetComponent<FixedCameraObject>().onRight = false;
+        }
+    }
+
 }

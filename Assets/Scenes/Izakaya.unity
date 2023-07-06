@@ -1636,6 +1636,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 0
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -1811,6 +1812,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 0
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
@@ -1831,6 +1833,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 0
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -2095,6 +2098,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 5
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
@@ -2118,6 +2122,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 0
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
@@ -2709,6 +2714,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 5
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -5898,6 +5904,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 15
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
@@ -6072,6 +6079,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 0
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -7145,6 +7153,7 @@ MonoBehaviour:
   isVisible: 0
   hasParent: 0
   minDist: 0
+  rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -8293,6 +8302,8 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652757391247}
   - component: {fileID: 5866666020972998133}
+  - component: {fileID: 5866666020972998134}
+  - component: {fileID: 5866666020972998135}
   m_Layer: 0
   m_Name: pizza_low_test2fbx
   m_TagString: Untagged
@@ -8639,6 +8650,57 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &5866666020972998134
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149024468277}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &5866666020972998135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149024468277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2638f8321f93f784f970537cb6a00dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  isVisible: 0
+  hasParent: 0
+  minDist: 5
+  rend: {fileID: 7477672113656122779}
+  activated: 0
+  firstActivated: 0
+  matColorVal: 0
+  fadeInterval: 10
+  playerHolding: {fileID: 0}
+  holdingPos: {fileID: 0}
+  pickUpText: 
 --- !u!1 &6425507055822361742
 GameObject:
   m_ObjectHideFlags: 0
@@ -8756,7 +8818,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4116317910449788622}
-  - component: {fileID: 6983220749819313555}
   m_Layer: 0
   m_Name: joint3
   m_TagString: Untagged
@@ -8764,65 +8825,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6983220749819313555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6983220749819313554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee195728a66c14c4ea207bc9e05ac156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Root: {fileID: 4116317910449788622}
-  m_UpdateRate: 60
-  m_Damping: 1
-  m_DampingDistrib:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_Elasticity: 0.1
-  m_ElasticityDistrib:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_Stiffness: 0.1
-  m_StiffnessDistrib:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_Inert: 0.85
-  m_InertDistrib:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_Radius: 0
-  m_RadiusDistrib:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_EndLength: 0
-  m_EndOffset: {x: 0, y: 0, z: 0}
-  m_Gravity: {x: 0, y: 0, z: 0}
-  m_Force: {x: 0, y: 0, z: 0}
-  m_Colliders: []
-  m_Exclusions: []
-  m_FreezeAxis: 0
-  m_DistantDisable: 0
-  m_ReferenceObject: {fileID: 4918753457880280028}
-  m_DistanceToObject: 20
 --- !u!4 &7178581638754750232
 Transform:
   m_ObjectHideFlags: 0
@@ -8909,6 +8911,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5639405849212263816}
   - component: {fileID: 7477672113656122779}
+  - component: {fileID: 7750397242709771857}
   m_Layer: 0
   m_Name: polySurface1
   m_TagString: Untagged
@@ -8916,6 +8919,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &7750397242709771857
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750397242709771856}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.17945749, y: 0.029830296, z: 0.28681684}
+  m_Center: {x: 0.0108300615, y: 0.0066383407, z: -0.019820884}
 --- !u!4 &7982313188611885741
 Transform:
   m_ObjectHideFlags: 0

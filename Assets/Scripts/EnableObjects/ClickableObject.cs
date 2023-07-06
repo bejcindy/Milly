@@ -37,7 +37,13 @@ public class ClickableObject : LivableObject
             {
                 animator.ResetTrigger("Pressed");
                 animator.SetTrigger("Released");
+                Invoke(nameof(ResetAnimTrigger), 0.5f);
             }
         }
+    }
+
+    void ResetAnimTrigger()
+    {
+        animator.ResetTrigger("Released");
     }
 }

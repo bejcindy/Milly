@@ -9,6 +9,7 @@ public class PlayerHolding : MonoBehaviour
     public Vector2 minThrowForce = new Vector2(100f, 50f);
     public Vector2 maxThrowForce = new Vector2(500f, 200f);
     public Transform holdingObj;
+    public Transform playerCam;
 
     public bool noFirstThrow;
 
@@ -43,7 +44,7 @@ public class PlayerHolding : MonoBehaviour
                     //firstClickDone = false;
                     holdingObj.SetParent(null);
                     holdingObj.GetComponent<Rigidbody>().isKinematic = false;
-                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * transform.forward + new Vector3(0, throwForce.y, 0));
+                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * playerCam.forward + new Vector3(0, throwForce.y, 0));
                 }
             }
             if (Input.GetMouseButtonDown(1))

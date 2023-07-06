@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CollisionObject : LivableObject
 {
+    public string tagName;
     private void OnCollisionEnter(Collision collision)
     {
-        activated = true;
+        if(collision.gameObject.tag == tagName)
+            activated = true;
     }
 }

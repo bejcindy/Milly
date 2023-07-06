@@ -8,7 +8,7 @@ public class LookingObject : LivableObject
     protected override void Update()
     {
         base.Update();
-        if (isVisible)
+        if (interactable)
         {
             activated = true;
         }

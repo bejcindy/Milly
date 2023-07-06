@@ -9,6 +9,7 @@ public class FixedCameraObject : LivableObject
     [SerializeField] protected KeyCode quitKey;
     [SerializeField] protected bool isInteracting;
     [SerializeField] protected bool positionFixed;
+    [SerializeField] protected bool showMouse;
 
     [SerializeField] protected CinemachineVirtualCamera fixedCamera;
     [SerializeField] protected CinemachineVirtualCamera playerCamera;
@@ -42,6 +43,8 @@ public class FixedCameraObject : LivableObject
         {
             if (Input.GetKeyDown(quitKey))
             {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 StartCoroutine(UnfixPlayer());
             }
         }
@@ -56,6 +59,11 @@ public class FixedCameraObject : LivableObject
             isInteracting = true;
             activated = true;
             positionFixed = true;
+            if (showMouse)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
             PositionPlayer();
         }
     }

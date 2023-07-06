@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class ClickableObject : LivableObject
 {
+    Animator animator;
+    protected override void Start()
+    {
+        base.Start();
+        if(TryGetComponent<Animator>(out Animator anim))
+        {
+            animator = anim;
+        }
+    }
     protected override void Update()
     {
         base.Update();
         if (isVisible)
         {
             Cursor.lockState = CursorLockMode.None;
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 RaycastHit raycastHit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -19,8 +28,15 @@ public class ClickableObject : LivableObject
                     if (raycastHit.transform.name == transform.name)
                     {
                         activated = true;
+                        animator.SetTrigger("Pressed");
                     }
                 }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                animator.ResetTrigger("Pressed");
+                animator.SetTrigger("Released");
             }
         }
     }

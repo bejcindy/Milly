@@ -2,17 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Unity.VisualScripting;
 
-public class Doorbell : LivableObject
+public class Doorbell : FixedCameraObject
 {
-    public CinemachineVirtualCamera fixedCamera;
-    public CinemachineVirtualCamera playerCamera;
 
-    public bool isInteracting;
 
     protected override void Update()
     {
         base.Update();
-
+        if (isInteracting)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit raycastHit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out raycastHit))
+                {
+                    if (raycastHit.transform != null)
+                    {
+                        Debug.Log(raycastHit.transform.name);
+                    }
+                }
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ public class LivableObject : MonoBehaviour
     protected Transform player;
     [SerializeField] protected bool interactable;
     [SerializeField] protected bool isVisible;
-    [SerializeField] protected bool hasParent;
+    [SerializeField] protected bool chainControl;
     [SerializeField] protected float minDist;
 
 
@@ -29,8 +29,6 @@ public class LivableObject : MonoBehaviour
         mat = rend.material;
         mat.EnableKeyword("_WhiteDegree");
         matColorVal = 1;
-        if (transform.parent != null)
-            hasParent = true;
     }
 
     protected virtual void Update()
@@ -41,7 +39,8 @@ public class LivableObject : MonoBehaviour
         {
             if(!firstActivated)
                 TurnOnColor(mat);
-
+            if (chainControl)
+                GetComponent<GroupMaster>().activateAll = true;
         }
     }
 
@@ -71,11 +70,6 @@ public class LivableObject : MonoBehaviour
         {
             matColorVal = 0;
             firstActivated = true;
-            if (hasParent)
-            {
-                GroupMaster groupMaster = transform.parent.GetComponent<GroupMaster>();
-                groupMaster.activateAll = true;
-            }
         }
         
     }

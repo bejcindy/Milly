@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class GroupMaster : MonoBehaviour
 {
-    public List<LivableObject> objects;
+    public List<Transform> chainTriggers;
     public bool activateAll;
     public float groupColorVal;
     public float fadeInterval;
     // Start is called before the first frame update
     void Start()
     {
-        foreach(LivableObject livableObject in GetComponentsInChildren<LivableObject>())
-        {
-            objects.Add(livableObject);
-        }    
+        groupColorVal = 1;
     }
 
     // Update is called once per frame
@@ -28,7 +25,7 @@ public class GroupMaster : MonoBehaviour
 
     void ActivateAll()
     {
-        foreach(Transform child in transform)
+        foreach(Transform child in chainTriggers)
         {
             if(child.GetComponent<LivableObject>() == null)
             {

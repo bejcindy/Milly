@@ -8,6 +8,9 @@ public class GroupMaster : MonoBehaviour
     public bool activateAll;
     public float groupColorVal;
     public float fadeInterval;
+
+    public bool designatedGroup;
+    public bool childToChildren;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,43 +22,66 @@ public class GroupMaster : MonoBehaviour
     {
         if (activateAll)
         {
+            if(groupColorVal > 0)
+            {
+                groupColorVal -= 0.1f * fadeInterval * Time.deltaTime;
+            }
+            else
+            {
+                groupColorVal = 0;
+            }
             ActivateAll();
         }
     }
 
     void ActivateAll()
     {
-        foreach(Transform child in chainTriggers)
+        if (designatedGroup)
         {
-            if(child.GetComponent<LivableObject>() == null)
+            foreach (Transform child in chainTriggers)
+            {
+                ActivateGroup(child);
+
+            }
+        }
+
+        if (childToChildren)
+        {
+            foreach(Transform child in transform.parent)
+            {
+                if(child.GetComponent<Renderer>()!=null)
+                    ActivateGroup(child);
+            }
+        }
+
+
+    }
+
+    void ActivateGroup(Transform child)
+    {
+        if (child.GetComponent<LivableObject>() == null)
+        {
+            Material childMat = child.GetComponent<Renderer>().material;
+            childMat.EnableKeyword("_WhiteDegree");
+            TurnOnColor(childMat);
+        }
+        else
+        {
+            if (!child.GetComponent<LivableObject>().activated)
             {
                 Material childMat = child.GetComponent<Renderer>().material;
                 childMat.EnableKeyword("_WhiteDegree");
                 TurnOnColor(childMat);
             }
-            else
-            {
-                if (!child.GetComponent<LivableObject>().activated){
-                    Material childMat = child.GetComponent<Renderer>().material;
-                    childMat.EnableKeyword("_WhiteDegree");
-                    TurnOnColor(childMat);
-                }
-            }
-
         }
     }
 
+
+
     void TurnOnColor(Material material)
     {
-        if (groupColorVal > 0)
-        {
-            groupColorVal -= 0.1f * fadeInterval * Time.deltaTime;
-            material.SetFloat("_WhiteDegree", groupColorVal);
-        }
-        else
-        {
-            groupColorVal = 0;
-        }
+
+        material.SetFloat("_WhiteDegree", groupColorVal);
 
     }
 }

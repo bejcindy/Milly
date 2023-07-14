@@ -125,6 +125,10 @@ public class PlayerMovement : MonoBehaviour
         {
             other.transform.parent.GetComponent<FixedCameraObject>().onRight = true;
         }
+        if (other.CompareTag("BuildingControl"))
+        {
+            other.transform.GetComponent<BuildingGroupController>().activateAll = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)

@@ -10,4 +10,13 @@ public class CollisionObject : LivableObject
         if(collision.gameObject.tag == tagName)
             activated = true;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("player stepped in");
+            activated = true;
+        }
+    }
 }

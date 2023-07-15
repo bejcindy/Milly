@@ -5,6 +5,8 @@ using UnityEngine;
 public class ClickableObject : LivableObject
 {
     Animator animator;
+    public bool groupControl;
+    public BuildingGroupController buildingGroup;
     protected override void Start()
     {
         base.Start();
@@ -16,7 +18,7 @@ public class ClickableObject : LivableObject
     protected override void Update()
     {
         base.Update();
-        if (isVisible)
+        if (interactable)
         {
             Cursor.lockState = CursorLockMode.None;
             if (Input.GetMouseButton(0))
@@ -33,8 +35,16 @@ public class ClickableObject : LivableObject
                 }
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && activated)
             {
+                if (groupControl)
+                {
+                    if (!buildingGroup.activateAll)
+                    {
+                        ActivateGroup();
+                    }
+                }
+
                 animator.ResetTrigger("Pressed");
                 animator.SetTrigger("Released");
                 Invoke(nameof(ResetAnimTrigger), 0.5f);
@@ -45,5 +55,10 @@ public class ClickableObject : LivableObject
     void ResetAnimTrigger()
     {
         animator.ResetTrigger("Released");
+    }
+
+    void ActivateGroup()
+    {
+        buildingGroup.activateAll = true;
     }
 }

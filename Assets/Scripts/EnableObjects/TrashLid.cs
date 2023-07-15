@@ -5,7 +5,8 @@ using UnityEngine;
 public class TrashLid : LivableObject
 {
     public float rotateSpeed;
-
+    public bool interacting;
+    public bool fixedPos;
 
     // Start is called before the first frame update
 
@@ -13,13 +14,18 @@ public class TrashLid : LivableObject
     protected override void Update()
     {
         base.Update();
+        if (transform.eulerAngles.z == 0 || transform.eulerAngles.z >= 359 || transform.eulerAngles.z == 270)
+            fixedPos = true;
+        else
+            fixedPos = false;
         if (interactable)
         {
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
-
+            Debug.Log(transform.eulerAngles.z);
             if (Input.GetMouseButton(0))
             {
                 activated = true;
+                interacting = true;
                 if (verticalInput < 0)
                 {
                     RotateLid(0);
@@ -30,6 +36,23 @@ public class TrashLid : LivableObject
                 }
 
 
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            interacting = false;
+
+        }
+        if (!fixedPos && !interacting)
+        {
+            if (transform.eulerAngles.z < 290)
+            {
+                RotateLid(270);
+            }
+            else if (transform.eulerAngles.z != 360)
+            {
+                RotateLid(0);
             }
         }
 

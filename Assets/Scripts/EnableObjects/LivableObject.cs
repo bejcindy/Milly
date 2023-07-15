@@ -14,7 +14,7 @@ public class LivableObject : MonoBehaviour
     protected Material mat;
     [SerializeField] protected Renderer rend;
     [SerializeField] public bool activated;
-    [SerializeField] protected bool firstActivated; 
+    [SerializeField] public bool firstActivated; 
     [SerializeField] protected float matColorVal;
     [SerializeField] protected float fadeInterval;
 

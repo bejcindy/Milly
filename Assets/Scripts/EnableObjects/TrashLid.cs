@@ -2,30 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrashLid : MonoBehaviour
+public class TrashLid : LivableObject
 {
-    public bool rotating;
+    public float rotateSpeed;
+
+
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        float verticalInput = Input.GetAxis("Mouse Y");
-
-        if (Input.GetMouseButton(0))
+        base.Update();
+        if (interactable)
         {
-            Debug.Log(transform.localEulerAngles.z);
-            if(transform.localEulerAngles.z > 270 || transform.localEulerAngles.z < 1)
+            float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
+
+            if (Input.GetMouseButton(0))
             {
-                transform.Rotate(new Vector3(0, 0, verticalInput * -30) * Time.deltaTime);
+                activated = true;
+                if (verticalInput < 0)
+                {
+                    RotateLid(0);
+                }
+                else if (verticalInput > 0)
+                {
+                    RotateLid(270);
+                }
+
 
             }
-
-
         }
+
     }
+
+
+    void RotateLid(float zTargetAngle)
+    {
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,
+            Mathf.LerpAngle(transform.eulerAngles.z, zTargetAngle, Time.deltaTime * rotateSpeed));
+
+    }
+
+
 }

@@ -59,7 +59,7 @@ public class FixedCameraObject : LivableObject
     }
 
 
-    protected void TriggerInteraction()
+    protected virtual void TriggerInteraction()
     {
         if (Input.GetKeyDown(interactKey))
         {
@@ -98,7 +98,7 @@ public class FixedCameraObject : LivableObject
     }
 
 
-    IEnumerator UnfixPlayer()
+    protected IEnumerator UnfixPlayer()
     {
         playerCamera.m_Priority = 10;
         if (doubleSided)

@@ -1233,6 +1233,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 301814788528613239, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
+      propertyPath: childToChildren
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 301814788528613239, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
+      propertyPath: chainTriggers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 332997088373093357, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
       propertyPath: m_Name
       value: Trash_can_low
@@ -4272,6 +4280,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 301814788528613239, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
+      propertyPath: childToChildren
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 332997088373093357, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
       propertyPath: m_Name
       value: Trash_can_low (1)
@@ -13289,6 +13301,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 301814788528613239, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
+      propertyPath: childToChildren
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 332997088373093357, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
       propertyPath: m_Name
       value: Trash_can_low (2)
@@ -14225,6 +14241,35 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2128314948}
   m_SourcePrefab: {fileID: 100100000, guid: ab2854fc10164fa458550986c9acebc7, type: 3}
+--- !u!1 &1678589691 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8593173069789796330, guid: 87fcece53e7f1684180e0ac870e5efaf, type: 3}
+  m_PrefabInstance: {fileID: 2136321638}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1678589697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678589691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2638f8321f93f784f970537cb6a00dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  isVisible: 0
+  chainControl: 0
+  minDist: 5
+  rend: {fileID: 0}
+  activated: 0
+  firstActivated: 0
+  matColorVal: 1
+  fadeInterval: 10
+  playerHolding: {fileID: 0}
+  holdingPos: {fileID: 0}
+  pickUpText: 
 --- !u!1 &1691978282 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1416318606666957491, guid: 1adb34753cc01a24c9f028d8f8462f63, type: 3}
@@ -16748,6 +16793,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 301814788528613239, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
+      propertyPath: childToChildren
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 332997088373093357, guid: f07769cf272c75d4a9416914c7efad74, type: 3}
       propertyPath: m_Name
       value: Trash_can_low (3)
@@ -18982,15 +19031,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1868921738881473453, guid: 87fcece53e7f1684180e0ac870e5efaf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -44.915436
+      value: -44.95
       objectReference: {fileID: 0}
     - target: {fileID: 1868921738881473453, guid: 87fcece53e7f1684180e0ac870e5efaf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.2416844
+      value: 3.075
       objectReference: {fileID: 0}
     - target: {fileID: 1868921738881473453, guid: 87fcece53e7f1684180e0ac870e5efaf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.765558
+      value: 18.871
       objectReference: {fileID: 0}
     - target: {fileID: 1868921738881473453, guid: 87fcece53e7f1684180e0ac870e5efaf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19027,7 +19076,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8593173069789796330, guid: 87fcece53e7f1684180e0ac870e5efaf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1678589697}
   m_SourcePrefab: {fileID: 100100000, guid: 87fcece53e7f1684180e0ac870e5efaf, type: 3}
 --- !u!23 &331379217324698358
 MeshRenderer:

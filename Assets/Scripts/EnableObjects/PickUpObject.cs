@@ -7,15 +7,14 @@ public class PickUpObject : LivableObject
 {
     public PlayerHolding playerHolding;
     Rigidbody rb;
-
-    public Transform holdingPos;
     public string pickUpText;
     DisplayText displayText;
+    public bool inHand;
+
 
     protected override void Start()
     {
         base.Start();
-        holdingPos = Camera.main.transform;
         playerHolding = player.GetComponent<PlayerHolding>();
         rb = GetComponent<Rigidbody>();
         displayText = GameObject.Find("Thought").GetComponent<DisplayText>();
@@ -27,30 +26,43 @@ public class PickUpObject : LivableObject
     }
     private void DetectEnable()
     {
-        if (interactable)
+        if (interactable && !inHand)
         {
-            if (!playerHolding.isHolding)
+            if (!playerHolding.fullHand)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    //activate if not yet
-                    if (!activated && matColorVal > 0)
+                    if (playerHolding.GetLeftHand())
                     {
-                        activated = true;
+                        if (!activated && matColorVal > 0)
+                        {
+                            activated = true;
+                        }
+
+                        displayText.txt = pickUpText;
+                        displayText.StartCoroutine("ShowText");
+                        rb.isKinematic = true;
+                        playerHolding.OccupyLeft(transform);
+                        inHand = true;
                     }
-                    //set player side
-                    playerHolding.isHolding = true;
-                    playerHolding.holdingObj = transform;
-
-                    displayText.txt = pickUpText;
-                    displayText.StartCoroutine("ShowText");
-
-                    //move obj position and disable rb
-                    transform.SetParent(holdingPos);
-                    transform.localPosition = playerHolding.holdingPosition;
-                    rb.isKinematic = true;
                 }
-                
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    if (playerHolding.GetRightHand())
+                    {
+                        if (!activated && matColorVal > 0)
+                        {
+                            activated = true;
+                        }
+                        displayText.txt = pickUpText;
+                        displayText.StartCoroutine("ShowText");
+                        rb.isKinematic = true;
+                        playerHolding.OccupyRight(transform);
+                        inHand = true;
+                    }
+                }
+
             }
         }
     }

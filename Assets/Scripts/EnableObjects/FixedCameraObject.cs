@@ -127,6 +127,8 @@ public class FixedCameraObject : LivableObject
         }
 
         yield return new WaitForSeconds(2f);
+        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
+        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
         playerBody.enabled = true;
         camController.enabled = true;
         playerMovement.enabled = true;

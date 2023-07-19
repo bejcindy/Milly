@@ -7,10 +7,16 @@ public class TrashLid : LivableObject
     public float rotateSpeed;
     public bool interacting;
     public bool fixedPos;
+    public PlayerHolding playerHolding;
 
     // Start is called before the first frame update
 
     // Update is called once per frame
+    protected override void Start()
+    {
+        base.Start();
+        playerHolding = player.GetComponent<PlayerHolding>();
+    }
     protected override void Update()
     {
         base.Update();
@@ -22,21 +28,39 @@ public class TrashLid : LivableObject
         {
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
             Debug.Log(transform.eulerAngles.z);
-            if (Input.GetMouseButton(0))
+            if (playerHolding.GetLeftHand())
             {
-                activated = true;
-                interacting = true;
-                if (verticalInput < 0)
+                if (Input.GetMouseButton(0))
                 {
-                    RotateLid(0);
+                    activated = true;
+                    interacting = true;
+                    if (verticalInput < 0)
+                    {
+                        RotateLid(0);
+                    }
+                    else if (verticalInput > 0)
+                    {
+                        RotateLid(270);
+                    }
                 }
-                else if (verticalInput > 0)
-                {
-                    RotateLid(270);
-                }
-
-
             }
+            if (playerHolding.GetRightHand())
+            {
+                if (Input.GetMouseButton(1))
+                {
+                    activated = true;
+                    interacting = true;
+                    if (verticalInput < 0)
+                    {
+                        RotateLid(0);
+                    }
+                    else if (verticalInput > 0)
+                    {
+                        RotateLid(270);
+                    }
+                }
+            }
+
         }
 
         if (Input.GetMouseButtonUp(0))

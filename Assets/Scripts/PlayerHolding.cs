@@ -1,70 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHolding : MonoBehaviour
 {
-    public bool isHolding;
-    public Vector3 holdingPosition;
-    public Vector2 minThrowForce = new Vector2(100f, 50f);
-    public Vector2 maxThrowForce = new Vector2(500f, 200f);
-    public Transform holdingObj;
-    public Transform playerCam;
-
-    public bool noFirstThrow;
-
-    float holdTime = 2f;
-    [SerializeField]
-    float holdTimer;
-    Vector2 throwForce;
+    public bool fullHand;
+    PlayerLeftHand leftHand;
+    PlayerRightHand rightHand;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        leftHand = GetComponent<PlayerLeftHand>();
+        rightHand = GetComponent<PlayerRightHand>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        DetectHolding();
+        GetFullHand();
     }
 
-    private void DetectHolding()
+
+
+    public bool GetLeftHand()
     {
-        if (isHolding)
+        if (leftHand.isHolding)
         {
-            if (Input.GetMouseButtonUp(0))
-            {
-                noFirstThrow = !noFirstThrow;
-                holdTimer = 0;
-                if (noFirstThrow)
-                {
-                    isHolding = false;
-                    //firstClickDone = false;
-                    holdingObj.SetParent(null);
-                    holdingObj.GetComponent<Rigidbody>().isKinematic = false;
-                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * playerCam.forward + new Vector3(0, throwForce.y, 0));
-                }
-            }
-            if (Input.GetMouseButtonDown(1))
-            {
-                isHolding = false;
-                noFirstThrow = true;
-                holdingObj.SetParent(null);
-                holdingObj.GetComponent<Rigidbody>().isKinematic = false;
-            }
-            if (Input.GetMouseButton(0) && !noFirstThrow)
-            {
-                if (holdTimer < holdTime)
-                {
-                    holdTimer += Time.deltaTime;
-                    holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
-                }
-                float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
-                float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
-                throwForce = new Vector2(throwForceX, throwForceY);
-            }
+            return false;
         }
+        leftHand.noThrow = true;
+        return true;
+    }
+
+    public bool GetRightHand()
+    {
+        if (rightHand.isHolding)
+        {
+            return false;
+        }
+        rightHand.noThrow = true;
+        return true;
+    }
+
+    public void GetFullHand()
+    {
+        if (leftHand.isHolding && rightHand.isHolding)
+            fullHand = true;
+        else
+            fullHand = false;
+    }
+
+    public void OccupyLeft(Transform obj)
+    {
+        leftHand.isHolding = true;
+        leftHand.holdingObj = obj;
+        obj.SetParent(Camera.main.transform);
+        obj.localPosition = leftHand.holdingPosition;
+        Invoke(nameof(EnableThrowLeft), 0.5f);
+    }
+
+    public void OccupyRight(Transform obj)
+    {
+        rightHand.isHolding = true;
+        rightHand.holdingObj = obj;
+        obj.SetParent(Camera.main.transform);
+        obj.localPosition = rightHand.holdingPosition;
+        Invoke(nameof(EnableThrowRight), 0.5f);
+    }
+
+    public void UnoccupyLeft()
+    {
+        leftHand.isHolding = false;
+        leftHand.holdingObj = null;
+        leftHand.noThrow = true;
+    }
+
+    public void UnoccupyRight()
+    {
+        rightHand.isHolding = false;
+        rightHand.holdingObj = null;
+        rightHand.noThrow = true;
+    }
+
+    public void EnableThrowLeft()
+    {
+        leftHand.noThrow = false;
+    }
+
+    public void EnableThrowRight()
+    {
+        rightHand.noThrow = false;
     }
 }

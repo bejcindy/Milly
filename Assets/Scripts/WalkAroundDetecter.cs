@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkAroundDetecter : MonoBehaviour
+public class WalkAroundDetecter : LivableObject
 {
     public Collider[] triggerAreas;
     public bool[] triggers;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         triggers = new bool[4];
         for(int i = 0; i < triggerAreas.Length; i++)
         {
@@ -18,12 +19,12 @@ public class WalkAroundDetecter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (allTrue())
         {
-            //Do Things Here and destroy gameobject when finish
-            //Debug.Log("allTrue");
+            activated = true;
 
         }
     }

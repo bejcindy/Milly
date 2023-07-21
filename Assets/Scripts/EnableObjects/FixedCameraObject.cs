@@ -20,6 +20,8 @@ public class FixedCameraObject : LivableObject
     [SerializeField] protected CinemachineVirtualCamera otherCamera;
     [SerializeField] protected CinemachineVirtualCamera playerCamera;
 
+    [SerializeField] public GameObject uiHint;
+
     PlayerCam camController;
     PlayerMovement playerMovement;
     Renderer playerBody;
@@ -31,6 +33,7 @@ public class FixedCameraObject : LivableObject
         camController = player.GetComponent<PlayerCam>();
         playerBody = player.GetChild(0).GetComponent<Renderer>();
         playerCamera = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
+
     }
 
 
@@ -42,8 +45,13 @@ public class FixedCameraObject : LivableObject
         {
             if (!isInteracting)
             {
+                uiHint.SetActive(true);
                 TriggerInteraction();
             }
+        }
+        else
+        {
+            uiHint.SetActive(false);
         }
 
         if (positionFixed)
@@ -63,6 +71,7 @@ public class FixedCameraObject : LivableObject
     {
         if (Input.GetKeyDown(interactKey))
         {
+            uiHint.SetActive(false);
             isInteracting = true;
             activated = true;
             positionFixed = true;
@@ -118,6 +127,8 @@ public class FixedCameraObject : LivableObject
         }
 
         yield return new WaitForSeconds(2f);
+        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
+        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
         playerBody.enabled = true;
         camController.enabled = true;
         playerMovement.enabled = true;

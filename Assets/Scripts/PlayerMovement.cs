@@ -76,7 +76,10 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-
+        if (horizontalInput == 0 && verticalInput == 0)
+            GetComponent<terraintry>().startPainting = false;
+        else
+            GetComponent<terraintry>().startPainting = true;
         if (Input.GetKeyDown(jumpKey))
         {
 

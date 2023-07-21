@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008958812, g: 0.013101446, b: 0.02045097, a: 1}
+  m_IndirectSpecularColor: {r: 0.008952402, g: 0.013101039, b: 0.020449812, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10161,6 +10161,7 @@ GameObject:
   - component: {fileID: 890563935}
   - component: {fileID: 890563937}
   - component: {fileID: 890563936}
+  - component: {fileID: 890563938}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -10308,6 +10309,23 @@ MonoBehaviour:
   minThrowForce: {x: 100, y: 50}
   maxThrowForce: {x: 500, y: 200}
   holdTimer: 0
+--- !u!114 &890563938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890563930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d35b3863b9a7249a79c0917ca73401ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  t: {fileID: 1922266490}
+  posX: 0
+  posZ: 0
+  rad: 10
+  startPainting: 0
 --- !u!1 &890917101 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2623810030991635920, guid: 50a89c40545b0a04fb6d2c5777de4d1e, type: 3}
@@ -24157,7 +24175,7 @@ GameObject:
   - component: {fileID: 1922266491}
   - component: {fileID: 1922266490}
   - component: {fileID: 1922266489}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}

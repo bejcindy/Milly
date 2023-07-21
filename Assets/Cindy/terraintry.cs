@@ -5,16 +5,17 @@ using static UnityEditor.PlayerSettings;
 
 public class terraintry : MonoBehaviour
 {
-    public Camera cam;
+    //public Camera cam;
     public Terrain t;
     public int posX, posZ;
     float[,,] map;
     public int rad;
+    public bool startPainting;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //cam = GetComponent<Camera>();
-        Debug.Log(new Vector2(t.terrainData.alphamapWidth, t.terrainData.alphamapHeight));
+        //Debug.Log(new Vector2(t.terrainData.alphamapWidth, t.terrainData.alphamapHeight));
         ResetAlphaMask();
         map = t.terrainData.GetAlphamaps(0, 0, t.terrainData.alphamapWidth, t.terrainData.alphamapHeight);
     }
@@ -22,22 +23,25 @@ public class terraintry : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Input.GetMouseButton(0))
+        //if (!Input.GetMouseButton(0))
+        //    return;
+        if (!startPainting)
             return;
-
         RaycastHit hit;
-        if (!Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit))
-            return;
-
-        if (hit.transform.GetComponent<Terrain>())
+        //if (!Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit))
+        //    return;
+        if (Physics.Raycast(transform.position, -transform.up, out hit))
         {
-            if (Input.GetMouseButton(0))
+            if (hit.transform.GetComponent<Terrain>())
             {
+                //if (Input.GetMouseButton(0))
+                //{
                 //Debug.Log("pressing");
                 ConvertPosition(hit.point);
                 Vector2 pixelUV = new Vector2(posZ, posX);
-                PaintTerrain(pixelUV,rad);
+                PaintTerrain(pixelUV, rad);
                 //Debug.Log(newCor);
+                //}
             }
         }
     }
@@ -80,7 +84,7 @@ public class terraintry : MonoBehaviour
                 Vector2 currentPixel = new Vector2(x, y);
                 if (Vector2.Distance(pos, currentPixel) <= radius)
                 {
-                    var frac = 1;
+                    var frac = 0;
                     //var frac =  Vector2.Distance(pos, currentPixel) / radius;
                     map[x, y, 0] = (float)frac;
                     map[x, y, 1] = (float)(1 - frac);
@@ -97,7 +101,7 @@ public class terraintry : MonoBehaviour
             for (int x = 0; x < t.terrainData.alphamapWidth; x++)
             {
 
-                    var frac = 0;
+                    var frac = 1;
                     map[x, y, 0] = (float)frac;
                     map[x, y, 1] = (float)(1 - frac);
 

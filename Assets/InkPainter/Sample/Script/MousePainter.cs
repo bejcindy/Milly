@@ -34,7 +34,9 @@ namespace Es.InkPainter.Sample
 				RaycastHit hitInfo;
 				if(Physics.Raycast(ray, out hitInfo))
 				{
+					
 					var paintObject = hitInfo.transform.GetComponent<InkCanvas>();
+					Debug.Log(paintObject.name);
 					if(paintObject != null)
 						switch(useMethodType)
 						{

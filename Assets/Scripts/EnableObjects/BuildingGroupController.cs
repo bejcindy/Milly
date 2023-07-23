@@ -6,8 +6,12 @@ public class BuildingGroupController : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool activateAll;
+    public bool groupControl;
     public float groupColorVal;
     public float fadeInterval;
+
+    public BuildingGroupController bgc;
+    public BuildingGroupController targetBgc;
     void Start()
     {
         groupColorVal = 1;
@@ -27,6 +31,14 @@ public class BuildingGroupController : MonoBehaviour
             }
 
             ActivateAll(this.transform);
+
+            if (groupControl)
+            {
+                if (bgc.activateAll)
+                {
+                    targetBgc.activateAll = true;
+                }
+            }
         }
     }
 

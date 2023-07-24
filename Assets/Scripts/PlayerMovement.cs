@@ -117,15 +117,15 @@ public class PlayerMovement : MonoBehaviour
     }
     void walkStair()
     {
-        Debug.Log("walking");
+        //Debug.Log("walking");
         RaycastHit hitLower;
         if (Physics.Raycast(lowerRay.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.5f, flatGround))
         {
-            Debug.Log("hit lower");
+            //Debug.Log("hit lower");
             RaycastHit hitUpper;
             if (!Physics.Raycast(upperRay.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.7f, flatGround))
             {
-                Debug.Log("hit upper");
+                //Debug.Log("hit upper");
                 rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
             }
         }

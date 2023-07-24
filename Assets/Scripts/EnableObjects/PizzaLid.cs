@@ -9,6 +9,8 @@ public class PizzaLid : LivableObject
     public float rotateSpeed;
     public bool quitInteraction;
     public bool coolDown;
+
+    public float coolDownVal;
     bool fixedPos;
     PlayerHolding playerHolding;
     FixedCameraObject camControl;
@@ -28,7 +30,7 @@ public class PizzaLid : LivableObject
             fixedPos = true;
         else
             fixedPos = false;
-        if (interactable)
+        if (interactable && !coolDown)
         {
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
             Debug.Log(transform.eulerAngles.z);
@@ -77,7 +79,7 @@ public class PizzaLid : LivableObject
 
         }
 
-        if (!fixedPos && !interacting && !quitInteraction)
+        if (!fixedPos && !interacting && !coolDown)
         {
             if (transform.eulerAngles.z < 250)
             {
@@ -89,17 +91,16 @@ public class PizzaLid : LivableObject
             }
         }
 
-        if (Input.GetKeyDown(camControl.quitKey))
+        if (openLid && Input.GetKeyDown(camControl.quitKey))
         {
             coolDown = true;
             interacting = false;
-            quitInteraction = true;
-            Invoke(nameof(StopCoolDown), 1.5f);
         }
 
-        if (quitInteraction)
+
+        if (coolDown)
         {
-            RotateLid(0);
+            StopCoolDown();
         }
             
 
@@ -107,7 +108,14 @@ public class PizzaLid : LivableObject
 
     void StopCoolDown()
     {
-        coolDown = false;
+        RotateLid(0);
+        if (coolDownVal > 0)
+            coolDownVal -= Time.deltaTime;
+        else
+        {
+            coolDown = false;
+            coolDownVal = 2;
+        }
     }
 
 

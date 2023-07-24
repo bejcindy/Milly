@@ -6,6 +6,12 @@ public class PlayerMovement : MonoBehaviour
 {
     protected float gravityMultiplier;
 
+    [SerializeField] GameObject upperRay;
+    [SerializeField] GameObject lowerRay;
+    [SerializeField] float stepHeight = 0.5f;
+    [SerializeField] float stepSmooth = 10f;
+
+
     [Header("Movement")]
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float walkSpeed;
@@ -39,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        lowerRay.transform.localPosition= new Vector3(0, -1.45f, 0);
+        upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y+stepHeight, upperRay.transform.position.z);
     }
 
     void Update()
@@ -58,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         SpeedControl();
+        walkStair();
     }
 
     void MovePlayer()
@@ -106,7 +115,43 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = upVel + limitedVel;
         }
     }
+    void walkStair()
+    {
+        Debug.Log("walking");
+        RaycastHit hitLower;
+        if (Physics.Raycast(lowerRay.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.5f, flatGround))
+        {
+            Debug.Log("hit lower");
+            RaycastHit hitUpper;
+            if (!Physics.Raycast(upperRay.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.7f, flatGround))
+            {
+                Debug.Log("hit upper");
+                rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
+            }
+        }
 
+        RaycastHit hitLower45;
+        if (Physics.Raycast(lowerRay.transform.position, transform.TransformDirection(1.5f, 0, 1), out hitLower45, 0.5f, flatGround))
+        {
+
+            RaycastHit hitUpper45;
+            if (!Physics.Raycast(upperRay.transform.position, transform.TransformDirection(1.5f, 0, 1), out hitUpper45, 0.7f, flatGround))
+            {
+                rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
+            }
+        }
+
+        RaycastHit hitLowerMinus45;
+        if (Physics.Raycast(lowerRay.transform.position, transform.TransformDirection(-1.5f, 0, 1), out hitLowerMinus45, 0.5f, flatGround))
+        {
+
+            RaycastHit hitUpperMinus45;
+            if (!Physics.Raycast(upperRay.transform.position, transform.TransformDirection(-1.5f, 0, 1), out hitUpperMinus45, 0.7f, flatGround))
+            {
+                rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
+            }
+        }
+    }
     protected virtual void Jump()
     {
         Vector3 verticalV = Vector3.ProjectOnPlane(rb.velocity, transform.right);

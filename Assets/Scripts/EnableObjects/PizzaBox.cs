@@ -8,6 +8,8 @@ public class PizzaBox : MonoBehaviour
     public List<int> pizzaRot;
     public List<Transform> pizzas;
 
+    public BuildingGroupController pizzaShop;
+
     public TrashLid boxLid;
     // Start is called before the first frame update
     void Start()
@@ -37,10 +39,24 @@ public class PizzaBox : MonoBehaviour
                 Vector3 newRot = new Vector3(0, pizzaRot[i], 0);
                 StartCoroutine(LerpRotation(newPizza, newRot, 2f));
                 newPizza.GetComponent<Pizza>().inBox = true;
+                if (CheckFullBox())
+                    pizzaShop.activateAll = true;
                 return;
             }
+
         }
     }
+
+    bool CheckFullBox()
+    {
+        foreach(Transform t in pizzas)
+        {
+            if (t == null)
+                return false;
+        }
+        return true;
+    }
+
 
     public void RemovePizza(Transform pizza)
     {

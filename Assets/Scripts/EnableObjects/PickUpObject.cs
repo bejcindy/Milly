@@ -6,7 +6,7 @@ using UnityEngine;
 public class PickUpObject : LivableObject
 {
     public PlayerHolding playerHolding;
-    Rigidbody rb;
+    protected Rigidbody rb;
     public string pickUpText;
     DisplayText displayText;
     public bool inHand;

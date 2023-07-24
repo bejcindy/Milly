@@ -7,7 +7,6 @@ public class Pizza : PickUpObject
     public bool inBox;
     public PizzaLid lid;
     public PizzaBox pizzaBox;
-    Rigidbody rb;
 
     protected override void Start()
     {

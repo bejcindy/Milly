@@ -75,7 +75,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void DetectPizzaHolding()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             if (!noThrow)
             {

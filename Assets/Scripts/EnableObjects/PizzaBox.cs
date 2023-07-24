@@ -36,6 +36,8 @@ public class PizzaBox : MonoBehaviour
                 StartCoroutine(LerpPosition(newPizza, pizzaPos[i], 2f));
                 Vector3 newRot = new Vector3(0, pizzaRot[i], 0);
                 StartCoroutine(LerpRotation(newPizza, newRot, 2f));
+                newPizza.GetComponent<Pizza>().inBox = true;
+                return;
             }
         }
     }
@@ -44,8 +46,7 @@ public class PizzaBox : MonoBehaviour
     {
         if (pizzas.Contains(pizza))
         {
-            pizzas.Remove(pizza);
-            pizza.SetParent(null);
+            pizzas[pizzas.IndexOf(pizza)] = null;
         }
     }
 

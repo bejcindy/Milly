@@ -35,7 +35,6 @@ public class PizzaLid : LivableObject
         if (interactable && !coolDown)
         {
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
-            Debug.Log(transform.eulerAngles.z);
             if (playerHolding.GetLeftHand())
             {
                 if (Input.GetMouseButton(0))
@@ -77,6 +76,17 @@ public class PizzaLid : LivableObject
 
         }
 
+        if (isInteracting)
+        {
+            player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
+            player.GetComponent<PlayerRightHand>().inPizzaBox = true;
+        }
+        else
+        {
+            player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
+            player.GetComponent<PlayerRightHand>().inPizzaBox = false;
+        }
+
         if (Input.GetMouseButtonUp(0))
         {
             interacting = false;
@@ -98,6 +108,7 @@ public class PizzaLid : LivableObject
         if (isInteracting && Input.GetKeyDown(camControl.quitKey))
         {
             isInteracting = false;
+            openLid = false;
             coolDown = true;
             interacting = false;
         }

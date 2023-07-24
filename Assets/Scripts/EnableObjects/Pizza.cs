@@ -7,7 +7,7 @@ public class Pizza : PickUpObject
     public bool inBox;
     public PizzaLid lid;
     public PizzaBox pizzaBox;
-
+    Rigidbody rb;
 
     protected override void Start()
     {
@@ -15,6 +15,8 @@ public class Pizza : PickUpObject
         if (inBox)
         {
             pizzaBox = transform.parent.GetComponent<PizzaBox>();
+            rb = GetComponent<Rigidbody>();
+            rb.isKinematic = true;
         }
     }
 
@@ -22,22 +24,44 @@ public class Pizza : PickUpObject
     {
         if (inBox)
         {
-            if (!lid.openLid)
+            if (lid.openLid)
             {
-                interactable = false;
-                isVisible = false;
+                base.Update();
             }
 
-            else
+            if (inHand)
             {
-                interactable = true;
-                isVisible = true;
+                inBox = false;
+                pizzaBox.RemovePizza(transform);
             }
-                
         }
         else
         {
             base.Update();
         }
+
+        if (selected)
+        {
+            ShowUI();
+        }
+        else
+        {
+            HideUI();
+        }
+
+
+    }
+
+
+    private void OnMouseOver()
+    {
+        if(lid.openLid && inBox)
+            selected = true;
+    }
+
+    private void OnMouseExit()
+    {
+        if(lid.openLid && inBox)
+            selected = false;
     }
 }

@@ -32,7 +32,12 @@ public class PlayerRightHand : MonoBehaviour
     {
         if (isHolding)
         {
-            DetectHolding();
+            if (!inPizzaBox)
+                DetectHolding();
+            else
+            {
+                DetectPizzaHolding();
+            }
         }
     }
 
@@ -66,5 +71,20 @@ public class PlayerRightHand : MonoBehaviour
             throwForce = new Vector2(throwForceX, throwForceY);
         }
 
+    }
+
+    private void DetectPizzaHolding()
+    {
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (!noThrow)
+            {
+                isHolding = false;
+                pizzaBox.AddPizza(holdingObj);
+                holdingObj.GetComponent<PickUpObject>().inHand = false;
+                playerHolding.UnoccupyRight();
+            }
+
+        }
     }
 }

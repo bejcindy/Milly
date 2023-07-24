@@ -77,7 +77,14 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            pizzaBox.AddPizza(holdingObj);
+            if (!noThrow)
+            {
+                isHolding = false;
+                pizzaBox.AddPizza(holdingObj);
+                holdingObj.GetComponent<PickUpObject>().inHand = false;
+                playerHolding.UnoccupyLeft();
+            }
+
         }
     }
 }

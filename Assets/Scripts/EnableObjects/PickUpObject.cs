@@ -33,7 +33,10 @@ public class PickUpObject : LivableObject
     {
         if (interactable && !inHand)
         {
-            playerHolding.AddInteractable(this);
+            if (!player.GetComponent <PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
+            {
+                playerHolding.AddInteractable(this);
+            }
             if (!playerHolding.fullHand)
             {
                 if (playerHolding.GetLeftHand())
@@ -47,8 +50,8 @@ public class PickUpObject : LivableObject
                             activated = true;
                         }
 
-                        displayText.txt = pickUpText;
-                        displayText.StartCoroutine("ShowText");
+                        //displayText.txt = pickUpText;
+                        //displayText.StartCoroutine("ShowText");
                         rb.isKinematic = true;
                         playerHolding.OccupyLeft(transform);
                         inHand = true;
@@ -58,15 +61,15 @@ public class PickUpObject : LivableObject
                 if (playerHolding.GetRightHand())
                 {
                     uiHint.GetComponent<SpriteRenderer>().sprite = rightMouse;
-                    if (Input.GetMouseButtonDown(1))
+                    if (Input.GetMouseButtonDown(1) && selected)
                     {
                         uiHint.SetActive(false);
                         if (!activated && matColorVal > 0)
                         {
                             activated = true;
                         }
-                        displayText.txt = pickUpText;
-                        displayText.StartCoroutine("ShowText");
+                        //displayText.txt = pickUpText;
+                        //displayText.StartCoroutine("ShowText");
                         rb.isKinematic = true;
                         playerHolding.OccupyRight(transform);
                         inHand = true;
@@ -93,12 +96,12 @@ public class PickUpObject : LivableObject
         }
     }
 
-    public void ShowUI()
+    protected void ShowUI()
     {
         uiHint.SetActive(true);
     }
 
-    public void HideUI()
+    protected void HideUI()
     {
         uiHint.SetActive(false);
     }

@@ -6,7 +6,7 @@ using Cinemachine;
 public class FixedCameraObject : LivableObject
 {
     [SerializeField] protected KeyCode interactKey;
-    [SerializeField] protected KeyCode quitKey;
+    [SerializeField] public KeyCode quitKey;
     [SerializeField] protected bool isInteracting;
     [SerializeField] protected bool positionFixed;
     [SerializeField] protected bool showMouse;
@@ -68,22 +68,34 @@ public class FixedCameraObject : LivableObject
     }
 
 
-    protected virtual void TriggerInteraction()
+    public virtual void TriggerInteraction()
     {
         if (Input.GetKeyDown(interactKey))
         {
-            uiHint.SetActive(false);
-            isInteracting = true;
-            activated = true;
-            positionFixed = true;
-            if (showMouse)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-            PositionPlayer();
+            TurnOnCamera();
         }
     }
+
+    public void TurnOnCamera()
+    {
+        uiHint.SetActive(false);
+        isInteracting = true;
+        activated = true;
+        positionFixed = true;
+        if (showMouse)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        PositionPlayer();
+
+        if (transform.parent.name.Contains("pizza"))
+        {
+            player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
+            player.GetComponent<PlayerRightHand>().inPizzaBox = true;
+        }
+    }
+
 
     protected void PositionPlayer()
     {
@@ -110,6 +122,12 @@ public class FixedCameraObject : LivableObject
 
     protected IEnumerator UnfixPlayer()
     {
+        playerCamera.m_Priority = 10;
+        if (transform.parent.name.Contains("pizza"))
+        {
+            player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
+            player.GetComponent<PlayerRightHand>().inPizzaBox = false;
+        }
         playerCamera.m_Priority = 10;
         if (doubleSided)
         {
@@ -138,5 +156,6 @@ public class FixedCameraObject : LivableObject
         playerMovement.enabled = true;
         positionFixed = false;
         isInteracting = false;
+
     }
 }

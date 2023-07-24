@@ -6,6 +6,8 @@ public class PlayerLeftHand : MonoBehaviour
 {
     public bool isHolding;
     public bool noThrow;
+    public bool inPizzaBox;
+    public PizzaBox pizzaBox;
     public Transform holdingObj;
     public Vector3 holdingPosition;
     public PlayerHolding playerHolding;
@@ -22,6 +24,8 @@ public class PlayerLeftHand : MonoBehaviour
     {
         noThrow = true;
         playerHolding = GetComponent<PlayerHolding>();
+
+        pizzaBox = GameObject.Find("PizzaHolder").GetComponent<PizzaBox>();
     }
 
     // Update is called once per frame
@@ -29,7 +33,12 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (isHolding)
         {
-            DetectHolding();
+            if(!inPizzaBox)
+                DetectHolding();
+            else
+            {
+                DetectPizzaHolding();
+            }
         }
     }
 
@@ -62,5 +71,13 @@ public class PlayerLeftHand : MonoBehaviour
             throwForce = new Vector2(throwForceX, throwForceY);
         }
 
+    }
+
+    private void DetectPizzaHolding()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            pizzaBox.AddPizza(holdingObj);
+        }
     }
 }

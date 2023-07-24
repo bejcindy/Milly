@@ -90,7 +90,7 @@ public class LivableObject : MonoBehaviour
 
         //Is in FOV
         if ((pointOnScreen.x < Screen.width * 0.3f) || (pointOnScreen.x > Screen.width * 0.7f) ||
-                (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.7f))
+                (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
         {
             //Debug.Log("OutOfBounds: " + gameObject.name);
             return false;

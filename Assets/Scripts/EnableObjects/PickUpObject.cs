@@ -10,6 +10,7 @@ public class PickUpObject : LivableObject
     public string pickUpText;
     DisplayText displayText;
     public bool inHand;
+    public bool selected;
 
     public GameObject uiHint;
     public Sprite leftMouse;
@@ -32,13 +33,13 @@ public class PickUpObject : LivableObject
     {
         if (interactable && !inHand)
         {
+            playerHolding.AddInteractable(this);
             if (!playerHolding.fullHand)
             {
                 if (playerHolding.GetLeftHand())
                 {
                     uiHint.GetComponent<SpriteRenderer>().sprite = leftMouse;
-                    uiHint.SetActive(true);
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && selected)
                     {
                         uiHint.SetActive(false);
                         if (!activated && matColorVal > 0)
@@ -57,7 +58,6 @@ public class PickUpObject : LivableObject
                 if (playerHolding.GetRightHand())
                 {
                     uiHint.GetComponent<SpriteRenderer>().sprite = rightMouse;
-                    uiHint.SetActive(true);
                     if (Input.GetMouseButtonDown(1))
                     {
                         uiHint.SetActive(false);
@@ -77,7 +77,29 @@ public class PickUpObject : LivableObject
         }
         else if (!interactable || inHand)
         {
-            uiHint.SetActive(false);
+            playerHolding.RemoveInteractable(this);
+            selected = false;
+            HideUI();
         }
+
+
+        if (selected)
+        {
+            ShowUI();
+        }
+        else
+        {
+            HideUI();
+        }
+    }
+
+    public void ShowUI()
+    {
+        uiHint.SetActive(true);
+    }
+
+    public void HideUI()
+    {
+        uiHint.SetActive(false);
     }
 }

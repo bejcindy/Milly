@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerHolding : MonoBehaviour
 {
     public bool fullHand;
+    public List<PickUpObject> pickUpObjects;
+    public PickUpObject selectedObj;
     PlayerLeftHand leftHand;
     PlayerRightHand rightHand;
 
@@ -20,8 +22,58 @@ public class PlayerHolding : MonoBehaviour
     void Update()
     {
         GetFullHand();
+        ChooseInteractable();
     }
 
+    public void AddInteractable(PickUpObject obj)
+    {
+        if (!pickUpObjects.Contains(obj))
+        {
+            pickUpObjects.Add(obj);
+        }
+    }
+
+    public void RemoveInteractable(PickUpObject obj)
+    {
+        if (pickUpObjects.Contains(obj))
+        {
+            pickUpObjects.Remove(obj);
+        }
+    }
+
+    public void ChooseInteractable()
+    {
+        if (pickUpObjects.Count <= 0)
+        {
+            selectedObj = null;
+        }
+        else if (pickUpObjects.Count == 1)
+        {
+            if (selectedObj != this && selectedObj != null)
+                selectedObj.selected = false;
+            selectedObj = pickUpObjects[0];
+            selectedObj.selected = true;
+        }
+        else
+        {
+            float minDist = Vector3.Distance(pickUpObjects[0].transform.position, transform.position);
+            selectedObj = pickUpObjects[0];
+            foreach (PickUpObject obj in pickUpObjects)
+            {
+                float distance = Vector3.Distance(transform.position, obj.transform.position);
+                if (distance < minDist)
+                {
+                    minDist = distance;
+                    if (selectedObj != this)
+                    {
+                        selectedObj.selected = false;
+                    }
+                    selectedObj = obj;
+                }
+            }
+            selectedObj.selected = true;
+        }
+    }
 
 
     public bool GetLeftHand()

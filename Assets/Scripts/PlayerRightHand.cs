@@ -6,6 +6,8 @@ public class PlayerRightHand : MonoBehaviour
 {
     public bool isHolding;
     public bool noThrow;
+    public bool inPizzaBox;
+    public PizzaBox pizzaBox;
     public Transform holdingObj;
     public Vector3 holdingPosition;
     public PlayerHolding playerHolding;
@@ -22,6 +24,7 @@ public class PlayerRightHand : MonoBehaviour
     {
         noThrow = true;
         playerHolding = GetComponent<PlayerHolding>();
+        pizzaBox = GameObject.Find("PizzaHolder").GetComponent<PizzaBox>();
     }
 
     // Update is called once per frame

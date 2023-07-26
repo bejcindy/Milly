@@ -10,12 +10,19 @@ public class LookingObject : LivableObject
         base.Update();
         if (interactable)
         {
+            if(!firstActivated)
+                gameObject.layer = 9;
             activated = true;
         }
         else
         {
+            gameObject.layer = 0;
             activated = false;
         }
+
+        if (firstActivated)
+            gameObject.layer = 0;
+
     }
 
 }

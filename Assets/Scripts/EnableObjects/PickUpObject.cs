@@ -44,7 +44,7 @@ public class PickUpObject : LivableObject
                     uiHint.GetComponent<SpriteRenderer>().sprite = leftMouse;
                     if (Input.GetMouseButtonDown(0) && selected)
                     {
-                        uiHint.SetActive(false);
+                        HideUI();
                         if (!activated && matColorVal > 0)
                         {
                             activated = true;
@@ -63,7 +63,7 @@ public class PickUpObject : LivableObject
                     uiHint.GetComponent<SpriteRenderer>().sprite = rightMouse;
                     if (Input.GetMouseButtonDown(1) && selected)
                     {
-                        uiHint.SetActive(false);
+                        HideUI();
                         if (!activated && matColorVal > 0)
                         {
                             activated = true;
@@ -89,10 +89,12 @@ public class PickUpObject : LivableObject
         if (selected)
         {
             ShowUI();
+            gameObject.layer = 9;
         }
         else
         {
             HideUI();
+            gameObject.layer = 0;
         }
     }
 
@@ -104,5 +106,6 @@ public class PickUpObject : LivableObject
     protected void HideUI()
     {
         uiHint.SetActive(false);
+        gameObject.layer = 0;
     }
 }

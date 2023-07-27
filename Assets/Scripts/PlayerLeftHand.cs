@@ -53,6 +53,7 @@ public class PlayerLeftHand : MonoBehaviour
                 isHolding = false;
                 holdingObj.GetComponent<Rigidbody>().isKinematic = false;
                 holdingObj.GetComponent<PickUpObject>().inHand = false;
+                holdingObj.GetComponent<PickUpObject>().thrown = true;
                 holdingObj.SetParent(null);
                 holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward + new Vector3(0, throwForce.y, 0));
                 noThrow = true;

@@ -23,6 +23,7 @@ public class Pizza : PickUpObject
     {
         if (inBox)
         {
+            activated = true;
             if (lid.openLid)
             {
                 base.Update();
@@ -39,13 +40,15 @@ public class Pizza : PickUpObject
             base.Update();
         }
 
-        if (selected)
+        if (selected && !thrown)
         {
             ShowUI();
+            transform.GetChild(1).gameObject.layer = 9;
         }
         else
         {
             HideUI();
+            transform.GetChild(1).gameObject.layer = 7;
         }
 
 

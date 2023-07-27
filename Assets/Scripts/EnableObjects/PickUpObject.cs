@@ -11,6 +11,8 @@ public class PickUpObject : LivableObject
     DisplayText displayText;
     public bool inHand;
     public bool selected;
+    public bool thrown;
+    public float throwCD;
 
     public GameObject uiHint;
     public Sprite leftMouse;
@@ -23,6 +25,7 @@ public class PickUpObject : LivableObject
         playerHolding = player.GetComponent<PlayerHolding>();
         rb = GetComponent<Rigidbody>();
         displayText = GameObject.Find("Thought").GetComponent<DisplayText>();
+        throwCD = 1f;
     }
     protected override void Update()
     {
@@ -31,7 +34,7 @@ public class PickUpObject : LivableObject
     }
     private void DetectEnable()
     {
-        if (interactable && !inHand)
+        if (interactable && !inHand && !thrown)
         {
             if (!player.GetComponent <PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
             {
@@ -86,7 +89,7 @@ public class PickUpObject : LivableObject
         }
 
 
-        if (selected)
+        if (selected && !thrown)
         {
             ShowUI();
             gameObject.layer = 9;
@@ -95,6 +98,11 @@ public class PickUpObject : LivableObject
         {
             HideUI();
             gameObject.layer = 7;
+        }
+
+        if (thrown)
+        {
+            ThrowCoolDown();
         }
     }
 
@@ -107,5 +115,16 @@ public class PickUpObject : LivableObject
     {
         uiHint.SetActive(false);
         gameObject.layer = 7;
+    }
+
+    void ThrowCoolDown()
+    {
+        if(throwCD >0)
+            throwCD -= Time.deltaTime;
+        else
+        {
+            throwCD = 1f;
+            thrown = false;
+        }
     }
 }

@@ -35,9 +35,9 @@ public class PizzaBox : MonoBehaviour
             {
                 pizzas[i] = newPizza;
                 newPizza.SetParent(transform);
-                StartCoroutine(LerpPosition(newPizza, pizzaPos[i], 2f));
+                StartCoroutine(LerpPosition(newPizza, pizzaPos[i], 1.5f));
                 Vector3 newRot = new Vector3(0, pizzaRot[i], 0);
-                StartCoroutine(LerpRotation(newPizza, newRot, 2f));
+                StartCoroutine(LerpRotation(newPizza, newRot, 1.5f));
                 newPizza.GetComponent<Pizza>().inBox = true;
                 if (CheckFullBox())
                     pizzaShop.activateAll = true;

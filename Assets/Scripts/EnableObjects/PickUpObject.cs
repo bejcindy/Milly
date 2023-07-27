@@ -94,7 +94,7 @@ public class PickUpObject : LivableObject
         else
         {
             HideUI();
-            gameObject.layer = 0;
+            gameObject.layer = 7;
         }
     }
 
@@ -106,6 +106,6 @@ public class PickUpObject : LivableObject
     protected void HideUI()
     {
         uiHint.SetActive(false);
-        gameObject.layer = 0;
+        gameObject.layer = 7;
     }
 }

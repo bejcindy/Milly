@@ -5,9 +5,27 @@ using UnityEngine;
 public class CollisionObject : LivableObject
 {
     public string tagName;
+    public List<string> tagList;
+
+    protected override void Start()
+    {
+        base.Start();
+        if (tagName.Contains(","))
+        {
+            string[] tags = tagName.Split(",");
+            for(int i = 0; i < tags.Length; i++)
+            {
+                tagList.Add(tags[i]);
+            }
+        }
+        else
+        {
+            tagList.Add(tagName);
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == tagName)
+        if(tagList.Contains(collision.gameObject.tag))
             activated = true;
     }
 

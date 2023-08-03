@@ -11,6 +11,9 @@ public class GroupMaster : MonoBehaviour
 
     public bool designatedGroup;
     public bool childToChildren;
+    public bool buildingControl;
+
+    public BuildingGroupController bgc;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +55,11 @@ public class GroupMaster : MonoBehaviour
                 if(child.GetComponent<Renderer>()!=null)
                     ActivateGroup(child);
             }
+        }
+
+        if (buildingControl)
+        {
+            bgc.activateAll = true;
         }
 
 

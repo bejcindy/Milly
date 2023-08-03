@@ -108,7 +108,7 @@ public class LivableObject : MonoBehaviour
                 Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);
                 Debug.LogError(toCheck.name + " occluded by " + hit.transform.name);
                 */
-                Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
+                //Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
                 return false;
             }
         }

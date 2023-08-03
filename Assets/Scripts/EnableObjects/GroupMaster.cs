@@ -72,6 +72,7 @@ public class GroupMaster : MonoBehaviour
                 Material childMat = child.GetComponent<Renderer>().material;
                 childMat.EnableKeyword("_WhiteDegree");
                 TurnOnColor(childMat);
+                child.GetComponent<LivableObject>().activated = true;
             }
         }
     }

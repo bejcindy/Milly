@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        lowerRay.transform.localPosition= new Vector3(0, -1.45f, 0);
+        lowerRay.transform.localPosition= new Vector3(0, -1f, 0);
         upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y+stepHeight, upperRay.transform.position.z);
     }
 

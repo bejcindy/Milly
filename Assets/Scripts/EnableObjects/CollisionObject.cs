@@ -15,7 +15,6 @@ public class CollisionObject : LivableObject
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("player stepped in");
             activated = true;
         }
     }

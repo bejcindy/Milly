@@ -59,7 +59,7 @@ public class GroupMaster : MonoBehaviour
 
         if (buildingControl)
         {
-            bgc.activateAll = true;
+            bgc.activateAll = true; 
         }
 
 

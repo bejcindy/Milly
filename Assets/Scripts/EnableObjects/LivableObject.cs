@@ -18,6 +18,9 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected float matColorVal;
     [SerializeField] protected float fadeInterval;
 
+    [Header("Effects")]
+    [SerializeField] protected GameObject specialEffect;
+
 
     protected virtual void Start()
     {
@@ -71,8 +74,11 @@ public class LivableObject : MonoBehaviour
         {
             matColorVal = 0;
             firstActivated = true;
+            if (specialEffect != null)
+                specialEffect.SetActive(true);
         }
-        
+
+
     }
 
 

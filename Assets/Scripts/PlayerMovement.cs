@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected float playerHeight;
     [SerializeField] protected bool grounded;
     [SerializeField] protected LayerMask flatGround;
+    [SerializeField] protected LayerMask stairs;
+    [SerializeField] protected float stairForce;
 
 
     void Start()
@@ -54,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        //lowerRay.transform.localPosition= new Vector3(0, -1f, 0);
+        lowerRay.transform.localPosition= new Vector3(0, -1f, 0);
         upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y+stepHeight, upperRay.transform.position.z);
     }
 
@@ -80,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
         SpeedControl();
         //if (horizontalInput != 0 && verticalInput != 0)
-            walkStair();
+        //    walkStair();
     }
 
     void MovePlayer()
@@ -90,8 +92,11 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             Vector3 movementVector = Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up);
-            //CheckForStep(ref movementVector);  
+
             rb.AddForce(movementVector, ForceMode.Force);
+            //CheckForStep(ref movementVector);
+
+            //walkStair(ref movementVector);
 
         }
         //in air
@@ -99,30 +104,34 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f * airMultiplier, orientation.up), ForceMode.Force);
         }
+
+        
     }
 
     void CheckForStep(ref Vector3 movement)
     {
-        Vector3 lookAheadStartPoint = transform.position + Vector3.up * (step_MaxStepHeight * 0.5f);
+        Vector3 lookAheadStartPoint = lowerRay.transform.position;
+            //+ Vector3.up * (step_MaxStepHeight * 0.5f);
         Vector3 lookAheadDir = movement.normalized;
         float lookAheadDistance = playerRadius + step_LookAheadRange;
-        if (Physics.Raycast(lookAheadStartPoint, lookAheadDir, lookAheadDistance, flatGround, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(lookAheadStartPoint, lookAheadDir, lookAheadDistance, stairs))
         {
             Debug.Log("Checking for step and there is ");
-            lookAheadStartPoint = transform.position + Vector3.up * step_MaxStepHeight;
-
-            if(Physics.Raycast(lookAheadStartPoint, lookAheadDir, lookAheadDistance, flatGround, QueryTriggerInteraction.Ignore))
+            lookAheadStartPoint = lowerRay.transform.position + Vector3.up * step_MaxStepHeight;
+            Debug.Log(lookAheadStartPoint);
+            if (!Physics.Raycast(lookAheadStartPoint, lookAheadDir, lookAheadDistance, flatGround))
             {
                 Vector3 candidatePoint = lookAheadStartPoint + lookAheadDir * lookAheadDistance;
+                Debug.Log(candidatePoint);
 
                 RaycastHit hitResult;
-                if (Physics.Raycast(candidatePoint, Vector3.down, out hitResult, step_MaxStepHeight * 2f, flatGround, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(candidatePoint, Vector3.down, out hitResult, step_MaxStepHeight, flatGround))
                 {
                     Debug.Log("Hit result is " + hitResult);
                     if (Vector3.Angle(Vector3.up, hitResult.normal) <= slopeLimit)
                     {
-                        
-                        transform.position = hitResult.point;
+                        Debug.Log("final is " + hitResult.point + Vector3.up);
+                        transform.position = hitResult.point + Vector3.up;
                     }
                 }
             }
@@ -163,19 +172,19 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = upVel + limitedVel;
         }
     }
-    void walkStair()
+    void walkStair(ref Vector3 movement)
     {
         //Debug.Log("walking");
 
         RaycastHit hitLower;
-        if (Physics.Raycast(lowerRay.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.3f, flatGround))
+        if (Physics.Raycast(lowerRay.transform.position, movement.normalized, out hitLower, 0.1f, flatGround))
         {
             Debug.Log("hit lower");
             RaycastHit hitUpper;
-            if (!Physics.Raycast(upperRay.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.3f, flatGround))
+            if (!Physics.Raycast(upperRay.transform.position, movement.normalized, out hitUpper, 0.3f, flatGround))
             {
                 Debug.Log("stairing");
-                rb.position -= new Vector3(0f, -stepSmooth, 0f);
+                rb.position -= new Vector3(0f, -0.5f, 0f);
                 rb.position += transform.forward * Time.deltaTime;
             }
         }

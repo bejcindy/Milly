@@ -90,6 +90,7 @@ public class LivableObject : MonoBehaviour
     float minBlur = .1f;
     float maxBlur = .75f;
     float focusDist = .75f;
+<<<<<<< HEAD
     DepthOfField dof;
     protected virtual void FocusOnThis()
     {
@@ -123,6 +124,9 @@ public class LivableObject : MonoBehaviour
             dof.focusDistance.value = focusDist;
         }
     }
+=======
+
+>>>>>>> 884b4c6f12dcdd5eecf3c8f2239f20894c49626f
 
     protected virtual bool IsInView()
     {

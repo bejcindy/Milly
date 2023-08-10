@@ -87,12 +87,7 @@ public class LivableObject : MonoBehaviour
     float minBlur = .1f;
     float maxBlur = .75f;
     float focusDist = .75f;
-    protected virtual void FocusOnThis()
-    {
-        focusDist-=
-        //VolumeProfile profile = postProcessingVolume.GetComponent<VolumeProfile>();
-        //if(profile.TryGet<DepthOfField>(out DepthOfField))
-    }
+
 
     protected virtual bool IsInView()
     {

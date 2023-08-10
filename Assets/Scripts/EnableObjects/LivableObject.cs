@@ -44,8 +44,11 @@ public class LivableObject : MonoBehaviour
         isVisible = IsInView();
         if (activated)
         {
-            if(!firstActivated)
+            if (!firstActivated)
+            {
                 TurnOnColor(mat);
+            }
+                
             if (chainControl)
                 GetComponent<GroupMaster>().activateAll = true;
         }
@@ -87,11 +90,38 @@ public class LivableObject : MonoBehaviour
     float minBlur = .1f;
     float maxBlur = .75f;
     float focusDist = .75f;
+    DepthOfField dof;
     protected virtual void FocusOnThis()
     {
-        focusDist-=
-        //VolumeProfile profile = postProcessingVolume.GetComponent<VolumeProfile>();
-        //if(profile.TryGet<DepthOfField>(out DepthOfField))
+        if (focusDist > .1f)
+            focusDist -= 0.1f * fadeInterval * Time.deltaTime;
+        else
+            focusDist = .1f;
+        //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
+        Volume v = postProcessingVolume.GetComponent<Volume>();
+        if (v.profile.TryGet<DepthOfField>(out dof))
+        {
+            dof.focusDistance.value = focusDist;
+        }
+    }
+
+    protected virtual void Unfocus(bool changeThis)
+    {
+        if (focusDist < .75f)
+            focusDist += .5f * Time.deltaTime;
+        else
+        {
+            focusDist = .75f;
+            changeThis = false;
+            gameObject.layer = 0;
+        }
+            
+        //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
+        Volume v = postProcessingVolume.GetComponent<Volume>();
+        if (v.profile.TryGet<DepthOfField>(out dof))
+        {
+            dof.focusDistance.value = focusDist;
+        }
     }
 
     protected virtual bool IsInView()

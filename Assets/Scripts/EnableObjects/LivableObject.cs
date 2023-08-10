@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class LivableObject : MonoBehaviour
 {
@@ -20,11 +22,12 @@ public class LivableObject : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] protected GameObject specialEffect;
-
+    [SerializeField] protected GameObject postProcessingVolume;
 
     protected virtual void Start()
     {
         player = GameObject.Find("Player").transform;
+        postProcessingVolume = GameObject.Find("GlowVolume");
         if (GetComponent<Renderer>() != null)
         {
             rend = GetComponent<Renderer>();
@@ -81,7 +84,15 @@ public class LivableObject : MonoBehaviour
 
     }
 
-
+    float minBlur = .1f;
+    float maxBlur = .75f;
+    float focusDist = .75f;
+    protected virtual void FocusOnThis()
+    {
+        focusDist-=
+        //VolumeProfile profile = postProcessingVolume.GetComponent<VolumeProfile>();
+        //if(profile.TryGet<DepthOfField>(out DepthOfField))
+    }
 
     protected virtual bool IsInView()
     {

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class LivableObject : MonoBehaviour
 {
@@ -20,11 +22,12 @@ public class LivableObject : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] protected GameObject specialEffect;
-
+    [SerializeField] protected GameObject postProcessingVolume;
 
     protected virtual void Start()
     {
         player = GameObject.Find("Player").transform;
+        postProcessingVolume = GameObject.Find("GlowVolume");
         if (GetComponent<Renderer>() != null)
         {
             rend = GetComponent<Renderer>();
@@ -41,8 +44,11 @@ public class LivableObject : MonoBehaviour
         isVisible = IsInView();
         if (activated)
         {
-            if(!firstActivated)
+            if (!firstActivated)
+            {
                 TurnOnColor(mat);
+            }
+                
             if (chainControl)
                 GetComponent<GroupMaster>().activateAll = true;
         }
@@ -81,7 +87,46 @@ public class LivableObject : MonoBehaviour
 
     }
 
+    float minBlur = .1f;
+    float maxBlur = .75f;
+    float focusDist = .75f;
+<<<<<<< HEAD
+    DepthOfField dof;
+    protected virtual void FocusOnThis()
+    {
+        if (focusDist > .1f)
+            focusDist -= 0.1f * fadeInterval * Time.deltaTime;
+        else
+            focusDist = .1f;
+        //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
+        Volume v = postProcessingVolume.GetComponent<Volume>();
+        if (v.profile.TryGet<DepthOfField>(out dof))
+        {
+            dof.focusDistance.value = focusDist;
+        }
+    }
 
+    protected virtual void Unfocus(bool changeThis)
+    {
+        if (focusDist < .75f)
+            focusDist += .5f * Time.deltaTime;
+        else
+        {
+            focusDist = .75f;
+            changeThis = false;
+            gameObject.layer = 0;
+        }
+            
+        //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
+        Volume v = postProcessingVolume.GetComponent<Volume>();
+        if (v.profile.TryGet<DepthOfField>(out dof))
+        {
+            dof.focusDistance.value = focusDist;
+        }
+    }
+=======
+
+>>>>>>> 884b4c6f12dcdd5eecf3c8f2239f20894c49626f
 
     protected virtual bool IsInView()
     {

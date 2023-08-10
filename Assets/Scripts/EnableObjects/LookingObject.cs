@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class LookingObject : LivableObject
 {
-
+    bool interacted;
     protected override void Update()
     {
+        
         base.Update();
         if (interactable)
         {
-            if(!firstActivated)
-                gameObject.layer = 9;
+            if (!firstActivated)
+            {
+                gameObject.layer = 12;
+                base.FocusOnThis();
+                Debug.Log("focused");
+                interacted = true;
+            }
+                
+
             activated = true;
         }
         else
         {
-            gameObject.layer = 0;
+            //gameObject.layer = 0;
             activated = false;
+            if(interacted)
+                base.Unfocus(interacted);
         }
 
-        if (firstActivated)
-            gameObject.layer = 0;
+        //if (firstActivated)
+        //    gameObject.layer = 0;
 
     }
 

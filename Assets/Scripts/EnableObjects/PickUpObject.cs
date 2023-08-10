@@ -7,8 +7,6 @@ public class PickUpObject : LivableObject
 {
     public PlayerHolding playerHolding;
     protected Rigidbody rb;
-    public string pickUpText;
-    DisplayText displayText;
     public bool inHand;
     public bool selected;
     public bool thrown;
@@ -24,7 +22,6 @@ public class PickUpObject : LivableObject
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
         rb = GetComponent<Rigidbody>();
-        displayText = GameObject.Find("Thought").GetComponent<DisplayText>();
         throwCD = 1f;
     }
     protected override void Update()

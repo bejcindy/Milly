@@ -38,7 +38,7 @@ public class ClickableObject : LivableObject
                     if (raycastHit.transform.name == transform.name)
                     {
                         activated = true;
-                        animator.SetTrigger("Pressed");
+
                     }
                 }
             }
@@ -52,15 +52,13 @@ public class ClickableObject : LivableObject
                         ActivateGroup();
                     }
                 }
+                UnpressButton();
 
-                animator.ResetTrigger("Pressed");
-                animator.SetTrigger("Released");
-                Invoke(nameof(ResetAnimTrigger), 0.5f);
 
-                if (dialogue != null)
-                {
-                    dialogue.enabled = true;
-                }
+                //if (dialogue != null)
+                //{
+                //    dialogue.enabled = true;
+                //}
             }
         }
     }
@@ -73,5 +71,17 @@ public class ClickableObject : LivableObject
     void ActivateGroup()
     {
         buildingGroup.activateAll = true;
+    }
+
+    public void PressButton()
+    {
+        animator.SetTrigger("Pressed");
+    }
+
+    public void UnpressButton()
+    {
+        animator.ResetTrigger("Pressed");
+        animator.SetTrigger("Released");
+        Invoke(nameof(ResetAnimTrigger), 0.5f);
     }
 }

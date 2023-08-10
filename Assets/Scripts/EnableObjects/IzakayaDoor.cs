@@ -7,16 +7,20 @@ public class IzakayaDoor : LivableObject
     public bool isInteracting;
     public bool leftHandOpen;
     public bool rightHandOpen;
+    public bool doorOpen;
     public Transform door;
+    public Vector3 doorOpenPos;
 
     PlayerHolding playerHolding;
     FixedCameraObject cameraControl;
+    Vector3 doorStartPos;
 
     protected override void Start()
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
         cameraControl = GetComponent<FixedCameraObject>();
+        doorStartPos = door.transform.localPosition;
     }
     protected override void Update()
     {
@@ -37,10 +41,11 @@ public class IzakayaDoor : LivableObject
 
         if (isInteracting)
         {
-            float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
-            if(verticalInput > 0)
+            float verticalInput = Input.GetAxis("Mouse X") * Time.deltaTime * 75;
+            Debug.Log(verticalInput);
+            if(verticalInput < 0)
             {
-                door.position -= Vector3.right * verticalInput * Time.deltaTime;
+                StartCoroutine(LerpPosition(doorOpenPos, 2f));
             }
 
             if (leftHandOpen)
@@ -51,18 +56,23 @@ public class IzakayaDoor : LivableObject
                 }
             }
         }
+
+        if(door.localPosition == doorOpenPos)
+        {
+            doorOpen = true;
+        }
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
         float time = 0;
-        Vector3 startPosition = transform.localPosition;
+        Vector3 startPosition = door.transform.localPosition;
         while (time < duration)
         {
-            transform.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            door.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
-        transform.localPosition = targetPosition;
+        door.transform.localPosition = targetPosition;
     }
 }

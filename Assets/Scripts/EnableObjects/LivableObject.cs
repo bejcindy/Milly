@@ -108,7 +108,8 @@ public class LivableObject : MonoBehaviour
 
         if (Physics.Linecast(Camera.main.transform.position, rend.bounds.center, out hit))
         {
-            if (hit.transform.name != gameObject.name && hit.transform.name != "Player" && !hit.transform.name.Contains("Trigger"))
+            if (hit.transform.name != gameObject.name && hit.transform.name != "Player" && !hit.transform.name.Contains("Trigger")
+                && hit.transform.gameObject.layer !=6)
             {
                 /* -->
                 Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);

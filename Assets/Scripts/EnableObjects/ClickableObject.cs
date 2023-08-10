@@ -1,18 +1,26 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class ClickableObject : LivableObject
 {
     Animator animator;
     public bool groupControl;
     public BuildingGroupController buildingGroup;
+    DialogueSystemTrigger dialogue;
     protected override void Start()
     {
         base.Start();
         if(TryGetComponent<Animator>(out Animator anim))
         {
             animator = anim;
+        }
+
+        if(TryGetComponent<DialogueSystemTrigger>(out DialogueSystemTrigger dia))
+        {
+            dialogue = dia;
         }
     }
     protected override void Update()
@@ -48,6 +56,11 @@ public class ClickableObject : LivableObject
                 animator.ResetTrigger("Pressed");
                 animator.SetTrigger("Released");
                 Invoke(nameof(ResetAnimTrigger), 0.5f);
+
+                if (dialogue != null)
+                {
+                    dialogue.enabled = true;
+                }
             }
         }
     }

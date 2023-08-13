@@ -30436,6 +30436,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fire_ladder
       objectReference: {fileID: 0}
+    - target: {fileID: 4844776742885495215, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.34
+      objectReference: {fileID: 0}
     - target: {fileID: 6148837435234293832, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -40370,6 +40374,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3818033979696020306, guid: cc3fcb84c55b61148a94070c8783e0b6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1765128942}
+    - targetCorrespondingSourceObject: {fileID: 3818033979696020306, guid: cc3fcb84c55b61148a94070c8783e0b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1765128946}
     - targetCorrespondingSourceObject: {fileID: 484670293942670655, guid: cc3fcb84c55b61148a94070c8783e0b6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2108884084}
@@ -40596,12 +40603,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1765128917}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: 64
+  trigger: 32
   condition:
     luaConditions: []
     questConditions: []
@@ -40642,13 +40649,13 @@ MonoBehaviour:
   conversationActor: {fileID: 890563932}
   startConversationEntryID: -1
   startConversationEntryTitle: 
-  exclusive: 0
+  exclusive: 1
   replace: 0
   skipIfNoValidEntries: 0
-  preventRestartOnSameFrameEnded: 0
+  preventRestartOnSameFrameEnded: 1
   stopConversationOnTriggerExit: 0
-  stopConversationIfTooFar: 0
-  maxConversationDistance: 5
+  stopConversationIfTooFar: 1
+  maxConversationDistance: 3
   monitorConversationDistanceFrequency: 1
   showCursorDuringConversation: 0
   pauseGameDuringConversation: 0
@@ -40782,6 +40789,43 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1334084, y: 0.07232694, z: 0.010528997}
   m_Center: {x: 0, y: 0, z: -0.0000009536743}
+--- !u!114 &1765128946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765128917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274b80ab5b659c646ba9338870d14625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideName: 102
+  overrideUseMessage: Click to ring bell
+  maxUseDistance: 3
+  events:
+    onSelect:
+      m_PersistentCalls:
+        m_Calls: []
+    onDeselect:
+      m_PersistentCalls:
+        m_Calls: []
+    onUse:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1765128923}
+          m_TargetAssemblyTypeName: ClickableObject, Assembly-CSharp
+          m_MethodName: PressButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1769863772
 GameObject:
   m_ObjectHideFlags: 0

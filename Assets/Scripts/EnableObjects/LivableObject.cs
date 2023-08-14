@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -40,7 +41,10 @@ public class LivableObject : MonoBehaviour
     protected virtual void Update()
     {
         DetectInteractable();
+
         matColorVal = mat.GetFloat("_WhiteDegree");
+
+
         isVisible = IsInView();
         if (activated)
         {

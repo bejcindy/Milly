@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +13,11 @@ public class PickUpObject : LivableObject
     public bool thrown;
     public float throwCD;
 
+    public GameObject leftUIHint;
+    public GameObject rightUIHint;
     public GameObject uiHint;
-    public Sprite leftMouse;
-    public Sprite rightMouse;
+
+    DialogueSystemTrigger dialogue;
 
 
     protected override void Start()
@@ -23,6 +26,7 @@ public class PickUpObject : LivableObject
         playerHolding = player.GetComponent<PlayerHolding>();
         rb = GetComponent<Rigidbody>();
         throwCD = 1f;
+        dialogue = GetComponent<DialogueSystemTrigger>();
     }
     protected override void Update()
     {
@@ -33,6 +37,7 @@ public class PickUpObject : LivableObject
     {
         if (interactable && !inHand && !thrown)
         {
+            dialogue.enabled = true;
             if (!player.GetComponent <PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
             {
                 playerHolding.AddInteractable(this);
@@ -41,7 +46,8 @@ public class PickUpObject : LivableObject
             {
                 if (playerHolding.GetLeftHand())
                 {
-                    uiHint.GetComponent<SpriteRenderer>().sprite = leftMouse;
+                    
+                    uiHint = leftUIHint;
                     if (Input.GetMouseButtonDown(0) && selected)
                     {
                         HideUI();
@@ -60,7 +66,7 @@ public class PickUpObject : LivableObject
 
                 if (playerHolding.GetRightHand())
                 {
-                    uiHint.GetComponent<SpriteRenderer>().sprite = rightMouse;
+                    uiHint = rightUIHint;
                     if (Input.GetMouseButtonDown(1) && selected)
                     {
                         HideUI();

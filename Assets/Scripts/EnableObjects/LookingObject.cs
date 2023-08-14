@@ -5,6 +5,7 @@ using UnityEngine;
 public class LookingObject : LivableObject
 {
     bool interacted;
+
     protected override void Update()
     {
         
@@ -15,7 +16,7 @@ public class LookingObject : LivableObject
             {
                 gameObject.layer = 12;
                 base.FocusOnThis();
-                Debug.Log("focused");
+                //Debug.Log(gameObject.name + ": focused");
                 interacted = true;
             }
                 
@@ -26,8 +27,12 @@ public class LookingObject : LivableObject
         {
             //gameObject.layer = 0;
             activated = false;
-            if(interacted)
+
+            if (interacted)
+            {
                 base.Unfocus(interacted);
+                //Debug.Log(gameObject.name + ": " + interacted);
+            }
         }
 
         //if (firstActivated)

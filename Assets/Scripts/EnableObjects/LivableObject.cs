@@ -108,12 +108,13 @@ public class LivableObject : MonoBehaviour
     protected virtual void Unfocus(bool changeThis)
     {
         if (focusDist < .75f)
-            focusDist += .5f * Time.deltaTime;
+            focusDist += .3f * Time.deltaTime;
         else
         {
             focusDist = .75f;
             changeThis = false;
             gameObject.layer = 0;
+            gameObject.GetComponent<LookingObject>().enabled = false;
         }
             
         //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
@@ -143,23 +144,23 @@ public class LivableObject : MonoBehaviour
             return false;
         }
 
-        RaycastHit hit;
-        Vector3 heading = gameObject.transform.position - Camera.main.transform.position;
-        Vector3 direction = heading.normalized;// / heading.magnitude;
+        //RaycastHit hit;
+        //Vector3 heading = gameObject.transform.position - Camera.main.transform.position;
+        //Vector3 direction = heading.normalized;// / heading.magnitude;
 
-        if (Physics.Linecast(Camera.main.transform.position, rend.bounds.center, out hit))
-        {
-            if (hit.transform.name != gameObject.name && hit.transform.name != "Player" && !hit.transform.name.Contains("Trigger")
-                && hit.transform.gameObject.layer !=6)
-            {
-                /* -->
-                Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);
-                Debug.LogError(toCheck.name + " occluded by " + hit.transform.name);
-                */
-                //Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
-                return false;
-            }
-        }
+        //if (Physics.Linecast(Camera.main.transform.position, rend.bounds.center, out hit))
+        //{
+        //    if (hit.transform.name != gameObject.name && hit.transform.name != "Player" && !hit.transform.name.Contains("Trigger")
+        //        && hit.transform.gameObject.layer !=6)
+        //    {
+        //        /* -->
+        //        Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);
+        //        Debug.LogError(toCheck.name + " occluded by " + hit.transform.name);
+        //        */
+        //        //Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
+        //        return false;
+        //    }
+        //}
         return true;
     }
 }

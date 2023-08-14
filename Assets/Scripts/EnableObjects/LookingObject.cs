@@ -27,12 +27,17 @@ public class LookingObject : LivableObject
         {
             //gameObject.layer = 0;
             activated = false;
+<<<<<<< HEAD
 
             if (interacted)
             {
                 base.Unfocus(interacted);
                 //Debug.Log(gameObject.name + ": " + interacted);
             }
+=======
+            if(interacted)
+                Unfocus(interacted);
+>>>>>>> df17efe46e7f9cce5c908066e88c39f729ff6256
         }
 
         //if (firstActivated)

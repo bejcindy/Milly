@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NPCObject : LivableObject
 {
+    public BoxCollider convoTrigger;
+
     [Header("Object Activation")]
     public bool objectOriented;
     public LivableObject npcObject;
@@ -18,6 +20,8 @@ public class NPCObject : LivableObject
         base.Start();
         if (lookingOriented)
             npcLooking = GetComponent<LookingObject>();
+
+        convoTrigger = GetComponent<BoxCollider>();
     }
 
 
@@ -34,5 +38,16 @@ public class NPCObject : LivableObject
             if (npcLooking.activated)
                 activated = true;
         }
+    }
+
+
+    public void ActivateConvoTrigger()
+    {
+        convoTrigger.enabled = true;
+    }
+
+    public void DeactivateConvoTrigger()
+    {
+        convoTrigger.enabled = false;
     }
 }

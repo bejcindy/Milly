@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Cinemachine;
 
 public class LivableObject : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class LivableObject : MonoBehaviour
     [Header("Effects")]
     [SerializeField] protected GameObject specialEffect;
     [SerializeField] protected GameObject postProcessingVolume;
+    [SerializeField] protected CinemachineVirtualCamera playerCam;
 
     protected virtual void Start()
     {
@@ -36,6 +38,7 @@ public class LivableObject : MonoBehaviour
         mat = rend.material;
         mat.EnableKeyword("_WhiteDegree");
         matColorVal = 1;
+        playerCam = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
     }
 
     protected virtual void Update()
@@ -107,6 +110,7 @@ public class LivableObject : MonoBehaviour
         {
             dof.focusDistance.value = focusDist;
         }
+        //playerCam.m_Lens.FieldOfView = 120;
     }
 
     protected virtual void Unfocus(bool changeThis)

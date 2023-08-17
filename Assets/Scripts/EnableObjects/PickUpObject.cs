@@ -13,6 +13,8 @@ public class PickUpObject : LivableObject
     public bool thrown;
     public float throwCD;
 
+    public bool npcBound;
+
     public GameObject leftUIHint;
     public GameObject rightUIHint;
     public GameObject uiHint;
@@ -37,7 +39,8 @@ public class PickUpObject : LivableObject
     {
         if (interactable && !inHand && !thrown)
         {
-            dialogue.enabled = true;
+            if(!npcBound)
+                dialogue.enabled = true;
             if (!player.GetComponent <PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
             {
                 playerHolding.AddInteractable(this);
@@ -89,6 +92,11 @@ public class PickUpObject : LivableObject
             playerHolding.RemoveInteractable(this);
             selected = false;
             HideUI();
+        }
+
+        if(activated && npcBound)
+        {
+            dialogue.enabled = true;
         }
 
 

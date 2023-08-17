@@ -37,6 +37,7 @@ public class LivableObject : MonoBehaviour
         }
         mat = rend.material;
         mat.EnableKeyword("_WhiteDegree");
+        mat.SetFloat("_WhiteDegree", 1);
         matColorVal = 1;
         playerCam = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
     }
@@ -89,6 +90,7 @@ public class LivableObject : MonoBehaviour
             firstActivated = true;
             if (specialEffect != null)
                 specialEffect.SetActive(true);
+            
         }
 
 
@@ -115,14 +117,19 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Unfocus(bool changeThis)
     {
+
         if (focusDist < .75f)
+        {
+            gameObject.layer = 13;
             focusDist += .3f * Time.deltaTime;
+        }
         else
         {
             focusDist = .75f;
             changeThis = false;
             gameObject.layer = 0;
-            gameObject.GetComponent<LookingObject>().enabled = false;
+            if (matColorVal <= 0)
+                gameObject.GetComponent<LookingObject>().enabled = false;
         }
             
         //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;

@@ -8,29 +8,39 @@ public class LookingObject : LivableObject
 
     protected override void Update()
     {
-        
-        base.Update();
-        if (interactable)
+        if (matColorVal > 0)
         {
-            if (!firstActivated)
+            base.Update();
+            if (interactable)
             {
-                gameObject.layer = 12;
-                base.FocusOnThis();
-                //Debug.Log(gameObject.name + ": focused");
-                interacted = true;
-            }
-                
+                if (!firstActivated)
+                {
+                    gameObject.layer = 12;
+                    base.FocusOnThis();
+                    //Debug.Log(gameObject.name + ": focused");
+                    interacted = true;
+                }
 
-            activated = true;
+
+                activated = true;
+            }
+            else
+            {
+                //gameObject.layer = 0;
+                activated = false;
+                if (interacted)
+                {
+                    Unfocus(interacted);
+                    Debug.Log("unfocusing");
+                }
+            }
         }
         else
         {
-            //gameObject.layer = 0;
-            activated = false;
-            if(interacted)
-                Unfocus(interacted);
+            Unfocus(interacted);
+            Debug.Log(gameObject.name+"uunfocusinig");
         }
-
+        
         //if (firstActivated)
         //    gameObject.layer = 0;
 

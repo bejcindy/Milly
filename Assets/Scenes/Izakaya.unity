@@ -724,7 +724,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31650143}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -732,12 +732,12 @@ RectTransform:
   - {fileID: 1828546841}
   - {fileID: 2119685082}
   - {fileID: 1004609262}
-  m_Father: {fileID: 1504068651}
+  m_Father: {fileID: 1270344572}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 300}
   m_SizeDelta: {x: 1917, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &31650145
@@ -7409,11 +7409,7 @@ GameObject:
   - component: {fileID: 294936065}
   - component: {fileID: 294936067}
   - component: {fileID: 294936068}
-  - component: {fileID: 294936069}
   - component: {fileID: 294936070}
-  - component: {fileID: 294936071}
-  - component: {fileID: 294936072}
-  - component: {fileID: 294936073}
   m_Layer: 0
   m_Name: cigarette2_low (1)
   m_TagString: Untagged
@@ -7539,80 +7535,7 @@ MonoBehaviour:
   npcBound: 1
   leftUIHint: {fileID: 1828546840}
   rightUIHint: {fileID: 2119685081}
-  uiHint: {fileID: 1828546840}
---- !u!114 &294936069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294936063}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trigger: 64
-  condition:
-    luaConditions: []
-    questConditions: []
-    acceptedTags: []
-    acceptedGameObjects: []
-    luaWizardIndex: -1
-    lastEvaluationValue: 0
-  setQuestState: 1
-  questName: 
-  questState: 0
-  setQuestEntryState: 0
-  questEntryNumber: 1
-  questEntryState: 0
-  setAnotherQuestEntryState: 0
-  anotherQuestEntryNumber: 1
-  anotherQuestEntryState: 0
-  luaCode: 
-  sequence: 
-  sequenceSpeaker: {fileID: 0}
-  sequenceListener: {fileID: 0}
-  waitOneFrameOnStartOrEnable: 1
-  alertMessage: 
-  textTable: {fileID: 0}
-  alertDuration: 0
-  sendMessages: []
-  barkSource: 0
-  barkConversation: 
-  barkText: 
-  barkTextSequence: 
-  barker: {fileID: 0}
-  barkTarget: {fileID: 0}
-  barkOrder: 0
-  allowBarksDuringConversations: 0
-  skipBarkIfNoValidEntries: 0
-  cacheBarkLines: 0
-  conversation: Smoking Worker
-  conversationConversant: {fileID: 0}
-  conversationActor: {fileID: 0}
-  startConversationEntryID: -1
-  startConversationEntryTitle: 
-  exclusive: 1
-  replace: 0
-  skipIfNoValidEntries: 0
-  preventRestartOnSameFrameEnded: 1
-  stopConversationOnTriggerExit: 0
-  stopConversationIfTooFar: 0
-  maxConversationDistance: 5
-  monitorConversationDistanceFrequency: 1
-  showCursorDuringConversation: 1
-  pauseGameDuringConversation: 0
-  setActiveActions: []
-  setEnabledActions: []
-  setAnimatorStateActions: []
-  onExecute:
-    m_PersistentCalls:
-      m_Calls: []
-  useConversationTitlePicker: 1
-  useBarkTitlePicker: 1
-  useQuestNamePicker: 1
-  selectedDatabase: {fileID: 11400000, guid: adec3fc67abd41e45828f2fe4a3292f4, type: 2}
+  uiHint: {fileID: 301349824}
 --- !u!54 &294936070
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7640,67 +7563,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &294936071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294936063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff9242e9fa771b848883f3016d09de52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactable: 0
-  isVisible: 0
-  chainControl: 0
-  minDist: 3
-  rend: {fileID: 0}
-  activated: 0
-  firstActivated: 0
-  matColorVal: 1
-  fadeInterval: 10
-  specialEffect: {fileID: 0}
-  postProcessingVolume: {fileID: 0}
-  playerCam: {fileID: 0}
-  npc: {fileID: 1052968949}
---- !u!114 &294936072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294936063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9452e0fbfa245c46aceceb551675604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trigger: 2
-  once: 1
-  selectedDatabase: {fileID: 0}
-  virtualCamera: {fileID: 1508920243}
-  onStart: 10
-  onEnd: 9
---- !u!114 &294936073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294936063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9452e0fbfa245c46aceceb551675604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trigger: 2
-  once: 1
-  selectedDatabase: {fileID: 0}
-  virtualCamera: {fileID: 1005978787}
-  onStart: 9
-  onEnd: 10
 --- !u!1001 &299740986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8926,7 +8788,6 @@ GameObject:
   m_Component:
   - component: {fileID: 333130893}
   - component: {fileID: 333130896}
-  - component: {fileID: 333130897}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -8961,68 +8822,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &333130897
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 333130892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9beda531928fc40968802117a5d256, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RecenterTarget: 0
-  m_VerticalAxis:
-    Value: 0
-    m_SpeedMode: 0
-    m_MaxSpeed: 300
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
-    m_InputAxisName: Mouse Y
-    m_InputAxisValue: 0
-    m_InvertInput: 1
-    m_MinValue: 0
-    m_MaxValue: 0
-    m_Wrap: 0
-    m_Recentering:
-      m_enabled: 0
-      m_WaitTime: 1
-      m_RecenteringTime: 2
-      m_LegacyHeadingDefinition: -1
-      m_LegacyVelocityFilterStrength: -1
-  m_VerticalRecentering:
-    m_enabled: 0
-    m_WaitTime: 1
-    m_RecenteringTime: 2
-    m_LegacyHeadingDefinition: -1
-    m_LegacyVelocityFilterStrength: -1
-  m_HorizontalAxis:
-    Value: 0
-    m_SpeedMode: 0
-    m_MaxSpeed: 300
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
-    m_InputAxisName: Mouse X
-    m_InputAxisValue: 0
-    m_InvertInput: 0
-    m_MinValue: 0
-    m_MaxValue: 0
-    m_Wrap: 0
-    m_Recentering:
-      m_enabled: 0
-      m_WaitTime: 1
-      m_RecenteringTime: 2
-      m_LegacyHeadingDefinition: -1
-      m_LegacyVelocityFilterStrength: -1
-  m_HorizontalRecentering:
-    m_enabled: 1
-    m_WaitTime: 1
-    m_RecenteringTime: 2
-    m_LegacyHeadingDefinition: -1
-    m_LegacyVelocityFilterStrength: -1
-  m_ApplyBeforeBody: 0
 --- !u!1 &336170588 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -328275984148084623, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
@@ -14941,7 +14740,7 @@ MonoBehaviour:
   interactable: 0
   isVisible: 0
   chainControl: 0
-  minDist: 30
+  minDist: 10
   rend: {fileID: 0}
   activated: 0
   firstActivated: 0
@@ -19714,6 +19513,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22325660, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22325660, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
       value: 1
       objectReference: {fileID: 0}
@@ -19727,7 +19530,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 22425850, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 31650144}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
 --- !u!1 &836459798 stripped
@@ -20915,6 +20721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fullHand: 0
+  inDialogue: 0
   pickUpObjects: []
   selectedObj: {fileID: 0}
 --- !u!114 &890563935
@@ -24238,9 +24045,6 @@ GameObject:
   - component: {fileID: 1052968948}
   - component: {fileID: 1052968949}
   - component: {fileID: 1052968950}
-  - component: {fileID: 1052968951}
-  - component: {fileID: 1052968952}
-  - component: {fileID: 1052968953}
   m_Layer: 0
   m_Name: Charles
   m_TagString: Untagged
@@ -24346,12 +24150,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052968942}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: 8
+  trigger: 64
   condition:
     luaConditions: []
     questConditions: []
@@ -24389,15 +24193,15 @@ MonoBehaviour:
   skipBarkIfNoValidEntries: 0
   cacheBarkLines: 0
   conversation: Smoking Worker
-  conversationConversant: {fileID: 1052968946}
-  conversationActor: {fileID: 890563932}
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
   startConversationEntryID: -1
   startConversationEntryTitle: 
   exclusive: 1
   replace: 0
   skipIfNoValidEntries: 0
   preventRestartOnSameFrameEnded: 1
-  stopConversationOnTriggerExit: 1
+  stopConversationOnTriggerExit: 0
   stopConversationIfTooFar: 1
   maxConversationDistance: 5
   monitorConversationDistanceFrequency: 1
@@ -24461,8 +24265,12 @@ MonoBehaviour:
   convoTrigger: {fileID: 1052968948}
   objectOriented: 1
   npcObject: {fileID: 294936068}
-  lookingOriented: 1
+  lookingOriented: 0
   npcLooking: {fileID: 0}
+  NPCCinemachine: {fileID: 1508920243}
+  playerCinemachine: {fileID: 1005978787}
+  firstTalk: 0
+  dialogueEnabled: 0
 --- !u!114 &1052968950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24472,7 +24280,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1052968942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556a4ee19efd1b340988efa8b6a5bce8, type: 3}
+  m_Script: {fileID: 11500000, guid: a3147a928e1c3e74c880c666c5a00ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 0
@@ -24483,128 +24291,23 @@ MonoBehaviour:
   activated: 0
   firstActivated: 0
   matColorVal: 1
-  fadeInterval: 1
+  fadeInterval: 10
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
---- !u!114 &1052968951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052968942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9452e0fbfa245c46aceceb551675604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trigger: 2
-  once: 0
-  selectedDatabase: {fileID: 0}
-  virtualCamera: {fileID: 1508920243}
-  onStart: 10
-  onEnd: 9
---- !u!114 &1052968952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052968942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9452e0fbfa245c46aceceb551675604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trigger: 2
-  once: 0
-  selectedDatabase: {fileID: 0}
-  virtualCamera: {fileID: 1005978787}
-  onStart: 9
-  onEnd: 10
---- !u!114 &1052968953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052968942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trigger: 16384
-  condition:
-    luaConditions: []
-    questConditions: []
-    acceptedTags: []
-    acceptedGameObjects: []
-    luaWizardIndex: -1
-    lastEvaluationValue: 0
-  setQuestState: 1
-  questName: 
-  questState: 0
-  setQuestEntryState: 0
-  questEntryNumber: 1
-  questEntryState: 0
-  setAnotherQuestEntryState: 0
-  anotherQuestEntryNumber: 1
-  anotherQuestEntryState: 0
-  luaCode: 
-  sequence: 
-  sequenceSpeaker: {fileID: 0}
-  sequenceListener: {fileID: 0}
-  waitOneFrameOnStartOrEnable: 1
-  alertMessage: 
-  textTable: {fileID: 0}
-  alertDuration: 0
-  sendMessages: []
-  barkSource: 0
-  barkConversation: 
-  barkText: 
-  barkTextSequence: 
-  barker: {fileID: 0}
-  barkTarget: {fileID: 0}
-  barkOrder: 0
-  allowBarksDuringConversations: 0
-  skipBarkIfNoValidEntries: 0
-  cacheBarkLines: 0
-  conversation: 
-  conversationConversant: {fileID: 0}
-  conversationActor: {fileID: 0}
-  startConversationEntryID: -1
-  startConversationEntryTitle: 
-  exclusive: 0
-  replace: 0
-  skipIfNoValidEntries: 0
-  preventRestartOnSameFrameEnded: 0
-  stopConversationOnTriggerExit: 0
-  stopConversationIfTooFar: 0
-  maxConversationDistance: 5
-  monitorConversationDistanceFrequency: 1
-  showCursorDuringConversation: 0
-  pauseGameDuringConversation: 0
-  setActiveActions:
-  - condition:
-      luaConditions: []
-      questConditions: []
-      acceptedTags: []
-      acceptedGameObjects: []
-      luaWizardIndex: 0
-      lastEvaluationValue: 0
-    target: {fileID: 458285446}
-    state: 1
-  setEnabledActions: []
-  setAnimatorStateActions: []
-  onExecute:
-    m_PersistentCalls:
-      m_Calls: []
-  useConversationTitlePicker: 1
-  useBarkTitlePicker: 1
-  useQuestNamePicker: 1
-  selectedDatabase: {fileID: 11400000, guid: adec3fc67abd41e45828f2fe4a3292f4, type: 2}
+  interactKey: 0
+  quitKey: 115
+  isInteracting: 0
+  positionFixed: 0
+  showMouse: 0
+  moveCam: 0
+  doubleSided: 0
+  onLeft: 0
+  onRight: 0
+  fixedCamera: {fileID: 1508920243}
+  otherCamera: {fileID: 0}
+  playerCamera: {fileID: 1005978787}
+  uiHint: {fileID: 256126970}
 --- !u!4 &1059232769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7591497097121322951, guid: 693c506a97a40d74e89a1fb82b275218, type: 3}
@@ -30792,6 +30495,11 @@ MonoBehaviour:
   playerCam: {fileID: 0}
   tagName: Player
   tagList: []
+--- !u!224 &1270344572 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 22425850, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+  m_PrefabInstance: {fileID: 833011485}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1276912462
 GameObject:
   m_ObjectHideFlags: 3
@@ -35750,10 +35458,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -35795,8 +35503,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 31650144}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -53254,6 +52961,10 @@ PrefabInstance:
     - target: {fileID: 1826969401927424823, guid: 693c506a97a40d74e89a1fb82b275218, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4748685816893205632, guid: 693c506a97a40d74e89a1fb82b275218, type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5238552506921629320, guid: 693c506a97a40d74e89a1fb82b275218, type: 3}
       propertyPath: m_StaticEditorFlags

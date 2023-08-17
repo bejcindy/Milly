@@ -122,7 +122,7 @@ public class LivableObject : MonoBehaviour
             focusDist = .75f;
             changeThis = false;
             gameObject.layer = 0;
-            gameObject.GetComponent<LookingObject>().enabled = false;
+            //gameObject.GetComponent<LookingObject>().enabled = false;
         }
             
         //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;

@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class PlayerHolding : MonoBehaviour
 {
+
     public bool fullHand;
+    public bool inDialogue;
     public List<PickUpObject> pickUpObjects;
     public PickUpObject selectedObj;
     PlayerLeftHand leftHand;
@@ -24,6 +27,7 @@ public class PlayerHolding : MonoBehaviour
         GetFullHand();
         ChooseInteractable();
     }
+
 
     public void AddInteractable(PickUpObject obj)
     {

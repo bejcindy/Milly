@@ -68,12 +68,10 @@ public class NPCObject : LivableObject
 
         if (dialogueEnabled)
         {
-            player.GetComponent<PlayerHolding>().inDialogue = true;
             GameObject.Find("PlayerObj").GetComponent<Renderer>().enabled = false;
         }
         else
         {
-            player.GetComponent<PlayerHolding>().inDialogue = false;
             GameObject.Find("PlayerObj").GetComponent<Renderer>().enabled = true;
         }
 
@@ -83,10 +81,22 @@ public class NPCObject : LivableObject
     {
         dialogue.enabled = true;
         dialogueEnabled = true;
-        cameraControl.TurnOnCamera();
         firstTalk = true;
-
     }
+
+    void OnConversationStart(Transform other)
+    {
+        player.GetComponent<PlayerHolding>().inDialogue = true;
+        player.GetComponent<PlayerMovement>().enabled = false;
+    }
+
+    void OnConversationEnd(Transform other)
+    {
+        dialogue.enabled = false;
+        player.GetComponent<PlayerHolding>().inDialogue = false;
+        player.GetComponent<PlayerMovement>().enabled = true;
+    }
+
 
 
 

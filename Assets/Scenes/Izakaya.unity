@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008952402, g: 0.013101039, b: 0.020449812, a: 1}
+  m_IndirectSpecularColor: {r: 0.008958812, g: 0.013101446, b: 0.02045097, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7532,7 +7532,7 @@ MonoBehaviour:
   selected: 0
   thrown: 0
   throwCD: 0
-  npcBound: 1
+  npcBound: 0
   leftUIHint: {fileID: 1828546840}
   rightUIHint: {fileID: 2119685081}
   uiHint: {fileID: 301349824}
@@ -19505,6 +19505,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: adec3fc67abd41e45828f2fe4a3292f4, type: 2}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.inputSettings.cancel.key
+      value: 323
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.inputSettings.alwaysForceResponseMenu
       value: 1
       objectReference: {fileID: 0}
@@ -24042,8 +24046,8 @@ GameObject:
   - component: {fileID: 1052968944}
   - component: {fileID: 1052968943}
   - component: {fileID: 1052968947}
-  - component: {fileID: 1052968948}
   - component: {fileID: 1052968949}
+  - component: {fileID: 1052968951}
   - component: {fileID: 1052968950}
   m_Layer: 0
   m_Name: Charles
@@ -24217,27 +24221,6 @@ MonoBehaviour:
   useBarkTitlePicker: 1
   useQuestNamePicker: 1
   selectedDatabase: {fileID: 11400000, guid: adec3fc67abd41e45828f2fe4a3292f4, type: 2}
---- !u!65 &1052968948
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052968942}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 3, y: 2, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1052968949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24258,11 +24241,11 @@ MonoBehaviour:
   activated: 0
   firstActivated: 0
   matColorVal: 1
-  fadeInterval: 1
+  fadeInterval: 10
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
-  convoTrigger: {fileID: 1052968948}
+  convoTrigger: {fileID: 0}
   objectOriented: 1
   npcObject: {fileID: 294936068}
   lookingOriented: 0
@@ -24280,34 +24263,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1052968942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3147a928e1c3e74c880c666c5a00ff5, type: 3}
+  m_Script: {fileID: 11500000, guid: b9452e0fbfa245c46aceceb551675604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 0
-  isVisible: 0
-  chainControl: 0
-  minDist: 3
-  rend: {fileID: 0}
-  activated: 0
-  firstActivated: 0
-  matColorVal: 1
-  fadeInterval: 10
-  specialEffect: {fileID: 0}
-  postProcessingVolume: {fileID: 0}
-  playerCam: {fileID: 0}
-  interactKey: 0
-  quitKey: 115
-  isInteracting: 0
-  positionFixed: 0
-  showMouse: 0
-  moveCam: 0
-  doubleSided: 0
-  onLeft: 0
-  onRight: 0
-  fixedCamera: {fileID: 1508920243}
-  otherCamera: {fileID: 0}
-  playerCamera: {fileID: 1005978787}
-  uiHint: {fileID: 256126970}
+  trigger: 2
+  once: 0
+  selectedDatabase: {fileID: 0}
+  virtualCamera: {fileID: 1005978787}
+  onStart: 0
+  onEnd: 10
+--- !u!114 &1052968951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052968942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9452e0fbfa245c46aceceb551675604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 2
+  once: 0
+  selectedDatabase: {fileID: 0}
+  virtualCamera: {fileID: 1508920243}
+  onStart: 99
+  onEnd: 0
 --- !u!4 &1059232769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7591497097121322951, guid: 693c506a97a40d74e89a1fb82b275218, type: 3}

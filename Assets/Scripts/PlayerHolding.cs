@@ -29,6 +29,8 @@ public class PlayerHolding : MonoBehaviour
     }
 
 
+
+
     public void AddInteractable(PickUpObject obj)
     {
         if (!pickUpObjects.Contains(obj))

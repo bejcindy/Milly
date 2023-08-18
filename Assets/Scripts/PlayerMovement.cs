@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     protected float gravityMultiplier;
+    bool onLadder;
 
     [Header("Stair Related")]
     [SerializeField] GameObject upperRay;
@@ -79,15 +80,32 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        MovePlayer();
-        SpeedControl();
+        if (!onLadder)
+        {
+            MovePlayer();
+            SpeedControl();
+        }
+        else
+        {
+            MoveOnLadder();
+        }
         //if (horizontalInput != 0 && verticalInput != 0)
         //    walkStair();
     }
 
+    void MoveOnLadder()
+    {
+        if (rb.useGravity)
+            rb.useGravity = false;
+        //rb.AddForce(Vector3.up * moveSpeed * verticalInput);
+        float ySpeed = moveSpeed * verticalInput;
+        rb.velocity = new Vector3(rb.velocity.x, ySpeed, rb.velocity.z);
+    }
+
     void MovePlayer()
     {
-
+        if(!rb.useGravity)
+            rb.useGravity = true;
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
         if (grounded)
         {
@@ -238,6 +256,8 @@ public class PlayerMovement : MonoBehaviour
         {
             other.transform.GetComponent<BuildingGroupController>().activateAll = true;
         }
+        if (other.name == "Ladder")
+            onLadder = true;
     }
 
     private void OnTriggerExit(Collider other)
@@ -250,6 +270,8 @@ public class PlayerMovement : MonoBehaviour
         {
             other.transform.parent.GetComponent<FixedCameraObject>().onRight = false;
         }
+        if (other.name == "Ladder")
+            onLadder = false;
     }
 
 }

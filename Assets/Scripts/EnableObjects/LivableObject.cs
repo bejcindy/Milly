@@ -90,55 +90,52 @@ public class LivableObject : MonoBehaviour
             firstActivated = true;
             if (specialEffect != null)
                 specialEffect.SetActive(true);
+        }
+    }
+
+    //float minBlur = .1f;
+    //float maxBlur = .75f;
+    //float focusDist = .75f;
+    //DepthOfField dof;
+    //protected virtual void FocusOnThis()
+    //{
+    //    if (focusDist > .1f)
+    //        focusDist -= 0.1f * fadeInterval * Time.deltaTime;
+    //    else
+    //        focusDist = .1f;
+    //    //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
+    //    Volume v = postProcessingVolume.GetComponent<Volume>();
+    //    if (v.profile.TryGet<DepthOfField>(out dof))
+    //    {
+    //        dof.focusDistance.value = focusDist;
+    //    }
+    //    //playerCam.m_Lens.FieldOfView = 120;
+    //}
+
+    //protected virtual void Unfocus(bool changeThis)
+    //{
+
+    //    if (focusDist < .75f)
+    //    {
+    //        gameObject.layer = 13;
+    //        focusDist += .5f * Time.deltaTime;
+    //    }
+    //    else
+    //    {
+    //        focusDist = .75f;
+    //        changeThis = false;
+    //        gameObject.layer = 0;
+    //        if (matColorVal <= 0)
+    //            gameObject.GetComponent<LookingObject>().enabled = false;
+    //    }
             
-        }
-
-
-    }
-
-    float minBlur = .1f;
-    float maxBlur = .75f;
-    float focusDist = .75f;
-    DepthOfField dof;
-    protected virtual void FocusOnThis()
-    {
-        if (focusDist > .1f)
-            focusDist -= 0.1f * fadeInterval * Time.deltaTime;
-        else
-            focusDist = .1f;
-        //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
-        Volume v = postProcessingVolume.GetComponent<Volume>();
-        if (v.profile.TryGet<DepthOfField>(out dof))
-        {
-            dof.focusDistance.value = focusDist;
-        }
-        //playerCam.m_Lens.FieldOfView = 120;
-    }
-
-    protected virtual void Unfocus(bool changeThis)
-    {
-
-        if (focusDist < .75f)
-        {
-            gameObject.layer = 13;
-            focusDist += .3f * Time.deltaTime;
-        }
-        else
-        {
-            focusDist = .75f;
-            changeThis = false;
-            gameObject.layer = 0;
-            if (matColorVal <= 0)
-                gameObject.GetComponent<LookingObject>().enabled = false;
-        }
-            
-        //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
-        Volume v = postProcessingVolume.GetComponent<Volume>();
-        if (v.profile.TryGet<DepthOfField>(out dof))
-        {
-            dof.focusDistance.value = focusDist;
-        }
-    }
+    //    //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
+    //    Volume v = postProcessingVolume.GetComponent<Volume>();
+    //    if (v.profile.TryGet<DepthOfField>(out dof))
+    //    {
+    //        dof.focusDistance.value = focusDist;
+    //    }
+    //}
 
     protected virtual bool IsInView()
     {

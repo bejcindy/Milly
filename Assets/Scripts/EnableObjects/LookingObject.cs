@@ -8,6 +8,7 @@ public class LookingObject : LivableObject
 
     protected override void Update()
     {
+        Debug.Log(matColorVal);
         if (matColorVal > 0)
         {
             base.Update();
@@ -16,31 +17,44 @@ public class LookingObject : LivableObject
                 if (!firstActivated)
                 {
                     gameObject.layer = 12;
-                    base.FocusOnThis();
-                    //Debug.Log(gameObject.name + ": focused");
+                    //base.FocusOnThis();
+                    DataHolder.FocusOnThis(fadeInterval,matColorVal);
+                    DataHolder.currentFocus = gameObject;
+
+                    Debug.Log(gameObject.name + ": focused");
                     interacted = true;
                 }
-
-
                 activated = true;
             }
             else
             {
                 //gameObject.layer = 0;
                 activated = false;
-                if (interacted)
+                if (DataHolder.currentFocus == gameObject)
                 {
-                    Unfocus(interacted);
-                    Debug.Log("unfocusing");
+                    //    DataHolder.currentFocus = null;
+                    DataHolder.focusing = false;
+                    Debug.Log(gameObject.name + ": unfocused");
                 }
+                //if (interacted)
+                //{
+                //    //Unfocus(interacted);
+                //    if (DataHolder.currentFocus == gameObject)
+                //        DataHolder.currentFocus = null;
+                //    //DataHolder.Unfocus(gameObject, interacted, matColorVal);
+                //    Debug.Log(gameObject.name + "unfocusing");
+                //}
             }
         }
         else
         {
-            Unfocus(interacted);
-            Debug.Log(gameObject.name+"uunfocusinig");
+            //Unfocus(interacted);
+            //DataHolder.Unfocus(gameObject, interacted, matColorVal);
+            Debug.Log(gameObject.name + "uunfocusinig");
+            DataHolder.focusing = false;
+            gameObject.GetComponent<LookingObject>().enabled = false;
         }
-        
+
         //if (firstActivated)
         //    gameObject.layer = 0;
 

@@ -39,8 +39,12 @@ public class PickUpObject : LivableObject
     {
         if (interactable && !inHand && !thrown)
         {
-            if(!npcBound)
-                dialogue.enabled = true;
+            if (!npcBound)
+            {
+                if(dialogue!=null)
+                    dialogue.enabled = true;
+            }
+
             if (!player.GetComponent <PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
             {
                 playerHolding.AddInteractable(this);
@@ -94,10 +98,10 @@ public class PickUpObject : LivableObject
             HideUI();
         }
 
-        if(activated && npcBound)
-        {
-            dialogue.enabled = true;
-        }
+        //if(activated && npcBound)
+        //{
+        //    dialogue.enabled = true;
+        //}
 
 
         if (selected && !thrown)

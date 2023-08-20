@@ -31,7 +31,7 @@ public class PlayerLeftHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isHolding)
+        if (isHolding && !playerHolding.inDialogue)
         {
             if(!inPizzaBox)
                 DetectHolding();

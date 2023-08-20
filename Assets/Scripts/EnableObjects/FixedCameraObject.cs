@@ -92,11 +92,15 @@ public class FixedCameraObject : LivableObject
         }
         PositionPlayer();
 
-        if (transform.parent.name.Contains("pizza"))
+        if(transform.parent != null)
         {
-            player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
-            player.GetComponent<PlayerRightHand>().inPizzaBox = true;
+            if (transform.parent.name.Contains("pizza"))
+            {
+                player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
+                player.GetComponent<PlayerRightHand>().inPizzaBox = true;
+            }
         }
+
     }
 
 
@@ -130,11 +134,16 @@ public class FixedCameraObject : LivableObject
     protected IEnumerator UnfixPlayer()
     {
         playerCamera.m_Priority = 10;
-        if (transform.parent.name.Contains("pizza"))
+
+        if(transform.parent != null)
         {
-            player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
-            player.GetComponent<PlayerRightHand>().inPizzaBox = false;
+            if (transform.parent.name.Contains("pizza"))
+            {
+                player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
+                player.GetComponent<PlayerRightHand>().inPizzaBox = false;
+            }
         }
+
         playerCamera.m_Priority = 10;
         if (doubleSided)
         {

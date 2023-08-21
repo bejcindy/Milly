@@ -25,7 +25,7 @@ public class FixedCameraObject : LivableObject
 
     PlayerCam camController;
     PlayerMovement playerMovement;
-    Renderer playerBody;
+    public Renderer playerBody;
 
     protected override void Start()
     {
@@ -44,7 +44,10 @@ public class FixedCameraObject : LivableObject
         base.Update();
         if (interactable)
         {
-            gameObject.layer = 9;
+            if (!activated)
+                gameObject.layer = 9;
+            else
+                gameObject.layer = 0;
             if (!isInteracting)
             {
                 uiHint.SetActive(true);
@@ -81,6 +84,7 @@ public class FixedCameraObject : LivableObject
 
     public void TurnOnCamera()
     {
+        playerBody.enabled = false;
         uiHint.SetActive(false);
         isInteracting = true;
         activated = true;

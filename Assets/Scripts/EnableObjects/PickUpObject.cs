@@ -15,10 +15,6 @@ public class PickUpObject : LivableObject
 
     public bool npcBound;
 
-    public GameObject leftUIHint;
-    public GameObject rightUIHint;
-    public GameObject uiHint;
-
     DialogueSystemTrigger dialogue;
 
 
@@ -53,18 +49,12 @@ public class PickUpObject : LivableObject
             {
                 if (playerHolding.GetLeftHand())
                 {
-                    
-                    uiHint = leftUIHint;
                     if (Input.GetMouseButtonDown(0) && selected)
                     {
-                        HideUI();
                         if (!activated && matColorVal > 0)
                         {
                             activated = true;
                         }
-
-                        //displayText.txt = pickUpText;
-                        //displayText.StartCoroutine("ShowText");
                         rb.isKinematic = true;
                         playerHolding.OccupyLeft(transform);
                         inHand = true;
@@ -73,16 +63,12 @@ public class PickUpObject : LivableObject
 
                 if (playerHolding.GetRightHand())
                 {
-                    uiHint = rightUIHint;
                     if (Input.GetMouseButtonDown(1) && selected)
                     {
-                        HideUI();
                         if (!activated && matColorVal > 0)
                         {
                             activated = true;
                         }
-                        //displayText.txt = pickUpText;
-                        //displayText.StartCoroutine("ShowText");
                         rb.isKinematic = true;
                         playerHolding.OccupyRight(transform);
                         inHand = true;
@@ -95,23 +81,16 @@ public class PickUpObject : LivableObject
         {
             playerHolding.RemoveInteractable(this);
             selected = false;
-            HideUI();
         }
 
-        //if(activated && npcBound)
-        //{
-        //    dialogue.enabled = true;
-        //}
 
 
         if (selected && !thrown)
         {
-            ShowUI();
             gameObject.layer = 9;
         }
         else
         {
-            HideUI();
             gameObject.layer = 7;
         }
 
@@ -121,16 +100,6 @@ public class PickUpObject : LivableObject
         }
     }
 
-    protected void ShowUI()
-    {
-        uiHint.SetActive(true);
-    }
-
-    protected void HideUI()
-    {
-        uiHint.SetActive(false);
-        gameObject.layer = 7;
-    }
 
     void ThrowCoolDown()
     {

@@ -17,6 +17,7 @@ public class LivableObject : MonoBehaviour
 
     protected Material mat;
     [SerializeField] protected Renderer rend;
+    [SerializeField] protected Collider coll;
     [SerializeField] public bool activated;
     [SerializeField] public bool firstActivated; 
     [SerializeField] protected float matColorVal;
@@ -149,30 +150,29 @@ public class LivableObject : MonoBehaviour
         }
 
         //Is in FOV
-        if ((pointOnScreen.x < Screen.width * 0.3f) || (pointOnScreen.x > Screen.width * 0.7f) ||
+        if ((pointOnScreen.x < Screen.width * 0.2) || (pointOnScreen.x > Screen.width * 0.8f) ||
                 (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
         {
             //Debug.Log("OutOfBounds: " + gameObject.name);
             return false;
         }
 
-        //RaycastHit hit;
+        RaycastHit hit;
         //Vector3 heading = gameObject.transform.position - Camera.main.transform.position;
         //Vector3 direction = heading.normalized;// / heading.magnitude;
 
-        //if (Physics.Linecast(Camera.main.transform.position, rend.bounds.center, out hit))
-        //{
-        //    if (hit.transform.name != gameObject.name && hit.transform.name != "Player" && !hit.transform.name.Contains("Trigger")
-        //        && hit.transform.gameObject.layer !=6)
-        //    {
-        //        /* -->
-        //        Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);
-        //        Debug.LogError(toCheck.name + " occluded by " + hit.transform.name);
-        //        */
-        //        //Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
-        //        return false;
-        //    }
-        //}
+        if (Physics.Linecast(Camera.main.transform.position, transform.position, out hit))
+        {
+            if (hit.transform.name != gameObject.name && !hit.transform.name.Contains("Player"))
+            {
+                /* -->
+                Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);
+                Debug.LogError(toCheck.name + " occluded by " + hit.transform.name);
+                */
+                //Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
+                return false;
+            }
+        }
         return true;
     }
 }

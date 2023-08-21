@@ -14,6 +14,9 @@ public class PlayerHolding : MonoBehaviour
     PlayerLeftHand leftHand;
     PlayerRightHand rightHand;
 
+    public GameObject leftHandUI;
+    public GameObject rightHandUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,24 @@ public class PlayerHolding : MonoBehaviour
     {
         GetFullHand();
         ChooseInteractable();
+
+        if(selectedObj!= null)
+        {
+            if (GetLeftHand())
+            {
+                leftHandUI.SetActive(true);
+            }
+            else if (GetRightHand())
+            {
+                rightHandUI.SetActive(true);
+            }
+
+        }
+        else
+        {
+            leftHandUI.SetActive(false);
+            rightHandUI.SetActive(false);
+        }
     }
 
 

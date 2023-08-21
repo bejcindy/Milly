@@ -25,8 +25,16 @@ public class CollisionObject : LivableObject
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(tagList.Contains(collision.gameObject.tag))
+        if (tagList.Contains(collision.gameObject.tag))
+        {
             activated = true;
+            if (gameObject.CompareTag("Ladder"))
+            {
+                GetComponent<Rigidbody>().isKinematic = false;
+            }
+
+        }
+            
     }
 
     private void OnTriggerEnter(Collider other)

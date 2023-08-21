@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     protected float gravityMultiplier;
-    bool onLadder;
+    public bool onLadder;
 
     [Header("Stair Related")]
     [SerializeField] GameObject upperRay;
@@ -256,7 +256,7 @@ public class PlayerMovement : MonoBehaviour
         {
             other.transform.GetComponent<BuildingGroupController>().activateAll = true;
         }
-        if (other.name == "Ladder")
+        if (other.CompareTag("Ladder"))
             onLadder = true;
     }
 
@@ -270,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
         {
             other.transform.parent.GetComponent<FixedCameraObject>().onRight = false;
         }
-        if (other.name == "Ladder")
+        if (other.CompareTag("Ladder"))
             onLadder = false;
     }
 

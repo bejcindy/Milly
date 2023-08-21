@@ -24,6 +24,7 @@ public class NPCObject : LivableObject
     FixedCameraObject cameraControl;
     public bool firstTalk;
     public bool dialogueEnabled;
+    Animator anim;
 
     protected override void Start()
     {
@@ -32,6 +33,7 @@ public class NPCObject : LivableObject
             npcLooking = GetComponent<LookingObject>();
         dialogue = GetComponent<DialogueSystemTrigger>();
         cameraControl = GetComponent<FixedCameraObject>();
+        anim = transform.GetChild(0).GetComponent<Animator>();
     }
 
 
@@ -75,6 +77,7 @@ public class NPCObject : LivableObject
 
         if (npcActivated)
         {
+            anim.SetTrigger("Start");
             ActivateAll(this.transform);
         }
 

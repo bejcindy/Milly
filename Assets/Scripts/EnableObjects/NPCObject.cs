@@ -71,10 +71,7 @@ public class NPCObject : LivableObject
         {
             GameObject.Find("PlayerObj").GetComponent<Renderer>().enabled = false;
         }
-        else
-        {
-            GameObject.Find("PlayerObj").GetComponent<Renderer>().enabled = true;
-        }
+
 
         if (npcActivated)
         {

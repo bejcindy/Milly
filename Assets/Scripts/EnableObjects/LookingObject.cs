@@ -28,7 +28,7 @@ public class LookingObject : LivableObject
             }
             else
             {
-                //gameObject.layer = 0;
+                gameObject.layer = 0;
                 activated = false;
                 if (DataHolder.currentFocus == gameObject)
                 {
@@ -50,6 +50,7 @@ public class LookingObject : LivableObject
         {
             //Unfocus(interacted);
             //DataHolder.Unfocus(gameObject, interacted, matColorVal);
+            gameObject.layer = 0;
             Debug.Log(gameObject.name + "uunfocusinig");
             DataHolder.focusing = false;
             gameObject.GetComponent<LookingObject>().enabled = false;

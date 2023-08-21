@@ -52,8 +52,8 @@ public class LivableObject : MonoBehaviour
     protected virtual void Update()
     {
         DetectInteractable();
-
-        matColorVal = mat.GetFloat("_WhiteDegree");
+        if(!npc)
+            matColorVal = mat.GetFloat("_WhiteDegree");
 
 
         isVisible = IsInView();

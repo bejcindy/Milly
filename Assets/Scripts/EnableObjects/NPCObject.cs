@@ -49,7 +49,7 @@ public class NPCObject : LivableObject
                 npcActivated = true;
         }
 
-        if (activated && !firstTalk)
+        if (npcActivated && !firstTalk)
         {
             StartConversation();
         }

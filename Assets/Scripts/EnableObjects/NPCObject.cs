@@ -8,6 +8,7 @@ public class NPCObject : LivableObject
 {
     public BoxCollider convoTrigger;
 
+    public bool npcActivated;
     [Header("Object Activation")]
     public bool objectOriented;
     public LivableObject npcObject;
@@ -39,13 +40,13 @@ public class NPCObject : LivableObject
         base.Update();
         if (npcObject.activated)
         {
-            activated = true;
+            npcActivated = true;
         }
 
         if (lookingOriented)
         {
             if (npcLooking.activated)
-                activated = true;
+                npcActivated = true;
         }
 
         if (activated && !firstTalk)
@@ -75,6 +76,36 @@ public class NPCObject : LivableObject
             GameObject.Find("PlayerObj").GetComponent<Renderer>().enabled = true;
         }
 
+        if (npcActivated)
+        {
+            ActivateAll(this.transform);
+        }
+
+    }
+
+    void ActivateAll(Transform obj)
+    {
+        if (obj.GetComponent<Renderer>() != null)
+        {
+            Material mat = obj.GetComponent<Renderer>().material;
+            mat.EnableKeyword("_WhiteDegree");
+            if (mat.GetFloat("_WhiteDegree") >= 0)
+                TurnOnColor(mat);
+        }
+        foreach (Transform child in obj)
+        {
+            if (child.childCount <= 0 && child.GetComponent<Renderer>() != null)
+            {
+                Material childMat = child.GetComponent<Renderer>().material;
+                childMat.EnableKeyword("_WhiteDegree");
+                if (childMat.GetFloat("_WhiteDegree") >= 0)
+                    TurnOnColor(childMat);
+            }
+            else
+            {
+                ActivateAll(child);
+            }
+        }
     }
 
     void StartConversation()

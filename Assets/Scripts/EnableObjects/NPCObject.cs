@@ -108,6 +108,12 @@ public class NPCObject : LivableObject
         }
     }
 
+    public void FinishingAnim()
+    {
+        anim.ResetTrigger("Start");
+        anim.SetTrigger("Finish");
+    }
+
     void StartConversation()
     {
         dialogue.enabled = true;

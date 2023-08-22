@@ -41,12 +41,13 @@ public class PickUpObject : LivableObject
                     dialogue.enabled = true;
             }
 
-            if (!player.GetComponent <PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
-            {
-                playerHolding.AddInteractable(this);
-            }
+
             if (!playerHolding.fullHand)
             {
+                if (!player.GetComponent<PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
+                {
+                    playerHolding.AddInteractable(this);
+                }
                 if (playerHolding.GetLeftHand())
                 {
                     if (Input.GetMouseButtonDown(0) && selected)
@@ -79,7 +80,8 @@ public class PickUpObject : LivableObject
         }
         else if (!interactable || inHand)
         {
-            playerHolding.RemoveInteractable(this);
+            if(playerHolding.CheckInteractable(this))
+                playerHolding.RemoveInteractable(this);
             selected = false;
         }
 

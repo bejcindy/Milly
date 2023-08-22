@@ -112,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 movementVector = Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up);
 
             rb.AddForce(movementVector, ForceMode.Force);
-            //CheckForStep(ref movementVector);
+            CheckForStep(ref movementVector);
 
             //walkStair(ref movementVector);
 

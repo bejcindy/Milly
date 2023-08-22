@@ -65,7 +65,19 @@ public class PlayerHolding : MonoBehaviour
         if (pickUpObjects.Contains(obj))
         {
             pickUpObjects.Remove(obj);
+
         }
+    }
+
+    public bool CheckInteractable(PickUpObject obj)
+    {
+        if (pickUpObjects.Count == 0)
+            return false;
+        if (pickUpObjects.Contains(obj))
+        {
+            return true;
+        }
+        return false;
     }
 
     public void ChooseInteractable()

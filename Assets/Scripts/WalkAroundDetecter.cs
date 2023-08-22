@@ -6,6 +6,7 @@ public class WalkAroundDetecter : LivableObject
 {
     public Collider[] triggerAreas;
     public bool[] triggers;
+    public Light streetLight;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -26,6 +27,10 @@ public class WalkAroundDetecter : LivableObject
         {
             activated = true;
 
+        }
+        if (matColorVal <= 0)
+        {
+            streetLight.enabled = true;
         }
     }
 

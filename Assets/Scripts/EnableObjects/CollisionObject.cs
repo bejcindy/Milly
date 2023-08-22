@@ -43,5 +43,9 @@ public class CollisionObject : LivableObject
         {
             activated = true;
         }
+        if (tagList.Contains(other.gameObject.tag))
+        {
+            activated = true;
+        }
     }
 }

@@ -11,6 +11,7 @@ public class PlayerLeftHand : MonoBehaviour
     public Transform holdingObj;
     public Vector3 holdingPosition;
     public PlayerHolding playerHolding;
+    public GameObject aimUI;
 
     public Vector2 minThrowForce = new Vector2(100f, 50f);
     public Vector2 maxThrowForce = new Vector2(500f, 200f);
@@ -47,6 +48,7 @@ public class PlayerLeftHand : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            aimUI.SetActive(false);
             holdTimer = 0;
             if (!noThrow)
             {
@@ -64,6 +66,8 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (holdTimer < holdTime)
             {
+                if(holdTimer > 0.1f)
+                    aimUI.SetActive(true);
                 holdTimer += Time.deltaTime;
                 holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
             }

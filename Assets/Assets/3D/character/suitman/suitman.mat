@@ -21,22 +21,21 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: suitman
-  m_Shader: {fileID: 4800000, guid: e88aeddd2ef1f934d805981244872e27, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 2c3c6a46626419c4f8bbdeab2ec2afbd, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _HAFTONESHAPES_STRIPE
+  m_InvalidKeywords:
   - _HALFTONESHAPE_CUSTOM
+  - _METALLICSPECGLOSSMAP
   - _NORMALMAP
   - _OUTLINE
-  m_InvalidKeywords:
-  - _HAFTONESHAPES_DOT
-  - _METALLICSPECGLOSSMAP
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2050
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -141,11 +140,11 @@ Material:
     m_Ints: []
     m_Floats:
     - Boolean_f9999c8db29c427d86a843c1a1c85720: 1
-    - ShadowPatternScale: 10
+    - ShadowPatternScale: 23.8
     - Vector1_0f3ca3289daa40b4a7654cc64fd05ec1: 0
     - Vector1_85d44c600d6c46b38d9c8065f25681ea: 0
     - Vector1_c89cb8dc56774a9583c7b9c3a5725c4c: 0
-    - Vector1_e5b6f1488dec4326bd8bbd0e05156810: 0
+    - Vector1_e5b6f1488dec4326bd8bbd0e05156810: -0.75
     - _AllToon_OverrideShadowColor: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -161,7 +160,7 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DiffuseStep: -0.31
-    - _DitherTexelSize: 4
+    - _DitherTexelSize: 10.14
     - _DitherThreshold: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
@@ -175,8 +174,8 @@ Material:
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
-    - _HAFTONESHAPES: 0
-    - _HafltoneFadeDistance: 10
+    - _HAFTONESHAPES: 1
+    - _HafltoneFadeDistance: 29.9
     - _HairSpecExponent: 128
     - _HairSpecNoiseStrength: 1
     - _HairSpecularSize: 0.8
@@ -186,21 +185,21 @@ Material:
     - _HalfToneIncludeReceivedShadow: 1
     - _HalfToneShape: 3
     - _HalfToneUvMode: 0
-    - _HalftoneDiffuseOffest: 0
+    - _HalftoneDiffuseOffest: -0.33
     - _HalftoneFadeDistance: 33.1
-    - _HalftoneFadeToColor: 0
-    - _HalftoneLightSizeFactor: 0
+    - _HalftoneFadeToColor: 0.246
+    - _HalftoneLightSizeFactor: 0.144
     - _HalftoneNoiseClip: 0.8
-    - _HalftoneScale: 0
-    - _HalftoneSize: 0.3
+    - _HalftoneScale: 1.07
+    - _HalftoneSize: 2
     - _HalftoneTilling: 8
     - _HalftoneUseScreenSpaceUV: 0
-    - _HatchingDensity: 1
-    - _HatchingDiffuseOffset: 0
-    - _HatchingDrawStrength: 4
+    - _HatchingDensity: 1.07
+    - _HatchingDiffuseOffset: -0.44
+    - _HatchingDrawStrength: 5.69
     - _HatchingEnabled: 0
     - _HatchingRotation: 0
-    - _HatchingSmoothness: 0.2
+    - _HatchingSmoothness: 1
     - _Metallic: 0
     - _NoiseScale: 1
     - _NoiseStrength: 0.1
@@ -220,7 +219,7 @@ Material:
     - _RimLightSmootness: 0
     - _RimPower: 0
     - _SPECULARHIGHLIGHTS: 0
-    - _ShadowPatternSize: 0.3
+    - _ShadowPatternSize: 0
     - _Shininess: 0
     - _SizeFalloff: 1
     - _Smoothness: 0.5
@@ -243,9 +242,11 @@ Material:
     - _StencilRef: 0
     - _StepViaRampTexture: 0
     - _Surface: 0
+    - _ToonBlending: 1
+    - _ToonEnabled: 0
     - _USERAMPCOLOR: 0
-    - _UseClipPattern: 0
-    - _UseNormalMap: 0
+    - _UseClipPattern: 1
+    - _UseNormalMap: 1
     - _UseRampColor: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
@@ -257,13 +258,13 @@ Material:
     - _FaceRightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _HairSpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _HalfToneColor: {r: 0, g: 0, b: 0, a: 0.457}
-    - _HalftoneColor: {r: 0.517647, g: 0.517647, b: 0.517647, a: 1}
-    - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HalftoneColor: {r: 0, g: 0, b: 0, a: 0.682}
+    - _HatchingColor: {r: 0, g: 0, b: 0, a: 0.375}
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
     - _OutlineColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
     - _OutlineDistancFade: {r: -30.799538, g: 6.1255836, b: 0, a: 0}
     - _RimColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadowColor: {r: 0, g: 0, b: 0, a: 0.615}
+    - _ShadowColor: {r: 0, g: 0, b: 0, a: 0.246}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpherizeNormalOrigin: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

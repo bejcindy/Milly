@@ -13126,7 +13126,7 @@ MonoBehaviour:
   interactable: 0
   isVisible: 0
   chainControl: 1
-  minDist: 3
+  minDist: 2
   rend: {fileID: 0}
   coll: {fileID: 0}
   activated: 0
@@ -22274,7 +22274,7 @@ MonoBehaviour:
   airMultiplier: 0.04
   readyToJump: 1
   jumpKey: 32
-  maxSlopeAngle: 60
+  maxSlopeAngle: 30
   orientation: {fileID: 1918295900}
   playerHeight: 2.2
   grounded: 0
@@ -32803,6 +32803,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ladder
       objectReference: {fileID: 0}
+    - target: {fileID: 4448306512701207944, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.73
+      objectReference: {fileID: 0}
     - target: {fileID: 4844776742885495215, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.34
@@ -32852,6 +32856,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5364054716865290318, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1296409847}
+    - targetCorrespondingSourceObject: {fileID: -5364054716865290318, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1296409855}
     - targetCorrespondingSourceObject: {fileID: -5765604439912163388, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 926913693}
@@ -32899,7 +32906,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 7.15059, y: 0.19644165, z: 2.6206372}
   m_Center: {x: -0.0000036491308, y: -0.57805634, z: -0.0000018216251}
@@ -32977,6 +32984,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 7.15059, y: 0.19644165, z: 2.6206372}
   m_Center: {x: -0.0000036491308, y: -0.57805634, z: -0.0000018216251}
+--- !u!64 &1296409855
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296409844}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1262459881223224759, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
 --- !u!65 &1296409856
 BoxCollider:
   m_ObjectHideFlags: 0

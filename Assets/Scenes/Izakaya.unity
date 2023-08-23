@@ -1030,6 +1030,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bf963fea06d7b3d449f81f9635c69865, type: 3}
   m_PrefabInstance: {fileID: 42840153}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &43738270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 43738271}
+  - component: {fileID: 43738272}
+  m_Layer: 6
+  m_Name: Collider (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &43738271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43738270}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1296409846}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &43738272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43738270}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0216733, y: 0.19644165, z: 1.50116}
+  m_Center: {x: -3.0905328, y: -0.57805634, z: -0.60967225}
 --- !u!1 &48015103 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1184445315307217505, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
@@ -1411,6 +1464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -1422,6 +1476,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -1548,6 +1604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -1559,6 +1616,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -1581,6 +1640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -1592,6 +1652,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -1655,6 +1717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -1666,6 +1729,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -1812,6 +1877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -1823,6 +1889,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -2123,6 +2191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -2134,6 +2203,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -2183,6 +2254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -2194,6 +2266,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -2334,6 +2408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -2345,6 +2420,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -2388,6 +2465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -2399,6 +2477,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -2484,6 +2564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -2495,6 +2576,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player,Throwable
   tagList: []
@@ -2522,6 +2605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -2533,6 +2617,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   triggerAreas:
   - {fileID: 1517484604}
@@ -2700,6 +2786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -2711,6 +2798,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -3855,6 +3944,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2625626466796905239, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1235459644}
+    - targetCorrespondingSourceObject: {fileID: -2625626466796905239, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1235459648}
+    - targetCorrespondingSourceObject: {fileID: -2625626466796905239, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1235459649}
     - targetCorrespondingSourceObject: {fileID: 8287741155009411024, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 902102878}
@@ -4265,6 +4360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -4276,6 +4372,8 @@ MonoBehaviour:
   specialEffect: {fileID: 1605597665}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -4340,6 +4438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -4351,6 +4450,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -4583,6 +4684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -4594,6 +4696,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -4780,6 +4884,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7342927877451016291, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 656905408}
+    - targetCorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1410876828}
   m_SourcePrefab: {fileID: 100100000, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
 --- !u!4 &164014918 stripped
 Transform:
@@ -5134,6 +5241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -5145,6 +5253,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -5188,6 +5298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -5199,6 +5310,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -5727,6 +5840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -5738,6 +5852,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -5802,6 +5918,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -5813,6 +5930,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -5876,6 +5995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -5887,6 +6007,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -6042,6 +6164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -6053,6 +6176,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -6418,6 +6543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -6426,9 +6552,11 @@ MonoBehaviour:
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
-  specialEffect: {fileID: 1721799404}
+  specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -6475,6 +6603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 7
   rend: {fileID: 0}
@@ -6486,6 +6615,8 @@ MonoBehaviour:
   specialEffect: {fileID: 2139125837}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!65 &227129990
 BoxCollider:
@@ -6607,6 +6738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -6618,6 +6750,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -7619,6 +7753,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c32454874d1e2964c836f6be6f859411, type: 3}
       insertIndex: -1
       addedObject: {fileID: 251084904}
+    - targetCorrespondingSourceObject: {fileID: 3191851609297968303, guid: c32454874d1e2964c836f6be6f859411, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1152848544}
   m_SourcePrefab: {fileID: 100100000, guid: c32454874d1e2964c836f6be6f859411, type: 3}
 --- !u!1 &251084903 stripped
 GameObject:
@@ -8035,6 +8172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -8046,6 +8184,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -8245,6 +8385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -8256,6 +8397,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -8338,7 +8481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292823387}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -8530,6 +8673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -8541,6 +8685,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -8738,6 +8884,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7342927877451016291, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 634185106}
+    - targetCorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1860160922}
   m_SourcePrefab: {fileID: 100100000, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
 --- !u!4 &299740987 stripped
 Transform:
@@ -9037,6 +9186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -9048,6 +9198,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -9695,6 +9847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -9706,6 +9859,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -10233,6 +10388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -10244,6 +10400,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -10350,6 +10508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -10361,6 +10520,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -10475,6 +10636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -10486,6 +10648,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -10634,7 +10798,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 365359561}
   m_LocalRotation: {x: -0, y: -0.44554228, z: -0, w: -0.89526093}
-  m_LocalPosition: {x: -2.174643, y: 0.5809999, z: -30.287645}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.03125001, y: 0.03125, z: 0.03125001}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -10936,6 +11100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -10947,6 +11112,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -11440,6 +11607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -11451,6 +11619,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -11596,6 +11766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -11607,6 +11778,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -11676,6 +11849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -11687,6 +11861,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   groupControl: 1
   buildingGroup: {fileID: 7562428570103268050}
@@ -11730,6 +11906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -11741,9 +11918,16 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
+--- !u!1 &422265803 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+  m_PrefabInstance: {fileID: 164014917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &424410907 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9059975546223421096, guid: 1adb34753cc01a24c9f028d8f8462f63, type: 3}
@@ -11763,6 +11947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -11774,6 +11959,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -11791,6 +11978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -11802,6 +11990,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!65 &424410913
 BoxCollider:
@@ -12193,6 +12383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -12204,6 +12395,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -12390,6 +12583,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7342927877451016291, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 449533062}
+    - targetCorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1946719900}
   m_SourcePrefab: {fileID: 100100000, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
 --- !u!4 &449533060 stripped
 Transform:
@@ -12410,6 +12606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 1946719897}
@@ -12421,6 +12618,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 1946719900}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -12633,6 +12832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -12644,6 +12844,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -12687,6 +12889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -12698,6 +12901,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -12804,7 +13009,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 969824027}
+  - {fileID: 779615152}
   m_Father: {fileID: 890563932}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12853,6 +13060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -12864,6 +13072,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -13045,6 +13255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -13056,6 +13267,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -13125,6 +13338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 2
   rend: {fileID: 0}
@@ -13136,6 +13350,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -13226,6 +13442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -13237,6 +13454,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -13954,6 +14173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -13965,6 +14185,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -14123,6 +14345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -14134,6 +14357,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -14275,6 +14500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -14286,6 +14512,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -14450,6 +14678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -14461,6 +14690,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -14596,6 +14827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -14607,6 +14839,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -14700,6 +14934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -14711,6 +14946,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -14912,6 +15149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -14923,6 +15161,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -15108,6 +15348,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &542646793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 542646794}
+  - component: {fileID: 542646795}
+  m_Layer: 6
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &542646794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542646793}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1296409846}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &542646795
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542646793}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.15059, y: 0.19644165, z: 0.23091008}
+  m_Center: {x: -0.0000036497504, y: -0.57805634, z: 0.025444}
 --- !u!1 &545515986
 GameObject:
   m_ObjectHideFlags: 0
@@ -15470,6 +15763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -15481,6 +15775,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -15529,6 +15825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -15540,6 +15837,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -15734,6 +16033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -15745,6 +16045,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -15985,6 +16287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 10
   rend: {fileID: 0}
@@ -15996,6 +16299,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!1 &585174051 stripped
 GameObject:
@@ -16091,6 +16396,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1376694082300647689, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
   m_PrefabInstance: {fileID: 141372649}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &608088457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+  m_PrefabInstance: {fileID: 780322595}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &609099394
 GameObject:
@@ -16769,6 +17079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -16780,6 +17091,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -16899,6 +17212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 1090794770}
@@ -16910,6 +17224,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 1860160922}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -17044,6 +17360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -17055,6 +17372,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -17317,6 +17636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -17328,6 +17648,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -17476,6 +17798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 1410876825}
@@ -17487,6 +17810,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 1410876828}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -17824,6 +18149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -17835,6 +18161,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -18223,6 +18551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -18234,6 +18563,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -18483,6 +18814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -18494,6 +18826,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -18811,6 +19145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -18822,6 +19157,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -19028,6 +19365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -19039,6 +19377,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -19183,6 +19523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -19194,6 +19535,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -19306,6 +19649,113 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774774606}
   m_Mesh: {fileID: 2892418288271020372, guid: 35fd48da62dd9e947bd056f03637811d, type: 3}
+--- !u!1 &779615151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 779615152}
+  - component: {fileID: 779615155}
+  - component: {fileID: 779615154}
+  - component: {fileID: 779615153}
+  m_Layer: 8
+  m_Name: Cylinder (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &779615152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779615151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2, y: -0.422, z: 0.4}
+  m_LocalScale: {x: 0.2, y: 0.5, z: 0.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 458285446}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &779615153
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779615151}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!23 &779615154
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779615151}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &779615155
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779615151}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &780143896 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2417359681050198846, guid: 1c4aabc77ca780f44b5b9b0f944677fc, type: 3}
@@ -19611,6 +20061,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7342927877451016291, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1012263352}
+    - targetCorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 976389682}
   m_SourcePrefab: {fileID: 100100000, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
 --- !u!4 &780322596 stripped
 Transform:
@@ -19846,6 +20299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -19857,6 +20311,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -20071,6 +20527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -20082,6 +20539,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   isInteracting: 0
   leftHandOpen: 0
@@ -20108,6 +20567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -20119,6 +20579,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!64 &800033720
 MeshCollider:
@@ -20345,6 +20807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -20356,6 +20819,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -20373,6 +20838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
@@ -20384,6 +20850,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!1 &820043991
 GameObject:
@@ -20725,6 +21193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -20736,6 +21205,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -20753,6 +21224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -20764,6 +21236,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -20781,6 +21255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -20792,6 +21267,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -21217,6 +21694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -21228,6 +21706,8 @@ MonoBehaviour:
   specialEffect: {fileID: 1198420341}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player,Throwable
   tagList: []
@@ -21250,6 +21730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -21261,6 +21742,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -21325,6 +21808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -21336,6 +21820,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -21379,6 +21865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -21390,6 +21877,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -21513,6 +22002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -21524,6 +22014,8 @@ MonoBehaviour:
   specialEffect: {fileID: 1557405149}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -21652,6 +22144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -21663,6 +22156,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -21738,6 +22233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -21749,6 +22245,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -21973,6 +22471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -21984,6 +22483,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -22230,7 +22731,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890563930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.37, y: 3.62, z: 14.54}
+  m_LocalPosition: {x: -36.16, y: 3.62, z: 14.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22462,6 +22963,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -22473,6 +22975,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -22516,6 +23020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -22527,6 +23032,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -22616,6 +23123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -22627,6 +23135,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -22693,6 +23203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
@@ -22704,6 +23215,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!1 &915068764
 GameObject:
@@ -23376,6 +23889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -23387,6 +23901,8 @@ MonoBehaviour:
   specialEffect: {fileID: 1298276488}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -23416,6 +23932,57 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5060632, y: 3.3536007, z: 0.010080998}
   m_Center: {x: 0, y: 0, z: -0.0000019073486}
+--- !u!114 &944365098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944365093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f91884b1a496714f9a70f81cf7413cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  isVisible: 0
+  checkVisible: 0
+  chainControl: 0
+  minDist: 0
+  rend: {fileID: 0}
+  coll: {fileID: 0}
+  activated: 0
+  firstActivated: 0
+  matColorVal: 1
+  fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  tagName: Throwable
+  tagList: []
+--- !u!114 &944365099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944365093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd302015e6ea4c846bcf887a8e5e99bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainTriggers: []
+  activateAll: 0
+  groupColorVal: 1
+  fadeInterval: 10
+  designatedGroup: 0
+  childToChildren: 1
+  buildingControl: 0
+  bgc: {fileID: 0}
 --- !u!1 &945210788 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7949741467946723597, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
@@ -23543,6 +24110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -23554,6 +24122,8 @@ MonoBehaviour:
   specialEffect: {fileID: 501947627}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player,Throwable
   tagList: []
@@ -23761,6 +24331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -23772,6 +24343,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player,Throwable
   tagList: []
@@ -23794,6 +24367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -23805,6 +24379,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -24093,6 +24669,113 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1025935986459044204, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
+--- !u!1 &969824026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 969824027}
+  - component: {fileID: 969824030}
+  - component: {fileID: 969824029}
+  - component: {fileID: 969824028}
+  m_Layer: 8
+  m_Name: Cylinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &969824027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969824026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2, y: -0.422, z: 0.4}
+  m_LocalScale: {x: 0.2, y: 0.5, z: 0.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 458285446}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &969824028
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969824026}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!23 &969824029
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969824026}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &969824030
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969824026}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &971438043 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6722365453946752356, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
@@ -24168,6 +24851,20 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1876660064432392605, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
   m_PrefabInstance: {fileID: 780322595}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &976389682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608088457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!1 &979260695
 GameObject:
   m_ObjectHideFlags: 0
@@ -24502,6 +25199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -24513,6 +25211,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -24535,6 +25235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -24546,6 +25247,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -24737,7 +25440,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1005978786}
   m_LocalRotation: {x: 0, y: -0.9921779, z: 0, w: -0.124831945}
-  m_LocalPosition: {x: -36.37, y: 4.72, z: 14.54}
+  m_LocalPosition: {x: -36.16, y: 4.72, z: 14.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24764,6 +25467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -24775,6 +25479,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -24887,6 +25593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
@@ -24898,6 +25605,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!65 &1007131853
 BoxCollider:
@@ -25219,6 +25928,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 976389679}
@@ -25230,6 +25940,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 976389682}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -25664,6 +26376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -25675,6 +26388,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -25879,6 +26594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -25890,6 +26606,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 1
   conversationID: 0
   npcActivated: 0
@@ -26087,6 +26805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -26098,6 +26817,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -27297,6 +28018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -27308,6 +28030,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -27325,6 +28049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -27336,6 +28061,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -27353,6 +28080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -27364,6 +28092,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -27381,6 +28111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -27392,6 +28123,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -27409,6 +28142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -27420,6 +28154,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -27553,6 +28289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -27564,6 +28301,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -27681,6 +28420,9 @@ GameObject:
   - component: {fileID: 1088822981}
   - component: {fileID: 1088822983}
   - component: {fileID: 1088822982}
+  - component: {fileID: 1088822985}
+  - component: {fileID: 1088822984}
+  - component: {fileID: 1088822986}
   m_Layer: 0
   m_Name: ac2_main_low
   m_TagString: Untagged
@@ -27753,6 +28495,78 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088822980}
   m_Mesh: {fileID: 7838389644216931238, guid: ab2854fc10164fa458550986c9acebc7, type: 3}
+--- !u!114 &1088822984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088822980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f91884b1a496714f9a70f81cf7413cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  isVisible: 0
+  checkVisible: 0
+  chainControl: 0
+  minDist: 0
+  rend: {fileID: 0}
+  coll: {fileID: 0}
+  activated: 0
+  firstActivated: 0
+  matColorVal: 1
+  fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  tagName: Player, Throwable
+  tagList: []
+--- !u!65 &1088822985
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088822980}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.69439936, y: 1.0876042, z: 1.3527749}
+  m_Center: {x: 0.0000009536743, y: -0.00000062584877, z: -0.00000014901173}
+--- !u!114 &1088822986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088822980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd302015e6ea4c846bcf887a8e5e99bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainTriggers: []
+  activateAll: 0
+  groupColorVal: 1
+  fadeInterval: 10
+  designatedGroup: 0
+  childToChildren: 1
+  buildingControl: 0
+  bgc: {fileID: 0}
 --- !u!137 &1090794770 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1876660064432392605, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
@@ -28091,6 +28905,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89858c28b67ef774cb6cb3e02faa5ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1104752084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3191851609297968303, guid: c32454874d1e2964c836f6be6f859411, type: 3}
+  m_PrefabInstance: {fileID: 251084902}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1109033023
 GameObject:
   m_ObjectHideFlags: 0
@@ -28292,6 +29111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -28303,6 +29123,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -28493,6 +29315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -28504,6 +29327,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -28645,6 +29470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -28656,6 +29482,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   interactKey: 0
   quitKey: 115
@@ -28773,6 +29601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -28784,6 +29613,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   triggerAreas:
   - {fileID: 161475274}
@@ -28812,6 +29643,25 @@ MonoBehaviour:
   childToChildren: 1
   buildingControl: 0
   bgc: {fileID: 0}
+--- !u!1 &1149618684 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+  m_PrefabInstance: {fileID: 1559386843}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1149618687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149618684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!1 &1151613765
 GameObject:
   m_ObjectHideFlags: 0
@@ -28900,6 +29750,20 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -1236078574458743485, guid: c32454874d1e2964c836f6be6f859411, type: 3}
   m_PrefabInstance: {fileID: 251084902}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1152848544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104752084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!114 &1160526803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28914,6 +29778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -28925,6 +29790,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -29057,6 +29924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
@@ -29068,6 +29936,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!1 &1174107850 stripped
 GameObject:
@@ -29088,6 +29958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -29099,6 +29970,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -29277,6 +30150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -29288,6 +30162,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -30946,6 +31822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -30957,6 +31834,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -30974,6 +31853,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -30985,6 +31865,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -31038,6 +31920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -31049,6 +31932,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -31145,6 +32030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -31156,6 +32042,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -31346,6 +32234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -31357,6 +32246,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -31819,6 +32710,55 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1175392486523015041, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
+--- !u!114 &1235459648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235459640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556a4ee19efd1b340988efa8b6a5bce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  isVisible: 0
+  checkVisible: 0
+  chainControl: 1
+  minDist: 2
+  rend: {fileID: 0}
+  coll: {fileID: 0}
+  activated: 0
+  firstActivated: 0
+  matColorVal: 1
+  fadeInterval: 1
+  specialEffect: {fileID: 1721799404}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+--- !u!114 &1235459649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235459640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd302015e6ea4c846bcf887a8e5e99bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainTriggers: []
+  activateAll: 0
+  groupColorVal: 1
+  fadeInterval: 0
+  designatedGroup: 0
+  childToChildren: 1
+  buildingControl: 0
+  bgc: {fileID: 0}
 --- !u!1 &1239342447 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -405449342120232025, guid: 1c4aabc77ca780f44b5b9b0f944677fc, type: 3}
@@ -32040,6 +32980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -32051,6 +32992,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -32142,6 +33085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -32153,6 +33097,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -32217,6 +33163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -32228,6 +33175,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -32383,6 +33332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -32394,6 +33344,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -32436,6 +33388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -32447,6 +33400,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -32840,6 +33795,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1156942955811082083, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 11416763}
+    - targetCorrespondingSourceObject: {fileID: 1156942955811082083, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 542646794}
+    - targetCorrespondingSourceObject: {fileID: 1156942955811082083, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1659118363}
+    - targetCorrespondingSourceObject: {fileID: 1156942955811082083, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 43738271}
     - targetCorrespondingSourceObject: {fileID: 7521984266161589831, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1307772004}
@@ -32856,9 +33820,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5364054716865290318, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1296409847}
-    - targetCorrespondingSourceObject: {fileID: -5364054716865290318, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1296409855}
     - targetCorrespondingSourceObject: {fileID: -5765604439912163388, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 926913693}
@@ -32906,10 +33867,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.15059, y: 0.19644165, z: 2.6206372}
-  m_Center: {x: -0.0000036491308, y: -0.57805634, z: -0.0000018216251}
+  m_Size: {x: 7.15059, y: 0.19644165, z: 0.9501843}
+  m_Center: {x: -0.0000036447175, y: -0.57805634, z: -0.8352284}
 --- !u!4 &1296409846 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1156942955811082083, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
@@ -32929,6 +33890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -32940,6 +33902,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -32984,28 +33948,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 7.15059, y: 0.19644165, z: 2.6206372}
   m_Center: {x: -0.0000036491308, y: -0.57805634, z: -0.0000018216251}
---- !u!64 &1296409855
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296409844}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1262459881223224759, guid: ba986f7a8941f244fbf7b2763b1f48e3, type: 3}
 --- !u!65 &1296409856
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33041,6 +33983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -33052,6 +33995,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -33069,6 +34014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -33080,6 +34026,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -33102,6 +34050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -33113,6 +34062,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -33513,6 +34464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -33524,8 +34476,10 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
-  tagName: Throwable
+  tagName: Throwable, Player
   tagList: []
 --- !u!65 &1307060363
 BoxCollider:
@@ -33617,6 +34571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -33628,6 +34583,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -33784,7 +34741,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308879908}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -36.37, y: 4.72, z: 14.54}
+  m_LocalPosition: {x: -36.16, y: 4.72, z: 14.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34158,6 +35115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -34169,6 +35127,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   triggerAreas:
   - {fileID: 636697989}
@@ -34876,6 +35836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -34887,6 +35848,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -35050,6 +36013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 1152848542}
@@ -35061,6 +36025,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 1152848544}
   npc: 1
   conversationID: 8
   npcActivated: 0
@@ -35288,6 +36254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -35299,6 +36266,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -35321,6 +36290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -35332,6 +36302,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -35375,6 +36347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -35386,6 +36359,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -35450,6 +36425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -35461,14 +36437,35 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
+--- !u!1 &1410209707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+  m_PrefabInstance: {fileID: 6402505849637704731}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &1410876825 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1876660064432392605, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
   m_PrefabInstance: {fileID: 164014917}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1410876828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422265803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!1 &1411808010 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1519113099745795443, guid: 50a89c40545b0a04fb6d2c5777de4d1e, type: 3}
@@ -35488,6 +36485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -35499,6 +36497,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -35673,6 +36673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -35684,6 +36685,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -35804,6 +36807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -35815,6 +36819,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -35853,6 +36859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -35864,6 +36871,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -35902,6 +36911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -35913,6 +36923,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -36171,6 +37183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -36182,6 +37195,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -36580,6 +37595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
@@ -36591,6 +37607,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   interactKey: 0
   quitKey: 115
@@ -36620,6 +37638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 3
   rend: {fileID: 0}
@@ -36631,6 +37650,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   interacting: 0
   openLid: 0
@@ -36679,6 +37700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -36690,6 +37712,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -36792,6 +37816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -36803,6 +37828,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -36846,6 +37873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -36857,6 +37885,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -36920,6 +37950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -36931,6 +37962,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -36990,6 +38023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -37001,6 +38035,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -37473,6 +38509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -37484,6 +38521,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -38211,6 +39250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -38222,6 +39262,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -38625,6 +39667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -38636,6 +39679,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -38926,7 +39971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557417312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -39263,6 +40308,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7342927877451016291, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1559386846}
+    - targetCorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1149618687}
   m_SourcePrefab: {fileID: 100100000, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
 --- !u!4 &1559386844 stripped
 Transform:
@@ -39283,6 +40331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 181563233}
@@ -39294,6 +40343,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 1149618687}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -39447,6 +40498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -39458,6 +40510,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -39496,6 +40550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -39507,6 +40562,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -39545,6 +40602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -39556,6 +40614,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -39824,6 +40884,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -39835,6 +40896,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -39898,6 +40961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -39909,6 +40973,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -39938,7 +41004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601588884}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.067, y: 0.379, z: -0.001}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 0.015, y: 0.015, z: 0.015}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -40479,6 +41545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 1966158029}
@@ -40490,6 +41557,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 1966158032}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -40756,6 +41825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -40767,6 +41837,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -41039,6 +42111,7 @@ GameObject:
   - component: {fileID: 1636903483}
   - component: {fileID: 1636903485}
   - component: {fileID: 1636903484}
+  - component: {fileID: 1636903486}
   m_Layer: 0
   m_Name: ac2_part1_low
   m_TagString: Untagged
@@ -41111,6 +42184,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636903482}
   m_Mesh: {fileID: -3548500565198435079, guid: ab2854fc10164fa458550986c9acebc7, type: 3}
+--- !u!65 &1636903486
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636903482}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.16135293, y: 0.43223193, z: 0.36602616}
+  m_Center: {x: 0.00000094622374, y: -0.000000603497, z: -0.0000035166738}
 --- !u!1 &1640036152 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1533947719102356912, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
@@ -41130,6 +42224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -41141,6 +42236,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!65 &1640036157
 BoxCollider:
@@ -42057,6 +43154,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7735925709405891837, guid: ab2854fc10164fa458550986c9acebc7, type: 3}
   m_PrefabInstance: {fileID: 1652798816}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1659118362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1659118363}
+  - component: {fileID: 1659118364}
+  m_Layer: 6
+  m_Name: Collider (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1659118363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659118362}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1296409846}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1659118364
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659118362}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7408484, y: 0.19644165, z: 1.4970189}
+  m_Center: {x: 2.7048483, y: -0.57805634, z: -0.6075972}
 --- !u!4 &1659623278 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8376218271921359947, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
@@ -42181,6 +43331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -42192,6 +43343,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -42402,6 +43555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -42413,6 +43567,8 @@ MonoBehaviour:
   specialEffect: {fileID: 1853959237}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player,Throwable
   tagList: []
@@ -42547,6 +43703,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694348823}
   m_Mesh: {fileID: 5828189589582413112, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
+--- !u!1 &1702118693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+  m_PrefabInstance: {fileID: 1719432211}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1702118696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702118693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!1 &1702850875 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7695643178021955689, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
@@ -42587,6 +43762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -42598,6 +43774,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -42621,6 +43799,25 @@ MonoBehaviour:
   childToChildren: 1
   buildingControl: 0
   bgc: {fileID: 0}
+--- !u!1 &1705566097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+  m_PrefabInstance: {fileID: 1812356923}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1705566100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705566097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!1 &1713195029
 GameObject:
   m_ObjectHideFlags: 0
@@ -42952,6 +44149,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7342927877451016291, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2012443431}
+    - targetCorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1702118696}
   m_SourcePrefab: {fileID: 100100000, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
 --- !u!4 &1719432212 stripped
 Transform:
@@ -43095,6 +44295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
@@ -43106,7 +44307,14 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
+--- !u!1 &1741621947 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+  m_PrefabInstance: {fileID: 449533059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1743972422
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -43370,6 +44578,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 3
   rend: {fileID: 0}
@@ -43381,6 +44590,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   interactKey: 102
   quitKey: 115
@@ -43450,6 +44661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -43461,6 +44673,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   groupControl: 1
   buildingGroup: {fileID: 1782058389}
@@ -43478,6 +44692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -43489,6 +44704,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   groupControl: 1
   buildingGroup: {fileID: 1931811154}
@@ -44051,6 +45268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -44062,6 +45280,8 @@ MonoBehaviour:
   specialEffect: {fileID: 249726139}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player,Throwable
   tagList: []
@@ -44142,6 +45362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -44153,6 +45374,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -44649,6 +45872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -44660,6 +45884,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   groupControl: 1
   buildingGroup: {fileID: 1495176019}
@@ -44719,6 +45945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -44730,6 +45957,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   groupControl: 1
   buildingGroup: {fileID: 2065603958}
@@ -44899,6 +46128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -44910,6 +46140,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -44963,6 +46195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -44974,6 +46207,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -45161,6 +46396,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7342927877451016291, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1812356926}
+    - targetCorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1705566100}
   m_SourcePrefab: {fileID: 100100000, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
 --- !u!4 &1812356924 stripped
 Transform:
@@ -45181,6 +46419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 341133161}
@@ -45192,6 +46431,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 1705566100}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -45623,6 +46864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -45634,6 +46876,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -45880,6 +47124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -45891,6 +47136,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -46201,6 +47448,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859751290}
   m_Mesh: {fileID: 7598571496973232705, guid: 1adb34753cc01a24c9f028d8f8462f63, type: 3}
+--- !u!1 &1860160919 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+  m_PrefabInstance: {fileID: 299740986}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1860160922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860160919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!1 &1861719934 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 303169282268896141, guid: 08d50331aadd5864a95c78eca53c00ea, type: 3}
@@ -46287,6 +47553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
@@ -46298,6 +47565,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!1 &1864465247
 GameObject:
@@ -46366,6 +47635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -46377,6 +47647,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -46468,6 +47740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -46479,6 +47752,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -46772,6 +48047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -46783,6 +48059,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -47291,6 +48569,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2232129148841585923, guid: 1c4aabc77ca780f44b5b9b0f944677fc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 944365094}
+    - targetCorrespondingSourceObject: {fileID: -2232129148841585923, guid: 1c4aabc77ca780f44b5b9b0f944677fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 944365098}
+    - targetCorrespondingSourceObject: {fileID: -2232129148841585923, guid: 1c4aabc77ca780f44b5b9b0f944677fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 944365099}
     - targetCorrespondingSourceObject: {fileID: 9002832279176565937, guid: 1c4aabc77ca780f44b5b9b0f944677fc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 94449481}
@@ -47555,6 +48839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -47566,6 +48851,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -47766,6 +49053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -47777,6 +49065,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -47894,6 +49184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 7
   rend: {fileID: 0}
@@ -47905,6 +49196,8 @@ MonoBehaviour:
   specialEffect: {fileID: 1325425306}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
 --- !u!1 &1922266488
 GameObject:
@@ -48017,6 +49310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -48028,6 +49322,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -48188,6 +49484,20 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1876660064432392605, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
   m_PrefabInstance: {fileID: 449533059}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1946719900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741621947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!1 &1949379557 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6942367807266903382, guid: ab2854fc10164fa458550986c9acebc7, type: 3}
@@ -48228,6 +49538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -48239,6 +49550,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -48276,6 +49589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -48287,6 +49601,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -48431,6 +49747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -48442,6 +49759,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -48492,6 +49811,20 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1876660064432392605, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
   m_PrefabInstance: {fileID: 6402505849637704731}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1966158032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410209707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7482b39e826e5d48b8eda427214d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigVisible: 0
+  isVisible: 0
 --- !u!1 &1974344325
 GameObject:
   m_ObjectHideFlags: 0
@@ -48911,6 +50244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 1099724962}
@@ -48922,6 +50256,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 1
+  visibleDetector: {fileID: 1702118696}
   npc: 0
   playerHolding: {fileID: 0}
   inHand: 0
@@ -49184,6 +50520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -49195,6 +50532,8 @@ MonoBehaviour:
   specialEffect: {fileID: 170049795}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player,Throwable
   tagList: []
@@ -49563,6 +50902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -49574,6 +50914,8 @@ MonoBehaviour:
   specialEffect: {fileID: 710705027}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   triggerAreas:
   - {fileID: 390906080}
@@ -49869,6 +51211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -49880,6 +51223,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -49984,6 +51329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 0
   rend: {fileID: 0}
@@ -49995,6 +51341,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Throwable
   tagList: []
@@ -50107,6 +51455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -50118,6 +51467,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: 
   tagList: []
@@ -50171,6 +51522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -50182,6 +51534,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -50326,6 +51680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -50337,6 +51692,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -50491,6 +51848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -50502,6 +51860,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -50573,7 +51933,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102743258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.86, z: 0}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -50711,6 +52071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 3
   rend: {fileID: 0}
@@ -50722,6 +52083,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   groupControl: 1
   buildingGroup: {fileID: 304798486}
@@ -50967,6 +52330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -50978,6 +52342,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -51539,6 +52905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
@@ -51550,6 +52917,8 @@ MonoBehaviour:
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
   npc: 0
   tagName: Player
   tagList: []
@@ -55521,6 +56890,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7342927877451016291, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1621927952}
+    - targetCorrespondingSourceObject: {fileID: 6746121899776894425, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1966158032}
   m_SourcePrefab: {fileID: 100100000, guid: 4b7403baf43bf8e4893eb652a901695b, type: 3}
 --- !u!23 &6505926225673754350
 MeshRenderer:

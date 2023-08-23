@@ -43,7 +43,7 @@ public class DataHolder : MonoBehaviour
         if (currentFocus)
         {
             focused = true;
-            Debug.Log("focusing");
+            //Debug.Log("focusing");
             if (focusDist > .1f)
             {
                 //focusDist -= 0.1f * fadeInterval * Time.deltaTime;

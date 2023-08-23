@@ -44,10 +44,10 @@ public class FixedCameraObject : LivableObject
         base.Update();
         if (interactable)
         {
-            if (!activated)
-                gameObject.layer = 9;
-            else
-                gameObject.layer = 0;
+            //if (!activated)
+            //    gameObject.layer = 9;
+            //else
+            //    gameObject.layer = 0;
             if (!isInteracting)
             {
                 uiHint.SetActive(true);
@@ -56,7 +56,7 @@ public class FixedCameraObject : LivableObject
         }
         else
         {
-            gameObject.layer = 0;
+            //gameObject.layer = 0;
             uiHint.SetActive(false);
         }
 
@@ -77,7 +77,7 @@ public class FixedCameraObject : LivableObject
     {
         if (Input.GetKeyDown(interactKey))
         {
-            gameObject.layer = 0;
+            //gameObject.layer = 0;
             TurnOnCamera();
         }
     }

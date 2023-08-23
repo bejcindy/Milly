@@ -15,7 +15,7 @@ public class LookingObject : LivableObject
 
     protected override void Update()
     {
-        Debug.Log(matColorVal);
+        //Debug.Log(matColorVal);
         if (matColorVal > 0)
         {
             base.Update();
@@ -30,7 +30,7 @@ public class LookingObject : LivableObject
                         DataHolder.FocusOnThis(fadeInterval, matColorVal);
                         DataHolder.currentFocus = gameObject;
 
-                        Debug.Log(gameObject.name + ": focused");
+                        //Debug.Log(gameObject.name + ": focused");
                         interacted = true;
                     }
                     activated = true;
@@ -44,7 +44,7 @@ public class LookingObject : LivableObject
                 {
                     //    DataHolder.currentFocus = null;
                     DataHolder.focusing = false;
-                    Debug.Log(gameObject.name + ": unfocused");
+                    //Debug.Log(gameObject.name + ": unfocused");
                 }
                 //if (interacted)
                 //{
@@ -61,7 +61,7 @@ public class LookingObject : LivableObject
             //Unfocus(interacted);
             //DataHolder.Unfocus(gameObject, interacted, matColorVal);
             gameObject.layer = 0;
-            Debug.Log(gameObject.name + "uunfocusinig");
+            //Debug.Log(gameObject.name + "uunfocusinig");
             DataHolder.focusing = false;
             gameObject.GetComponent<LookingObject>().enabled = false;
         }

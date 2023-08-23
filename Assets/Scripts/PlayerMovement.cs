@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using Cinemachine.Utility;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     protected float gravityMultiplier;
     public bool onLadder;
+
+    [Header("SlopeCheck")]
+    [SerializeField] bool onSlope;
+    public RaycastHit slopeHit;
+    public float maxSlopeAngle;
+    [SerializeField] bool slopeCollide;
+    Vector3 collisionSlopeDir;
 
     [Header("Stair Related")]
     [SerializeField] GameObject upperRay;
@@ -16,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float upperDetect = .7f;
     [SerializeField] float lowerDetect = .7f;
 
-
+    
     public float step_LookAheadRange = 0.1f;
     public float step_MaxStepHeight = 0.3f;
     public float playerRadius;
@@ -34,9 +42,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected bool readyToJump;
     [SerializeField] protected KeyCode jumpKey = KeyCode.Space;
 
-    [Header("SlopeCheck")]
-    public RaycastHit slopeHit;
-    public float maxSlopeAngle;
+    
 
     protected float horizontalInput;
     protected float verticalInput;
@@ -55,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected LayerMask stairs;
     [SerializeField] protected float stairForce;
 
+    
 
     void Start()
     {
@@ -67,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        
         grounded = Physics.Raycast(transform.position, -transform.up, playerHeight, flatGround);
         //upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y + stepHeight, upperRay.transform.position.z);
         if (grounded)
@@ -84,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        onSlope = OnSlope();
         if (!onLadder)
         {
             MovePlayer();
@@ -95,6 +104,23 @@ public class PlayerMovement : MonoBehaviour
         }
         //if (horizontalInput != 0 && verticalInput != 0)
         //    walkStair();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("slope"))
+        {
+            slopeCollide = true;
+            collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, collision.contacts[0].normal).normalized;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("slope"))
+        {
+            slopeCollide = false;
+        }
     }
 
     void MoveOnLadder()
@@ -111,16 +137,23 @@ public class PlayerMovement : MonoBehaviour
         if(!rb.useGravity)
             rb.useGravity = true;
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
-
-        if (OnSlope())
+        //Debug.Log(rb.velocity);
+        if (OnSlope()||slopeCollide)
         {
-            rb.AddForce(GetSlopeMoveDir() * moveSpeed * 20f, ForceMode.Force);
+            if(OnSlope())
+                rb.AddForce(GetSlopeMoveDir() * moveSpeed * 20f, ForceMode.Force);
+            else if (slopeCollide)
+                rb.AddForce(collisionSlopeDir * moveSpeed * 20f, ForceMode.Force);
 
-            if(rb.velocity.y > 0)
-            {
+            //if (rb.velocity.y > 0)
+            //    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+
+            if (rb.velocity.y > 0 && verticalInput > 0f)
+                rb.AddForce(Vector3.down * 10f, ForceMode.Force);
+            else if (rb.velocity.y > 0 && verticalInput < 0f)
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-            }
         }
+
         if (grounded)
         {
             Vector3 movementVector = Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up);
@@ -137,7 +170,12 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f * airMultiplier, orientation.up), ForceMode.Force);
         }
 
-        rb.useGravity = !OnSlope();
+        if (OnSlope() || slopeCollide)
+            rb.useGravity = false;
+        else if (!OnSlope() && !slopeCollide)
+            rb.useGravity = true;
+                
+        //rb.useGravity = !OnSlope();
         
     }
 
@@ -195,15 +233,21 @@ public class PlayerMovement : MonoBehaviour
     }
     void SpeedControl()
     {
-        if (OnSlope())
+        if (OnSlope() || slopeCollide)
         {
-            if(rb.velocity.magnitude > moveSpeed)
+            if (rb.velocity.magnitude > moveSpeed)
             {
                 rb.velocity = rb.velocity.normalized * moveSpeed;
             }
+            //if (verticalInput == 0)
+            //{
+            //    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            //    Debug.Log("trying");
+            //}
         }
-        else
+        else if (!OnSlope() && !slopeCollide)
         {
+            Debug.Log("here");
             Vector3 flatVel = Vector3.ProjectOnPlane(rb.velocity, transform.up);
             Vector3 upVel = Vector3.Project(rb.velocity, transform.up);
 
@@ -219,16 +263,20 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight*0.5f+0.3f, flatGround))
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight+.3f, flatGround))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            //Debug.Log(angle);
             return angle < maxSlopeAngle && angle != 0;
+            //return angle != 0;
         }
         return false;
     }
 
     private Vector3 GetSlopeMoveDir()
     {
+        
+
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 

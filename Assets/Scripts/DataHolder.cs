@@ -31,10 +31,10 @@ public class DataHolder : MonoBehaviour
         //Debug.Log("focusing is " + focusing+"; "+currentFocus);
         if (!focusing && focused)
         {
-            Debug.Log("unfocusing");
+            //Debug.Log("unfocusing");
             Unfocus();
         }
-        Debug.Log("focusing: " + focusing + "; focused: " + focused);
+        //Debug.Log("focusing: " + focusing + "; focused: " + focused);
     }
 
     
@@ -59,7 +59,7 @@ public class DataHolder : MonoBehaviour
                 focusing = false;
                 Debug.Log("false1");
             }
-            Debug.Log("focus dist" + focusDist);
+            //Debug.Log("focus dist" + focusDist);
             //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
             //Volume v = postProcessingVolume.GetComponent<Volume>();
             if (v.profile.TryGet<DepthOfField>(out dof))
@@ -70,7 +70,7 @@ public class DataHolder : MonoBehaviour
         else
         {
             focusing = false;
-            Debug.Log("false2");
+            //Debug.Log("false2");
         }
         //playerCam.m_Lens.FieldOfView = 120;
     }

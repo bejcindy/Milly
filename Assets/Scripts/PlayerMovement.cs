@@ -34,6 +34,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected bool readyToJump;
     [SerializeField] protected KeyCode jumpKey = KeyCode.Space;
 
+    [Header("SlopeCheck")]
+    public RaycastHit slopeHit;
+    public float maxSlopeAngle;
+
     protected float horizontalInput;
     protected float verticalInput;
 
@@ -107,14 +111,24 @@ public class PlayerMovement : MonoBehaviour
         if(!rb.useGravity)
             rb.useGravity = true;
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
+
+        if (OnSlope())
+        {
+            rb.AddForce(GetSlopeMoveDir() * moveSpeed * 20f, ForceMode.Force);
+
+            if(rb.velocity.y > 0)
+            {
+                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+            }
+        }
         if (grounded)
         {
             Vector3 movementVector = Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up);
 
             rb.AddForce(movementVector, ForceMode.Force);
-            CheckForStep(ref movementVector);
+            //CheckForStep(ref movementVector);
 
-            //walkStair(ref movementVector);
+            walkStair(ref movementVector);
 
         }
         //in air
@@ -123,13 +137,13 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f * airMultiplier, orientation.up), ForceMode.Force);
         }
 
+        rb.useGravity = !OnSlope();
         
     }
 
     void CheckForStep(ref Vector3 movement)
     {
-        Vector3 lookAheadStartPoint = lowerRay.transform.position;
-            //+ Vector3.up * (step_MaxStepHeight * 0.5f);
+        Vector3 lookAheadStartPoint = lowerRay.transform.position+ Vector3.up * (step_MaxStepHeight * 0.5f);
         Vector3 lookAheadDir = movement.normalized;
         float lookAheadDistance = playerRadius + step_LookAheadRange;
         if (Physics.Raycast(lookAheadStartPoint, lookAheadDir, lookAheadDistance, stairs))
@@ -181,21 +195,49 @@ public class PlayerMovement : MonoBehaviour
     }
     void SpeedControl()
     {
-        Vector3 flatVel = Vector3.ProjectOnPlane(rb.velocity, transform.up);
-        Vector3 upVel = Vector3.Project(rb.velocity, transform.up);
-
-        if (flatVel.magnitude > moveSpeed)
+        if (OnSlope())
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = upVel + limitedVel;
+            if(rb.velocity.magnitude > moveSpeed)
+            {
+                rb.velocity = rb.velocity.normalized * moveSpeed;
+            }
         }
+        else
+        {
+            Vector3 flatVel = Vector3.ProjectOnPlane(rb.velocity, transform.up);
+            Vector3 upVel = Vector3.Project(rb.velocity, transform.up);
+
+            if (flatVel.magnitude > moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = upVel + limitedVel;
+            }
+        }
+
     }
+
+
+    private bool OnSlope()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight*0.5f+0.3f, flatGround))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+        return false;
+    }
+
+    private Vector3 GetSlopeMoveDir()
+    {
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
     void walkStair(ref Vector3 movement)
     {
         //Debug.Log("walking");
 
         RaycastHit hitLower;
-        if (Physics.Raycast(lowerRay.transform.position, movement.normalized, out hitLower, 0.1f, flatGround))
+        if (Physics.Raycast(lowerRay.transform.position, movement.normalized, out hitLower, 0.3f, flatGround))
         {
             Debug.Log("hit lower");
             RaycastHit hitUpper;

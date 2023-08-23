@@ -46,7 +46,7 @@ public class PickUpObject : LivableObject
             {
                 if (!player.GetComponent<PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
                 {
-                    playerHolding.AddInteractable(this);
+                    playerHolding.AddInteractable(gameObject);
                 }
                 if (playerHolding.GetLeftHand())
                 {
@@ -80,8 +80,8 @@ public class PickUpObject : LivableObject
         }
         else if (!interactable || inHand)
         {
-            if(playerHolding.CheckInteractable(this))
-                playerHolding.RemoveInteractable(this);
+            if(playerHolding.CheckInteractable(gameObject))
+                playerHolding.RemoveInteractable(gameObject);
             selected = false;
         }
 

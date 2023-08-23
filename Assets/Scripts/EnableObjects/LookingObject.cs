@@ -5,6 +5,13 @@ using UnityEngine;
 public class LookingObject : LivableObject
 {
     bool interacted;
+    PlayerHolding playerHolding;
+
+    protected override void Start()
+    {
+        base.Start();
+        playerHolding = player.GetComponent<PlayerHolding>();
+    }
 
     protected override void Update()
     {
@@ -14,22 +21,25 @@ public class LookingObject : LivableObject
             base.Update();
             if (interactable)
             {
-                if (!firstActivated)
+                if (!playerHolding.throwing)
                 {
-                    gameObject.layer = 12;
-                    //base.FocusOnThis();
-                    DataHolder.FocusOnThis(fadeInterval,matColorVal);
-                    DataHolder.currentFocus = gameObject;
+                    if (!firstActivated)
+                    {
+                        gameObject.layer = 12;
+                        //base.FocusOnThis();
+                        DataHolder.FocusOnThis(fadeInterval, matColorVal);
+                        DataHolder.currentFocus = gameObject;
 
-                    Debug.Log(gameObject.name + ": focused");
-                    interacted = true;
+                        Debug.Log(gameObject.name + ": focused");
+                        interacted = true;
+                    }
+                    activated = true;
                 }
-                activated = true;
+
             }
             else
             {
                 gameObject.layer = 0;
-                activated = false;
                 if (DataHolder.currentFocus == gameObject)
                 {
                     //    DataHolder.currentFocus = null;

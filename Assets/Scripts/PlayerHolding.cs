@@ -9,8 +9,9 @@ public class PlayerHolding : MonoBehaviour
 
     public bool fullHand;
     public bool inDialogue;
-    public List<PickUpObject> pickUpObjects;
-    public PickUpObject selectedObj;
+    public bool throwing;
+    List<GameObject> pickUpObjects;
+    public GameObject selectedObj;
     PlayerLeftHand leftHand;
     PlayerRightHand rightHand;
 
@@ -22,6 +23,7 @@ public class PlayerHolding : MonoBehaviour
     {
         leftHand = GetComponent<PlayerLeftHand>();
         rightHand = GetComponent<PlayerRightHand>();
+        pickUpObjects = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -51,8 +53,7 @@ public class PlayerHolding : MonoBehaviour
 
 
 
-
-    public void AddInteractable(PickUpObject obj)
+    public void AddInteractable(GameObject obj)
     {
         if (!pickUpObjects.Contains(obj))
         {
@@ -60,16 +61,17 @@ public class PlayerHolding : MonoBehaviour
         }
     }
 
-    public void RemoveInteractable(PickUpObject obj)
+    public void RemoveInteractable(GameObject obj)
     {
         if (pickUpObjects.Contains(obj))
         {
+            obj.GetComponent<PickUpObject>().selected = false;
             pickUpObjects.Remove(obj);
 
         }
     }
 
-    public bool CheckInteractable(PickUpObject obj)
+    public bool CheckInteractable(GameObject obj)
     {
         if (pickUpObjects.Count == 0)
             return false;
@@ -89,15 +91,15 @@ public class PlayerHolding : MonoBehaviour
         else if (pickUpObjects.Count == 1)
         {
             if (selectedObj != this && selectedObj != null)
-                selectedObj.selected = false;
+                selectedObj.GetComponent<PickUpObject>().selected = false;
             selectedObj = pickUpObjects[0];
-            selectedObj.selected = true;
+            selectedObj.GetComponent<PickUpObject>().selected = true;
         }
         else
         {
             float minDist = Vector3.Distance(pickUpObjects[0].transform.position, transform.position);
             selectedObj = pickUpObjects[0];
-            foreach (PickUpObject obj in pickUpObjects)
+            foreach (GameObject obj in pickUpObjects)
             {
                 float distance = Vector3.Distance(transform.position, obj.transform.position);
                 if (distance < minDist)
@@ -105,12 +107,12 @@ public class PlayerHolding : MonoBehaviour
                     minDist = distance;
                     if (selectedObj != this)
                     {
-                        selectedObj.selected = false;
+                        selectedObj.GetComponent<PickUpObject>().selected = false;
                     }
                     selectedObj = obj;
                 }
             }
-            selectedObj.selected = true;
+            selectedObj.GetComponent<PickUpObject>().selected = true;
         }
     }
 

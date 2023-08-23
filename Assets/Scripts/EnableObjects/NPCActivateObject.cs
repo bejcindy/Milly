@@ -17,7 +17,6 @@ public class NPCActivateObject : LivableObject
         {
             dialogue.enabled = true;
             player.GetComponent<Renderer>().enabled = false;
-            npc.ActivateConvoTrigger();
         }
     }
 }

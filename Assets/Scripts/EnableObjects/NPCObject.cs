@@ -6,8 +6,8 @@ using Cinemachine;
 
 public class NPCObject : LivableObject
 {
-    public BoxCollider convoTrigger;
 
+    public int conversationID;
     public bool npcActivated;
     [Header("Object Activation")]
     public bool objectOriented;
@@ -22,6 +22,8 @@ public class NPCObject : LivableObject
     public CinemachineVirtualCamera NPCCinemachine;
     public CinemachineVirtualCamera playerCinemachine;
     FixedCameraObject cameraControl;
+
+    GameObject npcBody;
     public bool firstTalk;
     public bool dialogueEnabled;
     Animator anim;
@@ -34,6 +36,7 @@ public class NPCObject : LivableObject
         dialogue = GetComponent<DialogueSystemTrigger>();
         cameraControl = GetComponent<FixedCameraObject>();
         anim = transform.GetChild(0).GetComponent<Animator>();
+        npcBody = transform.GetChild(0).gameObject;
     }
 
 
@@ -58,7 +61,7 @@ public class NPCObject : LivableObject
 
         if(firstTalk && interactable)
         {
-            gameObject.layer = 9;
+            npcBody.layer = 9;
             if (Input.GetMouseButtonDown(0))
             {
                 StartConversation();
@@ -66,7 +69,7 @@ public class NPCObject : LivableObject
         }
         else
         {
-            gameObject.layer = 0;
+            npcBody.layer = 0;
         }
 
         if (dialogueEnabled)
@@ -79,6 +82,17 @@ public class NPCObject : LivableObject
         {
             anim.SetTrigger("Start");
             ActivateAll(this.transform);
+        }
+
+        if (DialogueManager.isConversationActive)
+        {
+            if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+            {
+                if(DialogueManager.lastConversationID == conversationID)
+                {
+                    DialogueManager.StopConversation();
+                }
+            }
         }
 
     }
@@ -138,13 +152,4 @@ public class NPCObject : LivableObject
 
 
 
-    public void ActivateConvoTrigger()
-    {
-        convoTrigger.enabled = true;
-    }
-
-    public void DeactivateConvoTrigger()
-    {
-        convoTrigger.enabled = false;
-    }
 }

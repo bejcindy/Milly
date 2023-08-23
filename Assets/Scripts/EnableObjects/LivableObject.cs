@@ -30,6 +30,8 @@ public class LivableObject : MonoBehaviour
 
     public bool npc;
 
+    protected bool checkVisible;
+
     protected virtual void Start()
     {
         player = GameObject.Find("Player").transform;
@@ -51,12 +53,20 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (checkVisible)
+        {
+            isVisible = IsInView();
+        }
+        else
+            isVisible = false;
         DetectInteractable();
         if(!npc)
             matColorVal = mat.GetFloat("_WhiteDegree");
 
 
-        isVisible = IsInView();
+
+
+        //isVisible = IsInView();
         if (activated)
         {
             if (!firstActivated)
@@ -163,7 +173,7 @@ public class LivableObject : MonoBehaviour
             return false;
         }
 
-        RaycastHit hit;
+        //RaycastHit hit;
         //Vector3 heading = gameObject.transform.position - Camera.main.transform.position;
         //Vector3 direction = heading.normalized;// / heading.magnitude;
 
@@ -175,10 +185,22 @@ public class LivableObject : MonoBehaviour
         //        Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);
         //        Debug.LogError(toCheck.name + " occluded by " + hit.transform.name);
         //        */
-        //        //Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
+        //        if(gameObject.name.Contains("Charles"))
+        //            Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
         //        return false;
         //    }
         //}
         return true;
+    }
+
+    protected void OnBecameVisible()
+    {
+        checkVisible = true;
+
+    }
+
+    protected void OnBecameInvisible()
+    {
+        checkVisible = false;
     }
 }

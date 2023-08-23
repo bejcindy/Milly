@@ -49,6 +49,7 @@ public class PlayerLeftHand : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             aimUI.SetActive(false);
+            playerHolding.throwing = false;
             holdTimer = 0;
             if (!noThrow)
             {
@@ -66,10 +67,11 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (holdTimer < holdTime)
             {
-                if(holdTimer > 0.1f)
-                    aimUI.SetActive(true);
+                playerHolding.throwing = true;
                 holdTimer += Time.deltaTime;
                 holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
+                if (holdTimer > 0.1f)
+                    aimUI.SetActive(true);
             }
             float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
             float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));

@@ -9,6 +9,9 @@ public class TrashLid : LivableObject
     public bool fixedPos;
     public PlayerHolding playerHolding;
 
+    public GameObject leftHandUI;
+    public GameObject rightHandUI;
+
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -30,8 +33,10 @@ public class TrashLid : LivableObject
             Debug.Log(transform.eulerAngles.z);
             if (playerHolding.GetLeftHand())
             {
+                leftHandUI.SetActive(true);
                 if (Input.GetMouseButton(0))
                 {
+                    leftHandUI.SetActive(false);
                     activated = true;
                     interacting = true;
                     if (verticalInput < 0)
@@ -46,8 +51,10 @@ public class TrashLid : LivableObject
             }
             if (playerHolding.GetRightHand())
             {
+                rightHandUI.SetActive(true);
                 if (Input.GetMouseButton(1))
                 {
+                    rightHandUI.SetActive(false);
                     activated = true;
                     interacting = true;
                     if (verticalInput < 0)
@@ -62,11 +69,22 @@ public class TrashLid : LivableObject
             }
 
         }
+        else
+        {
+            leftHandUI.SetActive(false);
+            rightHandUI.SetActive(false);
+        }
 
         if (Input.GetMouseButtonUp(0))
         {
             interacting = false;
 
+        }
+
+        if (interacting)
+        {
+            leftHandUI.SetActive(false);
+            rightHandUI.SetActive(false);
         }
         if (!fixedPos && !interacting)
         {

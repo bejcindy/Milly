@@ -80,7 +80,7 @@ public class NPCObject : LivableObject
         if (npcActivated)
         {
             anim.SetTrigger("Start");
-            ActivateAll(this.transform);
+            //ActivateAll(this.transform);
         }
 
         if (DialogueManager.isConversationActive)

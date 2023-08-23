@@ -11,6 +11,7 @@ public class LivableObject : MonoBehaviour
     protected Transform player;
     [SerializeField] protected bool interactable;
     [SerializeField] protected bool isVisible;
+    [SerializeField] protected bool checkVisible;
     [SerializeField] protected bool chainControl;
     [SerializeField] protected float minDist;
 
@@ -28,9 +29,13 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected GameObject postProcessingVolume;
     [SerializeField] protected CinemachineVirtualCamera playerCam;
 
+    [Header("Rigged")]
+    [SerializeField] protected bool rigged;
+    [SerializeField] protected RiggedVisibleDetector visibleDetector;
+
     public bool npc;
 
-    protected bool checkVisible;
+
 
     protected virtual void Start()
     {
@@ -53,12 +58,21 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (checkVisible)
+        if (!rigged)
         {
-            isVisible = IsInView();
+            if (checkVisible)
+            {
+                isVisible = IsInView();
+            }
+            else
+                isVisible = false;
+
         }
         else
-            isVisible = false;
+        {
+            isVisible = visibleDetector.isVisible;
+        }
+
         DetectInteractable();
         if(!npc)
             matColorVal = mat.GetFloat("_WhiteDegree");
@@ -161,7 +175,8 @@ public class LivableObject : MonoBehaviour
         //Is in front
         if (pointOnScreen.z < 0)
         {
-            //Debug.Log("Behind: " + gameObject.name);
+            if(gameObject.name.Contains("pizza"))
+                Debug.Log("Behind: " + gameObject.name);
             return false;
         }
 
@@ -169,7 +184,8 @@ public class LivableObject : MonoBehaviour
         if ((pointOnScreen.x < Screen.width * 0.2) || (pointOnScreen.x > Screen.width * 0.8f) ||
                 (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
         {
-            //Debug.Log("OutOfBounds: " + gameObject.name);
+            if (gameObject.name.Contains("pizza"))
+                Debug.Log("OutOfBounds: " + gameObject.name);
             return false;
         }
 

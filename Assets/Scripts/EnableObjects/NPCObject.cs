@@ -23,7 +23,7 @@ public class NPCObject : LivableObject
     public CinemachineVirtualCamera playerCinemachine;
     FixedCameraObject cameraControl;
 
-    GameObject npcBody;
+    public GameObject npcBody;
     public bool firstTalk;
     public bool dialogueEnabled;
     Animator anim;
@@ -36,7 +36,6 @@ public class NPCObject : LivableObject
         dialogue = GetComponent<DialogueSystemTrigger>();
         cameraControl = GetComponent<FixedCameraObject>();
         anim = transform.GetChild(0).GetComponent<Animator>();
-        npcBody = transform.GetChild(0).gameObject;
     }
 
 

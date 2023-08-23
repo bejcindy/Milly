@@ -15133,8 +15133,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0352919, y: 8.862736, z: 1}
-  m_Center: {x: -0.000003248453, y: 0.00000023841858, z: -0.000001102686}
+  m_Size: {x: 1.0352919, y: 9.439273, z: 1}
+  m_Center: {x: -0.0000032581527, y: 0.28826857, z: -0.0000011251215}
 --- !u!114 &536825569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22757,6 +22757,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onLadder: 0
+  onSlope: 0
+  maxSlopeAngle: 30
+  slopeCollide: 0
   upperRay: {fileID: 1176253672}
   lowerRay: {fileID: 868923153}
   stepHeight: 0.5
@@ -22775,7 +22778,6 @@ MonoBehaviour:
   airMultiplier: 0.04
   readyToJump: 1
   jumpKey: 32
-  maxSlopeAngle: 30
   orientation: {fileID: 1918295900}
   playerHeight: 2.2
   grounded: 0
@@ -34621,7 +34623,7 @@ GameObject:
   - component: {fileID: 1307772005}
   m_Layer: 6
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: slope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

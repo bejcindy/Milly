@@ -31,7 +31,7 @@ public class DataHolder : MonoBehaviour
         //Debug.Log("focusing is " + focusing+"; "+currentFocus);
         if (!focusing && focused)
         {
-            Debug.Log("unfocusing");
+            //Debug.Log("unfocusing");
             Unfocus();
         }
         //Debug.Log("focusing: " + focusing + "; focused: " + focused);

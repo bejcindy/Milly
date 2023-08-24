@@ -7,6 +7,9 @@ public class LookingObject : LivableObject
     bool interacted;
     PlayerHolding playerHolding;
 
+    public bool designatedSpot;
+    public bool inSpot;
+
     protected override void Start()
     {
         base.Start();
@@ -19,42 +22,84 @@ public class LookingObject : LivableObject
         if (matColorVal > 0)
         {
             base.Update();
-            if (interactable)
+            if (!designatedSpot)
             {
-                if (!playerHolding.throwing)
+                if (interactable)
                 {
-                    if (!firstActivated)
+                    if (!playerHolding.throwing)
                     {
-                        gameObject.layer = 12;
-                        //base.FocusOnThis();
-                        DataHolder.FocusOnThis(fadeInterval, matColorVal);
-                        DataHolder.currentFocus = gameObject;
+                        if (!firstActivated)
+                        {
+                            gameObject.layer = 12;
+                            //base.FocusOnThis();
+                            DataHolder.FocusOnThis(fadeInterval, matColorVal);
+                            DataHolder.currentFocus = gameObject;
 
-                        //Debug.Log(gameObject.name + ": focused");
-                        interacted = true;
+                            //Debug.Log(gameObject.name + ": focused");
+                            interacted = true;
+                        }
+                        activated = true;
                     }
-                    activated = true;
-                }
 
+                }
+                else
+                {
+                    gameObject.layer = 0;
+                    if (DataHolder.currentFocus == gameObject)
+                    {
+                        //    DataHolder.currentFocus = null;
+                        DataHolder.focusing = false;
+                        //Debug.Log(gameObject.name + ": unfocused");
+                    }
+                    //if (interacted)
+                    //{
+                    //    //Unfocus(interacted);
+                    //    if (DataHolder.currentFocus == gameObject)
+                    //        DataHolder.currentFocus = null;
+                    //    //DataHolder.Unfocus(gameObject, interacted, matColorVal);
+                    //    Debug.Log(gameObject.name + "unfocusing");
+                    //}
+                }
             }
             else
             {
-                gameObject.layer = 0;
-                if (DataHolder.currentFocus == gameObject)
+                if(inSpot && isVisible)
                 {
-                    //    DataHolder.currentFocus = null;
-                    DataHolder.focusing = false;
-                    //Debug.Log(gameObject.name + ": unfocused");
+                    if (!playerHolding.throwing)
+                    {
+                        if (!firstActivated)
+                        {
+                            gameObject.layer = 12;
+                            //base.FocusOnThis();
+                            DataHolder.FocusOnThis(fadeInterval, matColorVal);
+                            DataHolder.currentFocus = gameObject;
+
+                            //Debug.Log(gameObject.name + ": focused");
+                            interacted = true;
+                        }
+                        activated = true;
+                    }
                 }
-                //if (interacted)
-                //{
-                //    //Unfocus(interacted);
-                //    if (DataHolder.currentFocus == gameObject)
-                //        DataHolder.currentFocus = null;
-                //    //DataHolder.Unfocus(gameObject, interacted, matColorVal);
-                //    Debug.Log(gameObject.name + "unfocusing");
-                //}
+                else
+                {
+                    gameObject.layer = 0;
+                    if (DataHolder.currentFocus == gameObject)
+                    {
+                        //    DataHolder.currentFocus = null;
+                        DataHolder.focusing = false;
+                        //Debug.Log(gameObject.name + ": unfocused");
+                    }
+                    //if (interacted)
+                    //{
+                    //    //Unfocus(interacted);
+                    //    if (DataHolder.currentFocus == gameObject)
+                    //        DataHolder.currentFocus = null;
+                    //    //DataHolder.Unfocus(gameObject, interacted, matColorVal);
+                    //    Debug.Log(gameObject.name + "unfocusing");
+                    //}
+                }
             }
+
         }
         else
         {

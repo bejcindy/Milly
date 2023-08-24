@@ -67,11 +67,16 @@ public class GroupMaster : MonoBehaviour
 
     void ActivateGroup(Transform child)
     {
+
         if (child.GetComponent<LivableObject>() == null)
         {
             Material childMat = child.GetComponent<Renderer>().material;
             childMat.EnableKeyword("_WhiteDegree");
-            TurnOnColor(childMat);
+            if (childMat.GetFloat("_WhiteDegree") > 0)
+            {
+                TurnOnColor(childMat);
+            }
+
         }
         else
         {
@@ -79,7 +84,10 @@ public class GroupMaster : MonoBehaviour
             {
                 Material childMat = child.GetComponent<Renderer>().material;
                 childMat.EnableKeyword("_WhiteDegree");
-                TurnOnColor(childMat);
+                if (childMat.GetFloat("_WhiteDegree") > 0)
+                {
+                    TurnOnColor(childMat);
+                }
                 child.GetComponent<LivableObject>().activated = true;
             }
         }

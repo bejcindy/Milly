@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028542, g: 0.22571641, b: 0.3069246, a: 1}
+  m_IndirectSpecularColor: {r: 0.009012707, g: 0.013102867, b: 0.020503506, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -262,6 +262,10 @@ MonoBehaviour:
   activateAll: 0
   groupColorVal: 0
   fadeInterval: 0
+  designatedGroup: 0
+  childToChildren: 0
+  buildingControl: 0
+  bgc: {fileID: 0}
 --- !u!1 &102787712
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,16 +925,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 295455362}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
   playerHolding: {fileID: 0}
-  holdingPos: {fileID: 0}
-  pickUpText: 
+  inHand: 0
+  selected: 0
+  thrown: 0
+  throwCD: 0
+  npcBound: 0
 --- !u!54 &308921394
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2022,7 +2037,7 @@ BoxCollider:
   m_Center: {x: -0.5, y: 0, z: 0}
 --- !u!4 &501281429 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3859706233774809635, guid: 77201f1196656a448a9cff50211d8bed, type: 3}
+  m_CorrespondingSourceObject: {fileID: 211313261359015554, guid: 77201f1196656a448a9cff50211d8bed, type: 3}
   m_PrefabInstance: {fileID: 8464612780515955987}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &507635634 stripped
@@ -2251,13 +2266,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  tagName: 
+  tagList: []
 --- !u!64 &537740771
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2534,13 +2559,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 1
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
 --- !u!1 &595973540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2608,13 +2641,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  tagName: 
+  tagList: []
 --- !u!1 &605449638
 GameObject:
   m_ObjectHideFlags: 0
@@ -2929,16 +2972,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
   playerHolding: {fileID: 890563934}
-  holdingPos: {fileID: 1308879911}
-  pickUpText: 
+  inHand: 0
+  selected: 0
+  thrown: 0
+  throwCD: 0
+  npcBound: 0
 --- !u!114 &625586878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2953,13 +3007,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  tagName: 
+  tagList: []
 --- !u!1 &640969576 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2929640103473658562, guid: d1997d0756e2ed042aa0e600034b2e52, type: 3}
@@ -3532,6 +3596,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc8e32f059b2c744bc88fa49e1660ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onLadder: 0
+  onSlope: 0
+  maxSlopeAngle: 0
+  slopeCollide: 0
+  upperRay: {fileID: 0}
+  lowerRay: {fileID: 0}
+  stepHeight: 0.5
+  stepSmooth: 15
+  upperDetect: 0.7
+  lowerDetect: 0.7
+  step_LookAheadRange: 0.1
+  step_MaxStepHeight: 0.3
+  playerRadius: 0
+  slopeLimit: 0
   moveSpeed: 7
   walkSpeed: 7
   groundDrag: 5
@@ -3546,6 +3624,10 @@ MonoBehaviour:
   flatGround:
     serializedVersion: 2
     m_Bits: 64
+  stairs:
+    serializedVersion: 2
+    m_Bits: 0
+  stairForce: 0
 --- !u!114 &890563934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3558,13 +3640,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec56da029820dc24fa7d3e92aa6fb5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHolding: 0
-  holdingPosition: {x: -0.5, y: 0, z: 1}
-  minThrowForce: {x: 100, y: 50}
-  maxThrowForce: {x: 500, y: 200}
-  holdingObj: {fileID: 0}
-  noFirstThrow: 1
-  holdTimer: 0
+  fullHand: 0
+  inDialogue: 0
+  throwing: 0
+  selectedObj: {fileID: 0}
+  leftHandUI: {fileID: 0}
+  rightHandUI: {fileID: 0}
 --- !u!114 &890563935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4048,24 +4129,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
   interactKey: 102
   quitKey: 119
   isInteracting: 0
   positionFixed: 0
   showMouse: 0
+  moveCam: 0
   doubleSided: 1
   onLeft: 0
   onRight: 0
   fixedCamera: {fileID: 1176811241}
   otherCamera: {fileID: 1204423690}
   playerCamera: {fileID: 0}
+  uiHint: {fileID: 0}
+  playerBody: {fileID: 0}
 --- !u!114 &934848252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4080,24 +4172,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
   interactKey: 102
   quitKey: 119
   isInteracting: 0
   positionFixed: 0
   showMouse: 0
+  moveCam: 0
   doubleSided: 1
   onLeft: 0
   onRight: 0
   fixedCamera: {fileID: 1297907460}
   otherCamera: {fileID: 102787714}
   playerCamera: {fileID: 0}
+  uiHint: {fileID: 0}
+  playerBody: {fileID: 0}
 --- !u!64 &940103704
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4395,6 +4498,10 @@ PrefabInstance:
     - target: {fileID: -3174865735559272011, guid: b64820100cf1f5541aec51b9555b9280, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -253786545196755511, guid: b64820100cf1f5541aec51b9555b9280, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 549004691809616673, guid: b64820100cf1f5541aec51b9555b9280, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5163,6 +5270,10 @@ MonoBehaviour:
   activateAll: 0
   groupColorVal: 1
   fadeInterval: 10
+  designatedGroup: 0
+  childToChildren: 0
+  buildingControl: 0
+  bgc: {fileID: 0}
 --- !u!64 &1212070020
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5204,24 +5315,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
   interactKey: 102
   quitKey: 119
   isInteracting: 0
   positionFixed: 0
   showMouse: 0
+  moveCam: 0
   doubleSided: 1
   onLeft: 0
   onRight: 0
   fixedCamera: {fileID: 795222079}
   otherCamera: {fileID: 1466193656}
   playerCamera: {fileID: 1005978787}
+  uiHint: {fileID: 0}
+  playerBody: {fileID: 0}
 --- !u!1 &1245966284
 GameObject:
   m_ObjectHideFlags: 3
@@ -7013,6 +7135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.05
   disappearDelay: 2
+  delayBetweenTexts: 2
   txt: 
 --- !u!114 &1486145675
 MonoBehaviour:
@@ -7533,24 +7656,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 5
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
   interactKey: 102
   quitKey: 119
   isInteracting: 0
   positionFixed: 0
   showMouse: 0
+  moveCam: 0
   doubleSided: 1
   onLeft: 0
   onRight: 0
   fixedCamera: {fileID: 1189369628}
   otherCamera: {fileID: 1305637858}
   playerCamera: {fileID: 0}
+  uiHint: {fileID: 0}
+  playerBody: {fileID: 0}
 --- !u!1 &1601286721 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2990354146936310822, guid: d1997d0756e2ed042aa0e600034b2e52, type: 3}
@@ -7775,13 +7909,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 15
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 1
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
 --- !u!1001 &1628895133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7950,13 +8092,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  tagName: 
+  tagList: []
 --- !u!64 &1628895138
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8031,9 +8183,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 375193444908915268, guid: ab69264c41c3e804fa5915c337d8976f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ab69264c41c3e804fa5915c337d8976f, type: 3}
       propertyPath: m_Name
       value: TattoShop_BO (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ab69264c41c3e804fa5915c337d8976f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9140,13 +9300,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 0
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  tagName: 
+  tagList: []
 --- !u!64 &1848323631
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11235,6 +11405,10 @@ MonoBehaviour:
   activateAll: 0
   groupColorVal: 0
   fadeInterval: 10
+  designatedGroup: 0
+  childToChildren: 0
+  buildingControl: 0
+  bgc: {fileID: 0}
 --- !u!114 &6699080169857547624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11249,24 +11423,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 1
   minDist: 5
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
   interactKey: 102
   quitKey: 27
   isInteracting: 0
   positionFixed: 0
   showMouse: 1
+  moveCam: 0
   doubleSided: 0
   onLeft: 0
   onRight: 0
   fixedCamera: {fileID: 1783828606}
   otherCamera: {fileID: 0}
   playerCamera: {fileID: 1005978787}
+  uiHint: {fileID: 0}
+  playerBody: {fileID: 0}
 --- !u!1001 &6748248914266396835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11434,13 +11619,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 2
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  groupControl: 0
+  buildingGroup: {fileID: 0}
 --- !u!23 &7248351179476058007
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11519,13 +11714,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 2
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  groupControl: 0
+  buildingGroup: {fileID: 0}
 --- !u!1 &7258558823723429383
 GameObject:
   m_ObjectHideFlags: 0
@@ -11661,13 +11866,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 2
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  groupControl: 0
+  buildingGroup: {fileID: 0}
 --- !u!33 &7996244111293226937
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11712,13 +11927,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 2
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  groupControl: 0
+  buildingGroup: {fileID: 0}
 --- !u!1001 &8464612780515955987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11840,13 +12065,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 2
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  groupControl: 0
+  buildingGroup: {fileID: 0}
 --- !u!4 &8978811037021472692
 Transform:
   m_ObjectHideFlags: 0
@@ -11898,10 +12133,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
+  checkVisible: 0
   chainControl: 0
   minDist: 2
   rend: {fileID: 0}
+  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 0
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  npc: 0
+  groupControl: 0
+  buildingGroup: {fileID: 0}

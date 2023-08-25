@@ -189,7 +189,12 @@ public class LivableObject : MonoBehaviour
             return false;
         }
 
-        //RaycastHit hit;
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,Camera.main.transform.position-transform.position,out hit, Mathf.Infinity))
+        {
+            if (!hit.collider.CompareTag("Player"))
+                return false;
+        }
         //Vector3 heading = gameObject.transform.position - Camera.main.transform.position;
         //Vector3 direction = heading.normalized;// / heading.magnitude;
 

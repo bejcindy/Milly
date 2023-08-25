@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DesignatedSpot : MonoBehaviour
 {
-    public LookingObject lookingObject;
+    public LookingObject[] lookingObjects;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +19,12 @@ public class DesignatedSpot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player")
+        if (other.CompareTag("Player"))
         {
-            lookingObject.inSpot = true;
+            foreach(LookingObject lookingObject in lookingObjects)
+            {
+                lookingObject.inSpot = true;
+            }
         }
     }
 }

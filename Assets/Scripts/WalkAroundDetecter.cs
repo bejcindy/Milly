@@ -30,7 +30,8 @@ public class WalkAroundDetecter : LivableObject
         }
         if (matColorVal <= 0)
         {
-            streetLight.enabled = true;
+            if(streetLight!=null)
+                streetLight.enabled = true;
         }
     }
 

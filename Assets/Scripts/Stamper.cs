@@ -39,6 +39,7 @@ public class Stamper : MonoBehaviour
                 var paintObject = hitInfo.transform.GetComponent<InkCanvas>();
                 Debug.Log(paintObject.name);
                 if (paintObject != null)
+                {
                     switch (useMethodType)
                     {
                         case UseMethodType.RaycastHitInfo:
@@ -59,6 +60,9 @@ public class Stamper : MonoBehaviour
                             success = erase ? paintObject.EraseUVDirect(brush, hitInfo.textureCoord) : paintObject.PaintUVDirect(brush, hitInfo.textureCoord);
                             break;
                     }
+                    paintObject.GetComponent<LivableObject>().activated = true;
+                }
+
                 if (!success)
                     Debug.LogError("Failed to paint.");
             }

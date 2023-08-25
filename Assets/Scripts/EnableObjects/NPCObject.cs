@@ -21,7 +21,6 @@ public class NPCObject : LivableObject
     DialogueSystemTrigger dialogue;
     public CinemachineVirtualCamera NPCCinemachine;
     public CinemachineVirtualCamera playerCinemachine;
-    FixedCameraObject cameraControl;
 
     public GameObject npcBody;
     public bool firstTalk;
@@ -34,7 +33,6 @@ public class NPCObject : LivableObject
         if (lookingOriented)
             npcLooking = GetComponent<LookingObject>();
         dialogue = GetComponent<DialogueSystemTrigger>();
-        cameraControl = GetComponent<FixedCameraObject>();
         anim = transform.GetChild(0).GetComponent<Animator>();
     }
 
@@ -80,7 +78,7 @@ public class NPCObject : LivableObject
         if (npcActivated)
         {
             anim.SetTrigger("Start");
-            //ActivateAll(this.transform);
+            ActivateAll(this.transform);
         }
 
         if (DialogueManager.isConversationActive)

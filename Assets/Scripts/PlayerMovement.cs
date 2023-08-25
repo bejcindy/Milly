@@ -111,6 +111,9 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("slope"))
         {
             slopeCollide = true;
+            //RaycastHit downRay;
+            //if (Physics.Raycast(transform.position, -transform.up, out downRay, -10f, flatGround))
+            //    collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, downRay.normal).normalized;
             collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, collision.contacts[0].normal).normalized;
         }
     }
@@ -138,20 +141,34 @@ public class PlayerMovement : MonoBehaviour
             rb.useGravity = true;
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
         //Debug.Log(rb.velocity);
+        //Debug.DrawRay(transform.position, GetSlopeMoveDir() * moveSpeed * 20f, Color.red);
+        //Debug.DrawRay(transform.position, collisionSlopeDir * moveSpeed * 20f, Color.blue);
         if (OnSlope()||slopeCollide)
         {
-            if(OnSlope())
-                rb.AddForce(GetSlopeMoveDir() * moveSpeed * 20f, ForceMode.Force);
-            else if (slopeCollide)
-                rb.AddForce(collisionSlopeDir * moveSpeed * 20f, ForceMode.Force);
+            if (verticalInput == 0 && horizontalInput == 0)
+                rb.velocity = Vector3.zero;
+            else
+            {
+                if (OnSlope())
+                {
+                    rb.AddForce(GetSlopeMoveDir() * moveSpeed * 20f, ForceMode.Force);
+                    //Debug.Log("onslope");
+                }
+                else if (slopeCollide)
+                {
+                    rb.AddForce(collisionSlopeDir * moveSpeed * 20f, ForceMode.Force);
+                    //Debug.Log("colliding");
+                }
 
-            //if (rb.velocity.y > 0)
-            //    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-
-            if (rb.velocity.y > 0 && verticalInput > 0f)
-                rb.AddForce(Vector3.down * 10f, ForceMode.Force);
-            else if (rb.velocity.y > 0 && verticalInput < 0f)
-                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                //if (rb.velocity.y > 0)
+                //    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                if (rb.velocity.y > 0)
+                    rb.AddForce(Vector3.down * 10f, ForceMode.Force);
+                else if (rb.velocity.y < 0)
+                {
+                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                }
+            }
         }
 
         if (grounded)
@@ -247,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!OnSlope() && !slopeCollide)
         {
-            Debug.Log("here");
+            //Debug.Log("here");
             Vector3 flatVel = Vector3.ProjectOnPlane(rb.velocity, transform.up);
             Vector3 upVel = Vector3.Project(rb.velocity, transform.up);
 

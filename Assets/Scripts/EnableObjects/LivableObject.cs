@@ -9,7 +9,7 @@ using Cinemachine;
 public class LivableObject : MonoBehaviour
 {
     protected Transform player;
-    [SerializeField] protected bool interactable;
+    [SerializeField] public bool interactable;
     [SerializeField] protected bool isVisible;
     [SerializeField] protected bool checkVisible;
     [SerializeField] protected bool chainControl;

@@ -49,6 +49,15 @@ public class PlayerHolding : MonoBehaviour
             leftHandUI.SetActive(false);
             rightHandUI.SetActive(false);
         }
+
+        if (DialogueManager.IsConversationActive)
+        {
+            inDialogue = true;
+        }
+        else
+        {
+            inDialogue = false;
+        }
     }
 
 
@@ -186,4 +195,6 @@ public class PlayerHolding : MonoBehaviour
     {
         rightHand.noThrow = false;
     }
+
+    
 }

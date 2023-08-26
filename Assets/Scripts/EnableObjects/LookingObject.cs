@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class LookingObject : LivableObject
 {
@@ -9,6 +10,7 @@ public class LookingObject : LivableObject
 
     public bool designatedSpot;
     public bool inSpot;
+    public DialogueSystemTrigger dialogue;
 
     protected override void Start()
     {
@@ -26,7 +28,7 @@ public class LookingObject : LivableObject
             {
                 if (interactable)
                 {
-                    if (!playerHolding.throwing)
+                    if (!playerHolding.throwing && !playerHolding.inDialogue)
                     {
                         if (!firstActivated)
                         {
@@ -103,6 +105,7 @@ public class LookingObject : LivableObject
         }
         else
         {
+            dialogue.enabled = true;
             //Unfocus(interacted);
             //DataHolder.Unfocus(gameObject, interacted, matColorVal);
             gameObject.layer = 0;
@@ -114,6 +117,16 @@ public class LookingObject : LivableObject
         //if (firstActivated)
         //    gameObject.layer = 0;
 
+    }
+
+    void OnConversationStart(Transform other)
+    {
+        player.GetComponent<PlayerHolding>().inDialogue = true;
+    }
+
+    void OnConversationEnd(Transform other)
+    {
+        player.GetComponent<PlayerHolding>().inDialogue = false;
     }
 
 }

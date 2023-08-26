@@ -7,6 +7,8 @@ public class CollisionObject : LivableObject
     public string tagName;
     public List<string> tagList;
 
+    public bool stairParent;
+
     protected override void Start()
     {
         base.Start();
@@ -27,7 +29,15 @@ public class CollisionObject : LivableObject
     {
         if (tagList.Contains(collision.gameObject.tag))
         {
-            activated = true;
+            if(!stairParent)
+                activated = true;
+            else
+            {
+                Material parentMat = transform.parent.GetComponent<Renderer>().material;
+                parentMat.EnableKeyword("_WhiteDegree");
+                TurnOnColor(parentMat);
+            }
+
             if (gameObject.CompareTag("Ladder"))
             {
                 GetComponent<Rigidbody>().isKinematic = false;

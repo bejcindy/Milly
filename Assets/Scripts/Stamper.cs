@@ -39,29 +39,33 @@ public class Stamper : MonoBehaviour
                 var paintObject = hitInfo.transform.GetComponent<InkCanvas>();
                 if (paintObject != null && paintObject.GetComponent<LivableObject>().interactable)
                 {
-                    switch (useMethodType)
+                    var paintObject = hitInfo.transform.GetComponent<InkCanvas>();
+                    Debug.Log(paintObject.name);
+                    if (paintObject != null)
                     {
-                        case UseMethodType.RaycastHitInfo:
-                            success = erase ? paintObject.Erase(brush, hitInfo) : paintObject.Paint(brush, hitInfo);
-                            break;
+                        switch (useMethodType)
+                        {
+                            case UseMethodType.RaycastHitInfo:
+                                success = erase ? paintObject.Erase(brush, hitInfo) : paintObject.Paint(brush, hitInfo);
+                                break;
 
-                        case UseMethodType.WorldPoint:
-                            success = erase ? paintObject.Erase(brush, hitInfo.point) : paintObject.Paint(brush, hitInfo.point);
-                            break;
+                            case UseMethodType.WorldPoint:
+                                success = erase ? paintObject.Erase(brush, hitInfo.point) : paintObject.Paint(brush, hitInfo.point);
+                                break;
 
-                        case UseMethodType.NearestSurfacePoint:
-                            success = erase ? paintObject.EraseNearestTriangleSurface(brush, hitInfo.point) : paintObject.PaintNearestTriangleSurface(brush, hitInfo.point);
-                            break;
+                            case UseMethodType.NearestSurfacePoint:
+                                success = erase ? paintObject.EraseNearestTriangleSurface(brush, hitInfo.point) : paintObject.PaintNearestTriangleSurface(brush, hitInfo.point);
+                                break;
 
-                        case UseMethodType.DirectUV:
-                            if (!(hitInfo.collider is MeshCollider))
-                                Debug.LogWarning("Raycast may be unexpected if you do not use MeshCollider.");
-                            success = erase ? paintObject.EraseUVDirect(brush, hitInfo.textureCoord) : paintObject.PaintUVDirect(brush, hitInfo.textureCoord);
-                            break;
+                            case UseMethodType.DirectUV:
+                                if (!(hitInfo.collider is MeshCollider))
+                                    Debug.LogWarning("Raycast may be unexpected if you do not use MeshCollider.");
+                                success = erase ? paintObject.EraseUVDirect(brush, hitInfo.textureCoord) : paintObject.PaintUVDirect(brush, hitInfo.textureCoord);
+                                break;
+                        }
+                        paintObject.GetComponent<LivableObject>().activated = true;
                     }
-                    paintObject.GetComponent<LivableObject>().activated = true;
                 }
-
                 if (!success)
                     Debug.LogError("Failed to paint.");
             }

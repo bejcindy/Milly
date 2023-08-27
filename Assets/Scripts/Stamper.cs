@@ -37,10 +37,9 @@ public class Stamper : MonoBehaviour
             {
 
                 var paintObject = hitInfo.transform.GetComponent<InkCanvas>();
-                if (paintObject != null && paintObject.GetComponent<LivableObject>().interactable)
+                if (paintObject != null)
                 {
-                    var paintObject = hitInfo.transform.GetComponent<InkCanvas>();
-                    Debug.Log(paintObject.name);
+                    paintObject = hitInfo.transform.GetComponent<InkCanvas>();
                     if (paintObject != null)
                     {
                         switch (useMethodType)

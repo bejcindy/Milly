@@ -33,6 +33,8 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected bool rigged;
     [SerializeField] protected RiggedVisibleDetector visibleDetector;
 
+    public bool centerFocused;
+
     public bool npc;
 
 
@@ -48,7 +50,7 @@ public class LivableObject : MonoBehaviour
         if (!npc)
         {
             mat = rend.material;
-            mat.EnableKeyword("_WhiteDegree");
+            //mat.EnableKeyword("_WhiteDegree");
             mat.SetFloat("_WhiteDegree", 1);
         }
 
@@ -89,7 +91,11 @@ public class LivableObject : MonoBehaviour
             }
                 
             if (chainControl)
-                GetComponent<GroupMaster>().activateAll = true;
+            {
+                if(matColorVal <= 0)
+                    GetComponent<GroupMaster>().activateAll = true;
+            }
+                
         }
     }
 
@@ -124,50 +130,6 @@ public class LivableObject : MonoBehaviour
         }
     }
 
-    //float minBlur = .1f;
-    //float maxBlur = .75f;
-    //float focusDist = .75f;
-    //DepthOfField dof;
-    //protected virtual void FocusOnThis()
-    //{
-    //    if (focusDist > .1f)
-    //        focusDist -= 0.1f * fadeInterval * Time.deltaTime;
-    //    else
-    //        focusDist = .1f;
-    //    //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
-    //    Volume v = postProcessingVolume.GetComponent<Volume>();
-    //    if (v.profile.TryGet<DepthOfField>(out dof))
-    //    {
-    //        dof.focusDistance.value = focusDist;
-    //    }
-    //    //playerCam.m_Lens.FieldOfView = 120;
-    //}
-
-    //protected virtual void Unfocus(bool changeThis)
-    //{
-
-    //    if (focusDist < .75f)
-    //    {
-    //        gameObject.layer = 13;
-    //        focusDist += .5f * Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        focusDist = .75f;
-    //        changeThis = false;
-    //        gameObject.layer = 0;
-    //        if (matColorVal <= 0)
-    //            gameObject.GetComponent<LookingObject>().enabled = false;
-    //    }
-            
-    //    //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
-    //    Volume v = postProcessingVolume.GetComponent<Volume>();
-    //    if (v.profile.TryGet<DepthOfField>(out dof))
-    //    {
-    //        dof.focusDistance.value = focusDist;
-    //    }
-    //}
-
     protected virtual bool IsInView()
     {
         Vector3 pointOnScreen = Camera.main.WorldToScreenPoint(rend.bounds.center);
@@ -181,13 +143,27 @@ public class LivableObject : MonoBehaviour
         }
 
         //Is in FOV
-        if ((pointOnScreen.x < Screen.width * 0.2) || (pointOnScreen.x > Screen.width * 0.8f) ||
-                (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
+        if (centerFocused)
         {
-            if (gameObject.name.Contains("pizza"))
-                Debug.Log("OutOfBounds: " + gameObject.name);
-            return false;
+            if ((pointOnScreen.x < Screen.width * 0.4f) || (pointOnScreen.x > Screen.width * 0.6f) ||
+                (pointOnScreen.y < Screen.height * 0.4f) || (pointOnScreen.y > Screen.height * 0.6f))
+            {
+                if (gameObject.name.Contains("pizza"))
+                    Debug.Log("OutOfBounds: " + gameObject.name);
+                return false;
+            }
         }
+        else
+        {
+            if ((pointOnScreen.x < Screen.width * 0.2f) || (pointOnScreen.x > Screen.width * 0.8f) ||
+               (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
+            {
+                if (gameObject.name.Contains("pizza"))
+                    Debug.Log("OutOfBounds: " + gameObject.name);
+                return false;
+            }
+        }
+
 
         RaycastHit hit;
         if(Physics.Raycast(transform.position,Camera.main.transform.position-transform.position,out hit, Mathf.Infinity))
@@ -195,22 +171,6 @@ public class LivableObject : MonoBehaviour
             if (!hit.collider.CompareTag("Player"))
                 return false;
         }
-        //Vector3 heading = gameObject.transform.position - Camera.main.transform.position;
-        //Vector3 direction = heading.normalized;// / heading.magnitude;
-
-        //if (Physics.Linecast(Camera.main.transform.position, transform.position, out hit))
-        //{
-        //    if (hit.transform.name != gameObject.name && !hit.transform.name.Contains("Player"))
-        //    {
-        //        /* -->
-        //        Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);
-        //        Debug.LogError(toCheck.name + " occluded by " + hit.transform.name);
-        //        */
-        //        if(gameObject.name.Contains("Charles"))
-        //            Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
-        //        return false;
-        //    }
-        //}
         return true;
     }
 

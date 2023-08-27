@@ -47,24 +47,40 @@ public class BuildingGroupController : MonoBehaviour
         if(obj.GetComponent<Renderer>()!= null)
         {
             Material mat = obj.GetComponent<Renderer>().material;
-            mat.EnableKeyword("_WhiteDegree");
-            if(mat.GetFloat("_WhiteDegree") >=0)
-                TurnOnColor(mat);
+            if (mat.IsKeywordEnabled("_WhiteDegree"))
+            {
+                if (mat.GetFloat("_WhiteDegree") >= 0)
+                    TurnOnColor(mat);
+            }
+
         }
+        if (obj.GetComponent<LivableObject>() != null)
+            obj.GetComponent<LivableObject>().activated = true;
+
         foreach(Transform child in obj)
         {
-            if(child.childCount <= 0 && child.GetComponent<Renderer>()!=null)
+            if (child.GetComponent<LivableObject>() != null)
+                child.GetComponent<LivableObject>().activated = true;
+
+            if (child.childCount <= 0 && child.GetComponent<Renderer>()!=null)
             {
                 Material childMat = child.GetComponent<Renderer>().material;
-                childMat.EnableKeyword("_WhiteDegree");
-                if (childMat.GetFloat("_WhiteDegree") >= 0)
-                    TurnOnColor(childMat);
+                if (childMat.IsKeywordEnabled("_WhiteDegree"))
+                {
+                    childMat.EnableKeyword("_WhiteDegree");
+                    if (childMat.GetFloat("_WhiteDegree") >= 0)
+                        TurnOnColor(childMat);
+                }
+
             }
             else
             {
                 ActivateAll(child);
             }
+
+
         }
+
     }
 
     void TurnOnColor(Material material)

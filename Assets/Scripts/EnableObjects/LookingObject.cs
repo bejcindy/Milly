@@ -5,7 +5,6 @@ using PixelCrushers.DialogueSystem;
 
 public class LookingObject : LivableObject
 {
-    bool interacted;
     PlayerHolding playerHolding;
 
     public bool designatedSpot;
@@ -33,14 +32,12 @@ public class LookingObject : LivableObject
                         if (!firstActivated)
                         {
                             gameObject.layer = 12;
-                            //base.FocusOnThis();
                             DataHolder.FocusOnThis(fadeInterval, matColorVal);
                             DataHolder.currentFocus = gameObject;
-
-                            //Debug.Log(gameObject.name + ": focused");
-                            interacted = true;
                         }
                         activated = true;
+                        if(specialEffect != null)
+                            specialEffect.SetActive(true);
                     }
 
                 }
@@ -49,18 +46,8 @@ public class LookingObject : LivableObject
                     gameObject.layer = 0;
                     if (DataHolder.currentFocus == gameObject)
                     {
-                        //    DataHolder.currentFocus = null;
                         DataHolder.focusing = false;
-                        //Debug.Log(gameObject.name + ": unfocused");
                     }
-                    //if (interacted)
-                    //{
-                    //    //Unfocus(interacted);
-                    //    if (DataHolder.currentFocus == gameObject)
-                    //        DataHolder.currentFocus = null;
-                    //    //DataHolder.Unfocus(gameObject, interacted, matColorVal);
-                    //    Debug.Log(gameObject.name + "unfocusing");
-                    //}
                 }
             }
             else
@@ -72,14 +59,12 @@ public class LookingObject : LivableObject
                         if (!firstActivated)
                         {
                             gameObject.layer = 12;
-                            //base.FocusOnThis();
                             DataHolder.FocusOnThis(fadeInterval, matColorVal);
                             DataHolder.currentFocus = gameObject;
-
-                            //Debug.Log(gameObject.name + ": focused");
-                            interacted = true;
                         }
                         activated = true;
+                        if (specialEffect != null) 
+                            specialEffect.SetActive(true);
                     }
                 }
                 else
@@ -87,35 +72,19 @@ public class LookingObject : LivableObject
                     gameObject.layer = 0;
                     if (DataHolder.currentFocus == gameObject)
                     {
-                        //    DataHolder.currentFocus = null;
                         DataHolder.focusing = false;
-                        //Debug.Log(gameObject.name + ": unfocused");
                     }
-                    //if (interacted)
-                    //{
-                    //    //Unfocus(interacted);
-                    //    if (DataHolder.currentFocus == gameObject)
-                    //        DataHolder.currentFocus = null;
-                    //    //DataHolder.Unfocus(gameObject, interacted, matColorVal);
-                    //    Debug.Log(gameObject.name + "unfocusing");
-                    //}
                 }
             }
 
         }
         else
         {
-            dialogue.enabled = true;
-            //Unfocus(interacted);
-            //DataHolder.Unfocus(gameObject, interacted, matColorVal);
+            if(dialogue!=null)
+                dialogue.enabled = true;
             gameObject.layer = 0;
-            //Debug.Log(gameObject.name + "uunfocusinig");
             DataHolder.focusing = false;
-            gameObject.GetComponent<LookingObject>().enabled = false;
         }
-
-        //if (firstActivated)
-        //    gameObject.layer = 0;
 
     }
 

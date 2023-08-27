@@ -12,7 +12,9 @@ public class GroupMaster : MonoBehaviour
     public bool designatedGroup;
     public bool childToChildren;
     public bool buildingControl;
+    public bool delayedIgnition;
 
+    public Transform delayedGroup;
     public BuildingGroupController bgc;
     // Start is called before the first frame update
     void Start()
@@ -62,7 +64,19 @@ public class GroupMaster : MonoBehaviour
             bgc.activateAll = true; 
         }
 
+        if (delayedIgnition)
+        {
+            StartCoroutine(DelayedActivate());
+        }
+    }
 
+    IEnumerator DelayedActivate()
+    {
+        foreach(Transform child in chainTriggers)
+        {
+            child.GetComponent<LivableObject>().activated = true;
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 
     void ActivateGroup(Transform child)
@@ -70,25 +84,37 @@ public class GroupMaster : MonoBehaviour
 
         if (child.GetComponent<LivableObject>() == null)
         {
-            Material childMat = child.GetComponent<Renderer>().material;
-            childMat.EnableKeyword("_WhiteDegree");
-            if (childMat.GetFloat("_WhiteDegree") > 0)
+            if(child.GetComponent<Renderer>()!= null)
             {
-                TurnOnColor(childMat);
-            }
+                Material childMat = child.GetComponent<Renderer>().material;
+                if (childMat.IsKeywordEnabled("_WhiteDegree"))
+                {
+                    if (childMat.GetFloat("_WhiteDegree") > 0)
+                    {
+                        TurnOnColor(childMat);
+                    }
 
+                }
+
+            }
         }
         else
         {
             if (!child.GetComponent<LivableObject>().activated)
             {
-                Material childMat = child.GetComponent<Renderer>().material;
-                childMat.EnableKeyword("_WhiteDegree");
-                if (childMat.GetFloat("_WhiteDegree") > 0)
+                if (child.GetComponent<Renderer>() != null)
                 {
-                    TurnOnColor(childMat);
+                    Material childMat = child.GetComponent<Renderer>().material;
+                    if (childMat.IsKeywordEnabled("_WhiteDegree"))
+                    {
+                        if (childMat.GetFloat("_WhiteDegree") > 0)
+                        {
+                            TurnOnColor(childMat);
+                        }
+                    }
+                    child.GetComponent<LivableObject>().activated = true;
                 }
-                child.GetComponent<LivableObject>().activated = true;
+
             }
         }
     }
@@ -97,7 +123,6 @@ public class GroupMaster : MonoBehaviour
 
     void TurnOnColor(Material material)
     {
-
         material.SetFloat("_WhiteDegree", groupColorVal);
 
     }

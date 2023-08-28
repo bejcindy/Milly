@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
     void Maluyazi(Vector3 hitNormal)
     {
         //Debug.Log(Vector3.Dot(hitNormal, Vector3.up));
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
         if (Mathf.Abs(Vector3.Dot(hitNormal, Vector3.up)) < .4f)
         {
             if (Vector3.Dot(moveDirection, -hitNormal) > 0 && rb.velocity.y < 0.5f)

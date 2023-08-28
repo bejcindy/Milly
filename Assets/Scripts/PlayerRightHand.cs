@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerRightHand : MonoBehaviour
 {
+    public float xOffset = 2000;
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
@@ -11,6 +12,7 @@ public class PlayerRightHand : MonoBehaviour
     public Transform holdingObj;
     public Vector3 holdingPosition;
     public PlayerHolding playerHolding;
+    public GameObject aimUI;
 
     public Vector2 minThrowForce = new Vector2(100f, 50f);
     public Vector2 maxThrowForce = new Vector2(500f, 200f);
@@ -19,12 +21,14 @@ public class PlayerRightHand : MonoBehaviour
     float holdTimer;
     Vector2 throwForce;
 
+    bool readyToThrow;
     // Start is called before the first frame update
     void Start()
     {
         noThrow = true;
         playerHolding = GetComponent<PlayerHolding>();
         pizzaBox = GameObject.Find("PizzaHolder").GetComponent<PizzaBox>();
+        aimUI = GetComponent<PlayerLeftHand>().aimUI;
     }
 
     // Update is called once per frame
@@ -43,35 +47,57 @@ public class PlayerRightHand : MonoBehaviour
 
     private void DetectHolding()
     {
-
+        if (Input.GetMouseButtonDown(1) && holdingObj)
+        {
+            readyToThrow = true;
+        }
         if (Input.GetMouseButtonUp(1))
         {
-            holdTimer = 0;
-            if (!noThrow)
+            if (readyToThrow)
             {
-                isHolding = false;
-                holdingObj.GetComponent<Rigidbody>().isKinematic = false;
-                holdingObj.GetComponent<PickUpObject>().inHand = false;
-                holdingObj.GetComponent<PickUpObject>().thrown = true;
-                holdingObj.SetParent(null);
-                holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward + new Vector3(0, throwForce.y, 0));
-                noThrow = true;
-                playerHolding.UnoccupyRight();
-
+                aimUI.SetActive(false);
+                aimUI.transform.localScale = new Vector3(1, 1, 1);
+                playerHolding.throwing = false;
+                holdTimer = 0;
+                if (!noThrow)
+                {
+                    isHolding = false;
+                    holdingObj.GetComponent<Rigidbody>().isKinematic = false;
+                    holdingObj.GetComponent<PickUpObject>().inHand = false;
+                    holdingObj.GetComponent<PickUpObject>().thrown = true;
+                    holdingObj.SetParent(null);
+                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward + new Vector3(0, throwForce.y, 0));
+                    noThrow = true;
+                    playerHolding.UnoccupyRight();
+                    readyToThrow = false;
+                }
             }
         }
         if (Input.GetMouseButton(1))
         {
-            if (holdTimer < holdTime)
+            if (readyToThrow)
             {
-                holdTimer += Time.deltaTime;
-                holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
+                if (holdTimer < holdTime)
+                {
+                    holdTimer += Time.deltaTime;
+                    holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
+                }
+                float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
+                float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
+                throwForce = new Vector2(throwForceX - xOffset, throwForceY);
+                float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, holdTime, holdTimer));
+                aimUI.transform.localScale = new Vector3(uiScaleFactor, uiScaleFactor, uiScaleFactor);
             }
-            float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
-            float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
-            throwForce = new Vector2(throwForceX, throwForceY);
         }
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            readyToThrow = false;
+            holdingObj.localPosition = holdingPosition;
+            holdTimer = 0;
+            throwForce = Vector2.zero;
+            aimUI.SetActive(false);
+            aimUI.transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 
     private void DetectPizzaHolding()

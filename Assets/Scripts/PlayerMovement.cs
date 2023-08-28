@@ -116,6 +116,8 @@ public class PlayerMovement : MonoBehaviour
             //    collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, downRay.normal).normalized;
             collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, collision.contacts[0].normal).normalized;
         }
+        if (collision.gameObject.name.Contains("walk_side"))
+            Maluyazi(collision.contacts[0].normal);
     }
 
     private void OnCollisionExit(Collision collision)
@@ -123,6 +125,21 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("slope"))
         {
             slopeCollide = false;
+        }
+    }
+
+    void Maluyazi(Vector3 hitNormal)
+    {
+        //Debug.Log(Vector3.Dot(hitNormal, Vector3.up));
+        //Debug.Log(rb.velocity);
+        if (Mathf.Abs(Vector3.Dot(hitNormal, Vector3.up)) < .4f)
+        {
+            if (Vector3.Dot(moveDirection, -hitNormal) > 0 && rb.velocity.y < 0.5f)
+            {
+                //rb.position += new Vector3(0f, 0.3f, 0f);
+                rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+                rb.position += transform.forward * Time.deltaTime;
+            }
         }
     }
 

@@ -168,7 +168,7 @@ public class LivableObject : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position,Camera.main.transform.position-transform.position,out hit, Mathf.Infinity))
         {
-            if (!hit.collider.CompareTag("Player"))
+            if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
                 return false;
         }
         return true;

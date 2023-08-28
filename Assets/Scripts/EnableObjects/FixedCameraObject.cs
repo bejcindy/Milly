@@ -7,7 +7,7 @@ public class FixedCameraObject : LivableObject
 {
     [SerializeField] protected KeyCode interactKey;
     [SerializeField] public KeyCode quitKey;
-    [SerializeField] protected bool isInteracting;
+    [SerializeField] public bool isInteracting;
     [SerializeField] protected bool positionFixed;
     [SerializeField] protected bool showMouse;
     [SerializeField] protected bool moveCam;

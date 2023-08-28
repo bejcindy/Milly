@@ -30,7 +30,6 @@ public class TrashLid : LivableObject
         if (interactable)
         {
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
-            Debug.Log(transform.eulerAngles.z);
             if (playerHolding.GetLeftHand())
             {
                 leftHandUI.SetActive(true);

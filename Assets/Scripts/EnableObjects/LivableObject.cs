@@ -92,8 +92,7 @@ public class LivableObject : MonoBehaviour
                 
             if (chainControl)
             {
-                if(matColorVal <= 0)
-                    GetComponent<GroupMaster>().activateAll = true;
+                GetComponent<GroupMaster>().activateAll = true;
             }
                 
         }

@@ -173,13 +173,13 @@ public class LivableObject : MonoBehaviour
         return true;
     }
 
-    protected void OnBecameVisible()
+    protected virtual void OnBecameVisible()
     {
         checkVisible = true;
 
     }
 
-    protected void OnBecameInvisible()
+    protected virtual void OnBecameInvisible()
     {
         checkVisible = false;
     }

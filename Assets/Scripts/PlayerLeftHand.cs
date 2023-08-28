@@ -88,7 +88,7 @@ public class PlayerLeftHand : MonoBehaviour
                 float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
                 float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
                 
-                throwForce = new Vector2(throwForceX + xOffset, throwForceY);
+                throwForce = new Vector2(throwForceX, throwForceY);
                 float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, holdTime, holdTimer));
                 aimUI.transform.localScale = new Vector3(uiScaleFactor, uiScaleFactor, uiScaleFactor);
             }

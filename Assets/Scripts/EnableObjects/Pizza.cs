@@ -57,11 +57,19 @@ public class Pizza : PickUpObject
     {
         if(lid.openLid && inBox)
             selected = true;
+        if (!lid.openLid)
+            selected = false;
     }
 
     private void OnMouseExit()
     {
-        if(lid.openLid && inBox)
+        //if(lid.openLid && inBox)
             selected = false;
+    }
+
+    protected override void OnBecameInvisible()
+    {
+        base.OnBecameInvisible();
+        selected = false;
     }
 }

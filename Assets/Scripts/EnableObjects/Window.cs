@@ -85,7 +85,7 @@ public class Window : LivableObject
         }
         else if(verticalInput < 0)
         {
-            if(transform.localPosition.y > -0.6f)
+            if(transform.localPosition.y > -0.55f)
             {
                 transform.localPosition += Vector3.up * verticalInput * Time.deltaTime * 10f;
             }

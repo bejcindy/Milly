@@ -29,7 +29,7 @@ public class PizzaLid : LivableObject
     {
         base.Update();
         Debug.Log(transform.eulerAngles.z);
-        if (transform.eulerAngles.z == 0 || transform.eulerAngles.z >= 359 || transform.eulerAngles.z == 200)
+        if (transform.eulerAngles.z == 0 || transform.eulerAngles.z >= 359 || transform.eulerAngles.z == 300)
             fixedPos = true;
         else
             fixedPos = false;
@@ -49,7 +49,7 @@ public class PizzaLid : LivableObject
                     }
                     else if (verticalInput > 0)
                     {
-                        RotateLid(200);
+                        RotateLid(300);
                         camControl.TurnOnCamera();
                         isInteracting = true;
                     }
@@ -68,7 +68,7 @@ public class PizzaLid : LivableObject
                     }
                     else if (verticalInput > 0)
                     {
-                        RotateLid(200);
+                        RotateLid(300);
                         camControl.TurnOnCamera();
                         isInteracting = true;
                     }
@@ -77,7 +77,7 @@ public class PizzaLid : LivableObject
 
         }
 
-        if (isInteracting)
+        if (isInteracting && openLid)
         {
             player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
             player.GetComponent<PlayerRightHand>().inPizzaBox = true;
@@ -88,7 +88,7 @@ public class PizzaLid : LivableObject
             player.GetComponent<PlayerRightHand>().inPizzaBox = false;
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
         {
             interacting = false;
 
@@ -96,9 +96,9 @@ public class PizzaLid : LivableObject
 
         if (!fixedPos && !interacting && !coolDown)
         {
-            if (transform.eulerAngles.z < 250)
+            if (transform.eulerAngles.z < 310)
             {
-                RotateLid(200);
+                RotateLid(300);
             }
             else if (transform.eulerAngles.z != 360)
             {
@@ -141,7 +141,7 @@ public class PizzaLid : LivableObject
     {
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,
             Mathf.LerpAngle(transform.eulerAngles.z, zTargetAngle, Time.deltaTime * rotateSpeed));
-        if (zTargetAngle == 200)
+        if (zTargetAngle == 300)
             openLid = true;
         else
             openLid = false;

@@ -22355,6 +22355,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1201774470381880417, guid: ac15d6b707385b647adfd1dd1ba633b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1355656044}
+    - targetCorrespondingSourceObject: {fileID: 5427639011880268944, guid: ac15d6b707385b647adfd1dd1ba633b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2122044421}
+    - targetCorrespondingSourceObject: {fileID: 5427639011880268944, guid: ac15d6b707385b647adfd1dd1ba633b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2122044422}
     - targetCorrespondingSourceObject: {fileID: -7648604339094286761, guid: ac15d6b707385b647adfd1dd1ba633b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 607082273}
@@ -22427,6 +22433,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7092983496514102666, guid: ac15d6b707385b647adfd1dd1ba633b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 965761458}
+    - targetCorrespondingSourceObject: {fileID: 7092983496514102666, guid: ac15d6b707385b647adfd1dd1ba633b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 965761462}
   m_SourcePrefab: {fileID: 100100000, guid: ac15d6b707385b647adfd1dd1ba633b2, type: 3}
 --- !u!1 &685434745 stripped
 GameObject:
@@ -26155,12 +26164,16 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.subtitleSettings.minSubtitleSeconds
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.inputSettings.alwaysForceResponseMenu
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.subtitleCharsPerSecond
-      value: 35
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.showPCSubtitlesDuringLine
@@ -27606,6 +27619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382fa49a6c7e21240a4b467a64fd8588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xOffset: 2000
   isHolding: 0
   noThrow: 0
   inPizzaBox: 0
@@ -27613,6 +27627,7 @@ MonoBehaviour:
   holdingObj: {fileID: 0}
   holdingPosition: {x: 0.5, y: -0.25, z: 0.75}
   playerHolding: {fileID: 0}
+  aimUI: {fileID: 0}
   minThrowForce: {x: 100, y: 50}
   maxThrowForce: {x: 500, y: 200}
   holdTimer: 0
@@ -27628,6 +27643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d3705edb386a14ea409a2256911301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xOffset: 2000
   isHolding: 0
   noThrow: 0
   inPizzaBox: 0
@@ -29653,6 +29669,39 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10.72801, y: 1.6091113, z: 0.44351116}
   m_Center: {x: 0, y: 0, z: 0.0000038146973}
+--- !u!114 &965761462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965761454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f91884b1a496714f9a70f81cf7413cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  isVisible: 0
+  checkVisible: 0
+  chainControl: 0
+  minDist: 3
+  rend: {fileID: 0}
+  coll: {fileID: 0}
+  activated: 0
+  firstActivated: 0
+  matColorVal: 1
+  fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  centerFocused: 0
+  npc: 0
+  tagName: Player
+  tagList: []
+  stairParent: 0
 --- !u!1 &969824026
 GameObject:
   m_ObjectHideFlags: 0
@@ -34687,7 +34736,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104258348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -63969,6 +64018,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119685081}
   m_CullTransparentMesh: 1
+--- !u!1 &2122044417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5427639011880268944, guid: ac15d6b707385b647adfd1dd1ba633b2, type: 3}
+  m_PrefabInstance: {fileID: 685434744}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2122044421
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122044417}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.038924783, y: 1.4259241, z: 2.1727428}
+  m_Center: {x: 0.00000047683716, y: 0, z: 0}
+--- !u!114 &2122044422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122044417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 409b10f135da0c34aba8438dc7f394f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  isVisible: 0
+  checkVisible: 0
+  chainControl: 0
+  minDist: 5
+  rend: {fileID: 0}
+  coll: {fileID: 0}
+  activated: 0
+  firstActivated: 0
+  matColorVal: 1
+  fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  playerCam: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  centerFocused: 0
+  npc: 0
+  isInteracting: 0
+  leftHandInteraction: 0
+  rightHandInteraction: 0
 --- !u!1 &2122934752 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1645239988078233497, guid: 50a89c40545b0a04fb6d2c5777de4d1e, type: 3}

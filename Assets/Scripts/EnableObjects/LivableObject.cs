@@ -50,7 +50,7 @@ public class LivableObject : MonoBehaviour
         if (!npc)
         {
             mat = rend.material;
-            //mat.EnableKeyword("_WhiteDegree");
+            mat.EnableKeyword("_WhiteDegree");
             mat.SetFloat("_WhiteDegree", 1);
         }
 
@@ -147,8 +147,6 @@ public class LivableObject : MonoBehaviour
             if ((pointOnScreen.x < Screen.width * 0.4f) || (pointOnScreen.x > Screen.width * 0.6f) ||
                 (pointOnScreen.y < Screen.height * 0.4f) || (pointOnScreen.y > Screen.height * 0.6f))
             {
-                if (gameObject.name.Contains("pizza"))
-                    Debug.Log("OutOfBounds: " + gameObject.name);
                 return false;
             }
         }
@@ -157,18 +155,20 @@ public class LivableObject : MonoBehaviour
             if ((pointOnScreen.x < Screen.width * 0.2f) || (pointOnScreen.x > Screen.width * 0.8f) ||
                (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
             {
-                if (gameObject.name.Contains("pizza"))
-                    Debug.Log("OutOfBounds: " + gameObject.name);
                 return false;
             }
         }
 
 
         RaycastHit hit;
-        if(Physics.Raycast(transform.position,Camera.main.transform.position-transform.position,out hit, Mathf.Infinity))
+        if (Physics.Raycast(Camera.main.transform.position, GetComponent<Renderer>().bounds.center, out hit))
         {
             if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
+            {
+                Debug.Log(gameObject.name + "blocked by " + hit.collider.name);
                 return false;
+            }
+
         }
         return true;
     }

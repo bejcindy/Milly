@@ -58,7 +58,7 @@ public class NPCObject : LivableObject
 
         if(firstTalk && interactable)
         {
-            npcBody.layer = 9;
+            ChangeLayer(9);
             if (Input.GetMouseButtonDown(0))
             {
                 StartConversation();
@@ -66,7 +66,7 @@ public class NPCObject : LivableObject
         }
         else
         {
-            npcBody.layer = 0;
+            ChangeLayer(0);
         }
 
         if (dialogueEnabled)
@@ -92,6 +92,14 @@ public class NPCObject : LivableObject
             }
         }
 
+    }
+
+    void ChangeLayer(int layerNumber)
+    {
+        foreach(Transform child in npcBody.transform)
+        {
+            child.gameObject.layer = layerNumber;
+        }
     }
 
     void ActivateAll(Transform obj)

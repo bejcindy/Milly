@@ -9,6 +9,11 @@ public class ClickableObject : LivableObject
     Animator animator;
     public bool groupControl;
     public BuildingGroupController buildingGroup;
+
+    [Header("Bell Binding")]
+    public bool bellBinding;
+    public Usable dialogueUsable;
+    public FixedCameraObject bindedObject;
     DialogueSystemTrigger dialogue;
     protected override void Start()
     {
@@ -22,44 +27,51 @@ public class ClickableObject : LivableObject
         {
             dialogue = dia;
         }
+        if(TryGetComponent<Usable>(out Usable usableCom))
+        {
+            dialogueUsable = usableCom;
+        }
     }
     protected override void Update()
     {
         base.Update();
         if (interactable)
         {
-            Cursor.lockState = CursorLockMode.None;
-            if (Input.GetMouseButton(0))
+            if(bellBinding && bindedObject.isInteracting)
             {
-                RaycastHit raycastHit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out raycastHit, 6f))
+                dialogueUsable.enabled = true;
+                if (Input.GetMouseButton(0))
                 {
-                    if (raycastHit.transform.name == transform.name)
+                    RaycastHit raycastHit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out raycastHit, 6f))
                     {
-                        activated = true;
+                        if (raycastHit.transform.name == transform.name)
+                        {
+                            activated = true;
 
+                        }
                     }
                 }
-            }
 
-            if (Input.GetMouseButtonUp(0) && activated)
-            {
-                if (groupControl)
+                if (Input.GetMouseButtonUp(0) && activated)
                 {
-                    if (!buildingGroup.activateAll)
+                    if (groupControl)
                     {
-                        ActivateGroup();
+                        if (!buildingGroup.activateAll)
+                        {
+                            ActivateGroup();
+                        }
                     }
+                    UnpressButton();
+
                 }
-                UnpressButton();
-
-
-                //if (dialogue != null)
-                //{
-                //    dialogue.enabled = true;
-                //}
             }
+            else
+            {
+                dialogueUsable.enabled = false;
+            }
+
         }
     }
 

@@ -47,11 +47,10 @@ public class BuildingGroupController : MonoBehaviour
         if(obj.GetComponent<Renderer>()!= null)
         {
             Material mat = obj.GetComponent<Renderer>().material;
-            if (mat.IsKeywordEnabled("_WhiteDegree"))
-            {
-                if (mat.GetFloat("_WhiteDegree") >= 0)
-                    TurnOnColor(mat);
-            }
+            mat.EnableKeyword("_WhiteDegree");
+            if (mat.GetFloat("_WhiteDegree") >= 0)
+                TurnOnColor(mat);
+
 
         }
         if (obj.GetComponent<LivableObject>() != null)
@@ -65,12 +64,9 @@ public class BuildingGroupController : MonoBehaviour
             if (child.childCount <= 0 && child.GetComponent<Renderer>()!=null)
             {
                 Material childMat = child.GetComponent<Renderer>().material;
-                if (childMat.IsKeywordEnabled("_WhiteDegree"))
-                {
-                    childMat.EnableKeyword("_WhiteDegree");
-                    if (childMat.GetFloat("_WhiteDegree") >= 0)
-                        TurnOnColor(childMat);
-                }
+                childMat.EnableKeyword("_WhiteDegree");
+                if (childMat.GetFloat("_WhiteDegree") >= 0)
+                    TurnOnColor(childMat);
 
             }
             else

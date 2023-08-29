@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerRightHand : MonoBehaviour
 {
-    public float xOffset = 2000;
+    [SerializeField]float xOffset = 50;
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
@@ -66,7 +66,7 @@ public class PlayerRightHand : MonoBehaviour
                     holdingObj.GetComponent<PickUpObject>().inHand = false;
                     holdingObj.GetComponent<PickUpObject>().thrown = true;
                     holdingObj.SetParent(null);
-                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward + new Vector3(0, throwForce.y, 0));
+                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward + new Vector3(xOffset, 0, 0) + new Vector3(0, throwForce.y, 0));
                     noThrow = true;
                     playerHolding.UnoccupyRight();
                     readyToThrow = false;
@@ -84,7 +84,7 @@ public class PlayerRightHand : MonoBehaviour
                 }
                 float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
                 float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
-                throwForce = new Vector2(throwForceX - xOffset, throwForceY);
+                throwForce = new Vector2(throwForceX, throwForceY);
                 float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, holdTime, holdTimer));
                 aimUI.transform.localScale = new Vector3(uiScaleFactor, uiScaleFactor, uiScaleFactor);
             }

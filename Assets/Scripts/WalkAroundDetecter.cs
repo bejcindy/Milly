@@ -6,7 +6,9 @@ public class WalkAroundDetecter : LivableObject
 {
     public Collider[] triggerAreas;
     public bool[] triggers;
+    public bool poleLight;
     public Light streetLight;
+    public GameObject lightBulb;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -17,6 +19,8 @@ public class WalkAroundDetecter : LivableObject
             WalkAroundChildTrigger wact = triggerAreas[i].gameObject.AddComponent<WalkAroundChildTrigger>();
             wact.childIndex = i;
         }
+        if(poleLight)
+            lightBulb = transform.GetChild(5).gameObject;
     }
 
     // Update is called once per frame
@@ -32,6 +36,8 @@ public class WalkAroundDetecter : LivableObject
         {
             if(streetLight!=null)
                 streetLight.enabled = true;
+            if (lightBulb != null)
+                lightBulb.SetActive(true);
         }
     }
 

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerRightHand : MonoBehaviour
 {
-    [SerializeField]float xOffset = 50;
+    float xOffset = 50;
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
@@ -13,6 +14,7 @@ public class PlayerRightHand : MonoBehaviour
     public Vector3 holdingPosition;
     public PlayerHolding playerHolding;
     public GameObject aimUI;
+    GameObject throwUI;
 
     public Vector2 minThrowForce = new Vector2(100f, 50f);
     public Vector2 maxThrowForce = new Vector2(500f, 200f);
@@ -29,6 +31,7 @@ public class PlayerRightHand : MonoBehaviour
         playerHolding = GetComponent<PlayerHolding>();
         pizzaBox = GameObject.Find("PizzaHolder").GetComponent<PizzaBox>();
         aimUI = GetComponent<PlayerLeftHand>().aimUI;
+        throwUI = GetComponent<PlayerLeftHand>().ThrowUI;
     }
 
     // Update is called once per frame
@@ -56,6 +59,7 @@ public class PlayerRightHand : MonoBehaviour
             if (readyToThrow)
             {
                 aimUI.SetActive(false);
+                throwUI.SetActive(false);
                 aimUI.transform.localScale = new Vector3(1, 1, 1);
                 playerHolding.throwing = false;
                 holdTimer = 0;
@@ -81,6 +85,11 @@ public class PlayerRightHand : MonoBehaviour
                 {
                     holdTimer += Time.deltaTime;
                     holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
+                    if (holdTimer > 0.1f)
+                    {
+                        aimUI.SetActive(true);
+                        throwUI.SetActive(true);
+                    }
                 }
                 float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
                 float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
@@ -96,6 +105,7 @@ public class PlayerRightHand : MonoBehaviour
             holdTimer = 0;
             throwForce = Vector2.zero;
             aimUI.SetActive(false);
+            throwUI.SetActive(false);
             aimUI.transform.localScale = new Vector3(1, 1, 1);
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerLeftHand : MonoBehaviour
 {
-    public float xOffset = 2000;
+    [SerializeField]float xOffset = -50;
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
@@ -66,7 +66,7 @@ public class PlayerLeftHand : MonoBehaviour
                     holdingObj.GetComponent<PickUpObject>().inHand = false;
                     holdingObj.GetComponent<PickUpObject>().thrown = true;
                     holdingObj.SetParent(null);
-                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward + new Vector3(0, throwForce.y, 0));
+                    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward+new Vector3(xOffset,0,0) + new Vector3(0, throwForce.y, 0));
                     noThrow = true;
                     playerHolding.UnoccupyLeft();
                     readyToThrow = false;

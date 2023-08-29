@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerLeftHand : MonoBehaviour
 {
-    float xOffset = -50;
+    [SerializeField]float xOffset = -50;
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
@@ -13,7 +13,6 @@ public class PlayerLeftHand : MonoBehaviour
     public Vector3 holdingPosition;
     public PlayerHolding playerHolding;
     public GameObject aimUI;
-    public GameObject ThrowUI;
 
     public Vector2 minThrowForce = new Vector2(100f, 50f);
     public Vector2 maxThrowForce = new Vector2(500f, 200f);
@@ -57,7 +56,6 @@ public class PlayerLeftHand : MonoBehaviour
             if (readyToThrow)
             {
                 aimUI.SetActive(false);
-                ThrowUI.SetActive(false);
                 aimUI.transform.localScale = new Vector3(1, 1, 1);
                 playerHolding.throwing = false;
                 holdTimer = 0;
@@ -85,10 +83,7 @@ public class PlayerLeftHand : MonoBehaviour
                     holdTimer += Time.deltaTime;
                     holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
                     if (holdTimer > 0.1f)
-                    {
                         aimUI.SetActive(true);
-                        ThrowUI.SetActive(true);
-                    }
                 }
                 float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
                 float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
@@ -106,7 +101,6 @@ public class PlayerLeftHand : MonoBehaviour
             holdTimer = 0;
             throwForce = Vector2.zero;
             aimUI.SetActive(false);
-            ThrowUI.SetActive(false);
             aimUI.transform.localScale = new Vector3(1, 1, 1);
         }
     }

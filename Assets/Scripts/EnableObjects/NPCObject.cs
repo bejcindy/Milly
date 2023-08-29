@@ -18,6 +18,9 @@ public class NPCObject : LivableObject
     public bool lookingOriented;
     public LookingObject npcLooking;
 
+    [Header("Trigger Activation")]
+    public bool triggerActivated;
+
     DialogueSystemTrigger dialogue;
     public CinemachineVirtualCamera NPCCinemachine;
     public CinemachineVirtualCamera playerCinemachine;
@@ -40,10 +43,14 @@ public class NPCObject : LivableObject
     protected override void Update()
     {
         base.Update();
-        if (npcObject.activated)
+        if (objectOriented)
         {
-            npcActivated = true;
+            if (npcObject.activated)
+            {
+                npcActivated = true;
+            }
         }
+
 
         if (lookingOriented)
         {
@@ -151,6 +158,17 @@ public class NPCObject : LivableObject
         dialogue.enabled = false;
         player.GetComponent<PlayerHolding>().inDialogue = false;
         player.GetComponent<PlayerMovement>().enabled = true;
+    }
+
+    void OnTriggerEnter(Collider coll)
+    {
+        if (triggerActivated)
+        {
+            if (coll.CompareTag("Player"))
+            {
+                npcActivated = true;
+            }
+        }
     }
 
 

@@ -176,7 +176,6 @@ public class LivableObject : MonoBehaviour
     protected virtual void OnBecameVisible()
     {
         checkVisible = true;
-
     }
 
     protected virtual void OnBecameInvisible()

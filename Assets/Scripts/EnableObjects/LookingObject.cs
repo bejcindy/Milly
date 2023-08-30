@@ -69,7 +69,7 @@ public class LookingObject : LivableObject
                 }
                 else
                 {
-                    gameObject.layer = 0;
+                    gameObject.layer = 13;
                     if (DataHolder.currentFocus == gameObject)
                     {
                         DataHolder.focusing = false;
@@ -82,7 +82,7 @@ public class LookingObject : LivableObject
         {
             if(dialogue!=null)
                 dialogue.enabled = true;
-            gameObject.layer = 0;
+            gameObject.layer = 13;
             DataHolder.focusing = false;
         }
 

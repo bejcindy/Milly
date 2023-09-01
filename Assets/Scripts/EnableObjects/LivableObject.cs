@@ -165,7 +165,7 @@ public class LivableObject : MonoBehaviour
         {
             if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
             {
-                Debug.Log(gameObject.name + "blocked by " + hit.collider.name);
+                //Debug.Log(gameObject.name + "blocked by " + hit.collider.name);
                 return false;
             }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerRightHand : MonoBehaviour
 {
-    [SerializeField]float xOffset = 50;
+    float xOffset = 50;
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;

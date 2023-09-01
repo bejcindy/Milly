@@ -11,6 +11,7 @@ public class PickUpObject : LivableObject
     public bool inHand;
     public bool selected;
     public bool thrown;
+    public bool freezeRotation;
     public float throwCD;
 
     public bool npcBound;

@@ -160,6 +160,10 @@ public class PlayerHolding : MonoBehaviour
         leftHand.holdingObj = obj;
         obj.SetParent(Camera.main.transform);
         obj.localPosition = leftHand.holdingPosition;
+        if (obj.GetComponent<PickUpObject>().freezeRotation)
+        {
+            obj.localRotation = Quaternion.Euler(0, 0, 0);
+        }
         Invoke(nameof(EnableThrowLeft), 0.5f);
     }
 

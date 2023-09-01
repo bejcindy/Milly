@@ -54,7 +54,7 @@ public class GroupMaster : MonoBehaviour
         {
             foreach(Transform child in transform.parent)
             {
-                if(child.GetComponent<Renderer>()!=null)
+                if(child.GetComponent<Renderer>()!=null && child.GetComponent<SpriteRenderer>() == null)
                     ActivateGroup(child);
             }
         }

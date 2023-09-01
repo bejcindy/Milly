@@ -14,7 +14,9 @@ public class PickUpObject : LivableObject
     public bool freezeRotation;
     public float throwCD;
 
+    [Header("Type")]
     public bool npcBound;
+    public bool foodObj;
 
     DialogueSystemTrigger dialogue;
 

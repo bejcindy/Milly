@@ -7,6 +7,8 @@ public class Window : LivableObject
     public bool isInteracting;
     public bool leftHandInteraction;
     public bool rightHandInteraction;
+    public GameObject leftHandUI;
+    public GameObject rightHandUI;
     PlayerHolding playerHolding;
 
 
@@ -25,6 +27,8 @@ public class Window : LivableObject
             {
                 if (playerHolding.GetLeftHand())
                 {
+                    leftHandUI.SetActive(true);
+                    gameObject.layer = 9;
                     if (Input.GetMouseButtonDown(0))
                     {
                         isInteracting = true;
@@ -34,6 +38,8 @@ public class Window : LivableObject
                 }
                 if (playerHolding.GetRightHand())
                 {
+                    rightHandUI.SetActive(true);
+                    gameObject.layer = 9;
                     if (Input.GetMouseButtonDown(1))
                     {
                         isInteracting = true;
@@ -44,6 +50,8 @@ public class Window : LivableObject
             }
             else
             {
+                leftHandUI.SetActive(false);
+                rightHandUI.SetActive(false);
                 if (leftHandInteraction)
                 {
                     if (Input.GetMouseButtonUp(0))
@@ -67,6 +75,9 @@ public class Window : LivableObject
         else
         {
             isInteracting = false;
+            gameObject.layer = 0;
+            leftHandUI.SetActive(false);
+            rightHandUI.SetActive(false);
         }
 
     }
@@ -74,11 +85,12 @@ public class Window : LivableObject
 
     public void UseWindow()
     {
+        activated = true;
         float verticalInput = Input.GetAxisRaw("Mouse Y");
         Debug.Log(verticalInput);
         if(verticalInput > 0)
         {
-            if(transform.localPosition.y < 0.6f)
+            if(transform.localPosition.y < 0.57f)
             {
                 transform.localPosition += Vector3.up * verticalInput * Time.deltaTime * 10f;
             }

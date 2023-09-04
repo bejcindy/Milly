@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class NPCNavigation : MonoBehaviour
 {
+    public float speed;
     public Transform[] destinations;
 
     [SerializeField] float destThreashold;
@@ -19,6 +20,7 @@ public class NPCNavigation : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(destinations[0].position);
+        agent.speed = speed;
     }
 
     // Update is called once per frame

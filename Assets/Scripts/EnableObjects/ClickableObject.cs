@@ -56,13 +56,7 @@ public class ClickableObject : LivableObject
 
                 if (Input.GetMouseButtonUp(0) && activated)
                 {
-                    if (groupControl)
-                    {
-                        if (!buildingGroup.activateAll)
-                        {
-                            ActivateGroup();
-                        }
-                    }
+
                     UnpressButton();
 
                 }
@@ -95,5 +89,16 @@ public class ClickableObject : LivableObject
         animator.ResetTrigger("Pressed");
         animator.SetTrigger("Released");
         Invoke(nameof(ResetAnimTrigger), 0.5f);
+    }
+
+    void OnConversationEnd(Transform other)
+    {
+        if (groupControl)
+        {
+            if (!buildingGroup.activateAll)
+            {
+                ActivateGroup();
+            }
+        }
     }
 }

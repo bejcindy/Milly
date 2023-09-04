@@ -74,7 +74,12 @@ public class FixedCameraObject : LivableObject
 
         if(interactable || isInteracting || positionFixed)
         {
-            playerSitting.objInteracting = true;
+            playerSitting.AddCamObj(this);
+        }
+
+        if(!interactable && !isInteracting && !positionFixed)
+        {
+            playerSitting.RemoveCamObj(this);
         }
 
     }
@@ -154,8 +159,6 @@ public class FixedCameraObject : LivableObject
                 player.GetComponent<PlayerRightHand>().inPizzaBox = false;
             }
         }
-
-        playerCamera.m_Priority = 10;
         if (doubleSided)
         {
             if (onLeft)

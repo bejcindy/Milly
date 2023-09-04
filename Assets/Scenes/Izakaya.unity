@@ -13964,7 +13964,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &338289020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13981,7 +13981,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 9
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 274954737}
@@ -33785,6 +33785,7 @@ GameObject:
   - component: {fileID: 890563939}
   - component: {fileID: 890563941}
   - component: {fileID: 890563942}
+  - component: {fileID: 890563943}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -34089,6 +34090,23 @@ MonoBehaviour:
   cigCounts: 5
   player: {fileID: 0}
   fullCig: {fileID: 2426072100176447125, guid: c65318dd33cb1be4ebe885dbd55591eb, type: 3}
+--- !u!114 &890563943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890563930}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1fc541afab7e164dab7f0d6d86e984e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMainCam: {fileID: 1005978787}
+  playerSitCam: {fileID: 338289020}
+  fixedCamObjs: []
+  objInteracting: 0
+  sitting: 0
 --- !u!1 &890917101 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2623810030991635920, guid: 50a89c40545b0a04fb6d2c5777de4d1e, type: 3}
@@ -35471,7 +35489,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944894713}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -51.526, y: 9.158, z: -15.764}
+  m_LocalPosition: {x: -51.526, y: 9.331, z: -15.764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -42736,7 +42754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7448500585700344172, guid: 0664924ccdece7b43a33bb5f5ee47a3d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.66
+      value: 9.984
       objectReference: {fileID: 0}
     - target: {fileID: 7448500585700344172, guid: 0664924ccdece7b43a33bb5f5ee47a3d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -55819,7 +55837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4918952973890093597, guid: 197efef0e6326e54c9a55be169744441, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.161444
+      value: 9.322
       objectReference: {fileID: 0}
     - target: {fileID: 4918952973890093597, guid: 197efef0e6326e54c9a55be169744441, type: 3}
       propertyPath: m_LocalPosition.z

@@ -26,6 +26,7 @@ public class FixedCameraObject : LivableObject
     PlayerCam camController;
     PlayerMovement playerMovement;
     public Renderer playerBody;
+    PlayerSittingSwitch playerSitting;
 
     protected override void Start()
     {
@@ -33,6 +34,7 @@ public class FixedCameraObject : LivableObject
         playerMovement = player.GetComponent<PlayerMovement>();
         camController = player.GetComponent<PlayerCam>();
         playerBody = player.GetChild(0).GetComponent<Renderer>();
+        playerSitting = player.GetComponent<PlayerSittingSwitch>();
         playerCamera = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
 
     }
@@ -68,6 +70,11 @@ public class FixedCameraObject : LivableObject
                 Cursor.visible = false;
                 StartCoroutine(UnfixPlayer());
             }
+        }
+
+        if(interactable || isInteracting || positionFixed)
+        {
+            playerSitting.objInteracting = true;
         }
 
     }

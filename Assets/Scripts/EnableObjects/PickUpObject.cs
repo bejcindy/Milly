@@ -11,6 +11,7 @@ public class PickUpObject : LivableObject
     public bool inHand;
     public bool selected;
     public bool thrown;
+    public bool cigarette;
     public bool freezeRotation;
     public float throwCD;
 
@@ -19,6 +20,9 @@ public class PickUpObject : LivableObject
     public bool foodObj;
 
     DialogueSystemTrigger dialogue;
+    public GameObject uiHint;
+    public Sprite leftMouse;
+    public Sprite rightMouse;
 
 
     protected override void Start()
@@ -38,11 +42,6 @@ public class PickUpObject : LivableObject
     {
         if (interactable && !inHand && !thrown)
         {
-            if (!npcBound)
-            {
-                if(dialogue!=null)
-                    dialogue.enabled = true;
-            }
 
 
             if (!playerHolding.fullHand)
@@ -97,6 +96,15 @@ public class PickUpObject : LivableObject
         else
         {
             gameObject.layer = 7;
+        }
+
+        if (inHand)
+        {
+            if (!npcBound)
+            {
+                if (dialogue != null)
+                    dialogue.enabled = true;
+            }
         }
 
         if (thrown)

@@ -6,7 +6,7 @@ using PixelCrushers.DialogueSystem;
 
 public class PlayerHolding : MonoBehaviour
 {
-
+    public bool smoking;
     public bool fullHand;
     public bool inDialogue;
     public bool throwing;
@@ -32,7 +32,7 @@ public class PlayerHolding : MonoBehaviour
         GetFullHand();
         ChooseInteractable();
 
-        if(selectedObj!= null)
+        if (selectedObj != null)
         {
             if (GetLeftHand())
             {
@@ -58,6 +58,11 @@ public class PlayerHolding : MonoBehaviour
         {
             inDialogue = false;
         }
+
+        if (leftHand.smoking || rightHand.smoking)
+            smoking = true;
+        else
+            smoking = false;
     }
 
 
@@ -136,6 +141,15 @@ public class PlayerHolding : MonoBehaviour
         return true;
     }
 
+    public bool GetLeftHandSmoking()
+    {
+        if (leftHand.isHolding)
+            return false;
+        if (leftHand.smoking)
+            return false;
+        return true;
+    }
+
     public bool GetRightHand()
     {
         if (rightHand.isHolding)
@@ -143,6 +157,15 @@ public class PlayerHolding : MonoBehaviour
             return false;
         }
         rightHand.noThrow = true;
+        return true;
+    }
+
+    public bool GetRightHandSmoking()
+    {
+        if (rightHand.isHolding)
+            return false;
+        if (rightHand.smoking)
+            return false;
         return true;
     }
 
@@ -160,6 +183,11 @@ public class PlayerHolding : MonoBehaviour
         leftHand.holdingObj = obj;
         obj.SetParent(Camera.main.transform);
         obj.localPosition = leftHand.holdingPosition;
+        if (obj.GetComponent<PickUpObject>().cigarette)
+        {
+            obj.localEulerAngles = new Vector3(0, 160, 0);
+            leftHand.smoking = true;
+        }
         if (obj.GetComponent<PickUpObject>().freezeRotation)
         {
             obj.localRotation = Quaternion.Euler(0, 0, 0);
@@ -173,6 +201,15 @@ public class PlayerHolding : MonoBehaviour
         rightHand.holdingObj = obj;
         obj.SetParent(Camera.main.transform);
         obj.localPosition = rightHand.holdingPosition;
+        if (obj.GetComponent<PickUpObject>().cigarette)
+        {
+            obj.localEulerAngles = new Vector3(0, 160, 0);
+            rightHand.smoking = true;
+        }
+        if (obj.GetComponent<PickUpObject>().freezeRotation)
+        {
+            obj.localRotation = Quaternion.Euler(0, 0, 0);
+        }
         Invoke(nameof(EnableThrowRight), 0.5f);
     }
 

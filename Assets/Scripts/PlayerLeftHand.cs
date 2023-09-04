@@ -8,6 +8,8 @@ public class PlayerLeftHand : MonoBehaviour
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
+    public bool smoking;
+    public float pullForce;
     public PizzaBox pizzaBox;
     public Transform holdingObj;
     public Vector3 holdingPosition;
@@ -43,6 +45,28 @@ public class PlayerLeftHand : MonoBehaviour
                 DetectPizzaHolding();
             }
         }
+
+        if (smoking)
+        {
+            Smoke();
+        }
+    }
+
+
+    private void Smoke()
+    {
+        if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > 0.2f)
+        {
+            float newX = Mathf.Lerp(holdingObj.localPosition.x, 0, Time.deltaTime * pullForce);
+            float newZ = Mathf.Lerp(holdingObj.localPosition.z, 0.22f, Time.deltaTime * pullForce);
+            float newY = Mathf.Lerp(holdingObj.localPosition.y, -0.15f, Time.deltaTime * pullForce);
+            Vector3 newPos = new Vector3(newX, newY, newZ);
+            holdingObj.localPosition = newPos;
+        }
+        if(Input.mouseScrollDelta.y > 0)
+        {
+            holdingObj.localPosition = Vector3.Lerp(holdingObj.localPosition, holdingPosition, Time.deltaTime * pullForce);
+        }
     }
 
     private void DetectHolding()
@@ -62,6 +86,7 @@ public class PlayerLeftHand : MonoBehaviour
                 if (!noThrow)
                 {
                     isHolding = false;
+                    smoking = false;
                     holdingObj.GetComponent<Rigidbody>().isKinematic = false;
                     holdingObj.GetComponent<PickUpObject>().inHand = false;
                     holdingObj.GetComponent<PickUpObject>().thrown = true;
@@ -118,4 +143,6 @@ public class PlayerLeftHand : MonoBehaviour
             }
         }
     }
+
+
 }

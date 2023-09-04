@@ -8,6 +8,7 @@ public class PlayerRightHand : MonoBehaviour
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
+    public bool smoking;
     public PizzaBox pizzaBox;
     public Transform holdingObj;
     public Vector3 holdingPosition;

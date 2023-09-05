@@ -8,7 +8,10 @@ public class PlayerRightHand : MonoBehaviour
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
+
     public bool smoking;
+    public bool inhaling;
+
     public PizzaBox pizzaBox;
     public Transform holdingObj;
     public Vector3 holdingPosition;
@@ -44,6 +47,24 @@ public class PlayerRightHand : MonoBehaviour
                 DetectPizzaHolding();
             }
         }
+        if (smoking)
+        {
+            Smoke();
+        }
+    }
+
+    private void Smoke()
+    {
+        if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > 0.2f && !inhaling)
+        {
+            Vector3 smokingPos = new Vector3(0, -0.15f, 0.22f);
+            StartCoroutine(LerpPosition(smokingPos, 1f));
+        }
+        if (Input.mouseScrollDelta.y > 0 && !inhaling)
+        {
+            StartCoroutine(LerpPosition(holdingPosition, 1f));
+            holdingObj.GetComponent<Cigarette>().Inhale();
+        }
     }
 
     private void DetectHolding()
@@ -62,7 +83,12 @@ public class PlayerRightHand : MonoBehaviour
                 holdTimer = 0;
                 if (!noThrow)
                 {
+                    if (smoking)
+                    {
+                        holdingObj.GetComponent<Cigarette>().FinishSmoking();
+                    }
                     isHolding = false;
+                    smoking = false;
                     holdingObj.GetComponent<Rigidbody>().isKinematic = false;
                     holdingObj.GetComponent<PickUpObject>().inHand = false;
                     holdingObj.GetComponent<PickUpObject>().thrown = true;
@@ -126,5 +152,21 @@ public class PlayerRightHand : MonoBehaviour
             }
 
         }
+    }
+
+    IEnumerator LerpPosition(Vector3 targetPosition, float duration)
+    {
+        inhaling = true;
+        float time = 0;
+        Vector3 startPosition = holdingObj.localPosition;
+        while (time < duration)
+        {
+            holdingObj.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        holdingObj.localPosition = targetPosition;
+        inhaling = false;
+
     }
 }

@@ -8,11 +8,15 @@ public class PlayerLeftHand : MonoBehaviour
     public bool isHolding;
     public bool noThrow;
     public bool inPizzaBox;
+
     public bool smoking;
+    public bool inhaling;
+
     public float pullForce;
     public PizzaBox pizzaBox;
     public Transform holdingObj;
     public Vector3 holdingPosition;
+    public Vector3 smokingPosition;
     public PlayerHolding playerHolding;
     public GameObject aimUI;
 
@@ -55,17 +59,15 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void Smoke()
     {
-        if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > 0.2f)
+        if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > 0.2f && !inhaling)
         {
-            float newX = Mathf.Lerp(holdingObj.localPosition.x, 0, Time.deltaTime * pullForce);
-            float newZ = Mathf.Lerp(holdingObj.localPosition.z, 0.22f, Time.deltaTime * pullForce);
-            float newY = Mathf.Lerp(holdingObj.localPosition.y, -0.15f, Time.deltaTime * pullForce);
-            Vector3 newPos = new Vector3(newX, newY, newZ);
-            holdingObj.localPosition = newPos;
+            Vector3 smokingPos = new Vector3(0, -0.15f, 0.22f);
+            StartCoroutine(LerpPosition(smokingPos, 1f));
         }
-        if(Input.mouseScrollDelta.y > 0)
+        if(Input.mouseScrollDelta.y > 0 && !inhaling)
         {
-            holdingObj.localPosition = Vector3.Lerp(holdingObj.localPosition, holdingPosition, Time.deltaTime * pullForce);
+            StartCoroutine(LerpPosition(holdingPosition, 1f));
+            holdingObj.GetComponent<Cigarette>().Inhale();
         }
     }
 
@@ -85,6 +87,10 @@ public class PlayerLeftHand : MonoBehaviour
                 holdTimer = 0;
                 if (!noThrow)
                 {
+                    if (smoking)
+                    {
+                        holdingObj.GetComponent<Cigarette>().FinishSmoking();
+                    }
                     isHolding = false;
                     smoking = false;
                     holdingObj.GetComponent<Rigidbody>().isKinematic = false;
@@ -119,7 +125,7 @@ public class PlayerLeftHand : MonoBehaviour
                     playerHolding.throwing = true;
                     holdTimer += Time.deltaTime;
                     holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
-                    if (holdTimer > 0.1f)
+                    if (holdTimer > 0.2f)
                         aimUI.SetActive(true);
                 }
                 float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
@@ -154,6 +160,22 @@ public class PlayerLeftHand : MonoBehaviour
                 playerHolding.UnoccupyLeft();
             }
         }
+    }
+
+    IEnumerator LerpPosition(Vector3 targetPosition, float duration)
+    {
+        inhaling = true;
+        float time = 0;
+        Vector3 startPosition = holdingObj.localPosition;
+        while (time < duration)
+        {
+            holdingObj.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        holdingObj.localPosition = targetPosition;
+        inhaling = false;
+
     }
 
 

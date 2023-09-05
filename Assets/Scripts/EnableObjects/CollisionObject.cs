@@ -8,6 +8,7 @@ public class CollisionObject : LivableObject
     public List<string> tagList;
 
     public bool stairParent;
+    public bool ashTray;
 
     protected override void Start()
     {
@@ -56,6 +57,13 @@ public class CollisionObject : LivableObject
         if (tagList.Contains(other.gameObject.tag))
         {
             activated = true;
+        }
+        if (ashTray)
+        {
+            if (other.gameObject.name.Contains("cigarette"))
+            {
+                activated = true;
+            }
         }
     }
 }

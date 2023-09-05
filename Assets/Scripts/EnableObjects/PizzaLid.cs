@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +16,14 @@ public class PizzaLid : LivableObject
     bool fixedPos;
     PlayerHolding playerHolding;
     FixedCameraObject camControl;
+    DialogueSystemTrigger dialogue;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         camControl = GetComponent<FixedCameraObject>();
         playerHolding = player.GetComponent<PlayerHolding>();
+        dialogue = GetComponent<DialogueSystemTrigger>();
       
     }
 
@@ -40,6 +43,7 @@ public class PizzaLid : LivableObject
             {
                 if (Input.GetMouseButton(0))
                 {
+                    dialogue.enabled = true;
                     activated = true;
                     interacting = true;
                     quitInteraction = false;
@@ -59,6 +63,7 @@ public class PizzaLid : LivableObject
             {
                 if (Input.GetMouseButton(1))
                 {
+                    dialogue.enabled = true;
                     activated = true;
                     interacting = true;
                     quitInteraction = false;

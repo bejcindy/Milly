@@ -77,8 +77,6 @@ public class LivableObject : MonoBehaviour
         }
 
         DetectInteractable();
-        if(!npc)
-            matColorVal = mat.GetFloat("_WhiteDegree");
 
 
 

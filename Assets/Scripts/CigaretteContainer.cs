@@ -31,7 +31,6 @@ public class CigaretteContainer : MonoBehaviour
             {
                 cigCounts--;
                 GameObject newCig = GameObject.Instantiate(fullCig);
-                newCig.GetComponent<Renderer>().material.SetFloat("_WhiteDegree", 0);
                 newCig.GetComponent<LivableObject>().activated = true;
                 newCig.GetComponent<Rigidbody>().isKinematic = true;
                 if (playerHolding.GetLeftHandSmoking())

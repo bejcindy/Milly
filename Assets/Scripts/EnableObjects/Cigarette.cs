@@ -73,5 +73,6 @@ public class Cigarette : PickUpObject
     public void FinishSmoking()
     {
         cigStage = 4;
+        activeCigObj.tag = "CigButt";
     }
 }

@@ -9,6 +9,7 @@ public class NPCObject : LivableObject
 
     public int conversationID;
     public bool npcActivated;
+    public bool noActivation; 
     [Header("Object Activation")]
     public bool objectOriented;
     public LivableObject npcObject;
@@ -85,19 +86,20 @@ public class NPCObject : LivableObject
         if (npcActivated)
         {
             anim.SetTrigger("Start");
-            ActivateAll(this.transform);
+            if(!noActivation)
+                ActivateAll(this.transform);
         }
 
-        if (DialogueManager.isConversationActive)
-        {
-            if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-            {
-                if(DialogueManager.lastConversationID == conversationID)
-                {
-                    DialogueManager.StopConversation();
-                }
-            }
-        }
+        //if (DialogueManager.isConversationActive)
+        //{
+        //    if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        //    {
+        //        if(DialogueManager.lastConversationID == conversationID)
+        //        {
+        //            DialogueManager.StopConversation();
+        //        }
+        //    }
+        //}
 
     }
 

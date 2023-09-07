@@ -19,6 +19,7 @@ public class PlayerLeftHand : MonoBehaviour
     public Vector3 smokingPosition;
     public PlayerHolding playerHolding;
     public GameObject aimUI;
+    public GameObject aimHint;
 
     public Vector2 minThrowForce = new Vector2(100f, 50f);
     public Vector2 maxThrowForce = new Vector2(500f, 100f);
@@ -28,6 +29,7 @@ public class PlayerLeftHand : MonoBehaviour
     Vector2 throwForce;
 
     bool readyToThrow;
+    bool notHoldingAnyThing;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,7 @@ public class PlayerLeftHand : MonoBehaviour
         playerHolding = GetComponent<PlayerHolding>();
 
         pizzaBox = GameObject.Find("PizzaHolder").GetComponent<PizzaBox>();
+        aimHint.SetActive(false);
     }
 
     // Update is called once per frame
@@ -53,6 +56,16 @@ public class PlayerLeftHand : MonoBehaviour
         if (smoking)
         {
             Smoke();
+        }
+        if (!holdingObj && !GetComponent<PlayerRightHand>().holdingObj)
+        {
+            if (!aimHint.activeSelf)
+                aimHint.SetActive(true);
+        }
+        else
+        {
+            if (aimHint.activeSelf)
+                aimHint.SetActive(false);
         }
     }
 

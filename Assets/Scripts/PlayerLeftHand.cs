@@ -57,15 +57,15 @@ public class PlayerLeftHand : MonoBehaviour
         {
             Smoke();
         }
-        if (!holdingObj && !GetComponent<PlayerRightHand>().holdingObj)
-        {
-            if (!aimHint.activeSelf)
-                aimHint.SetActive(true);
-        }
-        else
+        if (!isHolding && !GetComponent<PlayerRightHand>().isHolding)
         {
             if (aimHint.activeSelf)
                 aimHint.SetActive(false);
+        }
+        else
+        {
+            if (!aimHint.activeSelf)
+                aimHint.SetActive(true);
         }
     }
 

@@ -91,12 +91,12 @@ public class EditorFunctions : MonoBehaviour
 
         }
         if (obj.GetComponent<LivableObject>() != null)
-            obj.GetComponent<LivableObject>().activated = true;
+            obj.GetComponent<LivableObject>().activated = false;
 
         foreach (Transform child in obj)
         {
             if (child.GetComponent<LivableObject>() != null)
-                child.GetComponent<LivableObject>().activated = true;
+                child.GetComponent<LivableObject>().activated = false;
 
             if (child.childCount <= 0 && child.GetComponent<Renderer>() != null)
             {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class IzakayaDoor : LivableObject
 {
@@ -8,9 +9,11 @@ public class IzakayaDoor : LivableObject
     public bool leftHandOpen;
     public bool rightHandOpen;
     public bool doorOpen;
+    public bool doorOpenable;
     public Transform door;
     public Vector3 doorOpenPos;
 
+    DialogueSystemTrigger dialogue;
     PlayerHolding playerHolding;
     FixedCameraObject cameraControl;
     Vector3 doorStartPos;
@@ -21,10 +24,23 @@ public class IzakayaDoor : LivableObject
         playerHolding = player.GetComponent<PlayerHolding>();
         cameraControl = GetComponent<FixedCameraObject>();
         doorStartPos = door.transform.localPosition;
+        dialogue = GetComponent<DialogueSystemTrigger>();
     }
     protected override void Update()
     {
         base.Update();
+        if (doorOpenable)
+        {
+            OpenDoor();
+        }
+        else
+        {
+            TriggerConversation();
+        }
+    }
+
+    void OpenDoor()
+    {
         if (interactable && !isInteracting)
         {
             if (playerHolding.GetLeftHand())
@@ -43,7 +59,7 @@ public class IzakayaDoor : LivableObject
         {
             float verticalInput = Input.GetAxis("Mouse X") * Time.deltaTime * 75;
             Debug.Log(verticalInput);
-            if(verticalInput < 0)
+            if (verticalInput < 0)
             {
                 StartCoroutine(LerpPosition(doorOpenPos, 2f));
             }
@@ -57,12 +73,36 @@ public class IzakayaDoor : LivableObject
             }
         }
 
-        if(door.localPosition == doorOpenPos)
+        if (door.localPosition == doorOpenPos)
         {
             doorOpen = true;
         }
     }
 
+    void TriggerConversation()
+    {
+        if (interactable)
+        {
+            if (playerHolding.GetLeftHand())
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    dialogue.enabled = true;
+                }
+            }
+            else if (playerHolding.GetRightHand())
+            {
+                if (Input.GetMouseButtonDown(1))
+                {
+                    dialogue.enabled = true;
+                }
+            }
+        }
+        else
+        {
+            dialogue.enabled = false;
+        }
+    }
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
         float time = 0;

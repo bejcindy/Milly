@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using PixelCrushers.DialogueSystem;
 
 public class FixedCameraObject : LivableObject
 {
@@ -23,10 +24,10 @@ public class FixedCameraObject : LivableObject
 
     [SerializeField] public GameObject uiHint;
 
+    DialogueSystemTrigger dialogue;
     PlayerCam camController;
     PlayerMovement playerMovement;
     public Renderer playerBody;
-    PlayerSittingSwitch playerSitting;
 
     protected override void Start()
     {
@@ -34,7 +35,6 @@ public class FixedCameraObject : LivableObject
         playerMovement = player.GetComponent<PlayerMovement>();
         camController = player.GetComponent<PlayerCam>();
         playerBody = player.GetChild(0).GetComponent<Renderer>();
-        playerSitting = player.GetComponent<PlayerSittingSwitch>();
         playerCamera = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
 
     }
@@ -72,15 +72,7 @@ public class FixedCameraObject : LivableObject
             }
         }
 
-        if(interactable || isInteracting || positionFixed)
-        {
-            playerSitting.AddCamObj(this);
-        }
 
-        if(!interactable && !isInteracting && !positionFixed)
-        {
-            playerSitting.RemoveCamObj(this);
-        }
 
     }
 

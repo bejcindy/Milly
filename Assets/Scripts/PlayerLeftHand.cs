@@ -37,7 +37,7 @@ public class PlayerLeftHand : MonoBehaviour
         playerHolding = GetComponent<PlayerHolding>();
 
         pizzaBox = GameObject.Find("PizzaHolder").GetComponent<PizzaBox>();
-        aimHint.SetActive(false);
+        //aimHint.SetActive(false);
     }
 
     // Update is called once per frame
@@ -57,16 +57,16 @@ public class PlayerLeftHand : MonoBehaviour
         {
             Smoke();
         }
-        if (!isHolding && !GetComponent<PlayerRightHand>().isHolding)
-        {
-            if (aimHint.activeSelf)
-                aimHint.SetActive(false);
-        }
-        else
-        {
-            if (!aimHint.activeSelf)
-                aimHint.SetActive(true);
-        }
+        //if (!isHolding && !GetComponent<PlayerRightHand>().isHolding)
+        //{
+        //    if (aimHint.activeSelf)
+        //        aimHint.SetActive(false);
+        //}
+        //else
+        //{
+        //    if (!aimHint.activeSelf)
+        //        aimHint.SetActive(true);
+        //}
     }
 
 

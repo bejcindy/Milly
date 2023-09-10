@@ -143,41 +143,41 @@ public class LivableObject : MonoBehaviour
         //Is in FOV
         if (centerFocused)
         {
-            //if ((pointOnScreen.x < Screen.width * 0.4f) || (pointOnScreen.x > Screen.width * 0.6f) ||
-            //    (pointOnScreen.y < Screen.height * 0.4f) || (pointOnScreen.y > Screen.height * 0.6f))
-            //{
-            //    return false;
-            //}
-            int pointsInScreen = 0;
-            Vector3 pointA = rend.bounds.min;
-            Vector3 pointB = rend.bounds.min + new Vector3(rend.bounds.size.x, 0, 0);
-            Vector3 pointC = rend.bounds.min + new Vector3(0, rend.bounds.size.y, 0);
-            Vector3 pointD = rend.bounds.min + new Vector3(0, 0, rend.bounds.size.z);
-            Vector3 pointE = rend.bounds.max - new Vector3(rend.bounds.size.x, 0, 0);
-            Vector3 pointF = rend.bounds.max - new Vector3(0, rend.bounds.size.y, 0);
-            Vector3 pointG = rend.bounds.max - new Vector3(0, 0, rend.bounds.size.z);
-            Vector3 pointH = rend.bounds.max;
-
-
-            checkBoundVisible[0] = CheckPointInView(pointA);
-            checkBoundVisible[1] = CheckPointInView(pointB);
-            checkBoundVisible[2] = CheckPointInView(pointC);
-            checkBoundVisible[3] = CheckPointInView(pointD);
-            checkBoundVisible[4] = CheckPointInView(pointE);
-            checkBoundVisible[5] = CheckPointInView(pointF);
-            checkBoundVisible[6] = CheckPointInView(pointG);
-            checkBoundVisible[7] = CheckPointInView(pointH);
-
-            for (int i = 0; i < checkBoundVisible.Length; i++)
+            if ((pointOnScreen.x < Screen.width * 0.4f) || (pointOnScreen.x > Screen.width * 0.6f) ||
+                (pointOnScreen.y < Screen.height * 0.4f) || (pointOnScreen.y > Screen.height * 0.6f))
             {
-                if (checkBoundVisible[i])
-                    pointsInScreen++;
-                else
-                    pointsInScreen--;
-            }
-
-            if (pointsInScreen < 2)
                 return false;
+            }
+            //int pointsInScreen = 0;
+            //Vector3 pointA = rend.bounds.min;
+            //Vector3 pointB = rend.bounds.min + new Vector3(rend.bounds.size.x, 0, 0);
+            //Vector3 pointC = rend.bounds.min + new Vector3(0, rend.bounds.size.y, 0);
+            //Vector3 pointD = rend.bounds.min + new Vector3(0, 0, rend.bounds.size.z);
+            //Vector3 pointE = rend.bounds.max - new Vector3(rend.bounds.size.x, 0, 0);
+            //Vector3 pointF = rend.bounds.max - new Vector3(0, rend.bounds.size.y, 0);
+            //Vector3 pointG = rend.bounds.max - new Vector3(0, 0, rend.bounds.size.z);
+            //Vector3 pointH = rend.bounds.max;
+
+
+            //checkBoundVisible[0] = CheckPointInView(pointA);
+            //checkBoundVisible[1] = CheckPointInView(pointB);
+            //checkBoundVisible[2] = CheckPointInView(pointC);
+            //checkBoundVisible[3] = CheckPointInView(pointD);
+            //checkBoundVisible[4] = CheckPointInView(pointE);
+            //checkBoundVisible[5] = CheckPointInView(pointF);
+            //checkBoundVisible[6] = CheckPointInView(pointG);
+            //checkBoundVisible[7] = CheckPointInView(pointH);
+
+            //for (int i = 0; i < checkBoundVisible.Length; i++)
+            //{
+            //    if (checkBoundVisible[i])
+            //        pointsInScreen++;
+            //    else
+            //        pointsInScreen--;
+            //}
+
+            //if (pointsInScreen < 4)
+            //    return false;
         }
         else
         {

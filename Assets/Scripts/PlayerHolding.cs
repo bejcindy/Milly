@@ -10,8 +10,11 @@ public class PlayerHolding : MonoBehaviour
     public bool fullHand;
     public bool inDialogue;
     public bool throwing;
+    public bool atContainer;
+
     List<GameObject> pickUpObjects;
     public List<GameObject> lookingObjects;
+    public GameObject[] containers;
     public GameObject selectedObj;
     public GameObject focusedObj;
     PlayerLeftHand leftHand;
@@ -19,6 +22,11 @@ public class PlayerHolding : MonoBehaviour
 
     public GameObject leftHandUI;
     public GameObject rightHandUI;
+    public GameObject duoHandUI;
+    public GameObject focusedHint;
+
+    public ContainerObject currentContainer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +35,8 @@ public class PlayerHolding : MonoBehaviour
         rightHand = GetComponent<PlayerRightHand>();
         pickUpObjects = new List<GameObject>();
         lookingObjects = new List<GameObject>();
+        focusedHint = GameObject.Find("QTEPanel").transform.GetChild(3).gameObject;
+        containers = GameObject.FindGameObjectsWithTag("Container");
     }
 
     // Update is called once per frame
@@ -35,16 +45,21 @@ public class PlayerHolding : MonoBehaviour
         GetFullHand();
         ChooseInteractable();
         ChooseLookable();
+        atContainer = CheckContainer();
         Debug.Log("Focused object is " + focusedObj);
         if (selectedObj != null)
         {
-            if (GetLeftHand())
+            if (GetLeftHand() && GetRightHand())
             {
-                leftHandUI.SetActive(true);
+                duoHandUI.SetActive(true);
             }
             else if (GetRightHand())
             {
                 rightHandUI.SetActive(true);
+            }
+            else if (GetLeftHand())
+            {
+                leftHandUI.SetActive(true);
             }
 
         }
@@ -52,6 +67,16 @@ public class PlayerHolding : MonoBehaviour
         {
             leftHandUI.SetActive(false);
             rightHandUI.SetActive(false);
+            duoHandUI.SetActive(false);
+        }
+
+        if(focusedObj != null)
+        {
+            focusedHint.SetActive(true);
+        }
+        else
+        {
+            focusedHint.SetActive(false);
         }
 
         if (DialogueManager.IsConversationActive)
@@ -189,6 +214,20 @@ public class PlayerHolding : MonoBehaviour
             }
             focusedObj.GetComponent<LookingObject>().selected = true;
         }
+    }
+
+    bool CheckContainer()
+    {
+        foreach(GameObject obj in containers)
+        {
+            if (obj.GetComponent<ContainerObject>().interactable)
+            {
+                currentContainer = obj.GetComponent<ContainerObject>();
+                return true;
+            }
+        }
+        currentContainer = null;
+        return false;
     }
 
 

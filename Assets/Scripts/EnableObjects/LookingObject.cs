@@ -16,6 +16,10 @@ public class LookingObject : LivableObject
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
+        if (TryGetComponent<DialogueSystemTrigger>(out DialogueSystemTrigger dia))
+        {
+            dialogue = dia;
+        }
     }
 
     protected override void Update()
@@ -26,7 +30,7 @@ public class LookingObject : LivableObject
             base.Update();
             if (!designatedSpot)
             {
-                if (interactable)
+                if (interactable && !playerHolding.inDialogue)
                 {
                     playerHolding.AddLookable(gameObject);
                     if (selected)

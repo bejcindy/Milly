@@ -58,12 +58,6 @@ public class CollisionObject : LivableObject
         {
             activated = true;
         }
-        //if (ashTray)
-        //{
-        //    if (other.gameObject.name.Contains("cigarette"))
-        //    {
-        //        activated = true;
-        //    }
-        //}
+
     }
 }

@@ -574,6 +574,20 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 16
+    fields:
+    - title: Name
+      value: Poster_MirandaColeman
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
@@ -15361,12 +15375,6 @@ MonoBehaviour:
       - originConversationID: 14
         originDialogueID: 0
         destinationConversationID: 14
-        destinationDialogueID: 1
-        isConnector: 0
-        priority: 2
-      - originConversationID: 14
-        originDialogueID: 0
-        destinationConversationID: 14
         destinationDialogueID: 3
         isConnector: 0
         priority: 2
@@ -15374,6 +15382,12 @@ MonoBehaviour:
         originDialogueID: 0
         destinationConversationID: 14
         destinationDialogueID: 4
+        isConnector: 0
+        priority: 2
+      - originConversationID: 14
+        originDialogueID: 0
+        destinationConversationID: 14
+        destinationDialogueID: 5
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -15385,111 +15399,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 346
         y: 31
-        width: 160
-        height: 30
-    - id: 1
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: (I didn't put this up here, so it's gotta be Nida or Hayden.)
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 14
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 14
-        originDialogueID: 1
-        destinationConversationID: 14
-        destinationDialogueID: 2
-        isConnector: 0
-        priority: 2
-      conditionsString: Variable["Tattoo_Poster_Plaza"] == false
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 159
-        y: 117
-        width: 160
-        height: 30
-    - id: 2
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: (Kinda interesting how we are one of the only two shops still left
-          in this building.)
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 14
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: Variable["Tattoo_Poster_Plaza"] = true
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 161
-        y: 192
         width: 160
         height: 30
     - id: 3
@@ -15515,8 +15424,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: (Not even sure if we have permission to be putting up ads on other
-          people's apartments like this...)
+        value: (This wall used to be filled with ads for the shops in this building,
+          and now we are the only one that is still here.)
         type: 0
         typeString: 
       - title: Sequence
@@ -15539,7 +15448,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 377
-        y: 119
+        y: 118
         width: 160
         height: 30
     - id: 4
@@ -15590,6 +15499,56 @@ MonoBehaviour:
         serializedVersion: 2
         x: 607
         y: 117
+        width: 160
+        height: 30
+    - id: 5
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: (Miranda Coleman's newest opera, been wanting to see this one for
+          a long time.)
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 14
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["Poster_MirandaColeman"] == false
+      userScript: Variable["Poster_MirandaColeman"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 200
+        y: 253
         width: 160
         height: 30
     entryGroups: []

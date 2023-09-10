@@ -77,7 +77,7 @@ public class PlayerLeftHand : MonoBehaviour
             Vector3 smokingPos = new Vector3(0, -0.15f, 0.22f);
             StartCoroutine(LerpPosition(smokingPos, 1f));
         }
-        if(Input.mouseScrollDelta.y > 0 && !inhaling)
+        if(Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0.75f && !inhaling)
         {
             StartCoroutine(LerpPosition(holdingPosition, 1f));
             holdingObj.GetComponent<Cigarette>().Inhale();

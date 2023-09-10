@@ -42,6 +42,7 @@ public class ContainerObject : CollisionObject
             yield return null;
         }
         obj.localPosition = containedPos;
+        activated = true;
     }
 
 

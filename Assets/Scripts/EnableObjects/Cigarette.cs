@@ -74,5 +74,6 @@ public class Cigarette : PickUpObject
     {
         cigStage = 4;
         activeCigObj.tag = "CigButt";
+        gameObject.tag = "CigButt";
     }
 }

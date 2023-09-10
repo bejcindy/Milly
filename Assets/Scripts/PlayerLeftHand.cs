@@ -111,18 +111,26 @@ public class PlayerLeftHand : MonoBehaviour
                     holdingObj.GetComponent<PickUpObject>().thrown = true;
                     holdingObj.SetParent(null);
                     //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward+new Vector3(xOffset,0,0) + new Vector3(0, throwForce.y, 0));
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                    if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
                     {
-                        holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                        //Debug.Log("hit " + hit.transform.gameObject.name);
+                        StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
                     }
                     else
                     {
-                        holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.forward * 30f - transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                        //Debug.Log("didn't hit");
+                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        RaycastHit hit;
+                        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                        {
+                            holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                            //Debug.Log("hit " + hit.transform.gameObject.name);
+                        }
+                        else
+                        {
+                            holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.forward * 30f - transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                            //Debug.Log("didn't hit");
+                        }
                     }
+
                     noThrow = true;
                     playerHolding.UnoccupyLeft();
                     readyToThrow = false;

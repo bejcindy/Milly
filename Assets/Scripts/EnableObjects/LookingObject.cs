@@ -9,12 +9,17 @@ public class LookingObject : LivableObject
 
     public bool designatedSpot;
     public bool inSpot;
+    public bool selected;
     public DialogueSystemTrigger dialogue;
 
     protected override void Start()
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
+        if (TryGetComponent<DialogueSystemTrigger>(out DialogueSystemTrigger dia))
+        {
+            dialogue = dia;
+        }
     }
 
     protected override void Update()
@@ -25,29 +30,33 @@ public class LookingObject : LivableObject
             base.Update();
             if (!designatedSpot)
             {
-                if (interactable)
+                if (interactable && !playerHolding.inDialogue)
                 {
-                    if (!playerHolding.throwing && !playerHolding.inDialogue)
+                    playerHolding.AddLookable(gameObject);
+                    if (selected)
                     {
-                        if (!firstActivated)
-                        {
-                            gameObject.layer = 12;
-                            DataHolder.FocusOnThis(fadeInterval, matColorVal);
-                            DataHolder.currentFocus = gameObject;
-                        }
-                        activated = true;
-                        if(specialEffect != null)
-                            specialEffect.SetActive(true);
+                        //DataHolder.FocusOnThis(fadeInterval, matColorVal);
+                        //DataHolder.currentFocus = gameObject;
+                        if (Input.GetKeyDown(KeyCode.Space))
+                            activated = true;
                     }
+                    //else if (!selected)
+                    //{
+                    //    if (DataHolder.currentFocus == gameObject)
+                    //    {
+                    //        DataHolder.focusing = false;
+                    //    }
+                    //}
 
                 }
                 else
                 {
-                    gameObject.layer = 0;
-                    if (DataHolder.currentFocus == gameObject)
-                    {
-                        DataHolder.focusing = false;
-                    }
+                    activated = false;
+                    playerHolding.RemoveLookable(gameObject);
+                    //if (DataHolder.currentFocus == gameObject)
+                    //{
+                    //    DataHolder.focusing = false;
+                    //}
                 }
             }
             else
@@ -63,8 +72,6 @@ public class LookingObject : LivableObject
                             DataHolder.currentFocus = gameObject;
                         }
                         activated = true;
-                        if (specialEffect != null) 
-                            specialEffect.SetActive(true);
                     }
                 }
                 else
@@ -80,10 +87,23 @@ public class LookingObject : LivableObject
         }
         else
         {
-            if(dialogue!=null)
+            if (specialEffect != null)
+                specialEffect.SetActive(true);
+            if (dialogue!=null)
                 dialogue.enabled = true;
-            gameObject.layer = 13;
-            DataHolder.focusing = false;
+            gameObject.layer = 0;
+            //gameObject.layer = 13;
+            playerHolding.RemoveLookable(gameObject);
+            //DataHolder.focusing = false;
+        }
+
+        if (selected)
+        {
+            gameObject.layer = 12;
+        }
+        else
+        {
+            gameObject.layer = 0;
         }
 
     }

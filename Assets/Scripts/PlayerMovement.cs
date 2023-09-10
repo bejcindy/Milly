@@ -255,17 +255,17 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<terraintry>().startPainting = false;
         else
             GetComponent<terraintry>().startPainting = true;
-        if (Input.GetKeyDown(jumpKey))
-        {
+        //if (Input.GetKeyDown(jumpKey))
+        //{
 
-            if (grounded && readyToJump)
-            {
-                readyToJump = false;
-                Jump();
-                Invoke(nameof(ResetJump), jumpCooldown);
-            }
+        //    if (grounded && readyToJump)
+        //    {
+        //        readyToJump = false;
+        //        Jump();
+        //        Invoke(nameof(ResetJump), jumpCooldown);
+        //    }
 
-        }
+        //}
 
     }
     void SpeedControl()

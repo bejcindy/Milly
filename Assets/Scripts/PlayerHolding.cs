@@ -10,13 +10,23 @@ public class PlayerHolding : MonoBehaviour
     public bool fullHand;
     public bool inDialogue;
     public bool throwing;
+    public bool atContainer;
+
     List<GameObject> pickUpObjects;
+    public List<GameObject> lookingObjects;
+    public GameObject[] containers;
     public GameObject selectedObj;
+    public GameObject focusedObj;
     PlayerLeftHand leftHand;
     PlayerRightHand rightHand;
 
     public GameObject leftHandUI;
     public GameObject rightHandUI;
+    public GameObject duoHandUI;
+    public GameObject focusedHint;
+
+    public ContainerObject currentContainer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +34,9 @@ public class PlayerHolding : MonoBehaviour
         leftHand = GetComponent<PlayerLeftHand>();
         rightHand = GetComponent<PlayerRightHand>();
         pickUpObjects = new List<GameObject>();
+        lookingObjects = new List<GameObject>();
+        focusedHint = GameObject.Find("QTEPanel").transform.GetChild(3).gameObject;
+        containers = GameObject.FindGameObjectsWithTag("Container");
     }
 
     // Update is called once per frame
@@ -31,16 +44,22 @@ public class PlayerHolding : MonoBehaviour
     {
         GetFullHand();
         ChooseInteractable();
-
+        ChooseLookable();
+        atContainer = CheckContainer();
+        Debug.Log("Focused object is " + focusedObj);
         if (selectedObj != null)
         {
-            if (GetLeftHand())
+            if (GetLeftHand() && GetRightHand())
             {
-                leftHandUI.SetActive(true);
+                duoHandUI.SetActive(true);
             }
             else if (GetRightHand())
             {
                 rightHandUI.SetActive(true);
+            }
+            else if (GetLeftHand())
+            {
+                leftHandUI.SetActive(true);
             }
 
         }
@@ -48,6 +67,16 @@ public class PlayerHolding : MonoBehaviour
         {
             leftHandUI.SetActive(false);
             rightHandUI.SetActive(false);
+            duoHandUI.SetActive(false);
+        }
+
+        if(focusedObj != null)
+        {
+            focusedHint.SetActive(true);
+        }
+        else
+        {
+            focusedHint.SetActive(false);
         }
 
         if (DialogueManager.IsConversationActive)
@@ -81,7 +110,27 @@ public class PlayerHolding : MonoBehaviour
         {
             obj.GetComponent<PickUpObject>().selected = false;
             pickUpObjects.Remove(obj);
+            if (selectedObj == obj)
+                selectedObj = null; 
+        }
+    }
 
+    public void AddLookable(GameObject obj)
+    {
+        if (!lookingObjects.Contains(obj))
+        {
+            lookingObjects.Add(obj);
+        }
+    }
+
+    public void RemoveLookable(GameObject obj)
+    {
+        if (lookingObjects.Contains(obj))
+        {
+            obj.GetComponent<LookingObject>().selected = false;
+            lookingObjects.Remove(obj);
+            if (focusedObj == obj)
+                focusedObj = null;
         }
     }
 
@@ -104,30 +153,81 @@ public class PlayerHolding : MonoBehaviour
         }
         else if (pickUpObjects.Count == 1)
         {
-            if (selectedObj != this && selectedObj != null)
+            if (selectedObj != pickUpObjects[0] && selectedObj != null)
                 selectedObj.GetComponent<PickUpObject>().selected = false;
             selectedObj = pickUpObjects[0];
             selectedObj.GetComponent<PickUpObject>().selected = true;
         }
         else
         {
-            float minDist = Vector3.Distance(pickUpObjects[0].transform.position, transform.position);
-            selectedObj = pickUpObjects[0];
+            Vector3 toScreen = Camera.main.transform.InverseTransformPoint(pickUpObjects[0].transform.position).normalized;
+            float minDist = Vector3.Dot(toScreen, Vector3.forward);
+
+
             foreach (GameObject obj in pickUpObjects)
             {
-                float distance = Vector3.Distance(transform.position, obj.transform.position);
-                if (distance < minDist)
+                Vector3 objToScreen = Camera.main.transform.InverseTransformPoint(obj.transform.position).normalized;
+                float distance = Vector3.Dot(objToScreen, Vector3.forward);
+                if (distance > minDist)
                 {
-                    minDist = distance;
-                    if (selectedObj != this)
-                    {
+                    if (selectedObj != null)
                         selectedObj.GetComponent<PickUpObject>().selected = false;
-                    }
+                    minDist = distance;
                     selectedObj = obj;
                 }
             }
             selectedObj.GetComponent<PickUpObject>().selected = true;
         }
+    }
+
+    public void ChooseLookable()
+    {
+        if(lookingObjects.Count <= 0)
+        {
+            focusedObj = null;
+        }
+        else if (lookingObjects.Count == 1)
+        {
+            if(focusedObj != lookingObjects[0] && focusedObj !=null)
+                focusedObj.GetComponent<LookingObject>().selected = false;
+            focusedObj = lookingObjects[0];
+            focusedObj.GetComponent<LookingObject>().selected = true;
+        }
+        else
+        {
+
+            Vector3 toScreen = Camera.main.transform.InverseTransformPoint(lookingObjects[0].transform.position).normalized;
+            float toScreenDist = Vector3.Dot(toScreen, Vector3.forward);
+
+            foreach (GameObject obj in lookingObjects)
+            {
+                Vector3 objtoScreen = Camera.main.transform.InverseTransformPoint(obj.transform.position).normalized;
+                float distance = Vector3.Dot(objtoScreen, Vector3.forward);
+                if (distance > toScreenDist)
+                {
+                    if(focusedObj!= null)
+                        focusedObj.GetComponent<LookingObject>().selected = false;
+                    toScreenDist = distance;
+                    focusedObj = obj;
+                }
+
+            }
+            focusedObj.GetComponent<LookingObject>().selected = true;
+        }
+    }
+
+    bool CheckContainer()
+    {
+        foreach(GameObject obj in containers)
+        {
+            if (obj.GetComponent<ContainerObject>().interactable)
+            {
+                currentContainer = obj.GetComponent<ContainerObject>();
+                return true;
+            }
+        }
+        currentContainer = null;
+        return false;
     }
 
 

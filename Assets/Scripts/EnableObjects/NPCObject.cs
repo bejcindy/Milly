@@ -153,6 +153,8 @@ public class NPCObject : LivableObject
     {
         player.GetComponent<PlayerHolding>().inDialogue = true;
         player.GetComponent<PlayerMovement>().enabled = false;
+        if (GetComponent<NPCNavigation>())
+            GetComponent<NPCNavigation>().talking = true;
     }
 
     void OnConversationEnd(Transform other)
@@ -160,6 +162,8 @@ public class NPCObject : LivableObject
         dialogue.enabled = false;
         player.GetComponent<PlayerHolding>().inDialogue = false;
         player.GetComponent<PlayerMovement>().enabled = true;
+        if (GetComponent<NPCNavigation>())
+            GetComponent<NPCNavigation>().talking = false;
     }
 
     void OnTriggerEnter(Collider coll)

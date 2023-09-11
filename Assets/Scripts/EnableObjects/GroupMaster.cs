@@ -87,12 +87,14 @@ public class GroupMaster : MonoBehaviour
             if(child.GetComponent<Renderer>()!= null)
             {
                 Material childMat = child.GetComponent<Renderer>().material;
-                childMat.EnableKeyword("_WhiteDegree");
-                if (childMat.GetFloat("_WhiteDegree") > 0)
+                if (childMat.HasProperty("_WhiteDegree"))
                 {
-                    TurnOnColor(childMat);
+                    childMat.EnableKeyword("_WhiteDegree");
+                    if (childMat.GetFloat("_WhiteDegree") > 0)
+                    {
+                        TurnOnColor(childMat);
+                    }
                 }
-
             }
         }
         else
@@ -102,10 +104,13 @@ public class GroupMaster : MonoBehaviour
                 if (child.GetComponent<Renderer>() != null)
                 {
                     Material childMat = child.GetComponent<Renderer>().material;
-                    childMat.EnableKeyword("_WhiteDegree");
-                    if (childMat.GetFloat("_WhiteDegree") > 0)
+                    if (childMat.HasProperty("_WhiteDegree"))
                     {
-                        TurnOnColor(childMat);
+                        childMat.EnableKeyword("_WhiteDegree");
+                        if (childMat.GetFloat("_WhiteDegree") > 0)
+                        {
+                            TurnOnColor(childMat);
+                        }
                     }
                     child.GetComponent<LivableObject>().activated = true;
                 }

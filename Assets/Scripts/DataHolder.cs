@@ -42,6 +42,7 @@ public class DataHolder : MonoBehaviour
     {
         if (currentFocus)
         {
+            currentFocus.layer = 12;
             focused = true;
             //Debug.Log("focusing");
             if (focusDist > .1f)
@@ -58,6 +59,7 @@ public class DataHolder : MonoBehaviour
                 //currentFocus = null;
                 focusing = false;
                 Debug.Log("false1");
+                currentFocus.GetComponent<LookingObject>().focusingThis = false;
             }
             //Debug.Log("focus dist" + focusDist);
             //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;

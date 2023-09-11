@@ -18,8 +18,8 @@ public class PlayerRightHand : MonoBehaviour
     public PlayerHolding playerHolding;
     public GameObject aimUI;
 
-    public Vector2 minThrowForce = new Vector2(100f, 50f);
-    public Vector2 maxThrowForce = new Vector2(500f, 200f);
+     Vector2 minThrowForce = new Vector2(100f, 10f);
+     Vector2 maxThrowForce = new Vector2(500f, 100f);
     float holdTime = 2f;
     [SerializeField]
     float holdTimer;

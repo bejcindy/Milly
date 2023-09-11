@@ -21,8 +21,8 @@ public class PlayerLeftHand : MonoBehaviour
     public GameObject aimUI;
     public GameObject aimHint;
 
-    public Vector2 minThrowForce = new Vector2(100f, 50f);
-    public Vector2 maxThrowForce = new Vector2(500f, 100f);
+     Vector2 minThrowForce = new Vector2(100f, 10f);
+     Vector2 maxThrowForce = new Vector2(500f, 100f);
     float holdTime = 2f;
     [SerializeField]
     float holdTimer;
@@ -43,6 +43,7 @@ public class PlayerLeftHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.ScreenPointToRay(Input.mousePosition).direction * 30f);
         if (isHolding && !playerHolding.inDialogue)
         {
             if(!inPizzaBox)
@@ -57,16 +58,16 @@ public class PlayerLeftHand : MonoBehaviour
         {
             Smoke();
         }
-        //if (!isHolding && !GetComponent<PlayerRightHand>().isHolding)
-        //{
-        //    if (aimHint.activeSelf)
-        //        aimHint.SetActive(false);
-        //}
-        //else
-        //{
-        //    if (!aimHint.activeSelf)
-        //        aimHint.SetActive(true);
-        //}
+        if (!isHolding && !GetComponent<PlayerRightHand>().isHolding)
+        {
+            if (aimHint.activeSelf)
+                aimHint.SetActive(false);
+        }
+        else
+        {
+            if (!aimHint.activeSelf)
+                aimHint.SetActive(true);
+        }
     }
 
 
@@ -126,7 +127,7 @@ public class PlayerLeftHand : MonoBehaviour
                         }
                         else
                         {
-                            holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.forward * 30f - transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                            holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position+ ray.direction * 30f - transform.position).normalized + new Vector3(0, throwForce.y, 0));
                             //Debug.Log("didn't hit");
                         }
                     }

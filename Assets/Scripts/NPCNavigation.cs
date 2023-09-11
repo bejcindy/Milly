@@ -6,8 +6,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class NPCNavigation : MonoBehaviour
 {
+    public bool loopRoute;
     public float speed;
     public Transform[] destinations;
+    public bool talking;
 
     [SerializeField] float destThreashold;
     [SerializeField] float waitTime;
@@ -26,22 +28,41 @@ public class NPCNavigation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (agent.remainingDistance <= destThreashold)
+        if (!talking)
         {
-            StartCoroutine("NextDestination");
+            if (agent.remainingDistance <= destThreashold)
+            {
+                StartCoroutine("NextDestination");
+            }
         }
+        else
+            agent.isStopped = true;
     }
 
     IEnumerator NextDestination()
     {
-        if (currentDestIndex < destinations.Length)
-            currentDestIndex++;
-        else
-            currentDestIndex = 0;
+        //if (currentDestIndex < destinations.Length)
+        //    currentDestIndex++;
+        //else
+        //{
+        //    if (loopRoute)
+        //        currentDestIndex = 0;
+        //    else
+        //        GetComponent<NPCNavigation>().enabled = false;
+        //}
         agent.SetDestination(destinations[currentDestIndex].position);
         agent.isStopped = true;
         yield return new WaitForSeconds(waitTime);
         agent.isStopped = false;
-        
+        if (currentDestIndex < destinations.Length)
+            currentDestIndex++;
+        else
+        {
+            if (loopRoute)
+                currentDestIndex = 0;
+            else
+                GetComponent<NPCNavigation>().enabled = false;
+        }
+
     }
 }

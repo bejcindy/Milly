@@ -11,6 +11,7 @@ public class LookingObject : LivableObject
     public bool inSpot;
     public bool selected;
     public DialogueSystemTrigger dialogue;
+    public bool focusingThis;
 
     protected override void Start()
     {
@@ -28,6 +29,11 @@ public class LookingObject : LivableObject
         if (matColorVal > 0)
         {
             base.Update();
+            if (focusingThis)
+            {
+                DataHolder.FocusOnThis(fadeInterval, matColorVal);
+                DataHolder.currentFocus = gameObject;
+            }
             if (!designatedSpot)
             {
                 if (interactable && !playerHolding.inDialogue)
@@ -38,7 +44,12 @@ public class LookingObject : LivableObject
                         //DataHolder.FocusOnThis(fadeInterval, matColorVal);
                         //DataHolder.currentFocus = gameObject;
                         if (Input.GetKeyDown(KeyCode.Space))
+                        {
                             activated = true;
+                            focusingThis = true;
+                            //DataHolder.FocusOnThis(fadeInterval, matColorVal);
+                            //DataHolder.currentFocus = gameObject;
+                        }
                     }
                     //else if (!selected)
                     //{
@@ -67,16 +78,17 @@ public class LookingObject : LivableObject
                     {
                         if (!firstActivated)
                         {
-                            gameObject.layer = 12;
-                            DataHolder.FocusOnThis(fadeInterval, matColorVal);
-                            DataHolder.currentFocus = gameObject;
+                            //gameObject.layer = 12;
+                            //DataHolder.FocusOnThis(fadeInterval, matColorVal);
+                            //DataHolder.currentFocus = gameObject;
+                            focusingThis = true;
                         }
                         activated = true;
                     }
                 }
                 else
                 {
-                    gameObject.layer = 13;
+                    //gameObject.layer = 13;
                     if (DataHolder.currentFocus == gameObject)
                     {
                         DataHolder.focusing = false;
@@ -91,7 +103,7 @@ public class LookingObject : LivableObject
                 specialEffect.SetActive(true);
             if (dialogue!=null)
                 dialogue.enabled = true;
-            gameObject.layer = 0;
+            //gameObject.layer = 0;
             //gameObject.layer = 13;
             playerHolding.RemoveLookable(gameObject);
             //DataHolder.focusing = false;
@@ -101,10 +113,10 @@ public class LookingObject : LivableObject
         {
             gameObject.layer = 12;
         }
-        else
-        {
-            gameObject.layer = 0;
-        }
+        //else
+        //{
+        //    gameObject.layer = 0;
+        //}
 
     }
 

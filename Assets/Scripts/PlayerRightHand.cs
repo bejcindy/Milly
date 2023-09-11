@@ -103,7 +103,7 @@ public class PlayerRightHand : MonoBehaviour
                     }
                     else
                     {
-                        holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.forward * 30f - transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                        holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + ray.direction * 30f - transform.position).normalized + new Vector3(0, throwForce.y, 0));
                         //Debug.Log("didn't hit");
                     }
                     noThrow = true;

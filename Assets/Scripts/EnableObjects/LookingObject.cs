@@ -113,10 +113,10 @@ public class LookingObject : LivableObject
         {
             gameObject.layer = 12;
         }
-        //else
-        //{
-        //    gameObject.layer = 0;
-        //}
+        else
+        {
+            gameObject.layer = 0;
+        }
 
     }
 

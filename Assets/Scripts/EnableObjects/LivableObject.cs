@@ -148,6 +148,7 @@ public class LivableObject : MonoBehaviour
             {
                 return false;
             }
+            //Debug.Log(gameObject.name + "point on screen is: " + pointOnScreen);
             //int pointsInScreen = 0;
             //Vector3 pointA = rend.bounds.min;
             //Vector3 pointB = rend.bounds.min + new Vector3(rend.bounds.size.x, 0, 0);
@@ -218,11 +219,13 @@ public class LivableObject : MonoBehaviour
             //    return false;
         }
 
-
+        
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, GetComponent<Renderer>().bounds.center, out hit))
+        if (Physics.Raycast(Camera.main.transform.position-new Vector3(0,0.1f,0), GetComponent<Renderer>().bounds.center-(Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity,Physics.AllLayers, QueryTriggerInteraction.Ignore))
         {
-            if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
+            if (hit.collider)
+                Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
+            if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player") )
             {
                 //Debug.Log(gameObject.name + "blocked by " + hit.collider.name);
                 return false;

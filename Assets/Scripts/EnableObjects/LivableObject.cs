@@ -219,16 +219,17 @@ public class LivableObject : MonoBehaviour
         }
 
 
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, GetComponent<Renderer>().bounds.center, out hit))
-        {
-            if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
-            {
-                //Debug.Log(gameObject.name + "blocked by " + hit.collider.name);
-                return false;
-            }
+        //RaycastHit hit;
+        //if (Physics.Raycast(Camera.main.transform.position, GetComponent<Renderer>().bounds.center, out hit))
+        //{
+        //    if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
+        //    {
+        //        if(centerFocused)
+        //            Debug.Log(gameObject.name + "blocked by " + hit.collider.name);
+        //        return false;
+        //    }
 
-        }
+        //}
         return true;
     }
 

@@ -46,7 +46,6 @@ public class PlayerHolding : MonoBehaviour
         ChooseInteractable();
         ChooseLookable();
         atContainer = CheckContainer();
-        Debug.Log("Focused object is " + focusedObj);
         if (selectedObj != null)
         {
             if (GetLeftHand() && GetRightHand())
@@ -279,6 +278,7 @@ public class PlayerHolding : MonoBehaviour
 
     public void OccupyLeft(Transform obj)
     {
+        RemoveInteractable(obj.gameObject);
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;
         obj.SetParent(Camera.main.transform);
@@ -292,11 +292,12 @@ public class PlayerHolding : MonoBehaviour
         {
             obj.localRotation = Quaternion.Euler(0, 0, 0);
         }
-        Invoke(nameof(EnableThrowLeft), 0.5f);
+        Invoke(nameof(EnableThrowLeft), 0.2f);
     }
 
     public void OccupyRight(Transform obj)
     {
+        RemoveInteractable(obj.gameObject);
         rightHand.isHolding = true;
         rightHand.holdingObj = obj;
         obj.SetParent(Camera.main.transform);
@@ -310,7 +311,7 @@ public class PlayerHolding : MonoBehaviour
         {
             obj.localRotation = Quaternion.Euler(0, 0, 0);
         }
-        Invoke(nameof(EnableThrowRight), 0.5f);
+        Invoke(nameof(EnableThrowRight), 0.2f);
     }
 
     public void UnoccupyLeft()

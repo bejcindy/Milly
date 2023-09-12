@@ -15,14 +15,18 @@ public class NPCNavigation : MonoBehaviour
     [SerializeField] float waitTime;
 
     NavMeshAgent agent;
+    NavMeshObstacle obstacle;
     int currentDestIndex;
 
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        obstacle = GetComponent<NavMeshObstacle>();
         agent.SetDestination(destinations[0].position);
         agent.speed = speed;
+        obstacle.enabled = false;
+        agent.enabled = true;
     }
 
     // Update is called once per frame
@@ -30,7 +34,7 @@ public class NPCNavigation : MonoBehaviour
     {
         if (!talking)
         {
-            if (agent.remainingDistance <= destThreashold)
+            if (agent.remainingDistance <= destThreashold && agent.enabled == true)
             {
                 StartCoroutine("NextDestination");
             }
@@ -50,9 +54,13 @@ public class NPCNavigation : MonoBehaviour
         //    else
         //        GetComponent<NPCNavigation>().enabled = false;
         //}
+        obstacle.enabled = true;
         agent.SetDestination(destinations[currentDestIndex].position);
         agent.isStopped = true;
+        agent.enabled = false;
         yield return new WaitForSeconds(waitTime);
+        obstacle.enabled = false;
+        agent.enabled = true;
         agent.isStopped = false;
         if (currentDestIndex < destinations.Length)
             currentDestIndex++;

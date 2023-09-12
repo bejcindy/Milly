@@ -22,6 +22,8 @@ public class NPCObject : LivableObject
     [Header("Trigger Activation")]
     public bool triggerActivated;
 
+    public bool talkActivated;
+
     DialogueSystemTrigger dialogue;
     public CinemachineVirtualCamera NPCCinemachine;
     public CinemachineVirtualCamera playerCinemachine;
@@ -62,6 +64,20 @@ public class NPCObject : LivableObject
         if (npcActivated && !firstTalk)
         {
             StartConversation();
+        }
+
+        if (talkActivated)
+        {
+            if (interactable)
+            {
+                ChangeLayer(9);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    StartConversation();
+                    npcActivated = true;
+                    ChangeLayer(0);
+                }
+            }
         }
 
         if(firstTalk && interactable)
@@ -163,7 +179,11 @@ public class NPCObject : LivableObject
         player.GetComponent<PlayerHolding>().inDialogue = false;
         player.GetComponent<PlayerMovement>().enabled = true;
         if (GetComponent<NPCNavigation>())
+        {
+            GetComponent<NPCNavigation>().enabled = true;
             GetComponent<NPCNavigation>().talking = false;
+        }
+
     }
 
     void OnTriggerEnter(Collider coll)

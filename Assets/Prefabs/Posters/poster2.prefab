@@ -120,6 +120,7 @@ MonoBehaviour:
   inSpot: 0
   selected: 0
   dialogue: {fileID: 0}
+  focusingThis: 0
 --- !u!114 &4992073858403070681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: 64
   condition:
-    luaConditions: []
+    luaConditions:
+    - Variable["Poster_Tech"] == false
     questConditions: []
     acceptedTags: []
     acceptedGameObjects: []
@@ -171,7 +173,7 @@ MonoBehaviour:
   conversation: Tech_Store_Posters
   conversationConversant: {fileID: 0}
   conversationActor: {fileID: 0}
-  startConversationEntryID: -1
+  startConversationEntryID: 1
   startConversationEntryTitle: 
   exclusive: 0
   replace: 0

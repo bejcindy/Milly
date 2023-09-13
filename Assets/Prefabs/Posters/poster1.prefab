@@ -120,6 +120,7 @@ MonoBehaviour:
   inSpot: 0
   selected: 0
   dialogue: {fileID: 0}
+  focusingThis: 0
 --- !u!114 &33064067561312743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: 64
   condition:
-    luaConditions: []
+    luaConditions:
+    - Variable["Poster_MirandaColeman"] == false
     questConditions: []
     acceptedTags: []
     acceptedGameObjects: []

@@ -37,6 +37,7 @@ public class NPCObject : LivableObject
     public bool inCD;
     public bool talking;
     Animator anim;
+    Coroutine lookCoroutine;
 
     protected override void Start()
     {
@@ -175,26 +176,51 @@ public class NPCObject : LivableObject
 
     void OnConversationStart(Transform other)
     {
+        lookCoroutine = StartCoroutine(RotateTowardsPlayer());
+        playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+        playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
         player.GetComponent<PlayerHolding>().inDialogue = true;
         player.GetComponent<PlayerMovement>().enabled = false;
         if (GetComponent<NPCNavigation>())
             GetComponent<NPCNavigation>().talking = true;
         talking = true;
+        anim.ResetTrigger("Move");
+        anim.SetTrigger("Stop");
     }
 
     void OnConversationEnd(Transform other)
     {
+        StopCoroutine(lookCoroutine);
+        playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 300;
+        playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 300;
         dialogue.enabled = false;
         player.GetComponent<PlayerHolding>().inDialogue = false;
         player.GetComponent<PlayerMovement>().enabled = true;
+
         if (movingNPC)
         {
-            Invoke(nameof(StartMoving), 2f);
+            anim.ResetTrigger("Stop");
+            anim.SetTrigger("Move");
+            //Invoke(nameof(StartMoving), 2f);
 
         }
         talking = false;
         inCD = true;
 
+    }
+
+    IEnumerator RotateTowardsPlayer()
+    {
+        Vector3 direction = player.position - transform.position;
+        direction.y = 0;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        float time = 0;
+        while (time < 1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, time);
+            time += Time.deltaTime * 0.1f;
+            yield return null;
+        }
     }
 
     void OnTriggerEnter(Collider coll)
@@ -208,9 +234,9 @@ public class NPCObject : LivableObject
         }
     }
 
-    void StartMoving()
+    public void StartMoving()
     {
-        anim.SetTrigger("Move");
+
         if (GetComponent<NPCNavigation>())
         {
             GetComponent<NPCNavigation>().enabled = true;

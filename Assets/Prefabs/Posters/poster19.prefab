@@ -119,6 +119,7 @@ MonoBehaviour:
   inSpot: 0
   selected: 0
   dialogue: {fileID: 0}
+  focusingThis: 0
 --- !u!114 &1226173352051174790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: 64
   condition:
-    luaConditions: []
+    luaConditions:
+    - Variable["Poster_Massage"] == false
     questConditions: []
     acceptedTags: []
     acceptedGameObjects: []

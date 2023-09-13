@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5539477732874973181}
   - component: {fileID: 6542213470932070605}
   - component: {fileID: 8587889654058595828}
+  - component: {fileID: 4119228771200062813}
   m_Layer: 0
   m_Name: poster6
   m_TagString: Untagged
@@ -119,6 +120,7 @@ MonoBehaviour:
   inSpot: 0
   selected: 0
   dialogue: {fileID: 0}
+  focusingThis: 0
 --- !u!114 &8587889654058595828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: 64
   condition:
-    luaConditions: []
+    luaConditions:
+    - Variable["Poster_Lenny"] == false
     questConditions: []
     acceptedTags: []
     acceptedGameObjects: []
@@ -192,3 +195,25 @@ MonoBehaviour:
   useBarkTitlePicker: 1
   useQuestNamePicker: 1
   selectedDatabase: {fileID: 11400000, guid: adec3fc67abd41e45828f2fe4a3292f4, type: 2}
+--- !u!114 &4119228771200062813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7694884759388517447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd302015e6ea4c846bcf887a8e5e99bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainTriggers: []
+  activateAll: 0
+  groupColorVal: 1
+  fadeInterval: 10
+  designatedGroup: 0
+  childToChildren: 1
+  buildingControl: 0
+  delayedIgnition: 0
+  delayedGroup: {fileID: 0}
+  bgc: {fileID: 0}

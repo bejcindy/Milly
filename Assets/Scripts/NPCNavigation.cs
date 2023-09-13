@@ -69,25 +69,46 @@ public class NPCNavigation : MonoBehaviour
             anim.ResetTrigger("Move");
             anim.SetTrigger("Stop");
         }
-        yield return new WaitForSeconds(waitTime);
-        if (anim != null)
+        if (destinations[currentDestIndex].name.Contains("circle"))
         {
-            anim.ResetTrigger("Stop");
-            anim.SetTrigger("Move");
+            obstacle.enabled = false;
+            //agent.enabled = true;
+            agent.isStopped = false;
+            if (currentDestIndex < destinations.Length)
+                currentDestIndex++;
+            else
+            {
+                if (loopRoute)
+                    currentDestIndex = 0;
+                else
+                    GetComponent<NPCNavigation>().enabled = false;
+            }
+            agent.SetDestination(destinations[currentDestIndex].position);
+            paused = false;
         }
-        obstacle.enabled = false;
-        //agent.enabled = true;
-        agent.isStopped = false;
-        if (currentDestIndex < destinations.Length)
-            currentDestIndex++;
         else
         {
-            if (loopRoute)
-                currentDestIndex = 0;
+
+            yield return new WaitForSeconds(waitTime);
+            if (anim != null)
+            {
+                anim.ResetTrigger("Stop");
+                anim.SetTrigger("Move");
+            }
+            obstacle.enabled = false;
+            //agent.enabled = true;
+            agent.isStopped = false;
+            if (currentDestIndex < destinations.Length)
+                currentDestIndex++;
             else
-                GetComponent<NPCNavigation>().enabled = false;
+            {
+                if (loopRoute)
+                    currentDestIndex = 0;
+                else
+                    GetComponent<NPCNavigation>().enabled = false;
+            }
+            agent.SetDestination(destinations[currentDestIndex].position);
+            paused = false;
         }
-        agent.SetDestination(destinations[currentDestIndex].position);
-        paused = false;
     }
 }

@@ -28,6 +28,8 @@ public class CollisionObject : LivableObject
             tagList.Add(tagName);
         }
     }
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (tagList.Contains(collision.gameObject.tag))
@@ -50,6 +52,11 @@ public class CollisionObject : LivableObject
             {
                 GetComponent<Rigidbody>().isKinematic = false;
                 GetComponent<DialogueSystemTrigger>().enabled = true;
+            }
+
+            if (GetComponent<BarkOnIdle>())
+            {
+                GetComponent<BarkOnIdle>().enabled = true;
             }
 
         }

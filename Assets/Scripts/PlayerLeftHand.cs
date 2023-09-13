@@ -58,7 +58,7 @@ public class PlayerLeftHand : MonoBehaviour
         {
             Smoke();
         }
-        if (!isHolding && !GetComponent<PlayerRightHand>().isHolding)
+        if (!isHolding && !GetComponent<PlayerRightHand>().isHolding || playerHolding.inDialogue)
         {
             if (aimHint.activeSelf)
                 aimHint.SetActive(false);

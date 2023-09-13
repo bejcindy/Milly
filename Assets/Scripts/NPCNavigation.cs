@@ -10,13 +10,15 @@ public class NPCNavigation : MonoBehaviour
     public float speed;
     public Transform[] destinations;
     public bool talking;
+    public bool paused;
 
     [SerializeField] float destThreashold;
     [SerializeField] float waitTime;
 
     NavMeshAgent agent;
     NavMeshObstacle obstacle;
-    int currentDestIndex;
+    public Animator anim;
+    public int currentDestIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,7 @@ public class NPCNavigation : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         agent.SetDestination(destinations[0].position);
+        anim = transform.GetChild(0).GetComponent<Animator>();
         agent.speed = speed;
         obstacle.enabled = false;
         agent.enabled = true;
@@ -34,7 +37,8 @@ public class NPCNavigation : MonoBehaviour
     {
         if (!talking)
         {
-            if (agent.remainingDistance <= destThreashold && agent.enabled == true)
+            if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance <= destThreashold && !paused)
+//                if (agent.remainingDistance <= destThreashold && agent.enabled == true)
             {
                 StartCoroutine("NextDestination");
             }
@@ -45,6 +49,8 @@ public class NPCNavigation : MonoBehaviour
 
     IEnumerator NextDestination()
     {
+        paused = true;
+        Debug.Log("checking how many times are we calling this shit");
         //if (currentDestIndex < destinations.Length)
         //    currentDestIndex++;
         //else
@@ -55,12 +61,22 @@ public class NPCNavigation : MonoBehaviour
         //        GetComponent<NPCNavigation>().enabled = false;
         //}
         obstacle.enabled = true;
-        agent.SetDestination(destinations[currentDestIndex].position);
         agent.isStopped = true;
-        agent.enabled = false;
+        //agent.enabled = false;
+        if (anim != null)
+        {
+            anim.ResetTrigger("Start");
+            anim.ResetTrigger("Move");
+            anim.SetTrigger("Stop");
+        }
         yield return new WaitForSeconds(waitTime);
+        if (anim != null)
+        {
+            anim.ResetTrigger("Stop");
+            anim.SetTrigger("Move");
+        }
         obstacle.enabled = false;
-        agent.enabled = true;
+        //agent.enabled = true;
         agent.isStopped = false;
         if (currentDestIndex < destinations.Length)
             currentDestIndex++;
@@ -71,6 +87,7 @@ public class NPCNavigation : MonoBehaviour
             else
                 GetComponent<NPCNavigation>().enabled = false;
         }
-
+        agent.SetDestination(destinations[currentDestIndex].position);
+        paused = false;
     }
 }

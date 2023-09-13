@@ -31,6 +31,11 @@ public class NPCObject : LivableObject
     public GameObject npcBody;
     public bool firstTalk;
     public bool dialogueEnabled;
+    public bool movingNPC;
+
+    public float talkCD;
+    public bool inCD;
+    public bool talking;
     Animator anim;
 
     protected override void Start()
@@ -46,6 +51,17 @@ public class NPCObject : LivableObject
     protected override void Update()
     {
         base.Update();
+
+        if (inCD && talkCD > 0)
+        {
+            talkCD -= Time.deltaTime;
+        }
+        else
+        {
+            inCD = false;
+            talkCD = 2f;
+        }
+
         if (objectOriented)
         {
             if (npcObject.activated)
@@ -66,32 +82,23 @@ public class NPCObject : LivableObject
             StartConversation();
         }
 
-        if (talkActivated)
-        {
-            if (interactable)
-            {
-                ChangeLayer(9);
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    StartConversation();
-                    npcActivated = true;
-                    ChangeLayer(0);
-                }
-            }
-        }
-
-        if(firstTalk && interactable)
+        if ((firstTalk || talkActivated) && interactable && !inCD && !talking)
         {
             ChangeLayer(9);
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
             {
                 StartConversation();
+                if (talkActivated)
+                    npcActivated = true;
             }
         }
         else
         {
             ChangeLayer(0);
         }
+        
+
+
 
         if (dialogueEnabled)
         {
@@ -160,6 +167,7 @@ public class NPCObject : LivableObject
 
     void StartConversation()
     {
+        ChangeLayer(0);
         dialogue.enabled = true;
         dialogueEnabled = true;
         firstTalk = true;
@@ -171,6 +179,7 @@ public class NPCObject : LivableObject
         player.GetComponent<PlayerMovement>().enabled = false;
         if (GetComponent<NPCNavigation>())
             GetComponent<NPCNavigation>().talking = true;
+        talking = true;
     }
 
     void OnConversationEnd(Transform other)
@@ -178,11 +187,13 @@ public class NPCObject : LivableObject
         dialogue.enabled = false;
         player.GetComponent<PlayerHolding>().inDialogue = false;
         player.GetComponent<PlayerMovement>().enabled = true;
-        if (GetComponent<NPCNavigation>())
+        if (movingNPC)
         {
-            GetComponent<NPCNavigation>().enabled = true;
-            GetComponent<NPCNavigation>().talking = false;
+            Invoke(nameof(StartMoving), 2f);
+
         }
+        talking = false;
+        inCD = true;
 
     }
 
@@ -194,6 +205,16 @@ public class NPCObject : LivableObject
             {
                 npcActivated = true;
             }
+        }
+    }
+
+    void StartMoving()
+    {
+        anim.SetTrigger("Move");
+        if (GetComponent<NPCNavigation>())
+        {
+            GetComponent<NPCNavigation>().enabled = true;
+            GetComponent<NPCNavigation>().talking = false;
         }
     }
 

@@ -16,14 +16,15 @@ public class RiggedVisibleDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rigVisible)
-        {
-            isVisible = IsInView();
-        }
-        else
-        {
-            isVisible = false;
-        }
+        //if (rigVisible)
+        //{
+        //    isVisible = IsInView();
+        //}
+        //else
+        //{
+        //    isVisible = false;
+        //}
+        isVisible = rigVisible;
     }
 
     private void OnBecameVisible()

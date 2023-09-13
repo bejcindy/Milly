@@ -51,14 +51,20 @@ public class PlayerHolding : MonoBehaviour
             if (GetLeftHand() && GetRightHand())
             {
                 duoHandUI.SetActive(true);
+                leftHandUI.SetActive(false);
+                rightHandUI.SetActive(false);
             }
             else if (GetRightHand())
             {
                 rightHandUI.SetActive(true);
+                duoHandUI.SetActive(false);
+                leftHandUI.SetActive(false);
             }
             else if (GetLeftHand())
             {
                 leftHandUI.SetActive(true);
+                duoHandUI.SetActive(false);
+                rightHandUI.SetActive(false);
             }
 
         }

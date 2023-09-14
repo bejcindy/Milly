@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7383124536893055294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Static/Outside_Ambience
+  m_EditorClassIdentifier: 
+  Path: event:/Static/Outside_Ambience
+  Guid:
+    Data1: -1058474959
+    Data2: 1151527299
+    Data3: 1545703868
+    Data4: 981071725
+  Banks:
+  - {fileID: 5735392386094529791}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 139467
+--- !u!114 &-6631348963725591312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Static/Izakaya_Noise
+  m_EditorClassIdentifier: 
+  Path: event:/Static/Izakaya_Noise
+  Guid:
+    Data1: 161903182
+    Data2: 1080281205
+    Data3: -500075115
+    Data4: -2073058613
+  Banks:
+  - {fileID: 5735392386094529791}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 50256
 --- !u!114 &-4729934772478789418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,11 +69,38 @@ MonoBehaviour:
   Path: Assets/FMODProject/MillyFMOD/Build/Desktop/SoundEffects.bank
   Name: SoundEffects
   StudioPath: bank:/SoundEffects
-  lastModified: 638277086922055319
+  lastModified: 638302564242110356
   FileSizes:
   - Name: Desktop
-    Value: 494
+    Value: 35104
   Exists: 1
+--- !u!114 &-871286595682361792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Slide_Door
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Slide_Door
+  Guid:
+    Data1: 90607936
+    Data2: 1255702328
+    Data3: 756644781
+    Data4: 226141526
+  Banks:
+  - {fileID: -4729934772478789418}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2544
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,13 +117,16 @@ MonoBehaviour:
   - {fileID: 4876093756887817646}
   - {fileID: 5735392386094529791}
   - {fileID: -4729934772478789418}
-  EditorEvents: []
+  EditorEvents:
+  - {fileID: -6631348963725591312}
+  - {fileID: -871286595682361792}
+  - {fileID: -7383124536893055294}
   EditorParameters: []
   MasterBanks:
   - {fileID: 5735392386094529791}
   StringsBanks:
   - {fileID: 4876093756887817646}
-  cacheTime: 638277086922055319
+  cacheTime: 638302564242110356
   cacheVersion: 131601
 --- !u!114 &4876093756887817646
 MonoBehaviour:
@@ -59,10 +143,10 @@ MonoBehaviour:
   Path: Assets/FMODProject/MillyFMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638277086922045550
+  lastModified: 638302564241889408
   FileSizes:
   - Name: Desktop
-    Value: 766
+    Value: 950
   Exists: 1
 --- !u!114 &5735392386094529791
 MonoBehaviour:
@@ -79,8 +163,8 @@ MonoBehaviour:
   Path: Assets/FMODProject/MillyFMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638277086922045550
+  lastModified: 638302564241859390
   FileSizes:
   - Name: Desktop
-    Value: 1036
+    Value: 2427840
   Exists: 1

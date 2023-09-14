@@ -37,10 +37,15 @@ public class NPCNavigation : MonoBehaviour
     {
         if (!talking)
         {
+            
             if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance <= destThreashold && !paused)
 //                if (agent.remainingDistance <= destThreashold && agent.enabled == true)
             {
                 StartCoroutine("NextDestination");
+            }
+            else if (!paused)
+            {
+                agent.isStopped = false;
             }
         }
         else

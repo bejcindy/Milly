@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using Unity.IO;
+using FMOD;
 
 public class StartGame : MonoBehaviour
 {
@@ -11,11 +12,19 @@ public class StartGame : MonoBehaviour
     public PlayerCam playerCam;
     public CinemachineVirtualCamera playerCinemachine;
     public bool startSequence;
+    public Animator startAnim;
     // Start is called before the first frame update
+
+    FMOD.Studio.EventInstance izakayaAmbienceEvent;
+    FMOD.Studio.EventInstance outsideAmbienceEvent;
     void Start()
     {
+        izakayaAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Izakaya_Noise");
+        outsideAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
+
         if (startSequence)
         {
+            izakayaAmbienceEvent.start();
             playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
             playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
             playerMovement.enabled = false;
@@ -33,7 +42,10 @@ public class StartGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(startAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >1)
+        {
+            startAnim.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public void ActivateGame()
@@ -49,6 +61,14 @@ public class StartGame : MonoBehaviour
         playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 300;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void StopAmbience()
+    {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Slide_Door", playerCam.transform.position);
+        izakayaAmbienceEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        izakayaAmbienceEvent.release();
+        outsideAmbienceEvent.start();
     }
 
 

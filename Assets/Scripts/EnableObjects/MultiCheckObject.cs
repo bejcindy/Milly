@@ -5,6 +5,7 @@ using UnityEngine;
 public class MultiCheckObject : LivableObject
 {
     public List<LivableObject> checks;
+    public List<BuildingGroupController> bgcs;
 
 
     protected override void Update()
@@ -15,13 +16,29 @@ public class MultiCheckObject : LivableObject
 
     bool CheckAllChecks()
     {
-        foreach(LivableObject obj in checks)
+        if(checks.Count > 0)
         {
-            if (!obj.activated)
+            foreach (LivableObject obj in checks)
             {
-                return false;
+                if (!obj.activated)
+                {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
+        if(bgcs.Count > 0)
+        {
+            foreach(BuildingGroupController bgc in bgcs)
+            {
+                if (!bgc.activateAll)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+
     }
 }

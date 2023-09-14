@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class CollisionObject : LivableObject
 {
@@ -9,6 +10,7 @@ public class CollisionObject : LivableObject
 
     public bool stairParent;
     public bool ashTray;
+    public bool brokenAC;
 
     protected override void Start()
     {
@@ -26,6 +28,8 @@ public class CollisionObject : LivableObject
             tagList.Add(tagName);
         }
     }
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (tagList.Contains(collision.gameObject.tag))
@@ -42,6 +46,17 @@ public class CollisionObject : LivableObject
             if (gameObject.CompareTag("Ladder"))
             {
                 GetComponent<Rigidbody>().isKinematic = false;
+            }
+
+            if (brokenAC)
+            {
+                GetComponent<Rigidbody>().isKinematic = false;
+                GetComponent<DialogueSystemTrigger>().enabled = true;
+            }
+
+            if (GetComponent<BarkOnIdle>())
+            {
+                GetComponent<BarkOnIdle>().enabled = true;
             }
 
         }

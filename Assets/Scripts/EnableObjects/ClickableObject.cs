@@ -74,7 +74,7 @@ public class ClickableObject : LivableObject
         animator.ResetTrigger("Released");
     }
 
-    void ActivateGroup()
+    public void ActivateGroup()
     {
         buildingGroup.activateAll = true;
     }
@@ -93,6 +93,10 @@ public class ClickableObject : LivableObject
 
     void OnConversationEnd(Transform other)
     {
+        if(gameObject.name.Contains("button"))
+        {
+            Debug.Log("Conversation over");
+        }
         if (groupControl)
         {
             if (!buildingGroup.activateAll)

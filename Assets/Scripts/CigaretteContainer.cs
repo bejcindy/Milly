@@ -33,6 +33,7 @@ public class CigaretteContainer : MonoBehaviour
                 GameObject newCig = GameObject.Instantiate(fullCig);
                 newCig.GetComponent<LivableObject>().activated = true;
                 newCig.GetComponent<Rigidbody>().isKinematic = true;
+                newCig.GetComponent<Cigarette>().inHand = true;
                 if (playerHolding.GetLeftHandSmoking())
                 {
                     playerHolding.OccupyLeft(newCig.transform);

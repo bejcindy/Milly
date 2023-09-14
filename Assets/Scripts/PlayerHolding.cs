@@ -46,7 +46,7 @@ public class PlayerHolding : MonoBehaviour
         ChooseInteractable();
         ChooseLookable();
         atContainer = CheckContainer();
-        if (selectedObj != null)
+        if (selectedObj != null && !fullHand)
         {
             if (GetLeftHand() && GetRightHand())
             {

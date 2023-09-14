@@ -168,12 +168,32 @@ public class PlayerMovement : MonoBehaviour
         float ySpeed = moveSpeed * verticalInput;
         //rb.velocity = new Vector3(rb.velocity.x, ySpeed, rb.velocity.z);
         rb.velocity = new Vector3(0, ySpeed, 0);
+        
     }
 
     void MovePlayer()
     {
-        if(!rb.useGravity)
-            rb.useGravity = true;
+        RaycastHit ladderDetect;
+        if(Physics.Raycast(transform.position, -transform.up, out ladderDetect, playerHeight, flatGround))
+        {
+            if (ladderDetect.transform.CompareTag("Ladder"))
+            {
+                rb.useGravity = false;
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            }
+            else
+            {
+                if (!rb.useGravity)
+                    rb.useGravity = true;
+            }
+        }
+        else
+        {
+            if(!rb.useGravity)
+                rb.useGravity = true;
+        }
+        //if(!rb.useGravity)
+        //    rb.useGravity = true;
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
         //Debug.Log(rb.velocity);
         //Debug.DrawRay(transform.position, GetSlopeMoveDir() * moveSpeed * 20f, Color.red);

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD;
 
 public class PickUpObject : LivableObject
 {
@@ -23,6 +24,9 @@ public class PickUpObject : LivableObject
     public GameObject uiHint;
     public Sprite leftMouse;
     public Sprite rightMouse;
+    public string pickUpEventName;
+    public string throwEventName;
+
 
 
     protected override void Start()
@@ -61,6 +65,7 @@ public class PickUpObject : LivableObject
                         rb.isKinematic = true;
                         playerHolding.OccupyLeft(transform);
                         inHand = true;
+                        FMODUnity.RuntimeManager.PlayOneShot(pickUpEventName, player.transform.position);
                     }
                 }
 

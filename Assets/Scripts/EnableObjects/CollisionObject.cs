@@ -11,6 +11,7 @@ public class CollisionObject : LivableObject
     public bool stairParent;
     public bool ashTray;
     public bool brokenAC;
+    public string eventName;
 
     protected override void Start()
     {

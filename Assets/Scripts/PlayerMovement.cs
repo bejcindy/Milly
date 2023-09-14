@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool ladderExited;
     Collider ladderTrigger;
+    bool tooLeft, tooRight;
 
     void Start()
     {
@@ -166,8 +167,21 @@ public class PlayerMovement : MonoBehaviour
             rb.useGravity = false;
         //rb.AddForce(Vector3.up * moveSpeed * verticalInput);
         float ySpeed = moveSpeed * verticalInput;
+        //Vector3 horizontalDir = Vector3.ProjectOnPlane(transform.position - ladderTrigger.transform.position, ladderTrigger.transform.forward);
+        //Vector3 horizontalDir=Vector3.Project(transform.position - ladderTrigger.transform.position, ladderTrigger.transform.right);
+        float clampedHorizontalInput;
+        if (tooLeft)
+            clampedHorizontalInput = Mathf.Clamp(horizontalInput, 0, 1);
+        else if (tooRight)
+            clampedHorizontalInput = Mathf.Clamp(horizontalInput, -1, 0);
+        else
+            clampedHorizontalInput = horizontalInput;
+
+        Vector3 xSpeed = moveSpeed * clampedHorizontalInput * -ladderTrigger.transform.right;
+        Debug.Log("left: " + tooLeft + "right: " + tooRight + "clamped: " + clampedHorizontalInput);
+        //Vector3 xSpeedZeroY = new Vector3(xSpeed.x, 0, xSpeed.z);
         //rb.velocity = new Vector3(rb.velocity.x, ySpeed, rb.velocity.z);
-        rb.velocity = new Vector3(0, ySpeed, 0);
+        rb.velocity = new Vector3(xSpeed.x, ySpeed, xSpeed.z);
         
     }
 
@@ -439,6 +453,10 @@ public class PlayerMovement : MonoBehaviour
             }
                 
         }
+        if (other.name == "TooLeft")
+            tooLeft = true;
+        if (other.name == "TooRight")
+            tooRight = true;
     }
 
     private void OnTriggerExit(Collider other)
@@ -466,6 +484,10 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             }
         }
+        if (other.name == "TooLeft")
+            tooLeft = false;
+        if (other.name == "TooRight")
+            tooRight = false;
     }
 
 }

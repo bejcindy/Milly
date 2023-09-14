@@ -61,7 +61,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected LayerMask stairs;
     [SerializeField] protected float stairForce;
 
-    
+    bool ladderExited;
+    Collider ladderTrigger;
 
     void Start()
     {
@@ -76,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         grounded = Physics.Raycast(transform.position, -transform.up, playerHeight, flatGround);
+
         //upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y + stepHeight, upperRay.transform.position.z);
         if (grounded)
             rb.drag = groundDrag;
@@ -93,14 +95,26 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         onSlope = OnSlope();
-        if (!onLadder)
+        if ((onLadder && !grounded && !ladderExited) || (onLadder && verticalInput > 0 && grounded))
+        {
+            MoveOnLadder();
+        }
+        else
         {
             MovePlayer();
             SpeedControl();
         }
-        else
+        if (!onLadder && grounded)
         {
-            MoveOnLadder();
+            ladderExited = false;
+            if (ladderTrigger)
+            {
+                if (!ladderTrigger.isTrigger)
+                {
+                    ladderTrigger.isTrigger = true;
+                    ladderTrigger.gameObject.layer = 0;
+                }
+            }
         }
         //if (horizontalInput != 0 && verticalInput != 0)
         //    walkStair();
@@ -152,7 +166,8 @@ public class PlayerMovement : MonoBehaviour
             rb.useGravity = false;
         //rb.AddForce(Vector3.up * moveSpeed * verticalInput);
         float ySpeed = moveSpeed * verticalInput;
-        rb.velocity = new Vector3(rb.velocity.x, ySpeed, rb.velocity.z);
+        //rb.velocity = new Vector3(rb.velocity.x, ySpeed, rb.velocity.z);
+        rb.velocity = new Vector3(0, ySpeed, 0);
     }
 
     void MovePlayer()
@@ -384,7 +399,26 @@ public class PlayerMovement : MonoBehaviour
             other.transform.GetComponent<BuildingGroupController>().activateAll = true;
         }
         if (other.CompareTag("Ladder"))
+        {
             onLadder = true;
+            if (!ladderTrigger)
+            {
+                Collider[] ladderColls = other.GetComponents<Collider>();
+                if (ladderColls[0].isTrigger)
+                {
+                    ladderTrigger = ladderColls[0];
+                    Debug.Log("trigger1");
+                }
+                else
+                {
+                    ladderTrigger = ladderColls[1];
+                    Debug.Log("trigger2");
+                }
+                other.gameObject.layer = 6;
+                //ladderTrigger = other.GetComponent<Collider>();
+            }
+                
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -398,7 +432,20 @@ public class PlayerMovement : MonoBehaviour
             other.transform.parent.GetComponent<FixedCameraObject>().onRight = false;
         }
         if (other.CompareTag("Ladder"))
+        {
             onLadder = false;
+            ladderExited = true;
+
+            //ladderTrigger.isTrigger = false;
+            //Debug.Log("ladder is: " + ladderTrigger.isTrigger);
+            //ladderTrigger.gameObject.layer = 6;
+            if ((other.transform.position - transform.position).y < 0)
+            {
+                rb.AddForce(Vector3.ProjectOnPlane( orientation.forward,Vector3.up) * 200f);
+                Debug.Log("added");
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            }
+        }
     }
 
 }

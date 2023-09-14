@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7383124536893055294
+--- !u!114 &-6159336789085771651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,25 +9,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Static/Outside_Ambience
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SoundEffects.bank
   m_EditorClassIdentifier: 
-  Path: event:/Static/Outside_Ambience
-  Guid:
-    Data1: -1058474959
-    Data2: 1151527299
-    Data3: 1545703868
-    Data4: 981071725
-  Banks:
-  - {fileID: 5735392386094529791}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 139467
---- !u!114 &-6631348963725591312
+  Path: Assets/FMODProject/MillyFMOD/Build/Desktop/SoundEffects.bank
+  Name: SoundEffects
+  StudioPath: bank:/SoundEffects
+  lastModified: 638303063842755135
+  FileSizes:
+  - Name: Desktop
+    Value: 35104
+  Exists: 1
+--- !u!114 &-6147887909751509313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMODProject/MillyFMOD/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638303063842755135
+  FileSizes:
+  - Name: Desktop
+    Value: 2427840
+  Exists: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 3790430058207161000}
+  - {fileID: -6147887909751509313}
+  - {fileID: -6159336789085771651}
+  EditorEvents:
+  - {fileID: 5817576599686376036}
+  - {fileID: 413197846653696090}
+  - {fileID: 2814715820408815048}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: -6147887909751509313}
+  StringsBanks:
+  - {fileID: 3790430058207161000}
+  cacheTime: 638303063842755135
+  cacheVersion: 131601
+--- !u!114 &413197846653696090
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +86,7 @@ MonoBehaviour:
     Data3: -500075115
     Data4: -2073058613
   Banks:
-  - {fileID: 5735392386094529791}
+  - {fileID: -6147887909751509313}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -54,31 +94,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 50256
---- !u!114 &-4729934772478789418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/SoundEffects.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/FMODProject/MillyFMOD/Build/Desktop/SoundEffects.bank
-  Name: SoundEffects
-  StudioPath: bank:/SoundEffects
-<<<<<<< HEAD
-  lastModified: 638303040940790986
-=======
-  lastModified: 638303036138029472
->>>>>>> 9f12521a29e3d1be2ae1296e245d718c78835f29
-  FileSizes:
-  - Name: Desktop
-    Value: 35104
-  Exists: 1
---- !u!114 &-871286595682361792
+--- !u!114 &2814715820408815048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +113,7 @@ MonoBehaviour:
     Data3: 756644781
     Data4: 226141526
   Banks:
-  - {fileID: -4729934772478789418}
+  - {fileID: -6159336789085771651}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -105,38 +121,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2544
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: 
-  EditorBanks:
-  - {fileID: 4876093756887817646}
-  - {fileID: 5735392386094529791}
-  - {fileID: -4729934772478789418}
-  EditorEvents:
-  - {fileID: -6631348963725591312}
-  - {fileID: -871286595682361792}
-  - {fileID: -7383124536893055294}
-  EditorParameters: []
-  MasterBanks:
-  - {fileID: 5735392386094529791}
-  StringsBanks:
-  - {fileID: 4876093756887817646}
-<<<<<<< HEAD
-  cacheTime: 638303040940790986
-=======
-  cacheTime: 638303036138029472
->>>>>>> 9f12521a29e3d1be2ae1296e245d718c78835f29
-  cacheVersion: 131601
---- !u!114 &4876093756887817646
+--- !u!114 &3790430058207161000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,16 +136,12 @@ MonoBehaviour:
   Path: Assets/FMODProject/MillyFMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-<<<<<<< HEAD
-  lastModified: 638303040940788231
-=======
-  lastModified: 638303036138019498
->>>>>>> 9f12521a29e3d1be2ae1296e245d718c78835f29
+  lastModified: 638303063842755135
   FileSizes:
   - Name: Desktop
     Value: 950
   Exists: 1
---- !u!114 &5735392386094529791
+--- !u!114 &5817576599686376036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,18 +150,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Static/Outside_Ambience
   m_EditorClassIdentifier: 
-  Path: Assets/FMODProject/MillyFMOD/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-<<<<<<< HEAD
-  lastModified: 638303040940784983
-=======
-  lastModified: 638303036137814741
->>>>>>> 9f12521a29e3d1be2ae1296e245d718c78835f29
-  FileSizes:
-  - Name: Desktop
-    Value: 2427840
-  Exists: 1
+  Path: event:/Static/Outside_Ambience
+  Guid:
+    Data1: -1058474959
+    Data2: 1151527299
+    Data3: 1545703868
+    Data4: 981071725
+  Banks:
+  - {fileID: -6147887909751509313}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 139467

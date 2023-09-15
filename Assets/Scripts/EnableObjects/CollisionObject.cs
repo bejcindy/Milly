@@ -13,6 +13,8 @@ public class CollisionObject : LivableObject
     public bool brokenAC;
     public string eventName;
 
+    public bool assistant;
+
     protected override void Start()
     {
         base.Start();
@@ -66,13 +68,20 @@ public class CollisionObject : LivableObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!assistant)
         {
-            activated = true;
+            if (other.CompareTag("Player"))
+            {
+                activated = true;
+            }
+            if (tagList.Contains(other.gameObject.tag))
+            {
+                activated = true;
+            }
         }
-        if (tagList.Contains(other.gameObject.tag))
+        else
         {
-            activated = true;
+            transform.parent.GetComponent<LivableObject>().activated = true;
         }
 
     }

@@ -13,6 +13,8 @@ public class LookingObject : LivableObject
     public DialogueSystemTrigger dialogue;
     public bool focusingThis;
 
+    public GameObject[] sameTypePosters;
+
     protected override void Start()
     {
         base.Start();
@@ -21,6 +23,7 @@ public class LookingObject : LivableObject
         {
             dialogue = dia;
         }
+        sameTypePosters = GameObject.FindGameObjectsWithTag(gameObject.tag);
     }
 
     protected override void Update()
@@ -107,6 +110,10 @@ public class LookingObject : LivableObject
             //gameObject.layer = 13;
             playerHolding.RemoveLookable(gameObject);
             //DataHolder.focusing = false;
+            if(sameTypePosters.Length > 0)
+            {
+                ActivateAll();
+            }
         }
 
         if (selected)
@@ -128,6 +135,18 @@ public class LookingObject : LivableObject
     void OnConversationEnd(Transform other)
     {
         player.GetComponent<PlayerHolding>().inDialogue = false;
+    }
+
+    void ActivateAll()
+    {
+        foreach(GameObject obj in sameTypePosters)
+        {
+            if (obj.GetComponent<LookingObject>())
+            {
+                LookingObject looking = obj.GetComponent<LookingObject>();
+            }
+
+        }
     }
 
 }

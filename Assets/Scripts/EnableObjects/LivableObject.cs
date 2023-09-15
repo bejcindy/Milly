@@ -12,7 +12,6 @@ public class LivableObject : MonoBehaviour
     [SerializeField] public bool interactable;
     [SerializeField] protected bool isVisible;
     [SerializeField] protected bool checkVisible;
-    [SerializeField] protected bool chainControl;
     [SerializeField] protected float minDist;
 
 
@@ -89,7 +88,7 @@ public class LivableObject : MonoBehaviour
                 TurnOnColor(mat);
             }
                 
-            if (chainControl && matColorVal <= 0)
+            if (GetComponent<GroupMaster>() && matColorVal <= 0)
             {
                 GetComponent<GroupMaster>().activateAll = true;
             }

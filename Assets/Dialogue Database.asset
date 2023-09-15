@@ -25069,7 +25069,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: I...I'm never gonna....gonna leave...
+        value: That...that is my beer you are grab...bing.
         type: 0
         typeString: 
       - title: Sequence
@@ -25124,7 +25124,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Oh hey, Mi...Milly. You here to, to buy cigarettes?
+        value: Oh h...hey Milly, You here to, to buy cigarettes?
         type: 0
         typeString: 
       - title: Sequence
@@ -25179,7 +25179,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Felix, you're not at your store.
+        value: Felix, this is not your store.
         type: 0
         typeString: 
       - title: Sequence
@@ -25207,7 +25207,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 429
+        x: 428
         y: 240
         width: 160
         height: 30
@@ -25234,7 +25234,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'This is the bar. '
+        value: You're at the bar.
         type: 0
         typeString: 
       - title: Sequence
@@ -25351,7 +25351,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Felix, your grocer shut down years ago.
+        value: Felix, your grocer shut down years ago. Frank is not here anymore,
+          remember?
         type: 0
         typeString: 
       - title: Sequence
@@ -25379,8 +25380,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 313
-        y: 416
+        x: 317
+        y: 414
         width: 160
         height: 30
     - id: 7
@@ -25461,7 +25462,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Go home Felix, Alice is gonna worry about you.
+        value: You should go home. Alice is gonna worry about you.
         type: 0
         typeString: 
       - title: Sequence
@@ -25516,7 +25517,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'Is...is that so? <i>That</i> is why I was drinking. '
+        value: Is...is that so? No wonder why I...I have time to...to drink, haha.
         type: 0
         typeString: 
       - title: Sequence
@@ -25571,8 +25572,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'Well...thanks, Milly. I better...uh I better get home to Alice. Haha,
-          she is definitely gonna yell...yell at me for  drinking a...again. '
+        value: 'I better...uh I better get home to Alice. Haha, she is definitely
+          gonna yell...yell at me for  drinking a...again. '
         type: 0
         typeString: 
       - title: Sequence
@@ -25586,7 +25587,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 24
+        originDialogueID: 10
+        destinationConversationID: 24
+        destinationDialogueID: 13
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: SetQuestState("Felix was nice. ", "success")
       onExecute:
@@ -25703,8 +25710,57 @@ MonoBehaviour:
         y: 569
         width: 160
         height: 30
+    - id: 13
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 13
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Thank you, Milly.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 24
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 568
+        y: 569
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1, y: 171}
+    canvasScrollPosition: {x: 1, y: 0}
     canvasZoom: 1
   - id: 25
     fields:

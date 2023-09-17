@@ -29,9 +29,9 @@ public class LookingObject : LivableObject
     protected override void Update()
     {
         //Debug.Log(matColorVal);
+        base.Update();
         if (matColorVal > 0)
         {
-            base.Update();
             if (focusingThis)
             {
                 DataHolder.FocusOnThis(fadeInterval, matColorVal);
@@ -102,19 +102,31 @@ public class LookingObject : LivableObject
         }
         else
         {
-            if (specialEffect != null)
-                specialEffect.SetActive(true);
-            if (dialogue!=null)
-                dialogue.enabled = true;
-            //gameObject.layer = 0;
-            //gameObject.layer = 13;
-            playerHolding.RemoveLookable(gameObject);
-            //DataHolder.focusing = false;
-            if(sameTypePosters.Length > 0)
+            if (activated)
             {
-                ActivateAll();
+                if (specialEffect != null)
+                    specialEffect.SetActive(true);
+                if (dialogue != null)
+                    dialogue.enabled = true;
+                //gameObject.layer = 0;
+                //gameObject.layer = 13;
+                playerHolding.RemoveLookable(gameObject);
+                //DataHolder.focusing = false;
+                if (sameTypePosters.Length > 0)
+                {
+                    ActivateAll();
+                }
             }
+            else
+            {
+                if(interactable && !playerHolding.inDialogue)
+                {
+                    activated = true;
+                }
+            }
+
         }
+
 
         if (selected)
         {
@@ -144,6 +156,7 @@ public class LookingObject : LivableObject
             if (obj.GetComponent<LookingObject>())
             {
                 LookingObject looking = obj.GetComponent<LookingObject>();
+                looking.TurnOnColor(looking.mat);
             }
 
         }

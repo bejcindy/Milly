@@ -34,7 +34,7 @@ public class LivableObject : MonoBehaviour
 
     public bool centerFocused;
 
-    public bool npc;
+    public bool noRend;
 
     bool[] checkBoundVisible;
 
@@ -47,7 +47,7 @@ public class LivableObject : MonoBehaviour
         {
             rend = GetComponent<Renderer>();
         }
-        if (!npc)
+        if (!noRend)
         {
             mat = rend.material;
             mat.EnableKeyword("_WhiteDegree");
@@ -134,7 +134,7 @@ public class LivableObject : MonoBehaviour
         //Is in front
         if (pointOnScreen.z < 0)
         {
-            if(gameObject.name.Contains("pizza"))
+            if(gameObject.name.Contains("poster") && matColorVal <= 0)
                 Debug.Log("Behind: " + gameObject.name);
             return false;
         }
@@ -145,6 +145,8 @@ public class LivableObject : MonoBehaviour
             if ((pointOnScreen.x < Screen.width * 0.4f) || (pointOnScreen.x > Screen.width * 0.6f) ||
                 (pointOnScreen.y < Screen.height * 0.4f) || (pointOnScreen.y > Screen.height * 0.6f))
             {
+                if (gameObject.name.Contains("poster") && matColorVal <= 0)
+                    Debug.Log("Not on screen: " + gameObject.name);
                 return false;
             }
             //Debug.Log(gameObject.name + "point on screen is: " + pointOnScreen);

@@ -29,11 +29,11 @@ Transform:
   m_GameObject: {fileID: 4032577380599061121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.50349, y: 0.27150804, z: 0}
-  m_LocalScale: {x: 2.4407, y: 2.4407, z: 2.4407}
+  m_LocalScale: {x: 1.5568, y: 1.5568001, z: 1.5567998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8037067426926041087
 MeshFilter:
@@ -119,6 +119,7 @@ MonoBehaviour:
   selected: 0
   dialogue: {fileID: 0}
   focusingThis: 0
+  sameTypePosters: []
 --- !u!114 &8498930708241729389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: 64
   condition:
-    luaConditions: []
+    luaConditions:
+    - Variable["Poster_Lenny"] == false
     questConditions: []
     acceptedTags: []
     acceptedGameObjects: []
@@ -174,7 +176,7 @@ MonoBehaviour:
   startConversationEntryTitle: 
   exclusive: 0
   replace: 0
-  skipIfNoValidEntries: 0
+  skipIfNoValidEntries: 1
   preventRestartOnSameFrameEnded: 0
   stopConversationOnTriggerExit: 0
   stopConversationIfTooFar: 0

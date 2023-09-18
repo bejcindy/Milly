@@ -16,15 +16,15 @@ public class RiggedVisibleDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (rigVisible)
-        //{
-        //    isVisible = IsInView();
-        //}
-        //else
-        //{
-        //    isVisible = false;
-        //}
-        isVisible = rigVisible;
+        if (rigVisible)
+        {
+            isVisible = IsInView();
+        }
+        else
+        {
+            isVisible = false;
+        }
+        //isVisible = rigVisible;
     }
 
     private void OnBecameVisible()
@@ -60,21 +60,15 @@ public class RiggedVisibleDetector : MonoBehaviour
         }
 
         //RaycastHit hit;
-        //Vector3 heading = gameObject.transform.position - Camera.main.transform.position;
-        //Vector3 direction = heading.normalized;// / heading.magnitude;
-
-        //if (Physics.Linecast(Camera.main.transform.position, transform.position, out hit))
+        //if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
         //{
-        //    if (hit.transform.name != gameObject.name && !hit.transform.name.Contains("Player"))
+        //    //if (hit.collider)
+        //    //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
+        //    if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
         //    {
-        //        /* -->
-        //        Debug.DrawLine(cam.transform.position, toCheck.GetComponentInChildren<Renderer>().bounds.center, Color.red);
-        //        Debug.LogError(toCheck.name + " occluded by " + hit.transform.name);
-        //        */
-        //        if(gameObject.name.Contains("Charles"))
-        //            Debug.Log(gameObject.name + " occluded by " + hit.transform.name);
         //        return false;
         //    }
+
         //}
         return true;
     }

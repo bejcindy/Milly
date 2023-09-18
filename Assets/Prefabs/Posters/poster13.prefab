@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1792519133068901570}
   - component: {fileID: 6391816876755737097}
   - component: {fileID: 5523657220742266572}
+  - component: {fileID: 1441705430442104729}
   m_Layer: 0
   m_Name: poster13
   m_TagString: Poster_Blackhole
@@ -29,11 +30,11 @@ Transform:
   m_GameObject: {fileID: 519421767439902128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.7555482, y: 0.5100703, z: -0.0330063}
-  m_LocalScale: {x: 0.90351826, y: 0.9035183, z: 0.9035183}
+  m_LocalScale: {x: 0.9035185, y: 0.9035182, z: 0.90351844}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9033233240389326364
 MeshFilter:
@@ -113,12 +114,13 @@ MonoBehaviour:
   rigged: 0
   visibleDetector: {fileID: 0}
   centerFocused: 1
-  npc: 0
+  noRend: 0
   designatedSpot: 0
   inSpot: 0
   selected: 0
   dialogue: {fileID: 0}
   focusingThis: 0
+  sameTypePosters: []
 --- !u!114 &5523657220742266572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,3 +195,25 @@ MonoBehaviour:
   useBarkTitlePicker: 1
   useQuestNamePicker: 1
   selectedDatabase: {fileID: 11400000, guid: adec3fc67abd41e45828f2fe4a3292f4, type: 2}
+--- !u!114 &1441705430442104729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519421767439902128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd302015e6ea4c846bcf887a8e5e99bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainTriggers: []
+  activateAll: 0
+  groupColorVal: 1
+  fadeInterval: 10
+  designatedGroup: 0
+  childToChildren: 0
+  buildingControl: 1
+  delayedIgnition: 0
+  delayedGroup: {fileID: 0}
+  bgc: {fileID: 0}

@@ -16,6 +16,7 @@ public class Door : LivableObject
     {
         base.Start();
         knockHint = GameObject.Find("QTEPanel").transform.GetChild(5).gameObject;
+        dialogue = GetComponent<DialogueSystemTrigger>();
     }
     protected override void Update()
     {

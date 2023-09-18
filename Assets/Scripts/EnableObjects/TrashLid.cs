@@ -50,7 +50,8 @@ public class TrashLid : LivableObject
             }
             if (playerHolding.GetRightHand())
             {
-                rightHandUI.SetActive(true);
+                if(!playerHolding.GetLeftHand())
+                    rightHandUI.SetActive(true);
                 if (Input.GetMouseButton(1))
                 {
                     rightHandUI.SetActive(false);

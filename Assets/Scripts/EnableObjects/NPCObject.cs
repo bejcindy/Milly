@@ -36,6 +36,7 @@ public class NPCObject : LivableObject
     public float talkCD;
     public bool inCD;
     public bool talking;
+    public bool conversationFinished;
     Animator anim;
     Coroutine lookCoroutine;
 
@@ -87,7 +88,7 @@ public class NPCObject : LivableObject
             }
         }
 
-        if ((firstTalk || talkActivated) && interactable && !inCD && !talking)
+        if ((firstTalk || talkActivated) && interactable && !inCD && !talking && !conversationFinished)
         {
             ChangeLayer(9);
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
@@ -130,6 +131,8 @@ public class NPCObject : LivableObject
         //}
 
     }
+
+    
 
     void ChangeLayer(int layerNumber)
     {
@@ -219,6 +222,11 @@ public class NPCObject : LivableObject
         talking = false;
         inCD = true;
 
+    }
+
+    public void FinishConversation()
+    {
+        conversationFinished = true;
     }
 
     IEnumerator RotateTowardsPlayer()

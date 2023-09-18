@@ -6,10 +6,13 @@ public class PauseMenu : MonoBehaviour
 {
     public bool isPaused;
     public GameObject pauseMenu;
+    public GameObject player;
+    PlayerHolding playerHolding;
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.Find("Player");
+        playerHolding = player.GetComponent<PlayerHolding>();
     }
 
     // Update is called once per frame
@@ -17,7 +20,8 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            isPaused = !isPaused;
+            if(!playerHolding.inDialogue)
+                isPaused = !isPaused;
         }
 
         if (isPaused)
@@ -36,6 +40,8 @@ public class PauseMenu : MonoBehaviour
     {
         if (isPaused)
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             isPaused = false;
             Time.timeScale = 1.0f;
             pauseMenu.SetActive(false);

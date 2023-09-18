@@ -490,4 +490,11 @@ public class PlayerMovement : MonoBehaviour
             tooRight = false;
     }
 
+
+    public void OpenSurvey()
+    {
+        Application.OpenURL("https://docs.google.com/forms/d/1PIwS_isjzkuRzk8xMy8_fZpowaGPg9k2d4lcuJ8MXJ0/edit");
+        Application.Quit();
+    }
+
 }

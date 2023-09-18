@@ -66,7 +66,20 @@ public class PlayerLeftHand : MonoBehaviour
         else
         {
             if (!aimHint.activeSelf)
+            {
+                if (smoking)
+                {
+                    aimHint.transform.GetChild(2).gameObject.SetActive(true);
+                    aimHint.transform.GetChild(1).gameObject.SetActive(false);
+                }
+                else
+                {
+                    aimHint.transform.GetChild(2).gameObject.SetActive(false);
+                    aimHint.transform.GetChild(1).gameObject.SetActive(true);
+                }
                 aimHint.SetActive(true);
+            }
+                
         }
     }
 

@@ -120,6 +120,8 @@ public class PlayerRightHand : MonoBehaviour
                 {
                     holdTimer += Time.deltaTime;
                     holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
+                    if (holdTimer > 0.2f)
+                        aimUI.SetActive(true);
                 }
                 float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
                 float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));

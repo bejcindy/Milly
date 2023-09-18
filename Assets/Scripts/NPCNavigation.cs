@@ -79,7 +79,7 @@ public class NPCNavigation : MonoBehaviour
             obstacle.enabled = false;
             //agent.enabled = true;
             agent.isStopped = false;
-            if (currentDestIndex < destinations.Length)
+            if (currentDestIndex < destinations.Length-1)
                 currentDestIndex++;
             else
             {
@@ -103,7 +103,7 @@ public class NPCNavigation : MonoBehaviour
             obstacle.enabled = false;
             //agent.enabled = true;
             agent.isStopped = false;
-            if (currentDestIndex < destinations.Length)
+            if (currentDestIndex < destinations.Length-1)
                 currentDestIndex++;
             else
             {

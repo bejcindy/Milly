@@ -20,7 +20,7 @@ public class Door : LivableObject
     protected override void Update()
     {
         base.Update();
-        if (interactable)
+        if (interactable && !activated)
         {
             gameObject.layer = 9;
             if (!interacting)
@@ -29,8 +29,7 @@ public class Door : LivableObject
                 if (Input.GetMouseButtonDown(0))
                 {
                     knockHint.SetActive(false);
-                    if(eventSoundName != "")
-                        FMODUnity.RuntimeManager.PlayOneShot(eventSoundName, player.position);
+                    dialogue.enabled = true;
                     interacting = true;
                     activated = true;
                 }

@@ -6,17 +6,19 @@ using UnityEngine;
 public class Door : LivableObject
 {
     DialogueSystemTrigger dialogue;
-    public GameObject knockHint;
+    public GameObject leftKnockHint;
+    public GameObject rightKnockHint;
     public bool interacting;
 
     string eventSoundName;
+    PlayerHolding playerHolding;
 
 
     protected override void Start()
     {
         base.Start();
-        knockHint = GameObject.Find("QTEPanel").transform.GetChild(5).gameObject;
         dialogue = GetComponent<DialogueSystemTrigger>();
+        playerHolding = player.GetComponent<PlayerHolding>();
     }
     protected override void Update()
     {
@@ -26,10 +28,18 @@ public class Door : LivableObject
             gameObject.layer = 9;
             if (!interacting)
             {
-                knockHint.SetActive(true);
+                if (playerHolding.GetLeftHand())
+                {
+                    leftKnockHint.SetActive(true);
+                }
+                else if (playerHolding.GetRightHand())
+                {
+                    rightKnockHint.SetActive(true);
+                }
                 if (Input.GetMouseButtonDown(0))
                 {
-                    knockHint.SetActive(false);
+                    leftKnockHint.SetActive(false);
+                    rightKnockHint.SetActive(false);
                     dialogue.enabled = true;
                     interacting = true;
                     activated = true;
@@ -38,7 +48,8 @@ public class Door : LivableObject
         }
         else
         {
-            knockHint.SetActive(false);
+            leftKnockHint.SetActive(false);
+            rightKnockHint.SetActive(false);
             gameObject.layer = 0;
         }
     }

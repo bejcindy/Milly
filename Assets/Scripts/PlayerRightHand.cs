@@ -19,7 +19,7 @@ public class PlayerRightHand : MonoBehaviour
     public GameObject aimUI;
 
      Vector2 minThrowForce = new Vector2(100f, 10f);
-     Vector2 maxThrowForce = new Vector2(500f, 100f);
+     Vector2 maxThrowForce = new Vector2(900f, 50f);
     float holdTime = 2f;
     [SerializeField]
     float holdTimer;
@@ -98,12 +98,14 @@ public class PlayerRightHand : MonoBehaviour
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                     {
-                        holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                        //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                        holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
                         //Debug.Log("hit " + hit.transform.gameObject.name);
                     }
                     else
                     {
-                        holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + ray.direction * 30f - transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                        //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + ray.direction * 30f - transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                        holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + ray.direction * 30f - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
                         //Debug.Log("didn't hit");
                     }
                     noThrow = true;

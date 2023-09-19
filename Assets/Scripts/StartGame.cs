@@ -42,7 +42,7 @@ public class StartGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(startAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >1)
+        if(startAnim.isActiveAndEnabled && startAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >1)
         {
             startAnim.transform.parent.gameObject.SetActive(false);
         }

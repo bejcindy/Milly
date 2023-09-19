@@ -42,7 +42,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected bool readyToJump;
     [SerializeField] protected KeyCode jumpKey = KeyCode.Space;
 
-    
+
+
+    [Header("Sound")]
+    protected FMOD.Studio.EventInstance playerMove;
 
     protected float horizontalInput;
     protected float verticalInput;
@@ -72,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
         //Cursor.visible = false;
         lowerRay.transform.localPosition= new Vector3(0, -1f, 0);
         upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y+stepHeight, upperRay.transform.position.z);
+        playerMove = FMODUnity.RuntimeManager.CreateInstance("event:/Sound Effects/FootStep");
     }
 
     void Update()
@@ -304,6 +308,30 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<terraintry>().startPainting = false;
         else
             GetComponent<terraintry>().startPainting = true;
+
+        if (horizontalInput == 0 && verticalInput == 0 && grounded)
+        {
+            playerMove.setPaused(true);
+        }
+        else if (grounded)
+        {
+            FMOD.Studio.PLAYBACK_STATE state;
+            playerMove.getPlaybackState(out state);
+            bool isPaused;
+            playerMove.getPaused(out isPaused);
+            if (isPaused)
+            {
+                playerMove.setPaused(false);
+            }
+            else if (state == FMOD.Studio.PLAYBACK_STATE.STOPPED)
+            {
+                playerMove.start();
+            }
+        }
+        else if (!grounded)
+        {
+            playerMove.setPaused(true);
+        }
         //if (Input.GetKeyDown(jumpKey))
         //{
 

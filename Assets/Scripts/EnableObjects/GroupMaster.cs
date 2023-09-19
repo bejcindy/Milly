@@ -95,6 +95,17 @@ public class GroupMaster : MonoBehaviour
                         TurnOnColor(childMat);
                     }
                 }
+
+                if (child.GetComponent<Renderer>().materials.Length > 1)
+                {
+                    foreach(Material mat in child.GetComponent<Renderer>().materials)
+                    {
+                        if (mat.HasProperty("_WhiteDegree")){
+                            mat.EnableKeyword("_WhiteDegree");
+                            TurnOnColor(mat);
+                        }
+                    }
+                }
             }
         }
         else

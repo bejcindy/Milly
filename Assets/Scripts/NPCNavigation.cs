@@ -110,7 +110,12 @@ public class NPCNavigation : MonoBehaviour
                 if (loopRoute)
                     currentDestIndex = 0;
                 else
+                {
                     GetComponent<NPCNavigation>().enabled = false;
+                    gameObject.SetActive(false);
+                }
+
+
             }
             agent.SetDestination(destinations[currentDestIndex].position);
             paused = false;

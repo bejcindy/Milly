@@ -54,7 +54,8 @@ public class CollisionObject : LivableObject
             if (brokenAC)
             {
                 GetComponent<Rigidbody>().isKinematic = false;
-                GetComponent<DialogueSystemTrigger>().enabled = true;
+                if(GetComponent<DialogueSystemTrigger>())
+                    GetComponent<DialogueSystemTrigger>().enabled = true;
             }
 
             if (GetComponent<BarkOnIdle>())

@@ -33,7 +33,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            if (!playerHolding.inDialogue)
+            if (!playerHolding.inDialogue && !playerHolding.positionFixedWithMouse)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;

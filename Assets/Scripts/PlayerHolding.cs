@@ -11,7 +11,7 @@ public class PlayerHolding : MonoBehaviour
     public bool inDialogue;
     public bool throwing;
     public bool atContainer;
-    public bool atDoor;
+    public bool positionFixedWithMouse;
 
     List<GameObject> pickUpObjects;
     public List<GameObject> lookingObjects;

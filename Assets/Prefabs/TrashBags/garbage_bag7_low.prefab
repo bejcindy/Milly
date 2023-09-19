@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8185915202299071377}
   m_Layer: 0
   m_Name: garbage_bag7_low
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,6 @@ MonoBehaviour:
   interactable: 0
   isVisible: 0
   checkVisible: 0
-  chainControl: 0
   minDist: 3
   rend: {fileID: 0}
   coll: {fileID: 0}
@@ -137,13 +136,22 @@ MonoBehaviour:
   playerCam: {fileID: 0}
   rigged: 0
   visibleDetector: {fileID: 0}
-  npc: 0
+  centerFocused: 0
+  noRend: 0
   playerHolding: {fileID: 0}
   inHand: 0
   selected: 0
   thrown: 0
+  cigarette: 0
+  freezeRotation: 0
   throwCD: 0
   npcBound: 0
+  foodObj: 0
+  uiHint: {fileID: 0}
+  leftMouse: {fileID: 0}
+  rightMouse: {fileID: 0}
+  pickUpEventName: 
+  throwEventName: 
 --- !u!54 &8185915202299071377
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -27,6 +27,7 @@ public class FixedCameraObject : LivableObject
     DialogueSystemTrigger dialogue;
     PlayerCam camController;
     PlayerMovement playerMovement;
+    PlayerHolding playerHolding;
     public Renderer playerBody;
 
     protected override void Start()
@@ -36,7 +37,7 @@ public class FixedCameraObject : LivableObject
         camController = player.GetComponent<PlayerCam>();
         playerBody = player.GetChild(0).GetComponent<Renderer>();
         playerCamera = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
-
+        playerHolding = player.GetComponent<PlayerHolding>();
     }
 
 
@@ -97,6 +98,7 @@ public class FixedCameraObject : LivableObject
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            playerHolding.positionFixedWithMouse = true;
         }
         PositionPlayer();
 
@@ -178,6 +180,7 @@ public class FixedCameraObject : LivableObject
         playerMovement.enabled = true;
         positionFixed = false;
         isInteracting = false;
+        playerHolding.positionFixedWithMouse = false;
 
     }
 }

@@ -11,6 +11,7 @@ public class PlayerHolding : MonoBehaviour
     public bool inDialogue;
     public bool throwing;
     public bool atContainer;
+    public bool atDoor;
 
     List<GameObject> pickUpObjects;
     public List<GameObject> lookingObjects;
@@ -83,6 +84,8 @@ public class PlayerHolding : MonoBehaviour
         {
             focusedHint.SetActive(false);
         }
+
+
 
         if (DialogueManager.IsConversationActive)
         {

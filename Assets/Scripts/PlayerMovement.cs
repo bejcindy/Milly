@@ -68,8 +68,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
         lowerRay.transform.localPosition= new Vector3(0, -1f, 0);
         upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y+stepHeight, upperRay.transform.position.z);
     }
@@ -493,7 +493,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OpenSurvey()
     {
-        Application.OpenURL("https://docs.google.com/forms/d/1PIwS_isjzkuRzk8xMy8_fZpowaGPg9k2d4lcuJ8MXJ0/edit");
+        Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLSdGedzEMk6VjuD2LUdROEXt9NoZFA0d4cO-gDnwiGO8Hh1qgA/viewform?usp=sf_link");
         Application.Quit();
     }
 

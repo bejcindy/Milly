@@ -27,10 +27,17 @@ public class PauseMenu : MonoBehaviour
         if (isPaused)
         {
             Time.timeScale = 0.0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             pauseMenu.SetActive(true);
         }
         else
         {
+            if (!playerHolding.inDialogue)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
             Time.timeScale = 1.0f;
             pauseMenu.SetActive(false);
         }
@@ -40,8 +47,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (isPaused)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+
             isPaused = false;
             Time.timeScale = 1.0f;
             pauseMenu.SetActive(false);
@@ -49,6 +55,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
+
             isPaused = true;
             Time.timeScale = 0.0f;
         }
@@ -56,6 +63,8 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLSdGedzEMk6VjuD2LUdROEXt9NoZFA0d4cO-gDnwiGO8Hh1qgA/viewform?usp=sf_link");
         Application.Quit(); 
+
     }
 }

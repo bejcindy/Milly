@@ -75,8 +75,7 @@ public class LivableObject : MonoBehaviour
             isVisible = visibleDetector.isVisible;
         }
 
-        if(isVisible)
-            DetectInteractable();
+        DetectInteractable();
 
 
 
@@ -101,7 +100,10 @@ public class LivableObject : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) <= minDist)
         {
-            interactable = true;
+            if (isVisible)
+                interactable = true;
+            else
+                interactable = false;
         }
         else
         {

@@ -9,6 +9,9 @@ public class KickObject : MonoBehaviour
     Transform player;
     public LivableObject activateTrigger;
     public RiggedVisibleDetector detector;
+    public GameObject kickHint;
+    public GameObject instantiatedHint;
+    public Vector3 hintPosition;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -18,10 +21,18 @@ public class KickObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (detector.isVisible)
+        if (activateTrigger.interactable)
         {
+            if(instantiatedHint == null)
+            {
+                instantiatedHint = Instantiate(kickHint, hintPosition, Quaternion.identity);
+                //instantiatedHint.transform.SetParent(GameObject.Find("Canvas").transform);
+
+            }
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
+                Destroy(instantiatedHint);
                 activateTrigger.activated = true;
                 transform.GetChild(0).gameObject.GetComponent<MeshCollider>().enabled = false;
                 transform.GetChild(1).gameObject.GetComponent<MeshCollider>().enabled = false;
@@ -30,6 +41,10 @@ public class KickObject : MonoBehaviour
                 rb.AddForce(player.forward);
                 Invoke(nameof(DeactivateEnabler), 2f);
             }
+        }
+        else
+        {
+            Destroy(instantiatedHint);
         }
 
     }

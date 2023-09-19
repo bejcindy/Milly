@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     bool ladderExited;
     Collider ladderTrigger;
     bool tooLeft, tooRight;
-
+    PlayerHolding playerHolding;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -309,7 +309,7 @@ public class PlayerMovement : MonoBehaviour
         else
             GetComponent<terraintry>().startPainting = true;
 
-        if (horizontalInput == 0 && verticalInput == 0 && grounded)
+        if (horizontalInput == 0 && verticalInput == 0 && grounded || playerHolding.inDialogue)
         {
             playerMove.setPaused(true);
         }

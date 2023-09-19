@@ -39,6 +39,7 @@ public class NPCObject : LivableObject
     public bool conversationFinished;
     Animator anim;
     Coroutine lookCoroutine;
+    public DialogueSystemTrigger throwReaction;
 
     protected override void Start()
     {
@@ -251,6 +252,15 @@ public class NPCObject : LivableObject
             {
                 npcActivated = true;
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Throwable")
+        {
+            throwReaction.enabled = true;
+            npcActivated = true;
         }
     }
 

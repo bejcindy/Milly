@@ -39,7 +39,7 @@ public class NPCObject : LivableObject
     public bool conversationFinished;
     Animator anim;
     Coroutine lookCoroutine;
-    public DialogueSystemTrigger throwReaction;
+    public string hintText;
 
     protected override void Start()
     {
@@ -117,7 +117,7 @@ public class NPCObject : LivableObject
         {
             anim.SetTrigger("Start");
             if(!noActivation)
-                ActivateAll(this.transform);
+                ActivateAll(npcBody.transform);
         }
 
         //if (DialogueManager.isConversationActive)
@@ -143,7 +143,7 @@ public class NPCObject : LivableObject
         }
     }
 
-    void ActivateAll(Transform obj)
+    public void ActivateAll(Transform obj)
     {
         if (obj.GetComponent<Renderer>() != null)
         {
@@ -255,14 +255,6 @@ public class NPCObject : LivableObject
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Throwable")
-        {
-            throwReaction.enabled = true;
-            npcActivated = true;
-        }
-    }
 
     public void StartMoving()
     {
@@ -272,6 +264,11 @@ public class NPCObject : LivableObject
             GetComponent<NPCNavigation>().enabled = true;
             GetComponent<NPCNavigation>().talking = false;
         }
+    }
+
+    public void SetHintText()
+    {
+
     }
 
 

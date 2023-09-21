@@ -9,7 +9,6 @@ public class CollisionObject : LivableObject
     public List<string> tagList;
 
     public bool stairParent;
-    public bool ashTray;
     public bool brokenAC;
     public string eventName;
 
@@ -30,6 +29,8 @@ public class CollisionObject : LivableObject
         {
             tagList.Add(tagName);
         }
+
+
     }
 
 
@@ -58,10 +59,6 @@ public class CollisionObject : LivableObject
                     GetComponent<DialogueSystemTrigger>().enabled = true;
             }
 
-            if (GetComponent<BarkOnIdle>())
-            {
-                GetComponent<BarkOnIdle>().enabled = true;
-            }
 
         }
             

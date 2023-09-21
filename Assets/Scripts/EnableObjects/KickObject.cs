@@ -38,7 +38,7 @@ public class KickObject : MonoBehaviour
                 transform.GetChild(1).gameObject.GetComponent<MeshCollider>().enabled = false;
                 GetComponent<CapsuleCollider>().enabled = true;
                 rb.isKinematic = false;
-                rb.AddForce(player.forward);
+                rb.AddForce(player.forward * 5);
                 Invoke(nameof(DeactivateEnabler), 2f);
             }
         }

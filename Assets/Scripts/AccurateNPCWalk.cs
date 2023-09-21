@@ -12,7 +12,7 @@ public class AccurateNPCWalk : MonoBehaviour
         npcNav = transform.parent.GetComponent<NPCNavigation>();
     }
 
-    public void StartWaling()
+    public void StartWalking()
     {
         npcNav.enabled = true;
         npcNav.talking = false;

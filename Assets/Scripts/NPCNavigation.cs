@@ -76,6 +76,12 @@ public class NPCNavigation : MonoBehaviour
         }
         if (destinations[currentDestIndex].name.Contains("circle"))
         {
+            yield return new WaitForSeconds(waitTime);
+            if (anim != null)
+            {
+                anim.ResetTrigger("Stop");
+                anim.SetTrigger("Move");
+            }
             obstacle.enabled = false;
             //agent.enabled = true;
             agent.isStopped = false;
@@ -86,7 +92,7 @@ public class NPCNavigation : MonoBehaviour
                 if (loopRoute)
                     currentDestIndex = 0;
                 else
-                    GetComponent<NPCNavigation>().enabled = false;
+                    this.enabled = false;
             }
             agent.SetDestination(destinations[currentDestIndex].position);
             paused = false;
@@ -111,7 +117,7 @@ public class NPCNavigation : MonoBehaviour
                     currentDestIndex = 0;
                 else
                 {
-                    GetComponent<NPCNavigation>().enabled = false;
+                    this.enabled = false;
                     gameObject.SetActive(false);
                 }
 

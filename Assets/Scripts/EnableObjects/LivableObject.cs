@@ -38,6 +38,9 @@ public class LivableObject : MonoBehaviour
 
     bool[] checkBoundVisible;
 
+    int originalLayer;
+    bool isGround;
+
 
     protected virtual void Start()
     {
@@ -56,6 +59,11 @@ public class LivableObject : MonoBehaviour
         checkBoundVisible = new bool[8];
         matColorVal = 1;
         playerCam = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
+        originalLayer = gameObject.layer;
+
+
+        if (gameObject.name.Contains("road") || gameObject.name.Contains("walk"))
+            isGround = true;
     }
 
     protected virtual void Update()
@@ -93,6 +101,19 @@ public class LivableObject : MonoBehaviour
                 GetComponent<GroupMaster>().activateAll = true;
             }
                 
+        }
+        
+        if(matColorVal >0 && isVisible && !isGround)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                gameObject.layer = 9;
+            }
+
+        }
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            gameObject.layer = originalLayer;
         }
     }
 

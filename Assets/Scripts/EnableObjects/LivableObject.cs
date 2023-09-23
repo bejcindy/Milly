@@ -26,7 +26,7 @@ public class LivableObject : MonoBehaviour
     [Header("Effects")]
     [SerializeField] protected GameObject specialEffect;
     [SerializeField] protected GameObject postProcessingVolume;
-    [SerializeField] protected CinemachineVirtualCamera playerCam;
+    protected CinemachineVirtualCamera playerCam;
 
     [Header("Rigged")]
     [SerializeField] protected bool rigged;
@@ -155,8 +155,6 @@ public class LivableObject : MonoBehaviour
         //Is in front
         if (pointOnScreen.z < 0)
         {
-            if(gameObject.name.Contains("poster") && matColorVal <= 0)
-                Debug.Log("Behind: " + gameObject.name);
             return false;
         }
 
@@ -166,8 +164,7 @@ public class LivableObject : MonoBehaviour
             if ((pointOnScreen.x < Screen.width * 0.4f) || (pointOnScreen.x > Screen.width * 0.6f) ||
                 (pointOnScreen.y < Screen.height * 0.4f) || (pointOnScreen.y > Screen.height * 0.6f))
             {
-                if (gameObject.name.Contains("poster") && matColorVal <= 0)
-                    Debug.Log("Not on screen: " + gameObject.name);
+
                 return false;
             }
             //Debug.Log(gameObject.name + "point on screen is: " + pointOnScreen);
@@ -250,8 +247,7 @@ public class LivableObject : MonoBehaviour
                 //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
                 if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
                 {
-                    if (centerFocused)
-                        Debug.Log(gameObject.name + "blocked by " + hit.collider.name);
+
                     return false;
                 }
 

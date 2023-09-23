@@ -139,7 +139,6 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.name.Contains("walk_side"))
         {
             Maluyazi(collision.contacts[0].normal);
-            Debug.Log(collision.contacts[0].normal);
         }
     }
 

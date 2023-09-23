@@ -45,8 +45,7 @@ public class RiggedVisibleDetector : MonoBehaviour
         //Is in front
         if (pointOnScreen.z < 0)
         {
-            if (gameObject.name.Contains("pizza"))
-                Debug.Log("Behind: " + gameObject.name);
+
             return false;
         }
 
@@ -54,8 +53,7 @@ public class RiggedVisibleDetector : MonoBehaviour
         if ((pointOnScreen.x < Screen.width * 0.2) || (pointOnScreen.x > Screen.width * 0.8f) ||
                 (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
         {
-            if (gameObject.name.Contains("pizza"))
-                Debug.Log("OutOfBounds: " + gameObject.name);
+
             return false;
         }
 

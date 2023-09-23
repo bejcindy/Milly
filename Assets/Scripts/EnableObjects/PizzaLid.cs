@@ -31,7 +31,6 @@ public class PizzaLid : LivableObject
     protected override void Update()
     {
         base.Update();
-        Debug.Log(transform.eulerAngles.z);
         if (transform.eulerAngles.z == 0 || transform.eulerAngles.z >= 359 || transform.eulerAngles.z == 300)
             fixedPos = true;
         else

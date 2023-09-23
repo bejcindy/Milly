@@ -44,10 +44,8 @@ public class NPCObject : LivableObject
     protected override void Start()
     {
         base.Start();
-        if (lookingOriented)
-            npcLooking = GetComponent<LookingObject>();
         dialogue = GetComponent<DialogueSystemTrigger>();
-        anim = transform.GetChild(0).GetComponent<Animator>();
+        //anim = transform.GetChild(0).GetComponent<Animator>();
     }
 
 
@@ -55,15 +53,7 @@ public class NPCObject : LivableObject
     {
         base.Update();
 
-        if (inCD && talkCD > 0)
-        {
-            talkCD -= Time.deltaTime;
-        }
-        else
-        {
-            inCD = false;
-            talkCD = 2f;
-        }
+        CheckTalkCD();
 
         if (objectOriented)
         {
@@ -74,14 +64,11 @@ public class NPCObject : LivableObject
         }
 
 
-        if (lookingOriented)
-        {
-            if (npcLooking.activated)
-                npcActivated = true;
-        }
-
         if (npcActivated && !firstTalk)
         {
+            //anim.SetTrigger("Start");
+            if (!noActivation)
+                ActivateAll(npcBody.transform);
             StartConversation();
             if (GetComponent<GroupMaster>())
             {
@@ -89,50 +76,38 @@ public class NPCObject : LivableObject
             }
         }
 
-        if ((firstTalk || talkActivated) && interactable && !inCD && !talking && !conversationFinished)
-        {
-            ChangeLayer(9);
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
-            {
-                StartConversation();
-                if (talkActivated)
-                    npcActivated = true;
-            }
-        }
-        else
-        {
-            ChangeLayer(0);
-        }
+        //if ((firstTalk || talkActivated) && interactable && !inCD && !talking && !conversationFinished)
+        //{
+        //    ChangeLayer(9);
+        //    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        StartConversation();
+        //        if (talkActivated)
+        //            npcActivated = true;
+        //    }
+        //}
+        //else
+        //{
+        //    ChangeLayer(0);
+        //}
         
 
 
-
-        if (dialogueEnabled)
-        {
-            GameObject.Find("PlayerObj").GetComponent<Renderer>().enabled = false;
-        }
-
-
-        if (npcActivated)
-        {
-            anim.SetTrigger("Start");
-            if(!noActivation)
-                ActivateAll(npcBody.transform);
-        }
-
-        //if (DialogueManager.isConversationActive)
-        //{
-        //    if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-        //    {
-        //        if(DialogueManager.lastConversationID == conversationID)
-        //        {
-        //            DialogueManager.StopConversation();
-        //        }
-        //    }
-        //}
-
     }
 
+
+    void CheckTalkCD()
+    {
+        if (inCD && talkCD > 0)
+        {
+            talkCD -= Time.deltaTime;
+        }
+        else
+        {
+            inCD = false;
+            talkCD = 2f;
+        }
+    }
     
 
     void ChangeLayer(int layerNumber)
@@ -186,41 +161,43 @@ public class NPCObject : LivableObject
     {
         ChangeLayer(0);
         dialogue.enabled = true;
-        dialogueEnabled = true;
         firstTalk = true;
     }
 
     void OnConversationStart(Transform other)
     {
+        talking = true;
         lookCoroutine = StartCoroutine(RotateTowardsPlayer());
-        playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-        playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+
+        //playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+        //playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+
         player.GetComponent<PlayerHolding>().inDialogue = true;
         player.GetComponent<PlayerMovement>().enabled = false;
         if (GetComponent<NPCNavigation>())
             GetComponent<NPCNavigation>().talking = true;
-        talking = true;
-        anim.ResetTrigger("Move");
-        anim.SetTrigger("Stop");
+        
+        //anim.ResetTrigger("Move");
+        //anim.SetTrigger("Stop");
     }
 
     void OnConversationEnd(Transform other)
     {
+        talking = false;
         StopCoroutine(lookCoroutine);
-        playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 300;
-        playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 300;
+        //playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 300;
+        //playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 300;
         dialogue.enabled = false;
         player.GetComponent<PlayerHolding>().inDialogue = false;
         player.GetComponent<PlayerMovement>().enabled = true;
 
         if (movingNPC)
         {
-            anim.ResetTrigger("Stop");
-            anim.SetTrigger("Move");
+            //anim.ResetTrigger("Stop");
+            //anim.SetTrigger("Move");
             //Invoke(nameof(StartMoving), 2f);
 
         }
-        talking = false;
         inCD = true;
 
     }

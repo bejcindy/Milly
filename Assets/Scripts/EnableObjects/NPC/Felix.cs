@@ -13,11 +13,11 @@ public class Felix : NPCControl
     {
 
         //animation state
-        SetAnimatorTrigger("Stop");
         //StartCoroutine(RotateTowards(connectedGroupOne.transform));
         //changes dialogue but maybe this is in idle to talking
 
         //activates stuff underconditions 
+
         if (Vector3.Distance(transform.position, player.position) < npcVincinity)
         {
             Debug.Log("in vincinity");

@@ -22,6 +22,7 @@ public class NPCControl : LivableObject
     public float idleTime;
     public string idleAction;
     public bool idling;
+    public bool idlePaused;
     public bool idleComplete;
 
 
@@ -43,13 +44,12 @@ public class NPCControl : LivableObject
     {
         base.Start();
 
-
+        npcDestinations = GetComponent<NPCDestinations>();
 
         dialogue = GetComponent<DialogueSystemTrigger>();
-        destinations = GetComponent<NPCDestinations>().GetDestinations();
+        destinations = npcDestinations.GetDestinations();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        idleTime = npcDestinations.GetWaitTime();
         SetUpDictionary();
     }
 
@@ -124,14 +124,13 @@ public class NPCControl : LivableObject
 
     void CheckIdle()
     {
-        if (idling)
+        if (idling && !idlePaused)
         {
             if (idleTime > 0)
                 idleTime -= Time.deltaTime;
             else
             {
-                idleComplete = true;
-                SetAnimatorTrigger("Move");
+                idling = false;
             }
         }
     }

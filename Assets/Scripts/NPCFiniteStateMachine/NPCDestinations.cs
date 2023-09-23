@@ -15,6 +15,7 @@ public class NPCDestinations : MonoBehaviour
     NavMeshAgent agent;
     public int _counter = 0;
     public bool finalStop;
+    Transform currentStop;
 
 
 
@@ -22,13 +23,20 @@ public class NPCDestinations : MonoBehaviour
     {
         control = GetComponent<NPCControl>();
         agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(destinations[0].position);
 
     }
 
     private void Update()
     {
         finalStop = FinalStop();
+        
+        if(!finalStop)
+            currentStop = destinations[_counter];   
+    }
+
+    public Transform GetCurrentDestination()
+    {
+        return currentStop;
     }
 
     public bool FinalStop()
@@ -41,7 +49,6 @@ public class NPCDestinations : MonoBehaviour
     {
 
         var point = destinations[_counter];
-        _counter = (_counter + 1);
 
         return point;
     }
@@ -69,11 +76,11 @@ public class NPCDestinations : MonoBehaviour
 
     public float GetWaitTime()
     {
-        return waitTimes[_counter];
+        return waitTimes[_counter-1];
     }
 
     public string GetWaitAction()
     {
-        return waitActions[_counter];
+        return waitActions[_counter-1];
     }
 }

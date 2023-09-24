@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using NPCFSM;
 
-public abstract class State
+public class State
 {
-    public BaseStateMachine machine;
+    public BaseStateMachine machine; 
 
     public void OnStateEnter(BaseStateMachine stateController)
     {
@@ -23,15 +23,6 @@ public abstract class State
         OnUpdate();
     }
     protected virtual void OnUpdate()
-    {
-        // Code placed here can be overridden
-    }
-    public void OnStateHurt()
-    {
-        // Code placed here will always run
-        OnHurt();
-    }
-    protected virtual void OnHurt()
     {
         // Code placed here can be overridden
     }

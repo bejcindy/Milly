@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using NPCFSM;
 
-[System.Serializable]
 public class State
 {
     public BaseStateMachine machine; 
@@ -24,15 +23,6 @@ public class State
         OnUpdate();
     }
     protected virtual void OnUpdate()
-    {
-        // Code placed here can be overridden
-    }
-    public void OnStateHurt()
-    {
-        // Code placed here will always run
-        OnHurt();
-    }
-    protected virtual void OnHurt()
     {
         // Code placed here can be overridden
     }

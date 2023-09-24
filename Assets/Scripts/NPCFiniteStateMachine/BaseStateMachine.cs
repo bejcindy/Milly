@@ -10,19 +10,18 @@ namespace NPCFSM
     public class BaseStateMachine: MonoBehaviour
     {
 
-        [SerializeField] State currentState;
+        State currentState;
         public State initialState;
+        public char initialStateChar;
         public FrozenState frozenState= new FrozenState();
         public MoveState moveState= new MoveState();
         public IdleState idleState = new IdleState();
         public TalkState talkState = new TalkState();
         public FinalState finalState = new FinalState();
 
-        public Transform player;
 
 
         private Dictionary<Type, Component> _cachedComponents;
-        private NPCDestinations destinations;
 
         private Animator anim;
         private DialogueSystemTrigger dialogue;
@@ -39,18 +38,18 @@ namespace NPCFSM
 
         private void Start()
         {
-            ChangeState(initialState);
+            initialState = ChooseInitialState(initialStateChar);
+            Debug.Log(initialState);
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
-            destinations = GetComponent<NPCDestinations>();
             npcControl = GetComponent<NPCControl>();
             dialogue = GetComponent<DialogueSystemTrigger>();
-            player = GameObject.Find("Player").transform;
+            ChangeState(initialState);
         }
 
         private void Update()
         {
-            Debug.Log(currentState);
+
             if (currentState != null)
                 currentState.OnStateUpdate();
 
@@ -67,6 +66,23 @@ namespace NPCFSM
             currentState.OnStateEnter(this);
         }
 
+        public State ChooseInitialState(char c)
+        {
+            switch (c)
+            {
+                case 'F':
+                    return frozenState;
+                case 'T':
+                    return talkState;
+                case 'M':
+                    return moveState;
+                case 'I':
+                    return idleState;
+                default:
+                    return frozenState;
+            }
+        }
+
         public new T GetComponent<T>() where T : Component
         {
             if (_cachedComponents.ContainsKey(typeof(T)))
@@ -80,10 +96,6 @@ namespace NPCFSM
             return component;
         }
 
-        public NPCDestinations GetDestinations()
-        {
-            return destinations;
-        }
 
         #region GeneralFunctionalityRegion
 
@@ -132,8 +144,8 @@ namespace NPCFSM
         public void BeginIdling()
         {
             npcControl.idling = true;
-            npcControl.idleTime = destinations.GetWaitTime();
-            npcControl.idleAction = destinations.GetWaitAction();
+            npcControl.SetWaitTime();
+            npcControl.SetWaitAction();
         }
 
         public void PauseIdling()
@@ -178,27 +190,27 @@ namespace NPCFSM
 
         public void SetNPCDestination()
         {
-            if (!destinations.FinalStop())
+            if (!npcControl.FinalStop())
             {
-                agent.SetDestination(destinations.GetNext().position);
-                destinations._counter++;
+                agent.SetDestination(npcControl.GetNext().position);
+                npcControl._counter++;
             }
 
         }
 
         public bool CheckReachDestination()
         {
-            return destinations.HasReached(agent);
+            return npcControl.HasReached(agent);
         }
 
         public bool CheckPathFinished()
         {
-            return destinations.FinalStop();
+            return npcControl.FinalStop();
         }
 
         public Transform GetCurrentDestination()
         {
-            return destinations.GetCurrentDestination();
+            return npcControl.GetCurrentDestination();
         }
 
         #endregion

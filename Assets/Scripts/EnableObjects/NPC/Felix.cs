@@ -4,54 +4,36 @@ using UnityEngine;
 
 public class Felix : NPCControl
 {
-    public BuildingGroupController connectedGroupOne;
-    public BuildingGroupController connectedGroupTwo;
 
 
 
     protected override void Start()
     {
         base.Start();
-        machine.initialState = ChooseInitialState('F');
+
     }
-    public void Felix1Action()
+    public void FelixAction1()
     {
 
-
-        if (Vector3.Distance(transform.position, player.position) < npcVincinity)
-        {
-            Debug.Log("in vincinity");
-            if(!connectedGroupOne.activateAll)
-                connectedGroupOne.activateAll = true;
-        }
+        //lookCoroutine = StartCoroutine(RotateTowards(destObjects[_counter - 1].transform));
+        //if (Vector3.Distance(transform.position, player.position) < npcVincinity)
+        //{
+        //    Debug.Log("in vincinity");
+        //    if(!connectedGroupOne.activateAll)
+        //        connectedGroupOne.activateAll = true;
+        //}
 
     }
 
-    public void Felix2Action()
+    public void FelixAction2()
     {
 
-        if (Vector3.Distance(transform.position, player.position) < npcVincinity)
-        {
-            if(!connectedGroupTwo.activateAll)
-                connectedGroupTwo.activateAll = true;
-        }
+        //if (Vector3.Distance(transform.position, player.position) < npcVincinity)
+        //{
+        //    if(!connectedGroupTwo.activateAll)
+        //        connectedGroupTwo.activateAll = true;
+        //}
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.name == "Felix1")
-        {
-            Debug.Log("runnin dest 1 rotate");
-            if (lookCoroutine != null)
-                StopCoroutine(lookCoroutine);
-            lookCoroutine = StartCoroutine(RotateTowards(connectedGroupOne.transform));
-        }
 
-        if(other.gameObject.name == "Felix2")
-        {
-            if (lookCoroutine != null)
-                StopCoroutine(lookCoroutine);
-            lookCoroutine = StartCoroutine(RotateTowards(connectedGroupTwo.transform));
-        }
-    }
 }

@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class NPCDestinations : MonoBehaviour
 {
     [SerializeField] private Transform[] destinations;
+    [SerializeField] private Object[] destObjects;
     [SerializeField] private float[] waitTimes;
     [SerializeField] private string[] waitActions;
     [SerializeField] public Transform currentDestination => destinations[_counter]; 

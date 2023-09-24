@@ -4,14 +4,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
-public class NPCControl : LivableObject
+public class NPCControl : MonoBehaviour
 {
-    [Header("Checkers")]
-    public float npcVincinity;
 
-    public bool firstTalk;
+    private float matColorVal;
+    [Header("[Activate Check]")]
+    public bool initialActivated;
     public bool npcActivated;
+    [SerializeField] protected float fadeInterval;
+    [SerializeField] protected float minDist;
+    [SerializeField] protected bool isVisible;
+    [SerializeField] protected bool interactable;
+    [SerializeField] protected float npcVincinity;
+
+    public Transform npcMesh;
+    public RiggedVisibleDetector visibleDetector;
+
+    public LivableObject triggerObject;
+
+
+    protected Transform player;
+    protected DialogueSystemTrigger dialogue;
+    protected Animator anim;
+    protected NavMeshAgent agent;
+    protected BaseStateMachine machine;
+
+
+
+
+    protected bool firstTalk;
+
+    [Header("[Route Control]")]
+    public Transform[] destinations;
+    public Component[] destObjects;
+    public float[] waitTimes;
+
+    public int _counter = 0;
+    public bool finalStop;
+    Transform currentStop;
+
+    [Header("[Conversation]")]
     public bool inConversation;
     public bool inCD;
     public bool reTriggerConversation;
@@ -19,56 +53,52 @@ public class NPCControl : LivableObject
 
 
 
-    [Header("Idle State")]
-    public float idleTime;
-    public string idleAction;
+    [Header("[Idle State]")]
+    protected float idleTime;
+    protected string idleAction;
     public bool idling;
     public bool idlePaused;
     public bool idleComplete;
-
-
     
-    public LivableObject triggerObject;
-    public Transform npcMesh;
-    NPCDestinations npcDestinations;
-
-    DialogueSystemTrigger dialogue;
-    Transform[] destinations;
-    Animator anim;
+    
     protected Coroutine lookCoroutine;
     bool lookCoroutineRuning;
-    NavMeshAgent agent;
-    public BaseStateMachine machine;
-
-    protected Dictionary<Transform, string> destToAction = new Dictionary<Transform, string>();
-    protected Dictionary<Transform, float> destToTime = new Dictionary<Transform, float>();
+    
+    
     // Start is called before the first frame update
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
+        //Setting up basic components
+        player = GameObject.Find("Player").transform;
+        matColorVal = 1f;
+        if (initialActivated)
+            npcActivated = true;
 
-        npcDestinations = GetComponent<NPCDestinations>();
         machine = GetComponent<BaseStateMachine>();
         dialogue = GetComponent<DialogueSystemTrigger>();
-        destinations = npcDestinations.GetDestinations();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        SetUpDictionary();
     }
 
-    protected override void Update()
+    protected virtual void Update()
     {
-        base.Update();
+        //Basic visible and interactable detection
+        isVisible = visibleDetector.isVisible;
+        interactable = CheckInteractable();
+
+        CheckNPCActivation();
         CheckTalkCD();
         CheckIdle();
 
-        Debug.Log(lookCoroutineRuning);
-        
-        if (triggerObject.activated)
-            npcActivated = true;
+        Debug.Log(gameObject.name + " " + lookCoroutineRuning);
+
 
         if (npcActivated)
-            ActivateAll(npcMesh);
+        {
+            if(matColorVal > 0f)
+                ActivateAll(npcMesh);
+        }
+            
 
 
         if(!inConversation && interactable && !inCD)
@@ -85,18 +115,31 @@ public class NPCControl : LivableObject
 
     }
 
-    void CheckTalkCD()
+
+
+    #region ActivateFunctionality
+    void CheckNPCActivation()
     {
-        if (inCD && talkCD > 0)
+        if (triggerObject != null && triggerObject.activated)
+            npcActivated = true;
+    }
+
+    bool CheckInteractable()
+    {
+        if (Vector3.Distance(transform.position, player.position) <= minDist)
         {
-            talkCD -= Time.deltaTime;
+            if (isVisible)
+                return true;
+            else
+                return false;
         }
         else
         {
-            inCD = false;
-            talkCD = 2f;
+            return false;
         }
     }
+
+
     public void ActivateAll(Transform obj)
     {
         if (obj.GetComponent<Renderer>() != null)
@@ -130,6 +173,33 @@ public class NPCControl : LivableObject
         }
     }
 
+    protected virtual void TurnOnColor(Material material)
+    {
+        if (matColorVal > 0)
+        {
+            matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
+            material.SetFloat("_WhiteDegree", matColorVal);
+        }
+        else
+        {
+            matColorVal = 0;
+        }
+    }
+
+    public void ActivateDesignatedObject()
+    {
+        if (Vector3.Distance(transform.position, player.position) < npcVincinity)
+        {
+            if (destObjects[_counter - 1].transform.GetComponent<LivableObject>())
+                destObjects[_counter - 1].transform.GetComponent<LivableObject>().activated = true;
+            if (destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>())
+                destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>().activateAll = true;
+        }
+    }
+
+    #endregion
+
+    #region Idle Region
     void CheckIdle()
     {
         if (idling && !idlePaused)
@@ -139,27 +209,38 @@ public class NPCControl : LivableObject
             else
             {
                 idling = false;
-                StopCoroutine(lookCoroutine);
+                if(lookCoroutine != null)
+                    StopCoroutine(lookCoroutine);
             }
         }
     }
 
+
+
     public void InvokeIdleFunction()
     {
         Invoke(idleAction, 0);
+        ActivateDesignatedObject();
     }
 
-    public void NpcFinished()
-    {
-        gameObject.SetActive(false);
-    }
+    #endregion
 
 
-    void SetUpDictionary()
+    #region GENERAL
+    public State ChooseInitialState(char c)
     {
-        for (int i = 0; i < destinations.Length; i++)
+        switch (c)
         {
-            destToAction.Add(destinations[i], destinations[i].name + "Action");
+            case 'F':
+                return machine.frozenState;
+            case 'T':
+                return machine.talkState;
+            case 'M':
+                return machine.moveState;
+            case 'I':
+                return machine.idleState;
+            default:
+                return machine.frozenState;
         }
     }
 
@@ -169,35 +250,6 @@ public class NPCControl : LivableObject
         {
             child.gameObject.layer = layerNumber;
         }
-    }
-
-
-
-    //CONVERSATION CONTROL
-    void OnConversationStart(Transform other)
-    {
-        if (lookCoroutine != null)
-            StopCoroutine(lookCoroutine);
-        lookCoroutine = StartCoroutine(RotateTowards(player));
-        if (!firstTalk)
-        {
-            firstTalk = true;
-            SetAnimatorTrigger("Start");
-        }
-
-        inConversation = true;
-    }
-
-    void OnConversationEnd(Transform other)
-    {
-        StopCoroutine(lookCoroutine);
-        inConversation = false;
-        inCD = true;
-        reTriggerConversation = false;
-        dialogue.enabled = false;
-
-        if (!idling)
-            SetAnimatorTrigger("Move");
     }
 
     public IEnumerator RotateTowards(Transform target)
@@ -215,33 +267,111 @@ public class NPCControl : LivableObject
         }
         lookCoroutineRuning = false;
     }
+    #endregion
 
 
-    //ANIMATOR CONTROL
-    public void SetAnimatorTrigger(string trigger)
+    #region Conversation Control
+
+    void CheckTalkCD()
     {
-        foreach(var param in anim.parameters)
+        if (inCD && talkCD > 0)
         {
-            if (param.type == AnimatorControllerParameterType.Trigger && param.name != trigger)
-                anim.ResetTrigger(param.name);
+            talkCD -= Time.deltaTime;
         }
-        anim.SetTrigger(trigger);
-    }
-
-    public State ChooseInitialState(char c)
-    {
-        switch (c)
+        else
         {
-            case 'F':
-                return machine.frozenState;
-            case 'T':
-                return machine.talkState;
-            case 'M':
-                return machine.moveState;
-            case 'I':
-                return machine.idleState;
-            default:
-                return machine.frozenState;
+            inCD = false;
+            talkCD = 2f;
         }
     }
+    void OnConversationStart(Transform other)
+    {
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
+        lookCoroutine = StartCoroutine(RotateTowards(player));
+        if (!firstTalk)
+        {
+            firstTalk = true;
+        }
+
+        inConversation = true;
+    }
+
+    void OnConversationEnd(Transform other)
+    {
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
+        inConversation = false;
+        inCD = true;
+        reTriggerConversation = false;
+        dialogue.enabled = false;
+
+    }
+    #endregion
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name.Contains(gameObject.name))
+        {
+
+            if (lookCoroutine != null)
+                StopCoroutine(lookCoroutine);
+            lookCoroutine = StartCoroutine(RotateTowards(destObjects[_counter - 1].transform));
+        }
+
+    }
+
+    #region AI Region
+    public Transform GetCurrentDestination()
+    {
+        return destinations[_counter - 1];
+    }
+
+    public bool FinalStop()
+    {
+        if (_counter == destinations.Length)
+            return true;
+        return false;
+    }
+    public Transform GetNext()
+    {
+
+        var point = destinations[_counter];
+
+        return point;
+    }
+
+    public bool HasReached(NavMeshAgent agent)
+    {
+        if (!agent.pathPending)
+        {
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                {
+                    agent.isStopped = true;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Transform[] GetDestinations()
+    {
+        return destinations;
+    }
+
+    public void SetWaitTime()
+    {
+        idleTime =  waitTimes[_counter - 1];
+    }
+
+    public void SetWaitAction()
+    {
+        idleAction =  gameObject.name+"Action"+_counter;
+    }
+    #endregion
+
 }

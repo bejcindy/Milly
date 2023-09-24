@@ -30,7 +30,7 @@ public class TalkState : State {
             }
             else
             {
-                machine.ChangeState(machine.followState);
+                machine.ChangeState(machine.moveState);
             }
 
         }

@@ -352,6 +352,7 @@ public class NPCControl : MonoBehaviour
         followingPlayer = true;
     }
 
+
     public bool HasReached(NavMeshAgent agent)
     {
         if (!agent.pathPending)

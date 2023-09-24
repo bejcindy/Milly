@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowState : MonoBehaviour
+public class FollowState : State
 {
-    // Start is called before the first frame update
-    void Start()
+
+    protected override void OnEnter()
     {
-        
+        machine.StopIdling();
+        machine.BeginNavigation();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnUpdate()
     {
-        
+        if(machine.CheckFollowPlayer())
+            machine.FollowPlayer();
     }
+
+
+    protected override void OnExit()
+    {
+        base.OnExit();
+    }
+
+
 }

@@ -11,12 +11,14 @@ namespace NPCFSM
     {
 
         State currentState;
+        Transform player;
         public State initialState;
         public char initialStateChar;
         public FrozenState frozenState= new FrozenState();
         public MoveState moveState= new MoveState();
         public IdleState idleState = new IdleState();
         public TalkState talkState = new TalkState();
+        public FollowState followState= new FollowState();
         public FinalState finalState = new FinalState();
 
 
@@ -28,6 +30,7 @@ namespace NPCFSM
         private NPCControl npcControl;
         private NavMeshAgent agent;
         private Coroutine lookCoroutine;
+        Vector3 previousPlayerPos = Vector3.zero;
 
         private void Awake()
         {
@@ -44,6 +47,7 @@ namespace NPCFSM
             agent = GetComponent<NavMeshAgent>();
             npcControl = GetComponent<NPCControl>();
             dialogue = GetComponent<DialogueSystemTrigger>();
+            player = GameObject.Find("Player").transform;
             ChangeState(initialState);
         }
 
@@ -158,6 +162,11 @@ namespace NPCFSM
         {
             npcControl.idlePaused = false;
         }
+
+        public void StopIdling()
+        {
+            npcControl.StopIdle();
+        }
         public void InvokeIdleFunction()
         {
 
@@ -194,6 +203,36 @@ namespace NPCFSM
             {
                 agent.SetDestination(npcControl.GetNext().position);
                 npcControl._counter++;
+            }
+
+        }
+
+        public bool CheckFollowPlayer()
+        {
+            return npcControl.followingPlayer;
+        }
+
+        public void StopFollowPlayer()
+        {
+            npcControl.followingPlayer = false;
+        }
+
+        public void FollowPlayer()
+        {
+            if(previousPlayerPos == Vector3.zero)
+            {
+                Vector3 newPos = player.position;
+                agent.SetDestination(newPos);
+                previousPlayerPos = newPos;
+            }
+            else
+            {
+                if(Vector3.Distance(previousPlayerPos, player.position) >= 2f)
+                {
+                    Vector3 newPos = player.position;
+                    agent.SetDestination(newPos);
+                    previousPlayerPos = newPos;
+                }
             }
 
         }

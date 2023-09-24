@@ -17,6 +17,7 @@ public class NPCControl : MonoBehaviour
     [SerializeField] protected float minDist;
     [SerializeField] protected bool isVisible;
     [SerializeField] protected bool interactable;
+    [SerializeField] public bool followingPlayer;
     [SerializeField] protected float npcVincinity;
 
     public Transform npcMesh;
@@ -54,7 +55,7 @@ public class NPCControl : MonoBehaviour
 
 
     [Header("[Idle State]")]
-    protected float idleTime;
+    public float idleTime;
     protected string idleAction;
     public bool idling;
     public bool idlePaused;
@@ -215,6 +216,10 @@ public class NPCControl : MonoBehaviour
         }
     }
 
+    public void StopIdle()
+    {
+        idleTime = 0;
+    }
 
 
     public void InvokeIdleFunction()
@@ -340,6 +345,11 @@ public class NPCControl : MonoBehaviour
         var point = destinations[_counter];
 
         return point;
+    }
+
+    public void SetNPCFollow()
+    {
+        followingPlayer = true;
     }
 
     public bool HasReached(NavMeshAgent agent)

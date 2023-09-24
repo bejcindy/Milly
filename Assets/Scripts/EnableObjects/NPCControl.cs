@@ -1,3 +1,4 @@
+using NPCFSM;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,8 +35,10 @@ public class NPCControl : LivableObject
     DialogueSystemTrigger dialogue;
     Transform[] destinations;
     Animator anim;
-    Coroutine lookCoroutine;
+    protected Coroutine lookCoroutine;
+    bool lookCoroutineRuning;
     NavMeshAgent agent;
+    public BaseStateMachine machine;
 
     protected Dictionary<Transform, string> destToAction = new Dictionary<Transform, string>();
     protected Dictionary<Transform, float> destToTime = new Dictionary<Transform, float>();
@@ -45,7 +48,7 @@ public class NPCControl : LivableObject
         base.Start();
 
         npcDestinations = GetComponent<NPCDestinations>();
-
+        machine = GetComponent<BaseStateMachine>();
         dialogue = GetComponent<DialogueSystemTrigger>();
         destinations = npcDestinations.GetDestinations();
         anim = GetComponent<Animator>();
@@ -58,6 +61,9 @@ public class NPCControl : LivableObject
         base.Update();
         CheckTalkCD();
         CheckIdle();
+
+        Debug.Log(lookCoroutineRuning);
+        
         if (triggerObject.activated)
             npcActivated = true;
 
@@ -75,6 +81,8 @@ public class NPCControl : LivableObject
         {
             ChangeLayer(0);
         }
+
+
     }
 
     void CheckTalkCD()
@@ -131,6 +139,7 @@ public class NPCControl : LivableObject
             else
             {
                 idling = false;
+                StopCoroutine(lookCoroutine);
             }
         }
     }
@@ -167,6 +176,8 @@ public class NPCControl : LivableObject
     //CONVERSATION CONTROL
     void OnConversationStart(Transform other)
     {
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
         lookCoroutine = StartCoroutine(RotateTowards(player));
         if (!firstTalk)
         {
@@ -191,6 +202,7 @@ public class NPCControl : LivableObject
 
     public IEnumerator RotateTowards(Transform target)
     {
+        lookCoroutineRuning = true;
         Vector3 direction = target.position - transform.position;
         direction.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -201,6 +213,7 @@ public class NPCControl : LivableObject
             time += Time.deltaTime * 0.1f;
             yield return null;
         }
+        lookCoroutineRuning = false;
     }
 
 
@@ -213,5 +226,22 @@ public class NPCControl : LivableObject
                 anim.ResetTrigger(param.name);
         }
         anim.SetTrigger(trigger);
+    }
+
+    public State ChooseInitialState(char c)
+    {
+        switch (c)
+        {
+            case 'F':
+                return machine.frozenState;
+            case 'T':
+                return machine.talkState;
+            case 'M':
+                return machine.moveState;
+            case 'I':
+                return machine.idleState;
+            default:
+                return machine.frozenState;
+        }
     }
 }

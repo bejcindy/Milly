@@ -7,18 +7,19 @@ public class TalkState : State {
 
     protected override void OnEnter()
     {
-
+        //machine.RotateNPC(machine.player);
         //Pause Idle first if in idle
         machine.PauseIdling();
 
         //commence normal behaviors
         machine.StartConversation();
         machine.StopNavigation();
-        machine.SetAnimatorTrigger("Stop");
-        machine.RotateNPC(machine.player);
+        //machine.SetAnimatorTrigger("Stop");
+
     }
     protected override void OnUpdate()
     {
+
         if (!machine.CheckNPCInDialogue())
         {
             if (machine.CheckIdleFinished())
@@ -32,6 +33,7 @@ public class TalkState : State {
     protected override void OnExit()
     {
         machine.ResetAnimTrigger("Stop");
+        //machine.StopRotatingNPC();
         machine.EndConversation();
         machine.UnPauseIdling();
     }

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using NPCFSM;
 
-public abstract class State
+[System.Serializable]
+public class State
 {
-    public BaseStateMachine machine;
+    public BaseStateMachine machine; 
 
     public void OnStateEnter(BaseStateMachine stateController)
     {

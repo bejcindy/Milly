@@ -36,7 +36,7 @@ public class NPCDestinations : MonoBehaviour
 
     public Transform GetCurrentDestination()
     {
-        return currentStop;
+        return destinations[_counter-1];
     }
 
     public bool FinalStop()

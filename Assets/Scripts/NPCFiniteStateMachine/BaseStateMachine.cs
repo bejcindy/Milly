@@ -11,6 +11,7 @@ namespace NPCFSM
     {
 
         [SerializeField] State currentState;
+        public State initialState;
         public FrozenState frozenState= new FrozenState();
         public MoveState moveState= new MoveState();
         public IdleState idleState = new IdleState();
@@ -38,7 +39,7 @@ namespace NPCFSM
 
         private void Start()
         {
-            ChangeState(frozenState);
+            ChangeState(initialState);
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
             destinations = GetComponent<NPCDestinations>();
@@ -102,11 +103,12 @@ namespace NPCFSM
 
         public IEnumerator RotateTowards(Transform target)
         {
+            Debug.Log("Rotating towards " + target);
             Vector3 direction = target.position - transform.position;
             direction.y = 0;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             float time = 0;
-            while (time < 1)
+            while (time < 2)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, time);
                 time += Time.deltaTime * 0.1f;

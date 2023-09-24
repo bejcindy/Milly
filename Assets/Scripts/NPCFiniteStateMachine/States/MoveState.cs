@@ -6,17 +6,28 @@ public class MoveState : State
 {
     protected override void OnEnter()
     {
-        machine.SetNPCDestination();
+        if (!machine.CheckFollowPlayer())
+            machine.SetNPCDestination();
+        else
+            machine.FollowPlayer();
         machine.BeginNavigation();
         machine.SetAnimatorTrigger("Move");
     }
 
     protected override void OnUpdate()
     {
-        if (machine.CheckReachDestination())
+        if (!machine.CheckFollowPlayer())
         {
-            machine.ChangeState(machine.idleState);
+            if (machine.CheckReachDestination())
+            {
+                machine.ChangeState(machine.idleState);
+            }
         }
+        else
+        {
+            machine.FollowPlayer();
+        }
+
     }
 
     protected override void OnExit()

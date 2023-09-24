@@ -12,11 +12,11 @@ public class TurnOnColor : MonoBehaviour
 
     private void OnEnable()
     {
-        if (childrenRends == null)
+        //if (childrenRends == null)
             childrenRends = GetComponentsInChildren<Renderer>();
-        if (childrenLights == null)
+        //if (childrenLights == null)
             childrenLights = GetComponentsInChildren<Light>();
-        if (originallyOffLights == null)
+        //if (originallyOffLights == null)
             originallyOffLights = new List<Light>();
         foreach (Renderer r in childrenRends)
         {

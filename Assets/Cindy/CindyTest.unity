@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!199 &58157295
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -162,7 +162,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
+  - {fileID: 2100000, guid: 78053d707076a49d794720478ea3d777, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -183,7 +183,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -845,7 +845,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 25
+    angle: 10
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -1050,7 +1050,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 1
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5482,7 +5482,6 @@ MonoBehaviour:
   interactable: 0
   isVisible: 0
   checkVisible: 0
-  chainControl: 1
   minDist: 0
   rend: {fileID: 0}
   coll: {fileID: 0}
@@ -5492,15 +5491,16 @@ MonoBehaviour:
   fadeInterval: 10
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
-  playerCam: {fileID: 0}
   rigged: 0
   visibleDetector: {fileID: 0}
   centerFocused: 0
-  npc: 0
+  noRend: 0
   tagName: Throwable
   tagList: []
   stairParent: 0
-  ashTray: 0
+  brokenAC: 0
+  eventName: 
+  assistant: 0
 --- !u!65 &480271368
 BoxCollider:
   m_ObjectHideFlags: 0

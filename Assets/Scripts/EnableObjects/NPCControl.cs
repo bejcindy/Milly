@@ -20,10 +20,17 @@ public class NPCControl : MonoBehaviour
     [SerializeField] public bool followingPlayer;
     [SerializeField] protected float npcVincinity;
 
+
+    [Header("References")]
     public Transform npcMesh;
     public RiggedVisibleDetector visibleDetector;
 
+
+    [Header("Trigger Types")]
+    public bool objectTriggered;
     public LivableObject triggerObject;
+    public bool peopleTriggered;
+    public Transform otherNPC;
 
 
     protected Transform player;
@@ -121,8 +128,20 @@ public class NPCControl : MonoBehaviour
     #region ActivateFunctionality
     void CheckNPCActivation()
     {
-        if (triggerObject != null && triggerObject.activated)
-            npcActivated = true;
+        if (objectTriggered)
+        {
+            if (triggerObject != null && triggerObject.activated)
+                npcActivated = true;
+        }
+
+        if (peopleTriggered)
+        {
+            float playerDist = Vector3.Distance(player.position, transform.position);
+            float otherNPCDist = Vector3.Distance(otherNPC.position, transform.position);
+
+            if (playerDist < npcVincinity && otherNPCDist < npcVincinity)
+                npcActivated = true;
+        }
     }
 
     bool CheckInteractable()
@@ -309,8 +328,13 @@ public class NPCControl : MonoBehaviour
         inConversation = false;
         inCD = true;
         reTriggerConversation = false;
-        dialogue.enabled = false;
+        //dialogue.enabled = false;
 
+    }
+
+    public void EndConversation()
+    {
+        inConversation = false;
     }
     #endregion
 
@@ -350,6 +374,7 @@ public class NPCControl : MonoBehaviour
     public void SetNPCFollow()
     {
         followingPlayer = true;
+        agent.stoppingDistance = 3;
     }
 
 

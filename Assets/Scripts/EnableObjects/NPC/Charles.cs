@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Charles : NPCControl
 {
-
+    public bool charlesSmoking;
 
     protected override void Start()
     {
@@ -13,6 +13,11 @@ public class Charles : NPCControl
 
     public void CharlesAction1()
     {
+        if (!charlesSmoking)
+        {
+            machine.SetAnimatorTrigger("Smoke");
+            charlesSmoking = true;
+        }
 
     }
 

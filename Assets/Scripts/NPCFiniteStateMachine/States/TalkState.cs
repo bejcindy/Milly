@@ -41,7 +41,7 @@ public class TalkState : State {
     {
         machine.ResetAnimTrigger("Stop");
         //machine.StopRotatingNPC();
-        machine.EndConversation();
+        //machine.EndConversation();
         machine.UnPauseIdling();
     }
 

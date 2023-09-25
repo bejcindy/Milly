@@ -7,40 +7,31 @@ public class FollowState : State
 
     protected override void OnEnter()
     {
-        machine.StopIdling();
-        machine.BeginNavigation();
-        machine.SetAnimatorTrigger("Move");
+        machine.SetAnimatorTrigger("Stop");
     }
 
     protected override void OnUpdate()
     {
-        if (machine.CheckFollowPlayer())
+        if(machine.CheckFollowPlayer() && machine.CheckReachDestination())
         {
-            machine.FollowPlayer();
-            if (machine.CheckReachDestination())
+            if (machine.CheckPlayerMove())
             {
-                machine.ResetAnimTrigger("Move");
-                machine.SetAnimatorTrigger("Stop");
-            }
-            else
-            {
-                machine.ResetAnimTrigger("Stop");
-                machine.SetAnimatorTrigger("Move");
-            }
-        }
-
-        else
-        {
-            if (!machine.CheckPathFinished())
+                Debug.Log("Player moved again");
                 machine.ChangeState(machine.moveState);
+            }
+
         }
-            
+        else if (!machine.CheckFollowPlayer())
+        {
+            machine.ChangeState(machine.moveState);
+        }
     }
+
 
 
     protected override void OnExit()
     {
-        machine.ResetAnimTrigger("Move");
+        machine.ResetAnimTrigger("Idle");
     }
 
 

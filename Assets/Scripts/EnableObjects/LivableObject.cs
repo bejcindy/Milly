@@ -206,8 +206,8 @@ public class LivableObject : MonoBehaviour
                 //else
                 //    pointsInScreen--;
             }
-            if (gameObject.name.Contains("iza_Gsign_low"))
-                Debug.Log(gameObject.name + "point on screen is: " + pointsInScreen);
+            //if (gameObject.name.Contains("iza_Gsign_low"))
+            //    Debug.Log(gameObject.name + "point on screen is: " + pointsInScreen);
             if (pointsInScreen < 2)
                 return false;
         }
@@ -282,11 +282,15 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void OnBecameVisible()
     {
+        //if (gameObject.name == "poster15")
+        //    Debug.Log($"'{name}' is Visible to '{Camera.current.name}'");
         checkVisible = true;
     }
 
     protected virtual void OnBecameInvisible()
     {
+        //if (gameObject.name == "poster15")
+        //    Debug.Log("poster not visible");
         checkVisible = false;
     }
 }

@@ -98,7 +98,7 @@ public class NPCControl : MonoBehaviour
         CheckTalkCD();
         CheckIdle();
 
-        Debug.Log(gameObject.name + " " + lookCoroutineRuning);
+        //Debug.Log(gameObject.name + " " + lookCoroutineRuning);
 
 
         if (npcActivated)

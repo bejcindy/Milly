@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using FMOD;
 
 public class LookingObject : LivableObject
 {
@@ -14,6 +15,7 @@ public class LookingObject : LivableObject
     public bool focusingThis;
 
     public GameObject[] sameTypePosters;
+    bool played;
 
     protected override void Start()
     {
@@ -36,6 +38,11 @@ public class LookingObject : LivableObject
             {
                 DataHolder.FocusOnThis(fadeInterval, matColorVal);
                 DataHolder.currentFocus = gameObject;
+                if (!played)
+                {
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
+                    played = true;
+                }
             }
             if (!designatedSpot)
             {

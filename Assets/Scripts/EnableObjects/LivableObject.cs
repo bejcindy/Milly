@@ -132,12 +132,23 @@ public class LivableObject : MonoBehaviour
         }
     }
 
+    bool played;
     protected virtual void TurnOnColor(Material material)
     {
         if (matColorVal > 0)
         {
             matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
             material.SetFloat("_WhiteDegree", matColorVal);
+            if (!played)
+            {
+                //if (!GetComponent<LookingObject>())
+                //    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Enable", transform.position);
+                if (GetComponent<PickUpObject>())
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/PickUp", transform.position);
+                else if (!GetComponent<LookingObject>() && gameObject.layer != 6)
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Enable", transform.position);
+                played = true;
+            }
         }
         else
         {

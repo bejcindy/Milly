@@ -25,7 +25,8 @@ public class MoveState : State
         }
         else
         {
-            machine.FollowPlayer();
+            if(machine.CheckReachDestination())
+                machine.ChangeState(machine.followState);
         }
 
     }

@@ -34,6 +34,7 @@ public class GroupMaster : MonoBehaviour
             else
             {
                 groupColorVal = 0;
+                enabled = false;
             }
             ActivateAll();
         }

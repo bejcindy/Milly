@@ -21,6 +21,7 @@ namespace NPCFSM
         public FollowState followState= new FollowState();
         public FinalState finalState = new FinalState();
 
+        [SerializeField] private float toPlayerDistance;
 
 
         private Dictionary<Type, Component> _cachedComponents;
@@ -42,7 +43,7 @@ namespace NPCFSM
         private void Start()
         {
             initialState = ChooseInitialState(initialStateChar);
-            Debug.Log(initialState);
+            //Debug.Log(initialState);
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
             npcControl = GetComponent<NPCControl>();
@@ -53,7 +54,8 @@ namespace NPCFSM
 
         private void Update()
         {
-
+            if (CheckNPCActivation())
+                //Debug.Log(currentState);
             if (currentState != null)
                 currentState.OnStateUpdate();
 
@@ -215,25 +217,51 @@ namespace NPCFSM
         public void StopFollowPlayer()
         {
             npcControl.followingPlayer = false;
+            agent.stoppingDistance = 0;
+        }
+
+        public bool CheckPlayerMove()
+        {
+            return (Vector3.Distance(transform.position, player.position) > toPlayerDistance);
         }
 
         public void FollowPlayer()
         {
-            if(previousPlayerPos == Vector3.zero)
-            {
-                Vector3 newPos = player.position;
-                agent.SetDestination(newPos);
-                previousPlayerPos = newPos;
-            }
-            else
-            {
-                if(Vector3.Distance(previousPlayerPos, player.position) >= 2f)
-                {
-                    Vector3 newPos = player.position;
-                    agent.SetDestination(newPos);
-                    previousPlayerPos = newPos;
-                }
-            }
+            agent.SetDestination(player.transform.position);
+            //if (previousPlayerPos == Vector3.zero)
+            //{
+            //    Vector3 newPos = player.position;
+            //    agent.SetDestination(newPos);
+            //    previousPlayerPos = newPos;
+            //    if (!anim.GetBool("Move"))
+            //    {
+            //        ResetAnimTrigger("Idle");
+            //        SetAnimatorTrigger("Move");
+            //    }
+            //}
+            //else
+            //{
+            //    if(Vector3.Distance(previousPlayerPos, player.position) >= 2f)
+            //    {
+            //        Vector3 newPos = player.position;
+            //        agent.SetDestination(newPos);
+            //        previousPlayerPos = newPos;
+            //        if (!anim.GetBool("Move"))
+            //        {
+            //            ResetAnimTrigger("Idle");
+            //            SetAnimatorTrigger("Move");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (!anim.GetBool("Idle"))
+            //        {
+            //            ResetAnimTrigger("Move");
+            //            SetAnimatorTrigger("Idle");
+            //        }
+            //    }
+                
+            //}
 
         }
 

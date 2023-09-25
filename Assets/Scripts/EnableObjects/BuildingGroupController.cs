@@ -28,6 +28,7 @@ public class BuildingGroupController : MonoBehaviour
             {
                 groupColorVal = 0;
                 activateAll = false;
+                enabled = false;
             }
 
             ActivateAll(this.transform);

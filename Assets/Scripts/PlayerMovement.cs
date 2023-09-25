@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
     Collider ladderTrigger;
     bool tooLeft, tooRight;
     PlayerHolding playerHolding;
+    float movementAmount;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -247,7 +248,6 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             Vector3 movementVector = Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up);
-
             rb.AddForce(movementVector, ForceMode.Force);
             //CheckForStep(ref movementVector);
 
@@ -268,6 +268,12 @@ public class PlayerMovement : MonoBehaviour
         //rb.useGravity = !OnSlope();
         
     }
+
+    public bool CheckMoveAmount()
+    {
+        return (moveDirection.x > 2f || moveDirection.z > 2f);
+    }
+
 
     void CheckForStep(ref Vector3 movement)
     {

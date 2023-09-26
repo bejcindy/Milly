@@ -134,14 +134,16 @@ public class LookingObject : LivableObject
 
         }
 
-
-        if (selected)
+        if (!focusingThis)
         {
-            gameObject.layer = 12;
-        }
-        else
-        {
-            gameObject.layer = 0;
+            if (selected)
+            {
+                gameObject.layer = 9;
+            }
+            else
+            {
+                gameObject.layer = 0;
+            }
         }
 
     }

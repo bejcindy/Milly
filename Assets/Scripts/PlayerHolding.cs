@@ -220,7 +220,8 @@ public class PlayerHolding : MonoBehaviour
                 }
 
             }
-            focusedObj.GetComponent<LookingObject>().selected = true;
+            if(focusedObj)
+                focusedObj.GetComponent<LookingObject>().selected = true;
         }
     }
 

@@ -43,7 +43,7 @@ namespace NPCFSM
         private void Start()
         {
             initialState = ChooseInitialState(initialStateChar);
-            Debug.Log(initialState);
+            //Debug.Log(initialState);
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
             npcControl = GetComponent<NPCControl>();
@@ -55,7 +55,7 @@ namespace NPCFSM
         private void Update()
         {
             if (CheckNPCActivation())
-                Debug.Log(currentState);
+                //Debug.Log(currentState);
             if (currentState != null)
                 currentState.OnStateUpdate();
 

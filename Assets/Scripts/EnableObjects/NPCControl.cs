@@ -18,7 +18,7 @@ public class NPCControl : MonoBehaviour
     [SerializeField] protected bool isVisible;
     [SerializeField] protected bool interactable;
     [SerializeField] public bool followingPlayer;
-    [SerializeField] protected float npcVincinity;
+    [SerializeField] public float npcVincinity;
 
 
     [Header("References")]
@@ -290,7 +290,8 @@ public class NPCControl : MonoBehaviour
 
     void CheckRetriggerTalk()
     {
-        if (!DialogueLua.GetVariable("NPC_Charles_Other_Interacted").asBool)
+        string reTriggerName = "NPC_" + gameObject.name + "_Other_Interacted";
+        if (!DialogueLua.GetVariable(reTriggerName).asBool)
         {
             if (!inConversation && interactable && !inCD && !playerHolding.inDialogue)
             {
@@ -342,6 +343,7 @@ public class NPCControl : MonoBehaviour
         inConversation = false;
         inCD = true;
         reTriggerConversation = false;
+        dialogue.enabled = false;
         
 
     }
@@ -388,7 +390,7 @@ public class NPCControl : MonoBehaviour
     public void SetNPCFollow()
     {
         followingPlayer = true;
-        agent.stoppingDistance = 3;
+        agent.stoppingDistance = 4;
     }
 
 

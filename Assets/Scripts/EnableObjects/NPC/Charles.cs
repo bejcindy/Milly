@@ -6,9 +6,9 @@ public class Charles : NPCControl
 {
     public bool charlesSmoking;
 
-    protected override void Start()
+    protected override void Update()
     {
-        base.Start();
+        base.Update();
     }
 
     public void CharlesAction1()
@@ -18,7 +18,8 @@ public class Charles : NPCControl
 
     public void CharlesAction2()
     {
-
+        Debug.Log("Calling charles 2");
+        destObjects[_counter - 1].GetComponent<IzakayaDoor>().OpenDoor();
     }
 
     public void CharlesAction3()

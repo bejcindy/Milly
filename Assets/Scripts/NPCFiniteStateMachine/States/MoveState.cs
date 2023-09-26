@@ -30,6 +30,9 @@ public class MoveState : State
                 machine.ChangeState(machine.followState);
         }
 
+        if (machine.RetriggerConversation())
+            machine.ChangeState(machine.talkState);
+
     }
 
     protected override void OnExit()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NPCFSM;
 
+[System.Serializable]
 public class State
 {
     public BaseStateMachine machine; 

@@ -25,6 +25,12 @@ public class FollowState : State
         {
             machine.ChangeState(machine.moveState);
         }
+
+        if (machine.RetriggerConversation())
+        {
+            machine.ChangeState(machine.talkState);
+        }
+
     }
 
 

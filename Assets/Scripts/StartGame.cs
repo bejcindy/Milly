@@ -36,6 +36,7 @@ public class StartGame : MonoBehaviour
             playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
             playerMovement.enabled = true;
             playerCam.enabled=true;
+            outsideAmbienceEvent.start();
         }
     }
 

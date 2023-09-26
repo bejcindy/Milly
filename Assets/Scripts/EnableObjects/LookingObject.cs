@@ -38,7 +38,7 @@ public class LookingObject : LivableObject
             {
                 DataHolder.FocusOnThis(fadeInterval, matColorVal);
                 DataHolder.currentFocus = gameObject;
-                if (!played)
+                if (!played && DataHolder.camBlended && DataHolder.camBlendDone)
                 {
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
                     played = true;

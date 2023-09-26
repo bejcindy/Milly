@@ -202,10 +202,14 @@ public class NPCControl : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) < npcVincinity)
         {
-            if (destObjects[_counter - 1].transform.GetComponent<LivableObject>())
-                destObjects[_counter - 1].transform.GetComponent<LivableObject>().activated = true;
-            if (destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>())
-                destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>().activateAll = true;
+            if (destObjects[_counter-1] != null)
+            {
+                if (destObjects[_counter - 1].transform.GetComponent<LivableObject>())
+                    destObjects[_counter - 1].transform.GetComponent<LivableObject>().activated = true;
+                if (destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>())
+                    destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>().activateAll = true;
+            }
+
         }
     }
 
@@ -325,6 +329,7 @@ public class NPCControl : MonoBehaviour
     }
     void OnConversationStart(Transform other)
     {
+        inConversation = true;
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
         lookCoroutine = StartCoroutine(RotateTowards(player));

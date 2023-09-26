@@ -10,7 +10,8 @@ public class Door : LivableObject
     public bool isInteracting;
 
     public bool slidingDoor;
-    
+
+    public bool playerInFront;
 
     PlayerHolding playerHolding;
     Vector3 closedPos;
@@ -29,71 +30,102 @@ public class Door : LivableObject
     protected override void Update()
     {
         base.Update();
-        DoorControl();
+        playerInFront = CheckPlayerForward();
+        if (interactable)
+            DoorControl();
+
 
     }
 
     protected virtual void DoorControl()
     {
-        if (doorInteractable)
+
+        if (playerHolding.GetLeftHand())
         {
-            if (playerHolding.GetLeftHand())
+            if (Input.GetMouseButton(0))
             {
-                if (Input.GetMouseButton(0) && checkVisible)
-                {
-                    activated = true;
-                    isInteracting = true;
-                }
+                activated = true;
+                isInteracting = true;
             }
 
-            if (isInteracting && checkVisible)
+        }
+
+        if (isInteracting)
+        {
+            float horizontalInput = Input.GetAxis("Mouse X") * Time.deltaTime ;
+            float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime ;
+            if (!doorMoving)
             {
-                float horizontalInput = Input.GetAxis("Mouse X") * Time.deltaTime * 75;
-                float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
-                if (!doorMoving)
+                if (!doorOpen)
                 {
-                    if (!doorOpen)
+                    if (slidingDoor)
                     {
-                        if (slidingDoor)
+                        if (playerInFront)
                         {
                             if (horizontalInput < 0)
-                            {
                                 StartCoroutine(LerpPosition(openPos, 1f));
-                            }
                         }
                         else
                         {
-                            if(verticalInput > 0)
-                            {
-                                StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
-                            }
+                            if (horizontalInput > 0)
+                                StartCoroutine(LerpPosition(openPos, 1f));
                         }
 
                     }
                     else
                     {
-                        if (slidingDoor)
+                        if (playerInFront)
                         {
-                            if (horizontalInput > 0)
-                            {
-                                StartCoroutine(LerpPosition(closedPos, 1f));
-                            }
+                            if (verticalInput > 0)
+                                StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
                         }
                         else
                         {
                             if (verticalInput < 0)
-                            {
-                                StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
-                            }
+                                StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+
                         }
 
                     }
-                }
 
+                }
+                else
+                {
+                    if (slidingDoor)
+                    {
+                        if (playerInFront)
+                        {
+                            if (horizontalInput > 0)
+                                StartCoroutine(LerpPosition(closedPos, 1f));
+                        }
+                        else
+                        {
+                            if (horizontalInput < 0)
+                                StartCoroutine(LerpPosition(closedPos, 1f));
+
+                        }
+
+                    }
+                    else
+                    {
+                        if (playerInFront)
+                        {
+                            if (verticalInput < 0)
+                                StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
+                        }
+                        else
+                        {
+                            if (verticalInput > 0)
+                                StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
+                        }
+
+                    }
+
+                }
             }
 
-
         }
+
         if (Input.GetMouseButtonUp(0))
         {
             isInteracting = false;
@@ -107,6 +139,32 @@ public class Door : LivableObject
         {
             doorOpen = false;
         }
+    }
+
+
+
+    public void NPCOpenDoor()
+    {
+        if (!doorOpen)
+        {
+            StartCoroutine(LerpPosition(openPos, 1f));
+        }
+    }
+
+    public void CloseDoor()
+    {
+        if (doorOpen)
+        {
+            StartCoroutine(LerpPosition(closedPos, 1f));
+        }
+    }
+
+    bool CheckPlayerForward()
+    {
+        float angle = Vector3.Angle(transform.forward, player.position - transform.position);
+        if (Mathf.Abs(angle) < 90)
+            return true;
+        return false;
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)

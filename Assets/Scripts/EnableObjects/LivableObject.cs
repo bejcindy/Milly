@@ -93,7 +93,16 @@ public class LivableObject : MonoBehaviour
         {
             if (!firstActivated)
             {
-                TurnOnColor(mat);
+                if (GetComponent<LookingObject>())
+                {
+                    if (DataHolder.camBlended && DataHolder.camBlendDone)
+                        TurnOnColor(mat);
+                }
+                else
+                {
+                    TurnOnColor(mat);
+                }
+                
             }
                 
             if (GetComponent<GroupMaster>() && matColorVal <= 0)
@@ -152,6 +161,7 @@ public class LivableObject : MonoBehaviour
         }
         else
         {
+            Debug.Log("here");
             matColorVal = 0;
             firstActivated = true;
             if (specialEffect != null)

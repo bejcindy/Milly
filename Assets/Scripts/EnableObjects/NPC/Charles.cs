@@ -6,28 +6,31 @@ public class Charles : NPCControl
 {
     public bool charlesSmoking;
 
-    protected override void Start()
+    protected override void Update()
     {
-        base.Start();
+        base.Update();
     }
 
     public void CharlesAction1()
     {
-        if (!charlesSmoking)
-        {
-            machine.SetAnimatorTrigger("Smoke");
-            charlesSmoking = true;
-        }
 
     }
 
     public void CharlesAction2()
     {
-
+        Debug.Log("Calling charles 2");
+        destObjects[_counter - 1].GetComponent<IzakayaDoor>().OpenDoor();
     }
 
     public void CharlesAction3()
     {
 
+    }
+
+    public void FinishSmoking()
+    {
+        Debug.Log("finishing smoking");
+        machine.ResetAnimTrigger("Special1");
+        machine.SetAnimatorTrigger("Finish");
     }
 }

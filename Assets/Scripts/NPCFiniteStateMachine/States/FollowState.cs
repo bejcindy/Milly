@@ -25,13 +25,19 @@ public class FollowState : State
         {
             machine.ChangeState(machine.moveState);
         }
+
+        if (machine.RetriggerConversation())
+        {
+            machine.ChangeState(machine.talkState);
+        }
+
     }
 
 
 
     protected override void OnExit()
     {
-        machine.ResetAnimTrigger("Idle");
+        //machine.ResetAnimTrigger("Idle");
     }
 
 

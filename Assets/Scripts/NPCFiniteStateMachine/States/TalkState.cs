@@ -9,8 +9,6 @@ public class TalkState : State {
     {
 
         machine.PauseIdling();
-
-        //commence normal behaviors
         machine.StartConversation();
         machine.StopNavigation();
 
@@ -21,6 +19,7 @@ public class TalkState : State {
 
         if (!machine.CheckNPCInDialogue())
         {
+            //NOT FOLLOWING NPC AFTER
             if (!machine.CheckFollowPlayer())
             {
                 if (machine.CheckIdleFinished())
@@ -28,9 +27,13 @@ public class TalkState : State {
                 else
                     machine.ChangeState(machine.idleState);
             }
+            //FOLLOWING NPC AFTER
             else
             {
-                machine.ChangeState(machine.moveState);
+                machine.StopIdling();
+                if (!machine.CheckPlayerInVincinity())
+                    machine.ChangeState(machine.moveState);
+
             }
 
         }
@@ -39,9 +42,7 @@ public class TalkState : State {
 
     protected override void OnExit()
     {
-        machine.ResetAnimTrigger("Stop");
-        //machine.StopRotatingNPC();
-        //machine.EndConversation();
+        //machine.ResetAnimTrigger("Stop");
         machine.UnPauseIdling();
     }
 

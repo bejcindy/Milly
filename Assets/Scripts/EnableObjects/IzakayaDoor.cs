@@ -5,12 +5,12 @@ using PixelCrushers.DialogueSystem;
 
 public class IzakayaDoor : LivableObject
 {
+    public bool doorInteractable;
     public bool isInteracting;
     public bool leftHandOpen;
     public bool rightHandOpen;
     public bool doorOpen;
-    public bool doorOpenable;
-    public Transform door;
+    public bool doorOpening;
     public Vector3 doorOpenPos;
 
     DialogueSystemTrigger dialogue;
@@ -22,60 +22,99 @@ public class IzakayaDoor : LivableObject
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
-        cameraControl = GetComponent<FixedCameraObject>();
-        doorStartPos = door.transform.localPosition;
-        dialogue = GetComponent<DialogueSystemTrigger>();
+        doorStartPos = transform.parent.transform.localPosition;
+        //dialogue = GetComponent<DialogueSystemTrigger>();
     }
     protected override void Update()
     {
         base.Update();
-        if (doorOpenable)
-        {
-            OpenDoor();
-        }
-        else
-        {
-            TriggerConversation();
-        }
+        DoorControl();
+
     }
 
-    void OpenDoor()
+    void DoorControl()
     {
-        if (interactable && !isInteracting)
+        if (doorInteractable)
         {
             if (playerHolding.GetLeftHand())
             {
                 if (Input.GetMouseButton(0))
                 {
-                    isInteracting = true;
                     activated = true;
-                    cameraControl.TurnOnCamera();
                     leftHandOpen = true;
+                    isInteracting = true;
                 }
             }
         }
 
         if (isInteracting)
         {
-            float verticalInput = Input.GetAxis("Mouse X") * Time.deltaTime * 75;
-            Debug.Log(verticalInput);
-            if (verticalInput < 0)
+            float horizontalInput = Input.GetAxis("Mouse X") * Time.deltaTime * 75;
+            if (!doorOpening)
             {
-                StartCoroutine(LerpPosition(doorOpenPos, 2f));
-            }
-
-            if (leftHandOpen)
-            {
-                if (Input.GetMouseButtonUp(0))
+                if (!doorOpen)
                 {
-                    isInteracting = false;
+                    if (horizontalInput < 0)
+                    {
+                        StartCoroutine(LerpPosition(doorOpenPos, 1f));
+                    }
+                }
+                else
+                {
+                    if (horizontalInput > 0)
+                    {
+                        StartCoroutine(LerpPosition(doorStartPos, 1f));
+                    }
                 }
             }
         }
 
-        if (door.localPosition == doorOpenPos)
+
+
+        if (leftHandOpen)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                isInteracting = false;
+            }
+        }
+        
+
+        if (transform.parent.localPosition == doorOpenPos)
         {
             doorOpen = true;
+        }
+        else
+        {
+            doorOpen = false;
+        }
+    }
+
+    public void OpenDoor()
+    {
+        Debug.Log("NPC opening door");
+        if (!doorOpen && !doorOpening)
+        {
+            StartCoroutine(LerpPosition(doorOpenPos, 1f));
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (checkVisible)
+                doorInteractable = true;
+            else
+                doorInteractable = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            doorInteractable = false;
         }
     }
 
@@ -105,14 +144,16 @@ public class IzakayaDoor : LivableObject
     }
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
+        doorOpening = true;
         float time = 0;
-        Vector3 startPosition = door.transform.localPosition;
+        Vector3 startPosition = transform.parent.transform.localPosition;
         while (time < duration)
         {
-            door.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            transform.parent.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
-        door.transform.localPosition = targetPosition;
+        transform.parent.transform.localPosition = targetPosition;
+        doorOpening = false;
     }
 }

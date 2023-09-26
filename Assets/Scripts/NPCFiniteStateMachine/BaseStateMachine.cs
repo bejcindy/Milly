@@ -10,7 +10,7 @@ namespace NPCFSM
     public class BaseStateMachine: MonoBehaviour
     {
 
-        State currentState;
+        [SerializeField] State currentState;
         Transform player;
         public State initialState;
         public char initialStateChar;
@@ -54,8 +54,8 @@ namespace NPCFSM
 
         private void Update()
         {
-            if (CheckNPCActivation())
-                //Debug.Log(currentState);
+            if (CheckNPCActivation() && gameObject.name == "Kelvin")
+                Debug.Log(currentState);
             if (currentState != null)
                 currentState.OnStateUpdate();
 
@@ -175,6 +175,16 @@ namespace NPCFSM
             npcControl.InvokeIdleFunction();
         }
 
+        public bool CheckSpecialIdleAnim()
+        {
+            return npcControl.GetSpecialIdleAnim();
+        }
+
+        public void SetSpecialIdleAnim()
+        {
+            SetAnimatorTrigger("Special" + npcControl._counter);
+        }
+
         public bool CheckIdleFinished()
         {
             return !npcControl.idling;
@@ -228,41 +238,11 @@ namespace NPCFSM
         public void FollowPlayer()
         {
             agent.SetDestination(player.transform.position);
-            //if (previousPlayerPos == Vector3.zero)
-            //{
-            //    Vector3 newPos = player.position;
-            //    agent.SetDestination(newPos);
-            //    previousPlayerPos = newPos;
-            //    if (!anim.GetBool("Move"))
-            //    {
-            //        ResetAnimTrigger("Idle");
-            //        SetAnimatorTrigger("Move");
-            //    }
-            //}
-            //else
-            //{
-            //    if(Vector3.Distance(previousPlayerPos, player.position) >= 2f)
-            //    {
-            //        Vector3 newPos = player.position;
-            //        agent.SetDestination(newPos);
-            //        previousPlayerPos = newPos;
-            //        if (!anim.GetBool("Move"))
-            //        {
-            //            ResetAnimTrigger("Idle");
-            //            SetAnimatorTrigger("Move");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (!anim.GetBool("Idle"))
-            //        {
-            //            ResetAnimTrigger("Move");
-            //            SetAnimatorTrigger("Idle");
-            //        }
-            //    }
-                
-            //}
+        }
 
+        public bool CheckPlayerInVincinity()
+        {
+            return (Vector3.Distance(transform.position, player.position) < npcControl.npcVincinity);
         }
 
         public bool CheckReachDestination()

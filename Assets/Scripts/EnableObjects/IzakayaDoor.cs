@@ -15,7 +15,6 @@ public class IzakayaDoor : LivableObject
 
     DialogueSystemTrigger dialogue;
     PlayerHolding playerHolding;
-    FixedCameraObject cameraControl;
     Vector3 doorStartPos;
 
     protected override void Start()

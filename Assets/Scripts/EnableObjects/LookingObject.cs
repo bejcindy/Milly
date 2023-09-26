@@ -134,7 +134,7 @@ public class LookingObject : LivableObject
 
         }
 
-        if (!focusingThis)
+        if (!focusingThis&&!DataHolder.camBlendDone&&!DataHolder.camBlended)
         {
             if (selected)
             {

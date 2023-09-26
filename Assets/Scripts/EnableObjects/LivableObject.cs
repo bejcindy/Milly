@@ -93,7 +93,16 @@ public class LivableObject : MonoBehaviour
         {
             if (!firstActivated)
             {
-                TurnOnColor(mat);
+                if (GetComponent<LookingObject>())
+                {
+                    if (DataHolder.camBlended && DataHolder.camBlendDone)
+                        TurnOnColor(mat);
+                }
+                else
+                {
+                    TurnOnColor(mat);
+                }
+                
             }
                 
             if (GetComponent<GroupMaster>() && matColorVal <= 0)
@@ -152,6 +161,7 @@ public class LivableObject : MonoBehaviour
         }
         else
         {
+            Debug.Log("here");
             matColorVal = 0;
             firstActivated = true;
             if (specialEffect != null)
@@ -178,7 +188,14 @@ public class LivableObject : MonoBehaviour
 
             //    return false;
             //}
-            
+
+            if ((pointOnScreen.x > Screen.width * 0.4f) || (pointOnScreen.x < Screen.width * 0.6f) ||
+                (pointOnScreen.y > Screen.height * 0.4f) || (pointOnScreen.y < Screen.height * 0.6f))
+            {
+
+                return true;
+            }
+
             int pointsInScreen = 0;
             Vector3 pointA = rend.bounds.min;
             Vector3 pointB = rend.bounds.min + new Vector3(rend.bounds.size.x, 0, 0);

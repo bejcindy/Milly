@@ -48,6 +48,7 @@ public class NPCControl : MonoBehaviour
     public Transform[] destinations;
     public Component[] destObjects;
     public float[] waitTimes;
+    public bool[] destSpecialAnim;
 
     public int _counter = 0;
     public bool finalStop;
@@ -71,6 +72,7 @@ public class NPCControl : MonoBehaviour
     
     protected Coroutine lookCoroutine;
     bool lookCoroutineRuning;
+    PlayerHolding playerHolding;
     
     
     // Start is called before the first frame update
@@ -86,6 +88,7 @@ public class NPCControl : MonoBehaviour
         dialogue = GetComponent<DialogueSystemTrigger>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        playerHolding = player.GetComponent<PlayerHolding>();
     }
 
     protected virtual void Update()
@@ -98,27 +101,16 @@ public class NPCControl : MonoBehaviour
         CheckTalkCD();
         CheckIdle();
 
-        Debug.Log(gameObject.name + " " + lookCoroutineRuning);
-
 
         if (npcActivated)
         {
             if(matColorVal > 0f)
                 ActivateAll(npcMesh);
         }
-            
 
 
-        if(!inConversation && interactable && !inCD)
-        {
-            ChangeLayer(9);
-            if (Input.GetMouseButtonDown(0))
-                reTriggerConversation = true;
-        }
-        else
-        {
-            ChangeLayer(0);
-        }
+
+        CheckRetriggerTalk();
 
 
     }
@@ -296,6 +288,28 @@ public class NPCControl : MonoBehaviour
 
     #region Conversation Control
 
+    void CheckRetriggerTalk()
+    {
+        if (!DialogueLua.GetVariable("NPC_Charles_Other_Interacted").asBool)
+        {
+            if (!inConversation && interactable && !inCD && !playerHolding.inDialogue)
+            {
+                ChangeLayer(9);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    inConversation = true;
+                    reTriggerConversation = true;
+                }
+
+            }
+            else
+            {
+                ChangeLayer(0);
+            }
+        }
+
+
+    }
     void CheckTalkCD()
     {
         if (inCD && talkCD > 0)
@@ -318,7 +332,7 @@ public class NPCControl : MonoBehaviour
             firstTalk = true;
         }
 
-        inConversation = true;
+
     }
 
     void OnConversationEnd(Transform other)
@@ -328,7 +342,7 @@ public class NPCControl : MonoBehaviour
         inConversation = false;
         inCD = true;
         reTriggerConversation = false;
-        //dialogue.enabled = false;
+        
 
     }
 
@@ -384,11 +398,13 @@ public class NPCControl : MonoBehaviour
         {
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-                {
-                    agent.isStopped = true;
-                    return true;
-                }
+                agent.isStopped = true;
+                return true;
+                //if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                //{
+                //    agent.isStopped = true;
+                //    return true;
+                //}
             }
         }
         return false;
@@ -408,6 +424,13 @@ public class NPCControl : MonoBehaviour
     {
         idleAction =  gameObject.name+"Action"+_counter;
     }
+
+    public bool GetSpecialIdleAnim()
+    {
+        return destSpecialAnim[_counter - 1];
+    }
+
+
     #endregion
 
 }

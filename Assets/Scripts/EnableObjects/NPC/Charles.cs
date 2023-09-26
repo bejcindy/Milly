@@ -13,11 +13,6 @@ public class Charles : NPCControl
 
     public void CharlesAction1()
     {
-        if (!charlesSmoking)
-        {
-            machine.SetAnimatorTrigger("Smoke");
-            charlesSmoking = true;
-        }
 
     }
 
@@ -29,5 +24,12 @@ public class Charles : NPCControl
     public void CharlesAction3()
     {
 
+    }
+
+    public void FinishSmoking()
+    {
+        Debug.Log("finishing smoking");
+        machine.ResetAnimTrigger("Special1");
+        machine.SetAnimatorTrigger("Finish");
     }
 }

@@ -9,8 +9,6 @@ public class TalkState : State {
     {
 
         machine.PauseIdling();
-
-        //commence normal behaviors
         machine.StartConversation();
         machine.StopNavigation();
 
@@ -39,9 +37,7 @@ public class TalkState : State {
 
     protected override void OnExit()
     {
-        machine.ResetAnimTrigger("Stop");
-        //machine.StopRotatingNPC();
-        //machine.EndConversation();
+        //machine.ResetAnimTrigger("Stop");
         machine.UnPauseIdling();
     }
 

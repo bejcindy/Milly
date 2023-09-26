@@ -175,6 +175,16 @@ namespace NPCFSM
             npcControl.InvokeIdleFunction();
         }
 
+        public bool CheckSpecialIdleAnim()
+        {
+            return npcControl.GetSpecialIdleAnim();
+        }
+
+        public void SetSpecialIdleAnim()
+        {
+            SetAnimatorTrigger("Special" + npcControl._counter);
+        }
+
         public bool CheckIdleFinished()
         {
             return !npcControl.idling;
@@ -299,7 +309,7 @@ namespace NPCFSM
 
         public void StartConversation()
         {
-            dialogue.enabled = true;
+            GetComponent<Usable>().OnUseUsable();
         }
 
         public void EndConversation()

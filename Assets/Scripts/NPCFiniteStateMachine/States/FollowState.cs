@@ -31,7 +31,7 @@ public class FollowState : State
 
     protected override void OnExit()
     {
-        machine.ResetAnimTrigger("Idle");
+        //machine.ResetAnimTrigger("Idle");
     }
 
 

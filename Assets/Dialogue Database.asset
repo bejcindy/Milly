@@ -535,7 +535,7 @@ MonoBehaviour:
     - title: Name
       value: Charles is smoking.
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Pictures
       value: '[]'
       type: 3
@@ -544,23 +544,27 @@ MonoBehaviour:
       value: Charles leaves his apartment to smoke before going to miyoshiya for
         a little something.
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Success Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Failure Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: State
       value: unassigned
       type: 0
-      typeString: 
+      typeString: CustomFieldType_QuestState
     - title: Is Item
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: 
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
   locations:
   - id: 1
     fields:
@@ -583,48 +587,6 @@ MonoBehaviour:
       type: 0
       typeString: 
   variables:
-  - id: 1
-    fields:
-    - title: Name
-      value: Alert
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 2
-    fields:
-    - title: Name
-      value: TalkToAlice
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 3
-    fields:
-    - title: Name
-      value: GameStart
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
   - id: 4
     fields:
     - title: Name
@@ -653,10 +615,38 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
-  - id: 6
+  - id: 28
     fields:
     - title: Name
-      value: Cleaner_SodaCanInTrash
+      value: 201_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 27
+    fields:
+    - title: Name
+      value: 202_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 26
+    fields:
+    - title: Name
+      value: BrokenAC
       type: 0
       typeString: 
     - title: Initial Value
@@ -681,10 +671,10 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
-  - id: 12
+  - id: 6
     fields:
     - title: Name
-      value: SodaCan_Checked
+      value: Cleaner_SodaCanInTrash
       type: 0
       typeString: 
     - title: Initial Value
@@ -695,10 +685,108 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 3
+    fields:
+    - title: Name
+      value: GameStart
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 29
+    fields:
+    - title: Name
+      value: Gloria_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 32
+    fields:
+    - title: Name
+      value: NPC/Charles/Other_Interacted
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 31
+    fields:
+    - title: Name
+      value: NPC/Charles/Other_State
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Idle
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 30
+    fields:
+    - title: Name
+      value: NPC/Charles/Talk_State
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Uninitiated
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 23
+    fields:
+    - title: Name
+      value: NPC/Kelvin/Talk_State
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Uninitiated
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   - id: 13
     fields:
     - title: Name
       value: Pizza_Checked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 19
+    fields:
+    - title: Name
+      value: Poster_BlackHole
       type: 0
       typeString: 
     - title: Initial Value
@@ -723,10 +811,10 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
-  - id: 15
+  - id: 20
     fields:
     - title: Name
-      value: Poster_HereIStand
+      value: Poster_Funeral
       type: 0
       typeString: 
     - title: Initial Value
@@ -737,10 +825,24 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
-  - id: 16
+  - id: 22
     fields:
     - title: Name
-      value: Poster_MirandaColeman
+      value: Poster_Grocer
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 15
+    fields:
+    - title: Name
+      value: Poster_HereIStand
       type: 0
       typeString: 
     - title: Initial Value
@@ -779,24 +881,10 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
-  - id: 19
+  - id: 16
     fields:
     - title: Name
-      value: Poster_BlackHole
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 20
-    fields:
-    - title: Name
-      value: Poster_Funeral
+      value: Poster_MirandaColeman
       type: 0
       typeString: 
     - title: Initial Value
@@ -811,20 +899,6 @@ MonoBehaviour:
     fields:
     - title: Name
       value: Poster_Nanay
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 22
-    fields:
-    - title: Name
-      value: Poster_Grocer
       type: 0
       typeString: 
     - title: Initial Value
@@ -863,10 +937,10 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
-  - id: 23
+  - id: 12
     fields:
     - title: Name
-      value: Kelvin_First
+      value: SodaCan_Checked
       type: 0
       typeString: 
     - title: Initial Value
@@ -877,52 +951,10 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
-  - id: 26
+  - id: 2
     fields:
     - title: Name
-      value: BrokenAC
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 27
-    fields:
-    - title: Name
-      value: 202_Talked
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 28
-    fields:
-    - title: Name
-      value: 201_Talked
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 29
-    fields:
-    - title: Name
-      value: Gloria_Talked
+      value: TalkToAlice
       type: 0
       typeString: 
     - title: Initial Value
@@ -3986,7 +4018,7 @@ MonoBehaviour:
   - id: 8
     fields:
     - title: Title
-      value: Charles
+      value: NPC/Charles/Initial
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -4073,6 +4105,18 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
+      - originConversationID: 8
+        originDialogueID: 0
+        destinationConversationID: 8
+        destinationDialogueID: 32
+        isConnector: 0
+        priority: 2
+      - originConversationID: 8
+        originDialogueID: 0
+        destinationConversationID: 8
+        destinationDialogueID: 33
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -4080,8 +4124,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1016
-        y: 50
+        x: 1439.8807
+        y: 44.029846
         width: 160
         height: 30
     - id: 1
@@ -4128,14 +4172,14 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Charles_Talk_State"] == "Uninitiated"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1016
+        x: 1014.5073
         y: 132.57143
         width: 160
         height: 30
@@ -5378,11 +5422,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 1
         type: 5
@@ -5394,19 +5438,19 @@ MonoBehaviour:
       - title: Menu Text
         value: '[Try checking on others with Charles.]'
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: Could've said it less sarcastically.
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Sequence
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: EventGuid
         value: 1cb0d8f3-e2d4-4660-a2ec-d768b18ba9eb
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 8
       isRoot: 0
       isGroup: 0
@@ -5416,14 +5460,17 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: 'Variable["NPC_Charles_Talk_State"] = "FirstInitiated";
+
+        Variable["NPC_Charles_Other_State"]
+        = "Follow"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 895.1095
-        y: 1539.5637
+        y: 1538.2479
         width: 160
         height: 30
     - id: 28
@@ -5569,6 +5616,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 450a6c65-f62c-4b37-87d7-a52dd85a0fc0
+        type: 0
+        typeString: 
       conversationID: 8
       isRoot: 0
       isGroup: 0
@@ -5634,7 +5685,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Charles_Talk_State"] = "FirstInitiated"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5644,9 +5695,109 @@ MonoBehaviour:
         y: 1710.231
         width: 160
         height: 30
+    - id: 32
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 5
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Lead the way, let's check on these "frozen" people.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 8
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Charles_Other_State"] == "Follow" and (Variable["NPC_Charles_Other_Interacted"]
+        == false)
+      userScript: Variable["NPC_Charles_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1421.0895
+        y: 152.80159
+        width: 160
+        height: 30
+    - id: 33
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 5
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Gonna get myself some beef tartare and a good suntory on the rocks.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 8
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Charles_Other_State"] == "Idle" and (Variable["NPC_Charles_Other_Interacted"]
+        == false)
+      userScript: Variable["NPC_Charles_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1705.21
+        y: 159.50574
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 132.97473, y: 1022.501}
-    canvasZoom: 0.6699998
+    canvasScrollPosition: {x: 722.6011, y: 0}
+    canvasZoom: 0.57999986
   - id: 9
     fields:
     - title: Title
@@ -6744,8 +6895,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 371.87512}
-    canvasZoom: 0.6399997
+    canvasScrollPosition: {x: 0, y: 270.61472}
+    canvasZoom: 0.4599998
   - id: 10
     fields:
     - title: Title
@@ -15647,7 +15798,7 @@ MonoBehaviour:
   - id: 18
     fields:
     - title: Title
-      value: Gloria
+      value: NPC/Gloria/Initial
       type: 0
       typeString: 
     - title: Description
@@ -21352,7 +21503,7 @@ MonoBehaviour:
   - id: 23
     fields:
     - title: Title
-      value: Kelvin
+      value: NPC/Kelvin/Initial
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -23281,7 +23432,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: 'Variable["NPC_Charles_Other_State"] = "Idle";
+
+        Variable["NPC_Charles_Other_Interacted"]
+        = false'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -23292,7 +23446,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 166.2113, y: 836.1222}
+    canvasScrollPosition: {x: 487.63974, y: 1130.4078}
     canvasZoom: 0.7000002
   - id: 24
     fields:

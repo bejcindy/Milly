@@ -20,6 +20,7 @@ public class MoveState : State
         {
             if (machine.CheckReachDestination())
             {
+                Debug.Log("reached dest");
                 machine.ChangeState(machine.idleState);
             }
         }
@@ -33,7 +34,7 @@ public class MoveState : State
 
     protected override void OnExit()
     {
-        machine.ResetAnimTrigger("Move");
+        //machine.ResetAnimTrigger("Move");
         machine.StopNavigation();
     }
 }

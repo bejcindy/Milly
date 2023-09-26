@@ -9,11 +9,17 @@ public class IdleState : State
     {
         if (!machine.CheckNPCActivation())
             machine.ActivateNPC();
-        machine.SetAnimatorTrigger("Stop");
+
+        if(!machine.CheckSpecialIdleAnim())
+            machine.SetAnimatorTrigger("Stop");
+        else
+        {
+            machine.SetSpecialIdleAnim();
+        }
         machine.StopNavigation();
         machine.BeginIdling();
     }
-
+    
     protected override void OnUpdate()
     {
         if (machine.CheckIdleFinished())
@@ -37,7 +43,8 @@ public class IdleState : State
 
     protected override void OnExit()
     {
-        machine.ResetAnimTrigger("Stop");
+        //if(!machine.CheckSpecialIdleAnim())
+        //    machine.ResetAnimTrigger("Stop");
         //machine.StopRotatingNPC();
     }
 }

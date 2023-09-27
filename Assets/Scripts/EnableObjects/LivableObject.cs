@@ -85,7 +85,11 @@ public class LivableObject : MonoBehaviour
 
         DetectInteractable();
 
-
+        if (fadeOut)
+        {
+            if (GetComponent<PickUpObject>())
+                FadeOutFilter();
+        }
 
 
         //isVisible = IsInView();
@@ -141,7 +145,10 @@ public class LivableObject : MonoBehaviour
         }
     }
 
+    FMOD.Studio.EventInstance snapshot;
+    float I;
     bool played;
+    bool fadeOut;
     protected virtual void TurnOnColor(Material material)
     {
         if (matColorVal > 0)
@@ -153,20 +160,57 @@ public class LivableObject : MonoBehaviour
                 //if (!GetComponent<LookingObject>())
                 //    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Enable", transform.position);
                 if (GetComponent<PickUpObject>())
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/PickUp", transform.position);
-                else if (!GetComponent<LookingObject>() && gameObject.layer != 6)
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Enable", transform.position);
+                {
+                    //Debug.Log("played snapshot");
+                    snapshot = FMODUnity.RuntimeManager.CreateInstance("snapshot:/EnableObject");
+                    //snapshot.getParameterByName("EnableFilterIntensity", out I);
+                    //snapshot.setParameterByName("EnableFilterIntensity", I);
+                    snapshot.start();
+                }
                 played = true;
+            }
+            I = 1 - matColorVal;
+            if (GetComponent<PickUpObject>())
+            {
+                snapshot.setParameterByName("EnableFilterIntensity", I);
+                //snapshot.getParameterByName("EnableFilterIntensity", out check);
+                //Debug.Log(gameObject.name + check+"; I is: "+I);
             }
         }
         else
         {
-            Debug.Log("here");
+            //Debug.Log(gameObject.name+"here");
+            //snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            //snapshot.release();
+            //if (GetComponent<PickUpObject>())
+            //    StartCoroutine(FadeOutFilter());
+            fadeOut = true;
             matColorVal = 0;
             firstActivated = true;
             if (specialEffect != null)
                 specialEffect.SetActive(true);
         }
+    }
+    //float check;
+    void FadeOutFilter()
+    {
+        
+        if (I > 0)
+        {
+            //snapshot.getParameterByName("EnableFilterIntensity", out check);
+            //Debug.Log(gameObject.name+ check);
+            I -= 0.1f * fadeInterval * Time.deltaTime;
+            snapshot.setParameterByName("EnableFilterIntensity", I);
+        }
+        else
+        {
+            I = 0;
+            snapshot.setParameterByName("EnableFilterIntensity", I);
+            snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            snapshot.release();
+            fadeOut = false;
+        }
+        
     }
 
     protected virtual bool IsInView()

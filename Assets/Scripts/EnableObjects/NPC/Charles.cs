@@ -5,7 +5,13 @@ using UnityEngine;
 public class Charles : NPCControl
 {
     public bool charlesSmoking;
+    public bool charlesOpenDoor;
 
+    protected override void Start()
+    {
+        base.Start();
+        firstTalk = true;
+    }
     protected override void Update()
     {
         base.Update();
@@ -13,18 +19,22 @@ public class Charles : NPCControl
 
     public void CharlesAction1()
     {
-
+        noTalkStage = false;
     }
 
     public void CharlesAction2()
     {
         Debug.Log("Calling charles 2");
-        destObjects[_counter - 1].GetComponent<IzakayaDoor>().OpenDoor();
+        noTalkStage = true;
+        if(charlesOpenDoor)
+            destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
+
+
     }
 
     public void CharlesAction3()
     {
-
+        noTalkStage = false;
     }
 
     public void FinishSmoking()

@@ -34,7 +34,7 @@ public class NPCControl : MonoBehaviour
 
 
     protected Transform player;
-    protected DialogueSystemTrigger dialogue;
+    public DialogueSystemTrigger currentDialogue;
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
@@ -49,6 +49,7 @@ public class NPCControl : MonoBehaviour
     public Component[] destObjects;
     public float[] waitTimes;
     public bool[] destSpecialAnim;
+    public DialogueSystemTrigger[] dialogues;
 
     public int _counter = 0;
     public bool finalStop;
@@ -57,7 +58,7 @@ public class NPCControl : MonoBehaviour
     [Header("[Conversation]")]
     public bool inConversation;
     public bool inCD;
-    public bool reTriggerConversation;
+    public bool triggerConversation;
     private float talkCD = 2f;
 
 
@@ -72,6 +73,8 @@ public class NPCControl : MonoBehaviour
     
     protected Coroutine lookCoroutine;
     bool lookCoroutineRuning;
+    protected bool noLookInConvo;
+    protected bool noTalkStage;
     PlayerHolding playerHolding;
     
     
@@ -85,7 +88,7 @@ public class NPCControl : MonoBehaviour
             npcActivated = true;
 
         machine = GetComponent<BaseStateMachine>();
-        dialogue = GetComponent<DialogueSystemTrigger>();
+        currentDialogue = dialogues[_counter];
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         playerHolding = player.GetComponent<PlayerHolding>();
@@ -202,10 +205,14 @@ public class NPCControl : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) < npcVincinity)
         {
-            if (destObjects[_counter - 1].transform.GetComponent<LivableObject>())
-                destObjects[_counter - 1].transform.GetComponent<LivableObject>().activated = true;
-            if (destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>())
-                destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>().activateAll = true;
+            if (destObjects[_counter-1] != null)
+            {
+                if (destObjects[_counter - 1].transform.GetComponent<LivableObject>())
+                    destObjects[_counter - 1].transform.GetComponent<LivableObject>().activated = true;
+                if (destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>())
+                    destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>().activateAll = true;
+            }
+
         }
     }
 
@@ -293,13 +300,13 @@ public class NPCControl : MonoBehaviour
         string reTriggerName = "NPC_" + gameObject.name + "_Other_Interacted";
         if (!DialogueLua.GetVariable(reTriggerName).asBool)
         {
-            if (!inConversation && interactable && !inCD && !playerHolding.inDialogue)
+            if (!inConversation && interactable && !inCD && !playerHolding.inDialogue && firstTalk && !noTalkStage)
             {
                 ChangeLayer(9);
                 if (Input.GetMouseButtonDown(0))
                 {
                     inConversation = true;
-                    reTriggerConversation = true;
+                    triggerConversation = true;
                 }
 
             }
@@ -323,11 +330,20 @@ public class NPCControl : MonoBehaviour
             talkCD = 2f;
         }
     }
+
+    public bool CheckFirstTalk()
+    {
+        return firstTalk;
+    }
     void OnConversationStart(Transform other)
     {
-        if (lookCoroutine != null)
-            StopCoroutine(lookCoroutine);
-        lookCoroutine = StartCoroutine(RotateTowards(player));
+        inConversation = true;
+        if (HasReached(agent) && noLookInConvo)
+        {
+            if (lookCoroutine != null)
+                StopCoroutine(lookCoroutine);
+            lookCoroutine = StartCoroutine(RotateTowards(player));
+        }
         if (!firstTalk)
         {
             firstTalk = true;
@@ -342,8 +358,8 @@ public class NPCControl : MonoBehaviour
             StopCoroutine(lookCoroutine);
         inConversation = false;
         inCD = true;
-        reTriggerConversation = false;
-        dialogue.enabled = false;
+        triggerConversation = false;
+        currentDialogue.enabled = false;
         
 
     }
@@ -425,6 +441,14 @@ public class NPCControl : MonoBehaviour
     public void SetWaitAction()
     {
         idleAction =  gameObject.name+"Action"+_counter;
+    }
+
+    public void SetDialogue()
+    {
+        currentDialogue = dialogues[_counter];
+        string reTriggerName = "NPC_" + gameObject.name + "_Other_Interacted";
+        DialogueLua.SetVariable(reTriggerName, false);
+
     }
 
     public bool GetSpecialIdleAnim()

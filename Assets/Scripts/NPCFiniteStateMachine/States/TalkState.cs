@@ -10,7 +10,12 @@ public class TalkState : State {
 
         machine.PauseIdling();
         machine.StartConversation();
-        machine.StopNavigation();
+        if (machine.CheckReachDestination() && machine.CheckFirstTalk())
+        {
+            machine.StopNavigation();
+            machine.SetAnimatorTrigger("Stop");
+        }
+
 
 
     }

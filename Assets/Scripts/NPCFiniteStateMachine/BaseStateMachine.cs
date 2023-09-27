@@ -152,6 +152,7 @@ namespace NPCFSM
             npcControl.idling = true;
             npcControl.SetWaitTime();
             npcControl.SetWaitAction();
+            npcControl.SetDialogue();
         }
 
         public void PauseIdling()
@@ -279,12 +280,12 @@ namespace NPCFSM
 
         public void StartConversation()
         {
-            dialogue.enabled = true;
+            npcControl.currentDialogue.enabled = true;
         }
 
         public void EndConversation()
         {
-            dialogue.enabled = false;
+            npcControl.currentDialogue.enabled = false;
         }
 
         public bool CheckNPCInDialogue()
@@ -294,7 +295,12 @@ namespace NPCFSM
 
         public bool RetriggerConversation()
         {
-            return npcControl.reTriggerConversation;
+            return npcControl.triggerConversation;
+        }
+
+        public bool CheckFirstTalk()
+        {
+            return npcControl.CheckFirstTalk();
         }
         #endregion
     }

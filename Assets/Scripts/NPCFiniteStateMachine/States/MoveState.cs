@@ -7,7 +7,13 @@ public class MoveState : State
     protected override void OnEnter()
     {
         if (!machine.CheckFollowPlayer())
-            machine.SetNPCDestination();
+        {
+            if (!machine.CheckReachDestination())
+                machine.BeginNavigation();
+            else
+                machine.SetNPCDestination();
+        }
+
         else
             machine.FollowPlayer();
         machine.BeginNavigation();
@@ -38,6 +44,6 @@ public class MoveState : State
     protected override void OnExit()
     {
         //machine.ResetAnimTrigger("Move");
-        machine.StopNavigation();
+        //machine.StopNavigation();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using FMOD;
+using FMODUnity;
 
 public class LookingObject : LivableObject
 {
@@ -41,6 +42,7 @@ public class LookingObject : LivableObject
                 if (!played && DataHolder.camBlended && DataHolder.camBlendDone)
                 {
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
+                    
                     played = true;
                 }
             }

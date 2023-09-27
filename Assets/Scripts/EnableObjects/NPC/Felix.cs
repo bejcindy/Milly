@@ -14,7 +14,7 @@ public class Felix : NPCControl
     }
     public void FelixAction1()
     {
-
+        noLookInConvo = true;
         //lookCoroutine = StartCoroutine(RotateTowards(destObjects[_counter - 1].transform));
         //if (Vector3.Distance(transform.position, player.position) < npcVincinity)
         //{
@@ -27,12 +27,17 @@ public class Felix : NPCControl
 
     public void FelixAction2()
     {
-
+        noLookInConvo = false;
         //if (Vector3.Distance(transform.position, player.position) < npcVincinity)
         //{
         //    if(!connectedGroupTwo.activateAll)
         //        connectedGroupTwo.activateAll = true;
         //}
+    }
+
+    public void FelixStandUp()
+    {
+        machine.SetAnimatorTrigger("StandUp");
     }
 
 

@@ -743,6 +743,20 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 38
+    fields:
+    - title: Name
+      value: NPC/Charles/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   - id: 32
     fields:
     - title: Name
@@ -4388,7 +4402,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Charles_Talk_State"] == "Uninitiated"
+      conditionsString: Variable["NPC_Charles_Talk_State"] == "Uninitiated" and (Variable["NPC_Charles_Main_Talked"]
+        == false)
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -5679,7 +5694,9 @@ MonoBehaviour:
       userScript: 'Variable["NPC_Charles_Talk_State"] = "FirstInitiated";
 
         Variable["NPC_Charles_Other_State"]
-        = "Follow"'
+        = "Follow";
+
+        Variable["NPC_Charles_Main_Talked"] = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5901,7 +5918,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["NPC_Charles_Talk_State"] = "FirstInitiated"
+      userScript: 'Variable["NPC_Charles_Talk_State"] = "FirstInitiated";
+
+        Variable["NPC_Charles_Main_Talked"]
+        = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -6012,8 +6032,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 157.94287, y: 0}
-    canvasZoom: 0.5499999
+    canvasScrollPosition: {x: 249.35547, y: 98.076965}
+    canvasZoom: 0.5199999
   - id: 9
     fields:
     - title: Title
@@ -6138,7 +6158,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: How was it at the shop today?
+        value: This guy that asked for a broken soda can tattoo, tell me more about
+          him.
         type: 0
         typeString: 
       - title: Sequence
@@ -7111,8 +7132,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 270.61472}
-    canvasZoom: 0.4599998
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 1.0299994
   - id: 10
     fields:
     - title: Title
@@ -21819,8 +21840,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 614.2195
-        y: 49.048767
+        x: 997.85565
+        y: 52.68512
         width: 160
         height: 30
     - id: 1
@@ -23720,8 +23741,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 840.4489
-        y: 144.95038
+        x: 1286.8977
+        y: 1
         width: 160
         height: 30
     - id: 36
@@ -23946,8 +23967,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 1039.726}
-    canvasZoom: 0.73000014
+    canvasScrollPosition: {x: 84.485405, y: 0}
+    canvasZoom: 0.5500003
   - id: 24
     fields:
     - title: Title

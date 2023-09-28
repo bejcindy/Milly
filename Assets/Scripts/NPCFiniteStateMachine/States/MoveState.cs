@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveState : State
 {
+    bool isFollowing;
     protected override void OnEnter()
     {
         if (!machine.CheckFollowPlayer())
@@ -15,7 +16,11 @@ public class MoveState : State
         }
 
         else
+        {
             machine.FollowPlayer();
+            isFollowing = true;
+        }
+
         machine.BeginNavigation();
         machine.SetAnimatorTrigger("Move");
     }
@@ -24,19 +29,30 @@ public class MoveState : State
     {
         if (!machine.CheckFollowPlayer())
         {
-            if (machine.CheckReachDestination())
+            if (!isFollowing)
             {
-                Debug.Log("reached dest");
-                machine.ChangeState(machine.idleState);
+                if (machine.CheckReachDestination())
+                {
+                    Debug.Log("reached dest");
+                    machine.SetMainTalkFalse();
+                    machine.ChangeState(machine.idleState);
+                }
             }
+            else
+            {
+                isFollowing = false;
+                machine.SetNPCDestination();
+            }
+
         }
         else
         {
+            isFollowing = true;
             if(machine.CheckReachDestination())
                 machine.ChangeState(machine.followState);
         }
 
-        if (machine.RetriggerConversation())
+        if (machine.CheckInConversation())
             machine.ChangeState(machine.talkState);
 
     }

@@ -565,6 +565,36 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: CustomFieldType_Text
+  - id: 7
+    fields:
+    - title: Name
+      value: NPC/Charles/Following
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
   locations:
   - id: 1
     fields:
@@ -22348,7 +22378,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 707.5209
-        y: 619.6123
+        y: 618.2965
         width: 160
         height: 30
     - id: 11
@@ -23641,7 +23671,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 815.07837
+        x: 813.7085
         y: 1779.0707
         width: 160
         height: 30
@@ -23916,8 +23946,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 43.421875}
-    canvasZoom: 0.7600001
+    canvasScrollPosition: {x: 0, y: 1039.726}
+    canvasZoom: 0.73000014
   - id: 24
     fields:
     - title: Title
@@ -24590,8 +24620,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 416.24396
-        y: 567.97577
+        x: 419.90247
+        y: 646.02454
         width: 160
         height: 30
     - id: 20
@@ -24810,7 +24840,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 41.46344}
     canvasZoom: 0.8200002
   - id: 25
     fields:
@@ -28010,6 +28040,12 @@ MonoBehaviour:
         destinationConversationID: 37
         destinationDialogueID: 1
         isConnector: 0
+        priority: 4
+      - originConversationID: 37
+        originDialogueID: 0
+        destinationConversationID: 37
+        destinationDialogueID: 19
+        isConnector: 0
         priority: 2
       conditionsString: 
       userScript: 
@@ -28018,8 +28054,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 528
-        y: 37
+        x: 615.6712
+        y: 34.260284
         width: 160
         height: 30
     - id: 1
@@ -28066,15 +28102,15 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "FirstInitiated"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 362
-        y: 121
+        x: 364
+        y: 120
         width: 160
         height: 30
     - id: 2
@@ -28833,6 +28869,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 6f196d88-234b-4366-abad-14b99e4bdf72
+        type: 0
+        typeString: 
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -28842,14 +28882,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Kelvin_Talk_State"] = "SecondInitiated"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 210
-        y: 752
+        y: 920
         width: 160
         height: 30
     - id: 16
@@ -29018,9 +29058,58 @@ MonoBehaviour:
         y: 828
         width: 160
         height: 30
+    - id: 19
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 12
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: What is this? You following me now?
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 37
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Kelvin_Other_Interacted"] == false
+      userScript: Variable["NPC_Kelvin_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 882.79443
+        y: 111.65755
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 244}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 0, y: 39.60974}
+    canvasZoom: 0.67000026
   - id: 38
     fields:
     - title: Title
@@ -29111,6 +29200,12 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
+      - originConversationID: 38
+        originDialogueID: 0
+        destinationConversationID: 38
+        destinationDialogueID: 25
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -29118,8 +29213,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 416
-        y: 96
+        x: 617.3698
+        y: 90.52055
         width: 160
         height: 30
     - id: 1
@@ -29166,7 +29261,7 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "SecondInitiated"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -29347,7 +29442,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 196
-        y: 391
+        y: 389.6842
         width: 160
         height: 30
     - id: 5
@@ -29534,11 +29629,11 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: 
+        value: '[Tell him you are exploring.]'
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 
+        value: Who said about being your guide? I'm just exploring a little.
         type: 0
         typeString: 
       - title: Sequence
@@ -29552,7 +29647,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 38
+        originDialogueID: 10
+        destinationConversationID: 38
+        destinationDialogueID: 22
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -29560,8 +29661,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 407
-        y: 398
+        x: 428.32297
+        y: 391.25882
         width: 160
         height: 30
     - id: 12
@@ -29616,7 +29717,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 199.26315
+        x: 200.63303
         y: 634.579
         width: 160
         height: 30
@@ -30095,6 +30196,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 576a8f3c-dcf6-4d6f-8eea-9fdbb67deea5
+        type: 0
+        typeString: 
       conversationID: 38
       isRoot: 0
       isGroup: 0
@@ -30104,19 +30209,234 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
+      userScript: Variable["NPC_Kelvin_Talk_State"] = "ThirdInitiated"
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 204.01709
+        y: 1229.9087
+        width: 160
+        height: 30
+    - id: 22
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 12
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Why? Finally realizing you don't know your own neighborhood that well
+          or something?
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 38
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 38
+        originDialogueID: 22
+        destinationConversationID: 38
+        destinationDialogueID: 23
+        isConnector: 0
+        priority: 2
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 205.38693
-        y: 1235.3881
+        x: 428.32297
+        y: 459.06705
+        width: 160
+        height: 30
+    - id: 23
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 12
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Maybe, things are looking a little off today.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 38
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 38
+        originDialogueID: 23
+        destinationConversationID: 38
+        destinationDialogueID: 24
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 425.58325
+        y: 515.9164
+        width: 160
+        height: 30
+    - id: 24
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 12
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: How so?
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 38
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 38
+        originDialogueID: 24
+        destinationConversationID: 38
+        destinationDialogueID: 12
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 424.2134
+        y: 578.2451
+        width: 160
+        height: 30
+    - id: 25
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 12
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Gotta admit, the bar's name really got my attention.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 38
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Kelvin_Other_Interacted"] == false
+      userScript: Variable["NPC_Kelvin_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 835.178
+        y: 169.28766
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 542.2742}
-    canvasZoom: 0.76000017
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.7300002
   syncInfo:
     syncActors: 0
     syncItems: 0

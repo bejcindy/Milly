@@ -12,22 +12,21 @@ public class Kelvin : NPCControl
         machine.initialState = ChooseInitialState('F');
     }
 
-    public void Kelvin1Action()
+    public void KelvinAction1()
     {
-
-
-
+        noLookInConvo = true;
+        currentDialogue = dialogues[1];
     }
 
-    public void Kelvin2Action()
+    public void KelvinAction2()
     {
-
-
+        noLookInConvo = true;
+        currentDialogue = dialogues[2];
     }
 
     public void KelvinAction3()
     {
-
+        noTalkStage = true;
     }
 
 

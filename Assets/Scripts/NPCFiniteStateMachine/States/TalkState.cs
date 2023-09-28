@@ -9,8 +9,7 @@ public class TalkState : State {
     {
 
         machine.PauseIdling();
-        machine.StartConversation();
-        if (machine.CheckReachDestination() && machine.CheckFirstTalk())
+        if (machine.CheckReachDestination() && machine.CheckFirstTalk() && !machine.CheckSpecialIdleAnim())
         {
             machine.StopNavigation();
             machine.SetAnimatorTrigger("Stop");
@@ -22,7 +21,7 @@ public class TalkState : State {
     protected override void OnUpdate()
     {
 
-        if (!machine.CheckNPCInDialogue())
+        if (!machine.CheckInConversation())
         {
             //NOT FOLLOWING NPC AFTER
             if (!machine.CheckFollowPlayer())

@@ -35,6 +35,7 @@ public class NPCControl : MonoBehaviour
 
     protected Transform player;
     public DialogueSystemTrigger currentDialogue;
+    protected DialogueSystemTrigger previousDialogue;
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
@@ -108,12 +109,17 @@ public class NPCControl : MonoBehaviour
         if (npcActivated)
         {
             if(matColorVal > 0f)
+            {
                 ActivateAll(npcMesh);
+                if (!firstTalk && !currentDialogue.enabled && !initialActivated)
+                    currentDialogue.enabled = true;
+            }
+
         }
 
 
 
-        CheckRetriggerTalk();
+        CheckTriggerConversation();
 
 
     }
@@ -237,6 +243,8 @@ public class NPCControl : MonoBehaviour
     public void StopIdle()
     {
         idleTime = 0;
+        idling = false;
+        idlePaused = false;
     }
 
 
@@ -295,28 +303,39 @@ public class NPCControl : MonoBehaviour
 
     #region Conversation Control
 
-    void CheckRetriggerTalk()
+    void CheckTriggerConversation()
     {
         string reTriggerName = "NPC_" + gameObject.name + "_Other_Interacted";
-        if (!DialogueLua.GetVariable(reTriggerName).asBool)
-        {
-            if (!inConversation && interactable && !inCD && !playerHolding.inDialogue && firstTalk && !noTalkStage)
-            {
-                ChangeLayer(9);
-                if (Input.GetMouseButtonDown(0))
-                {
-                    inConversation = true;
-                    triggerConversation = true;
-                }
 
+        //in distance with player and player not already in conversation
+        if (interactable && !playerHolding.inDialogue)
+        {
+            //check npc conditions to trigger conversation
+            if (firstTalk && !noTalkStage && !inCD && !inConversation)
+            {
+                //if npc in idle states are already talked once 
+                if (!DialogueLua.GetVariable(reTriggerName).asBool)
+                {
+                    //move player to interactable layer
+                    ChangeLayer(9);
+
+                    //check player interaction command
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        StartTalking();
+                    }
+                }
             }
             else
-            {
                 ChangeLayer(0);
-            }
         }
+        else
+            ChangeLayer(0);
+    }
 
-
+    void StartTalking()
+    {
+        currentDialogue.enabled = true;
     }
     void CheckTalkCD()
     {
@@ -338,7 +357,7 @@ public class NPCControl : MonoBehaviour
     void OnConversationStart(Transform other)
     {
         inConversation = true;
-        if (HasReached(agent) && noLookInConvo)
+        if (HasReached(agent) && !noLookInConvo)
         {
             if (lookCoroutine != null)
                 StopCoroutine(lookCoroutine);
@@ -354,14 +373,11 @@ public class NPCControl : MonoBehaviour
 
     void OnConversationEnd(Transform other)
     {
+        inConversation = false;
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
-        inConversation = false;
         inCD = true;
-        triggerConversation = false;
         currentDialogue.enabled = false;
-        
-
     }
 
     public void EndConversation()
@@ -418,11 +434,6 @@ public class NPCControl : MonoBehaviour
             {
                 agent.isStopped = true;
                 return true;
-                //if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-                //{
-                //    agent.isStopped = true;
-                //    return true;
-                //}
             }
         }
         return false;
@@ -445,10 +456,21 @@ public class NPCControl : MonoBehaviour
 
     public void SetDialogue()
     {
-        currentDialogue = dialogues[_counter];
-        string reTriggerName = "NPC_" + gameObject.name + "_Other_Interacted";
+        //currentDialogue = dialogues[_counter];
+        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
         DialogueLua.SetVariable(reTriggerName, false);
 
+    }
+
+    public void SetMainTalkeTrue()
+    {
+        string seTalkName = "NPC/" + gameObject.name + "/Main_Talked";
+        DialogueLua.SetVariable(seTalkName, true);
+    }
+
+    public void SetMainTalkFalse() {
+        string seTalkName = "NPC/" + gameObject.name + "/Main_Talked";
+        DialogueLua.SetVariable(seTalkName, false);
     }
 
     public bool GetSpecialIdleAnim()

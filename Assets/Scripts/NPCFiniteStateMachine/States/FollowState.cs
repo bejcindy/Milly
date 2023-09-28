@@ -23,10 +23,11 @@ public class FollowState : State
         }
         else if (!machine.CheckFollowPlayer())
         {
+            machine.ResetPath();
             machine.ChangeState(machine.moveState);
         }
 
-        if (machine.RetriggerConversation())
+        if (machine.CheckInConversation())
         {
             machine.ChangeState(machine.talkState);
         }

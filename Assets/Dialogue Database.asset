@@ -565,6 +565,36 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: CustomFieldType_Text
+  - id: 7
+    fields:
+    - title: Name
+      value: NPC/Charles/Following
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
   locations:
   - id: 1
     fields:
@@ -703,6 +733,20 @@ MonoBehaviour:
     fields:
     - title: Name
       value: Gloria_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 38
+    fields:
+    - title: Name
+      value: NPC/Charles/Main_Talked
       type: 0
       typeString: 
     - title: Initial Value
@@ -4358,7 +4402,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Charles_Talk_State"] == "Uninitiated"
+      conditionsString: Variable["NPC_Charles_Talk_State"] == "Uninitiated" and (Variable["NPC_Charles_Main_Talked"]
+        == false)
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -5649,7 +5694,9 @@ MonoBehaviour:
       userScript: 'Variable["NPC_Charles_Talk_State"] = "FirstInitiated";
 
         Variable["NPC_Charles_Other_State"]
-        = "Follow"'
+        = "Follow";
+
+        Variable["NPC_Charles_Main_Talked"] = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5871,7 +5918,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["NPC_Charles_Talk_State"] = "FirstInitiated"
+      userScript: 'Variable["NPC_Charles_Talk_State"] = "FirstInitiated";
+
+        Variable["NPC_Charles_Main_Talked"]
+        = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5982,8 +6032,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 157.94287, y: 0}
-    canvasZoom: 0.5499999
+    canvasScrollPosition: {x: 249.35547, y: 98.076965}
+    canvasZoom: 0.5199999
   - id: 9
     fields:
     - title: Title
@@ -21789,8 +21839,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 614.2195
-        y: 49.048767
+        x: 997.85565
+        y: 52.68512
         width: 160
         height: 30
     - id: 1
@@ -23641,7 +23691,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 815.07837
+        x: 813.7085
         y: 1779.0707
         width: 160
         height: 30
@@ -23690,8 +23740,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 840.4489
-        y: 144.95038
+        x: 1286.8977
+        y: 1
         width: 160
         height: 30
     - id: 36
@@ -23916,8 +23966,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 280.82193, y: 0}
-    canvasZoom: 0.73000014
+    canvasScrollPosition: {x: 84.485405, y: 0}
+    canvasZoom: 0.5500003
   - id: 24
     fields:
     - title: Title
@@ -28010,7 +28060,7 @@ MonoBehaviour:
         destinationConversationID: 37
         destinationDialogueID: 1
         isConnector: 0
-        priority: 2
+        priority: 4
       - originConversationID: 37
         originDialogueID: 0
         destinationConversationID: 37
@@ -28839,6 +28889,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 6f196d88-234b-4366-abad-14b99e4bdf72
+        type: 0
+        typeString: 
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -29074,8 +29128,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 62.74283, y: 0}
-    canvasZoom: 0.7300002
+    canvasScrollPosition: {x: 0, y: 39.60974}
+    canvasZoom: 0.67000026
   - id: 38
     fields:
     - title: Title
@@ -30160,6 +30214,10 @@ MonoBehaviour:
         typeString: 
       - title: Sequence
         value: 
+        type: 0
+        typeString: 
+      - title: EventGuid
+        value: 576a8f3c-dcf6-4d6f-8eea-9fdbb67deea5
         type: 0
         typeString: 
       conversationID: 38

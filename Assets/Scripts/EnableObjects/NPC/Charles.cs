@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class Charles : NPCControl
 {
@@ -10,7 +11,6 @@ public class Charles : NPCControl
     protected override void Start()
     {
         base.Start();
-        firstTalk = true;
     }
     protected override void Update()
     {
@@ -19,12 +19,13 @@ public class Charles : NPCControl
 
     public void CharlesAction1()
     {
-        noTalkStage = false;
+        
+        currentDialogue = dialogues[0];
+        firstTalk = true;
     }
 
     public void CharlesAction2()
     {
-        Debug.Log("Calling charles 2");
         noTalkStage = true;
         if(charlesOpenDoor)
             destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
@@ -35,6 +36,7 @@ public class Charles : NPCControl
     public void CharlesAction3()
     {
         noTalkStage = false;
+        currentDialogue = dialogues[1];
     }
 
     public void FinishSmoking()
@@ -43,4 +45,6 @@ public class Charles : NPCControl
         machine.ResetAnimTrigger("Special1");
         machine.SetAnimatorTrigger("Finish");
     }
+
+
 }

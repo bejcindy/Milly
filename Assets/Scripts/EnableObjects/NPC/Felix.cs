@@ -15,24 +15,13 @@ public class Felix : NPCControl
     public void FelixAction1()
     {
         noLookInConvo = true;
-        //lookCoroutine = StartCoroutine(RotateTowards(destObjects[_counter - 1].transform));
-        //if (Vector3.Distance(transform.position, player.position) < npcVincinity)
-        //{
-        //    Debug.Log("in vincinity");
-        //    if(!connectedGroupOne.activateAll)
-        //        connectedGroupOne.activateAll = true;
-        //}
+        currentDialogue = dialogues[1];
 
     }
 
     public void FelixAction2()
     {
-        noLookInConvo = false;
-        //if (Vector3.Distance(transform.position, player.position) < npcVincinity)
-        //{
-        //    if(!connectedGroupTwo.activateAll)
-        //        connectedGroupTwo.activateAll = true;
-        //}
+        noTalkStage = true;
     }
 
     public void FelixStandUp()

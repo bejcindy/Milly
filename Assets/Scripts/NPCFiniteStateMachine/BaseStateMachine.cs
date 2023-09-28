@@ -220,6 +220,11 @@ namespace NPCFSM
 
         }
 
+        public void IncreaseCounter()
+        {
+            npcControl._counter++;
+        }
+
         public bool CheckFollowPlayer()
         {
             return npcControl.followingPlayer;
@@ -229,6 +234,11 @@ namespace NPCFSM
         {
             npcControl.followingPlayer = false;
             agent.stoppingDistance = 0;
+        }
+
+        public void ResetPath()
+        {
+            agent.ResetPath();
         }
 
         public bool CheckPlayerMove()
@@ -278,30 +288,27 @@ namespace NPCFSM
 
         #region DialogueSystemRegion
 
-        public void StartConversation()
-        {
-            npcControl.currentDialogue.enabled = true;
-        }
 
-        public void EndConversation()
-        {
-            npcControl.currentDialogue.enabled = false;
-        }
-
-        public bool CheckNPCInDialogue()
+        public bool CheckInConversation()
         {
             return npcControl.inConversation;
-        }
-
-        public bool RetriggerConversation()
-        {
-            return npcControl.triggerConversation;
         }
 
         public bool CheckFirstTalk()
         {
             return npcControl.CheckFirstTalk();
         }
+
+        public void SetMainTalkTrue()
+        {
+            npcControl.SetMainTalkeTrue();
+        }
+
+        public void SetMainTalkFalse()
+        {
+            npcControl.SetMainTalkFalse();
+        }
+
         #endregion
     }
 }

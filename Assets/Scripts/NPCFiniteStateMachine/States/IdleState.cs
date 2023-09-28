@@ -27,6 +27,7 @@ public class IdleState : State
             if (!machine.CheckPathFinished())
             {
                 machine.StopRotatingNPC();
+                machine.SetMainTalkTrue();
                 machine.ChangeState(machine.moveState);
             }
 
@@ -36,7 +37,7 @@ public class IdleState : State
         else
         {
             machine.InvokeIdleFunction();
-            if (machine.RetriggerConversation())
+            if (machine.CheckInConversation())
                 machine.ChangeState(machine.talkState);
         }
     }

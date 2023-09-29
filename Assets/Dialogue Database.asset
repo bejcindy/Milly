@@ -841,6 +841,62 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 41
+    fields:
+    - title: Name
+      value: NPC/Gloria/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 40
+    fields:
+    - title: Name
+      value: NPC/Gloria/Other_Interacted
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 42
+    fields:
+    - title: Name
+      value: NPC/Gloria/Other_State
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Idle
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 39
+    fields:
+    - title: Name
+      value: NPC/Gloria/Talk_State
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Uninitiated
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   - id: 34
     fields:
     - title: Name
@@ -4277,7 +4333,7 @@ MonoBehaviour:
       defaultSequence: 
       defaultPlayerSequence: 
       defaultResponseMenuSequence: 
-      overrideInputSettings: 1
+      overrideInputSettings: 0
       alwaysForceResponseMenu: 0
       includeInvalidEntries: 0
       responseTimeout: 0
@@ -6032,7 +6088,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 249.35547, y: 98.076965}
+    canvasScrollPosition: {x: 330.12476, y: 0}
     canvasZoom: 0.5199999
   - id: 9
     fields:
@@ -22269,7 +22325,7 @@ MonoBehaviour:
       defaultSequence: 
       defaultPlayerSequence: 
       defaultResponseMenuSequence: 
-      overrideInputSettings: 1
+      overrideInputSettings: 0
       alwaysForceResponseMenu: 0
       includeInvalidEntries: 0
       responseTimeout: 0
@@ -28007,15 +28063,15 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 0
-      overrideSubtitleSettings: 0
+      useOverrides: 1
+      overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
-      showPCSubtitlesDuringLine: 0
+      showPCSubtitlesDuringLine: 1
       skipPCSubtitleAfterResponseMenu: 0
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
-      continueButton: 0
+      continueButton: 1
       overrideSequenceSettings: 0
       defaultSequence: 
       defaultPlayerSequence: 
@@ -30977,15 +31033,15 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 0
-      overrideSubtitleSettings: 0
+      useOverrides: 1
+      overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
-      showPCSubtitlesDuringLine: 0
+      showPCSubtitlesDuringLine: 1
       skipPCSubtitleAfterResponseMenu: 0
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
-      continueButton: 0
+      continueButton: 1
       overrideSequenceSettings: 0
       defaultSequence: 
       defaultPlayerSequence: 
@@ -31628,15 +31684,15 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 0
-      overrideSubtitleSettings: 0
+      useOverrides: 1
+      overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
-      showPCSubtitlesDuringLine: 0
+      showPCSubtitlesDuringLine: 1
       skipPCSubtitleAfterResponseMenu: 0
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
-      continueButton: 0
+      continueButton: 1
       overrideSequenceSettings: 0
       defaultSequence: 
       defaultPlayerSequence: 
@@ -31699,6 +31755,12 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
+      - originConversationID: 40
+        originDialogueID: 0
+        destinationConversationID: 40
+        destinationDialogueID: 21
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -31706,8 +31768,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 535
-        y: 27
+        x: 964.4117
+        y: 19.941177
         width: 160
         height: 30
     - id: 1
@@ -31754,7 +31816,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Gloria_Main_Talked"] == false and (Variable["NPC_Gloria_Talk_State"]
+        == "Uninitiated")
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -32645,7 +32708,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: 'Variable["NPC_Gloria_Talk_State"] = "FirstInitiated";
+
+        Variable["NPC_Gloria_Main_Talked"]
+        = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -32765,9 +32831,60 @@ MonoBehaviour:
         y: 580.9333
         width: 160
         height: 30
+    - id: 21
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 11
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Thought you'd not want to see me again? Meet me at that bar when you
+          wanna talk.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 40
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Gloria_Main_Talked"] == true and (Variable["NPC_Gloria_Other_Interacted"]
+        == false)
+      userScript: Variable["NPC_Gloria_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1296.1761
+        y: 81.70589
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.8800002
+    canvasScrollPosition: {x: 382.32336, y: 0}
+    canvasZoom: 0.85000026
   syncInfo:
     syncActors: 0
     syncItems: 0

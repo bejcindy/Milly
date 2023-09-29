@@ -322,6 +322,8 @@ public class NPCControl : MonoBehaviour
                     //check player interaction command
                     if (Input.GetMouseButtonDown(0))
                     {
+                        if(!npcActivated)
+                            npcActivated = true;
                         StartTalking();
                     }
                 }

@@ -49,7 +49,8 @@ public class Pizza : PickUpObject
             transform.GetChild(1).gameObject.layer = 7;
         }
 
-
+        if (!IsObjectVisible(rend))
+            selected = false;
     }
 
 
@@ -67,9 +68,9 @@ public class Pizza : PickUpObject
             selected = false;
     }
 
-    protected override void OnBecameInvisible()
-    {
-        base.OnBecameInvisible();
-        selected = false;
-    }
+    //protected override void OnBecameInvisible()
+    //{
+    //    base.OnBecameInvisible();
+    //    selected = false;
+    //}
 }

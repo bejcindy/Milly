@@ -124,7 +124,7 @@ public class DataHolder : MonoBehaviour
             playerCinemachine.LookAt = null;
             //focusCinemachine.GetCinemachineComponent<CinemachinePOV>().
             //Cursor.lockState = CursorLockMode.None;
-            
+
             if (focusDist < .75f)
             {
                 currentFocus.layer = 13;

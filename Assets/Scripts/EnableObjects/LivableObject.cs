@@ -68,6 +68,8 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (rend)
+            checkVisible = IsObjectVisible(rend);
         if (!rigged)
         {
             if (checkVisible)
@@ -340,18 +342,17 @@ public class LivableObject : MonoBehaviour
         }
         return true;
     }
-
-    protected virtual void OnBecameVisible()
+    public static bool IsObjectVisible( Renderer renderer)
     {
-        //if (gameObject.name == "poster15")
-        //    Debug.Log($"'{name}' is Visible to '{Camera.current.name}'");
-        checkVisible = true;
+        return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds);
     }
+    //protected virtual void OnBecameVisible()
+    //{
+    //    checkVisible = true;
+    //}
 
-    protected virtual void OnBecameInvisible()
-    {
-        //if (gameObject.name == "poster15")
-        //    Debug.Log("poster not visible");
-        checkVisible = false;
-    }
+    //protected virtual void OnBecameInvisible()
+    //{
+    //    checkVisible = false;
+    //}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using UnityEngine.UI;
 
 public class PlayerHolding : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class PlayerHolding : MonoBehaviour
 
     public ContainerObject currentContainer;
 
+    public Image objectUI;
+    public Sprite pickUpSprite, lookingSprite;
+    RectTransform objectUIRect;
+    public RectTransform CanvasRect;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +43,7 @@ public class PlayerHolding : MonoBehaviour
         lookingObjects = new List<GameObject>();
         focusedHint = GameObject.Find("QTEPanel").transform.GetChild(3).gameObject;
         containers = GameObject.FindGameObjectsWithTag("Container");
+        objectUIRect = objectUI.GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -46,6 +52,8 @@ public class PlayerHolding : MonoBehaviour
         GetFullHand();
         ChooseInteractable();
         ChooseLookable();
+        if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0)
+            HideUI();
         atContainer = CheckContainer();
         if (selectedObj != null && !fullHand)
         {
@@ -153,18 +161,46 @@ public class PlayerHolding : MonoBehaviour
         return false;
     }
 
+    void DisplayUI(GameObject trackingObject,Sprite interactionSprite)
+    {
+        Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
+        //Debug.Log(trackingObject.name + ": position is: " + ViewportPosition);
+        Vector2 WorldObject_ScreenPosition = new Vector2(
+        ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+        ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+        objectUIRect.anchoredPosition = WorldObject_ScreenPosition;
+        objectUI.sprite = interactionSprite;
+        objectUI.SetNativeSize();
+        if(!objectUI.gameObject.activeSelf)
+            objectUI.gameObject.SetActive(true);
+    }
+
+    void HideUI()
+    {
+        if (objectUI.gameObject.activeSelf)
+        {
+            objectUI.gameObject.SetActive(false);
+            objectUI.sprite = null;
+        }
+    }
+
     public void ChooseInteractable()
     {
         if (pickUpObjects.Count <= 0)
         {
             selectedObj = null;
+            //HideUI();
         }
         else if (pickUpObjects.Count == 1)
         {
             if (selectedObj != pickUpObjects[0] && selectedObj != null)
+            {
                 selectedObj.GetComponent<PickUpObject>().selected = false;
+                //HideUI();
+            }
             selectedObj = pickUpObjects[0];
             selectedObj.GetComponent<PickUpObject>().selected = true;
+            DisplayUI(selectedObj, pickUpSprite);
         }
         else
         {
@@ -179,12 +215,16 @@ public class PlayerHolding : MonoBehaviour
                 if (distance > minDist)
                 {
                     if (selectedObj != null)
+                    {
                         selectedObj.GetComponent<PickUpObject>().selected = false;
+                        //HideUI();
+                    }
                     minDist = distance;
                     selectedObj = obj;
                 }
             }
             selectedObj.GetComponent<PickUpObject>().selected = true;
+            DisplayUI(selectedObj, pickUpSprite);
         }
     }
 
@@ -193,13 +233,21 @@ public class PlayerHolding : MonoBehaviour
         if(lookingObjects.Count <= 0)
         {
             focusedObj = null;
+            //HideUI();
         }
         else if (lookingObjects.Count == 1)
         {
-            if(focusedObj != lookingObjects[0] && focusedObj !=null)
+            if (focusedObj != lookingObjects[0] && focusedObj != null)
+            {
                 focusedObj.GetComponent<LookingObject>().selected = false;
+                //HideUI();
+            }
             focusedObj = lookingObjects[0];
             focusedObj.GetComponent<LookingObject>().selected = true;
+            if (!focusedObj.GetComponent<LookingObject>().focusingThis&&!DataHolder.camBlendDone && !DataHolder.camBlended)
+                DisplayUI(focusedObj, lookingSprite);
+            else
+                HideUI();
         }
         else
         {
@@ -213,15 +261,24 @@ public class PlayerHolding : MonoBehaviour
                 float distance = Vector3.Dot(objtoScreen, Vector3.forward);
                 if (distance > toScreenDist)
                 {
-                    if(focusedObj!= null)
+                    if (focusedObj != null)
+                    {
                         focusedObj.GetComponent<LookingObject>().selected = false;
+                        //HideUI();
+                    }
                     toScreenDist = distance;
                     focusedObj = obj;
                 }
 
             }
-            if(focusedObj)
+            if (focusedObj)
+            {
                 focusedObj.GetComponent<LookingObject>().selected = true;
+                if (!focusedObj.GetComponent<LookingObject>().focusingThis&& !DataHolder.camBlendDone && !DataHolder.camBlended)
+                    DisplayUI(focusedObj, lookingSprite);
+                else
+                    HideUI();
+            }
         }
     }
 

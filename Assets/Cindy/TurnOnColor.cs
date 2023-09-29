@@ -39,16 +39,22 @@ public class TurnOnColor : MonoBehaviour
     }
     private void OnDisable()
     {
-        foreach (Renderer r in childrenRends)
+        if (childrenRends != null)
         {
-            Material mat = r.sharedMaterial;
-            if (mat.HasProperty("_WhiteDegree"))
-                mat.SetFloat("_WhiteDegree", 1);
-            //Debug.Log(mat.name);
+            foreach (Renderer r in childrenRends)
+            {
+                Material mat = r.sharedMaterial;
+                if (mat.HasProperty("_WhiteDegree"))
+                    mat.SetFloat("_WhiteDegree", 1);
+                //Debug.Log(mat.name);
+            }
         }
-        foreach(Light l in originallyOffLights)
+        if (originallyOffLights != null)
         {
-            l.gameObject.SetActive(false);
+            foreach (Light l in originallyOffLights)
+            {
+                l.gameObject.SetActive(false);
+            }
         }
     }
 }

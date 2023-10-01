@@ -34,6 +34,9 @@ public class PlayerHolding : MonoBehaviour
     RectTransform objectUIRect;
     public RectTransform CanvasRect;
 
+    bool displayedLeftHandUI;
+    bool displayedFocusHint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,34 +62,44 @@ public class PlayerHolding : MonoBehaviour
         {
             if (GetLeftHand() && GetRightHand())
             {
-                duoHandUI.SetActive(true);
+                //duoHandUI.SetActive(true);
                 leftHandUI.SetActive(false);
-                rightHandUI.SetActive(false);
+                //rightHandUI.SetActive(false);
             }
-            else if (GetRightHand())
-            {
-                rightHandUI.SetActive(true);
-                duoHandUI.SetActive(false);
-                leftHandUI.SetActive(false);
-            }
+            //else if (GetRightHand())
+            //{
+            //    rightHandUI.SetActive(true);
+            //    duoHandUI.SetActive(false);
+            //    leftHandUI.SetActive(false);
+            //}
             else if (GetLeftHand())
             {
-                leftHandUI.SetActive(true);
-                duoHandUI.SetActive(false);
-                rightHandUI.SetActive(false);
+                if (!displayedLeftHandUI)
+                {
+                    leftHandUI.SetActive(true);
+                    displayedLeftHandUI = true;
+                }
+                //duoHandUI.SetActive(false);
+                //rightHandUI.SetActive(false);
             }
 
         }
         else
         {
             leftHandUI.SetActive(false);
-            rightHandUI.SetActive(false);
-            duoHandUI.SetActive(false);
+            //rightHandUI.SetActive(false);
+            //duoHandUI.SetActive(false);
         }
 
         if(focusedObj != null)
         {
-            focusedHint.SetActive(true);
+            if (!displayedFocusHint)
+            {
+                focusedHint.SetActive(true);
+                //displayedFocusHint = true;
+                if(focusedObj.GetComponent<LookingObject>().focusingThis)
+                    displayedFocusHint = true;
+            }
         }
         else
         {

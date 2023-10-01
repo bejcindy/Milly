@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Cinemachine;
+using static Cinemachine.CinemachineOrbitalTransposer;
 
 public class LivableObject : MonoBehaviour
 {
@@ -33,13 +34,18 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected RiggedVisibleDetector visibleDetector;
 
     public bool centerFocused;
-
+    
     public bool noRend;
+
+    [Header("Only Used For LookingObject")]
+    public bool onlyFront = true;
+    static float allowedAngle = .2f;
 
     bool[] checkBoundVisible;
 
     int originalLayer;
     bool isGround;
+
 
 
     protected virtual void Start()
@@ -134,17 +140,18 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void DetectInteractable()
     {
-        if (Vector3.Distance(transform.position, player.position) <= minDist)
-        {
-            if (isVisible)
-                interactable = true;
+            if (Vector3.Distance(transform.position, player.position) <= minDist)
+            {
+                if (isVisible)
+                    interactable = true;
+                else
+                    interactable = false;
+            }
             else
+            {
                 interactable = false;
-        }
-        else
-        {
-            interactable = false;
-        }
+            }
+        
     }
 
     FMOD.Studio.EventInstance snapshot;
@@ -235,12 +242,12 @@ public class LivableObject : MonoBehaviour
             //    return false;
             //}
 
-            if ((pointOnScreen.x > Screen.width * 0.4f) || (pointOnScreen.x < Screen.width * 0.6f) ||
-                (pointOnScreen.y > Screen.height * 0.4f) || (pointOnScreen.y < Screen.height * 0.6f))
-            {
+            //if ((pointOnScreen.x > Screen.width * 0.4f) || (pointOnScreen.x < Screen.width * 0.6f) ||
+            //    (pointOnScreen.y > Screen.height * 0.4f) || (pointOnScreen.y < Screen.height * 0.6f))
+            //{
 
-                return true;
-            }
+            //    return true;
+            //}
 
             int pointsInScreen = 0;
             Vector3 pointA = rend.bounds.min;
@@ -269,8 +276,8 @@ public class LivableObject : MonoBehaviour
                 //else
                 //    pointsInScreen--;
             }
-            //if (gameObject.name.Contains("iza_Gsign_low"))
-            //    Debug.Log(gameObject.name + "point on screen is: " + pointsInScreen);
+            if (gameObject.name=="poster15")
+                Debug.Log(gameObject.name + "point on screen is: " + pointsInScreen);
             if (pointsInScreen < 2)
                 return false;
         }
@@ -281,36 +288,7 @@ public class LivableObject : MonoBehaviour
             {
                 return false;
             }
-            //int pointsInScreen = 0;
-            //Vector3 pointA = rend.bounds.min;
-            //Vector3 pointB = rend.bounds.min + new Vector3(rend.bounds.size.x, 0, 0);
-            //Vector3 pointC = rend.bounds.min + new Vector3(0, rend.bounds.size.y, 0);
-            //Vector3 pointD = rend.bounds.min + new Vector3(0, 0, rend.bounds.size.z);
-            //Vector3 pointE = rend.bounds.max - new Vector3(rend.bounds.size.x, 0, 0);
-            //Vector3 pointF = rend.bounds.max - new Vector3(0, rend.bounds.size.y, 0);
-            //Vector3 pointG = rend.bounds.max - new Vector3(0, 0, rend.bounds.size.z);
-            //Vector3 pointH = rend.bounds.max;
-
-
-            //checkBoundVisible[0] = CheckPointInView(pointA);
-            //checkBoundVisible[1] = CheckPointInView(pointB);
-            //checkBoundVisible[2] = CheckPointInView(pointC);
-            //checkBoundVisible[3] = CheckPointInView(pointD);
-            //checkBoundVisible[4] = CheckPointInView(pointE);
-            //checkBoundVisible[5] = CheckPointInView(pointF);
-            //checkBoundVisible[6] = CheckPointInView(pointG);
-            //checkBoundVisible[7] = CheckPointInView(pointH);
-
-            //for (int i = 0; i < checkBoundVisible.Length; i++)
-            //{
-            //    if (checkBoundVisible[i])
-            //        pointsInScreen++;
-            //    else
-            //        pointsInScreen--;
-            //}
-
-            //if (pointsInScreen < 3)
-            //    return false;
+            
         }
 
         if (!centerFocused)
@@ -344,7 +322,36 @@ public class LivableObject : MonoBehaviour
     }
     public static bool IsObjectVisible( Renderer renderer)
     {
-        return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds);
+        Transform go = renderer.transform;
+        if (go.GetComponent<LookingObject>() && go.GetComponent<LookingObject>().onlyFront)
+        {
+            if (GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds))
+            {
+                Transform playerT = GameObject.Find("Player").transform;
+                LookingObject lo;
+                lo = go.GetComponent<LookingObject>();
+                if (Vector3.Distance(go.position, playerT.position) <= lo.minDist)
+                {
+                    //get direction
+                    if (Vector3.Dot(playerT.position - go.position, go.forward) > allowedAngle)
+                    {
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+                return false;
+        }
+        else
+        {
+            return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds);
+        }
     }
     //protected virtual void OnBecameVisible()
     //{

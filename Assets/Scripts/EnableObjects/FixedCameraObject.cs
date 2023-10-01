@@ -118,6 +118,8 @@ public class FixedCameraObject : LivableObject
     {
         playerMovement.enabled = false;
         playerBody.enabled = false;
+        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
         if (doubleSided)
         {
             if (onLeft)
@@ -169,7 +171,10 @@ public class FixedCameraObject : LivableObject
             fixedCamera.m_Priority = 9;
         }
 
+        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
+        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
         yield return new WaitForSeconds(2f);
+
         if (moveCam)
         {
             fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;

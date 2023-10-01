@@ -21,9 +21,9 @@ public class PickUpObject : LivableObject
     public bool foodObj;
 
     DialogueSystemTrigger dialogue;
-    public GameObject uiHint;
-    public Sprite leftMouse;
-    public Sprite rightMouse;
+    //public GameObject uiHint;
+    //public Sprite leftMouse;
+    //public Sprite rightMouse;
     public string pickUpEventName;
     public string throwEventName;
 

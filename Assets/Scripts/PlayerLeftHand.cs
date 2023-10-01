@@ -34,6 +34,8 @@ public class PlayerLeftHand : MonoBehaviour
 
     bool readyToThrow;
     bool notHoldingAnyThing;
+
+    bool aimHinted, smokingHinted;
     // Start is called before the first frame update
     void Start()
     {
@@ -79,15 +81,31 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 if (smoking)
                 {
-                    aimHint.transform.GetChild(2).gameObject.SetActive(true);
-                    aimHint.transform.GetChild(1).gameObject.SetActive(false);
+                    if (!smokingHinted)
+                    {
+                        aimHint.SetActive(true);
+                        aimHint.transform.GetChild(2).gameObject.SetActive(true);
+                        aimHint.transform.GetChild(1).gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        aimHint.SetActive(false);
+                    }
                 }
                 else
                 {
-                    aimHint.transform.GetChild(2).gameObject.SetActive(false);
-                    aimHint.transform.GetChild(1).gameObject.SetActive(true);
+                    if (!aimHinted)
+                    {
+                        aimHint.SetActive(true);
+                        aimHint.transform.GetChild(2).gameObject.SetActive(false);
+                        aimHint.transform.GetChild(1).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        aimHint.SetActive(false);
+                    }
                 }
-                aimHint.SetActive(true);
+                //aimHint.SetActive(true);
             }
                 
         }
@@ -105,6 +123,7 @@ public class PlayerLeftHand : MonoBehaviour
         {
             StartCoroutine(LerpPosition(holdingPosition, 1f));
             holdingObj.GetComponent<Cigarette>().Inhale();
+            //smokingHinted = true;
         }
     }
 
@@ -148,6 +167,7 @@ public class PlayerLeftHand : MonoBehaviour
                     if (smoking)
                     {
                         holdingObj.GetComponent<Cigarette>().FinishSmoking();
+                        smokingHinted = true;
                     }
                     isHolding = false;
                     smoking = false;
@@ -181,6 +201,7 @@ public class PlayerLeftHand : MonoBehaviour
 
                     noThrow = true;
                     playerHolding.UnoccupyLeft();
+                    aimHinted = true;
                     readyToThrow = false;
                 }
             }

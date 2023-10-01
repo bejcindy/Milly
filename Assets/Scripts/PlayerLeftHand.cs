@@ -29,6 +29,7 @@ public class PlayerLeftHand : MonoBehaviour
     float holdTime = 2f;
     [SerializeField]
     float holdTimer;
+
     Vector2 throwForce;
 
     bool readyToThrow;
@@ -47,12 +48,13 @@ public class PlayerLeftHand : MonoBehaviour
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.ScreenPointToRay(Input.mousePosition).direction * 30f,Color.cyan);
-        if (isHolding && !playerHolding.inDialogue)
+        if (isHolding)
         {
+
             if (!inPizzaBox)
             {
                 Drink();
-                if(!drinking)
+                if(!drinking && !playerHolding.atInterior)
                     DetectHolding();
             }
 
@@ -109,7 +111,16 @@ public class PlayerLeftHand : MonoBehaviour
     private void Drink()
     {
         Debug.Log(handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-        if(Input.mouseScrollDelta.y<0 && !drinking)
+        if (Input.GetMouseButtonDown(0) && !noThrow)
+        {
+            if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+            {
+                isHolding = false;
+                StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
+            }
+        }
+
+        if (Input.mouseScrollDelta.y<0 && !drinking)
         {
             drinking = true;
             handAnim.Play("HandDrink");
@@ -147,6 +158,7 @@ public class PlayerLeftHand : MonoBehaviour
                     //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward+new Vector3(xOffset,0,0) + new Vector3(0, throwForce.y, 0));
                     if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
                     {
+                        isHolding = false;
                         StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
                     }
                     else

@@ -82,7 +82,7 @@ MonoBehaviour:
   - id: 8
     fields:
     - title: Name
-      value: Nida
+      value: Loy
       type: 0
       typeString: 
     - title: Pictures
@@ -595,6 +595,36 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+  - id: 8
+    fields:
+    - title: Name
+      value: NPC/Akihito/MiyoshiDuty
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: active
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
   locations:
   - id: 1
     fields:
@@ -831,6 +861,62 @@ MonoBehaviour:
     fields:
     - title: Name
       value: NPC/Felix/Talk_State
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Uninitiated
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 41
+    fields:
+    - title: Name
+      value: NPC/Gloria/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 40
+    fields:
+    - title: Name
+      value: NPC/Gloria/Other_Interacted
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 42
+    fields:
+    - title: Name
+      value: NPC/Gloria/Other_State
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Idle
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 39
+    fields:
+    - title: Name
+      value: NPC/Gloria/Talk_State
       type: 0
       typeString: 
     - title: Initial Value
@@ -4277,7 +4363,7 @@ MonoBehaviour:
       defaultSequence: 
       defaultPlayerSequence: 
       defaultResponseMenuSequence: 
-      overrideInputSettings: 1
+      overrideInputSettings: 0
       alwaysForceResponseMenu: 0
       includeInvalidEntries: 0
       responseTimeout: 0
@@ -6032,7 +6118,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 249.35547, y: 98.076965}
+    canvasScrollPosition: {x: 330.12476, y: 0}
     canvasZoom: 0.5199999
   - id: 9
     fields:
@@ -6839,7 +6925,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Nida, we can't--
+        value: Loy, we can't--
         type: 0
         typeString: 
       - title: Sequence
@@ -6964,7 +7050,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 9
+        originDialogueID: 57
+        destinationConversationID: 9
+        destinationDialogueID: 59
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -7013,7 +7105,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 9
+        originDialogueID: 58
+        destinationConversationID: 9
+        destinationDialogueID: 59
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -7357,7 +7455,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1998.2495
+        x: 1996.5254
         y: 413.32095
         width: 160
         height: 30
@@ -7604,8 +7702,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: You go ahead, can't really go back to tasting these if I smoke right
-          now.
+        value: You go ahead, I'll lose appetite if I smoke right now.
         type: 0
         typeString: 
       - title: Sequence
@@ -7632,8 +7729,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 521.2372, y: 0}
-    canvasZoom: 0.3099999
+    canvasScrollPosition: {x: 779.6013, y: 14.360306}
+    canvasZoom: 0.5799999
   - id: 10
     fields:
     - title: Title
@@ -16535,7 +16632,7 @@ MonoBehaviour:
   - id: 18
     fields:
     - title: Title
-      value: NPC/Gloria/Initial
+      value: NPC/Gloria/OLD
       type: 0
       typeString: 
     - title: Description
@@ -22269,7 +22366,7 @@ MonoBehaviour:
       defaultSequence: 
       defaultPlayerSequence: 
       defaultResponseMenuSequence: 
-      overrideInputSettings: 1
+      overrideInputSettings: 0
       alwaysForceResponseMenu: 0
       includeInvalidEntries: 0
       responseTimeout: 0
@@ -28007,15 +28104,15 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 0
-      overrideSubtitleSettings: 0
+      useOverrides: 1
+      overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
-      showPCSubtitlesDuringLine: 0
+      showPCSubtitlesDuringLine: 1
       skipPCSubtitleAfterResponseMenu: 0
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
-      continueButton: 0
+      continueButton: 1
       overrideSequenceSettings: 0
       defaultSequence: 
       defaultPlayerSequence: 
@@ -30977,15 +31074,15 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 0
-      overrideSubtitleSettings: 0
+      useOverrides: 1
+      overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
-      showPCSubtitlesDuringLine: 0
+      showPCSubtitlesDuringLine: 1
       skipPCSubtitleAfterResponseMenu: 0
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
-      continueButton: 0
+      continueButton: 1
       overrideSequenceSettings: 0
       defaultSequence: 
       defaultPlayerSequence: 
@@ -31612,7 +31709,7 @@ MonoBehaviour:
   - id: 40
     fields:
     - title: Title
-      value: Gloria
+      value: NPC/Gloria/Initial
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -31628,15 +31725,15 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 0
-      overrideSubtitleSettings: 0
+      useOverrides: 1
+      overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
-      showPCSubtitlesDuringLine: 0
+      showPCSubtitlesDuringLine: 1
       skipPCSubtitleAfterResponseMenu: 0
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
-      continueButton: 0
+      continueButton: 1
       overrideSequenceSettings: 0
       defaultSequence: 
       defaultPlayerSequence: 
@@ -31699,6 +31796,12 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
+      - originConversationID: 40
+        originDialogueID: 0
+        destinationConversationID: 40
+        destinationDialogueID: 21
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -31706,8 +31809,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 535
-        y: 27
+        x: 964.4117
+        y: 19.941177
         width: 160
         height: 30
     - id: 1
@@ -31754,7 +31857,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Gloria_Main_Talked"] == false and (Variable["NPC_Gloria_Talk_State"]
+        == "Uninitiated")
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -31762,7 +31866,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 538
-        y: 96
+        y: 94.86363
         width: 160
         height: 30
     - id: 2
@@ -31927,7 +32031,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 536.9362
+        x: 535.7998
         y: 278.82977
         width: 160
         height: 30
@@ -31954,7 +32058,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'But you can relax yourself, I come at peace. '
+        value: 'You can relax yourself, I come at peace. '
         type: 0
         typeString: 
       - title: Sequence
@@ -32009,8 +32113,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'Not really at my original will but something made me realize it was
-          necessary to...clarify stuff. '
+        value: Not really my original plan but something along the way made me realize
+          it was necessary to...clarify stuff with you.
         type: 0
         typeString: 
       - title: Sequence
@@ -32065,8 +32169,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'Do me a favor--cut to the point so I don''t have to pretend that
-          I can put up with the sound of your voice. '
+        value: 'Do me a favor--cut to the fucking point so I don''t have to pretend
+          putting up with that annoying sound of your voice. '
         type: 0
         typeString: 
       - title: Sequence
@@ -32121,7 +32225,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'It''s about your sister. '
+        value: 'Milly, It''s about your sister. '
         type: 0
         typeString: 
       - title: Sequence
@@ -32139,7 +32243,7 @@ MonoBehaviour:
       - originConversationID: 40
         originDialogueID: 8
         destinationConversationID: 40
-        destinationDialogueID: 9
+        destinationDialogueID: 19
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -32151,61 +32255,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 531.472
         y: 538.8878
-        width: 160
-        height: 30
-    - id: 9
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 11
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: YOU, DO NOT, FUCKING GO THERE--
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 40
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 40
-        originDialogueID: 9
-        destinationConversationID: 40
-        destinationDialogueID: 10
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 532.6084
-        y: 605.9333
         width: 160
         height: 30
     - id: 10
@@ -32350,7 +32399,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: SCREW, YOU.
+        value: Go FUCK yourself.
         type: 0
         typeString: 
       - title: Sequence
@@ -32405,8 +32454,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Sure, and maybe we could arrange that meeting to the day you draw
-          your last breath?That is of course if you can still make it there by then.
+        value: How about we raincheck that to the day you die? Your deathbed is prolly
+          the only place that'd make the idea of seeing you again a little more attractive.
         type: 0
         typeString: 
       - title: Sequence
@@ -32547,7 +32596,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 541.69934
-        y: 996.84235
+        y: 995.706
         width: 160
         height: 30
     - id: 16
@@ -32573,7 +32622,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Choice is yours to make. But just know this--
+        value: Choice is yours to make. But you should know this before making  up
+          your mind--
         type: 0
         typeString: 
       - title: Sequence
@@ -32642,7 +32692,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 40
+        originDialogueID: 17
+        destinationConversationID: 40
+        destinationDialogueID: 18
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -32654,9 +32710,222 @@ MonoBehaviour:
         y: 1103.6605
         width: 160
         height: 30
+    - id: 18
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 11
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Hope I'll see you in a bit.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 40
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 'Variable["NPC_Gloria_Talk_State"] = "FirstInitiated";
+
+        Variable["NPC_Gloria_Main_Talked"]
+        = true'
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 541.69934
+        y: 1163.8878
+        width: 160
+        height: 30
+    - id: 19
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 11
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Ha ha--heh heh heh--L, O, L.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 40
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 40
+        originDialogueID: 19
+        destinationConversationID: 40
+        destinationDialogueID: 20
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 780.3356
+        y: 532.06964
+        width: 160
+        height: 30
+    - id: 20
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 11
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: F U C K, Y O U.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 40
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 40
+        originDialogueID: 20
+        destinationConversationID: 40
+        destinationDialogueID: 10
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 780.3356
+        y: 580.9333
+        width: 160
+        height: 30
+    - id: 21
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 11
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Thought you'd not want to see me again? Meet me at that bar when you
+          wanna talk.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 40
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Gloria_Main_Talked"] == true and (Variable["NPC_Gloria_Other_Interacted"]
+        == false)
+      userScript: Variable["NPC_Gloria_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1296.1761
+        y: 81.70589
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 615.90906}
-    canvasZoom: 0.8800002
+    canvasScrollPosition: {x: 382.32336, y: 0}
+    canvasZoom: 0.85000026
   syncInfo:
     syncActors: 0
     syncItems: 0

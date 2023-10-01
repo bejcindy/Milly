@@ -22,22 +22,24 @@ public class StartGame : MonoBehaviour
         izakayaAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Izakaya_Noise");
         outsideAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
 
-        if (startSequence)
-        {
-            izakayaAmbienceEvent.start();
-            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
-            playerMovement.enabled = false;
-            playerCam.enabled = false;
-        }
-        else
-        {
-            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
-            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
-            playerMovement.enabled = true;
-            playerCam.enabled=true;
-            //outsideAmbienceEvent.start();
-        }
+        ActivateGame();
+
+        //if (startSequence)
+        //{
+        //    izakayaAmbienceEvent.start();
+        //    playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+        //    playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+        //    playerMovement.enabled = false;
+        //    playerCam.enabled = false;
+        //}
+        //else
+        //{
+        //    playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
+        //    playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
+        //    //playerMovement.enabled = true;
+        //    //playerCam.enabled=true;
+        //    //outsideAmbienceEvent.start();
+        //}
     }
 
     // Update is called once per frame
@@ -51,7 +53,7 @@ public class StartGame : MonoBehaviour
 
     public void ActivateGame()
     {
-        playerMovement.enabled = true;
+        //playerMovement.enabled = true;
         playerCam.enabled = true;
         Invoke(nameof(ActivateMouse), 1.5f);
     }

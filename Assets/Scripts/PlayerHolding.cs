@@ -16,6 +16,9 @@ public class PlayerHolding : MonoBehaviour
 
 
     public Transform handContainer;
+    public bool atInterior;
+
+
     List<GameObject> pickUpObjects;
     public List<GameObject> lookingObjects;
     public GameObject[] containers;
@@ -35,6 +38,7 @@ public class PlayerHolding : MonoBehaviour
     public Sprite pickUpSprite, lookingSprite;
     RectTransform objectUIRect;
     public RectTransform CanvasRect;
+
 
     // Start is called before the first frame update
     void Start()
@@ -351,8 +355,10 @@ public class PlayerHolding : MonoBehaviour
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;
         obj.SetParent(handContainer);
-        obj.localPosition = Vector3.zero;
-        obj.localRotation = Quaternion.Euler(Vector3.zero);
+        StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+        StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
+        //obj.localPosition = Vector3.zero;
+        //obj.localRotation = Quaternion.Euler(Vector3.zero);
         if (obj.GetComponent<PickUpObject>().cigarette)
         {
             obj.localEulerAngles = new Vector3(0, 160, 0);
@@ -408,5 +414,44 @@ public class PlayerHolding : MonoBehaviour
         rightHand.noThrow = false;
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interior"))
+            atInterior = true;
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Interior"))
+            atInterior = false;
+    }
+
+    IEnumerator LerpPosition(Transform obj, Vector3 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = obj.localPosition;
+        while (time < duration)
+        {
+            obj.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        obj.localPosition = targetPosition;
+    }
+
+    IEnumerator LerpRotation(Transform obj, Quaternion endValue, float duration)
+    {
+        float time = 0;
+        Quaternion startValue = obj.localRotation;
+        while (time < duration)
+        {
+            obj.localRotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        obj.localRotation = endValue;
+    }
+
+
 }

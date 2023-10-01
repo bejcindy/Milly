@@ -14,6 +14,8 @@ public class PlayerHolding : MonoBehaviour
     public bool atContainer;
     public bool positionFixedWithMouse;
 
+
+    public Transform handContainer;
     List<GameObject> pickUpObjects;
     public List<GameObject> lookingObjects;
     public GameObject[] containers;
@@ -361,8 +363,9 @@ public class PlayerHolding : MonoBehaviour
         RemoveInteractable(obj.gameObject);
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;
-        obj.SetParent(Camera.main.transform);
-        obj.localPosition = leftHand.holdingPosition;
+        obj.SetParent(handContainer);
+        obj.localPosition = Vector3.zero;
+        obj.localRotation = Quaternion.Euler(Vector3.zero);
         if (obj.GetComponent<PickUpObject>().cigarette)
         {
             obj.localEulerAngles = new Vector3(0, 160, 0);

@@ -63,12 +63,12 @@ public class Door : LivableObject
                         if (playerInFront)
                         {
                             if (horizontalInput < 0)
-                                StartCoroutine(LerpPosition(openPos, 1f));
+                                StartCoroutine(LerpPosition(openPos, 2f));
                         }
                         else
                         {
                             if (horizontalInput > 0)
-                                StartCoroutine(LerpPosition(openPos, 1f));
+                                StartCoroutine(LerpPosition(openPos, 2f));
                         }
 
                     }
@@ -96,12 +96,12 @@ public class Door : LivableObject
                         if (playerInFront)
                         {
                             if (horizontalInput > 0)
-                                StartCoroutine(LerpPosition(closedPos, 1f));
+                                StartCoroutine(LerpPosition(closedPos, 2f));
                         }
                         else
                         {
                             if (horizontalInput < 0)
-                                StartCoroutine(LerpPosition(closedPos, 1f));
+                                StartCoroutine(LerpPosition(closedPos, 2f));
 
                         }
 

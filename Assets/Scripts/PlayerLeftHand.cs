@@ -21,6 +21,9 @@ public class PlayerLeftHand : MonoBehaviour
     public GameObject aimUI;
     public GameObject aimHint;
 
+    public Animator handAnim;
+    public bool drinking;
+
      Vector2 minThrowForce = new Vector2(100f, 10f);
      Vector2 maxThrowForce = new Vector2(900f, 50f);
     float holdTime = 2f;
@@ -48,8 +51,13 @@ public class PlayerLeftHand : MonoBehaviour
         Debug.DrawRay(Camera.main.transform.position, Camera.main.ScreenPointToRay(Input.mousePosition).direction * 30f,Color.cyan);
         if (isHolding && !playerHolding.inDialogue)
         {
-            if(!inPizzaBox)
-                DetectHolding();
+            if (!inPizzaBox)
+            {
+                Drink();
+                if(!drinking)
+                    DetectHolding();
+            }
+
             else
             {
                 DetectPizzaHolding();
@@ -105,6 +113,18 @@ public class PlayerLeftHand : MonoBehaviour
             holdingObj.GetComponent<Cigarette>().Inhale();
             //smokingHinted = true;
         }
+    }
+
+    private void Drink()
+    {
+        Debug.Log(handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        if(Input.mouseScrollDelta.y<0 && !drinking)
+        {
+            drinking = true;
+            handAnim.Play("HandDrink");
+        }
+        if (handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "HandDrink")
+            drinking = false;
     }
 
     private void DetectHolding()

@@ -595,6 +595,36 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+  - id: 8
+    fields:
+    - title: Name
+      value: NPC/Akihito/MiyoshiDuty
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: active
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
   locations:
   - id: 1
     fields:
@@ -7020,7 +7050,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 9
+        originDialogueID: 57
+        destinationConversationID: 9
+        destinationDialogueID: 59
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -7069,7 +7105,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 9
+        originDialogueID: 58
+        destinationConversationID: 9
+        destinationDialogueID: 59
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -7660,8 +7702,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: You go ahead, can't really go back to tasting these if I smoke right
-          now.
+        value: You go ahead, I'll lose appetite if I smoke right now.
         type: 0
         typeString: 
       - title: Sequence
@@ -7688,8 +7729,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 521.2372, y: 0}
-    canvasZoom: 0.3099999
+    canvasScrollPosition: {x: 750.24316, y: 0}
+    canvasZoom: 0.48999992
   - id: 10
     fields:
     - title: Title

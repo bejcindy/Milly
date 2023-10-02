@@ -41,7 +41,8 @@ public class PlayerHolding : MonoBehaviour
 
     bool displayedLeftHandUI;
     bool displayedFocusHint;
-
+    bool hintDone;
+    bool hintHiden;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,52 +64,37 @@ public class PlayerHolding : MonoBehaviour
         if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0)
             HideUI();
         atContainer = CheckContainer();
-        if (selectedObj != null && !fullHand)
+        
+        if (!hintDone)
         {
-            if (GetLeftHand() && GetRightHand())
+            if (focusedObj != null)
             {
-                //duoHandUI.SetActive(true);
-                leftHandUI.SetActive(false);
-                //rightHandUI.SetActive(false);
-            }
-            //else if (GetRightHand())
-            //{
-            //    rightHandUI.SetActive(true);
-            //    duoHandUI.SetActive(false);
-            //    leftHandUI.SetActive(false);
-            //}
-            else if (GetLeftHand())
-            {
-                if (!displayedLeftHandUI)
+                if (!displayedFocusHint)
                 {
-                    leftHandUI.SetActive(true);
-                    displayedLeftHandUI = true;
+                    Debug.Log("trying");
+                    //focusedHint.SetActive(true);
+                    DataHolder.ShowHint(DataHolder.hints.lookHint);
+                    //displayedFocusHint = true;
+                    hintHiden = false;
+                    if (focusedObj.GetComponent<LookingObject>().focusingThis)
+                        displayedFocusHint = true;
                 }
-                //duoHandUI.SetActive(false);
-                //rightHandUI.SetActive(false);
+                else
+                {
+                    DataHolder.HideHint();
+                    hintDone = true;
+                }
             }
-
-        }
-        else
-        {
-            leftHandUI.SetActive(false);
-            //rightHandUI.SetActive(false);
-            //duoHandUI.SetActive(false);
-        }
-
-        if(focusedObj != null)
-        {
-            if (!displayedFocusHint)
+            else
             {
-                focusedHint.SetActive(true);
-                //displayedFocusHint = true;
-                if(focusedObj.GetComponent<LookingObject>().focusingThis)
-                    displayedFocusHint = true;
+                //focusedHint.SetActive(false);
+                if (!hintHiden)
+                {
+                    DataHolder.HideHint();
+                    hintHiden = true;
+                }
+                //hintDone = true;
             }
-        }
-        else
-        {
-            focusedHint.SetActive(false);
         }
 
 

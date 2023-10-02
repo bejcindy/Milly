@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Cinemachine;
+using TMPro;
+using System;
+
+[Serializable]
+public class HintTexts
+{
+    [TextArea]
+    public string throwHint, smokeHint, lookHint, drinkHint, talkHint, scrollHint;
+}
 
 public class DataHolder : MonoBehaviour
 {
@@ -26,6 +35,14 @@ public class DataHolder : MonoBehaviour
 
     static Transform originalPlayerCmFollow;
 
+    [SerializeField]
+    [InspectorName("Hints")]
+    HintTexts hintsReference;
+    public static HintTexts hints;
+
+    static GameObject hintPanel;
+    static GameObject dotImage;
+    static TextMeshProUGUI hintTMP;
 
     // Start is called before the first frame update
     void Start()
@@ -36,24 +53,26 @@ public class DataHolder : MonoBehaviour
         originalPlayerCmFollow = playerCinemachine.Follow;
         postProcessingVolume = GameObject.Find("GlowVolume");
         v = postProcessingVolume.GetComponent<Volume>();
+        hintPanel = GameObject.Find("HintPanel");
+        dotImage = hintPanel.transform.GetChild(0).gameObject;
+        hintTMP = hintPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        hintPanel.SetActive(false);
+        hints = hintsReference;
         //focusCinemachine.Priority = playerCinemachine.Priority + 1;
         //focusCinemachine.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("camblended is: "+camBlended+"camblenddone is: "+camBlendDone);
-        //Debug.Log("focusing is " + focusing+"; "+currentFocus);
         if (!focusing && focused)
         {
-            //Debug.Log("unfocusing");
             Unfocus();
         }
-        //Debug.Log("focusing: " + focusing + "; focused: " + focused);
     }
 
-    
+    #region Focusing and Unfocusing
     public static void FocusOnThis(float fadeInterval,float matColorVal)
     {
         if (currentFocus)
@@ -159,5 +178,23 @@ public class DataHolder : MonoBehaviour
             
 
     }
-    
+    #endregion
+
+    /// <summary>
+    /// put in "DataHolder.hints.blablabla" for the string
+    /// </summary>
+    /// <param name="hint"></param>
+    public static void ShowHint(string hint)
+    {
+        hintTMP.text = hint;
+        hintPanel.SetActive(true);
+        dotImage.SetActive(true);
+        hintTMP.gameObject.SetActive(true);
+    }
+
+    public static void HideHint()
+    {
+        hintPanel.SetActive(false);
+        hintTMP.text = null;
+    }
 }

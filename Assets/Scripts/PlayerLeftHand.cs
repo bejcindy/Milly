@@ -35,7 +35,8 @@ public class PlayerLeftHand : MonoBehaviour
     public bool readyToThrow;
     bool notHoldingAnyThing;
 
-    bool aimHinted, smokingHinted;
+    bool aimHinted, smokingHinted,drinkHinted;
+    bool aimHintDone, smokingHintDone,drinkHintDone;
     // Start is called before the first frame update
     void Start()
     {
@@ -70,45 +71,63 @@ public class PlayerLeftHand : MonoBehaviour
             Smoke();
         }
 
-        if (!isHolding && !GetComponent<PlayerRightHand>().isHolding || playerHolding.inDialogue)
+        //if (!isHolding && !GetComponent<PlayerRightHand>().isHolding || playerHolding.inDialogue)
+        //{
+        //    if (aimHint.activeSelf)
+        //        aimHint.SetActive(false);
+        //}
+        //else
+        //{
+        //if (!aimHint.activeSelf)
+        //{
+        if (smoking) 
         {
-            if (aimHint.activeSelf)
-                aimHint.SetActive(false);
-        }
-        else
-        {
-            if (!aimHint.activeSelf)
+            if (!smokingHintDone)
             {
-                if (smoking)
-                {
-                    if (!smokingHinted)
-                    {
-                        aimHint.SetActive(true);
-                        aimHint.transform.GetChild(2).gameObject.SetActive(true);
-                        aimHint.transform.GetChild(1).gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        aimHint.SetActive(false);
-                    }
-                }
-                else
-                {
-                    if (!aimHinted)
-                    {
-                        aimHint.SetActive(true);
-                        aimHint.transform.GetChild(2).gameObject.SetActive(false);
-                        aimHint.transform.GetChild(1).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        aimHint.SetActive(false);
-                    }
-                }
-                //aimHint.SetActive(true);
+                DataHolder.ShowHint(DataHolder.hints.smokeHint);
+                //if (!smokingHinted)
+                //{
+                //    DataHolder.ShowHint(DataHolder.hints.smokeHint);
+                //}
+                //else
+                //{
+                //    DataHolder.HideHint();
+                //    smokingHintDone = true;
+                //}
             }
-                
         }
+        else if (drinking)
+        {
+            DataHolder.ShowHint(DataHolder.hints.drinkHint);
+            //if (!drinkHintDone)
+            //{
+            //    if (!drinkHinted)
+            //        DataHolder.ShowHint(DataHolder.hints.drinkHint);
+            //    else
+            //    {
+            //        DataHolder.HideHint();
+            //        drinkHintDone = true;
+            //    }
+            //}
+        }
+        else if(isHolding)
+        {
+            if (!aimHintDone)
+            {
+                    DataHolder.ShowHint(DataHolder.hints.throwHint);
+                
+                //else
+                //{
+                //    Debug.Log("hinted");
+                //    DataHolder.HideHint();
+                //    aimHintDone = true;
+                //}
+            }
+        }
+                //aimHint.SetActive(true);
+            //}
+                
+        //}
     }
 
 
@@ -135,7 +154,6 @@ public class PlayerLeftHand : MonoBehaviour
             StartCoroutine(LerpPosition(Vector3.zero, 1f));
             StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
             holdingObj.GetComponent<Cigarette>().Inhale();
-            //smokingHinted = true;
         }
     }
 
@@ -154,6 +172,12 @@ public class PlayerLeftHand : MonoBehaviour
         {
             drinking = true;
             handAnim.Play("HandDrink");
+            //drinkHinted = true;
+            if (!drinkHintDone)
+            {
+                DataHolder.HideHint();
+                drinkHintDone = true;
+            }
         }
         if (handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "HandDrink")
             drinking = false;
@@ -178,7 +202,12 @@ public class PlayerLeftHand : MonoBehaviour
                     if (smoking)
                     {
                         holdingObj.GetComponent<Cigarette>().FinishSmoking();
-                        smokingHinted = true;
+                        //smokingHinted = true;
+                        if (!smokingHintDone)
+                        {
+                            DataHolder.HideHint();
+                            smokingHintDone = true;
+                        }
                     }
                     isHolding = false;
                     smoking = false;
@@ -209,10 +238,15 @@ public class PlayerLeftHand : MonoBehaviour
                         }
                         FMODUnity.RuntimeManager.PlayOneShot(holdingObj.GetComponent<PickUpObject>().throwEventName, transform.position);
                     }
-
+                    
                     noThrow = true;
                     playerHolding.UnoccupyLeft();
-                    aimHinted = true;
+                    if (!aimHintDone)
+                    {
+                        Debug.Log("hinted");
+                        DataHolder.HideHint();
+                        aimHintDone = true;
+                    }
                     readyToThrow = false;
                 }
             }

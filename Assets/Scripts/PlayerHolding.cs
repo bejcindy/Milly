@@ -341,7 +341,9 @@ public class PlayerHolding : MonoBehaviour
 
     public void GetFullHand()
     {
-        if (leftHand.isHolding && rightHand.isHolding)
+        //if (leftHand.isHolding && rightHand.isHolding)
+        //    fullHand = true;
+        if (leftHand.isHolding)
             fullHand = true;
         else
             fullHand = false;

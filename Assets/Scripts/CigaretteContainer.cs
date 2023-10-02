@@ -27,7 +27,7 @@ public class CigaretteContainer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            if(cigCounts > 0 && !playerHolding.smoking && !playerHolding.fullHand)
+            if(cigCounts > 0 && !playerHolding.smoking && !playerHolding.fullHand && !playerHolding.atInterior)
             {
                 cigCounts--;
                 GameObject newCig = GameObject.Instantiate(fullCig);

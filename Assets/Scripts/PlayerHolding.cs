@@ -368,7 +368,8 @@ public class PlayerHolding : MonoBehaviour
         leftHand.holdingObj = obj;
         obj.SetParent(handContainer);
         StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
-        StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
+        if(!obj.GetComponent<Cigarette>())
+            StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
         //obj.localPosition = Vector3.zero;
         //obj.localRotation = Quaternion.Euler(Vector3.zero);
         if (obj.GetComponent<PickUpObject>().cigarette)

@@ -5,8 +5,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMOD;
 
+public enum HandObjectType
+{
+    DRINK,
+    FOOD,
+    TRASH,
+    CIGARETTE
+}
 public class PickUpObject : LivableObject
 {
+    public HandObjectType objType;
     public PlayerHolding playerHolding;
     protected Rigidbody rb;
     public bool inHand;
@@ -69,19 +77,19 @@ public class PickUpObject : LivableObject
                     }
                 }
 
-                if (playerHolding.GetRightHand())
-                {
-                    if (Input.GetMouseButtonDown(1) && selected)
-                    {
-                        if (!activated && matColorVal > 0)
-                        {
-                            activated = true;
-                        }
-                        rb.isKinematic = true;
-                        playerHolding.OccupyRight(transform);
-                        inHand = true;
-                    }
-                }
+                //if (playerHolding.GetRightHand())
+                //{
+                //    if (Input.GetMouseButtonDown(1) && selected)
+                //    {
+                //        if (!activated && matColorVal > 0)
+                //        {
+                //            activated = true;
+                //        }
+                //        rb.isKinematic = true;
+                //        playerHolding.OccupyRight(transform);
+                //        inHand = true;
+                //    }
+                //}
 
             }
         }

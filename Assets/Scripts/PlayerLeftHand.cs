@@ -32,7 +32,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     Vector2 throwForce;
 
-    bool readyToThrow;
+    public bool readyToThrow;
     bool notHoldingAnyThing;
 
     bool aimHinted, smokingHinted;
@@ -49,13 +49,12 @@ public class PlayerLeftHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.ScreenPointToRay(Input.mousePosition).direction * 30f,Color.cyan);
         if (isHolding)
         {
-
             if (!inPizzaBox)
             {
-                Drink();
+                if(holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
+                    Drink();
                 if(!drinking && !playerHolding.atInterior)
                     DetectHolding();
             }
@@ -70,6 +69,7 @@ public class PlayerLeftHand : MonoBehaviour
         {
             Smoke();
         }
+
         if (!isHolding && !GetComponent<PlayerRightHand>().isHolding || playerHolding.inDialogue)
         {
             if (aimHint.activeSelf)
@@ -114,14 +114,18 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void Smoke()
     {
-        if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > 0.2f && !inhaling)
+        if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > -0.1f && !inhaling)
         {
-            Vector3 smokingPos = new Vector3(0, -0.15f, 0.22f);
+            Vector3 smokingPos = new Vector3(0.5f, 0f, -0.3f);
+            Vector3 smokingRot = new Vector3(0, 180, 0);
             StartCoroutine(LerpPosition(smokingPos, 1f));
+            StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
         }
-        if(Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0.75f && !inhaling)
+        if(Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !inhaling)
         {
-            StartCoroutine(LerpPosition(holdingPosition, 1f));
+            Vector3 smokingRot = new Vector3(0, 160, 0);
+            StartCoroutine(LerpPosition(Vector3.zero, 1f));
+            StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
             holdingObj.GetComponent<Cigarette>().Inhale();
             //smokingHinted = true;
         }
@@ -129,7 +133,6 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void Drink()
     {
-        Debug.Log(handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         if (Input.GetMouseButtonDown(0) && !noThrow)
         {
             if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
@@ -150,7 +153,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void DetectHolding()
     {
-        if (Input.GetMouseButtonDown(0) && holdingObj)
+        if (Input.GetMouseButtonDown(0) && holdingObj && !PauseMenu.isPaused)
         {
             readyToThrow = true;
         }
@@ -230,7 +233,7 @@ public class PlayerLeftHand : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             readyToThrow = false;
-            holdingObj.localPosition = holdingPosition;
+            holdingObj.localPosition = Vector3.zero;
             holdTimer = 0;
             throwForce = Vector2.zero;
             aimUI.SetActive(false);
@@ -266,6 +269,19 @@ public class PlayerLeftHand : MonoBehaviour
         holdingObj.localPosition = targetPosition;
         inhaling = false;
 
+    }
+
+    IEnumerator LerpRotation(Quaternion endValue, float duration)
+    {
+        float time = 0;
+        Quaternion startValue = holdingObj.localRotation;
+        while (time < duration)
+        {
+            holdingObj.localRotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        holdingObj.localRotation = endValue;
     }
 
 

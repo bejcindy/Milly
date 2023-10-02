@@ -180,7 +180,7 @@ public class FixedCameraObject : LivableObject
             fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
             fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
         }
-        playerBody.enabled = true;
+        //playerBody.enabled = true;
         camController.enabled = true;
         playerMovement.enabled = true;
         positionFixed = false;

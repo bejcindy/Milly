@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public bool isPaused;
+    public static bool isPaused;
+    public static bool pauseAfterCD;
+
+    float pauseCD = 2f;
     public GameObject pauseMenu;
     public GameObject player;
     PlayerHolding playerHolding;
@@ -40,6 +43,17 @@ public class PauseMenu : MonoBehaviour
             }
             Time.timeScale = 1.0f;
             pauseMenu.SetActive(false);
+
+            if (pauseCD > 0)
+            {
+                pauseAfterCD = true;
+                pauseCD -= Time.deltaTime;
+            }
+            else
+            {
+                pauseCD = 2f;
+                pauseAfterCD = false;
+            }
         }
     }
 

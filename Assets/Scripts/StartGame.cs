@@ -11,6 +11,7 @@ public class StartGame : MonoBehaviour
     public PlayerMovement playerMovement;
     public PlayerCam playerCam;
     public CinemachineVirtualCamera playerCinemachine;
+    public CinemachineVirtualCamera izakayaStartCam;
     public bool startSequence;
     public Animator startAnim;
     // Start is called before the first frame update
@@ -22,24 +23,25 @@ public class StartGame : MonoBehaviour
         izakayaAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Izakaya_Noise");
         outsideAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
 
-        ActivateGame();
 
-        //if (startSequence)
-        //{
-        //    izakayaAmbienceEvent.start();
-        //    playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-        //    playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
-        //    playerMovement.enabled = false;
-        //    playerCam.enabled = false;
-        //}
-        //else
-        //{
-        //    playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
-        //    playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
-        //    //playerMovement.enabled = true;
-        //    //playerCam.enabled=true;
-        //    //outsideAmbienceEvent.start();
-        //}
+        if (startSequence)
+        {
+            izakayaAmbienceEvent.start();
+            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+            playerMovement.enabled = false;
+            playerCam.enabled = false;
+        }
+        else
+        {
+            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
+            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
+            izakayaStartCam.m_Priority = 9;
+            playerCinemachine.m_Priority = 10;
+            playerMovement.enabled = true;
+            playerCam.enabled=true;
+            //outsideAmbienceEvent.start();
+        }
     }
 
     // Update is called once per frame

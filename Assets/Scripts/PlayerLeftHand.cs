@@ -23,7 +23,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     public Animator handAnim;
     public bool drinking;
-
+    public ParticleSystem smokeVFX;
      Vector2 minThrowForce = new Vector2(100f, 10f);
      Vector2 maxThrowForce = new Vector2(900f, 50f);
     float holdTime = 2f;
@@ -123,6 +123,14 @@ public class PlayerLeftHand : MonoBehaviour
         }
         if(Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !inhaling)
         {
+            if (!smokeVFX.gameObject.activeSelf)
+            {
+                smokeVFX.gameObject.SetActive(true);
+            }
+            else
+            {
+                smokeVFX.Play();
+            }
             Vector3 smokingRot = new Vector3(0, 160, 0);
             StartCoroutine(LerpPosition(Vector3.zero, 1f));
             StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));

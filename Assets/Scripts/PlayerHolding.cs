@@ -39,6 +39,7 @@ public class PlayerHolding : MonoBehaviour
     RectTransform objectUIRect;
     public RectTransform CanvasRect;
 
+    public GameObject doorHandle;
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
@@ -61,10 +62,14 @@ public class PlayerHolding : MonoBehaviour
         GetFullHand();
         ChooseInteractable();
         ChooseLookable();
-        if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0)
+        if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle)
             HideUI();
         atContainer = CheckContainer();
-        
+        if (doorHandle)
+        {
+            //Debug.Log("doorhandeled");
+            DisplayUI(doorHandle, pickUpSprite);
+        }
         if (!hintDone)
         {
             if (focusedObj != null)

@@ -16,6 +16,9 @@ public class Door : LivableObject
     PlayerHolding playerHolding;
     Vector3 closedPos;
     public Vector3 openPos;
+    public Collider doorHandleCollider;
+
+    bool playedWithDoor;
 
     protected override void Start()
     {
@@ -25,16 +28,41 @@ public class Door : LivableObject
             closedPos = door.localPosition;
         else
             closedPos = door.localEulerAngles;
+        
     }
 
     protected override void Update()
     {
         base.Update();
+        checkVisible = isDoorHandleVisible(doorHandleCollider);
+        Vector3 pointOnScreen = Camera.main.WorldToScreenPoint(doorHandleCollider.bounds.center);
+        if (checkVisible)
+        {
+            if ((pointOnScreen.x > Screen.width * 0.2f) || (pointOnScreen.x < Screen.width * 0.8f) ||
+            (pointOnScreen.y > Screen.height * 0.2f) || (pointOnScreen.y < Screen.height * 0.8f))
+                isVisible = true;
+            else
+                isVisible = false;
+        }
+        else
+            isVisible = false;
+
+
         playerInFront = CheckPlayerForward();
         if (interactable)
+        {
             DoorControl();
+            playedWithDoor = true;
+        }
+        else
+        {
+            if (playedWithDoor)
+            {
+                playerHolding.doorHandle = null;
+                playedWithDoor = false;
+            }
 
-
+        }
     }
 
     protected virtual void DoorControl()
@@ -46,8 +74,9 @@ public class Door : LivableObject
             {
                 activated = true;
                 isInteracting = true;
+                playedWithDoor = true;
             }
-
+            playerHolding.doorHandle = doorHandleCollider.gameObject;
         }
 
         if (isInteracting)

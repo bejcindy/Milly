@@ -74,23 +74,25 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (rend)
-            checkVisible = IsObjectVisible(rend);
-        if (!rigged)
+
+        if (!GetComponent<Door>() && rend)
         {
-            if (checkVisible)
+            checkVisible = IsObjectVisible(rend);
+            if (!rigged)
             {
-                isVisible = IsInView();
+                if (checkVisible)
+                {
+                    isVisible = IsInView();
+                }
+                else
+                    isVisible = false;
+
             }
             else
-                isVisible = false;
-
+            {
+                isVisible = visibleDetector.isVisible;
+            }
         }
-        else
-        {
-            isVisible = visibleDetector.isVisible;
-        }
-
         DetectInteractable();
 
         if (fadeOut)
@@ -166,14 +168,9 @@ public class LivableObject : MonoBehaviour
             material.SetFloat("_WhiteDegree", matColorVal);
             if (!played)
             {
-                //if (!GetComponent<LookingObject>())
-                //    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Enable", transform.position);
                 if (GetComponent<PickUpObject>())
                 {
-                    //Debug.Log("played snapshot");
                     snapshot = FMODUnity.RuntimeManager.CreateInstance("snapshot:/EnableObject");
-                    //snapshot.getParameterByName("EnableFilterIntensity", out I);
-                    //snapshot.setParameterByName("EnableFilterIntensity", I);
                     snapshot.start();
                 }
                 played = true;
@@ -182,17 +179,10 @@ public class LivableObject : MonoBehaviour
             if (GetComponent<PickUpObject>())
             {
                 snapshot.setParameterByName("EnableFilterIntensity", I);
-                //snapshot.getParameterByName("EnableFilterIntensity", out check);
-                //Debug.Log(gameObject.name + check+"; I is: "+I);
             }
         }
         else
         {
-            //Debug.Log(gameObject.name+"here");
-            //snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            //snapshot.release();
-            //if (GetComponent<PickUpObject>())
-            //    StartCoroutine(FadeOutFilter());
             fadeOut = true;
             matColorVal = 0;
             firstActivated = true;
@@ -200,14 +190,12 @@ public class LivableObject : MonoBehaviour
                 specialEffect.SetActive(true);
         }
     }
-    //float check;
+
     void FadeOutFilter()
     {
         
         if (I > 0)
         {
-            //snapshot.getParameterByName("EnableFilterIntensity", out check);
-            //Debug.Log(gameObject.name+ check);
             I -= 0.1f * fadeInterval * Time.deltaTime;
             snapshot.setParameterByName("EnableFilterIntensity", I);
         }
@@ -355,6 +343,10 @@ public class LivableObject : MonoBehaviour
         {
             return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds);
         }
+    }
+    protected virtual bool isDoorHandleVisible(Collider col)
+    {
+        return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), col.bounds);
     }
     //protected virtual void OnBecameVisible()
     //{

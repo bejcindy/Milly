@@ -16,6 +16,7 @@ public class PlayerHolding : MonoBehaviour
 
 
     public Transform handContainer;
+    public Transform chopsticksContainer;
     public bool atInterior;
 
 
@@ -359,12 +360,26 @@ public class PlayerHolding : MonoBehaviour
         RemoveInteractable(obj.gameObject);
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;
-        obj.SetParent(handContainer);
-        StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
-        if(!obj.GetComponent<Cigarette>())
+
+        if (!obj.GetComponent<Chopsticks>())
+        {
+            obj.SetParent(handContainer);
+            StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+        }
+
+        else
+        {
+            obj.parent.SetParent(chopsticksContainer);
+            StartCoroutine(LerpPosition(obj.parent, Vector3.zero, 1f));
+        }
+
+
+
+
+        if(!obj.GetComponent<Cigarette>() && !obj.GetComponent<Chopsticks>())
             StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
-        //obj.localPosition = Vector3.zero;
-        //obj.localRotation = Quaternion.Euler(Vector3.zero);
+        else if (obj.GetComponent<Chopsticks>())
+            StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(Vector3.zero), 1f));
         if (obj.GetComponent<PickUpObject>().cigarette)
         {
             obj.localEulerAngles = new Vector3(0, 160, 0);

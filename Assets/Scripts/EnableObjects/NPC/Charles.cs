@@ -30,7 +30,6 @@ public class Charles : NPCControl
         if(charlesOpenDoor)
             destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
 
-
     }
 
     public void CharlesAction3()
@@ -42,7 +41,7 @@ public class Charles : NPCControl
     public void FinishSmoking()
     {
         Debug.Log("finishing smoking");
-        machine.ResetAnimTrigger("Special1");
+        //machine.ResetAnimTrigger("Special1");
         machine.SetAnimatorTrigger("Finish");
     }
 

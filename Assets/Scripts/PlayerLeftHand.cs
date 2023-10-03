@@ -71,63 +71,24 @@ public class PlayerLeftHand : MonoBehaviour
             Smoke();
         }
 
-        //if (!isHolding && !GetComponent<PlayerRightHand>().isHolding || playerHolding.inDialogue)
-        //{
-        //    if (aimHint.activeSelf)
-        //        aimHint.SetActive(false);
-        //}
-        //else
-        //{
-        //if (!aimHint.activeSelf)
-        //{
         if (smoking) 
         {
             if (!smokingHintDone)
             {
                 DataHolder.ShowHint(DataHolder.hints.smokeHint);
-                //if (!smokingHinted)
-                //{
-                //    DataHolder.ShowHint(DataHolder.hints.smokeHint);
-                //}
-                //else
-                //{
-                //    DataHolder.HideHint();
-                //    smokingHintDone = true;
-                //}
             }
         }
         else if (drinking)
         {
             DataHolder.ShowHint(DataHolder.hints.drinkHint);
-            //if (!drinkHintDone)
-            //{
-            //    if (!drinkHinted)
-            //        DataHolder.ShowHint(DataHolder.hints.drinkHint);
-            //    else
-            //    {
-            //        DataHolder.HideHint();
-            //        drinkHintDone = true;
-            //    }
-            //}
         }
         else if(isHolding)
         {
             if (!aimHintDone)
             {
-                    DataHolder.ShowHint(DataHolder.hints.throwHint);
-                
-                //else
-                //{
-                //    Debug.Log("hinted");
-                //    DataHolder.HideHint();
-                //    aimHintDone = true;
-                //}
+                DataHolder.ShowHint(DataHolder.hints.throwHint);
             }
         }
-                //aimHint.SetActive(true);
-            //}
-                
-        //}
     }
 
 

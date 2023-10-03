@@ -10,7 +10,8 @@ public enum HandObjectType
     DRINK,
     FOOD,
     TRASH,
-    CIGARETTE
+    CIGARETTE,
+    DISH
 }
 public class PickUpObject : LivableObject
 {
@@ -54,8 +55,6 @@ public class PickUpObject : LivableObject
     {
         if (interactable && !inHand && !thrown)
         {
-
-
             if (!playerHolding.fullHand)
             {
                 if (!player.GetComponent<PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)

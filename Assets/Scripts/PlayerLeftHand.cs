@@ -19,6 +19,7 @@ public class PlayerLeftHand : MonoBehaviour
     public Vector3 smokingPosition;
     public PlayerHolding playerHolding;
     public GameObject aimUI;
+    public GameObject chopAimUI;
     public GameObject aimHint;
 
     public Animator handAnim;
@@ -27,6 +28,11 @@ public class PlayerLeftHand : MonoBehaviour
      Vector2 minThrowForce = new Vector2(100f, 10f);
      Vector2 maxThrowForce = new Vector2(900f, 50f);
     float holdTime = 2f;
+
+
+    float chopHoldTimeMax = 1f;
+    float chopHoldVal = 0;
+    public bool chopAiming;
     [SerializeField]
     float holdTimer;
 
@@ -65,12 +71,20 @@ public class PlayerLeftHand : MonoBehaviour
                 DetectPizzaHolding();
             }
         }
+        
 
         if (smoking)
         {
             Smoke();
         }
 
+        if (holdingObj.GetComponent<Chopsticks>())
+        {
+            UsingChopsticks();
+            ChopUIDetect();
+        }
+
+        #region Hint Region
         if (smoking) 
         {
             if (!smokingHintDone)
@@ -89,6 +103,35 @@ public class PlayerLeftHand : MonoBehaviour
                 DataHolder.ShowHint(DataHolder.hints.throwHint);
             }
         }
+        #endregion
+    }
+
+    private void UsingChopsticks()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if(chopHoldVal < chopHoldTimeMax)
+            {
+                chopHoldVal += Time.deltaTime; 
+            }
+            else
+            {
+                chopHoldVal = 0;
+                chopAiming = true;
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            chopAiming = false;
+        }
+    }
+
+    private void ChopUIDetect()
+    {
+        if (chopAiming)
+            chopAimUI.SetActive(true);
+        else
+            chopAimUI.SetActive(false);
     }
 
 

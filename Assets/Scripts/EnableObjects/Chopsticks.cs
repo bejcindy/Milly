@@ -6,7 +6,7 @@ public class Chopsticks : PickUpObject
 {
     Transform otherChopstick;
 
-    protected override void Start()
+    protected override void Start() 
     {
         base.Start();
         otherChopstick = transform.parent.GetChild(1).transform;

@@ -11,7 +11,7 @@ using System;
 public class HintTexts
 {
     [TextArea]
-    public string throwHint, smokeHint, lookHint, drinkHint, talkHint, scrollHint;
+    public string throwHint, smokeHint, lookHint, drinkHint, kickHint, scrollHint;
 }
 
 public class DataHolder : MonoBehaviour

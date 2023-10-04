@@ -36,7 +36,7 @@ public class PlayerHolding : MonoBehaviour
     public ContainerObject currentContainer;
 
     public Image objectUI;
-    public Sprite pickUpSprite, lookingSprite;
+    public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite;
     RectTransform objectUIRect;
     public RectTransform CanvasRect;
 
@@ -45,6 +45,11 @@ public class PlayerHolding : MonoBehaviour
     bool displayedFocusHint;
     bool hintDone;
     bool hintHiden;
+
+    //for kicking objects only
+    public GameObject kickableObj;
+    bool kickHintable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +74,10 @@ public class PlayerHolding : MonoBehaviour
         if (doorHandle)
         {
             //Debug.Log("doorhandeled");
-            DisplayUI(doorHandle, pickUpSprite);
+            if (!doorHandle.GetComponentInParent<Door>().doorMoving)
+                DisplayUI(doorHandle, pickUpSprite);
+            else
+                HideUI();
         }
         if (!hintDone)
         {
@@ -77,7 +85,7 @@ public class PlayerHolding : MonoBehaviour
             {
                 if (!displayedFocusHint)
                 {
-                    Debug.Log("trying");
+                    //Debug.Log("trying");
                     //focusedHint.SetActive(true);
                     DataHolder.ShowHint(DataHolder.hints.lookHint);
                     //displayedFocusHint = true;
@@ -103,7 +111,20 @@ public class PlayerHolding : MonoBehaviour
             }
         }
 
-
+        if (kickableObj)
+        {
+            DisplayUI(kickableObj, kickSprite);
+            kickHintable = false;
+        }
+        else
+        {
+            if (!kickHintable)
+            {
+                HideUI();
+                kickHintable = true;
+            }
+        }
+            
 
         if (DialogueManager.IsConversationActive)
         {
@@ -120,7 +141,7 @@ public class PlayerHolding : MonoBehaviour
             smoking = false;
     }
 
-
+    #region Interact & Look Related
 
     public void AddInteractable(GameObject obj)
     {
@@ -170,7 +191,8 @@ public class PlayerHolding : MonoBehaviour
         }
         return false;
     }
-
+    #endregion
+    #region Object-Tracking UI
     void DisplayUI(GameObject trackingObject,Sprite interactionSprite)
     {
         Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
@@ -193,7 +215,7 @@ public class PlayerHolding : MonoBehaviour
             objectUI.sprite = null;
         }
     }
-
+    #endregion
     public void ChooseInteractable()
     {
         if (pickUpObjects.Count <= 0)
@@ -306,7 +328,7 @@ public class PlayerHolding : MonoBehaviour
         return false;
     }
 
-
+    #region Hands Related
     public bool GetLeftHand()
     {
         if (leftHand.isHolding)
@@ -434,6 +456,7 @@ public class PlayerHolding : MonoBehaviour
     {
         rightHand.noThrow = false;
     }
+    #endregion
 
     private void OnTriggerEnter(Collider other)
     {

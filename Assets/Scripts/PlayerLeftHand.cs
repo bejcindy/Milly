@@ -33,6 +33,7 @@ public class PlayerLeftHand : MonoBehaviour
     float chopHoldTimeMax = 1f;
     float chopHoldVal = 0;
     public bool chopAiming;
+    public Transform selectedFood;
     [SerializeField]
     float holdTimer;
 
@@ -70,19 +71,23 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 DetectPizzaHolding();
             }
+
+            if (holdingObj.GetComponent<Chopsticks>())
+            {
+                UsingChopsticks();
+                ChopUIDetect();
+            }
+
+            if (smoking)
+            {
+                Smoke();
+            }
         }
         
 
-        if (smoking)
-        {
-            Smoke();
-        }
 
-        if (holdingObj.GetComponent<Chopsticks>())
-        {
-            UsingChopsticks();
-            ChopUIDetect();
-        }
+
+
 
         #region Hint Region
         if (smoking) 
@@ -108,7 +113,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void UsingChopsticks()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !holdingObj.GetComponent<Chopsticks>().hasFood)
         {
             if(chopHoldVal < chopHoldTimeMax)
             {
@@ -122,7 +127,27 @@ public class PlayerLeftHand : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            chopAiming = false;
+            if (chopAiming)
+            {
+                if (selectedFood)
+                {
+                    Chopsticks currentChop = holdingObj.GetComponent<Chopsticks>();
+                    if (!currentChop.hasFood)
+                    {
+
+                        FoodPickObject food = selectedFood.GetComponent<FoodPickObject>();
+
+                        selectedFood.SetParent(holdingObj.parent.transform);
+
+                        StartCoroutine(food.LerpPosition(currentChop.chopPickedPos, 0.5f));
+                        StartCoroutine(food.LerpRotation(Quaternion.Euler(food.inChopRot), 0.5f));
+                        selectedFood.GetComponent<FoodPickObject>().selected = false;
+                        currentChop.hasFood = true;
+                    }
+
+                }
+                chopAiming = false;
+            }
         }
     }
 
@@ -133,6 +158,8 @@ public class PlayerLeftHand : MonoBehaviour
         else
             chopAimUI.SetActive(false);
     }
+
+
 
 
     private void Smoke()

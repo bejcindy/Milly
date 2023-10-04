@@ -6,6 +6,8 @@ public class FoodPickObject : MonoBehaviour
 {
     public bool selected;
     PlayerLeftHand leftHand;
+
+    public Vector3 inChopRot;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +27,20 @@ public class FoodPickObject : MonoBehaviour
         }
 
         if (selected)
+        {
             gameObject.layer = 9;
+            leftHand.selectedFood = this.transform;
+        }
+
         else
+        {
             gameObject.layer = 0;
+            if(leftHand.selectedFood == this.transform)
+            {
+                leftHand.selectedFood = null;
+            }
+        }
+
     }
 
     public void DetectChopPick()
@@ -45,6 +58,33 @@ public class FoodPickObject : MonoBehaviour
                 selected = false;
             }
         }
+    }
+
+    public IEnumerator LerpPosition(Vector3 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = transform.localPosition;
+        while (time < duration)
+        {
+            transform.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.localPosition = targetPosition;
+
+    }
+
+    public IEnumerator LerpRotation(Quaternion endValue, float duration)
+    {
+        float time = 0;
+        Quaternion startValue = transform.localRotation;
+        while (time < duration)
+        {
+            transform.localRotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.localRotation = endValue;
     }
 
 

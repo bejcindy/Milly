@@ -5,6 +5,8 @@ using UnityEngine;
 public class Chopsticks : PickUpObject
 {
     Transform otherChopstick;
+    public Vector3 chopPickedPos;
+    public bool hasFood;
 
     protected override void Start() 
     {

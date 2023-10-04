@@ -19,6 +19,7 @@ public class PlayerLeftHand : MonoBehaviour
     public Vector3 smokingPosition;
     public PlayerHolding playerHolding;
     public GameObject aimUI;
+    public GameObject chopAimUI;
     public GameObject aimHint;
 
     public Animator handAnim;
@@ -27,6 +28,14 @@ public class PlayerLeftHand : MonoBehaviour
      Vector2 minThrowForce = new Vector2(100f, 10f);
      Vector2 maxThrowForce = new Vector2(900f, 50f);
     float holdTime = 2f;
+
+
+    float chopHoldTimeMax = 0.2f;
+    float chopHoldVal = 0;
+    public bool chopAiming;
+
+    public Transform selectedFood;
+    Transform currentFood;
     [SerializeField]
     float holdTimer;
 
@@ -64,13 +73,25 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 DetectPizzaHolding();
             }
-        }
 
-        if (smoking)
-        {
-            Smoke();
-        }
+            if (holdingObj.GetComponent<Chopsticks>())
+            {
+                UsingChopsticks();
+                ChopUIDetect();
+            }
 
+            if (smoking)
+            {
+                Smoke();
+            }
+        }
+        
+
+
+
+
+
+        #region Hint Region
         if (smoking) 
         {
             if (!smokingHintDone)
@@ -89,7 +110,79 @@ public class PlayerLeftHand : MonoBehaviour
                 DataHolder.ShowHint(DataHolder.hints.throwHint);
             }
         }
+        #endregion
     }
+
+    private void UsingChopsticks()
+    {
+        Chopsticks currentChop = holdingObj.GetComponent<Chopsticks>();
+        if (Input.GetMouseButton(0) && !holdingObj.GetComponent<Chopsticks>().hasFood)
+        {
+            if (chopHoldVal < chopHoldTimeMax)
+            {
+
+                currentChop.transform.parent.localPosition += Camera.main.transform.forward * Time.deltaTime * 0.1f;
+
+                chopHoldVal += Time.deltaTime;
+            }
+            else
+            {
+                chopHoldVal = 0;
+                chopAiming = true;
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            if(currentChop.transform.parent.localPosition != Vector3.zero)
+            {
+                currentChop.transform.parent.localPosition = Vector3.Lerp(currentChop.transform.localPosition, Vector3.zero, 0.2f);
+            }
+            if (chopAiming && selectedFood)
+            {
+                if (!currentChop.hasFood)
+                {
+                    FoodPickObject food = selectedFood.GetComponent<FoodPickObject>();
+                    selectedFood.SetParent(holdingObj.parent.transform);
+                    selectedFood.localPosition = currentChop.foodPickedPos;
+                    selectedFood.localRotation = Quaternion.Euler(food.inChopRot);
+                    currentFood = selectedFood;
+                    selectedFood.GetComponent<FoodPickObject>().selected = false;
+                    currentChop.hasFood = true;
+                }
+                
+            }
+            chopAiming = false;
+        }
+
+        if(currentChop.hasFood)
+        {
+            if(Input.mouseScrollDelta.y < 0)
+            {
+                currentChop.SetEatAnim();
+                currentChop.hasFood = false;
+                Invoke(nameof(DestroyFood), 1f);
+            }
+        }
+
+
+    }
+
+    private void ChopUIDetect()
+    {
+        if (chopAiming)
+            chopAimUI.SetActive(true);
+        else
+            chopAimUI.SetActive(false);
+    }
+
+    private void DestroyFood()
+    {
+        Destroy(currentFood.gameObject);
+    }
+
+
+
+
 
 
     private void Smoke()
@@ -287,5 +380,6 @@ public class PlayerLeftHand : MonoBehaviour
         holdingObj.localRotation = endValue;
     }
 
+    
 
 }

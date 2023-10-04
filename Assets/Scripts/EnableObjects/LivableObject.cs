@@ -214,6 +214,7 @@ public class LivableObject : MonoBehaviour
     {
         Vector3 pointOnScreen = Camera.main.WorldToScreenPoint(rend.bounds.center);
 
+
         //Is in front
         if (pointOnScreen.z < 0)
         {

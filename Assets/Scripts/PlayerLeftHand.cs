@@ -30,10 +30,12 @@ public class PlayerLeftHand : MonoBehaviour
     float holdTime = 2f;
 
 
-    float chopHoldTimeMax = 1f;
+    float chopHoldTimeMax = 0.2f;
     float chopHoldVal = 0;
     public bool chopAiming;
+
     public Transform selectedFood;
+    Transform currentFood;
     [SerializeField]
     float holdTimer;
 
@@ -113,11 +115,15 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void UsingChopsticks()
     {
+        Chopsticks currentChop = holdingObj.GetComponent<Chopsticks>();
         if (Input.GetMouseButton(0) && !holdingObj.GetComponent<Chopsticks>().hasFood)
         {
-            if(chopHoldVal < chopHoldTimeMax)
+            if (chopHoldVal < chopHoldTimeMax)
             {
-                chopHoldVal += Time.deltaTime; 
+
+                currentChop.transform.parent.localPosition += Camera.main.transform.forward * Time.deltaTime * 0.1f;
+
+                chopHoldVal += Time.deltaTime;
             }
             else
             {
@@ -127,28 +133,38 @@ public class PlayerLeftHand : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            if (chopAiming)
+            if(currentChop.transform.parent.localPosition != Vector3.zero)
             {
-                if (selectedFood)
+                currentChop.transform.parent.localPosition = Vector3.Lerp(currentChop.transform.localPosition, Vector3.zero, 0.2f);
+            }
+            if (chopAiming && selectedFood)
+            {
+                if (!currentChop.hasFood)
                 {
-                    Chopsticks currentChop = holdingObj.GetComponent<Chopsticks>();
-                    if (!currentChop.hasFood)
-                    {
-
-                        FoodPickObject food = selectedFood.GetComponent<FoodPickObject>();
-
-                        selectedFood.SetParent(holdingObj.parent.transform);
-
-                        StartCoroutine(food.LerpPosition(currentChop.chopPickedPos, 0.5f));
-                        StartCoroutine(food.LerpRotation(Quaternion.Euler(food.inChopRot), 0.5f));
-                        selectedFood.GetComponent<FoodPickObject>().selected = false;
-                        currentChop.hasFood = true;
-                    }
-
+                    FoodPickObject food = selectedFood.GetComponent<FoodPickObject>();
+                    selectedFood.SetParent(holdingObj.parent.transform);
+                    selectedFood.localPosition = currentChop.foodPickedPos;
+                    selectedFood.localRotation = Quaternion.Euler(food.inChopRot);
+                    currentFood = selectedFood;
+                    selectedFood.GetComponent<FoodPickObject>().selected = false;
+                    currentChop.hasFood = true;
                 }
-                chopAiming = false;
+                
+            }
+            chopAiming = false;
+        }
+
+        if(currentChop.hasFood)
+        {
+            if(Input.mouseScrollDelta.y < 0)
+            {
+                currentChop.SetEatAnim();
+                currentChop.hasFood = false;
+                Invoke(nameof(DestroyFood), 1f);
             }
         }
+
+
     }
 
     private void ChopUIDetect()
@@ -158,6 +174,13 @@ public class PlayerLeftHand : MonoBehaviour
         else
             chopAimUI.SetActive(false);
     }
+
+    private void DestroyFood()
+    {
+        Destroy(currentFood.gameObject);
+    }
+
+
 
 
 
@@ -357,5 +380,6 @@ public class PlayerLeftHand : MonoBehaviour
         holdingObj.localRotation = endValue;
     }
 
+    
 
 }

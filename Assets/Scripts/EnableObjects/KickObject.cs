@@ -99,10 +99,10 @@ public class KickObject : MonoBehaviour
 
     }
 
-    public void DeactivateEnabler()
-    {
-        activateTrigger.enabled = false;
-    }
+    //public void DeactivateEnabler()
+    //{
+    //    activateTrigger.enabled = false;
+    //}
 
  
 

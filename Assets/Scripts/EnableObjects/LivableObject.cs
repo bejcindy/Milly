@@ -18,7 +18,6 @@ public class LivableObject : MonoBehaviour
 
     protected Material mat;
     [SerializeField] protected Renderer rend;
-    [SerializeField] protected Collider coll;
     [SerializeField] public bool activated;
     [SerializeField] public bool firstActivated; 
     [SerializeField] protected float matColorVal;
@@ -34,8 +33,8 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected RiggedVisibleDetector visibleDetector;
 
     public bool centerFocused;
-    
     public bool noRend;
+    public bool overrideStartSequence;
 
     [Header("Only Used For LookingObject")]
     public bool onlyFront = true;
@@ -45,6 +44,7 @@ public class LivableObject : MonoBehaviour
 
     int originalLayer;
     bool isGround;
+
 
 
 
@@ -74,70 +74,63 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Update()
     {
-
-        if (!GetComponent<Door>() && rend)
+        if (!StartSequence.noControl || overrideStartSequence)
         {
-            checkVisible = IsObjectVisible(rend);
-            if (!rigged)
+            if (!GetComponent<Door>() && rend)
             {
-                if (checkVisible)
+                checkVisible = IsObjectVisible(rend);
+                if (!rigged)
                 {
-                    isVisible = IsInView();
+                    if (checkVisible)
+                    {
+                        isVisible = IsInView();
+                    }
+                    else
+                        isVisible = false;
+
                 }
                 else
-                    isVisible = false;
-
-            }
-            else
-            {
-                isVisible = visibleDetector.isVisible;
-            }
-        }
-        DetectInteractable();
-
-        if (fadeOut)
-        {
-            if (GetComponent<PickUpObject>())
-                FadeOutFilter();
-        }
-
-
-        //isVisible = IsInView();
-        if (activated)
-        {
-            if (!firstActivated)
-            {
-                if (GetComponent<LookingObject>())
                 {
-                    if (DataHolder.camBlended && DataHolder.camBlendDone)
+                    isVisible = visibleDetector.isVisible;
+                }
+            }
+            DetectInteractable();
+
+            if (fadeOut)
+            {
+                if (GetComponent<PickUpObject>())
+                    FadeOutFilter();
+            }
+
+
+            //isVisible = IsInView();
+            if (activated)
+            {
+                if (!firstActivated)
+                {
+                    if (GetComponent<LookingObject>())
+                    {
+                        if (DataHolder.camBlended && DataHolder.camBlendDone)
+                            TurnOnColor(mat);
+                    }
+                    else
+                    {
                         TurnOnColor(mat);
+                    }
+
                 }
-                else
+
+                if (GetComponent<GroupMaster>() && matColorVal <= 0)
                 {
-                    TurnOnColor(mat);
+                    GetComponent<GroupMaster>().activateAll = true;
                 }
-                
-            }
-                
-            if (GetComponent<GroupMaster>() && matColorVal <= 0)
-            {
-                GetComponent<GroupMaster>().activateAll = true;
-            }
-                
-        }
-        
-        if(matColorVal >0 && isVisible && !isGround)
-        {
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                gameObject.layer = 9;
+
             }
 
         }
-        if (Input.GetKeyUp(KeyCode.Tab))
-        {
-            gameObject.layer = originalLayer;
-        }
+
+
+
     }
 
     protected virtual void DetectInteractable()

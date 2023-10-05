@@ -9,9 +9,10 @@ public class TrashLid : LivableObject
     public bool fixedPos;
     public PlayerHolding playerHolding;
 
-    public GameObject leftHandUI;
-    public GameObject rightHandUI;
-
+    //public GameObject leftHandUI;
+    //public GameObject rightHandUI;
+    GameObject iconPos;
+    bool iconHidden;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -19,6 +20,7 @@ public class TrashLid : LivableObject
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
+        iconPos = transform.GetChild(0).gameObject;
     }
     protected override void Update()
     {
@@ -32,10 +34,11 @@ public class TrashLid : LivableObject
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
             if (playerHolding.GetLeftHand())
             {
-                leftHandUI.SetActive(true);
+                //leftHandUI.SetActive(true);
+                
                 if (Input.GetMouseButton(0))
                 {
-                    leftHandUI.SetActive(false);
+                    //leftHandUI.SetActive(false);
                     activated = true;
                     interacting = true;
                     if (verticalInput < 0)
@@ -47,32 +50,40 @@ public class TrashLid : LivableObject
                         RotateLid(270);
                     }
                 }
-            }
-            if (playerHolding.GetRightHand())
-            {
-                if(!playerHolding.GetLeftHand())
-                    rightHandUI.SetActive(true);
-                if (Input.GetMouseButton(1))
+                else
                 {
-                    rightHandUI.SetActive(false);
-                    activated = true;
-                    interacting = true;
-                    if (verticalInput < 0)
-                    {
-                        RotateLid(0);
-                    }
-                    else if (verticalInput > 0)
-                    {
-                        RotateLid(270);
-                    }
+                    playerHolding.lidObj = iconPos;
+                    iconHidden = false;
                 }
             }
+            //if (playerHolding.GetRightHand())
+            //{
+            //    if(!playerHolding.GetLeftHand())
+            //        //rightHandUI.SetActive(true);
+            //    if (Input.GetMouseButton(1))
+            //    {
+            //        //rightHandUI.SetActive(false);
+            //        activated = true;
+            //        interacting = true;
+            //        if (verticalInput < 0)
+            //        {
+            //            RotateLid(0);
+            //        }
+            //        else if (verticalInput > 0)
+            //        {
+            //            RotateLid(270);
+            //        }
+            //    }
+            //}
 
         }
         else
         {
-            leftHandUI.SetActive(false);
-            rightHandUI.SetActive(false);
+            if (!iconHidden)
+            {
+                playerHolding.lidObj = null;
+                iconHidden = true;
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -83,8 +94,11 @@ public class TrashLid : LivableObject
 
         if (interacting)
         {
-            leftHandUI.SetActive(false);
-            rightHandUI.SetActive(false);
+            if (!iconHidden)
+            {
+                playerHolding.lidObj = null;
+                iconHidden = true;
+            }
         }
         if (!fixedPos && !interacting)
         {

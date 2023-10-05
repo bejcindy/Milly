@@ -30,6 +30,8 @@ public class FixedCameraObject : LivableObject
     PlayerHolding playerHolding;
     public Renderer playerBody;
 
+    bool iconHidden;
+
     protected override void Start()
     {
         base.Start();
@@ -53,14 +55,23 @@ public class FixedCameraObject : LivableObject
             //    gameObject.layer = 0;
             if (!isInteracting)
             {
-                uiHint.SetActive(true);
+                //uiHint.SetActive(true);
+                playerHolding.sitObj = uiHint;
+                DataHolder.ShowHint(DataHolder.hints.sitHint);
+                iconHidden = false;
                 TriggerInteraction();
             }
         }
         else
         {
             //gameObject.layer = 0;
-            uiHint.SetActive(false);
+            //uiHint.SetActive(false);
+            if (!iconHidden)
+            {
+                playerHolding.sitObj = null;
+                DataHolder.HideHint();
+                iconHidden = true;
+            }
         }
 
         if (positionFixed)

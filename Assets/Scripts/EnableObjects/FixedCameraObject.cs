@@ -146,8 +146,8 @@ public class FixedCameraObject : LivableObject
     protected IEnumerator UnfixPlayer()
     {
         playerCamera.m_Priority = 10;
-
-        if(transform.parent != null)
+        isInteracting = false;
+        if (transform.parent != null)
         {
             if (transform.parent.name.Contains("pizza"))
             {
@@ -184,7 +184,6 @@ public class FixedCameraObject : LivableObject
         camController.enabled = true;
         playerMovement.enabled = true;
         positionFixed = false;
-        isInteracting = false;
         playerHolding.positionFixedWithMouse = false;
 
     }

@@ -24,9 +24,10 @@ public class Chopsticks : PickUpObject
 
     protected override void Update()
     {
+
         base.Update();
 
-        if(selected && !thrown)
+        if (selected && !thrown)
         {
             otherChopstick.gameObject.layer = 9;
         }
@@ -34,6 +35,8 @@ public class Chopsticks : PickUpObject
         {
             otherChopstick.gameObject.layer = 0;
         }
+
+
     }
 
     public void SetChopAnimPick()

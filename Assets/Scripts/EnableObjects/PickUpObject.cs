@@ -58,7 +58,7 @@ public class PickUpObject : LivableObject
         {
             if (!playerHolding.fullHand)
             {
-                if (!player.GetComponent<PlayerLeftHand>().inPizzaBox && !player.GetComponent<PlayerRightHand>().inPizzaBox)
+                if (!player.GetComponent<PlayerLeftHand>().inPizzaBox && !StartSequence.noControl)
                 {
                     playerHolding.AddInteractable(gameObject);
                 }
@@ -77,19 +77,6 @@ public class PickUpObject : LivableObject
                     }
                 }
 
-                //if (playerHolding.GetRightHand())
-                //{
-                //    if (Input.GetMouseButtonDown(1) && selected)
-                //    {
-                //        if (!activated && matColorVal > 0)
-                //        {
-                //            activated = true;
-                //        }
-                //        rb.isKinematic = true;
-                //        playerHolding.OccupyRight(transform);
-                //        inHand = true;
-                //    }
-                //}
 
             }
         }

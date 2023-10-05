@@ -32,11 +32,17 @@ public class ChopsticksHolder : LivableObject
             !playerLeftHand.chopAiming && !playerLeftHand.GetCurrentChops().hasFood && !playerLeftHand.GetCurrentChops().chopMoving)
         {
             gameObject.layer = 9;
-            PutChops();
+            if(Input.GetMouseButtonDown(0))
+                PutChops();
         }
         else
         {
             gameObject.layer = 0;
+        }
+
+        if (StartSequence.noControl && !hasChop)
+        {
+            PutChops();
         }
 
         if (chopMoving)
@@ -45,19 +51,18 @@ public class ChopsticksHolder : LivableObject
             myChops.enabled = true;
     } 
 
-    void PutChops()
+    public void PutChops()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Chopsticks targetChops = playerLeftHand.GetCurrentChops();
-            myChops = targetChops;
-            targetChops.inHand = false;
-            targetChops.transform.parent.SetParent(transform);
-            StartCoroutine(LerpPosition(targetChops.transform.parent, 1f));
-            StartCoroutine(LerpRotation(targetChops.transform.parent, 1f));
-            playerHolding.UnoccupyLeft();
-            hasChop = true;
-        }
+
+        Chopsticks targetChops = playerLeftHand.GetCurrentChops();
+        myChops = targetChops;
+        targetChops.inHand = false;
+        targetChops.transform.parent.SetParent(transform);
+        StartCoroutine(LerpPosition(targetChops.transform.parent, 1f));
+        StartCoroutine(LerpRotation(targetChops.transform.parent, 1f));
+        playerHolding.UnoccupyLeft();
+        hasChop = true;
+
     }
 
     IEnumerator LerpPosition(Transform chops, float duration)

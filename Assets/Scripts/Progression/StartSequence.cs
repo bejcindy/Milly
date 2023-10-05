@@ -1,4 +1,5 @@
 using Cinemachine;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ public class StartSequence : MonoBehaviour
 
     public CinemachineVirtualCamera tableCam;
     public CinemachineVirtualCamera shockCam;
+
+    public StudioEventEmitter izaInEmitter;
+    bool fadingIzaAmbience;
+    float izaInFadeVal;
 
     LivableObject[] livObjects;
     // Start is called before the first frame update
@@ -40,6 +45,9 @@ public class StartSequence : MonoBehaviour
             ActivateAll(this.transform);
 
         }
+
+        if (fadingIzaAmbience)
+            FadeIzaInAmbience();
     }
 
     void ActivateAll(Transform obj)
@@ -84,6 +92,20 @@ public class StartSequence : MonoBehaviour
     {
         material.SetFloat("_WhiteDegree", groupColorVal);
 
+    }
+
+    public void FadeIzaInAmbience()
+    {
+        fadingIzaAmbience = true;
+        if(izaInFadeVal < 5)
+        {
+            izaInFadeVal += Time.deltaTime;
+            izaInEmitter.SetParameter("IzaInFade", izaInFadeVal);
+        }
+        else
+        {
+            fadingIzaAmbience = false;
+        }
     }
 
     public void SetTargetVal(float target)

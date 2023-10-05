@@ -26,7 +26,7 @@ public class StartGame : MonoBehaviour
 
         if (startSequence)
         {
-            izakayaAmbienceEvent.start();
+            //izakayaAmbienceEvent.start();
             playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
             playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
             playerMovement.enabled = false;

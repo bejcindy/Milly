@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
+using System;
 
 public class PlayerHolding : MonoBehaviour
 {
@@ -68,8 +69,12 @@ public class PlayerHolding : MonoBehaviour
     void Update()
     {
         GetFullHand();
-        ChooseInteractable();
-        ChooseLookable();
+        if (!StartSequence.noControl)
+        {
+            ChooseInteractable();
+            ChooseLookable();
+        }
+
 
         #region UI and Hints
         if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo)

@@ -84,4 +84,17 @@ public class Chopsticks : PickUpObject
         transform.parent.localPosition = Vector3.zero;
         transform.localRotation = chopOriginalRot;
     }
+
+    public IEnumerator LerpChopRotation(Quaternion targetRot, float duration)
+    {
+        float time = 0;
+        Quaternion startValue = transform.parent.localRotation;
+        while (time < duration)
+        {
+            transform.parent.localRotation = Quaternion.Lerp(startValue, targetRot, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.parent.localRotation = targetRot;
+    }
 }

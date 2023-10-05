@@ -55,8 +55,8 @@ public class BuildingGroupController : MonoBehaviour
                     TurnOnColor(mat);
             }
 
-
         }
+
         if (obj.GetComponent<LivableObject>() != null)
             obj.GetComponent<LivableObject>().activated = true;
 

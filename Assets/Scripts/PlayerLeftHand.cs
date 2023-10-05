@@ -30,8 +30,9 @@ public class PlayerLeftHand : MonoBehaviour
     float holdTime = 2f;
 
 
-    float chopHoldTimeMax = 0.2f;
-    float chopHoldVal = 0;
+    bool chopOut;
+    float chopHoldTimeMax = 1f;
+    public float chopHoldVal = 0;
     public bool chopAiming;
 
     public Transform selectedFood;
@@ -113,30 +114,28 @@ public class PlayerLeftHand : MonoBehaviour
         #endregion
     }
 
+
+    #region Chopsticks Region
     private void UsingChopsticks()
     {
         Chopsticks currentChop = holdingObj.GetComponent<Chopsticks>();
         if (Input.GetMouseButton(0) && !holdingObj.GetComponent<Chopsticks>().hasFood)
         {
+            chopOut = false;
+            chopAiming = true;
             if (chopHoldVal < chopHoldTimeMax)
             {
-
-                currentChop.transform.parent.localPosition += Camera.main.transform.forward * Time.deltaTime * 0.1f;
-
                 chopHoldVal += Time.deltaTime;
+                currentChop.transform.parent.localPosition += Camera.main.transform.forward * Time.deltaTime * 0.1f;
             }
-            else
-            {
-                chopHoldVal = 0;
-                chopAiming = true;
-            }
+
         }
+
         if (Input.GetMouseButtonUp(0))
         {
-            if(currentChop.transform.parent.localPosition != Vector3.zero)
-            {
-                currentChop.transform.parent.localPosition = Vector3.Lerp(currentChop.transform.localPosition, Vector3.zero, 0.2f);
-            }
+            chopOut = true;
+            chopHoldVal = 0;
+
             if (chopAiming && selectedFood)
             {
                 if (!currentChop.hasFood)
@@ -153,6 +152,9 @@ public class PlayerLeftHand : MonoBehaviour
             }
             chopAiming = false;
         }
+
+        if (chopOut)
+            DrawBackChop(currentChop);
 
         if(currentChop.hasFood)
         {
@@ -180,6 +182,17 @@ public class PlayerLeftHand : MonoBehaviour
         Destroy(currentFood.gameObject);
     }
 
+    private void DrawBackChop(Chopsticks chop)
+    {
+        if (chop.transform.parent.localPosition != Vector3.zero)
+        {
+            chop.transform.parent.localPosition = Vector3.Lerp(chop.transform.parent.localPosition, Vector3.zero, 0.5f);
+        }
+        else
+            chopOut = false;
+    }
+
+    #endregion
 
 
 

@@ -69,8 +69,7 @@ public class KickObject : MonoBehaviour
                 transform.GetChild(1).gameObject.GetComponent<Collider>().enabled = false;
                 coll.enabled = true;
                 rb.isKinematic = false;
-                rb.AddForce(player.forward * 20f,ForceMode.Impulse);
-                Invoke(nameof(DeactivateEnabler), 2f);
+                rb.AddForce(Camera.main.transform.forward * 20f,ForceMode.Impulse);
                 if (hinted)
                 {
                     DataHolder.HideHint();
@@ -93,7 +92,7 @@ public class KickObject : MonoBehaviour
         if (activated)
         {
             usefulChild.GetComponent<GroupMaster>().activateAll = true;
-            GetComponent<KickObject>().enabled = false;
+            //GetComponent<KickObject>().enabled = false;
 
         }
 

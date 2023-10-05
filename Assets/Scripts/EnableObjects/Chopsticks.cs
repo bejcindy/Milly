@@ -10,6 +10,7 @@ public class Chopsticks : PickUpObject
     public Vector3 chopPickingRot;
     Quaternion chopOriginalRot;
     public bool hasFood;
+    public bool chopMoving;
     Animator anim;
 
     protected override void Start() 

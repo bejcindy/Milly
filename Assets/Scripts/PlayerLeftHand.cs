@@ -126,10 +126,11 @@ public class PlayerLeftHand : MonoBehaviour
         if (Input.GetMouseButton(0) && !holdingObj.GetComponent<Chopsticks>().hasFood)
         {
             chopOut = false;
-            chopAiming = true;
             if (chopHoldVal < chopHoldTimeMax)
             {
                 chopHoldVal += Time.deltaTime;
+                if(chopHoldVal>0.2f)
+                    chopAiming = true;
                 currentChop.transform.parent.localPosition += Camera.main.transform.forward * Time.deltaTime * 0.1f;
             }
 
@@ -164,6 +165,7 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if(Input.mouseScrollDelta.y < 0)
             {
+                currentChop.chopMoving = true;
                 currentChop.SetEatAnim();
                 currentChop.hasFood = false;
                 Invoke(nameof(DestroyFood), 1f);
@@ -184,6 +186,7 @@ public class PlayerLeftHand : MonoBehaviour
     private void DestroyFood()
     {
         Destroy(currentFood.gameObject);
+        currentChop.chopMoving = false;
     }
 
     private void DrawBackChop(Chopsticks chop)

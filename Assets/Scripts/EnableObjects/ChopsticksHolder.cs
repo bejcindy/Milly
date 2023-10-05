@@ -10,6 +10,7 @@ public class ChopsticksHolder : LivableObject
     PlayerHolding playerHolding;
     public Chopsticks myChops;
     public bool hasChop;
+    bool chopMoving;
 
 
     protected override void Start()
@@ -27,7 +28,8 @@ public class ChopsticksHolder : LivableObject
         if (transform.childCount < 1)
             hasChop = false;
 
-        if(interactable && !hasChop && playerLeftHand.GetCurrentChops()!=null && !playerLeftHand.chopAiming)
+        if(interactable && !hasChop && playerLeftHand.GetCurrentChops()!=null && !chopMoving &&
+            !playerLeftHand.chopAiming && !playerLeftHand.GetCurrentChops().hasFood && !playerLeftHand.GetCurrentChops().chopMoving)
         {
             gameObject.layer = 9;
             PutChops();
@@ -36,6 +38,11 @@ public class ChopsticksHolder : LivableObject
         {
             gameObject.layer = 0;
         }
+
+        if (chopMoving)
+            myChops.enabled = false;
+        else
+            myChops.enabled = true;
     } 
 
     void PutChops()
@@ -43,6 +50,7 @@ public class ChopsticksHolder : LivableObject
         if (Input.GetMouseButtonDown(0))
         {
             Chopsticks targetChops = playerLeftHand.GetCurrentChops();
+            myChops = targetChops;
             targetChops.inHand = false;
             targetChops.transform.parent.SetParent(transform);
             StartCoroutine(LerpPosition(targetChops.transform.parent, 1f));
@@ -54,6 +62,7 @@ public class ChopsticksHolder : LivableObject
 
     IEnumerator LerpPosition(Transform chops, float duration)
     {
+        chopMoving = true;
         float time = 0;
         Vector3 startPosition = chops.localPosition;
         while (time < duration)
@@ -63,7 +72,7 @@ public class ChopsticksHolder : LivableObject
             yield return null;
         }
         chops.localPosition = chopHoldingPos;
-
+        chopMoving = false;
     }
 
     IEnumerator LerpRotation(Transform chops, float duration)

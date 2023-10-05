@@ -507,6 +507,9 @@ public class PlayerHolding : MonoBehaviour
 
     IEnumerator LerpPosition(Transform obj, Vector3 targetPosition, float duration)
     {
+        if (leftHand.holdingObj.GetComponent<Chopsticks>())
+            leftHand.holdingObj.GetComponent<Chopsticks>().chopMoving = true;
+
         float time = 0;
         Vector3 startPosition = obj.localPosition;
         while (time < duration)
@@ -516,6 +519,9 @@ public class PlayerHolding : MonoBehaviour
             yield return null;
         }
         obj.localPosition = targetPosition;
+
+        if (leftHand.holdingObj.GetComponent<Chopsticks>())
+            leftHand.holdingObj.GetComponent<Chopsticks>().chopMoving = false;
     }
 
     IEnumerator LerpRotation(Transform obj, Quaternion endValue, float duration)

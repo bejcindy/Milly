@@ -226,7 +226,7 @@ public class PlayerHolding : MonoBehaviour
         objectUI.sprite = interactionSprite;
         objectUI.SetNativeSize();
         if (interactionSprite == talkSprite)
-            objectUIRect.localScale = new Vector3(.2f, .2f, .2f);
+            objectUIRect.localScale = new Vector3(.15f, .15f, .15f);
         else
             objectUIRect.localScale = new Vector3(.1f, .1f, .1f);
         if (!objectUI.gameObject.activeSelf)

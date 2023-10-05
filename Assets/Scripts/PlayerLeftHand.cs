@@ -29,7 +29,7 @@ public class PlayerLeftHand : MonoBehaviour
      Vector2 maxThrowForce = new Vector2(900f, 50f);
     float holdTime = 2f;
 
-
+    Chopsticks currentChop;
     bool chopOut;
     float chopHoldTimeMax = 1f;
     public float chopHoldVal = 0;
@@ -77,8 +77,13 @@ public class PlayerLeftHand : MonoBehaviour
 
             if (holdingObj.GetComponent<Chopsticks>())
             {
+                currentChop = holdingObj.GetComponent<Chopsticks>();
                 UsingChopsticks();
                 ChopUIDetect();
+            }
+            else
+            {
+                currentChop = null;
             }
 
             if (smoking)
@@ -118,7 +123,6 @@ public class PlayerLeftHand : MonoBehaviour
     #region Chopsticks Region
     private void UsingChopsticks()
     {
-        Chopsticks currentChop = holdingObj.GetComponent<Chopsticks>();
         if (Input.GetMouseButton(0) && !holdingObj.GetComponent<Chopsticks>().hasFood)
         {
             chopOut = false;
@@ -190,6 +194,14 @@ public class PlayerLeftHand : MonoBehaviour
         }
         else
             chopOut = false;
+    }
+
+    public Chopsticks GetCurrentChops()
+    {
+        if (currentChop && !currentChop.hasFood)
+            return currentChop;
+        else
+            return null;
     }
 
     #endregion

@@ -48,7 +48,9 @@ public class PlayerHolding : MonoBehaviour
 
     //for kicking objects only
     public GameObject kickableObj;
-    bool kickHintable;
+    bool kickHidden;
+    public GameObject talkingTo;
+    public bool talknHidden;
 
     // Start is called before the first frame update
     void Start()
@@ -68,8 +70,12 @@ public class PlayerHolding : MonoBehaviour
         GetFullHand();
         ChooseInteractable();
         ChooseLookable();
-        if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle)
+
+        #region UI and Hints
+        if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo)
+        {
             HideUI();
+        }
         atContainer = CheckContainer();
         if (doorHandle)
         {
@@ -114,17 +120,33 @@ public class PlayerHolding : MonoBehaviour
         if (kickableObj)
         {
             DisplayUI(kickableObj, kickSprite);
-            kickHintable = false;
+            kickHidden = false;
         }
         else
         {
-            if (!kickHintable)
+            if (!kickHidden)
             {
                 HideUI();
-                kickHintable = true;
+                kickHidden = true;
             }
         }
-            
+
+        if (talkingTo)
+        {
+            DisplayUI(talkingTo, talkSprite);
+            Debug.Log("tried");
+            talknHidden = false;
+        }
+        else
+        {
+            if (!talknHidden)
+            {
+                HideUI();
+                talknHidden = true;
+            }
+        }
+
+        #endregion
 
         if (DialogueManager.IsConversationActive)
         {
@@ -203,7 +225,11 @@ public class PlayerHolding : MonoBehaviour
         objectUIRect.anchoredPosition = WorldObject_ScreenPosition;
         objectUI.sprite = interactionSprite;
         objectUI.SetNativeSize();
-        if(!objectUI.gameObject.activeSelf)
+        if (interactionSprite == talkSprite)
+            objectUIRect.localScale = new Vector3(.2f, .2f, .2f);
+        else
+            objectUIRect.localScale = new Vector3(.1f, .1f, .1f);
+        if (!objectUI.gameObject.activeSelf)
             objectUI.gameObject.SetActive(true);
     }
 
@@ -276,10 +302,14 @@ public class PlayerHolding : MonoBehaviour
             }
             focusedObj = lookingObjects[0];
             focusedObj.GetComponent<LookingObject>().selected = true;
-            if (!focusedObj.GetComponent<LookingObject>().focusingThis&&!DataHolder.camBlendDone && !DataHolder.camBlended)
+            if (!focusedObj.GetComponent<LookingObject>().focusingThis && !DataHolder.camBlendDone && !DataHolder.camBlended)
+            {
                 DisplayUI(focusedObj, lookingSprite);
+            }
             else
-                HideUI();
+            {
+                    HideUI();
+            }
         }
         else
         {
@@ -306,10 +336,14 @@ public class PlayerHolding : MonoBehaviour
             if (focusedObj)
             {
                 focusedObj.GetComponent<LookingObject>().selected = true;
-                if (!focusedObj.GetComponent<LookingObject>().focusingThis&& !DataHolder.camBlendDone && !DataHolder.camBlended)
+                if (!focusedObj.GetComponent<LookingObject>().focusingThis && !DataHolder.camBlendDone && !DataHolder.camBlended)
+                {
                     DisplayUI(focusedObj, lookingSprite);
+                }
                 else
-                    HideUI();
+                {
+                        HideUI();
+                }
             }
         }
     }

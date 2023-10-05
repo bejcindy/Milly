@@ -258,8 +258,7 @@ public class LivableObject : MonoBehaviour
                 //else
                 //    pointsInScreen--;
             }
-            if (gameObject.name=="poster15")
-                Debug.Log(gameObject.name + "point on screen is: " + pointsInScreen);
+            
             if (pointsInScreen < 2)
                 return false;
         }

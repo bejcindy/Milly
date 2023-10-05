@@ -37,21 +37,27 @@ public class PlayerHolding : MonoBehaviour
     public ContainerObject currentContainer;
 
     public Image objectUI;
-    public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite;
+    public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite;
     RectTransform objectUIRect;
     public RectTransform CanvasRect;
 
+    //for object tracking ui
     public GameObject doorHandle;
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
     bool hintHiden;
-
-    //for kicking objects only
     public GameObject kickableObj;
     bool kickHidden;
     public GameObject talkingTo;
     public bool talknHidden;
+    public GameObject lidObj;
+    bool dragHidden;
+    public GameObject sitObj;
+    bool sitHidden;
+    public GameObject clickableObj;
+    bool clickHidden;
+
 
     // Start is called before the first frame update
     void Start()
@@ -121,36 +127,16 @@ public class PlayerHolding : MonoBehaviour
                 //hintDone = true;
             }
         }
-
-        if (kickableObj)
-        {
-            DisplayUI(kickableObj, kickSprite);
-            kickHidden = false;
-        }
-        else
-        {
-            if (!kickHidden)
-            {
-                HideUI();
-                kickHidden = true;
-            }
-        }
-
-        if (talkingTo)
-        {
-            DisplayUI(talkingTo, talkSprite);
-            Debug.Log("tried");
-            talknHidden = false;
-        }
-        else
-        {
-            if (!talknHidden)
-            {
-                HideUI();
-                talknHidden = true;
-            }
-        }
-
+        if(kickableObj)
+            UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
+        if(talkingTo)
+            UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
+        if(lidObj)
+            UITriggerdByOtherObj(lidObj, pickUpSprite, dragHidden);
+        if(sitObj)
+            UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
+        if (clickableObj)
+            UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
         #endregion
 
         if (DialogueManager.IsConversationActive)
@@ -231,7 +217,7 @@ public class PlayerHolding : MonoBehaviour
         objectUI.sprite = interactionSprite;
         objectUI.SetNativeSize();
         if (interactionSprite == talkSprite)
-            objectUIRect.localScale = new Vector3(.2f, .2f, .2f);
+            objectUIRect.localScale = new Vector3(.15f, .15f, .15f);
         else
             objectUIRect.localScale = new Vector3(.1f, .1f, .1f);
         if (!objectUI.gameObject.activeSelf)
@@ -244,6 +230,22 @@ public class PlayerHolding : MonoBehaviour
         {
             objectUI.gameObject.SetActive(false);
             objectUI.sprite = null;
+        }
+    }
+    void UITriggerdByOtherObj(GameObject obj,Sprite sprite,bool hidden)
+    {
+        if (obj)
+        {
+            DisplayUI(obj, sprite);
+            hidden = false;
+        }
+        else
+        {
+            if (!hidden)
+            {
+                HideUI();
+                hidden = true;
+            }
         }
     }
     #endregion

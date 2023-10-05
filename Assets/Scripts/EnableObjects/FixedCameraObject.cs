@@ -30,6 +30,8 @@ public class FixedCameraObject : LivableObject
     PlayerHolding playerHolding;
     public Renderer playerBody;
 
+    bool iconHidden;
+
     protected override void Start()
     {
         base.Start();
@@ -53,14 +55,39 @@ public class FixedCameraObject : LivableObject
             //    gameObject.layer = 0;
             if (!isInteracting)
             {
-                uiHint.SetActive(true);
+                //uiHint.SetActive(true);
+                if (gameObject.name.Contains("apt_call"))
+                {
+                    playerHolding.clickableObj = gameObject;
+                    iconHidden = false;
+                }
+                else
+                {
+                    playerHolding.sitObj = uiHint;
+                    DataHolder.ShowHint(DataHolder.hints.sitHint);
+                    iconHidden = false;
+                }
                 TriggerInteraction();
             }
         }
         else
         {
             //gameObject.layer = 0;
-            uiHint.SetActive(false);
+            //uiHint.SetActive(false);
+            if (!iconHidden)
+            {
+                if (gameObject.name.Contains("apt_call"))
+                {
+                    playerHolding.clickableObj = null;
+                    iconHidden = true;
+                }
+                else
+                {
+                    playerHolding.sitObj = null;
+                    DataHolder.HideHint();
+                    iconHidden = true;
+                }
+            }
         }
 
         if (positionFixed)

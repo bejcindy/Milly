@@ -36,7 +36,7 @@ public class PlayerHolding : MonoBehaviour
     public ContainerObject currentContainer;
 
     public Image objectUI;
-    public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite,sitSprite;
+    public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite;
     RectTransform objectUIRect;
     public RectTransform CanvasRect;
 
@@ -54,6 +54,8 @@ public class PlayerHolding : MonoBehaviour
     bool dragHidden;
     public GameObject sitObj;
     bool sitHidden;
+    public GameObject clickableObj;
+    bool clickHidden;
 
 
     // Start is called before the first frame update
@@ -128,49 +130,8 @@ public class PlayerHolding : MonoBehaviour
             UITriggerdByOtherObj(lidObj, pickUpSprite, dragHidden);
         if(sitObj)
             UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
-
-        //if (kickableObj)
-        //{
-        //    DisplayUI(kickableObj, kickSprite);
-        //    kickHidden = false;
-        //}
-        //else
-        //{
-        //    if (!kickHidden)
-        //    {
-        //        HideUI();
-        //        kickHidden = true;
-        //    }
-        //}
-
-        //if (talkingTo)
-        //{
-        //    DisplayUI(talkingTo, talkSprite);
-        //    talknHidden = false;
-        //}
-        //else
-        //{
-        //    if (!talknHidden)
-        //    {
-        //        HideUI();
-        //        talknHidden = true;
-        //    }
-        //}
-
-        //if (lidObj)
-        //{
-        //    DisplayUI(lidObj, pickUpSprite);
-        //    dragHidden = false;
-        //}
-        //else
-        //{
-        //    if (!dragHidden)
-        //    {
-        //        HideUI();
-        //        dragHidden = true;
-        //    }
-        //}
-
+        if (clickableObj)
+            UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
         #endregion
 
         if (DialogueManager.IsConversationActive)

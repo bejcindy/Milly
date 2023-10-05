@@ -15,9 +15,14 @@ public class ClickableObject : LivableObject
     public Usable dialogueUsable;
     public FixedCameraObject bindedObject;
     DialogueSystemTrigger dialogue;
+
+    bool iconHidden;
+    PlayerHolding playerHolding;
+
     protected override void Start()
     {
         base.Start();
+        playerHolding = player.GetComponent<PlayerHolding>();
         if(TryGetComponent<Animator>(out Animator anim))
         {
             animator = anim;
@@ -37,6 +42,7 @@ public class ClickableObject : LivableObject
         base.Update();
         if (interactable)
         {
+            
             if(bellBinding && bindedObject.isInteracting)
             {
                 dialogueUsable.enabled = true;
@@ -49,7 +55,6 @@ public class ClickableObject : LivableObject
                         if (raycastHit.transform.name == transform.name)
                         {
                             activated = true;
-
                         }
                     }
                 }
@@ -58,7 +63,6 @@ public class ClickableObject : LivableObject
                 {
 
                     UnpressButton();
-
                 }
             }
             else

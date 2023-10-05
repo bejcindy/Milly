@@ -56,9 +56,17 @@ public class FixedCameraObject : LivableObject
             if (!isInteracting)
             {
                 //uiHint.SetActive(true);
-                playerHolding.sitObj = uiHint;
-                DataHolder.ShowHint(DataHolder.hints.sitHint);
-                iconHidden = false;
+                if (gameObject.name.Contains("apt_call"))
+                {
+                    playerHolding.clickableObj = gameObject;
+                    iconHidden = false;
+                }
+                else
+                {
+                    playerHolding.sitObj = uiHint;
+                    DataHolder.ShowHint(DataHolder.hints.sitHint);
+                    iconHidden = false;
+                }
                 TriggerInteraction();
             }
         }
@@ -68,9 +76,17 @@ public class FixedCameraObject : LivableObject
             //uiHint.SetActive(false);
             if (!iconHidden)
             {
-                playerHolding.sitObj = null;
-                DataHolder.HideHint();
-                iconHidden = true;
+                if (gameObject.name.Contains("apt_call"))
+                {
+                    playerHolding.clickableObj = null;
+                    iconHidden = true;
+                }
+                else
+                {
+                    playerHolding.sitObj = null;
+                    DataHolder.HideHint();
+                    iconHidden = true;
+                }
             }
         }
 

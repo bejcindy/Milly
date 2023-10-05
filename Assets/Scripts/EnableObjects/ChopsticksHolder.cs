@@ -45,10 +45,18 @@ public class ChopsticksHolder : LivableObject
             PutChops();
         }
 
-        if (chopMoving)
-            myChops.enabled = false;
+        if(myChops != null)
+        {
+            if (chopMoving)
+                myChops.enabled = false;
+            else
+                myChops.enabled = true;
+        }
         else
-            myChops.enabled = true;
+        {
+            chopMoving = false;
+        }
+
     } 
 
     public void PutChops()

@@ -77,6 +77,8 @@ public class NPCControl : MonoBehaviour
     protected bool noLookInConvo;
     protected bool noTalkStage;
     PlayerHolding playerHolding;
+
+    GameObject bone;
     
     
     // Start is called before the first frame update
@@ -93,7 +95,24 @@ public class NPCControl : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         playerHolding = player.GetComponent<PlayerHolding>();
+        //FindTheChosenOne(transform);
+        foreach(Transform child in transform)
+        {
+            if (child.name == "iconPos")
+                bone = child.gameObject;
+        }
     }
+
+    //void FindTheChosenOne(Transform t)
+    //{
+    //    foreach (Transform child in t)
+    //    {
+    //        if (child.name == "mixamorig:HeadTop_End")
+    //            bone = child.gameObject;
+    //        else if (child.childCount != 0)
+    //            FindTheChosenOne(child);
+    //    }
+    //}
 
     protected virtual void Update()
     {
@@ -274,9 +293,22 @@ public class NPCControl : MonoBehaviour
                 return machine.frozenState;
         }
     }
-
+    bool iconHidden;
     void ChangeLayer(int layerNumber)
     {
+        if (layerNumber == 9)
+        {
+            playerHolding.talkingTo = bone;
+            iconHidden = false;
+        }
+        else if (layerNumber == 0)
+        {
+            if (!iconHidden)
+            {
+                playerHolding.talkingTo = null;
+                iconHidden = true;
+            }
+        }
         foreach (Transform child in npcMesh)
         {
             child.gameObject.layer = layerNumber;

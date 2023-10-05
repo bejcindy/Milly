@@ -70,7 +70,7 @@ public class KickObject : MonoBehaviour
                 coll.enabled = true;
                 rb.isKinematic = false;
                 rb.AddForce(player.forward * 20f,ForceMode.Impulse);
-                Invoke(nameof(DeactivateEnabler), 2f);
+                //Invoke(nameof(DeactivateEnabler), 2f);
                 if (hinted)
                 {
                     DataHolder.HideHint();

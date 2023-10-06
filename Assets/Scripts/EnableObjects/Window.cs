@@ -10,7 +10,7 @@ public class Window : LivableObject
     public GameObject leftHandUI;
     public GameObject rightHandUI;
     PlayerHolding playerHolding;
-
+    bool iconHidden;
 
     protected override void Start()
     {
@@ -27,7 +27,7 @@ public class Window : LivableObject
             {
                 if (playerHolding.GetLeftHand())
                 {
-                    leftHandUI.SetActive(true);
+                    //leftHandUI.SetActive(true);
                     gameObject.layer = 9;
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -35,23 +35,28 @@ public class Window : LivableObject
                         leftHandInteraction = true;
                         activated = true;
                     }
-                }
-                if (playerHolding.GetRightHand())
-                {
-                    rightHandUI.SetActive(true);
-                    gameObject.layer = 9;
-                    if (Input.GetMouseButtonDown(1))
+                    else
                     {
-                        isInteracting = true;
-                        rightHandInteraction = true;
-                        activated = true;
+                        playerHolding.lidObj = leftHandUI;
+                        iconHidden = false;
                     }
                 }
+                //if (playerHolding.GetRightHand())
+                //{
+                //    rightHandUI.SetActive(true);
+                //    gameObject.layer = 9;
+                //    if (Input.GetMouseButtonDown(1))
+                //    {
+                //        isInteracting = true;
+                //        rightHandInteraction = true;
+                //        activated = true;
+                //    }
+                //}
             }
             else
             {
-                leftHandUI.SetActive(false);
-                rightHandUI.SetActive(false);
+                //leftHandUI.SetActive(false);
+                //rightHandUI.SetActive(false);
                 if (leftHandInteraction)
                 {
                     if (Input.GetMouseButtonUp(0))
@@ -60,13 +65,18 @@ public class Window : LivableObject
                         isInteracting=false;
                     }
                 }
-                if (rightHandInteraction)
+                //if (rightHandInteraction)
+                //{
+                //    if (Input.GetMouseButtonUp(1))
+                //    {
+                //        rightHandInteraction = false;
+                //        isInteracting = false;
+                //    }
+                //}
+                if (!iconHidden)
                 {
-                    if (Input.GetMouseButtonUp(1))
-                    {
-                        rightHandInteraction = false;
-                        isInteracting = false;
-                    }
+                    playerHolding.lidObj = null;
+                    iconHidden = true;
                 }
                 UseWindow();
             }
@@ -76,8 +86,13 @@ public class Window : LivableObject
         {
             isInteracting = false;
             gameObject.layer = 0;
-            leftHandUI.SetActive(false);
-            rightHandUI.SetActive(false);
+            if (!iconHidden)
+            {
+                playerHolding.lidObj = null;
+                iconHidden = true;
+            }
+            //leftHandUI.SetActive(false);
+            //rightHandUI.SetActive(false);
         }
 
     }

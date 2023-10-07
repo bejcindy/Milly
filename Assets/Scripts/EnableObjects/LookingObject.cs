@@ -53,33 +53,18 @@ public class LookingObject : LivableObject
                     playerHolding.AddLookable(gameObject);
                     if (selected)
                     {
-                        //DataHolder.FocusOnThis(fadeInterval, matColorVal);
-                        //DataHolder.currentFocus = gameObject;
                         if (Input.GetKeyDown(KeyCode.Space))
                         {
                             activated = true;
                             focusingThis = true;
-                            //DataHolder.FocusOnThis(fadeInterval, matColorVal);
-                            //DataHolder.currentFocus = gameObject;
                         }
                     }
-                    //else if (!selected)
-                    //{
-                    //    if (DataHolder.currentFocus == gameObject)
-                    //    {
-                    //        DataHolder.focusing = false;
-                    //    }
-                    //}
 
                 }
                 else
                 {
                     activated = false;
                     playerHolding.RemoveLookable(gameObject);
-                    //if (DataHolder.currentFocus == gameObject)
-                    //{
-                    //    DataHolder.focusing = false;
-                    //}
                 }
             }
             else
@@ -90,9 +75,6 @@ public class LookingObject : LivableObject
                     {
                         if (!firstActivated)
                         {
-                            //gameObject.layer = 12;
-                            //DataHolder.FocusOnThis(fadeInterval, matColorVal);
-                            //DataHolder.currentFocus = gameObject;
                             focusingThis = true;
                         }
                         activated = true;

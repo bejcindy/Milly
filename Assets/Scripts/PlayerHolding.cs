@@ -452,7 +452,7 @@ public class PlayerHolding : MonoBehaviour
         {
             obj.localRotation = Quaternion.Euler(0, 0, 0);
         }
-        Invoke(nameof(EnableThrowLeft), 0.2f);
+
     }
 
     public void OccupyRight(Transform obj)
@@ -529,6 +529,7 @@ public class PlayerHolding : MonoBehaviour
 
         if (leftHand.holdingObj.GetComponent<Chopsticks>())
             leftHand.holdingObj.GetComponent<Chopsticks>().chopMoving = false;
+        Invoke(nameof(EnableThrowLeft), 0.2f);
     }
 
     IEnumerator LerpRotation(Transform obj, Quaternion endValue, float duration)

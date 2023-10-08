@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chair : MonoBehaviour
+public class Chair : FixedCameraObject
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject AkiConfrontation;
+    protected override void Update()
     {
-        
-    }
+        base.Update();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (MainQuestState.firstGloriaTalk && isInteracting)
+            AkiConfrontation.SetActive(true);
+
+        if (isInteracting)
+            playerHolding.atTable = true;
+        else
+            playerHolding.atTable = false;
     }
 }

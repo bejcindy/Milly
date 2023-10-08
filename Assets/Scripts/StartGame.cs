@@ -33,17 +33,17 @@ public class StartGame : MonoBehaviour
         if (startSequence)
         {
             //izakayaAmbienceEvent.start();
-            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+            //playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+            //playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
             playerMovement.enabled = false;
-            playerCam.enabled = false;
+            //playerCam.enabled = false;
             playerHolding.atTable = true;
             GetComponent<DialogueSystemTrigger>().enabled = true;
         }
         else
         {
-            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
-            playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
+            //playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
+            //playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
             izakayaStartCam.m_Priority = 9;
             playerCinemachine.m_Priority = 10;
             playerMovement.enabled = true;
@@ -57,17 +57,18 @@ public class StartGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(startAnim.isActiveAndEnabled && startAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >1)
-        {
-            startAnim.transform.parent.gameObject.SetActive(false);
-        }
+        //if(startAnim.isActiveAndEnabled && startAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >1)
+        //{
+        //    startAnim.transform.parent.gameObject.SetActive(false);
+        //}
     }
 
     public void ActivateGame()
     {
-        //playerMovement.enabled = true;
-        playerCam.enabled = true;
-        Invoke(nameof(ActivateMouse), 1.5f);
+        playerMovement.enabled = true;
+        playerHolding.atTable = false;
+        //playerCam.enabled = true;
+        //Invoke(nameof(ActivateMouse), 1.5f);
     }
 
     public void ActivateMouse()

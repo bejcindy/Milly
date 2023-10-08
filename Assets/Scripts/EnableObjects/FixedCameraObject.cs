@@ -27,7 +27,7 @@ public class FixedCameraObject : LivableObject
     DialogueSystemTrigger dialogue;
     PlayerCam camController;
     PlayerMovement playerMovement;
-    PlayerHolding playerHolding;
+    protected PlayerHolding playerHolding;
     public Renderer playerBody;
 
     bool iconHidden;
@@ -49,10 +49,6 @@ public class FixedCameraObject : LivableObject
         base.Update();
         if (interactable)
         {
-            //if (!activated)
-            //    gameObject.layer = 9;
-            //else
-            //    gameObject.layer = 0;
             if (!isInteracting)
             {
                 //uiHint.SetActive(true);
@@ -68,14 +64,8 @@ public class FixedCameraObject : LivableObject
                     iconHidden = false;
                 }
 
-                if (gameObject.name == "izaIn_high_chair_sit")
-                    playerHolding.atTable = false;
+
                 TriggerInteraction();
-            }
-            else
-            {
-                if (gameObject.name == "izaIn_high_chair_sit")
-                    playerHolding.atTable = true;
             }
         }
         else
@@ -175,6 +165,12 @@ public class FixedCameraObject : LivableObject
             fixedCamera.m_Priority = 10;
         }
         playerCamera.m_Priority = 9;
+
+
+        if(gameObject.name == "Kelvin_Rock")
+        {
+            KelvinRockChair();
+        }
     }
 
 
@@ -221,5 +217,13 @@ public class FixedCameraObject : LivableObject
         positionFixed = false;
         playerHolding.positionFixedWithMouse = false;
 
+    }
+
+    public void KelvinRockChair()
+    {
+        Kelvin kelv = GameObject.Find("Kelvin").GetComponent<Kelvin>();
+        DialogueLua.SetVariable("NPC/Kelvin/PlayerAtRock", true);
+        Debug.Log(DialogueLua.GetVariable("NPC/Kelvin/PlayerAtRock").asBool);
+        kelv.npcActivated = true;
     }
 }

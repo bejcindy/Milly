@@ -88,8 +88,8 @@ public class NPCControl : MonoBehaviour
         //Setting up basic components
         player = GameObject.Find("Player").transform;
         matColorVal = 1f;
-        if (initialActivated)
-            npcActivated = true;
+        //if (initialActivated)
+        //    npcActivated = true;
 
         machine = GetComponent<BaseStateMachine>();
         currentDialogue = dialogues[_counter];
@@ -131,7 +131,7 @@ public class NPCControl : MonoBehaviour
             if(matColorVal > 0f)
             {
                 ActivateAll(npcMesh);
-                if (!firstTalk && !currentDialogue.enabled && !initialActivated)
+                if (!currentDialogue.enabled)
                     currentDialogue.enabled = true;
             }
 

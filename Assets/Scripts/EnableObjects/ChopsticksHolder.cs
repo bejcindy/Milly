@@ -40,7 +40,7 @@ public class ChopsticksHolder : LivableObject
             gameObject.layer = 0;
         }
 
-        if (StartSequence.noControl && !hasChop)
+        if ((StartSequence.noControl || !playerHolding.atTable) && !hasChop)
         {
             PutChops();
         }

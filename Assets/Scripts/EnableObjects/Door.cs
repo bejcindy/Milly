@@ -49,7 +49,7 @@ public class Door : LivableObject
 
 
         playerInFront = CheckPlayerForward();
-        if (interactable)
+        if (interactable && !playerHolding.atTable)
         {
             DoorControl();
             playedWithDoor = true;

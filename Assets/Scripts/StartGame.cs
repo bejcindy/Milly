@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.Animations;
 using Unity.IO;
 using FMOD;
+using PixelCrushers.DialogueSystem;
 
 public class StartGame : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
-    public PlayerCam playerCam;
+    PlayerMovement playerMovement;
+    PlayerCam playerCam;
+    PlayerHolding playerHolding;
     public CinemachineVirtualCamera playerCinemachine;
     public CinemachineVirtualCamera izakayaStartCam;
     public bool startSequence;
@@ -23,6 +25,10 @@ public class StartGame : MonoBehaviour
         izakayaAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Izakaya_Noise");
         outsideAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
 
+        GameObject player = GameObject.Find("Player");
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerHolding = player.GetComponent<PlayerHolding>();
+        playerCam = player.GetComponent<PlayerCam>();
 
         if (startSequence)
         {
@@ -31,6 +37,8 @@ public class StartGame : MonoBehaviour
             playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
             playerMovement.enabled = false;
             playerCam.enabled = false;
+            playerHolding.atTable = true;
+            GetComponent<DialogueSystemTrigger>().enabled = true;
         }
         else
         {
@@ -40,6 +48,8 @@ public class StartGame : MonoBehaviour
             playerCinemachine.m_Priority = 10;
             playerMovement.enabled = true;
             playerCam.enabled=true;
+            playerHolding.atTable = false;
+            GetComponent<DialogueSystemTrigger>().enabled = false;
             //outsideAmbienceEvent.start();
         }
     }

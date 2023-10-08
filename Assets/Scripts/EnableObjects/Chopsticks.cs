@@ -24,8 +24,11 @@ public class Chopsticks : PickUpObject
 
     protected override void Update()
     {
+        if (playerHolding.atTable)
+        {
+            base.Update();
+        }
 
-        base.Update();
 
         if (selected && !thrown)
         {

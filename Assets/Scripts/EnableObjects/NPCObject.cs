@@ -9,7 +9,7 @@ public class NPCObject : LivableObject
 
     public int conversationID;
     public bool npcActivated;
-    public bool noActivation; 
+    public bool noActivation;
     [Header("Object Activation")]
     public bool objectOriented;
     public LivableObject npcObject;

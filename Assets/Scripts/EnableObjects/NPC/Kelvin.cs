@@ -9,7 +9,7 @@ public class Kelvin : NPCControl
     protected override void Start()
     {
         base.Start();
-        machine.initialState = ChooseInitialState('F');
+        firstTalk = true;
     }
 
     public void KelvinAction1()

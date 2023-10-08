@@ -13,6 +13,7 @@ public class PlayerHolding : MonoBehaviour
     public bool inDialogue;
     public bool throwing;
     public bool atContainer;
+    public bool atTable;
     public bool positionFixedWithMouse;
 
 

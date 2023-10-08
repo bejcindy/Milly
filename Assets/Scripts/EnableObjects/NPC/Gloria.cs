@@ -8,6 +8,7 @@ public class Gloria : NPCControl
     protected override void Start()
     {
         base.Start();
+        overrideNoControl = true;
         firstTalk = true;
     }
 

@@ -67,7 +67,15 @@ public class FixedCameraObject : LivableObject
                     DataHolder.ShowHint(DataHolder.hints.sitHint);
                     iconHidden = false;
                 }
+
+                if (gameObject.name == "izaIn_high_chair_sit")
+                    playerHolding.atTable = false;
                 TriggerInteraction();
+            }
+            else
+            {
+                if (gameObject.name == "izaIn_high_chair_sit")
+                    playerHolding.atTable = true;
             }
         }
         else

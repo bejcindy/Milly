@@ -13,6 +13,7 @@ public class NPCControl : MonoBehaviour
     [Header("[Activate Check]")]
     public bool initialActivated;
     public bool npcActivated;
+    public bool overrideNoControl;
     [SerializeField] protected float fadeInterval;
     [SerializeField] protected float minDist;
     [SerializeField] protected bool isVisible;
@@ -137,8 +138,8 @@ public class NPCControl : MonoBehaviour
         }
 
 
-
-        CheckTriggerConversation();
+        if(!StartSequence.noControl || overrideNoControl)
+            CheckTriggerConversation();
 
 
     }

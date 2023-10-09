@@ -12,6 +12,17 @@ public class FrozenState : State
 
             machine.ChangeState(machine.talkState);
         }
+        else
+        {
+            if (machine.CheckInConversation())
+            {
+                machine.FakeActivateNPC();
+            }
+            else
+            {
+                machine.FakeDeactivateNPC();
+            }
+        }
     }
 
     protected override void OnExit()

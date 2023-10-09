@@ -12,6 +12,7 @@ public class NPCControl : MonoBehaviour
     [Header("[Activate Check]")]
     public bool initialActivated;
     public bool npcActivated;
+    public bool fakeActivated;
     public bool overrideNoControl;
     [SerializeField] protected float fadeInterval;
     [SerializeField] protected float minDist;
@@ -31,6 +32,8 @@ public class NPCControl : MonoBehaviour
     public LivableObject triggerObject;
     public bool peopleTriggered;
     public Transform otherNPC;
+    public bool questTriggered;
+    public bool questAccepted;
 
 
     protected Transform player;
@@ -125,7 +128,7 @@ public class NPCControl : MonoBehaviour
         CheckIdle();
 
 
-        if (npcActivated)
+        if (npcActivated || fakeActivated)
         {
             if(matColorVal > 0f)
             {
@@ -135,6 +138,15 @@ public class NPCControl : MonoBehaviour
             }
 
         }
+        else
+        {
+            if (matColorVal < 1f)
+            {
+                DeactivateAll(npcMesh);
+            }
+        }
+
+        
 
 
         if(!StartSequence.noControl || overrideNoControl)
@@ -213,6 +225,39 @@ public class NPCControl : MonoBehaviour
         }
     }
 
+    public void DeactivateAll(Transform obj)
+    {
+        if (obj.GetComponent<Renderer>() != null)
+        {
+            Material mat = obj.GetComponent<Renderer>().material;
+            if (mat.HasProperty("_WhiteDegree"))
+            {
+                mat.EnableKeyword("_WhiteDegree");
+                if (mat.GetFloat("_WhiteDegree") <= 1)
+                    TurnOffColor(mat);
+            }
+
+        }
+        foreach (Transform child in obj)
+        {
+            if (child.childCount <= 0 && child.GetComponent<Renderer>() != null)
+            {
+                Material childMat = child.GetComponent<Renderer>().material;
+                if (childMat.HasProperty("_WhiteDegree"))
+                {
+                    childMat.EnableKeyword("_WhiteDegree");
+                    if (childMat.GetFloat("_WhiteDegree") <= 1)
+                        TurnOffColor(childMat);
+                }
+
+            }
+            else
+            {
+                DeactivateAll(child);
+            }
+        }
+    }
+
     protected virtual void TurnOnColor(Material material)
     {
         if (matColorVal > 0)
@@ -223,6 +268,19 @@ public class NPCControl : MonoBehaviour
         else
         {
             matColorVal = 0;
+        }
+    }
+
+    protected virtual void TurnOffColor(Material material)
+    {
+        if (matColorVal < 1)
+        {
+            matColorVal += 0.1f * fadeInterval * Time.deltaTime;
+            material.SetFloat("_WhiteDegree", matColorVal);
+        }
+        else
+        {
+            matColorVal = 1;
         }
     }
 
@@ -354,10 +412,17 @@ public class NPCControl : MonoBehaviour
                     //check player interaction command
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (gameObject.name == "Charles")
-                            Debug.Log("this is why charles fucked 2");
-                        if(!npcActivated)
-                            npcActivated = true;
+                        if (!questTriggered)
+                        {
+                            if (!npcActivated)
+                                npcActivated = true;
+                        }
+                        else if (questAccepted)
+                        {
+                            if (!npcActivated)
+                                npcActivated = true;
+                        }
+
                         StartTalking();
                     }
                 }
@@ -414,6 +479,7 @@ public class NPCControl : MonoBehaviour
             StopCoroutine(lookCoroutine);
         inCD = true;
         currentDialogue.enabled = false;
+        fakeActivated = false;
     }
 
     public void EndConversation()

@@ -147,6 +147,31 @@ namespace NPCFSM
             return npcControl.npcActivated;
         }
 
+
+        public bool CheckIfQuestTrigger()
+        {
+            return npcControl.questTriggered;
+        }
+
+        public void FakeActivateNPC()
+        {
+            npcControl.fakeActivated = true;
+        }
+
+        public void FakeDeactivateNPC()
+        {
+            npcControl.fakeActivated = false;
+        }
+
+        public void FinishNpc()
+        {
+            gameObject.SetActive(false);
+        }
+        #endregion
+
+        #region Idle Region
+
+
         public void BeginIdling()
         {
             npcControl.idling = true;
@@ -157,7 +182,7 @@ namespace NPCFSM
 
         public void PauseIdling()
         {
-            if(npcControl.idling)
+            if (npcControl.idling)
                 npcControl.idlePaused = true;
         }
 
@@ -190,14 +215,7 @@ namespace NPCFSM
         {
             return !npcControl.idling;
         }
-
-        public void FinishNpc()
-        {
-            gameObject.SetActive(false);
-        }
         #endregion
-
-
 
         #region NavMeshControlRegion
         public void StopNavigation()

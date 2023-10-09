@@ -5,11 +5,13 @@ using UnityEngine;
 public class Felix : NPCControl
 {
 
-
+    public BuildingGroupController hintOne;
 
     protected override void Start()
     {
         base.Start();
+        questTriggered = true;
+        firstTalk = true;
 
     }
     public void FelixAction1()
@@ -29,5 +31,9 @@ public class Felix : NPCControl
         machine.SetAnimatorTrigger("StandUp");
     }
 
+    public void ActivateHintOne()
+    {
+        hintOne.activateAll = true;
+    }
 
 }

@@ -11,6 +11,8 @@ public class Charles : NPCControl
     protected override void Start()
     {
         base.Start();
+        firstTalk = true;
+
     }
     protected override void Update()
     {
@@ -21,7 +23,8 @@ public class Charles : NPCControl
     {
         
         currentDialogue = dialogues[0];
-        firstTalk = true;
+        
+
     }
 
     public void CharlesAction2()

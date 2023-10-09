@@ -32,7 +32,7 @@ public class ChopsticksHolder : LivableObject
             !playerLeftHand.chopAiming && !playerLeftHand.GetCurrentChops().hasFood && !playerLeftHand.GetCurrentChops().chopMoving)
         {
             gameObject.layer = 9;
-            if(Input.GetMouseButtonDown(0))
+            if(Input.GetMouseButtonDown(1))
                 PutChops();
         }
         else

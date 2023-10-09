@@ -90,7 +90,7 @@ public class FixedCameraObject : LivableObject
 
         if (positionFixed)
         {
-            if (Input.GetKeyDown(quitKey))
+            if (Input.GetKeyDown(quitKey) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;

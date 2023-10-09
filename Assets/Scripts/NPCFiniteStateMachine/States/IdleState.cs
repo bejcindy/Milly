@@ -7,8 +7,8 @@ public class IdleState : State
 
     protected override void OnEnter()
     {
-        if (!machine.CheckNPCActivation())
-            machine.ActivateNPC();
+        //if (!machine.CheckNPCActivation())
+        //    machine.ActivateNPC();
 
         if(!machine.CheckSpecialIdleAnim())
             machine.SetAnimatorTrigger("Stop");
@@ -38,7 +38,11 @@ public class IdleState : State
         {
             machine.InvokeIdleFunction();
             if (machine.CheckInConversation())
+            {
+                Debug.Log("THIS IS WHY CHARLES FUCKED 1");
                 machine.ChangeState(machine.talkState);
+            }
+
         }
     }
 

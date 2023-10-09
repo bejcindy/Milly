@@ -54,7 +54,7 @@ namespace NPCFSM
 
         private void Update()
         {
-            if (CheckNPCActivation() && gameObject.name == "Kelvin")
+            if (CheckNPCActivation() && gameObject.name == "Charles")
                 Debug.Log(currentState);
             if (currentState != null)
                 currentState.OnStateUpdate();

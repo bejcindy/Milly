@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class MainQuestState: MonoBehaviour
 {
-    public static bool firstGloriaTalk;
 
+    [Header("First Gloria Talk")]
+    public static bool firstGloriaTalk;
+    public GameObject AkiConfrontation;
+    public Chair izakayaHighChair;
+
+
+    public void Update()
+    {
+        if (firstGloriaTalk && izakayaHighChair.isInteracting && !AkiConfrontation.activeSelf)
+            AkiConfrontation.SetActive(true);
+    }
 
     public void SetFirstGloriaTalked()
     {

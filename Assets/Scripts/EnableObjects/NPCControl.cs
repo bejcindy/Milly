@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class NPCControl : MonoBehaviour
 {
@@ -355,6 +354,8 @@ public class NPCControl : MonoBehaviour
                     //check player interaction command
                     if (Input.GetMouseButtonDown(0))
                     {
+                        if (gameObject.name == "Charles")
+                            Debug.Log("this is why charles fucked 2");
                         if(!npcActivated)
                             npcActivated = true;
                         StartTalking();

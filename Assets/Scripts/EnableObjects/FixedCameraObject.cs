@@ -98,7 +98,7 @@ public class FixedCameraObject : LivableObject
                 else
                 {
                     playerHolding.sitObj = null;
-                    DataHolder.HideHint();
+                    DataHolder.HideHint(DataHolder.hints.sitHint);
                     iconHidden = true;
                 }
             }

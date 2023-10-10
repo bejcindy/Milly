@@ -94,7 +94,7 @@ public class PlayerLeftHand : MonoBehaviour
                 Smoke();
                 if (!smokingHinted)
                 {
-                    DataHolder.HideHint();
+                    DataHolder.HideHint(DataHolder.hints.cigHint);
                     smokingHinted = true;
                 }
             }
@@ -128,7 +128,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
         else if (!currentChop && chophinted)
         {
-            DataHolder.HideHint();
+            DataHolder.HideHint(DataHolder.hints.chopHint);
             chophinted = false;
         }
         else if (isHolding)
@@ -138,7 +138,15 @@ public class PlayerLeftHand : MonoBehaviour
         }
         else if (canSmoke && !smokingHinted)
         {
-            DataHolder.ShowHint(DataHolder.hints.cigHint);
+            if (!smokingHinted)
+            {
+                DataHolder.ShowHint(DataHolder.hints.cigHint);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    DataHolder.HideHint(DataHolder.hints.cigHint);
+                    smokingHinted = true;
+                }
+            }
         }
         #endregion
     }
@@ -287,7 +295,7 @@ public class PlayerLeftHand : MonoBehaviour
             //drinkHinted = true;
             if (!drinkHintDone)
             {
-                DataHolder.HideHint();
+                DataHolder.HideHint(DataHolder.hints.drinkHint);
                 drinkHintDone = true;
             }
         }
@@ -316,7 +324,7 @@ public class PlayerLeftHand : MonoBehaviour
                         holdingObj.GetComponent<Cigarette>().FinishSmoking();
                         if (!smokingHintDone)
                         {
-                            DataHolder.HideHint();
+                            DataHolder.HideHint(DataHolder.hints.throwHint);
                             smokingHintDone = true;
                         }
                     }
@@ -355,7 +363,7 @@ public class PlayerLeftHand : MonoBehaviour
                     if (!aimHintDone)
                     {
                         Debug.Log("hinted");
-                        DataHolder.HideHint();
+                        DataHolder.HideHint(DataHolder.hints.throwHint);
                         aimHintDone = true;
                     }
                     readyToThrow = false;

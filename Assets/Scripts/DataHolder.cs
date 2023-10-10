@@ -47,6 +47,7 @@ public class DataHolder : MonoBehaviour
     static PlayerLeftHand playerLeftHand;
     static CinemachinePOV pov;
     static float originalVerticalSpeed, originalHorizontalSpeed;
+    static string currentHint;
     // Start is called before the first frame update
     void Start()
     {
@@ -205,11 +206,15 @@ public class DataHolder : MonoBehaviour
         hintPanel.SetActive(true);
         dotImage.SetActive(true);
         hintTMP.gameObject.SetActive(true);
+        currentHint = hint;
     }
 
-    public static void HideHint()
+    public static void HideHint(string hintToHide)
     {
-        hintPanel.SetActive(false);
-        hintTMP.text = null;
+        if (hintToHide == currentHint)
+        {
+            hintPanel.SetActive(false);
+            hintTMP.text = null;
+        }
     }
 }

@@ -44,8 +44,6 @@ public class NPCControl : MonoBehaviour
     protected BaseStateMachine machine;
 
 
-
-
     protected bool firstTalk;
 
     [Header("[Route Control]")]
@@ -73,8 +71,8 @@ public class NPCControl : MonoBehaviour
     public bool idling;
     public bool idlePaused;
     public bool idleComplete;
-    
-    
+
+
     protected Coroutine lookCoroutine;
     bool lookCoroutineRuning;
     protected bool noLookInConvo;
@@ -82,8 +80,8 @@ public class NPCControl : MonoBehaviour
     PlayerHolding playerHolding;
 
     GameObject bone;
-    
-    
+
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -99,7 +97,7 @@ public class NPCControl : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playerHolding = player.GetComponent<PlayerHolding>();
         //FindTheChosenOne(transform);
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             if (child.name == "iconPos")
                 bone = child.gameObject;
@@ -130,7 +128,7 @@ public class NPCControl : MonoBehaviour
 
         if (npcActivated || fakeActivated)
         {
-            if(matColorVal > 0f)
+            if (matColorVal > 0f)
             {
                 ActivateAll(npcMesh);
                 if (!currentDialogue.enabled)
@@ -146,10 +144,10 @@ public class NPCControl : MonoBehaviour
             }
         }
 
-        
 
 
-        if(!StartSequence.noControl || overrideNoControl)
+
+        if (!StartSequence.noControl || overrideNoControl)
             CheckTriggerConversation();
 
 
@@ -288,7 +286,7 @@ public class NPCControl : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) < npcVincinity)
         {
-            if (destObjects[_counter-1] != null)
+            if (destObjects[_counter - 1] != null)
             {
                 if (destObjects[_counter - 1].transform.GetComponent<LivableObject>())
                     destObjects[_counter - 1].transform.GetComponent<LivableObject>().activated = true;
@@ -297,6 +295,16 @@ public class NPCControl : MonoBehaviour
             }
 
         }
+    }
+
+    public void ActivateNPC()
+    {
+        npcActivated = true;
+    }
+
+    public void FakeActivateNPC()
+    {
+        fakeActivated = true;
     }
 
     #endregion
@@ -311,7 +319,7 @@ public class NPCControl : MonoBehaviour
             else
             {
                 idling = false;
-                if(lookCoroutine != null)
+                if (lookCoroutine != null)
                     StopCoroutine(lookCoroutine);
             }
         }
@@ -419,6 +427,7 @@ public class NPCControl : MonoBehaviour
                         }
                         else if (questAccepted)
                         {
+                            QuestAcceptChange();
                             if (!npcActivated)
                                 npcActivated = true;
                         }
@@ -454,6 +463,16 @@ public class NPCControl : MonoBehaviour
     public bool CheckFirstTalk()
     {
         return firstTalk;
+    }
+
+    public void QuestAccept()
+    {
+        questAccepted = true;
+    }
+
+    protected virtual void QuestAcceptChange()
+    {
+
     }
     void OnConversationStart(Transform other)
     {

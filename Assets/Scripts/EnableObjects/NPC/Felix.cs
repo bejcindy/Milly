@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class Felix : NPCControl
 {
@@ -14,10 +15,19 @@ public class Felix : NPCControl
         firstTalk = true;
 
     }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (triggerObject.activated)
+        {
+            DialogueLua.SetVariable("NPC_Felix_ActivateType", "CanActivate");
+        }
+    }
     public void FelixAction1()
     {
         noLookInConvo = true;
-        currentDialogue = dialogues[1];
+        currentDialogue = dialogues[2];
 
     }
 
@@ -36,4 +46,20 @@ public class Felix : NPCControl
         hintOne.activateAll = true;
     }
 
+    protected override void QuestAcceptChange()
+    {
+        currentDialogue = dialogues[1];
+    }
+
+    public void CanActivate()
+    {
+        if (questAccepted)
+        {
+            npcActivated = true;
+        }
+        else
+        {
+            fakeActivated = true;
+        }
+    }
 }

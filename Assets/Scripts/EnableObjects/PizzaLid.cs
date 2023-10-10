@@ -17,6 +17,7 @@ public class PizzaLid : LivableObject
     PlayerHolding playerHolding;
     FixedCameraObject camControl;
     DialogueSystemTrigger dialogue;
+    PlayerLeftHand playerLeftHand;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -24,6 +25,7 @@ public class PizzaLid : LivableObject
         camControl = GetComponent<FixedCameraObject>();
         playerHolding = player.GetComponent<PlayerHolding>();
         dialogue = GetComponent<DialogueSystemTrigger>();
+        playerLeftHand = player.GetComponent<PlayerLeftHand>();
       
     }
 
@@ -58,14 +60,15 @@ public class PizzaLid : LivableObject
                     }
                 }
             }
-            if (playerHolding.GetRightHand())
+            else
             {
-                if (Input.GetMouseButton(1))
+                if (Input.GetMouseButton(0))
                 {
                     dialogue.enabled = true;
                     activated = true;
                     interacting = true;
                     quitInteraction = false;
+                    playerLeftHand.enabled = false;
                     if (verticalInput < 0)
                     {
                         RotateLid(0);
@@ -77,7 +80,32 @@ public class PizzaLid : LivableObject
                         isInteracting = true;
                     }
                 }
+                else
+                {
+                    playerLeftHand.enabled = true;
+                }
+
             }
+            //if (playerHolding.GetRightHand())
+            //{
+            //    if (Input.GetMouseButton(1))
+            //    {
+            //        dialogue.enabled = true;
+            //        activated = true;
+            //        interacting = true;
+            //        quitInteraction = false;
+            //        if (verticalInput < 0)
+            //        {
+            //            RotateLid(0);
+            //        }
+            //        else if (verticalInput > 0)
+            //        {
+            //            RotateLid(300);
+            //            camControl.TurnOnCamera();
+            //            isInteracting = true;
+            //        }
+            //    }
+            //}
 
         }
 

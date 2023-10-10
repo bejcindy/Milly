@@ -77,7 +77,7 @@ public class PlayerLeftHand : MonoBehaviour
                 DetectPizzaHolding();
             }
 
-            if (holdingObj.GetComponent<Chopsticks>()!=null)
+            if (holdingObj.GetComponent<Chopsticks>())
             {
                 currentChop = holdingObj.GetComponent<Chopsticks>();
                 UsingChopsticks();

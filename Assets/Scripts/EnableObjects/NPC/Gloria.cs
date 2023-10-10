@@ -14,6 +14,5 @@ public class Gloria : NPCControl
 
     public void GloriaAction1()
     {
-        currentDialogue = dialogues[0];
     }
 }

@@ -19,15 +19,10 @@ public class Felix : NPCControl
     protected override void Update()
     {
         base.Update();
-        if (triggerObject.activated)
-        {
-            DialogueLua.SetVariable("NPC_Felix_ActivateType", "CanActivate");
-        }
     }
     public void FelixAction1()
     {
         noLookInConvo = true;
-        currentDialogue = dialogues[2];
 
     }
 
@@ -46,9 +41,9 @@ public class Felix : NPCControl
         hintOne.activateAll = true;
     }
 
-    protected override void QuestAcceptChange()
+    public void ChangeFelixQuestDialogue()
     {
-        currentDialogue = dialogues[1];
+        currentDialogue = dialogueHolder.GetChild(1);
     }
 
     public void CanActivate()

@@ -12,7 +12,6 @@ public class BarkTrigger : MonoBehaviour
     LivableObject activateTrigger;
     public BarkOnIdle bark;
     DialogueSystemTrigger hitDialogue;
-    NPCObject npcControl;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +25,6 @@ public class BarkTrigger : MonoBehaviour
         else
         {
             hitDialogue = GetComponent<DialogueSystemTrigger>();
-            npcControl = transform.parent.GetComponent<NPCObject>();
         }
 
 
@@ -35,8 +33,7 @@ public class BarkTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (npcActivated)
-            npcControl.ActivateAll(npcControl.npcBody.transform);
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -51,7 +48,6 @@ public class BarkTrigger : MonoBehaviour
             else
             {
                 hitDialogue.enabled = true;
-                npcControl.ActivateAll(npcControl.transform);
             }
         }
     }

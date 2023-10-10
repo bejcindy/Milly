@@ -6,7 +6,6 @@ using PixelCrushers.DialogueSystem;
 
 public class NPCActivateObject : LivableObject
 {
-    public NPCObject npc;
 
     DialogueSystemTrigger dialogue;
 

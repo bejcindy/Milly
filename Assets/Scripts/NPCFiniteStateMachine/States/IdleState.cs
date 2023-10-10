@@ -16,6 +16,7 @@ public class IdleState : State
         {
             machine.SetSpecialIdleAnim();
         }
+
         machine.StopNavigation();
         machine.BeginIdling();
     }

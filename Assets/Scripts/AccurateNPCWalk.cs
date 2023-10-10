@@ -5,16 +5,15 @@ using UnityEngine;
 public class AccurateNPCWalk : MonoBehaviour
 {
 
-    NPCNavigation npcNav;
+
     // Start is called before the first frame update
     void Start()
     {
-        npcNav = transform.parent.GetComponent<NPCNavigation>();
+
     }
 
     public void StartWalking()
     {
-        npcNav.enabled = true;
-        npcNav.talking = false;
+
     }
 }

@@ -10,11 +10,13 @@ public class NPCControl : MonoBehaviour
 
     private float matColorVal;
     [Header("[Activate Check]")]
+    public bool mainNPC;
+    public bool inCutscene;
     public bool initialActivated;
     public bool npcActivated;
     public bool fakeActivated;
     public bool overrideNoControl;
-    [SerializeField] protected float fadeInterval;
+    protected float fadeInterval;
     [SerializeField] protected float minDist;
     [SerializeField] protected bool isVisible;
     [SerializeField] protected bool interactable;
@@ -37,8 +39,7 @@ public class NPCControl : MonoBehaviour
 
 
     protected Transform player;
-    public DialogueSystemTrigger currentDialogue;
-    protected DialogueSystemTrigger previousDialogue;
+    protected Transform currentDialogue;
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
@@ -51,7 +52,7 @@ public class NPCControl : MonoBehaviour
     public Component[] destObjects;
     public float[] waitTimes;
     public bool[] destSpecialAnim;
-    public DialogueSystemTrigger[] dialogues;
+    protected Transform dialogueHolder;
 
     public int _counter = 0;
     public bool finalStop;
@@ -59,8 +60,7 @@ public class NPCControl : MonoBehaviour
 
     [Header("[Conversation]")]
     public bool inConversation;
-    public bool inCD;
-    public bool triggerConversation;
+    private bool inCD;
     private float talkCD = 2f;
 
 
@@ -87,33 +87,27 @@ public class NPCControl : MonoBehaviour
     {
         //Setting up basic components
         player = GameObject.Find("Player").transform;
-        matColorVal = 1f;
-        //if (initialActivated)
-        //    npcActivated = true;
 
         machine = GetComponent<BaseStateMachine>();
-        currentDialogue = dialogues[_counter];
+
+        dialogueHolder = transform.GetChild(2);
+        currentDialogue = dialogueHolder.GetChild(0);
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
         playerHolding = player.GetComponent<PlayerHolding>();
-        //FindTheChosenOne(transform);
+
+
         foreach (Transform child in transform)
         {
             if (child.name == "iconPos")
                 bone = child.gameObject;
         }
+
+        fadeInterval = 5;
     }
 
-    //void FindTheChosenOne(Transform t)
-    //{
-    //    foreach (Transform child in t)
-    //    {
-    //        if (child.name == "mixamorig:HeadTop_End")
-    //            bone = child.gameObject;
-    //        else if (child.childCount != 0)
-    //            FindTheChosenOne(child);
-    //    }
-    //}
 
     protected virtual void Update()
     {
@@ -125,30 +119,41 @@ public class NPCControl : MonoBehaviour
         CheckTalkCD();
         CheckIdle();
 
-
-        if (npcActivated || fakeActivated)
+        if (!mainNPC)
         {
-            if (matColorVal > 0f)
+            if (npcActivated || fakeActivated)
             {
-                ActivateAll(npcMesh);
-                if (!currentDialogue.enabled)
-                    currentDialogue.enabled = true;
-            }
+                if (matColorVal > 0f)
+                {
+                    ActivateAll(npcMesh);
+                    if (!currentDialogue.gameObject.activeSelf)
+                        currentDialogue.gameObject.SetActive(true);
+                }
 
+            }
+            else
+            {
+                if (matColorVal < 1f)
+                {
+                    DeactivateAll(npcMesh);
+                }
+            }
+        }
+
+
+
+
+        if (!mainNPC)
+        {
+            if (!StartSequence.noControl || overrideNoControl)
+                CheckTriggerConversation();
         }
         else
         {
-            if (matColorVal < 1f)
-            {
-                DeactivateAll(npcMesh);
-            }
+            if ((!StartSequence.noControl || overrideNoControl) && !inCutscene)
+                CheckTriggerConversation();
         }
 
-
-
-
-        if (!StartSequence.noControl || overrideNoControl)
-            CheckTriggerConversation();
 
 
     }
@@ -427,7 +432,6 @@ public class NPCControl : MonoBehaviour
                         }
                         else if (questAccepted)
                         {
-                            QuestAcceptChange();
                             if (!npcActivated)
                                 npcActivated = true;
                         }
@@ -445,7 +449,7 @@ public class NPCControl : MonoBehaviour
 
     void StartTalking()
     {
-        currentDialogue.enabled = true;
+        currentDialogue.gameObject.SetActive(true);
     }
     void CheckTalkCD()
     {
@@ -497,7 +501,7 @@ public class NPCControl : MonoBehaviour
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
         inCD = true;
-        currentDialogue.enabled = false;
+        currentDialogue.gameObject.SetActive(false);
         fakeActivated = false;
     }
 
@@ -577,7 +581,8 @@ public class NPCControl : MonoBehaviour
 
     public void SetDialogue()
     {
-        //currentDialogue = dialogues[_counter];
+        int diaIndex = currentDialogue.GetSiblingIndex();
+        currentDialogue = dialogueHolder.GetChild(diaIndex + 1);
         string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
         DialogueLua.SetVariable(reTriggerName, false);
 

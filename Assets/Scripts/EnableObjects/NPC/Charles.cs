@@ -22,7 +22,6 @@ public class Charles : NPCControl
     public void CharlesAction1()
     {
         
-        currentDialogue = dialogues[0];
         
 
     }
@@ -38,7 +37,6 @@ public class Charles : NPCControl
     public void CharlesAction3()
     {
         noTalkStage = false;
-        currentDialogue = dialogues[1];
     }
 
     public void FinishSmoking()

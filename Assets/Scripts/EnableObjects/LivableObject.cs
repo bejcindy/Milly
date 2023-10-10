@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Cinemachine;
@@ -40,6 +41,8 @@ public class LivableObject : MonoBehaviour
     public bool onlyFront = true;
     static float allowedAngle = .2f;
 
+    [Header("On Activate")]
+    public UnityEvent OnActivateEvent;
     bool[] checkBoundVisible;
 
     int originalLayer;
@@ -116,6 +119,11 @@ public class LivableObject : MonoBehaviour
                     else
                     {
                         TurnOnColor(mat);
+                    }
+
+                    if(OnActivateEvent != null)
+                    {
+                        OnActivateEvent.Invoke();
                     }
 
                 }

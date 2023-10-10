@@ -10,6 +10,7 @@ public class FixedCameraObject : LivableObject
     [SerializeField] public KeyCode quitKey;
     [SerializeField] public bool isInteracting;
     [SerializeField] public bool positionFixed;
+    public bool mouseActivate;
     [SerializeField] protected bool showMouse;
     [SerializeField] protected bool moveCam;
 
@@ -120,11 +121,20 @@ public class FixedCameraObject : LivableObject
 
     public virtual void TriggerInteraction()
     {
-        if (Input.GetKeyDown(interactKey))
+        if (mouseActivate)
         {
-            //gameObject.layer = 0;
-            TurnOnCamera();
+            if (Input.GetMouseButtonDown(0))
+                TurnOnCamera();
         }
+        else
+        {
+            if (Input.GetKeyDown(interactKey))
+            {
+                //gameObject.layer = 0;
+                TurnOnCamera();
+            }
+        }
+
     }
 
     public void TurnOnCamera()

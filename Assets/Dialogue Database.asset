@@ -1207,11 +1207,25 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 46
+    fields:
+    - title: Name
+      value: NPC/Felix/ActivateType
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Normal
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
     - title: Title
-      value: Building1_101
+      value: Building/101
       type: 0
       typeString: 
     - title: Description
@@ -1420,7 +1434,7 @@ MonoBehaviour:
   - id: 2
     fields:
     - title: Title
-      value: Building_102
+      value: Building/102
       type: 0
       typeString: 
     - title: Description
@@ -2065,6 +2079,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 9c32fe96-f78d-4f52-bf8f-575d683c211d
+        type: 0
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2080,7 +2098,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 86
+        x: 87.09889
         y: 507
         width: 160
         height: 30
@@ -2405,12 +2423,12 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 1.4925537, y: 156.71637}
+    canvasZoom: 0.6700003
   - id: 3
     fields:
     - title: Title
-      value: Building_201
+      value: Building/201
       type: 0
       typeString: 
     - title: Description
@@ -3625,269 +3643,6 @@ MonoBehaviour:
     entryGroups: []
     canvasScrollPosition: {x: 20.72096, y: 6.640227}
     canvasZoom: 0.75999993
-  - id: 6
-    fields:
-    - title: Title
-      value: SodaBark
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Description
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Actor
-      value: 1
-      type: 5
-      typeString: CustomFieldType_Actor
-    - title: Conversant
-      value: -1
-      type: 5
-      typeString: CustomFieldType_Actor
-    overrideSettings:
-      useOverrides: 1
-      overrideSubtitleSettings: 0
-      showNPCSubtitlesDuringLine: 1
-      showNPCSubtitlesWithResponses: 1
-      showPCSubtitlesDuringLine: 0
-      skipPCSubtitleAfterResponseMenu: 0
-      subtitleCharsPerSecond: 30
-      minSubtitleSeconds: 2
-      continueButton: 0
-      overrideSequenceSettings: 0
-      defaultSequence: 
-      defaultPlayerSequence: 
-      defaultResponseMenuSequence: 
-      overrideInputSettings: 1
-      alwaysForceResponseMenu: 0
-      includeInvalidEntries: 0
-      responseTimeout: 0
-      emTagForOldResponses: 0
-      emTagForInvalidResponses: 0
-      cancelSubtitle:
-        key: 27
-        buttonName: 
-      cancelConversation:
-        key: 27
-        buttonName: 
-    nodeColor: 
-    dialogueEntries:
-    - id: 0
-      fields:
-      - title: Title
-        value: START
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: None()
-        type: 0
-        typeString: 
-      conversationID: 6
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 6
-        originDialogueID: 0
-        destinationConversationID: 6
-        destinationDialogueID: 1
-        isConnector: 0
-        priority: 2
-      - originConversationID: 6
-        originDialogueID: 0
-        destinationConversationID: 6
-        destinationDialogueID: 3
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 78
-        y: 91
-        width: 160
-        height: 30
-    - id: 1
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: (A soda can...)
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 6
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: Variable["SodaCan_Checked"] == false
-      userScript: Variable["SodaCan_Checked"] = true
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 296.82352
-        y: 91
-        width: 160
-        height: 30
-    - id: 3
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: (Someone must've forgot their slice out here.)
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 6
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 6
-        originDialogueID: 3
-        destinationConversationID: 6
-        destinationDialogueID: 4
-        isConnector: 0
-        priority: 2
-      conditionsString: Variable["Pizza_Checked"] == false
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 74.47057
-        y: 199.82355
-        width: 160
-        height: 30
-    - id: 4
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: (It's got to be from Cherry Hill.)
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 6
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: Variable["Pizza_Checked"] = true
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 72.11764
-        y: 259.23532
-        width: 160
-        height: 30
-    entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.85000014
   - id: 8
     fields:
     - title: Title
@@ -7887,7 +7642,7 @@ MonoBehaviour:
   - id: 11
     fields:
     - title: Title
-      value: Building_202
+      value: Building/202
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -24000,6 +23755,12 @@ MonoBehaviour:
       - originConversationID: 24
         originDialogueID: 0
         destinationConversationID: 24
+        destinationDialogueID: 2
+        isConnector: 0
+        priority: 2
+      - originConversationID: 24
+        originDialogueID: 0
+        destinationConversationID: 24
         destinationDialogueID: 20
         isConnector: 0
         priority: 2
@@ -24058,15 +23819,16 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Felix_Talk_State"] == "Uninitiated"
+      conditionsString: Variable["NPC_Felix_Talk_State"] == "Uninitiated" and (Variable["NPC_Felix_ActivateType"]
+        == "CanActivate")
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 269.21957
-        y: 168.65854
+        x: 275.46954
+        y: 62.408585
         width: 160
         height: 30
     - id: 2
@@ -24113,7 +23875,8 @@ MonoBehaviour:
         destinationDialogueID: 3
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Felix_Talk_State"] == "Uninitiated" and (Variable["NPC_Felix_ActivateType"]
+        == "Normal")
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -24799,12 +24562,12 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 41.46344}
-    canvasZoom: 0.8200002
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.64000034
   - id: 25
     fields:
     - title: Title
-      value: Building_301
+      value: Building/301
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -25013,7 +24776,7 @@ MonoBehaviour:
   - id: 26
     fields:
     - title: Title
-      value: Building_302
+      value: Building/302
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -27319,7 +27082,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["NPC_Felix_Talk_State"] = "SecondInitiated"
+      userScript: 'Variable["NPC_Felix_Talk_State"] = "SecondInitiated";
+
+        SetQuestState("Felix
+        was nice. ", "success")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -27379,8 +27145,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1, y: 0}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 205.31342, y: 103.480415}
+    canvasZoom: 0.97
   - id: 37
     fields:
     - title: Title

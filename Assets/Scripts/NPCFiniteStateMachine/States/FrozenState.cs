@@ -14,7 +14,7 @@ public class FrozenState : State
         }
         else
         {
-            if (machine.CheckInConversation())
+            if (machine.CheckInConversation() && !machine.CheckQuestActivated())
             {
                 machine.FakeActivateNPC();
             }

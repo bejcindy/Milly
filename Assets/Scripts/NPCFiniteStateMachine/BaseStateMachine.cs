@@ -153,6 +153,11 @@ namespace NPCFSM
             return npcControl.questTriggered;
         }
 
+        public bool CheckQuestActivated()
+        {
+            return npcControl.questAccepted;
+        }
+
         public void FakeActivateNPC()
         {
             npcControl.fakeActivated = true;

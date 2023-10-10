@@ -6,7 +6,7 @@ using PixelCrushers.DialogueSystem;
 
 public class FixedCameraObject : LivableObject
 {
-    [SerializeField] protected KeyCode interactKey;
+    [SerializeField] KeyCode interactKey;
     [SerializeField] public KeyCode quitKey;
     [SerializeField] public bool isInteracting;
     [SerializeField] public bool positionFixed;
@@ -31,7 +31,7 @@ public class FixedCameraObject : LivableObject
     public Renderer playerBody;
 
     bool iconHidden;
-
+    bool isPizzaBox;
     protected override void Start()
     {
         base.Start();
@@ -40,6 +40,11 @@ public class FixedCameraObject : LivableObject
         playerBody = player.GetChild(0).GetComponent<Renderer>();
         playerCamera = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
         playerHolding = player.GetComponent<PlayerHolding>();
+        if (transform.parent != null)
+        {
+            if (transform.parent.name.Contains("pizza"))
+                isPizzaBox = true;
+        }
     }
 
 
@@ -55,6 +60,11 @@ public class FixedCameraObject : LivableObject
                 if (gameObject.name.Contains("apt_call"))
                 {
                     playerHolding.clickableObj = gameObject;
+                    iconHidden = false;
+                }
+                else if (isPizzaBox)
+                {
+                    playerHolding.lidObj = gameObject;
                     iconHidden = false;
                 }
                 else
@@ -77,6 +87,11 @@ public class FixedCameraObject : LivableObject
                 if (gameObject.name.Contains("apt_call"))
                 {
                     playerHolding.clickableObj = null;
+                    iconHidden = true;
+                }
+                else if (isPizzaBox)
+                {
+                    playerHolding.lidObj = null;
                     iconHidden = true;
                 }
                 else
@@ -127,13 +142,10 @@ public class FixedCameraObject : LivableObject
         }
         PositionPlayer();
 
-        if(transform.parent != null)
+        if(isPizzaBox)
         {
-            if (transform.parent.name.Contains("pizza"))
-            {
-                player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
-                player.GetComponent<PlayerRightHand>().inPizzaBox = true;
-            }
+            player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
+            player.GetComponent<PlayerRightHand>().inPizzaBox = true;
         }
 
     }

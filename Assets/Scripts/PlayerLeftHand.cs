@@ -47,6 +47,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     bool aimHinted, smokingHinted,drinkHinted;
     bool aimHintDone, smokingHintDone,drinkHintDone;
+    bool chophinted;
     // Start is called before the first frame update
     void Start()
     {
@@ -91,30 +92,42 @@ public class PlayerLeftHand : MonoBehaviour
                 Smoke();
             }
         }
-        
+
 
 
 
 
 
         #region Hint Region
-        if (smoking) 
+        if (smoking)
         {
-            if (!smokingHintDone)
-            {
-                DataHolder.ShowHint(DataHolder.hints.smokeHint);
-            }
+            DataHolder.ShowHint(DataHolder.hints.smokeHint);
+            smokingHintDone = false;
         }
         else if (drinking)
         {
             DataHolder.ShowHint(DataHolder.hints.drinkHint);
+            drinkHintDone = false;
         }
-        else if(isHolding)
+        else if (currentChop && !currentChop.hasFood)
         {
-            if (!aimHintDone)
-            {
-                DataHolder.ShowHint(DataHolder.hints.throwHint);
-            }
+            DataHolder.ShowHint(DataHolder.hints.chopHint);
+            chophinted = true;
+        }
+        else if (currentChop && currentChop.hasFood)
+        {
+            DataHolder.ShowHint(DataHolder.hints.eatHint);
+            chophinted = true;
+        }
+        else if (!currentChop && chophinted)
+        {
+            DataHolder.HideHint();
+            chophinted = false;
+        }
+        else if (isHolding)
+        {
+            DataHolder.ShowHint(DataHolder.hints.throwHint);
+            aimHintDone = false;
         }
         #endregion
     }

@@ -97,37 +97,36 @@ public class PlayerHolding : MonoBehaviour
             else
                 HideUI();
         }
-        if (!hintDone)
+
+        if (focusedObj != null)
         {
-            if (focusedObj != null)
+            if (!displayedFocusHint)
             {
-                if (!displayedFocusHint)
-                {
-                    //Debug.Log("trying");
-                    //focusedHint.SetActive(true);
-                    DataHolder.ShowHint(DataHolder.hints.lookHint);
-                    //displayedFocusHint = true;
-                    hintHiden = false;
-                    if (focusedObj.GetComponent<LookingObject>().focusingThis)
-                        displayedFocusHint = true;
-                }
-                else
-                {
-                    DataHolder.HideHint();
-                    hintDone = true;
-                }
+                //Debug.Log("trying");
+                //focusedHint.SetActive(true);
+                DataHolder.ShowHint(DataHolder.hints.lookHint);
+                //displayedFocusHint = true;
+                hintHiden = false;
+                if (focusedObj.GetComponent<LookingObject>().focusingThis)
+                    displayedFocusHint = true;
             }
             else
             {
-                //focusedHint.SetActive(false);
-                if (!hintHiden)
-                {
-                    DataHolder.HideHint();
-                    hintHiden = true;
-                }
-                //hintDone = true;
+                DataHolder.HideHint();
             }
         }
+        else
+        {
+            //focusedHint.SetActive(false);
+            if (!hintHiden)
+            {
+                DataHolder.HideHint();
+                hintHiden = true;
+                displayedFocusHint = false;
+            }
+            //hintDone = true;
+        }
+        
         if(kickableObj)
             UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
         if(talkingTo)

@@ -48,6 +48,7 @@ public class PlayerLeftHand : MonoBehaviour
     bool aimHinted, smokingHinted,drinkHinted;
     bool aimHintDone, smokingHintDone,drinkHintDone;
     bool chophinted;
+    bool canSmoke;
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +91,11 @@ public class PlayerLeftHand : MonoBehaviour
             if (smoking)
             {
                 Smoke();
+                if (!smokingHinted)
+                {
+                    DataHolder.HideHint();
+                    smokingHinted = true;
+                }
             }
         }
 
@@ -128,6 +134,10 @@ public class PlayerLeftHand : MonoBehaviour
         {
             DataHolder.ShowHint(DataHolder.hints.throwHint);
             aimHintDone = false;
+        }
+        else if (canSmoke && !smokingHinted)
+        {
+            DataHolder.ShowHint(DataHolder.hints.cigHint);
         }
         #endregion
     }
@@ -222,7 +232,13 @@ public class PlayerLeftHand : MonoBehaviour
 
     #endregion
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "StartConvo" && !smokingHinted)
+        {
+            canSmoke = true;
+        }
+    }
 
 
 
@@ -297,7 +313,6 @@ public class PlayerLeftHand : MonoBehaviour
                     if (smoking)
                     {
                         holdingObj.GetComponent<Cigarette>().FinishSmoking();
-                        //smokingHinted = true;
                         if (!smokingHintDone)
                         {
                             DataHolder.HideHint();

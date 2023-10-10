@@ -112,7 +112,7 @@ public class PlayerHolding : MonoBehaviour
             }
             else
             {
-                DataHolder.HideHint();
+                DataHolder.HideHint(DataHolder.hints.lookHint);
             }
         }
         else
@@ -120,7 +120,7 @@ public class PlayerHolding : MonoBehaviour
             //focusedHint.SetActive(false);
             if (!hintHiden)
             {
-                DataHolder.HideHint();
+                DataHolder.HideHint(DataHolder.hints.lookHint);
                 hintHiden = true;
                 displayedFocusHint = false;
             }

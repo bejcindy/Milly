@@ -16,7 +16,7 @@ public class LookingObject : LivableObject
     public bool focusingThis;
 
     public GameObject[] sameTypePosters;
-    bool played;
+    bool playedSF;
 
     protected override void Start()
     {
@@ -39,11 +39,11 @@ public class LookingObject : LivableObject
             {
                 DataHolder.FocusOnThis(fadeInterval, matColorVal);
                 DataHolder.currentFocus = gameObject;
-                if (!played && DataHolder.camBlended && DataHolder.camBlendDone)
+                if (!playedSF && DataHolder.camBlended && DataHolder.camBlendDone)
                 {
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
                     
-                    played = true;
+                    playedSF = true;
                 }
             }
             if (!designatedSpot)
@@ -134,12 +134,12 @@ public class LookingObject : LivableObject
 
     void OnConversationStart(Transform other)
     {
-        player.GetComponent<PlayerHolding>().inDialogue = true;
+        playerHolding.inDialogue = true;
     }
 
     void OnConversationEnd(Transform other)
     {
-        player.GetComponent<PlayerHolding>().inDialogue = false;
+        playerHolding.inDialogue = false;
     }
 
     void ActivateAll()

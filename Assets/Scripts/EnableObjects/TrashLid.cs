@@ -13,6 +13,7 @@ public class TrashLid : LivableObject
     //public GameObject rightHandUI;
     GameObject iconPos;
     bool iconHidden;
+    PlayerLeftHand playerLeftHand;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class TrashLid : LivableObject
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
         iconPos = transform.GetChild(0).gameObject;
+        playerLeftHand = player.GetComponent<PlayerLeftHand>();
     }
     protected override void Update()
     {
@@ -54,6 +56,30 @@ public class TrashLid : LivableObject
                 {
                     playerHolding.lidObj = iconPos;
                     iconHidden = false;
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    //leftHandUI.SetActive(false);
+                    activated = true;
+                    interacting = true;
+                    playerLeftHand.enabled = false;
+                    if (verticalInput < 0)
+                    {
+                        RotateLid(0);
+                    }
+                    else if (verticalInput > 0)
+                    {
+                        RotateLid(270);
+                    }
+                }
+                else
+                {
+                    playerHolding.lidObj = iconPos;
+                    iconHidden = false;
+                    playerLeftHand.enabled = true;
                 }
             }
             //if (playerHolding.GetRightHand())

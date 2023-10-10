@@ -72,7 +72,7 @@ public class KickObject : MonoBehaviour
                 rb.AddForce(Camera.main.transform.forward * 20f,ForceMode.Impulse);
                 if (hinted)
                 {
-                    DataHolder.HideHint();
+                    DataHolder.HideHint(DataHolder.hints.kickHint);
                     player.GetComponent<PlayerHolding>().kickableObj = null;
                     hinted = false;
                 }
@@ -83,7 +83,7 @@ public class KickObject : MonoBehaviour
             //Destroy(instantiatedHint);
             if (hinted)
             {
-                DataHolder.HideHint();
+                DataHolder.HideHint(DataHolder.hints.kickHint);
                 player.GetComponent<PlayerHolding>().kickableObj = null;
                 hinted = false;
             }

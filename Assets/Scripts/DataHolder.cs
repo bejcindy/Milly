@@ -43,7 +43,11 @@ public class DataHolder : MonoBehaviour
     static GameObject hintPanel;
     static GameObject dotImage;
     static TextMeshProUGUI hintTMP;
-
+    static PlayerHolding playerHolding;
+    static PlayerLeftHand playerLeftHand;
+    static CinemachinePOV pov;
+    static float originalVerticalSpeed, originalHorizontalSpeed;
+    static string currentHint;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,9 +62,14 @@ public class DataHolder : MonoBehaviour
         hintTMP = hintPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         hintPanel.SetActive(false);
         hints = hintsReference;
+        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
+        playerLeftHand = GameObject.Find("Player").GetComponent<PlayerLeftHand>();
+        pov = playerCinemachine.GetCinemachineComponent<CinemachinePOV>();
+        originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
+        originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
         //focusCinemachine.Priority = playerCinemachine.Priority + 1;
         //focusCinemachine.gameObject.SetActive(false);
-        
+
     }
 
     // Update is called once per frame
@@ -83,9 +92,12 @@ public class DataHolder : MonoBehaviour
             focusCinemachine.Priority = playerCinemachine.Priority + 1;
             focusCinemachine.LookAt = currentFocus.transform;
             //Cursor.lockState = CursorLockMode.Locked;
-
+            playerHolding.enabled = false;
+            playerLeftHand.enabled = false;
             playerCinemachine.LookAt= currentFocus.transform;
-            if(playerBrain.IsBlending)
+            pov.m_HorizontalAxis.m_MaxSpeed = 0f;
+            pov.m_VerticalAxis.m_MaxSpeed = 0f;
+            if (playerBrain.IsBlending)
                 camBlended = true;
             if (camBlended && !playerBrain.IsBlending)
                 camBlendDone = true;
@@ -158,6 +170,10 @@ public class DataHolder : MonoBehaviour
                 focused = false;
                 camBlended = false;
                 camBlendDone = false;
+                playerHolding.enabled = true;
+                playerLeftHand.enabled = true;
+                pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
+                pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
                 //playerCinemachine.Follow = originalPlayerCmFollow;
                 //if (matColorVal <= 0)
                 //    go.GetComponent<LookingObject>().enabled = false;
@@ -190,11 +206,15 @@ public class DataHolder : MonoBehaviour
         hintPanel.SetActive(true);
         dotImage.SetActive(true);
         hintTMP.gameObject.SetActive(true);
+        currentHint = hint;
     }
 
-    public static void HideHint()
+    public static void HideHint(string hintToHide)
     {
-        hintPanel.SetActive(false);
-        hintTMP.text = null;
+        if (hintToHide == currentHint)
+        {
+            hintPanel.SetActive(false);
+            hintTMP.text = null;
+        }
     }
 }

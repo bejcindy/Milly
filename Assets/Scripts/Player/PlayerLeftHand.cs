@@ -241,6 +241,11 @@ public class PlayerLeftHand : MonoBehaviour
             return null;
     }
 
+    public void RemoveCurrentChops()
+    {
+        currentChop = null;
+    }
+
     #endregion
 
     private void OnTriggerEnter(Collider other)
@@ -317,7 +322,6 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 aimUI.SetActive(false);
                 aimUI.transform.localScale = new Vector3(1, 1, 1);
-                playerHolding.throwing = false;
                 holdTimer = 0;
                 if (!noThrow)
                 {
@@ -378,7 +382,6 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 if (holdTimer < holdTime)
                 {
-                    playerHolding.throwing = true;
                     holdTimer += Time.deltaTime;
                     holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
                     if (holdTimer > 0.2f)

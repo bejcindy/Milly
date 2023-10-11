@@ -12,8 +12,10 @@ public class PlayerHolding : MonoBehaviour
     public bool fullHand;
     public bool inDialogue;
     public bool throwing;
+
     public bool atContainer;
     public bool atTable;
+
     public bool positionFixedWithMouse;
 
 
@@ -41,6 +43,8 @@ public class PlayerHolding : MonoBehaviour
     public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite;
     RectTransform objectUIRect;
     public RectTransform CanvasRect;
+
+    bool noControlReset;
 
     //for object tracking ui
     public GameObject doorHandle;
@@ -88,6 +92,14 @@ public class PlayerHolding : MonoBehaviour
         {
             HideUI();
         }
+
+        if (StartSequence.noControl && !noControlReset)
+        {
+            HideUI();
+            noControlReset = true;
+        }
+
+
         atContainer = CheckContainer();
         if (doorHandle)
         {

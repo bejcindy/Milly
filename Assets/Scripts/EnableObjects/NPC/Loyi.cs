@@ -17,4 +17,9 @@ public class Loyi : NPCControl
     {
         machine.ChangeState(machine.moveState);
     }
+
+    public void LoyiAction1()
+    {
+
+    }
 }

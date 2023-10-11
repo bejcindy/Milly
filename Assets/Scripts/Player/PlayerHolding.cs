@@ -90,7 +90,7 @@ public class PlayerHolding : MonoBehaviour
 
         if (StartSequence.noControl && !noControlReset)
         {
-            HideUI();
+            HideUI(null);
             noControlReset = true;
         }
 

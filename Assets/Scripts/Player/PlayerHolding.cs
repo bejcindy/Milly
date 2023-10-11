@@ -37,27 +37,21 @@ public class PlayerHolding : MonoBehaviour
 
     public ContainerObject currentContainer;
 
-    public Image objectUI;
+    #region For Object Tracking UI
+    public Image objectUI,objectUI2;
     public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite;
-    RectTransform objectUIRect;
+    RectTransform objectUIRect,objectUIRect2;
     public RectTransform CanvasRect;
 
-    //for object tracking ui
-    public GameObject doorHandle;
+    [HideInInspector]
+    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj;
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
-    bool hintHiden;
-    public GameObject kickableObj;
-    bool kickHidden;
-    public GameObject talkingTo;
-    public bool talknHidden;
-    public GameObject lidObj;
-    bool dragHidden;
-    public GameObject sitObj;
-    bool sitHidden;
-    public GameObject clickableObj;
-    bool clickHidden;
+    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden;
+    GameObject trackedBy1, trackedBy2;
+    Sprite usedBy1, usedBy2;
+    #endregion
 
 
     // Start is called before the first frame update
@@ -70,12 +64,14 @@ public class PlayerHolding : MonoBehaviour
         focusedHint = GameObject.Find("QTEPanel").transform.GetChild(3).gameObject;
         containers = GameObject.FindGameObjectsWithTag("Container");
         objectUIRect = objectUI.GetComponent<RectTransform>();
+        objectUIRect2 = objectUI2.GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
         GetFullHand();
+        TrackObjPos();
         if (!StartSequence.noControl)
         {
             ChooseInteractable();
@@ -86,7 +82,7 @@ public class PlayerHolding : MonoBehaviour
         #region UI and Hints
         if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo)
         {
-            HideUI();
+            HideUI(null);
         }
         atContainer = CheckContainer();
         if (doorHandle)
@@ -95,7 +91,7 @@ public class PlayerHolding : MonoBehaviour
             if (!doorHandle.GetComponentInParent<Door>().doorMoving)
                 DisplayUI(doorHandle, pickUpSprite);
             else
-                HideUI();
+                HideUI(pickUpSprite);
         }
 
         if (focusedObj != null)
@@ -208,28 +204,99 @@ public class PlayerHolding : MonoBehaviour
     #region Object-Tracking UI
     void DisplayUI(GameObject trackingObject,Sprite interactionSprite)
     {
-        Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
-        //Debug.Log(trackingObject.name + ": position is: " + ViewportPosition);
-        Vector2 WorldObject_ScreenPosition = new Vector2(
-        ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-        ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-        objectUIRect.anchoredPosition = WorldObject_ScreenPosition;
-        objectUI.sprite = interactionSprite;
-        objectUI.SetNativeSize();
-        if (interactionSprite == talkSprite)
-            objectUIRect.localScale = new Vector3(.15f, .15f, .15f);
-        else
-            objectUIRect.localScale = new Vector3(.1f, .1f, .1f);
-        if (!objectUI.gameObject.activeSelf)
-            objectUI.gameObject.SetActive(true);
-    }
 
-    void HideUI()
-    {
-        if (objectUI.gameObject.activeSelf)
+        if (!objectUI.gameObject.activeSelf || (trackedBy1 && trackedBy2 && trackingObject != trackedBy1 && trackingObject != trackedBy2 && interactionSprite == usedBy1))
         {
-            objectUI.gameObject.SetActive(false);
-            objectUI.sprite = null;
+            objectUI.sprite = interactionSprite;
+            objectUI.SetNativeSize();
+            trackedBy1 = trackingObject;
+            if (interactionSprite == talkSprite)
+                objectUIRect.localScale = new Vector3(.15f, .15f, .15f);
+            else
+                objectUIRect.localScale = new Vector3(.1f, .1f, .1f);
+            if (!objectUI.gameObject.activeSelf)
+            {
+                objectUI.gameObject.SetActive(true);
+            }
+            usedBy1 = interactionSprite;
+        }
+        else if(!objectUI2.gameObject.activeSelf || (trackedBy1 && trackedBy2 && trackingObject != trackedBy1 && trackingObject != trackedBy2 && interactionSprite == usedBy2))
+        {
+            if (!usedBy1 || interactionSprite != usedBy1)
+            {
+                trackedBy2 = trackingObject;
+                objectUI2.sprite = interactionSprite;
+                objectUI2.SetNativeSize();
+                if (interactionSprite == talkSprite)
+                    objectUIRect2.localScale = new Vector3(.15f, .15f, .15f);
+                else
+                    objectUIRect2.localScale = new Vector3(.1f, .1f, .1f);
+                if (!objectUI2.gameObject.activeSelf)
+                {
+                    objectUI2.gameObject.SetActive(true);
+                }
+                usedBy2 = interactionSprite;
+            }
+        }
+        
+    }
+    void TrackObjPos()
+    {
+        if (trackedBy1)
+        {
+            Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackedBy1.transform.position);
+            Vector2 WorldObject_ScreenPosition = new Vector2(
+            ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+            ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+            objectUIRect.anchoredPosition = WorldObject_ScreenPosition;
+        }
+        if (trackedBy2)
+        {
+            Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackedBy2.transform.position);
+            Vector2 WorldObject_ScreenPosition = new Vector2(
+            ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+            ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+            objectUIRect2.anchoredPosition = WorldObject_ScreenPosition;
+        }
+    }
+    void HideUI(Sprite toHide)
+    {
+        if (!toHide)
+        {
+            Debug.Log("hid all");
+            if (objectUI.gameObject.activeSelf)
+            {
+                objectUI.gameObject.SetActive(false);
+                objectUI.sprite = null;
+                trackedBy1 = null;
+                usedBy1 = null;
+            }
+            if (objectUI2.gameObject.activeSelf)
+            {
+                objectUI2.gameObject.SetActive(false);
+                objectUI2.sprite = null;
+                trackedBy2 = null;
+                usedBy2 = null;
+            }
+        }
+        else
+        {
+            if (toHide == usedBy1 && objectUI.gameObject.activeSelf)
+            {
+                objectUI.gameObject.SetActive(false);
+                objectUI.sprite = null;
+                trackedBy1 = null;
+                usedBy1 = null;
+                Debug.Log("hid1");
+            }
+            if(toHide == usedBy2 && objectUI2.gameObject.activeSelf)
+            {
+                objectUI2.gameObject.SetActive(false);
+                objectUI2.sprite = null;
+                trackedBy2 = null;
+                usedBy2 = null;
+                Debug.Log("hid2");
+            }
         }
     }
     void UITriggerdByOtherObj(GameObject obj,Sprite sprite,bool hidden)
@@ -243,7 +310,7 @@ public class PlayerHolding : MonoBehaviour
         {
             if (!hidden)
             {
-                HideUI();
+                HideUI(sprite);
                 hidden = true;
             }
         }
@@ -315,7 +382,7 @@ public class PlayerHolding : MonoBehaviour
             }
             else
             {
-                    HideUI();
+                    HideUI(lookingSprite);
             }
         }
         else
@@ -349,7 +416,7 @@ public class PlayerHolding : MonoBehaviour
                 }
                 else
                 {
-                        HideUI();
+                        HideUI(lookingSprite);
                 }
             }
         }

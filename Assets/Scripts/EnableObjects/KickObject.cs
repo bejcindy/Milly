@@ -45,7 +45,9 @@ public class KickObject : MonoBehaviour
         else
             isVisible = false;
 
-        DetectInteractable();
+
+        if(!StartSequence.noControl)
+            DetectInteractable();
 
         if (interactable)
         {

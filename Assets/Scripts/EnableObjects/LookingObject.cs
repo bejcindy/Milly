@@ -67,28 +67,28 @@ public class LookingObject : LivableObject
                     playerHolding.RemoveLookable(gameObject);
                 }
             }
-            else
-            {
-                if(inSpot && isVisible)
-                {
-                    if (!playerHolding.throwing)
-                    {
-                        if (!firstActivated)
-                        {
-                            focusingThis = true;
-                        }
-                        activated = true;
-                    }
-                }
-                else
-                {
-                    //gameObject.layer = 13;
-                    if (DataHolder.currentFocus == gameObject)
-                    {
-                        DataHolder.focusing = false;
-                    }
-                }
-            }
+            //else
+            //{
+            //    if(inSpot && isVisible)
+            //    {
+            //        if (!playerHolding.throwing)
+            //        {
+            //            if (!firstActivated)
+            //            {
+            //                focusingThis = true;
+            //            }
+            //            activated = true;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        //gameObject.layer = 13;
+            //        if (DataHolder.currentFocus == gameObject)
+            //        {
+            //            DataHolder.focusing = false;
+            //        }
+            //    }
+            //}
 
         }
         else

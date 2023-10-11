@@ -24,20 +24,27 @@ public class Chopsticks : PickUpObject
 
     protected override void Update()
     {
-        if (playerHolding.atTable)
+        if (playerHolding.atTable && !StartSequence.noControl)
         {
             base.Update();
-        }
-
-
-        if (selected && !thrown)
-        {
-            otherChopstick.gameObject.layer = 9;
+            if (selected && !thrown)
+            {
+                otherChopstick.gameObject.layer = 9;
+            }
+            else
+            {
+                otherChopstick.gameObject.layer = 0;
+            }
         }
         else
         {
+            selected = false;
+            gameObject.layer = 0;
             otherChopstick.gameObject.layer = 0;
         }
+
+
+
 
 
     }

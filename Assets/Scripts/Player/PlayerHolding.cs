@@ -12,8 +12,10 @@ public class PlayerHolding : MonoBehaviour
     public bool fullHand;
     public bool inDialogue;
     public bool throwing;
+
     public bool atContainer;
     public bool atTable;
+
     public bool positionFixedWithMouse;
 
 
@@ -45,6 +47,7 @@ public class PlayerHolding : MonoBehaviour
 
     [HideInInspector]
     public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj;
+    bool noControlReset;
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
@@ -84,6 +87,14 @@ public class PlayerHolding : MonoBehaviour
         {
             HideUI(null);
         }
+
+        if (StartSequence.noControl && !noControlReset)
+        {
+            HideUI();
+            noControlReset = true;
+        }
+
+
         atContainer = CheckContainer();
         if (doorHandle)
         {

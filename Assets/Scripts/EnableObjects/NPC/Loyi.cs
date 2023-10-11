@@ -12,4 +12,9 @@ public class Loyi : NPCControl
         firstTalk = true;
         inCutscene = true;
     }
+
+    public void ExitIzaCutsceneStage()
+    {
+        machine.ChangeState(machine.moveState);
+    }
 }

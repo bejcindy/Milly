@@ -45,6 +45,7 @@ public class DataHolder : MonoBehaviour
     static TextMeshProUGUI hintTMP;
     static PlayerHolding playerHolding;
     static PlayerLeftHand playerLeftHand;
+    static PlayerMovement playerMovement;
     static CinemachinePOV pov;
     static float originalVerticalSpeed, originalHorizontalSpeed;
     static string currentHint;
@@ -64,6 +65,7 @@ public class DataHolder : MonoBehaviour
         hints = hintsReference;
         playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
         playerLeftHand = GameObject.Find("Player").GetComponent<PlayerLeftHand>();
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         pov = playerCinemachine.GetCinemachineComponent<CinemachinePOV>();
         originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
         originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
@@ -93,6 +95,7 @@ public class DataHolder : MonoBehaviour
             focusCinemachine.LookAt = currentFocus.transform;
             //Cursor.lockState = CursorLockMode.Locked;
             playerHolding.enabled = false;
+            playerMovement.enabled = false;
             playerLeftHand.enabled = false;
             playerCinemachine.LookAt= currentFocus.transform;
             pov.m_HorizontalAxis.m_MaxSpeed = 0f;
@@ -171,6 +174,7 @@ public class DataHolder : MonoBehaviour
                 camBlended = false;
                 camBlendDone = false;
                 playerHolding.enabled = true;
+                playerMovement.enabled = true;
                 playerLeftHand.enabled = true;
                 pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
                 pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;

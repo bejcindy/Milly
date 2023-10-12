@@ -49,6 +49,7 @@ public class PlayerLeftHand : MonoBehaviour
     bool aimHintDone, smokingHintDone,drinkHintDone;
     bool chophinted;
     bool canSmoke;
+    bool aiming;
     // Start is called before the first frame update
     void Start()
     {
@@ -118,9 +119,14 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.ShowHint(DataHolder.hints.drinkHint);
             drinkHintDone = false;
         }
-        else if (currentChop && !currentChop.hasFood)
+        else if (currentChop && !currentChop.hasFood && !aiming)
         {
             DataHolder.ShowHint(DataHolder.hints.chopHint);
+            chophinted = true;
+        }
+        else if (currentChop && !currentChop.hasFood && aiming)
+        {
+            DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
             chophinted = true;
         }
         else if (currentChop && currentChop.hasFood)
@@ -320,6 +326,7 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (readyToThrow)
             {
+                aiming = false;
                 aimUI.SetActive(false);
                 aimUI.transform.localScale = new Vector3(1, 1, 1);
                 holdTimer = 0;
@@ -387,6 +394,7 @@ public class PlayerLeftHand : MonoBehaviour
                     if (holdTimer > 0.2f)
                         aimUI.SetActive(true);
                 }
+                aiming = true;
                 float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
                 float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
                 

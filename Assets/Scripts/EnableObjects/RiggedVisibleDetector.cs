@@ -54,7 +54,22 @@ public class RiggedVisibleDetector : MonoBehaviour
         if ((pointOnScreen.x > Screen.width * 0.2f) || (pointOnScreen.x < Screen.width * 0.8f) ||
                (pointOnScreen.y > Screen.height * 0.2f) || (pointOnScreen.y < Screen.height * 0.8f))
         {
-            return true;
+            if (GetComponent<Renderer>())
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                {
+                    //if (hit.collider)
+                    //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
+                    if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
+                    {
+
+                        return false;
+                    }
+
+                }
+            }
+            
         }
         else
         {
@@ -88,7 +103,7 @@ public class RiggedVisibleDetector : MonoBehaviour
             if (pointsInScreen < 2)
                 return false;
         }
-
+        
         return true;
     }
     bool CheckPointInView(Vector3 pointPos)

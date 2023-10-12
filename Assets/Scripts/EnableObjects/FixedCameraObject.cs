@@ -80,6 +80,14 @@ public class FixedCameraObject : LivableObject
 
                 TriggerInteraction();
             }
+            else
+            {
+                if (gameObject.name.Contains("apt_call"))
+                {
+                    playerHolding.clickableObj = null;
+                    iconHidden = true;
+                }
+            }
         }
         else
         {

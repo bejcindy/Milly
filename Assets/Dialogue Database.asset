@@ -829,6 +829,34 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 46
+    fields:
+    - title: Name
+      value: NPC/Felix/ActivateType
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Normal
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 45
+    fields:
+    - title: Name
+      value: NPC/Felix/FakeActivation
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   - id: 37
     fields:
     - title: Name
@@ -969,10 +997,52 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 44
+    fields:
+    - title: Name
+      value: NPC/Kelvin/RudeMilly
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   - id: 23
     fields:
     - title: Name
       value: NPC/Kelvin/Talk_State
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: Uninitiated
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 48
+    fields:
+    - title: Name
+      value: NPC/Loyi/Other_Interacted
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 47
+    fields:
+    - title: Name
+      value: NPC/Loyi/Talk_State
       type: 0
       typeString: 
     - title: Initial Value
@@ -1175,48 +1245,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 44
-    fields:
-    - title: Name
-      value: NPC/Kelvin/RudeMilly
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 45
-    fields:
-    - title: Name
-      value: NPC/Felix/FakeActivation
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 46
-    fields:
-    - title: Name
-      value: NPC/Felix/ActivateType
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: Normal
-      type: 0
-      typeString: CustomFieldType_Text
     - title: Description
       value: 
       type: 0
@@ -21588,7 +21616,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 469.09753
+        x: 467.66895
         y: 141.73169
         width: 160
         height: 30
@@ -23660,7 +23688,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 454.12506, y: 0}
+    canvasScrollPosition: {x: 69.83948, y: 1139.9999}
     canvasZoom: 0.7000003
   - id: 24
     fields:
@@ -31553,8 +31581,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 542.58966
-        y: 1362.2188
+        x: 535.25793
+        y: 1358.012
         width: 160
         height: 30
     - id: 25
@@ -31621,8 +31649,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 164.81342, y: 3.5048447}
-    canvasZoom: 0.64000034
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.52000046
   - id: 41
     fields:
     - title: Title
@@ -33758,6 +33786,12 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
+      - originConversationID: 42
+        originDialogueID: 0
+        destinationConversationID: 42
+        destinationDialogueID: 18
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -33765,8 +33799,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 549.92114
-        y: 81.62929
+        x: 879.0119
+        y: 70.7202
         width: 160
         height: 30
     - id: 1
@@ -33813,7 +33847,7 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Loyi_Talk_State"] == "Uninitiated"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -34707,14 +34741,64 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Loyi_Talk_State"] = "FirstInitiated"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 690.62366
-        y: 1013.7975
+        x: 685.16907
+        y: 1011.9794
+        width: 160
+        height: 30
+    - id: 18
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 8
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Go ahead Mil, I'll be right behind ya.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 42
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Loyi_Talk_State"] == "FirstInitiated" and (Variable["Poster_Funeral"]
+        == false)
+      userScript: Variable["Poster_Funeral"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1126.2845
+        y: 197.08382
         width: 160
         height: 30
     entryGroups: []

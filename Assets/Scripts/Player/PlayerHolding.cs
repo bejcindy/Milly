@@ -95,7 +95,7 @@ public class PlayerHolding : MonoBehaviour
 
         if (StartSequence.noControl && !noControlReset)
         {
-            HideUI();
+            pickUpObjects.Clear();
             noControlReset = true;
         }
 

@@ -22,4 +22,9 @@ public class Loyi : NPCControl
     {
 
     }
+
+    public void ExitCutscene()
+    {
+        inCutscene = false;
+    }
 }

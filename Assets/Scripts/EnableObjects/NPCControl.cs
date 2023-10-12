@@ -39,7 +39,7 @@ public class NPCControl : MonoBehaviour
 
 
     protected Transform player;
-    protected Transform currentDialogue;
+    public Transform currentDialogue;
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
@@ -382,7 +382,10 @@ public class NPCControl : MonoBehaviour
         }
         foreach (Transform child in npcMesh)
         {
-            child.gameObject.layer = layerNumber;
+            if (child.childCount <= 0)
+                child.gameObject.layer = layerNumber;
+            else
+                ChangeLayer(layerNumber);
         }
     }
 

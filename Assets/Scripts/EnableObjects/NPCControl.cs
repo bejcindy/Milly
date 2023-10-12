@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class NPCControl : MonoBehaviour
 {
 
-    private float matColorVal;
+    protected float matColorVal;
     [Header("[Activate Check]")]
     public bool mainNPC;
     public bool inCutscene;

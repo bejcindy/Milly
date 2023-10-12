@@ -22,6 +22,7 @@ public class FixedCameraObject : LivableObject
     [SerializeField] protected CinemachineVirtualCamera fixedCamera;
     [SerializeField] protected CinemachineVirtualCamera otherCamera;
     [SerializeField] protected CinemachineVirtualCamera playerCamera;
+    CinemachineBrain camBrain;
 
     [SerializeField] public GameObject uiHint;
 
@@ -41,6 +42,7 @@ public class FixedCameraObject : LivableObject
         playerBody = player.GetChild(0).GetComponent<Renderer>();
         playerCamera = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
         playerHolding = player.GetComponent<PlayerHolding>();
+        camBrain = Camera.main.GetComponent<CinemachineBrain>();
         if (transform.parent != null)
         {
             if (transform.parent.name.Contains("pizza"))
@@ -104,7 +106,7 @@ public class FixedCameraObject : LivableObject
             }
         }
 
-        if (positionFixed)
+        if (positionFixed && !camBrain.IsBlending)
         {
             if (Input.GetKeyDown(quitKey) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
             {
@@ -141,7 +143,6 @@ public class FixedCameraObject : LivableObject
     {
         playerBody.enabled = false;
         uiHint.SetActive(false);
-        isInteracting = true;
         activated = true;
         positionFixed = true;
         if (showMouse)
@@ -187,9 +188,9 @@ public class FixedCameraObject : LivableObject
             fixedCamera.m_Priority = 10;
         }
         playerCamera.m_Priority = 9;
+        isInteracting = true;
 
-
-        if(gameObject.name == "Kelvin_Rock")
+        if (gameObject.name == "Kelvin_Rock")
         {
             KelvinRockChair();
         }
@@ -245,7 +246,6 @@ public class FixedCameraObject : LivableObject
     {
         Kelvin kelv = GameObject.Find("Kelvin").GetComponent<Kelvin>();
         DialogueLua.SetVariable("NPC/Kelvin/PlayerAtRock", true);
-        Debug.Log(DialogueLua.GetVariable("NPC/Kelvin/PlayerAtRock").asBool);
         kelv.npcActivated = true;
     }
 }

@@ -330,7 +330,7 @@ public class PlayerLeftHand : MonoBehaviour
                         holdingObj.GetComponent<Cigarette>().FinishSmoking();
                         if (!smokingHintDone)
                         {
-                            DataHolder.HideHint(DataHolder.hints.throwHint);
+                            DataHolder.HideHint(DataHolder.hints.smokeHint);
                             smokingHintDone = true;
                         }
                     }

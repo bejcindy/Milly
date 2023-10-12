@@ -64,6 +64,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected LayerMask stairs;
     [SerializeField] protected float stairForce;
 
+    public bool initialCutsceneMove;
+    public Transform currentTarget;
+
     bool ladderExited;
     Collider ladderTrigger;
     bool tooLeft, tooRight;
@@ -108,7 +111,15 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            MovePlayer();
+            if (!initialCutsceneMove)
+            {
+                MovePlayer();
+            }
+            else
+            {
+                InitialCutsceneMovement(currentTarget);
+            }
+
             SpeedControl();
         }
         if (!onLadder && grounded)
@@ -123,8 +134,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        //if (horizontalInput != 0 && verticalInput != 0)
-        //    walkStair();
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -211,12 +221,10 @@ public class PlayerMovement : MonoBehaviour
             if(!rb.useGravity)
                 rb.useGravity = true;
         }
-        //if(!rb.useGravity)
-        //    rb.useGravity = true;
+
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
-        //Debug.Log(rb.velocity);
-        //Debug.DrawRay(transform.position, GetSlopeMoveDir() * moveSpeed * 20f, Color.red);
-        //Debug.DrawRay(transform.position, collisionSlopeDir * moveSpeed * 20f, Color.blue);
+
+
         if (OnSlope()||slopeCollide)
         {
             if (verticalInput == 0 && horizontalInput == 0)
@@ -226,12 +234,12 @@ public class PlayerMovement : MonoBehaviour
                 if (OnSlope())
                 {
                     rb.AddForce(GetSlopeMoveDir() * moveSpeed * 20f, ForceMode.Force);
-                    //Debug.Log("onslope");
+
                 }
                 else if (slopeCollide)
                 {
                     rb.AddForce(collisionSlopeDir * moveSpeed * 20f, ForceMode.Force);
-                    //Debug.Log("colliding");
+
                 }
 
                 //if (rb.velocity.y > 0)
@@ -269,42 +277,66 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public void InitialCutsceneMovement(Transform target)
+    {
+        float clampedVert = Mathf.Clamp(verticalInput, 0, 1);
+        moveDirection = Vector3.Normalize((target.position - transform.position) * clampedVert);
+
+        if (OnSlope() || slopeCollide)
+        {
+            if (verticalInput == 0 && horizontalInput == 0)
+                rb.velocity = Vector3.zero;
+            else
+            {
+                if (OnSlope())
+                {
+                    rb.AddForce(GetSlopeMoveDir() * moveSpeed * 20f, ForceMode.Force);
+
+                }
+                else if (slopeCollide)
+                {
+                    rb.AddForce(collisionSlopeDir * moveSpeed * 20f, ForceMode.Force);
+
+                }
+
+                //if (rb.velocity.y > 0)
+                //    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                if (rb.velocity.y > 0)
+                    rb.AddForce(Vector3.down * 10f, ForceMode.Force);
+                else if (rb.velocity.y < 0)
+                {
+                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                }
+            }
+        }
+
+        if (grounded)
+        {
+            Vector3 movementVector = Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up);
+            rb.AddForce(movementVector, ForceMode.Force);
+            //CheckForStep(ref movementVector);
+
+            walkStair(ref movementVector);
+
+        }
+        //in air
+        else if (!grounded)
+        {
+            rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f * airMultiplier, orientation.up), ForceMode.Force);
+        }
+
+        if (OnSlope() || slopeCollide)
+            rb.useGravity = false;
+        else if (!OnSlope() && !slopeCollide)
+            rb.useGravity = true;
+    }
+
     public bool CheckMoveAmount()
     {
         return (moveDirection.x > 2f || moveDirection.z > 2f);
     }
 
 
-    void CheckForStep(ref Vector3 movement)
-    {
-        Vector3 lookAheadStartPoint = lowerRay.transform.position+ Vector3.up * (step_MaxStepHeight * 0.5f);
-        Vector3 lookAheadDir = movement.normalized;
-        float lookAheadDistance = playerRadius + step_LookAheadRange;
-        if (Physics.Raycast(lookAheadStartPoint, lookAheadDir, lookAheadDistance, stairs))
-        {
-            Debug.Log("Checking for step and there is ");
-            lookAheadStartPoint = lowerRay.transform.position + Vector3.up * step_MaxStepHeight;
-            Debug.Log(lookAheadStartPoint);
-            if (!Physics.Raycast(lookAheadStartPoint, lookAheadDir, lookAheadDistance, flatGround))
-            {
-                Vector3 candidatePoint = lookAheadStartPoint + lookAheadDir * lookAheadDistance;
-                Debug.Log(candidatePoint);
-
-                RaycastHit hitResult;
-                if (Physics.Raycast(candidatePoint, Vector3.down, out hitResult, step_MaxStepHeight, flatGround))
-                {
-                    Debug.Log("Hit result is " + hitResult);
-                    if (Vector3.Angle(Vector3.up, hitResult.normal) <= slopeLimit)
-                    {
-                        Debug.Log("final is " + hitResult.point + Vector3.up);
-                        transform.position = hitResult.point + Vector3.up;
-                    }
-                }
-            }
-        }
-
-
-    }
 
     void PlayerInput()
     {
@@ -339,17 +371,7 @@ public class PlayerMovement : MonoBehaviour
         //    playerMove.setPaused(true);
         //}
 
-        //if (Input.GetKeyDown(jumpKey))
-        //{
 
-        //    if (grounded && readyToJump)
-        //    {
-        //        readyToJump = false;
-        //        Jump();
-        //        Invoke(nameof(ResetJump), jumpCooldown);
-        //    }
-
-        //}
 
     }
     void SpeedControl()
@@ -418,27 +440,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        //RaycastHit hitLower45;
-        //if (Physics.Raycast(lowerRay.transform.position, transform.TransformDirection(1.5f, 0, 1), out hitLower45, lowerDetect, flatGround))
-        //{
-
-        //    RaycastHit hitUpper45;
-        //    if (!Physics.Raycast(upperRay.transform.position, transform.TransformDirection(1.5f, 0, 1), out hitUpper45, upperDetect, flatGround))
-        //    {
-        //        rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
-        //    }
-        //}
-
-        //RaycastHit hitLowerMinus45;
-        //if (Physics.Raycast(lowerRay.transform.position, transform.TransformDirection(-1.5f, 0, 1), out hitLowerMinus45, lowerDetect, flatGround))
-        //{
-
-        //    RaycastHit hitUpperMinus45;
-        //    if (!Physics.Raycast(upperRay.transform.position, transform.TransformDirection(-1.5f, 0, 1), out hitUpperMinus45, upperDetect, flatGround))
-        //    {
-        //        rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
-        //    }
-        //}
     }
     protected virtual void Jump()
     {

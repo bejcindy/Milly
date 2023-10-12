@@ -10,6 +10,7 @@ public class Kelvin : NPCControl
     {
         base.Start();
         firstTalk = true;
+        matColorVal = 1;
     }
 
     public void KelvinAction1()

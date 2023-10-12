@@ -49,6 +49,7 @@ public class PlayerLeftHand : MonoBehaviour
     bool aimHintDone, smokingHintDone,drinkHintDone;
     bool chophinted;
     bool canSmoke;
+    bool aiming;
     // Start is called before the first frame update
     void Start()
     {
@@ -118,9 +119,14 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.ShowHint(DataHolder.hints.drinkHint);
             drinkHintDone = false;
         }
-        else if (currentChop && !currentChop.hasFood)
+        else if (currentChop && !currentChop.hasFood && !aiming)
         {
             DataHolder.ShowHint(DataHolder.hints.chopHint);
+            chophinted = true;
+        }
+        else if (currentChop && !currentChop.hasFood && aiming)
+        {
+            DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
             chophinted = true;
         }
         else if (currentChop && currentChop.hasFood)
@@ -309,94 +315,108 @@ public class PlayerLeftHand : MonoBehaviour
         if (handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "HandDrink")
             drinking = false;
     }
-
+    public bool bypassThrow;
     private void DetectHolding()
     {
-        if (Input.GetMouseButtonDown(0) && holdingObj && !PauseMenu.isPaused)
+        if (!bypassThrow)
         {
-            readyToThrow = true;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (readyToThrow)
+            if (Input.GetMouseButtonDown(0) && holdingObj && !PauseMenu.isPaused)
             {
-                aimUI.SetActive(false);
-                aimUI.transform.localScale = new Vector3(1, 1, 1);
-                holdTimer = 0;
-                if (!noThrow)
+                readyToThrow = true;
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (readyToThrow)
                 {
-                    if (smoking)
+                    aiming = false;
+                    aimUI.SetActive(false);
+                    aimUI.transform.localScale = new Vector3(1, 1, 1);
+                    holdTimer = 0;
+                    if (!noThrow)
                     {
-                        holdingObj.GetComponent<Cigarette>().FinishSmoking();
-                        if (!smokingHintDone)
+                        if (smoking)
                         {
-                            DataHolder.HideHint(DataHolder.hints.throwHint);
-                            smokingHintDone = true;
+                            holdingObj.GetComponent<Cigarette>().FinishSmoking();
+                            if (!smokingHintDone)
+                            {
+                                DataHolder.HideHint(DataHolder.hints.smokeHint);
+                                smokingHintDone = true;
+                            }
                         }
-                    }
-                    isHolding = false;
-                    smoking = false;
-                    holdingObj.GetComponent<Rigidbody>().isKinematic = false;
-                    holdingObj.GetComponent<PickUpObject>().inHand = false;
-                    holdingObj.GetComponent<PickUpObject>().thrown = true;
-                    holdingObj.SetParent(null);
-                    //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward+new Vector3(xOffset,0,0) + new Vector3(0, throwForce.y, 0));
-                    if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
-                    {
                         isHolding = false;
-                        StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
-                    }
-                    else
-                    {
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                        RaycastHit hit;
-                        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                        smoking = false;
+                        holdingObj.GetComponent<Rigidbody>().isKinematic = false;
+                        holdingObj.GetComponent<PickUpObject>().inHand = false;
+                        holdingObj.GetComponent<PickUpObject>().thrown = true;
+                        holdingObj.SetParent(null);
+                        //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward+new Vector3(xOffset,0,0) + new Vector3(0, throwForce.y, 0));
+                        if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
                         {
-                            holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                            //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - transform.position).normalized);
-                            //Debug.Log("hit " + hit.transform.gameObject.name);
+                            isHolding = false;
+                            StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
                         }
                         else
                         {
-                            holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position+ ray.direction * 30f - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                            //Debug.Log("didn't hit");
+                            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            RaycastHit hit;
+                            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                            {
+                                holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                                //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - transform.position).normalized);
+                                //Debug.Log("hit " + hit.transform.gameObject.name);
+                            }
+                            else
+                            {
+                                holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + ray.direction * 30f - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                                //Debug.Log("didn't hit");
+                            }
+                            FMODUnity.RuntimeManager.PlayOneShot(holdingObj.GetComponent<PickUpObject>().throwEventName, transform.position);
                         }
-                        FMODUnity.RuntimeManager.PlayOneShot(holdingObj.GetComponent<PickUpObject>().throwEventName, transform.position);
+
+                        noThrow = true;
+                        playerHolding.UnoccupyLeft();
+                        if (!aimHintDone)
+                        {
+                            Debug.Log("hinted");
+                            DataHolder.HideHint(DataHolder.hints.throwHint);
+                            aimHintDone = true;
+                        }
+                        readyToThrow = false;
                     }
-                    
-                    noThrow = true;
-                    playerHolding.UnoccupyLeft();
-                    if (!aimHintDone)
-                    {
-                        Debug.Log("hinted");
-                        DataHolder.HideHint(DataHolder.hints.throwHint);
-                        aimHintDone = true;
-                    }
-                    readyToThrow = false;
                 }
             }
-        }
-        if (Input.GetMouseButton(0))
-        {
-            if (readyToThrow)
+            if (Input.GetMouseButton(0))
             {
-                if (holdTimer < holdTime)
+                if (readyToThrow)
                 {
-                    holdTimer += Time.deltaTime;
-                    holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
-                    if (holdTimer > 0.2f)
-                        aimUI.SetActive(true);
+                    if (holdTimer < holdTime)
+                    {
+                        holdTimer += Time.deltaTime;
+                        holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
+                        if (holdTimer > 0.2f)
+                            aimUI.SetActive(true);
+                    }
+                    aiming = true;
+                    float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
+                    float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
+
+                    throwForce = new Vector2(throwForceX, throwForceY);
+                    float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, holdTime, holdTimer));
+                    aimUI.transform.localScale = new Vector3(uiScaleFactor, uiScaleFactor, uiScaleFactor);
                 }
-                float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
-                float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
-                
-                throwForce = new Vector2(throwForceX, throwForceY);
-                float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, holdTime, holdTimer));
-                aimUI.transform.localScale = new Vector3(uiScaleFactor, uiScaleFactor, uiScaleFactor);
+
             }
-            
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                readyToThrow = false;
+                holdingObj.localPosition = Vector3.zero;
+                holdTimer = 0;
+                throwForce = Vector2.zero;
+                aimUI.SetActive(false);
+                aimUI.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        else
         {
             readyToThrow = false;
             holdingObj.localPosition = Vector3.zero;

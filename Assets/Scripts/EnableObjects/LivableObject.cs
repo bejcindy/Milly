@@ -225,20 +225,6 @@ public class LivableObject : MonoBehaviour
         //Is in FOV
         if (centerFocused)
         {
-            //if ((pointOnScreen.x < Screen.width * 0.4f) || (pointOnScreen.x > Screen.width * 0.6f) ||
-            //    (pointOnScreen.y < Screen.height * 0.4f) || (pointOnScreen.y > Screen.height * 0.6f))
-            //{
-
-            //    return false;
-            //}
-
-            //if ((pointOnScreen.x > Screen.width * 0.4f) || (pointOnScreen.x < Screen.width * 0.6f) ||
-            //    (pointOnScreen.y > Screen.height * 0.4f) || (pointOnScreen.y < Screen.height * 0.6f))
-            //{
-
-            //    return true;
-            //}
-
             int pointsInScreen = 0;
             Vector3 pointA = rend.bounds.min;
             Vector3 pointB = rend.bounds.min + new Vector3(rend.bounds.size.x, 0, 0);
@@ -263,12 +249,25 @@ public class LivableObject : MonoBehaviour
             {
                 if (checkBoundVisible[i])
                     pointsInScreen++;
-                //else
-                //    pointsInScreen--;
             }
             
             if (pointsInScreen < 2)
                 return false;
+            if (GetComponent<Renderer>())
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                {
+                    //if (hit.collider)
+                    //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
+                    if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
+                    {
+
+                        return false;
+                    }
+
+                }
+            }
         }
         else
         {
@@ -277,7 +276,25 @@ public class LivableObject : MonoBehaviour
             {
                 return false;
             }
-            
+            if (GetComponent<Renderer>())
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                {
+                    if (gameObject.name.Contains("cig"))
+                    {
+                        Debug.Log(hit.collider.name);
+                    }
+                    //if (hit.collider)
+                    //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
+                    if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
+                    {
+
+                        return false;
+                    }
+
+                }
+            }
         }
 
         if (!centerFocused)
@@ -349,13 +366,5 @@ public class LivableObject : MonoBehaviour
     {
         return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), col.bounds);
     }
-    //protected virtual void OnBecameVisible()
-    //{
-    //    checkVisible = true;
-    //}
 
-    //protected virtual void OnBecameInvisible()
-    //{
-    //    checkVisible = false;
-    //}
 }

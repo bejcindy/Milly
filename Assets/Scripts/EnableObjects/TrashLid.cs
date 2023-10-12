@@ -65,7 +65,7 @@ public class TrashLid : LivableObject
                     //leftHandUI.SetActive(false);
                     activated = true;
                     interacting = true;
-                    playerLeftHand.enabled = false;
+                    playerLeftHand.bypassThrow = true;
                     if (verticalInput < 0)
                     {
                         RotateLid(0);
@@ -79,28 +79,9 @@ public class TrashLid : LivableObject
                 {
                     playerHolding.lidObj = iconPos;
                     iconHidden = false;
-                    playerLeftHand.enabled = true;
+                    playerLeftHand.bypassThrow = false;
                 }
             }
-            //if (playerHolding.GetRightHand())
-            //{
-            //    if(!playerHolding.GetLeftHand())
-            //        //rightHandUI.SetActive(true);
-            //    if (Input.GetMouseButton(1))
-            //    {
-            //        //rightHandUI.SetActive(false);
-            //        activated = true;
-            //        interacting = true;
-            //        if (verticalInput < 0)
-            //        {
-            //            RotateLid(0);
-            //        }
-            //        else if (verticalInput > 0)
-            //        {
-            //            RotateLid(270);
-            //        }
-            //    }
-            //}
 
         }
         else
@@ -109,6 +90,7 @@ public class TrashLid : LivableObject
             {
                 playerHolding.lidObj = null;
                 iconHidden = true;
+                playerLeftHand.bypassThrow = false;
             }
         }
 

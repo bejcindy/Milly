@@ -14,6 +14,8 @@ public class NPCControl : MonoBehaviour
     public bool inCutscene;
     public bool initialActivated;
     public bool npcActivated;
+
+    public bool hasFakeActivate;
     public bool fakeActivated;
     public bool overrideNoControl;
     protected float fadeInterval;
@@ -121,7 +123,7 @@ public class NPCControl : MonoBehaviour
 
         if (!mainNPC)
         {
-            if (npcActivated || fakeActivated)
+            if (npcActivated)
             {
                 if (matColorVal > 0f)
                 {
@@ -131,12 +133,20 @@ public class NPCControl : MonoBehaviour
                 }
 
             }
-            else
+
+            if (fakeActivated)
             {
-                if (matColorVal < 1f)
+                if (matColorVal > 0f)
                 {
-                    DeactivateAll(npcMesh);
+                    ActivateAll(npcMesh);
+                    if (!currentDialogue.gameObject.activeSelf)
+                        currentDialogue.gameObject.SetActive(true);
                 }
+            }
+            else if(hasFakeActivate && !fakeActivated && !npcActivated)
+            {
+                DeactivateAll(npcMesh);
+
             }
         }
 
@@ -380,12 +390,10 @@ public class NPCControl : MonoBehaviour
                 iconHidden = true;
             }
         }
-        foreach (Transform child in npcMesh)
+        var children = npcMesh.GetComponentsInChildren<Transform>();
+        foreach (var child in children)
         {
-            if (child.childCount <= 0)
-                child.gameObject.layer = layerNumber;
-            else
-                ChangeLayer(layerNumber);
+            child.gameObject.layer = layerNumber;
         }
     }
 

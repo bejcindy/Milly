@@ -13,6 +13,7 @@ public class Felix : NPCControl
         base.Start();
         questTriggered = true;
         firstTalk = true;
+        hasFakeActivate = true;
 
     }
 

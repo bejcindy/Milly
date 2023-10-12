@@ -9,18 +9,18 @@ public class Loyi : NPCControl
         base.Start();
         mainNPC = true;
         overrideNoControl = true;
-        firstTalk = true;
-        inCutscene = true;
     }
 
     public void ExitIzaCutsceneStage()
     {
+        firstTalk = true;
         machine.ChangeState(machine.moveState);
+        agent.enabled = true;
     }
 
     public void LoyiAction1()
     {
-
+        noLookInConvo = true;
     }
 
     public void ExitCutscene()

@@ -52,8 +52,9 @@ public class PlayerHolding : MonoBehaviour
     bool displayedFocusHint;
     bool hintDone;
     bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden;
-    GameObject trackedBy1, trackedBy2;
-    Sprite usedBy1, usedBy2;
+    List<GameObject> trackedObjs;
+    List<GameObject> UIs;
+    List<Sprite> usedSprites;
     #endregion
 
 
@@ -67,14 +68,15 @@ public class PlayerHolding : MonoBehaviour
         focusedHint = GameObject.Find("QTEPanel").transform.GetChild(3).gameObject;
         containers = GameObject.FindGameObjectsWithTag("Container");
         objectUIRect = objectUI.GetComponent<RectTransform>();
-        objectUIRect2 = objectUI2.GetComponent<RectTransform>();
+        trackedObjs = new List<GameObject>();
+        UIs = new List<GameObject>();
+        usedSprites = new List<Sprite>();
     }
 
     // Update is called once per frame
     void Update()
     {
         GetFullHand();
-        TrackObjPos();
         if (!StartSequence.noControl)
         {
             ChooseInteractable();
@@ -215,98 +217,75 @@ public class PlayerHolding : MonoBehaviour
     #region Object-Tracking UI
     void DisplayUI(GameObject trackingObject,Sprite interactionSprite)
     {
-
-        if (!objectUI.gameObject.activeSelf || (trackedBy1 && trackedBy2 && trackingObject != trackedBy1 && trackingObject != trackedBy2 && interactionSprite == usedBy1))
+        //check if current object is tracked already
+        bool instantiated = false;
+        if (!instantiated)
         {
-            objectUI.sprite = interactionSprite;
-            objectUI.SetNativeSize();
-            trackedBy1 = trackingObject;
-            if (interactionSprite == talkSprite)
-                objectUIRect.localScale = new Vector3(.15f, .15f, .15f);
-            else
-                objectUIRect.localScale = new Vector3(.1f, .1f, .1f);
-            if (!objectUI.gameObject.activeSelf)
+            if (trackedObjs.Count == 0 || !trackedObjs.Contains(trackingObject))
             {
-                objectUI.gameObject.SetActive(true);
-            }
-            usedBy1 = interactionSprite;
-        }
-        else if(!objectUI2.gameObject.activeSelf || (trackedBy1 && trackedBy2 && trackingObject != trackedBy1 && trackingObject != trackedBy2 && interactionSprite == usedBy2))
-        {
-            if (!usedBy1 || interactionSprite != usedBy1)
-            {
-                trackedBy2 = trackingObject;
-                objectUI2.sprite = interactionSprite;
-                objectUI2.SetNativeSize();
-                if (interactionSprite == talkSprite)
-                    objectUIRect2.localScale = new Vector3(.15f, .15f, .15f);
-                else
-                    objectUIRect2.localScale = new Vector3(.1f, .1f, .1f);
-                if (!objectUI2.gameObject.activeSelf)
+                if (usedSprites.Count == 0 || !usedSprites.Contains(interactionSprite))
                 {
-                    objectUI2.gameObject.SetActive(true);
+                    Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
+                    Vector2 WorldObject_ScreenPosition = new Vector2(
+                    ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+                    ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+                    GameObject instantiatedUI = Instantiate(objectUI.gameObject, CanvasRect.transform);
+                    instantiatedUI.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
+                    if (interactionSprite == talkSprite)
+                        instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.15f, .15f, .15f);
+                    else
+                        instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.1f, .1f, .1f);
+                    instantiatedUI.SetActive(true);
+                    instantiatedUI.GetComponent<TrackObject>().sprite = interactionSprite;
+                    instantiatedUI.GetComponent<TrackObject>().trackThis = trackingObject;
+                    UIs.Add(instantiatedUI);
+                    trackedObjs.Add(trackingObject);
+                    usedSprites.Add(interactionSprite);
+                    instantiated = true;
                 }
-                usedBy2 = interactionSprite;
+                else
+                {
+                    for (int i = 0; i < UIs.Count; i++)
+                    {
+                        if (UIs[i].GetComponent<TrackObject>().sprite == interactionSprite)
+                        {
+                            trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
+                            UIs[i].GetComponent<TrackObject>().trackThis = trackingObject;
+                            trackedObjs.Add(trackingObject);
+                            instantiated = true;
+                        }
+                    }
+                }
             }
         }
-        
     }
-    void TrackObjPos()
-    {
-        if (trackedBy1)
-        {
-            Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackedBy1.transform.position);
-            Vector2 WorldObject_ScreenPosition = new Vector2(
-            ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-            ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-            objectUIRect.anchoredPosition = WorldObject_ScreenPosition;
-        }
-        if (trackedBy2)
-        {
-            Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackedBy2.transform.position);
-            Vector2 WorldObject_ScreenPosition = new Vector2(
-            ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-            ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-            objectUIRect2.anchoredPosition = WorldObject_ScreenPosition;
-        }
-    }
+
     void HideUI(Sprite toHide)
     {
         if (!toHide)
         {
-            Debug.Log("hid all");
-            if (objectUI.gameObject.activeSelf)
+            if (UIs.Count != 0)
             {
-                objectUI.gameObject.SetActive(false);
-                objectUI.sprite = null;
-                trackedBy1 = null;
-                usedBy1 = null;
-            }
-            if (objectUI2.gameObject.activeSelf)
-            {
-                objectUI2.gameObject.SetActive(false);
-                objectUI2.sprite = null;
-                trackedBy2 = null;
-                usedBy2 = null;
+                for (int i = 0; i < UIs.Count; i++)
+                {
+                    Destroy(UIs[i]);
+                }
+                usedSprites.Clear();
+                trackedObjs.Clear();
+                UIs.Clear();
             }
         }
         else
         {
-            if (toHide == usedBy1 && objectUI.gameObject.activeSelf)
+            for (int i = 0; i < UIs.Count; i++)
             {
-                objectUI.gameObject.SetActive(false);
-                objectUI.sprite = null;
-                trackedBy1 = null;
-                usedBy1 = null;
-                Debug.Log("hid1");
-            }
-            if(toHide == usedBy2 && objectUI2.gameObject.activeSelf)
-            {
-                objectUI2.gameObject.SetActive(false);
-                objectUI2.sprite = null;
-                trackedBy2 = null;
-                usedBy2 = null;
-                Debug.Log("hid2");
+                if (UIs[i].GetComponent<TrackObject>().sprite == toHide)
+                {
+                    Destroy(UIs[i]);
+                    usedSprites.Remove(UIs[i].GetComponent<TrackObject>().sprite);
+                    trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
+                    UIs.Remove(UIs[i]);
+                }
             }
         }
     }

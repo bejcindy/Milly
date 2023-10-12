@@ -11,7 +11,7 @@ using System;
 public class HintTexts
 {
     [TextArea]
-    public string throwHint, smokeHint, lookHint, drinkHint, kickHint, scrollHint, sitHint, cigHint,chopHint, eatHint;
+    public string throwHint, smokeHint, lookHint, drinkHint, kickHint, scrollHint, sitHint, cigHint, chopHint, pickFoodHint, eatHint;
 }
 
 public class DataHolder : MonoBehaviour
@@ -39,16 +39,21 @@ public class DataHolder : MonoBehaviour
     [InspectorName("Hints")]
     HintTexts hintsReference;
     public static HintTexts hints;
-
+    public GameObject hintPanelPrefab;
+    public Transform canvasRef;
+    static Transform canvas;
     static GameObject hintPanel;
-    static GameObject dotImage;
-    static TextMeshProUGUI hintTMP;
+
+    //static TextMeshProUGUI hintTMP;
     static PlayerHolding playerHolding;
     static PlayerLeftHand playerLeftHand;
     static PlayerMovement playerMovement;
     static CinemachinePOV pov;
     static float originalVerticalSpeed, originalHorizontalSpeed;
-    static string currentHint;
+    //static string currentHint;
+    static List<string> currentHints;
+    static List<GameObject> hintPanels;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,11 +63,15 @@ public class DataHolder : MonoBehaviour
         originalPlayerCmFollow = playerCinemachine.Follow;
         postProcessingVolume = GameObject.Find("GlowVolume");
         v = postProcessingVolume.GetComponent<Volume>();
-        hintPanel = GameObject.Find("HintPanel");
-        dotImage = hintPanel.transform.GetChild(0).gameObject;
-        hintTMP = hintPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        hintPanel.SetActive(false);
+
+        hintPanel = hintPanelPrefab;
+        //hintTMP = hintPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        //hintPanel.SetActive(false);
         hints = hintsReference;
+        currentHints = new List<string>();
+        hintPanels = new List<GameObject>();
+        canvas = canvasRef;
+
         playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
         playerLeftHand = GameObject.Find("Player").GetComponent<PlayerLeftHand>();
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
@@ -206,19 +215,43 @@ public class DataHolder : MonoBehaviour
     /// <param name="hint"></param>
     public static void ShowHint(string hint)
     {
-        hintTMP.text = hint;
-        hintPanel.SetActive(true);
-        dotImage.SetActive(true);
-        hintTMP.gameObject.SetActive(true);
-        currentHint = hint;
+        bool instantiated = false;
+        if (!instantiated)
+        {
+            if (currentHints.Count == 0 || !currentHints.Contains(hint))
+            {
+                GameObject instantiatedPanel = Instantiate(hintPanel, canvas);
+                //instantiatedPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(25, 200 - currentHints.Count * 200, 0);
+                instantiatedPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = hint;
+                instantiatedPanel.SetActive(true);
+                hintPanels.Add(instantiatedPanel);
+                currentHints.Add(hint);
+                instantiated = true;
+            }
+        }
+        
     }
 
     public static void HideHint(string hintToHide)
     {
-        if (hintToHide == currentHint)
+        bool hidden = false;
+        if (hintPanels.Count != 0 && !hidden)
         {
-            hintPanel.SetActive(false);
-            hintTMP.text = null;
+            for (int i = 0; i < hintPanels.Count; i++)
+            {
+                if (currentHints[i] == hintToHide)
+                {
+                    Destroy(hintPanels[i]);
+                    currentHints.Remove(hintToHide);
+                    hintPanels.Remove(hintPanels[i]);
+                    hidden = true;
+                }
+            }
         }
+        //if (hintToHide == currentHint)
+        //{
+        //    hintPanel.SetActive(false);
+        //    hintTMP.text = null;
+        //}
     }
 }

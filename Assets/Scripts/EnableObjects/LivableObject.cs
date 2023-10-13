@@ -189,6 +189,7 @@ public class LivableObject : MonoBehaviour
             firstActivated = true;
             if (specialEffect != null)
                 specialEffect.SetActive(true);
+            
         }
     }
 

@@ -48,13 +48,13 @@ public class RiggedVisibleDetector : MonoBehaviour
         //Is in front
         if (pointOnScreen.z < 0)
         {
-
+            Debug.Log("fucked here 1"+gameObject.name);
             return false;
         }
         if ((pointOnScreen.x > Screen.width * 0.2f) || (pointOnScreen.x < Screen.width * 0.8f) ||
                (pointOnScreen.y > Screen.height * 0.2f) || (pointOnScreen.y < Screen.height * 0.8f))
         {
-            if (GetComponent<Renderer>())
+            if (GetComponent<Renderer>() && GetComponent<Collider>())
             {
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
@@ -63,11 +63,15 @@ public class RiggedVisibleDetector : MonoBehaviour
                     //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
                     if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
                     {
-
+                        Debug.Log("fucked here 2"+hit.collider.name+gameObject.name);
                         return false;
                     }
 
                 }
+            }
+            else if(GetComponent<Renderer>() && !GetComponent<Collider>())
+            {
+                return true;
             }
             
         }
@@ -101,7 +105,11 @@ public class RiggedVisibleDetector : MonoBehaviour
                 //    pointsInScreen--;
             }
             if (pointsInScreen < 2)
+            {
+                Debug.Log("fucked here 3" + gameObject.name);
                 return false;
+            }
+
         }
         
         return true;

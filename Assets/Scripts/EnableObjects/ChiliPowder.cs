@@ -6,25 +6,37 @@ public class ChiliPowder : PickUpObject
 {
     Animator anim;
     Vector3 startingPos;
+    PlayerLeftHand leftHand;
+    bool powderMoving;
     public ParticleSystem powderParticle;
     protected override void Start()
     {
         base.Start();
         anim = GetComponent<Animator>();
         startingPos = transform.position;
+        leftHand = player.GetComponent<PlayerLeftHand>();
     }
 
     protected override void Update()
     {
-        if (playerHolding.atTable)
+        if (playerHolding.atTable && !powderMoving && !StartSequence.noControl)
         {
             base.Update();
-            if (inHand)
+
+            if(selected && !powderMoving)
+            {
+                gameObject.layer = 9;
+            }
+            else
+            {
+                gameObject.layer = 0;
+            }
+
+            if (inHand && !leftHand.noThrow)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
                     anim.SetTrigger("Use");
-                    powderParticle.Play();
                 }
 
                 if (Input.GetMouseButtonDown(1))
@@ -36,11 +48,22 @@ public class ChiliPowder : PickUpObject
                 }
             }
         }
+        else
+        {
+            selected = false;
+            gameObject.layer = 0;
+        }
 
+    }
+
+    public void PlayChiliParticle()
+    {
+        powderParticle.Play();
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
+        powderMoving = true;
         float time = 0;
         Vector3 startPosition = transform.position;
         while (time < duration)
@@ -50,6 +73,7 @@ public class ChiliPowder : PickUpObject
             yield return null;
         }
         transform.position = targetPosition;
+        powderMoving = false;
 
     }
 }

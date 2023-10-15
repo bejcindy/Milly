@@ -211,6 +211,7 @@ namespace NPCFSM
             return npcControl.GetSpecialIdleAnim();
         }
 
+
         public void SetSpecialIdleAnim()
         {
             SetAnimatorTrigger("Special" + npcControl._counter);

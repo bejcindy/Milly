@@ -41,13 +41,12 @@ public class Pizza : PickUpObject
         }
 
         if (selected && !thrown)
-        {
             transform.GetChild(1).gameObject.layer = 9;
-        }
-        else
-        {
+        else if(inHand)
             transform.GetChild(1).gameObject.layer = 7;
-        }
+        else
+            transform.GetChild(1).gameObject.layer = 0;
+        
 
         if (!IsObjectVisible(rend))
             selected = false;

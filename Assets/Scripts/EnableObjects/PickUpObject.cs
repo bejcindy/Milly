@@ -90,17 +90,11 @@ public class PickUpObject : LivableObject
 
 
         if (selected && !thrown)
-        {
             gameObject.layer = 9;
-        }
         else if(inHand)
-        {
             gameObject.layer = 7;
-        }
         else
-        {
             gameObject.layer = 0;
-        }
 
         if (inHand)
         {

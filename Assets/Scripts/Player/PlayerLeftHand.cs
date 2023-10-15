@@ -130,17 +130,20 @@ public class PlayerLeftHand : MonoBehaviour
         }
         else if (currentChop && !currentChop.hasFood && aiming)
         {
+            //关其他的
+            DataHolder.HideHint(DataHolder.hints.chopHint);
             DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
             chophinted = true;
         }
         else if (currentChop && currentChop.hasFood)
         {
+            DataHolder.HideHint(DataHolder.hints.pickFoodHint);
             DataHolder.ShowHint(DataHolder.hints.eatHint);
             chophinted = true;
         }
         else if (!currentChop && chophinted)
         {
-            DataHolder.HideHint(DataHolder.hints.chopHint);
+            DataHolder.HideHint(DataHolder.hints.eatHint);
             chophinted = false;
         }
         else if (isHolding)
@@ -191,6 +194,7 @@ public class PlayerLeftHand : MonoBehaviour
                 {
                     FoodPickObject food = selectedFood.GetComponent<FoodPickObject>();
                     selectedFood.SetParent(holdingObj.parent.transform);
+                    food.picked = true;
                     selectedFood.localPosition = currentChop.foodPickedPos;
                     selectedFood.localRotation = Quaternion.Euler(food.inChopRot);
                     currentFood = selectedFood;

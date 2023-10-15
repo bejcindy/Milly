@@ -79,6 +79,7 @@ public class PlayerHolding : MonoBehaviour
         GetFullHand();
         if (!StartSequence.noControl)
         {
+
             ChooseInteractable();
             ChooseLookable();
         }
@@ -494,8 +495,6 @@ public class PlayerHolding : MonoBehaviour
         }
 
 
-
-
         if(!obj.GetComponent<Cigarette>() && !obj.GetComponent<Chopsticks>())
             StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
         else if (obj.GetComponent<Chopsticks>())
@@ -510,6 +509,7 @@ public class PlayerHolding : MonoBehaviour
             obj.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
+        pickUpObjects.Clear();
     }
 
     public void OccupyRight(Transform obj)

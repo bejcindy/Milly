@@ -9,10 +9,15 @@ public class TalkState : State {
     {
 
         machine.PauseIdling();
-        if (machine.CheckReachDestination() && machine.CheckFirstTalk() && !machine.CheckSpecialIdleAnim())
+        if (machine.CheckReachDestination())
         {
-            machine.StopNavigation();
-            machine.SetAnimatorTrigger("Stop");
+            if (machine.CheckFirstTalk())
+            {
+                machine.StopNavigation();
+                machine.SetAnimatorTrigger("Stop");
+
+            }
+
         }
 
 

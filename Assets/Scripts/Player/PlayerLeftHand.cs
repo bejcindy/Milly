@@ -101,6 +101,10 @@ public class PlayerLeftHand : MonoBehaviour
                     smokingHinted = true;
                 }
             }
+            //if (holdingObj)
+            //{
+            //    holdingObj.gameObject.layer = 16;
+            //}
         }
 
 

@@ -92,9 +92,13 @@ public class PickUpObject : LivableObject
         {
             gameObject.layer = 9;
         }
-        else
+        else if(inHand)
         {
             gameObject.layer = 7;
+        }
+        else
+        {
+            gameObject.layer = 0;
         }
 
         if (inHand)

@@ -31,9 +31,6 @@ public class PickUpObject : LivableObject
     public bool foodObj;
 
     DialogueSystemTrigger dialogue;
-    //public GameObject uiHint;
-    //public Sprite leftMouse;
-    //public Sprite rightMouse;
     public string pickUpEventName;
     public string throwEventName;
 
@@ -95,14 +92,6 @@ public class PickUpObject : LivableObject
         else
             gameObject.layer = 0;
 
-        if (inHand)
-        {
-            if (!npcBound)
-            {
-                if (dialogue != null)
-                    dialogue.enabled = true;
-            }
-        }
 
         if (thrown)
         {

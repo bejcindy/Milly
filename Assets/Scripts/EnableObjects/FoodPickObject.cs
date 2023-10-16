@@ -8,6 +8,7 @@ public class FoodPickObject : MonoBehaviour
     PlayerLeftHand leftHand;
 
     public Vector3 inChopRot;
+    public bool picked;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,19 +27,22 @@ public class FoodPickObject : MonoBehaviour
             selected = false;
         }
 
-        if (selected)
+        if (selected && !picked)
         {
             gameObject.layer = 9;
             leftHand.selectedFood = this.transform;
         }
-
-        else
+        else if(picked)
         {
-            gameObject.layer = 0;
+            gameObject.layer = 7;
             if(leftHand.selectedFood == this.transform)
             {
                 leftHand.selectedFood = null;
             }
+        }
+        else
+        {
+            gameObject.layer = 0;
         }
 
     }

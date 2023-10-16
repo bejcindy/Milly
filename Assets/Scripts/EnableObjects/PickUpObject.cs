@@ -56,26 +56,25 @@ public class PickUpObject : LivableObject
     {
         if (interactable && !inHand && !thrown)
         {
-            if (!playerHolding.fullHand)
+            if (playerHolding.GetLeftHand())
             {
                 if (!player.GetComponent<PlayerLeftHand>().inPizzaBox && !StartSequence.noControl)
                 {
                     playerHolding.AddInteractable(gameObject);
                 }
-                if (playerHolding.GetLeftHand())
+
+                if (Input.GetMouseButtonDown(0) && selected)
                 {
-                    if (Input.GetMouseButtonDown(0) && selected)
+                    if (!activated && matColorVal > 0)
                     {
-                        if (!activated && matColorVal > 0)
-                        {
-                            activated = true;
-                        }
-                        rb.isKinematic = true;
-                        playerHolding.OccupyLeft(transform);
-                        inHand = true;
-                        FMODUnity.RuntimeManager.PlayOneShot(pickUpEventName, player.transform.position);
+                        activated = true;
                     }
+                    rb.isKinematic = true;
+                    playerHolding.OccupyLeft(transform);
+                    inHand = true;
+                    FMODUnity.RuntimeManager.PlayOneShot(pickUpEventName, player.transform.position);
                 }
+
 
 
             }
@@ -90,13 +89,11 @@ public class PickUpObject : LivableObject
 
 
         if (selected && !thrown)
-        {
             gameObject.layer = 9;
-        }
-        else
-        {
+        else if(inHand)
             gameObject.layer = 7;
-        }
+        else
+            gameObject.layer = 0;
 
         if (inHand)
         {

@@ -593,9 +593,13 @@ public class NPCControl : MonoBehaviour
     public void SetDialogue()
     {
         int diaIndex = currentDialogue.GetSiblingIndex();
-        currentDialogue = dialogueHolder.GetChild(diaIndex + 1);
-        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
-        DialogueLua.SetVariable(reTriggerName, false);
+        if(diaIndex != dialogueHolder.childCount - 1)
+        {
+            currentDialogue = dialogueHolder.GetChild(diaIndex + 1);
+            string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
+            DialogueLua.SetVariable(reTriggerName, false);
+        }
+
 
     }
 

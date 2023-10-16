@@ -45,6 +45,9 @@ public class Felix : NPCControl
     public void ChangeFelixQuestDialogue()
     {
         currentDialogue = dialogueHolder.GetChild(1);
+        machine.SetMainTalkFalse();
+        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
+        DialogueLua.SetVariable(reTriggerName, false);
     }
 
     public void CanActivate()

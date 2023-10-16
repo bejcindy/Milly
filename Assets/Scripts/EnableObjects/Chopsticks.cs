@@ -28,13 +28,11 @@ public class Chopsticks : PickUpObject
         {
             base.Update();
             if (selected && !thrown)
-            {
                 otherChopstick.gameObject.layer = 9;
-            }
+            else if(inHand)
+                otherChopstick.gameObject.layer = 7;
             else
-            {
                 otherChopstick.gameObject.layer = 0;
-            }
         }
         else
         {

@@ -9,6 +9,7 @@ public class ChiliPowder : PickUpObject
     PlayerLeftHand leftHand;
     bool powderMoving;
     public ParticleSystem powderParticle;
+    public TableController myTable;
     protected override void Start()
     {
         base.Start();
@@ -19,7 +20,7 @@ public class ChiliPowder : PickUpObject
 
     protected override void Update()
     {
-        if (playerHolding.atTable && !powderMoving && !StartSequence.noControl)
+        if (playerHolding.atTable && !powderMoving && !StartSequence.noControl && myTable.tableControlOn)
         {
             base.Update();
 
@@ -57,6 +58,7 @@ public class ChiliPowder : PickUpObject
             selected = false;
             gameObject.layer = 0;
         }
+
 
     }
 

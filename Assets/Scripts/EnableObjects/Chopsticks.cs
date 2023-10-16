@@ -11,6 +11,7 @@ public class Chopsticks : PickUpObject
     Quaternion chopOriginalRot;
     public bool hasFood;
     public bool chopMoving;
+    public TableController myTable;
     Animator anim;
 
     protected override void Start() 
@@ -24,7 +25,7 @@ public class Chopsticks : PickUpObject
 
     protected override void Update()
     {
-        if (playerHolding.atTable && !StartSequence.noControl)
+        if (playerHolding.atTable && !StartSequence.noControl && myTable.tableControlOn)
         {
             base.Update();
             if (selected && !thrown)

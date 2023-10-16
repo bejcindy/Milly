@@ -1279,6 +1279,34 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 49
+    fields:
+    - title: Name
+      value: NPC/Felix/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 50
+    fields:
+    - title: Name
+      value: NPC/Kelvin/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
@@ -2481,7 +2509,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1.4925537, y: 156.71637}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 0.6700003
   - id: 3
     fields:
@@ -5488,8 +5516,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 951.58606, y: 0}
-    canvasZoom: 0.8799998
+    canvasScrollPosition: {x: 701.4676, y: 1144.5413}
+    canvasZoom: 0.7
   - id: 9
     fields:
     - title: Title
@@ -23492,7 +23520,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1424.6025
+        x: 1422.8784
         y: 142.4519
         width: 160
         height: 30
@@ -23718,8 +23746,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 120.85886, y: 0}
-    canvasZoom: 0.6100004
+    canvasScrollPosition: {x: 63.23883, y: 0}
+    canvasZoom: 0.5800004
   - id: 24
     fields:
     - title: Title
@@ -24620,7 +24648,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 15.625, y: 0}
     canvasZoom: 0.64000034
   - id: 25
     fields:
@@ -26869,7 +26897,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Felix_Talk_State"] == "FirstInitiated"
+      conditionsString: Variable["NPC_Felix_Talk_State"] == "FirstInitiated" and
+        (Variable["NPC_Felix_Main_Talked"] == false)
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -27143,7 +27172,9 @@ MonoBehaviour:
       userScript: 'Variable["NPC_Felix_Talk_State"] = "SecondInitiated";
 
         SetQuestState("Felix
-        was nice. ", "success")'
+        was nice. ", "success");
+
+        Variable["NPC_Felix_Main_Talked"] = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -27224,7 +27255,7 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 1
+      useOverrides: 0
       overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
@@ -27357,8 +27388,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: Variable["NPC_Kelvin_Talk_State"] == "FirstInitiated" and
-        (Variable["NPC_Kelvin_RudeMilly"] == false)
-      userScript: 
+        (Variable["NPC_Kelvin_Main_Talked"] == false)
+      userScript: Variable["NPC_Kelvin_Main_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -27514,16 +27545,15 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: Variable["NPC_Kelvin_Other_Interacted"] == false and (Variable["NPC_Kelvin_RudeMilly"]
-        == true)
+      conditionsString: Variable["NPC_Kelvin_Other_Interacted"] == false
       userScript: Variable["NPC_Kelvin_Other_Interacted"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1272.6571
-        y: 126.727905
+        x: 1276.2935
+        y: 183.0915
         width: 160
         height: 30
     - id: 20
@@ -27714,7 +27744,7 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 1
+      useOverrides: 0
       overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
@@ -27846,7 +27876,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "SecondInitiated"
+      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "SecondInitiated" and
+        (Variable["NPC_Kelvin_Main_Talked"] == false)
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -28544,7 +28575,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Is that how everything to you?
+        value: Is that how everything is to you?
         type: 0
         typeString: 
       - title: Sequence
@@ -28894,7 +28925,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["NPC_Kelvin_Talk_State"] = "ThirdInitiated"
+      userScript: 'Variable["NPC_Kelvin_Talk_State"] = "ThirdInitiated";
+
+        Variable["NPC_Kelvin_Main_Talked"]
+        = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -28961,8 +28995,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.4900004
+    canvasScrollPosition: {x: 26.603415, y: 331.69556}
+    canvasZoom: 0.6400003
   - id: 39
     fields:
     - title: Title
@@ -30951,8 +30985,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 461.5381}
-    canvasZoom: 0.52000046
+    canvasScrollPosition: {x: 242.87067, y: 251.61322}
+    canvasZoom: 0.7300004
   - id: 41
     fields:
     - title: Title
@@ -33025,7 +33059,7 @@ MonoBehaviour:
       skipPCSubtitleAfterResponseMenu: 0
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
-      continueButton: 0
+      continueButton: 1
       overrideSequenceSettings: 0
       defaultSequence: 
       defaultPlayerSequence: 
@@ -34091,15 +34125,15 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: Variable["NPC_Loyi_Talk_State"] == "FirstInitiated" and (Variable["Poster_Funeral"]
+      conditionsString: Variable["NPC_Loyi_Talk_State"] == "FirstInitiated" and (Variable["NPC_Loyi_Other_Interacted"]
         == false)
-      userScript: Variable["Poster_Funeral"] = true
+      userScript: Variable["NPC_Loyi_Other_Interacted"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1126.2845
+        x: 1144.4663
         y: 197.08382
         width: 160
         height: 30
@@ -36422,7 +36456,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 21.428528, y: 1328.227}
+    canvasScrollPosition: {x: 0, y: 1042.5128}
     canvasZoom: 0.70000035
   - id: 44
     fields:
@@ -38082,7 +38116,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 912.668
+        x: 914.70886
         y: 947.19
         width: 160
         height: 30
@@ -38109,7 +38143,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: I'll see you inside Miyoshiya later.
+        value: Really the best time for a whiskey on the rocks at this time of the
+          day.
         type: 0
         typeString: 
       - title: Sequence
@@ -38158,7 +38193,7 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 1
+      useOverrides: 0
       overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
@@ -39777,7 +39812,7 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
-      useOverrides: 1
+      useOverrides: 0
       overrideSubtitleSettings: 1
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
@@ -39785,7 +39820,7 @@ MonoBehaviour:
       skipPCSubtitleAfterResponseMenu: 0
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
-      continueButton: 0
+      continueButton: 1
       overrideSequenceSettings: 0
       defaultSequence: 
       defaultPlayerSequence: 
@@ -39848,6 +39883,12 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
+      - originConversationID: 46
+        originDialogueID: 0
+        destinationConversationID: 46
+        destinationDialogueID: 5
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -39903,14 +39944,14 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Felix_Main_Talked"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 413
+        x: 412
         y: 130
         width: 160
         height: 30
@@ -40068,18 +40109,67 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Felix_Main_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 415
+        x: 419
         y: 327
         width: 160
         height: 30
+    - id: 5
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 13
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: It's ok Frankie...a little bo, booze won't hurt.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 46
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Felix_Other_Interacted"] == false
+      userScript: Variable["NPC_Felix_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 864
+        y: 147
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 227, y: 0}
     canvasZoom: 1
   - id: 47
     fields:
@@ -40594,7 +40684,19 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 48
+        originDialogueID: 0
+        destinationConversationID: 48
+        destinationDialogueID: 1
+        isConnector: 0
+        priority: 2
+      - originConversationID: 48
+        originDialogueID: 0
+        destinationConversationID: 48
+        destinationDialogueID: 4
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -40602,8 +40704,216 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 213
-        y: 49
+        x: 542
+        y: 52
+        width: 160
+        height: 30
+    - id: 1
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 8
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>Yeah, yeah gimme one sec mom.</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 48
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 48
+        originDialogueID: 1
+        destinationConversationID: 48
+        destinationDialogueID: 2
+        isConnector: 0
+        priority: 2
+      conditionsString: Variable["NPC_Loyi_Talk_State"] == "FirstInitiated"
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 348
+        y: 147
+        width: 160
+        height: 30
+    - id: 2
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 8
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: 'Sorry Mil, on the phone right now can we talk later? '
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 48
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 48
+        originDialogueID: 2
+        destinationConversationID: 48
+        destinationDialogueID: 3
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 348
+        y: 197
+        width: 160
+        height: 30
+    - id: 3
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 8
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Yeah my bad.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 48
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: Variable["NPC_Loyi_Talk_State"] = "SecondInitiated"
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 348
+        y: 254
+        width: 160
+        height: 30
+    - id: 4
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 8
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Milly, please.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 48
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Loyi_Other_Interacted"] == false
+      userScript: Variable["NPC_Loyi_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 708
+        y: 154
         width: 160
         height: 30
     entryGroups: []

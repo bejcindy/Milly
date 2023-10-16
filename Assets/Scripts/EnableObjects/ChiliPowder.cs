@@ -27,6 +27,10 @@ public class ChiliPowder : PickUpObject
             {
                 gameObject.layer = 9;
             }
+            else if (inHand)
+            {
+                gameObject.layer = 7;
+            }
             else
             {
                 gameObject.layer = 0;

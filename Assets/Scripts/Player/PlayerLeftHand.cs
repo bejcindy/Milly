@@ -44,12 +44,13 @@ public class PlayerLeftHand : MonoBehaviour
 
     public bool readyToThrow;
     bool notHoldingAnyThing;
-
+    #region UI variables
     bool aimHinted, smokingHinted,drinkHinted;
     bool aimHintDone, smokingHintDone,drinkHintDone;
     bool chophinted;
     bool canSmoke;
     bool aiming;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -123,24 +124,30 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.ShowHint(DataHolder.hints.drinkHint);
             drinkHintDone = false;
         }
-        else if (currentChop && !currentChop.hasFood && !aiming)
+        else if (currentChop && !currentChop.hasFood && !chopAiming)
         {
+            DataHolder.HideHint(DataHolder.hints.eatHint);
             DataHolder.ShowHint(DataHolder.hints.chopHint);
             chophinted = true;
         }
-        else if (currentChop && !currentChop.hasFood && aiming)
+        else if (currentChop && !currentChop.hasFood && chopAiming)
         {
+            //关其他的
+            DataHolder.HideHint(DataHolder.hints.chopHint);
             DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
             chophinted = true;
         }
         else if (currentChop && currentChop.hasFood)
         {
+            DataHolder.HideHint(DataHolder.hints.pickFoodHint);
             DataHolder.ShowHint(DataHolder.hints.eatHint);
             chophinted = true;
         }
         else if (!currentChop && chophinted)
         {
             DataHolder.HideHint(DataHolder.hints.chopHint);
+            DataHolder.HideHint(DataHolder.hints.pickFoodHint);
+            DataHolder.HideHint(DataHolder.hints.eatHint);
             chophinted = false;
         }
         else if (isHolding)
@@ -191,6 +198,7 @@ public class PlayerLeftHand : MonoBehaviour
                 {
                     FoodPickObject food = selectedFood.GetComponent<FoodPickObject>();
                     selectedFood.SetParent(holdingObj.parent.transform);
+                    food.picked = true;
                     selectedFood.localPosition = currentChop.foodPickedPos;
                     selectedFood.localRotation = Quaternion.Euler(food.inChopRot);
                     currentFood = selectedFood;

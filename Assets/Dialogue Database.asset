@@ -1279,6 +1279,34 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 49
+    fields:
+    - title: Name
+      value: NPC/Felix/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 50
+    fields:
+    - title: Name
+      value: NPC/Kelvin/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
@@ -5488,8 +5516,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 951.58606, y: 0}
-    canvasZoom: 0.8799998
+    canvasScrollPosition: {x: 701.4676, y: 1144.5413}
+    canvasZoom: 0.7
   - id: 9
     fields:
     - title: Title
@@ -24620,7 +24648,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 15.625, y: 0}
     canvasZoom: 0.64000034
   - id: 25
     fields:
@@ -26869,7 +26897,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Felix_Talk_State"] == "FirstInitiated"
+      conditionsString: Variable["NPC_Felix_Talk_State"] == "FirstInitiated" and
+        (Variable["NPC_Felix_Main_Talked"] == false)
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -27143,7 +27172,9 @@ MonoBehaviour:
       userScript: 'Variable["NPC_Felix_Talk_State"] = "SecondInitiated";
 
         SetQuestState("Felix
-        was nice. ", "success")'
+        was nice. ", "success");
+
+        Variable["NPC_Felix_Main_Talked"] = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -27357,8 +27388,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: Variable["NPC_Kelvin_Talk_State"] == "FirstInitiated" and
-        (Variable["NPC_Kelvin_RudeMilly"] == false)
-      userScript: 
+        (Variable["NPC_Kelvin_Main_Talked"] == false)
+      userScript: Variable["NPC_Kelvin_Main_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -27514,8 +27545,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: Variable["NPC_Kelvin_Other_Interacted"] == false and (Variable["NPC_Kelvin_RudeMilly"]
-        == true)
+      conditionsString: Variable["NPC_Kelvin_Other_Interacted"] == false
       userScript: Variable["NPC_Kelvin_Other_Interacted"] = true
       onExecute:
         m_PersistentCalls:
@@ -27846,7 +27876,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "SecondInitiated"
+      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "SecondInitiated" and
+        (Variable["NPC_Kelvin_Main_Talked"] == false)
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -28894,7 +28925,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["NPC_Kelvin_Talk_State"] = "ThirdInitiated"
+      userScript: 'Variable["NPC_Kelvin_Talk_State"] = "ThirdInitiated";
+
+        Variable["NPC_Kelvin_Main_Talked"]
+        = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -28961,8 +28995,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 244.26215}
-    canvasZoom: 0.6100003
+    canvasScrollPosition: {x: 26.603415, y: 331.69556}
+    canvasZoom: 0.6400003
   - id: 39
     fields:
     - title: Title
@@ -39848,6 +39882,12 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
+      - originConversationID: 46
+        originDialogueID: 0
+        destinationConversationID: 46
+        destinationDialogueID: 5
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -39903,14 +39943,14 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Felix_Main_Talked"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 413
+        x: 412
         y: 130
         width: 160
         height: 30
@@ -40068,18 +40108,67 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Felix_Main_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 415
+        x: 419
         y: 327
         width: 160
         height: 30
+    - id: 5
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 13
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: It's ok Frankie...a little bo, booze won't hurt.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 46
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["NPC_Felix_Other_Interacted"] == false
+      userScript: Variable["NPC_Felix_Other_Interacted"] = true
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 864
+        y: 147
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 227, y: 0}
     canvasZoom: 1
   - id: 47
     fields:

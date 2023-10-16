@@ -40,7 +40,6 @@ public class IdleState : State
             machine.InvokeIdleFunction();
             if (machine.CheckInConversation())
             {
-                Debug.Log("THIS IS WHY CHARLES FUCKED 1");
                 machine.ChangeState(machine.talkState);
             }
 

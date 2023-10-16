@@ -77,12 +77,8 @@ public class PlayerHolding : MonoBehaviour
     void Update()
     {
         GetFullHand();
-        if (!StartSequence.noControl)
-        {
-
-            ChooseInteractable();
-            ChooseLookable();
-        }
+        ChooseInteractable();
+        ChooseLookable();
 
 
         #region UI and Hints

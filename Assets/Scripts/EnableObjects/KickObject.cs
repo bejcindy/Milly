@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class KickObject : MonoBehaviour
 {
@@ -17,8 +18,9 @@ public class KickObject : MonoBehaviour
     bool isVisible, interactable;
     Collider coll;
     bool hinted;
-    bool activated,firstActivated;
+    bool activated, firstActivated;
     GameObject usefulChild;
+    public EventReference kickedSound;
 
     void Start()
     {
@@ -27,7 +29,7 @@ public class KickObject : MonoBehaviour
         coll = GetComponent<Collider>();
         coll.enabled = false;
         rb.isKinematic = true;
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             if (child.gameObject.GetComponent<GroupMaster>())
                 usefulChild = child.gameObject;
@@ -46,12 +48,12 @@ public class KickObject : MonoBehaviour
             isVisible = false;
 
 
-        if(!StartSequence.noControl)
+        if (!StartSequence.noControl)
             DetectInteractable();
 
         if (interactable)
         {
-            if(instantiatedHint == null)
+            if (instantiatedHint == null)
             {
                 //instantiatedHint = Instantiate(kickHint, hintPosition, Quaternion.identity);
                 //instantiatedHint.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -71,13 +73,15 @@ public class KickObject : MonoBehaviour
                 transform.GetChild(1).gameObject.GetComponent<Collider>().enabled = false;
                 coll.enabled = true;
                 rb.isKinematic = false;
-                rb.AddForce(Camera.main.transform.forward * 20f,ForceMode.Impulse);
+                rb.AddForce(Camera.main.transform.forward * 20f, ForceMode.Impulse);
                 if (hinted)
                 {
                     DataHolder.HideHint(DataHolder.hints.kickHint);
                     player.GetComponent<PlayerHolding>().kickableObj = null;
                     hinted = false;
                 }
+                if (!kickedSound.IsNull)
+                    RuntimeManager.PlayOneShot(kickedSound, transform.position);
             }
         }
         else
@@ -105,7 +109,7 @@ public class KickObject : MonoBehaviour
     //    activateTrigger.enabled = false;
     //}
 
- 
+
 
 
     void DetectInteractable()
@@ -134,29 +138,29 @@ public class KickObject : MonoBehaviour
             return false;
         }
 
-        
-            if ((pointOnScreen.x < Screen.width * 0.2f) || (pointOnScreen.x > Screen.width * 0.8f) ||
-               (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
-            {
-                return false;
-            }
 
-            if (GetComponent<Renderer>())
+        if ((pointOnScreen.x < Screen.width * 0.2f) || (pointOnScreen.x > Screen.width * 0.8f) ||
+           (pointOnScreen.y < Screen.height * 0.2f) || (pointOnScreen.y > Screen.height * 0.8f))
+        {
+            return false;
+        }
+
+        if (GetComponent<Renderer>())
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                //if (hit.collider)
+                //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
+                if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
                 {
-                    //if (hit.collider)
-                    //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
-                    if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
-                    {
 
-                        return false;
-                    }
-
+                    return false;
                 }
+
             }
-        
+        }
+
 
         return true;
     }

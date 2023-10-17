@@ -103,7 +103,6 @@ MonoBehaviour:
   checkVisible: 0
   minDist: 3
   rend: {fileID: 0}
-  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -114,7 +113,11 @@ MonoBehaviour:
   visibleDetector: {fileID: 0}
   centerFocused: 0
   noRend: 0
+  overrideStartSequence: 0
   onlyFront: 1
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   objType: 2
   playerHolding: {fileID: 0}
   inHand: 0
@@ -127,6 +130,20 @@ MonoBehaviour:
   foodObj: 0
   pickUpEventName: 
   throwEventName: 
+  pickUpSound:
+    Guid:
+      Data1: 903459537
+      Data2: 1119517988
+      Data3: -1947752567
+      Data4: -685133880
+    Path: event:/Sound Effects/ObjectInteraction/Trash
+  collideSound:
+    Guid:
+      Data1: 903459537
+      Data2: 1119517988
+      Data3: -1947752567
+      Data4: -685133880
+    Path: event:/Sound Effects/ObjectInteraction/Trash
 --- !u!54 &837044080195896745
 Rigidbody:
   m_ObjectHideFlags: 0

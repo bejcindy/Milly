@@ -10,7 +10,6 @@ public class FoodPickObject : MonoBehaviour
 
     public Vector3 inChopRot;
     public bool picked;
-    EventReference pickFoodSound;
     // Start is called before the first frame update
     void Start()
     {

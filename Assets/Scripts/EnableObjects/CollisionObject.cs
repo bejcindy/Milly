@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using FMODUnity;
 
 public class CollisionObject : LivableObject
 {
@@ -13,14 +14,14 @@ public class CollisionObject : LivableObject
     public string eventName;
 
     public bool assistant;
-
+    public EventReference collisionSound;
     protected override void Start()
     {
         base.Start();
         if (tagName.Contains(","))
         {
             string[] tags = tagName.Split(",");
-            for(int i = 0; i < tags.Length; i++)
+            for (int i = 0; i < tags.Length; i++)
             {
                 tagList.Add(tags[i]);
             }
@@ -38,7 +39,7 @@ public class CollisionObject : LivableObject
     {
         if (tagList.Contains(collision.gameObject.tag))
         {
-            if(!stairParent)
+            if (!stairParent)
                 activated = true;
             else
             {
@@ -55,13 +56,14 @@ public class CollisionObject : LivableObject
             if (brokenAC)
             {
                 GetComponent<Rigidbody>().isKinematic = false;
-                if(GetComponent<DialogueSystemTrigger>())
+                if (GetComponent<DialogueSystemTrigger>())
                     GetComponent<DialogueSystemTrigger>().enabled = true;
             }
 
 
         }
-            
+        if (!collisionSound.IsNull && DataHolder.canMakeSound)
+            RuntimeManager.PlayOneShot(collisionSound, transform.position);
     }
 
     private void OnTriggerEnter(Collider other)

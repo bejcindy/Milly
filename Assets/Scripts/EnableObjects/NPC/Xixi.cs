@@ -8,22 +8,24 @@ public class Xixi : NPCControl
     {
         base.Start();
         firstTalk = true;
-        noTalkInWalk = true;
     }
 
     public void XixiAction1()
     {
         noTalkStage = true;
+        noTalkInWalk = false;
     }
 
     public void XixiAction2()
     {
         noTalkStage = false;
+        noTalkInWalk = false;
     }
 
     public void XixiAction3()
     {
         noTalkStage = true;
+        noTalkInWalk = false;
     }
 
     void OnConversationEnd(Transform other)
@@ -32,7 +34,8 @@ public class Xixi : NPCControl
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
         currentDialogue.gameObject.SetActive(false);
-        StopIdle();
+        noTalkInWalk = true;
     }
+
 
 }

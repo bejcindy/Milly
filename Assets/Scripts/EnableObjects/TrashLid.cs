@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class TrashLid : LivableObject
 {
@@ -14,9 +15,10 @@ public class TrashLid : LivableObject
     GameObject iconPos;
     bool iconHidden;
     PlayerLeftHand playerLeftHand;
-    // Start is called before the first frame update
 
-    // Update is called once per frame
+    public EventReference openSound, closeSound;
+    bool openPlayed, closePlayed;
+
     protected override void Start()
     {
         base.Start();
@@ -46,15 +48,27 @@ public class TrashLid : LivableObject
                     if (verticalInput < 0)
                     {
                         RotateLid(0);
+                        if (!closePlayed && !closeSound.IsNull)
+                        {
+                            RuntimeManager.PlayOneShot(closeSound, transform.position);
+                            closePlayed = true;
+                        }
                     }
                     else if (verticalInput > 0)
                     {
                         RotateLid(270);
+                        if (!openPlayed && !openSound.IsNull)
+                        {
+                            RuntimeManager.PlayOneShot(openSound, transform.position);
+                            closePlayed = true;
+                        }
                     }
                 }
                 else
                 {
                     playerHolding.lidObj = iconPos;
+                    openPlayed = false;
+                    closePlayed = false;
                     iconHidden = false;
                 }
             }
@@ -69,6 +83,11 @@ public class TrashLid : LivableObject
                     if (verticalInput < 0)
                     {
                         RotateLid(0);
+                        if (!closePlayed && !closeSound.IsNull)
+                        {
+                            RuntimeManager.PlayOneShot(closeSound, transform.position);
+                            closePlayed = true;
+                        }
                     }
                     else if (verticalInput > 0)
                     {
@@ -79,6 +98,8 @@ public class TrashLid : LivableObject
                 {
                     playerHolding.lidObj = iconPos;
                     iconHidden = false;
+                    openPlayed = false;
+                    closePlayed = false;
                     playerLeftHand.bypassThrow = false;
                 }
             }

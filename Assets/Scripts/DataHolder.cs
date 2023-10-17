@@ -53,6 +53,8 @@ public class DataHolder : MonoBehaviour
     //static string currentHint;
     static List<string> currentHints;
     static List<GameObject> hintPanels;
+    public static bool canMakeSound;
+    float beginningAudioCoolDownTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -80,12 +82,19 @@ public class DataHolder : MonoBehaviour
         originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
         //focusCinemachine.Priority = playerCinemachine.Priority + 1;
         //focusCinemachine.gameObject.SetActive(false);
+        canMakeSound = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (beginningAudioCoolDownTimer < 1)
+            beginningAudioCoolDownTimer += Time.deltaTime;
+        else
+        {
+            canMakeSound = true;
+        }
         if (!focusing && focused)
         {
             Unfocus();

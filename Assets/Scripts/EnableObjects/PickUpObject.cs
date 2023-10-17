@@ -35,8 +35,7 @@ public class PickUpObject : LivableObject
     public string pickUpEventName;
     public string throwEventName;
 
-    public FMODUnity.EventReference pickUpSound, collideSound;
-    float beginningAudioCoolDownTimer;
+    public EventReference pickUpSound, collideSound;
 
     protected override void Start()
     {
@@ -50,8 +49,6 @@ public class PickUpObject : LivableObject
     {
         base.Update();
         DetectEnable();
-        if (beginningAudioCoolDownTimer < 1)
-            beginningAudioCoolDownTimer += Time.deltaTime;
     }
     private void DetectEnable()
     {
@@ -110,7 +107,7 @@ public class PickUpObject : LivableObject
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collideSound.IsNull && beginningAudioCoolDownTimer >= 1)
+        if (!collideSound.IsNull && DataHolder.canMakeSound && !inHand)
             RuntimeManager.PlayOneShot(collideSound, transform.position);
     }
 

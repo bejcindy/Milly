@@ -362,7 +362,6 @@ MonoBehaviour:
   checkVisible: 0
   minDist: 2
   rend: {fileID: 2367047620054705904}
-  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -373,7 +372,11 @@ MonoBehaviour:
   visibleDetector: {fileID: 8298567202998863992}
   centerFocused: 0
   noRend: 0
+  overrideStartSequence: 0
   onlyFront: 1
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   objType: 1
   playerHolding: {fileID: 0}
   inHand: 0
@@ -386,6 +389,20 @@ MonoBehaviour:
   foodObj: 0
   pickUpEventName: 
   throwEventName: 
+  pickUpSound:
+    Guid:
+      Data1: -1894745233
+      Data2: 1109512823
+      Data3: 1412770722
+      Data4: 242922209
+    Path: event:/Sound Effects/ObjectInteraction/Pizza
+  collideSound:
+    Guid:
+      Data1: -1894745233
+      Data2: 1109512823
+      Data3: 1412770722
+      Data4: 242922209
+    Path: event:/Sound Effects/ObjectInteraction/Pizza
   inBox: 0
   lid: {fileID: 0}
   pizzaBox: {fileID: 0}

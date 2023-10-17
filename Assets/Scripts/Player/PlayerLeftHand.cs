@@ -150,6 +150,14 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.eatHint);
             chophinted = false;
         }
+        else if (holdingObj && holdingObj.GetComponent<ChiliPowder>())
+        {
+            DataHolder.ShowHint(DataHolder.hints.powderHint);
+        }
+        else if (!holdingObj)
+        {
+            DataHolder.HideHint(DataHolder.hints.powderHint);
+        }
         else if (isHolding)
         {
             DataHolder.ShowHint(DataHolder.hints.throwHint);

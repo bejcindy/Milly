@@ -27,11 +27,13 @@ public class TableController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Tab) && !isHolding)
             {
                 tableControlOn = !tableControlOn;
+                CheckTableControl();
             }
         }
         else
         {
             tableControlOn = false;
+
         }
 
 
@@ -41,17 +43,11 @@ public class TableController : MonoBehaviour
     {
         if (tableControlOn)
         {
-            foreach(var obj in objects)
-            {
-                obj.enabled = true;
-            }
+
         }
         else
         {
-            foreach(var obj in objects)
-            {
-                obj.enabled = false;
-            }
+            playerHolding.ClearPickUp();
         }
     }
 }

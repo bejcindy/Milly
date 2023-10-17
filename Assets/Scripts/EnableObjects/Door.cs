@@ -63,6 +63,30 @@ public class Door : LivableObject
             }
 
         }
+
+        if (slidingDoor)
+        {
+            if (door.localPosition == openPos)
+            {
+                doorOpen = true;
+            }
+            else
+            {
+                doorOpen = false;
+            }
+        }
+        else
+        {
+            if (door.localRotation == Quaternion.Euler(openPos))
+            {
+                doorOpen = true;
+            }
+            else
+            {
+                doorOpen = false;
+            }
+        }
+
     }
 
     protected virtual void DoorControl()
@@ -160,14 +184,7 @@ public class Door : LivableObject
             isInteracting = false;
         }
 
-        if (door.localPosition == openPos)
-        {
-            doorOpen = true;
-        }
-        else
-        {
-            doorOpen = false;
-        }
+
     }
 
 
@@ -184,7 +201,10 @@ public class Door : LivableObject
     {
         if (doorOpen)
         {
-            StartCoroutine(LerpPosition(closedPos, 1f));
+            if(slidingDoor)
+                StartCoroutine(LerpPosition(closedPos, 1f));
+            else
+                StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
         }
     }
 

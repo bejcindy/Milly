@@ -564,6 +564,12 @@ public class PlayerHolding : MonoBehaviour
         if (other.CompareTag("Interior"))
             atInterior = false;
     }
+    
+    public void ClearPickUp()
+    {
+        pickUpObjects.Clear();
+        HideUI(null);
+    }
 
     IEnumerator LerpPosition(Transform obj, Vector3 targetPosition, float duration)
     {

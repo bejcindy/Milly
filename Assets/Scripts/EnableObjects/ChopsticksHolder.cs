@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class ChopsticksHolder : LivableObject
 {
@@ -11,7 +12,7 @@ public class ChopsticksHolder : LivableObject
     public Chopsticks myChops;
     public bool hasChop;
     bool chopMoving;
-
+    public EventReference chopPutSound;
 
     protected override void Start()
     {
@@ -86,6 +87,8 @@ public class ChopsticksHolder : LivableObject
             yield return null;
         }
         chops.localPosition = chopHoldingPos;
+        if(!chopPutSound.IsNull)
+            RuntimeManager.PlayOneShot(chopPutSound, transform.position);
         chopMoving = false;
     }
 

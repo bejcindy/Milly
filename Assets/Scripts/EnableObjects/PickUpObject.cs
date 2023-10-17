@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMOD;
+using FMODUnity;
 
 public enum HandObjectType
 {
@@ -34,7 +35,8 @@ public class PickUpObject : LivableObject
     public string pickUpEventName;
     public string throwEventName;
 
-
+    public FMODUnity.EventReference pickUpSound, collideSound;
+    float beginningAudioCoolDownTimer;
 
     protected override void Start()
     {
@@ -48,6 +50,8 @@ public class PickUpObject : LivableObject
     {
         base.Update();
         DetectEnable();
+        if (beginningAudioCoolDownTimer < 1)
+            beginningAudioCoolDownTimer += Time.deltaTime;
     }
     private void DetectEnable()
     {
@@ -67,9 +71,11 @@ public class PickUpObject : LivableObject
                         activated = true;
                     }
                     rb.isKinematic = true;
+                    if (!pickUpSound.IsNull)
+                        RuntimeManager.PlayOneShot(pickUpSound, transform.position);
                     playerHolding.OccupyLeft(transform);
                     inHand = true;
-                    FMODUnity.RuntimeManager.PlayOneShot(pickUpEventName, player.transform.position);
+                    //FMODUnity.RuntimeManager.PlayOneShot(pickUpEventName, player.transform.position);
                 }
 
 
@@ -78,7 +84,7 @@ public class PickUpObject : LivableObject
         }
         else if (!interactable || inHand)
         {
-            if(playerHolding.CheckInteractable(gameObject))
+            if (playerHolding.CheckInteractable(gameObject))
                 playerHolding.RemoveInteractable(gameObject);
             selected = false;
         }
@@ -87,8 +93,11 @@ public class PickUpObject : LivableObject
 
         if (selected && !thrown)
             gameObject.layer = 9;
-        else if(inHand)
+        else if (inHand)
+        {
             gameObject.layer = 7;
+            
+        } 
         else
             gameObject.layer = 0;
 
@@ -99,6 +108,11 @@ public class PickUpObject : LivableObject
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collideSound.IsNull && beginningAudioCoolDownTimer >= 1)
+            RuntimeManager.PlayOneShot(collideSound, transform.position);
+    }
 
     void ThrowCoolDown()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 public class PlayerLeftHand : MonoBehaviour
@@ -247,6 +248,7 @@ public class PlayerLeftHand : MonoBehaviour
     {
         Destroy(currentFood.gameObject);
         currentChop.chopMoving = false;
+        currentChop.PlayEatSound();
     }
 
     private void DrawBackChop(Chopsticks chop)
@@ -329,6 +331,7 @@ public class PlayerLeftHand : MonoBehaviour
             if (!drinkHintDone)
             {
                 DataHolder.HideHint(DataHolder.hints.drinkHint);
+                RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Swallow", transform.position);
                 drinkHintDone = true;
             }
         }

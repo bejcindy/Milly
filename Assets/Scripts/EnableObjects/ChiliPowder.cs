@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class ChiliPowder : PickUpObject
 {
@@ -10,6 +11,9 @@ public class ChiliPowder : PickUpObject
     bool powderMoving;
     public ParticleSystem powderParticle;
     public TableController myTable;
+
+    public EventReference powderSound;
+    public bool playedSF;
     protected override void Start()
     {
         base.Start();
@@ -42,6 +46,9 @@ public class ChiliPowder : PickUpObject
                 if (Input.GetMouseButtonDown(0))
                 {
                     anim.SetTrigger("Use");
+                    if (!powderSound.IsNull)
+                        RuntimeManager.PlayOneShot(powderSound, transform.position);
+                    
                 }
 
                 if (Input.GetMouseButtonDown(1))
@@ -66,12 +73,13 @@ public class ChiliPowder : PickUpObject
     {
         powderParticle.Play();
     }
-
+    
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
         powderMoving = true;
         float time = 0;
         Vector3 startPosition = transform.position;
+        playedSF = false;
         while (time < duration)
         {
             transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
@@ -80,6 +88,13 @@ public class ChiliPowder : PickUpObject
         }
         transform.position = targetPosition;
         powderMoving = false;
-
+        if (targetPosition == startingPos)
+        {
+            if (!pickUpSound.IsNull && !playedSF)
+            {
+                playedSF = true;
+                RuntimeManager.PlayOneShot(pickUpSound, transform.position);
+            }
+        }
     }
 }

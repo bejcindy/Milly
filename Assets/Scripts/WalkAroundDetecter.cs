@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class WalkAroundDetecter : LivableObject
 {
@@ -9,6 +10,7 @@ public class WalkAroundDetecter : LivableObject
     public bool poleLight;
     public Light streetLight;
     public GameObject lightBulb;
+    public EventReference lightSound;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -34,10 +36,18 @@ public class WalkAroundDetecter : LivableObject
         }
         if (matColorVal <= 0)
         {
-            if(streetLight!=null)
+            if (streetLight)
+            {
                 streetLight.enabled = true;
-            if (lightBulb != null)
+                if (!lightSound.IsNull)
+                    RuntimeManager.PlayOneShot(lightSound, lightBulb.transform.position);
+            }
+            if (lightBulb)
+            {
                 lightBulb.SetActive(true);
+                if (!lightSound.IsNull)
+                    RuntimeManager.PlayOneShot(lightSound, lightBulb.transform.position);
+            }
         }
     }
 

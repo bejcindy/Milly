@@ -2,6 +2,7 @@ using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class PizzaLid : LivableObject
 {
@@ -18,6 +19,9 @@ public class PizzaLid : LivableObject
     FixedCameraObject camControl;
     DialogueSystemTrigger dialogue;
     PlayerLeftHand playerLeftHand;
+    public EventReference openSound, closeSound;
+    FMOD.Studio.EventInstance openEvent, closeEvent;
+    bool openPlayed, closePlayed;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -26,7 +30,8 @@ public class PizzaLid : LivableObject
         playerHolding = player.GetComponent<PlayerHolding>();
         dialogue = GetComponent<DialogueSystemTrigger>();
         playerLeftHand = player.GetComponent<PlayerLeftHand>();
-      
+        openEvent = RuntimeManager.CreateInstance(openSound);
+        closeEvent = RuntimeManager.CreateInstance(closeSound);
     }
 
     // Update is called once per frame
@@ -51,12 +56,26 @@ public class PizzaLid : LivableObject
                     if (verticalInput < 0)
                     {
                         RotateLid(0);
+                        if (!closePlayed && !closeSound.IsNull)
+                        {
+                            openEvent.start();
+                            closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            openPlayed = false;
+                            closePlayed = true;
+                        }
                     }
                     else if (verticalInput > 0)
                     {
                         RotateLid(300);
                         camControl.TurnOnCamera();
                         isInteracting = true;
+                        if (!openPlayed && !openSound.IsNull)
+                        {
+                            closeEvent.start();
+                            openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            closePlayed = false;
+                            openPlayed = true;
+                        }
                     }
                 }
             }
@@ -68,21 +87,37 @@ public class PizzaLid : LivableObject
                     activated = true;
                     interacting = true;
                     quitInteraction = false;
-                    playerLeftHand.enabled = false;
+                    playerLeftHand.bypassThrow = true;
                     if (verticalInput < 0)
                     {
                         RotateLid(0);
+                        if (!closePlayed && !closeSound.IsNull)
+                        {
+                            openEvent.start();
+                            closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            openPlayed = false;
+                            closePlayed = true;
+                        }
                     }
                     else if (verticalInput > 0)
                     {
                         RotateLid(300);
                         camControl.TurnOnCamera();
                         isInteracting = true;
+                        if (!openPlayed && !openSound.IsNull)
+                        {
+                            closeEvent.start();
+                            openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            closePlayed = false;
+                            openPlayed = true;
+                        }
                     }
                 }
                 else
                 {
-                    playerLeftHand.enabled = true;
+                    playerLeftHand.bypassThrow = false;
+                    openPlayed = false;
+                    closePlayed = false;
                 }
 
             }
@@ -131,10 +166,24 @@ public class PizzaLid : LivableObject
             if (transform.eulerAngles.z < 310)
             {
                 RotateLid(300);
+                if (!openPlayed && !openSound.IsNull)
+                {
+                    closeEvent.start();
+                    openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    closePlayed = false;
+                    openPlayed = true;
+                }
             }
             else if (transform.eulerAngles.z != 360)
             {
                 RotateLid(0);
+                if (!closePlayed && !closeSound.IsNull)
+                {
+                    openEvent.start();
+                    closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    openPlayed = false;
+                    closePlayed = true;
+                }
             }
         }
 

@@ -342,12 +342,27 @@ MonoBehaviour:
   noRend: 0
   overrideStartSequence: 0
   onlyFront: 1
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   rotateSpeed: 10
   interacting: 0
   fixedPos: 0
   playerHolding: {fileID: 0}
-  leftHandUI: {fileID: 3407990858111531404}
-  rightHandUI: {fileID: 5531489516699035582}
+  openSound:
+    Guid:
+      Data1: 427747714
+      Data2: 1108865335
+      Data3: 420426415
+      Data4: 1897683953
+    Path: event:/Sound Effects/ObjectInteraction/Trashcan_Rotate_Open
+  closeSound:
+    Guid:
+      Data1: 1239630540
+      Data2: 1282963168
+      Data3: -586720070
+      Data4: 1742584254
+    Path: event:/Sound Effects/ObjectInteraction/Trashcan_Rotate_Close
 --- !u!64 &7917476748793121382
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -712,5 +727,5 @@ Transform:
   - {fileID: 9124685085978106455}
   - {fileID: 6574731669405489049}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

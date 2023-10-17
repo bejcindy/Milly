@@ -33,7 +33,7 @@ Transform:
   - {fileID: 2494560504819520967}
   - {fileID: 4150780867801399401}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3313241501114802109
 GameObject:
@@ -293,12 +293,27 @@ MonoBehaviour:
   noRend: 0
   overrideStartSequence: 0
   onlyFront: 1
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   rotateSpeed: 10
   interacting: 0
   fixedPos: 0
   playerHolding: {fileID: 0}
-  leftHandUI: {fileID: 3313241501114802109}
-  rightHandUI: {fileID: 6741749669673871002}
+  openSound:
+    Guid:
+      Data1: 427747714
+      Data2: 1108865335
+      Data3: 420426415
+      Data4: 1897683953
+    Path: event:/Sound Effects/ObjectInteraction/Trashcan_Rotate_Open
+  closeSound:
+    Guid:
+      Data1: 1239630540
+      Data2: 1282963168
+      Data3: -586720070
+      Data4: 1742584254
+    Path: event:/Sound Effects/ObjectInteraction/Trashcan_Rotate_Close
 --- !u!1 &5735100178555514369
 GameObject:
   m_ObjectHideFlags: 0

@@ -347,29 +347,29 @@ public class PlayerMovement : MonoBehaviour
         else
             GetComponent<terraintry>().startPainting = true;
 
-        //if (horizontalInput == 0 && verticalInput == 0 && grounded || playerHolding.inDialogue)
-        //{
-        //    playerMove.setPaused(true);
-        //}
-        //else if (grounded)
-        //{
-        //    FMOD.Studio.PLAYBACK_STATE state;
-        //    playerMove.getPlaybackState(out state);
-        //    bool isPaused;
-        //    playerMove.getPaused(out isPaused);
-        //    if (isPaused)
-        //    {
-        //        playerMove.setPaused(false);
-        //    }
-        //    else if (state == FMOD.Studio.PLAYBACK_STATE.STOPPED)
-        //    {
-        //        playerMove.start();
-        //    }
-        //}
-        //else if (!grounded)
-        //{
-        //    playerMove.setPaused(true);
-        //}
+        if (horizontalInput == 0 && verticalInput == 0 && grounded || playerHolding.inDialogue)
+        {
+            playerMove.setPaused(true);
+        }
+        else if (grounded)
+        {
+            FMOD.Studio.PLAYBACK_STATE state;
+            playerMove.getPlaybackState(out state);
+            bool isPaused;
+            playerMove.getPaused(out isPaused);
+            if (isPaused)
+            {
+                playerMove.setPaused(false);
+            }
+            else if (state == FMOD.Studio.PLAYBACK_STATE.STOPPED)
+            {
+                playerMove.start();
+            }
+        }
+        else if (!grounded)
+        {
+            playerMove.setPaused(true);
+        }
 
 
 

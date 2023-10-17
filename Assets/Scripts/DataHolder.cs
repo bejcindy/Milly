@@ -89,7 +89,7 @@ public class DataHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (beginningAudioCoolDownTimer < 1)
+        if (beginningAudioCoolDownTimer < 2)
             beginningAudioCoolDownTimer += Time.deltaTime;
         else
         {

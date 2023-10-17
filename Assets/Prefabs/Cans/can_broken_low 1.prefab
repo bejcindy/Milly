@@ -125,20 +125,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
-  chainControl: 0
+  checkVisible: 0
   minDist: 3
   rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  centerFocused: 0
+  noRend: 0
+  overrideStartSequence: 0
+  onlyFront: 1
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  objType: 0
   playerHolding: {fileID: 0}
-  pickUpText: 
   inHand: 0
   selected: 0
-  uiHint: {fileID: 0}
-  leftMouse: {fileID: 21300000, guid: 8a88b71feede68347bdda3134b25a197, type: 3}
-  rightMouse: {fileID: 21300000, guid: 771f122aaf0f7ee4082671863edbedad, type: 3}
+  thrown: 0
+  cigarette: 0
+  freezeRotation: 0
+  throwCD: 0
+  npcBound: 0
+  foodObj: 0
+  pickUpEventName: 
+  throwEventName: 
+  pickUpSound:
+    Guid:
+      Data1: 662911712
+      Data2: 1259934437
+      Data3: -1777081937
+      Data4: -553936643
+    Path: event:/Sound Effects/ObjectInteraction/Can_Grab
+  collideSound:
+    Guid:
+      Data1: 503954401
+      Data2: 1102837358
+      Data3: -1029122934
+      Data4: -56378995
+    Path: event:/Sound Effects/ObjectInteraction/Can_Throw
 --- !u!54 &6467648859227598295
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -180,20 +210,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   isVisible: 0
-  chainControl: 0
+  checkVisible: 0
   minDist: 3
   rend: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
+  specialEffect: {fileID: 0}
+  postProcessingVolume: {fileID: 0}
+  rigged: 0
+  visibleDetector: {fileID: 0}
+  centerFocused: 0
+  noRend: 0
+  overrideStartSequence: 0
+  onlyFront: 1
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  objType: 0
   playerHolding: {fileID: 0}
-  pickUpText: 
   inHand: 0
   selected: 0
-  uiHint: {fileID: 5076664448225684508}
-  leftMouse: {fileID: 0}
-  rightMouse: {fileID: 0}
+  thrown: 0
+  cigarette: 0
+  freezeRotation: 0
+  throwCD: 0
+  npcBound: 0
+  foodObj: 0
+  pickUpEventName: 
+  throwEventName: 
+  pickUpSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  collideSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5076664448225684508
 GameObject:
   m_ObjectHideFlags: 0

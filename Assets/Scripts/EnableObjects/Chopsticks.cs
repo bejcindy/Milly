@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class Chopsticks : PickUpObject
 {
@@ -13,6 +14,7 @@ public class Chopsticks : PickUpObject
     public bool chopMoving;
     public TableController myTable;
     Animator anim;
+    public EventReference eatSound;
 
     protected override void Start() 
     {
@@ -63,8 +65,13 @@ public class Chopsticks : PickUpObject
     public void SetEatAnim()
     {
         anim.SetTrigger("Eat");
+        
     }
-
+    public void PlayEatSound()
+    {
+        if (!eatSound.IsNull)
+            RuntimeManager.PlayOneShot(eatSound, transform.position);
+    }
     public IEnumerator LerpChopPicking(float duration)
     {
         float time = 0;

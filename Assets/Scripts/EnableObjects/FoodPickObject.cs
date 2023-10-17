@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 public class FoodPickObject : MonoBehaviour
@@ -9,6 +10,7 @@ public class FoodPickObject : MonoBehaviour
 
     public Vector3 inChopRot;
     public bool picked;
+    EventReference pickFoodSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +39,7 @@ public class FoodPickObject : MonoBehaviour
             gameObject.layer = 7;
             if(leftHand.selectedFood == this.transform)
             {
+                RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Chopsticks_PickFood", transform.position);
                 leftHand.selectedFood = null;
             }
         }

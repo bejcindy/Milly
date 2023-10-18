@@ -2,6 +2,7 @@ using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 
 public class ClickableObject : LivableObject
@@ -18,7 +19,8 @@ public class ClickableObject : LivableObject
 
     bool iconHidden;
     PlayerHolding playerHolding;
-
+    public EventReference buzzSound;
+    bool playedSound;
     protected override void Start()
     {
         base.Start();
@@ -86,6 +88,11 @@ public class ClickableObject : LivableObject
     public void PressButton()
     {
         animator.SetTrigger("Pressed");
+        if (!playedSound && !buzzSound.IsNull)
+        {
+            RuntimeManager.PlayOneShot(buzzSound, transform.position);
+            playedSound = true;
+        }
     }
 
     public void UnpressButton()
@@ -93,6 +100,7 @@ public class ClickableObject : LivableObject
         animator.ResetTrigger("Pressed");
         animator.SetTrigger("Released");
         Invoke(nameof(ResetAnimTrigger), 0.5f);
+        playedSound = false;
     }
 
     void OnConversationEnd(Transform other)

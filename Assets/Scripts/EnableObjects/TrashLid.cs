@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class TrashLid : LivableObject
 {
@@ -14,15 +15,18 @@ public class TrashLid : LivableObject
     GameObject iconPos;
     bool iconHidden;
     PlayerLeftHand playerLeftHand;
-    // Start is called before the first frame update
 
-    // Update is called once per frame
+    public EventReference openSound, closeSound;
+    bool openPlayed, closePlayed;
+    FMOD.Studio.EventInstance openEvent, closeEvent;
     protected override void Start()
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
         iconPos = transform.GetChild(0).gameObject;
         playerLeftHand = player.GetComponent<PlayerLeftHand>();
+        openEvent = FMODUnity.RuntimeManager.CreateInstance(openSound);
+        closeEvent= FMODUnity.RuntimeManager.CreateInstance(closeSound);
     }
     protected override void Update()
     {
@@ -46,15 +50,32 @@ public class TrashLid : LivableObject
                     if (verticalInput < 0)
                     {
                         RotateLid(0);
+                        if (!closePlayed && !closeSound.IsNull)
+                        {
+                            //RuntimeManager.PlayOneShot(closeSound, transform.position);
+                            openEvent.start();
+                            closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            openPlayed = false;
+                            closePlayed = true;
+                        }
                     }
                     else if (verticalInput > 0)
                     {
                         RotateLid(270);
+                        if (!openPlayed && !openSound.IsNull)
+                        {
+                            closeEvent.start();
+                            openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            closePlayed = false;
+                            openPlayed = true;
+                        }
                     }
                 }
                 else
                 {
                     playerHolding.lidObj = iconPos;
+                    openPlayed = false;
+                    closePlayed = false;
                     iconHidden = false;
                 }
             }
@@ -69,16 +90,32 @@ public class TrashLid : LivableObject
                     if (verticalInput < 0)
                     {
                         RotateLid(0);
+                        if (!closePlayed && !closeSound.IsNull)
+                        {
+                            openEvent.start();
+                            closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            openPlayed = false;
+                            closePlayed = true;
+                        }
                     }
                     else if (verticalInput > 0)
                     {
                         RotateLid(270);
+                        if (!openPlayed && !openSound.IsNull)
+                        {
+                            closeEvent.start();
+                            openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            closePlayed = false;
+                            openPlayed = true;
+                        }
                     }
                 }
                 else
                 {
                     playerHolding.lidObj = iconPos;
                     iconHidden = false;
+                    openPlayed = false;
+                    closePlayed = false;
                     playerLeftHand.bypassThrow = false;
                 }
             }
@@ -113,10 +150,24 @@ public class TrashLid : LivableObject
             if (transform.eulerAngles.z < 290)
             {
                 RotateLid(270);
+                if (!openPlayed && !openSound.IsNull)
+                {
+                    closeEvent.start();
+                    openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    closePlayed = false;
+                    openPlayed = true;
+                }
             }
             else if (transform.eulerAngles.z != 360)
             {
                 RotateLid(0);
+                if (!closePlayed && !closeSound.IsNull)
+                {
+                    openEvent.start();
+                    closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    openPlayed = false;
+                    closePlayed = true;
+                }
             }
         }
 

@@ -156,8 +156,11 @@ public class NPCControl : MonoBehaviour
 
         if (!mainNPC)
         {
-            if (!StartSequence.noControl || overrideNoControl)
+            if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk)
+            {
                 CheckTriggerConversation();
+            }
+
         }
         else
         {

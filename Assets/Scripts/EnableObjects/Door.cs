@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using FMODUnity;
 
 public class Door : LivableObject
 {
@@ -17,6 +18,7 @@ public class Door : LivableObject
     Vector3 closedPos;
     public Vector3 openPos;
     public Collider doorHandleCollider;
+    public EventReference doorMoveEvent;
 
     bool playedWithDoor;
 
@@ -116,12 +118,12 @@ public class Door : LivableObject
                         if (playerInFront)
                         {
                             if (horizontalInput < 0)
-                                StartCoroutine(LerpPosition(openPos, 2f));
+                                StartCoroutine(LerpPosition(openPos, 1.5f));
                         }
                         else
                         {
                             if (horizontalInput > 0)
-                                StartCoroutine(LerpPosition(openPos, 2f));
+                                StartCoroutine(LerpPosition(openPos, 1.5f));
                         }
 
                     }
@@ -149,12 +151,12 @@ public class Door : LivableObject
                         if (playerInFront)
                         {
                             if (horizontalInput > 0)
-                                StartCoroutine(LerpPosition(closedPos, 2f));
+                                StartCoroutine(LerpPosition(closedPos, 1.5f));
                         }
                         else
                         {
                             if (horizontalInput < 0)
-                                StartCoroutine(LerpPosition(closedPos, 2f));
+                                StartCoroutine(LerpPosition(closedPos, 1.5f));
 
                         }
 
@@ -218,6 +220,8 @@ public class Door : LivableObject
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
+        if (!doorMoving)
+            RuntimeManager.PlayOneShot(doorMoveEvent, transform.position);
         doorMoving = true;
         float time = 0;
         Vector3 startPosition = door.localPosition;

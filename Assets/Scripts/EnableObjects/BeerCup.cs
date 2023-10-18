@@ -6,8 +6,10 @@ using FMODUnity;
 public class BeerCup : PickUpObject
 {
     public TableController myTable;
+    Transform liquid;
     public bool moving;
     Vector3 startingPos;
+    Quaternion startRotation;
 
     public EventReference powderSound;
     public bool playedSF;
@@ -16,6 +18,8 @@ public class BeerCup : PickUpObject
     {
         base.Start();
         startingPos = transform.position;
+        liquid = transform.GetChild(0);
+        startRotation = transform.rotation;
     }
 
     protected override void Update()
@@ -27,23 +31,28 @@ public class BeerCup : PickUpObject
             if (selected)
             {
                 gameObject.layer = 9;
+           
             }
             else if (inHand)
             {
                 gameObject.layer = 7;
+                liquid.gameObject.layer = 7;
             }
             else
             {
                 gameObject.layer = 0;
+                liquid.gameObject.layer = 0;
             }
 
             if (inHand)
             {
                 if (Input.GetMouseButtonDown(1))
                 {
+                    liquid.gameObject.layer = 0;
                     playerHolding.UnoccupyLeft();
                     inHand = false;
                     StartCoroutine(LerpPosition(startingPos, 1f));
+                    StartCoroutine(LerpRotation(startRotation, 1f));
                     transform.SetParent(null);
                 }
             }
@@ -79,5 +88,18 @@ public class BeerCup : PickUpObject
                 RuntimeManager.PlayOneShot(pickUpSound, transform.position);
             }
         }
+    }
+
+    public IEnumerator LerpRotation(Quaternion targetRot, float duration)
+    {
+        float time = 0;
+        Quaternion startValue = transform.rotation;
+        while (time < duration)
+        {
+            transform.rotation = Quaternion.Lerp(startValue, targetRot, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.rotation = targetRot;
     }
 }

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class Cigarette : PickUpObject
 {
     public int cigStage;
     public bool activateAll;
     public Transform activeCigObj;
+    public EventReference inhaleEvent;
+    public EventReference exhaleEvent;
 
 
     protected override void Start()
@@ -63,6 +66,15 @@ public class Cigarette : PickUpObject
         activateAll = true;
     }
 
+    public void PlayInhaleSound()
+    {
+        RuntimeManager.PlayOneShot(inhaleEvent, transform.position);
+    }
+
+    public void PlayExhaleSound()
+    {
+        RuntimeManager.PlayOneShot(exhaleEvent, transform.position);
+    }
 
     public void Inhale()
     {

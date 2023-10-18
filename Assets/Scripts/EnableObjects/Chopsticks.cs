@@ -44,10 +44,6 @@ public class Chopsticks : PickUpObject
             otherChopstick.gameObject.layer = 0;
         }
 
-
-
-
-
     }
 
     public void SetChopAnimPick()

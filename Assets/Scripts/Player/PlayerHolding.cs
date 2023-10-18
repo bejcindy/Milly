@@ -342,8 +342,12 @@ public class PlayerHolding : MonoBehaviour
                     selectedObj = obj;
                 }
             }
-            selectedObj.GetComponent<PickUpObject>().selected = true;
-            DisplayUI(selectedObj, pickUpSprite);
+            if (selectedObj)
+            {
+                selectedObj.GetComponent<PickUpObject>().selected = true;
+                DisplayUI(selectedObj, pickUpSprite);
+            }
+
         }
     }
 

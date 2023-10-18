@@ -11,17 +11,18 @@ public class WalkAroundDetecter : LivableObject
     public Light streetLight;
     public GameObject lightBulb;
     public EventReference lightSound;
+    bool played;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         triggers = new bool[4];
-        for(int i = 0; i < triggerAreas.Length; i++)
+        for (int i = 0; i < triggerAreas.Length; i++)
         {
             WalkAroundChildTrigger wact = triggerAreas[i].gameObject.AddComponent<WalkAroundChildTrigger>();
             wact.childIndex = i;
         }
-        if(poleLight)
+        if (poleLight)
             lightBulb = transform.GetChild(5).gameObject;
     }
 
@@ -36,29 +37,31 @@ public class WalkAroundDetecter : LivableObject
         }
         if (matColorVal <= 0)
         {
-            if (streetLight)
+            if (streetLight && !played)
             {
                 streetLight.enabled = true;
                 if (!lightSound.IsNull)
                     RuntimeManager.PlayOneShot(lightSound, lightBulb.transform.position);
+                played = true;
             }
-            if (lightBulb)
+            if (lightBulb && !played)
             {
                 lightBulb.SetActive(true);
                 if (!lightSound.IsNull)
                     RuntimeManager.PlayOneShot(lightSound, lightBulb.transform.position);
+                played = true;
             }
         }
     }
 
     bool allTrue()
     {
-        for(int i = 0; i < triggers.Length; i++)
+        for (int i = 0; i < triggers.Length; i++)
         {
             if (!triggers[i])
                 return false;
         }
         return true;
     }
-    
+
 }

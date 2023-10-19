@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using FMODUnity;
+using PixelCrushers.DialogueSystem;
 
 public class Door : LivableObject
 {
@@ -11,9 +12,10 @@ public class Door : LivableObject
     public bool isInteracting;
 
     public bool slidingDoor;
+    public bool barDoor;
+    DialogueSystemTrigger barWarning;
 
     public bool playerInFront;
-
     PlayerHolding playerHolding;
     Vector3 closedPos;
     public Vector3 openPos;
@@ -49,45 +51,60 @@ public class Door : LivableObject
         else
             isVisible = false;
 
-
-        playerInFront = CheckPlayerForward();
-        if (interactable && !playerHolding.atTable)
+        if (!barDoor)
         {
-            DoorControl();
-            playedWithDoor = true;
-        }
-        else
-        {
-            if (playedWithDoor)
+            playerInFront = CheckPlayerForward();
+            if (interactable && !playerHolding.atTable)
             {
-                playerHolding.doorHandle = null;
-                playedWithDoor = false;
-            }
-
-        }
-
-        if (slidingDoor)
-        {
-            if (door.localPosition == openPos)
-            {
-                doorOpen = true;
+                DoorControl();
+                playedWithDoor = true;
             }
             else
             {
-                doorOpen = false;
+                if (playedWithDoor)
+                {
+                    playerHolding.doorHandle = null;
+                    playedWithDoor = false;
+                }
+
+            }
+
+            if (slidingDoor)
+            {
+                if (door.localPosition == openPos)
+                {
+                    doorOpen = true;
+                }
+                else
+                {
+                    doorOpen = false;
+                }
+            }
+            else
+            {
+                if (door.localRotation == Quaternion.Euler(openPos))
+                {
+                    doorOpen = true;
+                }
+                else
+                {
+                    doorOpen = false;
+                }
             }
         }
         else
         {
-            if (door.localRotation == Quaternion.Euler(openPos))
+            if (interactable)
             {
-                doorOpen = true;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    GetComponent<DialogueSystemTrigger>().enabled = true;
+                }
             }
-            else
-            {
-                doorOpen = false;
-            }
+
         }
+
+
 
     }
 

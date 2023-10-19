@@ -45,6 +45,8 @@ public class PlayerLeftHand : MonoBehaviour
 
     public bool readyToThrow;
     bool notHoldingAnyThing;
+
+
     #region UI variables
     bool aimHinted, smokingHinted,drinkHinted;
     bool aimHintDone, smokingHintDone,drinkHintDone;
@@ -290,6 +292,7 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > -0.1f && !inhaling)
         {
+            holdingObj.GetComponent<Cigarette>().PlayInhaleSound();
             Vector3 smokingPos = new Vector3(0.5f, 0f, -0.3f);
             Vector3 smokingRot = new Vector3(0, 180, 0);
             StartCoroutine(LerpPosition(smokingPos, 1f));
@@ -297,6 +300,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
         if(Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !inhaling)
         {
+            holdingObj.GetComponent<Cigarette>().PlayExhaleSound();
             if (!smokeVFX.gameObject.activeSelf)
             {
                 smokeVFX.gameObject.SetActive(true);

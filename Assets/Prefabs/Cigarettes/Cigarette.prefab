@@ -55,7 +55,6 @@ MonoBehaviour:
   checkVisible: 0
   minDist: 3
   rend: {fileID: 6331551915220657144}
-  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -66,7 +65,11 @@ MonoBehaviour:
   visibleDetector: {fileID: 417049301630636323}
   centerFocused: 0
   noRend: 0
+  overrideStartSequence: 0
   onlyFront: 1
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   objType: 3
   playerHolding: {fileID: 0}
   inHand: 0
@@ -79,9 +82,37 @@ MonoBehaviour:
   foodObj: 0
   pickUpEventName: 
   throwEventName: 
+  pickUpSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  collideSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   cigStage: 0
   activateAll: 0
   activeCigObj: {fileID: 0}
+  inhaleEvent:
+    Guid:
+      Data1: 1950798731
+      Data2: 1267707548
+      Data3: -694254438
+      Data4: 1476145423
+    Path: event:/Sound Effects/ObjectInteraction/Smoking_Inhale
+  exhaleEvent:
+    Guid:
+      Data1: -185905453
+      Data2: 1277209794
+      Data3: -202046844
+      Data4: 630952757
+    Path: event:/Sound Effects/ObjectInteraction/Smoking_Exhale
 --- !u!54 &5239858223725385805
 Rigidbody:
   m_ObjectHideFlags: 0

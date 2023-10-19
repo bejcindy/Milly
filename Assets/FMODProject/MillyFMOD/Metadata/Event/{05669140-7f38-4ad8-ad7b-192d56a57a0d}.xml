@@ -5,7 +5,7 @@
 			<value>Slide_Door</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{2b681549-b160-4b64-b401-13c829861ae0}</destination>
@@ -120,9 +120,18 @@
 	<object class="MixerBusEffectChain" id="{cde11489-fa54-4abc-a2de-d410fdfaa8a9}">
 		<relationship name="effects">
 			<destination>{32323886-6d95-4852-a883-5aba1bab7e03}</destination>
+			<destination>{d47020c5-d7b3-48af-be5e-27aa974b6e06}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{15bd74ef-0dc5-479c-82f2-9d80b587f7be}" />
 	<object class="MixerBusFader" id="{5de2c8bf-f80f-401e-b8f3-bffbfcb89e0b}" />
 	<object class="MixerBusFader" id="{32323886-6d95-4852-a883-5aba1bab7e03}" />
+	<object class="SpatialiserEffect" id="{d47020c5-d7b3-48af-be5e-27aa974b6e06}">
+		<property name="maximumDistance">
+			<value>10</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 </objects>

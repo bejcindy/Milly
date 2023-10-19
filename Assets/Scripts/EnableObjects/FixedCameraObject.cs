@@ -131,19 +131,23 @@ public class FixedCameraObject : LivableObject
 
     public virtual void TriggerInteraction()
     {
-        if (mouseActivate)
+        if (!camBrain.IsBlending)
         {
-            if (Input.GetMouseButtonDown(0))
-                TurnOnCamera();
-        }
-        else
-        {
-            if (Input.GetKeyDown(interactKey))
+            if (mouseActivate)
             {
-                //gameObject.layer = 0;
-                TurnOnCamera();
+                if (Input.GetMouseButtonDown(0))
+                    TurnOnCamera();
+            }
+            else
+            {
+                if (Input.GetKeyDown(interactKey))
+                {
+                    //gameObject.layer = 0;
+                    TurnOnCamera();
+                }
             }
         }
+
 
     }
 

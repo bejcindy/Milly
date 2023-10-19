@@ -254,6 +254,7 @@ public class Door : LivableObject
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)
     {
+        doorMoving = true;
         float time = 0;
         Quaternion startValue = door.localRotation;
         while (time < duration)
@@ -263,5 +264,6 @@ public class Door : LivableObject
             yield return null;
         }
         door.localRotation = endValue;
+        doorMoving = false;
     }
 }

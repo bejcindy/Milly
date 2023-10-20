@@ -110,6 +110,12 @@ public class PlayerLeftHand : MonoBehaviour
             //    holdingObj.gameObject.layer = 16;
             //}
         }
+        else
+        {
+            inhaling = false;
+            drinking = false;
+            smoking = false;
+        }
 
 
 

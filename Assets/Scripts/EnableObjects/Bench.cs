@@ -6,6 +6,8 @@ using UnityEngine;
 public class Bench : FixedCameraObject 
 {
     public float sitTime;
+    public bool npcBound;
+    public NPCControl npcControl;
     public bool thoughtDone;
     float sitTimeVal;
 
@@ -32,7 +34,17 @@ public class Bench : FixedCameraObject
         }
         else
         {
-            GetComponent<DialogueSystemTrigger>().enabled = true;
+            if (!npcBound)
+            {
+                GetComponent<DialogueSystemTrigger>().enabled = true;
+            }
+            else
+            {
+                if(npcControl.gameObject.name == "Kelvin")
+                    DialogueLua.SetVariable("NPC/Kelvin/PlayerAtRock", true);
+                npcControl.npcActivated = true;
+            }
+
             thoughtDone = true;
         }
     }

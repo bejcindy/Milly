@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class CigaretteContainer : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class CigaretteContainer : MonoBehaviour
     PlayerHolding playerHolding;
     
     public GameObject fullCig;
+
+    bool beforeGloriaThought;
+    bool afterGloriaThought;
+    bool afterParentsThought;
 
     // Start is called before the first frame update
     void Start()
@@ -39,10 +44,35 @@ public class CigaretteContainer : MonoBehaviour
                     playerHolding.OccupyLeft(newCig.transform);
                 }
 
-                else if (playerHolding.GetRightHandSmoking())
+                if (!MainQuestState.firstGloriaTalk)
                 {
-                    playerHolding.OccupyRight(newCig.transform);
+                    if (!beforeGloriaThought)
+                    {
+                        DialogueManager.StartConversation("Cigarette/BeforeGloria");
+                        beforeGloriaThought = true;
+                    }
+
                 }
+                if(MainQuestState.firstGloriaTalk && !MainQuestState.parentsCalled)
+                {
+                    if (!afterGloriaThought)
+                    {
+                        DialogueManager.StartConversation("Cigarette/AfterGloria");
+                        afterGloriaThought = true;
+                    }
+
+                }
+                if(MainQuestState.firstGloriaTalk && MainQuestState.parentsCalled)
+                {
+                    if (!afterParentsThought)
+                    {
+                        DialogueManager.StartConversation("Cigarette/AfterCallingParents");
+                        afterParentsThought = true;
+                    }
+
+                }
+
+
             }
         }
     }

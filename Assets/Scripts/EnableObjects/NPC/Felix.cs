@@ -14,6 +14,7 @@ public class Felix : NPCControl
         questTriggered = true;
         firstTalk = true;
         hasFakeActivate = true;
+        noLookInConvo = true;
 
     }
 

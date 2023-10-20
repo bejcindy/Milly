@@ -6,6 +6,7 @@ using PixelCrushers.DialogueSystem;
 
 public class FixedCameraObject : LivableObject
 {
+    public bool dialogueBound;
     [SerializeField] KeyCode interactKey;
     [SerializeField] public KeyCode quitKey;
     [SerializeField] public bool isInteracting;
@@ -114,6 +115,14 @@ public class FixedCameraObject : LivableObject
             }
         }
 
+        if(!dialogueBound || (dialogueBound && !playerHolding.inDialogue))
+            QuitInteraction();
+
+
+    }
+
+    public void QuitInteraction()
+    {
         if (positionFixed && !camBrain.IsBlending)
         {
             if (Input.GetKeyDown(quitKey) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
@@ -123,9 +132,6 @@ public class FixedCameraObject : LivableObject
                 StartCoroutine(UnfixPlayer());
             }
         }
-
-
-
     }
 
 
@@ -201,11 +207,6 @@ public class FixedCameraObject : LivableObject
         }
         playerCamera.m_Priority = 9;
         isInteracting = true;
-
-        if (gameObject.name == "Kelvin_Rock")
-        {
-            KelvinRockChair();
-        }
     }
 
 
@@ -254,10 +255,4 @@ public class FixedCameraObject : LivableObject
 
     }
 
-    public void KelvinRockChair()
-    {
-        Kelvin kelv = GameObject.Find("Kelvin").GetComponent<Kelvin>();
-        DialogueLua.SetVariable("NPC/Kelvin/PlayerAtRock", true);
-        kelv.npcActivated = true;
-    }
 }

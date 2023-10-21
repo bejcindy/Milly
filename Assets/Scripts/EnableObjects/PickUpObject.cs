@@ -36,7 +36,7 @@ public class PickUpObject : LivableObject
     public string throwEventName;
 
     public EventReference pickUpSound, collideSound;
-
+    bool canPlayCollideSF;
     protected override void Start()
     {
         base.Start();
@@ -67,6 +67,7 @@ public class PickUpObject : LivableObject
                     {
                         activated = true;
                     }
+                    canPlayCollideSF = true;
                     rb.isKinematic = true;
                     if (!pickUpSound.IsNull)
                         RuntimeManager.PlayOneShot(pickUpSound, transform.position);
@@ -107,8 +108,11 @@ public class PickUpObject : LivableObject
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collideSound.IsNull && DataHolder.canMakeSound && !inHand)
+        if (!collideSound.IsNull && DataHolder.canMakeSound && !inHand && canPlayCollideSF)
+        {
             RuntimeManager.PlayOneShot(collideSound, transform.position);
+            canPlayCollideSF = false;
+        }
     }
 
     void ThrowCoolDown()

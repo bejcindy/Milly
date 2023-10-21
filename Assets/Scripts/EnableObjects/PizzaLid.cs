@@ -166,24 +166,10 @@ public class PizzaLid : LivableObject
             if (transform.eulerAngles.z < 310)
             {
                 RotateLid(300);
-                if (!openPlayed && !openSound.IsNull)
-                {
-                    closeEvent.start();
-                    openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    closePlayed = false;
-                    openPlayed = true;
-                }
             }
             else if (transform.eulerAngles.z != 360)
             {
                 RotateLid(0);
-                if (!closePlayed && !closeSound.IsNull)
-                {
-                    openEvent.start();
-                    closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    openPlayed = false;
-                    closePlayed = true;
-                }
             }
         }
 

@@ -5,7 +5,7 @@
 			<value>Trashcan_Rotate_Open</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{69529567-4551-4b70-99f1-7d7eecf4beaf}</destination>
@@ -64,6 +64,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{476f0b49-0a34-4183-9a40-94244eff3b7c}">
+		<property name="volume">
+			<value>-2</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{f3ba7b48-23e3-4620-9595-786ea289ce1a}</destination>
 		</relationship>
@@ -91,11 +94,9 @@
 	<object class="MixerBusEffectChain" id="{f3ba7b48-23e3-4620-9595-786ea289ce1a}">
 		<relationship name="effects">
 			<destination>{0029b6a6-e439-4318-aa09-613a4ffe8320}</destination>
-			<destination>{b1fa16dc-373e-4473-ab5c-e7e649f7af0c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{90c12570-1756-4342-900e-a6665123c535}" />
 	<object class="MixerBusFader" id="{ad239e77-3ab0-4bce-818c-ad6285c67e68}" />
 	<object class="MixerBusFader" id="{0029b6a6-e439-4318-aa09-613a4ffe8320}" />
-	<object class="SpatialiserEffect" id="{b1fa16dc-373e-4473-ab5c-e7e649f7af0c}" />
 </objects>

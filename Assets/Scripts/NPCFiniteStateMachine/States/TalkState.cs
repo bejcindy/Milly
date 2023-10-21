@@ -11,7 +11,7 @@ public class TalkState : State {
         machine.PauseIdling();
         if (machine.CheckReachDestination())
         {
-            if (machine.CheckFirstTalk())
+            if (machine.CheckFirstTalk() && !machine.CheckSpecialIdleAnim())
             {
                 machine.StopNavigation();
                 machine.SetAnimatorTrigger("Stop");

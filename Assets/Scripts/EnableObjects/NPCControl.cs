@@ -620,7 +620,10 @@ public class NPCControl : MonoBehaviour
 
     public bool GetSpecialIdleAnim()
     {
-        return destSpecialAnim[_counter - 1];
+        if (_counter > 0)
+            return destSpecialAnim[_counter - 1];
+        else
+            return destSpecialAnim[_counter];
     }
 
 

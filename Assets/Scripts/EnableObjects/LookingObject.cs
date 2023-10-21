@@ -12,6 +12,7 @@ public class LookingObject : LivableObject
     public bool designatedSpot;
     public bool inSpot;
     public bool selected;
+    public bool posterLinkAct;
     public DialogueSystemTrigger dialogue;
     public bool focusingThis;
 
@@ -67,28 +68,6 @@ public class LookingObject : LivableObject
                     playerHolding.RemoveLookable(gameObject);
                 }
             }
-            //else
-            //{
-            //    if(inSpot && isVisible)
-            //    {
-            //        if (!playerHolding.throwing)
-            //        {
-            //            if (!firstActivated)
-            //            {
-            //                focusingThis = true;
-            //            }
-            //            activated = true;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        //gameObject.layer = 13;
-            //        if (DataHolder.currentFocus == gameObject)
-            //        {
-            //            DataHolder.focusing = false;
-            //        }
-            //    }
-            //}
 
         }
         else
@@ -97,12 +76,9 @@ public class LookingObject : LivableObject
             {
                 if (specialEffect != null)
                     specialEffect.SetActive(true);
-                if (dialogue != null)
+                if (dialogue != null && !posterLinkAct)
                     dialogue.enabled = true;
-                //gameObject.layer = 0;
-                //gameObject.layer = 13;
                 playerHolding.RemoveLookable(gameObject);
-                //DataHolder.focusing = false;
                 if (sameTypePosters.Length > 0)
                 {
                     ActivateAll();
@@ -149,6 +125,7 @@ public class LookingObject : LivableObject
             if (obj.GetComponent<LookingObject>())
             {
                 LookingObject looking = obj.GetComponent<LookingObject>();
+                looking.posterLinkAct = true;
                 looking.TurnOnColor(looking.mat);
             }
 

@@ -35,7 +35,8 @@ public class TableController : MonoBehaviour
             tableControlOn = false;
 
         }
-
+        playerHolding.tableControl = tableControlOn;
+        
 
     }
 

@@ -38,6 +38,7 @@ public class PlayerHolding : MonoBehaviour
     public GameObject focusedHint;
 
     public ContainerObject currentContainer;
+    public bool tableControl;
 
     #region For Object Tracking UI
     public Image objectUI,objectUI2;
@@ -86,7 +87,10 @@ public class PlayerHolding : MonoBehaviour
         {
             HideUI(null);
         }
-
+        if (!tableControl)
+            FakeHideUI();
+        else
+            FakeDisplayUI();
         if (StartSequence.noControl && !noControlReset)
         {
             pickUpObjects.Clear();
@@ -284,6 +288,22 @@ public class PlayerHolding : MonoBehaviour
                     UIs.Remove(UIs[i]);
                 }
             }
+        }
+    }
+    void FakeHideUI()
+    {
+        for (int i = 0; i < UIs.Count; i++)
+        {
+            Image img = UIs[i].GetComponent<Image>();
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
+        }
+    }
+    void FakeDisplayUI()
+    {
+        for (int i = 0; i < UIs.Count; i++)
+        {
+            Image img = UIs[i].GetComponent<Image>();
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
         }
     }
     void UITriggerdByOtherObj(GameObject obj,Sprite sprite,bool hidden)

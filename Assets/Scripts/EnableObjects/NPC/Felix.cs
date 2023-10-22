@@ -5,7 +5,7 @@ using PixelCrushers.DialogueSystem;
 
 public class Felix : NPCControl
 {
-
+     
     public BuildingGroupController hintOne;
 
     protected override void Start()

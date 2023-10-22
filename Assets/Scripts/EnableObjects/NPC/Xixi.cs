@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class Xixi : NPCControl
 {
+    public EventReference catMeowSF;
     protected override void Start()
     {
         base.Start();
@@ -27,7 +29,11 @@ public class Xixi : NPCControl
         noTalkStage = true;
         noTalkInWalk = false;
     }
-
+    public void Meow()
+    {
+        if (!catMeowSF.IsNull)
+            RuntimeManager.PlayOneShot(catMeowSF, transform.position);
+    }
     void OnConversationEnd(Transform other)
     {
         inConversation = false;

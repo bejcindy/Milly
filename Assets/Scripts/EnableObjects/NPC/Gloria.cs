@@ -11,7 +11,7 @@ public class Gloria : NPCControl
         overrideNoControl = true;
         firstTalk = true;
     }
-
+     
     public void GloriaAction1()
     {
     }

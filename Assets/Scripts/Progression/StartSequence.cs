@@ -22,6 +22,7 @@ public class StartSequence : MonoBehaviour
     float izaInFadeVal;
 
     LivableObject[] livObjects;
+    bool tabHintOn;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,11 @@ public class StartSequence : MonoBehaviour
     void Update()
     {
         IzaInteriorFade();
+        if (Input.GetKeyDown(KeyCode.Tab) && tabHintOn)
+        {
+            DataHolder.HideHint(DataHolder.hints.tabHint);
+            tabHintOn = false;
+        }
     }
 
     public void IzaInteriorFade()
@@ -83,7 +89,6 @@ public class StartSequence : MonoBehaviour
                 ActivateAll(child);
             }
 
-
         }
 
     }
@@ -93,7 +98,11 @@ public class StartSequence : MonoBehaviour
         material.SetFloat("_WhiteDegree", groupColorVal);
 
     }
-
+    public void ShowTabHint()
+    {
+        DataHolder.ShowHint(DataHolder.hints.tabHint);
+        tabHintOn = true;
+    }
     public void FadeIzaInAmbience()
     {
         fadingIzaAmbience = true;

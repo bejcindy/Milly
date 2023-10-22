@@ -10,7 +10,7 @@ public class Loyi : NPCControl
         mainNPC = true;
         overrideNoControl = true;
     }
-
+     
     public void ExitIzaCutsceneStage()
     {
         firstTalk = true;

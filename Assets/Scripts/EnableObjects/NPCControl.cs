@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using FMODUnity;
 public class NPCControl : MonoBehaviour
 {
 
@@ -84,6 +84,8 @@ public class NPCControl : MonoBehaviour
 
     GameObject bone;
 
+    [Header("Sound")]
+    public EventReference footStepSF;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -172,6 +174,11 @@ public class NPCControl : MonoBehaviour
 
     }
 
+    public void PlayFootstepSF()
+    {
+        if (!footStepSF.IsNull)
+            RuntimeManager.PlayOneShot(footStepSF, transform.position);
+    }
 
 
     #region ActivateFunctionality

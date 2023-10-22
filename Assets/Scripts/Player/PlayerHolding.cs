@@ -87,10 +87,16 @@ public class PlayerHolding : MonoBehaviour
         {
             HideUI(null);
         }
-        if (!tableControl)
-            FakeHideUI();
+        if (atTable)
+        {
+            if (!tableControl)
+                FakeHideUI();
+            else
+                FakeDisplayUI();
+        }
         else
             FakeDisplayUI();
+
         if (StartSequence.noControl && !noControlReset)
         {
             pickUpObjects.Clear();

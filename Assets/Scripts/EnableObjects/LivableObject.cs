@@ -14,6 +14,7 @@ public class LivableObject : MonoBehaviour
     [SerializeField] public bool interactable;
     [SerializeField] protected bool isVisible;
     [SerializeField] protected bool checkVisible;
+    [SerializeField] protected bool tableObj;
     [SerializeField] protected float minDist;
 
 
@@ -255,6 +256,14 @@ public class LivableObject : MonoBehaviour
             if (pointsInScreen < 2)
                 return false;
             
+        }
+        else if (tableObj)
+        {
+            if ((pointOnScreen.x < Screen.width * 0.4f) || (pointOnScreen.x > Screen.width * 0.6f) ||
+                (pointOnScreen.y < Screen.height * 0.4f) || (pointOnScreen.y > Screen.height * 0.6f))
+            {
+                return false;
+            }
         }
         else
         {

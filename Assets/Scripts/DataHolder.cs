@@ -6,12 +6,14 @@ using UnityEngine.Rendering.Universal;
 using Cinemachine;
 using TMPro;
 using System;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 [Serializable]
 public class HintTexts
 {
     [TextArea]
-    public string throwHint, smokeHint, lookHint, drinkHint, kickHint, scrollHint, sitHint, cigHint, chopHint, pickFoodHint, eatHint,powderHint,tabHint;
+    public string throwHint, smokeHint, lookHint, drinkHint, kickHint, scrollHint, sitHint, cigHint, chopHint, pickFoodHint, eatHint,powderHint,tabHint,tableDrinkHint;
 }
 
 public class DataHolder : MonoBehaviour
@@ -40,9 +42,11 @@ public class DataHolder : MonoBehaviour
     HintTexts hintsReference;
     public static HintTexts hints;
     public GameObject hintPanelPrefab;
+    public GameObject hintPrefab;
     public Transform canvasRef;
     static Transform canvas;
     static GameObject hintPanel;
+    static GameObject hintPref;
 
     //static TextMeshProUGUI hintTMP;
     static PlayerHolding playerHolding;
@@ -67,6 +71,7 @@ public class DataHolder : MonoBehaviour
         v = postProcessingVolume.GetComponent<Volume>();
 
         hintPanel = hintPanelPrefab;
+        hintPref = hintPrefab;
         //hintTMP = hintPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         //hintPanel.SetActive(false);
         hints = hintsReference;
@@ -83,7 +88,7 @@ public class DataHolder : MonoBehaviour
         //focusCinemachine.Priority = playerCinemachine.Priority + 1;
         //focusCinemachine.gameObject.SetActive(false);
         canMakeSound = false;
-
+        
     }
 
     // Update is called once per frame
@@ -231,16 +236,38 @@ public class DataHolder : MonoBehaviour
             {
                 GameObject instantiatedPanel = Instantiate(hintPanel, canvas);
                 //instantiatedPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(25, 200 - currentHints.Count * 200, 0);
-                instantiatedPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = hint;
-                instantiatedPanel.SetActive(true);
+                List<Image> imgs = new List<Image>();
+                List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
+                string[] parsed = hint.Split("\n");
+                foreach (string s in parsed)
+                {
+                    GameObject instantiatedHintGroup = Instantiate(hintPref, instantiatedPanel.transform);
+                    int buttonInt = s.IndexOf(" ");
+                    string button = s.Substring(0, buttonInt);
+                    string usage = s.Replace(button, "");
+                    instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = button;
+                    imgs.Add(instantiatedHintGroup.transform.GetChild(0).GetComponent<Image>());
+                    texts.Add(instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
+                    instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
+                    texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
+                }
+                //instantiatedPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = hint;
+                //instantiatedPanel.SetActive(true);
                 hintPanels.Add(instantiatedPanel);
                 currentHints.Add(hint);
                 instantiated = true;
             }
         }
-        
-    }
+        //string[] parsed = hints.throwHint.Split("\n");
+        //foreach (string s in parsed)
+        //{
+        //    int buttonInt = s.IndexOf(" ");
+        //    string button = s.Substring(0, buttonInt);
+        //    string usage = s.Replace(button, "");
+        //}
 
+    }
+    
     public static void HideHint(string hintToHide)
     {
         bool hidden = false;

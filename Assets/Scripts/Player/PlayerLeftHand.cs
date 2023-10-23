@@ -26,8 +26,8 @@ public class PlayerLeftHand : MonoBehaviour
     public Animator handAnim;
     public bool drinking;
     public ParticleSystem smokeVFX;
-     Vector2 minThrowForce = new Vector2(100f, 10f);
-     Vector2 maxThrowForce = new Vector2(900f, 50f);
+    Vector2 minThrowForce = new Vector2(100f, 10f);
+    Vector2 maxThrowForce = new Vector2(900f, 50f);
     float holdTime = 2f;
 
     Chopsticks currentChop;
@@ -48,8 +48,8 @@ public class PlayerLeftHand : MonoBehaviour
 
 
     #region UI variables
-    bool aimHinted, smokingHinted,drinkHinted;
-    bool aimHintDone, smokingHintDone,drinkHintDone;
+    bool aimHinted, smokingHinted, drinkHinted;
+    public bool aimHintDone, smokingHintDone, drinkHintDone;
     bool chophinted;
     bool canSmoke;
     bool aiming;
@@ -71,9 +71,9 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (!inPizzaBox)
             {
-                if(holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
+                if (holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
                     Drink();
-                if(!drinking && !playerHolding.atInterior)
+                if (!drinking && !playerHolding.atInterior)
                     DetectHolding();
             }
 
@@ -128,11 +128,6 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.ShowHint(DataHolder.hints.smokeHint);
             smokingHintDone = false;
         }
-        else if (drinking)
-        {
-            DataHolder.ShowHint(DataHolder.hints.drinkHint);
-            drinkHintDone = false;
-        }
         else if (currentChop && !currentChop.hasFood && !chopAiming)
         {
             DataHolder.HideHint(DataHolder.hints.eatHint);
@@ -163,9 +158,20 @@ public class PlayerLeftHand : MonoBehaviour
         {
             DataHolder.ShowHint(DataHolder.hints.powderHint);
         }
+        else if (holdingObj && holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
+        {
+            if(playerHolding.atTable)
+                DataHolder.ShowHint(DataHolder.hints.tableDrinkHint);
+            else
+                DataHolder.ShowHint(DataHolder.hints.drinkHint);
+            drinkHintDone = false;
+        }
         else if (!holdingObj)
         {
             DataHolder.HideHint(DataHolder.hints.powderHint);
+            DataHolder.HideHint(DataHolder.hints.drinkHint);
+            DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
+            drinkHintDone = true;
         }
         else if (isHolding)
         {
@@ -197,7 +203,7 @@ public class PlayerLeftHand : MonoBehaviour
             if (chopHoldVal < chopHoldTimeMax)
             {
                 chopHoldVal += Time.deltaTime;
-                if(chopHoldVal>0.2f)
+                if (chopHoldVal > 0.2f)
                     chopAiming = true;
                 currentChop.transform.parent.localPosition += Camera.main.transform.forward * Time.deltaTime * 0.1f;
             }
@@ -222,7 +228,7 @@ public class PlayerLeftHand : MonoBehaviour
                     selectedFood.GetComponent<FoodPickObject>().selected = false;
                     currentChop.hasFood = true;
                 }
-                
+
             }
             chopAiming = false;
         }
@@ -230,9 +236,9 @@ public class PlayerLeftHand : MonoBehaviour
         if (chopOut)
             DrawBackChop(currentChop);
 
-        if(currentChop.hasFood)
+        if (currentChop.hasFood)
         {
-            if(Input.mouseScrollDelta.y < 0)
+            if (Input.mouseScrollDelta.y < 0)
             {
                 currentChop.chopMoving = true;
                 currentChop.SetEatAnim();
@@ -304,7 +310,7 @@ public class PlayerLeftHand : MonoBehaviour
             StartCoroutine(LerpPosition(smokingPos, 1f));
             StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
         }
-        if(Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !inhaling)
+        if (Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !inhaling)
         {
             holdingObj.GetComponent<Cigarette>().PlayExhaleSound();
             if (!smokeVFX.gameObject.activeSelf)
@@ -333,7 +339,7 @@ public class PlayerLeftHand : MonoBehaviour
             }
         }
 
-        if (Input.mouseScrollDelta.y<0 && !drinking)
+        if (Input.mouseScrollDelta.y < 0 && !drinking)
         {
             drinking = true;
             handAnim.Play("HandDrink");
@@ -410,7 +416,6 @@ public class PlayerLeftHand : MonoBehaviour
                         playerHolding.UnoccupyLeft();
                         if (!aimHintDone)
                         {
-                            Debug.Log("hinted");
                             DataHolder.HideHint(DataHolder.hints.throwHint);
                             aimHintDone = true;
                         }
@@ -503,6 +508,6 @@ public class PlayerLeftHand : MonoBehaviour
         holdingObj.localRotation = endValue;
     }
 
-    
+
 
 }

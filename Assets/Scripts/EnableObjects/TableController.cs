@@ -15,13 +15,13 @@ public class TableController : MonoBehaviour
         objects = GetComponentsInChildren<PickUpObject>();
         playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
         atTable = playerHolding.atTable;
-        isHolding = !playerHolding.GetLeftHand();
         tableControlOn = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        isHolding = !playerHolding.GetLeftHand();
         if (atTable)
         {
             if (Input.GetKeyDown(KeyCode.Tab) && !isHolding)

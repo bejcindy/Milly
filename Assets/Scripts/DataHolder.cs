@@ -59,6 +59,7 @@ public class DataHolder : MonoBehaviour
     static List<GameObject> hintPanels;
     public static bool canMakeSound;
     float beginningAudioCoolDownTimer;
+    bool hintOff,turnedOffHint;
 
     // Start is called before the first frame update
     void Start()
@@ -103,6 +104,25 @@ public class DataHolder : MonoBehaviour
         if (!focusing && focused)
         {
             Unfocus();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            hintOff = !hintOff;
+        if (hintOff && hintPanels.Count != 0 && !turnedOffHint)
+        {
+            for(int i=0;i< hintPanels.Count; i++)
+            {
+                hintPanels[i].SetActive(false);
+            }
+            turnedOffHint = true;
+        }
+        else if(!hintOff && hintPanels.Count != 0 && turnedOffHint)
+        {
+            for (int i = 0; i < hintPanels.Count; i++)
+            {
+                hintPanels[i].SetActive(true);
+            }
+            turnedOffHint = false;
         }
     }
 
@@ -223,6 +243,7 @@ public class DataHolder : MonoBehaviour
     }
     #endregion
 
+    #region Hint Related
     /// <summary>
     /// put in "DataHolder.hints.blablabla" for the string
     /// </summary>
@@ -290,4 +311,5 @@ public class DataHolder : MonoBehaviour
         //    hintTMP.text = null;
         //}
     }
+    #endregion
 }

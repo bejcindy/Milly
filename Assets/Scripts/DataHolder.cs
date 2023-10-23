@@ -106,7 +106,7 @@ public class DataHolder : MonoBehaviour
             Unfocus();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Y))
             hintOff = !hintOff;
         if (hintOff && hintPanels.Count != 0 && !turnedOffHint)
         {

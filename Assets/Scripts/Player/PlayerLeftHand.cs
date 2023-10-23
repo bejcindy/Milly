@@ -170,6 +170,8 @@ public class PlayerLeftHand : MonoBehaviour
         {
             DataHolder.HideHint(DataHolder.hints.powderHint);
             DataHolder.HideHint(DataHolder.hints.drinkHint);
+            DataHolder.HideHint(DataHolder.hints.throwHint);
+            DataHolder.HideHint(DataHolder.hints.smokeHint);
             DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
             drinkHintDone = true;
         }

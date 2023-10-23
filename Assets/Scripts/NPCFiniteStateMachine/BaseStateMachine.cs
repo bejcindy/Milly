@@ -191,6 +191,10 @@ namespace NPCFSM
                 npcControl.idlePaused = true;
         }
 
+        public bool CheckIdlePaused()
+        {
+            return npcControl.idlePaused;
+        }
         public void UnPauseIdling()
         {
             npcControl.idlePaused = false;

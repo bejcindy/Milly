@@ -34,7 +34,10 @@ public class TalkState : State {
                 if (machine.CheckIdleFinished())
                     machine.ChangeState(machine.moveState);
                 else
+                {
                     machine.ChangeState(machine.idleState);
+                }
+
             }
             //FOLLOWING NPC AFTER
             else
@@ -52,7 +55,7 @@ public class TalkState : State {
     protected override void OnExit()
     {
         //machine.ResetAnimTrigger("Stop");
-        machine.UnPauseIdling();
+
     }
 
 }

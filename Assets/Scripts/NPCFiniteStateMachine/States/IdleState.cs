@@ -18,7 +18,10 @@ public class IdleState : State
         }
 
         machine.StopNavigation();
-        machine.BeginIdling();
+        if (!machine.CheckIdlePaused())
+            machine.BeginIdling();
+        else
+            machine.UnPauseIdling();
     }
     
     protected override void OnUpdate()

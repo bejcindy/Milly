@@ -22,6 +22,7 @@ public class BuildingGroupController : MonoBehaviour
     {
         if (activateAll)
         {
+            gameObject.layer = 17;
             if (groupColorVal > 0)
                 groupColorVal -= 0.1f * fadeInterval * Time.deltaTime;
             else
@@ -62,6 +63,7 @@ public class BuildingGroupController : MonoBehaviour
 
         foreach(Transform child in obj)
         {
+            child.gameObject.layer = 17;
             if (child.GetComponent<LivableObject>() != null)
                 child.GetComponent<LivableObject>().activated = true;
 

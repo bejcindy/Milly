@@ -31,17 +31,39 @@ public class Chopsticks : PickUpObject
         {
             base.Update();
             if (selected && !thrown)
+            {
+                gameObject.layer = 9;
                 otherChopstick.gameObject.layer = 9;
-            else if(inHand)
+            }
+            else if (inHand)
+            {
+                gameObject.layer = 7;
                 otherChopstick.gameObject.layer = 7;
+            }
+            else if (activated && MainQuestState.firstGloriaTalk)
+            {
+                gameObject.layer = 17;
+                otherChopstick.gameObject.layer = 17;
+            }
             else
+            {
+                gameObject.layer = 0;
                 otherChopstick.gameObject.layer = 0;
+            }
         }
         else
         {
             selected = false;
-            gameObject.layer = 0;
-            otherChopstick.gameObject.layer = 0;
+            if (activated && MainQuestState.firstGloriaTalk)
+            {
+                gameObject.layer = 17;
+                otherChopstick.gameObject.layer = 17;
+            }
+            else
+            {
+                gameObject.layer = 0;
+                otherChopstick.gameObject.layer = 0;
+            }
         }
 
     }

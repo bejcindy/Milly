@@ -38,6 +38,11 @@ public class BeerCup : PickUpObject
                 gameObject.layer = 7;
                 liquid.gameObject.layer = 7;
             }
+            else if (activated)
+            {
+                gameObject.layer = 17;
+                liquid.gameObject.layer = 17;
+            }
             else
             {
                 gameObject.layer = 0;
@@ -48,7 +53,7 @@ public class BeerCup : PickUpObject
             {
                 if (Input.GetMouseButtonDown(1))
                 {
-                    liquid.gameObject.layer = 0;
+                    liquid.gameObject.layer = 17;
                     playerHolding.UnoccupyLeft();
                     inHand = false;
                     StartCoroutine(LerpPosition(startingPos, 1f));
@@ -60,7 +65,10 @@ public class BeerCup : PickUpObject
         else
         {
             selected = false;
-            gameObject.layer = 0;
+            if (activated && MainQuestState.firstGloriaTalk)
+                gameObject.layer = 17;
+            else
+                gameObject.layer = 0;
         }
 
 

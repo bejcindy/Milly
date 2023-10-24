@@ -29,13 +29,15 @@ public class ChopsticksHolder : LivableObject
         if (transform.childCount < 1)
             hasChop = false;
 
-        if(interactable && !hasChop && playerLeftHand.GetCurrentChops()!=null && !chopMoving &&
+        if (interactable && !hasChop && playerLeftHand.GetCurrentChops() != null && !chopMoving &&
             !playerLeftHand.chopAiming && !playerLeftHand.GetCurrentChops().hasFood && !playerLeftHand.GetCurrentChops().chopMoving)
         {
             gameObject.layer = 9;
-            if(Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1))
                 PutChops();
         }
+        else if (activated && MainQuestState.firstGloriaTalk)
+            gameObject.layer = 17;
         else
         {
             gameObject.layer = 0;

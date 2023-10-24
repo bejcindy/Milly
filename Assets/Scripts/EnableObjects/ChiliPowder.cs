@@ -36,6 +36,10 @@ public class ChiliPowder : PickUpObject
             {
                 gameObject.layer = 7;
             }
+            else if (activated)
+            {
+                gameObject.layer = 17;
+            }
             else
             {
                 gameObject.layer = 0;
@@ -63,7 +67,10 @@ public class ChiliPowder : PickUpObject
         else
         {
             selected = false;
-            gameObject.layer = 0;
+            if (activated && MainQuestState.firstGloriaTalk)
+                gameObject.layer = 17;
+            else
+                gameObject.layer = 0;
         }
 
 

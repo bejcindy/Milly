@@ -44,6 +44,8 @@ public class Pizza : PickUpObject
             transform.GetChild(1).gameObject.layer = 9;
         else if(inHand)
             transform.GetChild(1).gameObject.layer = 7;
+        else if(activated)
+            transform.GetChild(1).gameObject.layer = 17;
         else
             transform.GetChild(1).gameObject.layer = 0;
         

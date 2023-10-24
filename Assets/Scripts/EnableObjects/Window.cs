@@ -71,11 +71,17 @@ public class Window : LivableObject
         {
             foreach(Transform child in transform)
             {
-                child.gameObject.layer = 0;
+                if (activated)
+                    child.gameObject.layer = 17;
+                else
+                    child.gameObject.layer = 0;
             }
 
             isInteracting = false;
-            gameObject.layer = 0;
+            if (activated)
+                gameObject.layer = 17;
+            else
+                gameObject.layer = 0;
             if (!iconHidden)
             {
                 playerHolding.lidObj = null;

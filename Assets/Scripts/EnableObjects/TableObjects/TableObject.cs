@@ -29,7 +29,10 @@ public class TableObject : LivableObject
         else
         {
             selected = false;
-            gameObject.layer = 0;
+            if (activated)
+                gameObject.layer = 17;
+            else
+                gameObject.layer = 0;
         }
     }
 
@@ -71,6 +74,8 @@ public class TableObject : LivableObject
             gameObject.layer = 9;
         else if (inHand)
             gameObject.layer = 7;
+        else if (activated)
+            gameObject.layer = 17;
         else
             gameObject.layer = 0;
 

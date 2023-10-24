@@ -133,7 +133,10 @@ public class LivableObject : MonoBehaviour
                 {
                     GetComponent<GroupMaster>().activateAll = true;
                 }
-
+                if (gameObject.layer == 6)
+                    gameObject.layer = 18;
+                else if (gameObject.layer != 18)
+                    gameObject.layer = 17;
             }
 
         }
@@ -164,6 +167,8 @@ public class LivableObject : MonoBehaviour
     bool fadeOut;
     protected virtual void TurnOnColor(Material material)
     {
+        
+
         if (matColorVal > 0)
         {
             matColorVal -= 0.1f * fadeInterval * Time.deltaTime;

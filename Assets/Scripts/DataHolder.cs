@@ -211,7 +211,8 @@ public class DataHolder : MonoBehaviour
             {
                 focusDist = .75f;
                 //changeThis = false;
-                currentFocus.layer = 0;
+                //currentFocus.layer = 0;
+                currentFocus.layer = 17;
                 currentFocus = null;
                 focused = false;
                 camBlended = false;

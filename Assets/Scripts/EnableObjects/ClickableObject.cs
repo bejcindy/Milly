@@ -57,6 +57,7 @@ public class ClickableObject : LivableObject
                         if (raycastHit.transform.name == transform.name)
                         {
                             activated = true;
+                            dialogueUsable.OnUseUsable();
                         }
                     }
                 }

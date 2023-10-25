@@ -47,7 +47,10 @@ public class GroupMaster : MonoBehaviour
             foreach (Transform child in chainTriggers)
             {
                 ActivateGroup(child);
-                child.gameObject.layer = 17;
+                if (child.gameObject.layer == 6 || child.gameObject.layer == 18)
+                    child.gameObject.layer = 18;
+                else
+                    child.gameObject.layer = 17;
             }
         }
 
@@ -55,8 +58,11 @@ public class GroupMaster : MonoBehaviour
         {
             foreach(Transform child in transform.parent)
             {
-                child.gameObject.layer = 17;
-                if(child.GetComponent<Renderer>()!=null && child.GetComponent<SpriteRenderer>() == null)
+                if (child.gameObject.layer == 6 || child.gameObject.layer == 18)
+                    child.gameObject.layer = 18;
+                else
+                    child.gameObject.layer = 17;
+                if (child.GetComponent<Renderer>()!=null && child.GetComponent<SpriteRenderer>() == null)
                     ActivateGroup(child);
             }
         }

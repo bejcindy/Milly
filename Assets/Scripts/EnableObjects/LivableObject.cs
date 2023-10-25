@@ -133,10 +133,17 @@ public class LivableObject : MonoBehaviour
                 {
                     GetComponent<GroupMaster>().activateAll = true;
                 }
-                if (gameObject.layer == 6)
-                    gameObject.layer = 18;
-                else if (gameObject.layer != 18)
-                    gameObject.layer = 17;
+
+                if(gameObject.layer != 17 && gameObject.layer != 18)
+                {
+                    if (gameObject.layer == 6 || gameObject.layer == 18)
+                    {
+                        gameObject.layer = 18;
+                    }
+                    else
+                        gameObject.layer = 17;
+                }
+
             }
 
         }

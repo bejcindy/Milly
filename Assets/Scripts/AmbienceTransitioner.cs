@@ -10,6 +10,8 @@ public class AmbienceTransitioner : MonoBehaviour
     public float fadeSpeed;
     public float currentVol;
     public bool fadeIn, fadeOut;
+
+    public bool initialFade;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,19 @@ public class AmbienceTransitioner : MonoBehaviour
 
     private void Update()
     {
+        if (initialFade)
+        {
+            if (currentVol > 0)
+            {
+                currentVol -= Time.deltaTime * fadeSpeed;
+            }
+            else
+            {
+                currentVol = 0;
+                initialFade = false;
+            }
+        }
+
         if (fadeOut)
         {
             if (currentVol > 0)
@@ -66,6 +81,11 @@ public class AmbienceTransitioner : MonoBehaviour
             currentAmb.setPaused(false);
         }
 
+    }
+
+    public void FadeIzaAmbience()
+    {
+        initialFade = true;
     }
 
     private void OnTriggerEnter(Collider other)

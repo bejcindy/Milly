@@ -393,7 +393,7 @@ public class NPCControl : MonoBehaviour
             playerHolding.talkingTo = bone;
             iconHidden = false;
         }
-        else if (layerNumber == 0)
+        else if (layerNumber == 0 || layerNumber == 17)
         {
             if (!iconHidden)
             {

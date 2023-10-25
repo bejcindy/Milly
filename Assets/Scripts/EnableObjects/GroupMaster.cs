@@ -42,7 +42,6 @@ public class GroupMaster : MonoBehaviour
 
     void ActivateAll()
     {
-        gameObject.layer = 17;
         if (designatedGroup)
         {
             foreach (Transform child in chainTriggers)

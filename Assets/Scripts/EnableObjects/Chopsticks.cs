@@ -40,7 +40,7 @@ public class Chopsticks : PickUpObject
                 gameObject.layer = 7;
                 otherChopstick.gameObject.layer = 7;
             }
-            else if (activated && MainQuestState.firstGloriaTalk)
+            else if (activated)
             {
                 gameObject.layer = 17;
                 otherChopstick.gameObject.layer = 17;

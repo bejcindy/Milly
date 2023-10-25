@@ -128,6 +128,7 @@ public class NPCControl : MonoBehaviour
         {
             if (npcActivated)
             {
+                ChangeLayer(17);
                 if (matColorVal > 0f)
                 {
                     ActivateAll(npcMesh);
@@ -139,6 +140,7 @@ public class NPCControl : MonoBehaviour
 
             if (fakeActivated)
             {
+                ChangeLayer(17);
                 if (matColorVal > 0f)
                 {
                     ActivateAll(npcMesh);
@@ -148,6 +150,7 @@ public class NPCControl : MonoBehaviour
             }
             else if(hasFakeActivate && !fakeActivated && !npcActivated)
             {
+                ChangeLayer(0);
                 DeactivateAll(npcMesh);
 
             }
@@ -393,7 +396,7 @@ public class NPCControl : MonoBehaviour
             playerHolding.talkingTo = bone;
             iconHidden = false;
         }
-        else if (layerNumber == 0)
+        else if (layerNumber == 0 || layerNumber == 17)
         {
             if (!iconHidden)
             {
@@ -462,9 +465,13 @@ public class NPCControl : MonoBehaviour
                     }
                 }
             }
+            else if (npcActivated)
+                ChangeLayer(17);
             else
                 ChangeLayer(0);
         }
+        else if (npcActivated)
+            ChangeLayer(17);
         else
             ChangeLayer(0);
     }

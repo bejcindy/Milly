@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class PlayerCam : MonoBehaviour
 {
     public float sensX;
@@ -11,13 +11,14 @@ public class PlayerCam : MonoBehaviour
 
     float xRotation;
     float yRotation;
+    CinemachineBrain cameraBrain;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-    }
+        CinemachineCore.GetInputAxis = GetAxisCustom;
+        cameraBrain = Camera.main.GetComponent<CinemachineBrain>();
+    }   
 
     // Update is called once per frame
     void Update()
@@ -34,5 +35,12 @@ public class PlayerCam : MonoBehaviour
         //orientation.rotation = Quaternion.Euler(0, yRotation, 0);
         orientation.forward = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up);
 
+    }
+
+    private float GetAxisCustom(string axisName)
+    {
+        if (cameraBrain.IsBlending)
+            return 0;
+        return Input.GetAxis(axisName);
     }
 }

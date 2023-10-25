@@ -35,6 +35,8 @@ public class FixedCameraObject : LivableObject
 
     bool iconHidden;
     bool isPizzaBox;
+    public float camXAxisSpeed;
+    public float camYAxisSpeed;
     protected override void Start()
     {
         base.Start();
@@ -49,6 +51,7 @@ public class FixedCameraObject : LivableObject
             if (transform.parent.name.Contains("pizza"))
                 isPizzaBox = true;
         }
+
     }
 
 
@@ -89,6 +92,7 @@ public class FixedCameraObject : LivableObject
                     iconHidden = true;
                 }
             }
+
         }
         else
         {

@@ -43,5 +43,11 @@ public class Xixi : NPCControl
         noTalkInWalk = true;
     }
 
+    public void ChangeIntialActivate()
+    {
+        initialActivated = true;
+        ChangeLayer(17);
+    }
+
 
 }

@@ -108,21 +108,23 @@ public class DataHolder : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Y))
             hintOff = !hintOff;
-        if (hintOff && hintPanels.Count != 0 && !turnedOffHint)
+        //if (hintOff && hintPanels.Count != 0 && !turnedOffHint)
+        if (hintOff && hintPanels.Count != 0)
         {
             for(int i=0;i< hintPanels.Count; i++)
             {
                 hintPanels[i].SetActive(false);
             }
-            turnedOffHint = true;
+            //turnedOffHint = true;
         }
-        else if(!hintOff && hintPanels.Count != 0 && turnedOffHint)
+        //else if(!hintOff && hintPanels.Count != 0 && turnedOffHint)
+        else if (!hintOff && hintPanels.Count != 0)
         {
             for (int i = 0; i < hintPanels.Count; i++)
             {
                 hintPanels[i].SetActive(true);
             }
-            turnedOffHint = false;
+            //turnedOffHint = false;
         }
     }
 

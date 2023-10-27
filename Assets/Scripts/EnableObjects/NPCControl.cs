@@ -109,7 +109,8 @@ public class NPCControl : MonoBehaviour
             if (child.name == "iconPos")
                 bone = child.gameObject;
         }
-
+        if (initialActivated)
+            ChangeLayer(17);
         fadeInterval = 5;
     }
 
@@ -148,7 +149,7 @@ public class NPCControl : MonoBehaviour
                         currentDialogue.gameObject.SetActive(true);
                 }
             }
-            else if(hasFakeActivate && !fakeActivated && !npcActivated)
+            else if(hasFakeActivate && !fakeActivated && !npcActivated && !initialActivated)
             {
                 ChangeLayer(0);
                 DeactivateAll(npcMesh);
@@ -157,21 +158,35 @@ public class NPCControl : MonoBehaviour
         }
 
 
-
-
-        if (!mainNPC)
+        if (interactable)
         {
-            if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk)
+            if (!mainNPC)
             {
-                CheckTriggerConversation();
-            }
+                if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk)
+                {
+                    CheckTriggerConversation();
+                }
 
+            }
+            else
+            {
+                if ((!StartSequence.noControl || overrideNoControl) && !inCutscene)
+                    CheckTriggerConversation();
+            }
         }
         else
         {
-            if ((!StartSequence.noControl || overrideNoControl) && !inCutscene)
-                CheckTriggerConversation();
+            if (npcActivated || initialActivated)
+            {
+                ChangeLayer(17);
+            }
+            else
+            {
+                ChangeLayer(0);
+            }
         }
+
+
 
 
 
@@ -389,7 +404,7 @@ public class NPCControl : MonoBehaviour
         }
     }
     bool iconHidden;
-    void ChangeLayer(int layerNumber)
+    public void ChangeLayer(int layerNumber)
     {
         if (layerNumber == 9)
         {
@@ -404,6 +419,7 @@ public class NPCControl : MonoBehaviour
                 iconHidden = true;
             }
         }
+        npcMesh.gameObject.layer = layerNumber;
         var children = npcMesh.GetComponentsInChildren<Transform>();
         foreach (var child in children)
         {
@@ -470,7 +486,7 @@ public class NPCControl : MonoBehaviour
             else
                 ChangeLayer(0);
         }
-        else if (npcActivated)
+        else if (npcActivated || initialActivated)
             ChangeLayer(17);
         else
             ChangeLayer(0);

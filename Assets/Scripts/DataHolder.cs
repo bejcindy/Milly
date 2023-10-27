@@ -68,7 +68,7 @@ public class DataHolder : MonoBehaviour
         playerCinemachine = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
         playerBrain = Camera.main.GetComponent<CinemachineBrain>();
         originalPlayerCmFollow = playerCinemachine.Follow;
-        postProcessingVolume = GameObject.Find("GlowVolume");
+        postProcessingVolume = GameObject.Find("MonoVolume");
         v = postProcessingVolume.GetComponent<Volume>();
 
         hintPanel = hintPanelPrefab;

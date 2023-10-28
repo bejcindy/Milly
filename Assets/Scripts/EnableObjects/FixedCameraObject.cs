@@ -27,14 +27,14 @@ public class FixedCameraObject : LivableObject
 
     [SerializeField] public GameObject uiHint;
 
-    DialogueSystemTrigger dialogue;
+    protected DialogueSystemTrigger dialogue;
     PlayerCam camController;
     PlayerMovement playerMovement;
     protected PlayerHolding playerHolding;
     public Renderer playerBody;
 
-    bool iconHidden;
-    bool isPizzaBox;
+    protected bool iconHidden;
+    protected bool isPizzaBox;
     public float camXAxisSpeed;
     public float camYAxisSpeed;
     protected override void Start()
@@ -69,11 +69,11 @@ public class FixedCameraObject : LivableObject
                     playerHolding.clickableObj = gameObject;
                     iconHidden = false;
                 }
-                //else if (isPizzaBox)
-                //{
-                //    playerHolding.lidObj = gameObject;
-                //    iconHidden = false;
-                //}
+                else if (isPizzaBox)
+                {
+                    playerHolding.lidObj = gameObject;
+                    iconHidden = false;
+                }
                 else
                 {
                     playerHolding.sitObj = uiHint;
@@ -134,6 +134,7 @@ public class FixedCameraObject : LivableObject
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 StartCoroutine(UnfixPlayer());
+                QuitAction();
             }
         }
     }
@@ -256,6 +257,11 @@ public class FixedCameraObject : LivableObject
         playerMovement.enabled = true;
         positionFixed = false;
         playerHolding.positionFixedWithMouse = false;
+
+    }
+
+    protected virtual void QuitAction()
+    {
 
     }
 

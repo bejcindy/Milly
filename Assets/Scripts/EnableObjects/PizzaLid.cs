@@ -4,33 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 
-public class PizzaLid : LivableObject
+public class PizzaLid : FixedCameraObject
 {
     public bool interacting;
     public bool openLid;
     public float rotateSpeed;
     public bool quitInteraction;
     public bool coolDown;
-    public bool isInteracting;
 
     public float coolDownVal;
-    bool fixedPos;
-    PlayerHolding playerHolding;
-    FixedCameraObject camControl;
-    DialogueSystemTrigger dialogue;
+    public bool fixedPos;
+
     PlayerLeftHand playerLeftHand;
     public EventReference openSound, closeSound;
     FMOD.Studio.EventInstance openEvent, closeEvent;
     bool openPlayed, closePlayed;
 
-    bool iconHidden;
-
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        camControl = GetComponent<FixedCameraObject>();
-        playerHolding = player.GetComponent<PlayerHolding>();
+        isPizzaBox = true;
         dialogue = GetComponent<DialogueSystemTrigger>();
         playerLeftHand = player.GetComponent<PlayerLeftHand>();
         openEvent = RuntimeManager.CreateInstance(openSound);
@@ -41,93 +35,55 @@ public class PizzaLid : LivableObject
     protected override void Update()
     {
         base.Update();
+
         if (transform.eulerAngles.z == 0 || transform.eulerAngles.z >= 359 || transform.eulerAngles.z == 300)
             fixedPos = true;
         else
             fixedPos = false;
+
         if (interactable && !coolDown && playerHolding.GetLeftHand())
         {
-            if (iconHidden)
-            {
-                playerHolding.lidObj = gameObject;
-                iconHidden = false;
-            }
-            float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
-            if (playerHolding.GetLeftHand())
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    dialogue.enabled = true;
-                    activated = true;
-                    interacting = true;
-                    quitInteraction = false;
-                    if (verticalInput < 0)
-                    {
-                        RotateLid(0);
-                        if (!closePlayed && !closeSound.IsNull)
-                        {
-                            openEvent.start();
-                            closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                            openPlayed = false;
-                            closePlayed = true;
-                        }
-                    }
-                    else if (verticalInput > 0)
-                    {
-                        RotateLid(300);
-                        camControl.TurnOnCamera();
-                        isInteracting = true;
-                        if (!openPlayed && !openSound.IsNull)
-                        {
-                            closeEvent.start();
-                            openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                            closePlayed = false;
-                            openPlayed = true;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    dialogue.enabled = true;
-                    activated = true;
-                    interacting = true;
-                    quitInteraction = false;
-                    playerLeftHand.bypassThrow = true;
-                    if (verticalInput < 0)
-                    {
-                        RotateLid(0);
-                        if (!closePlayed && !closeSound.IsNull)
-                        {
-                            openEvent.start();
-                            closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                            openPlayed = false;
-                            closePlayed = true;
-                        }
-                    }
-                    else if (verticalInput > 0)
-                    {
-                        RotateLid(300);
-                        camControl.TurnOnCamera();
-                        isInteracting = true;
-                        if (!openPlayed && !openSound.IsNull)
-                        {
-                            closeEvent.start();
-                            openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                            closePlayed = false;
-                            openPlayed = true;
-                        }
-                    }
-                }
-                else
-                {
-                    playerLeftHand.bypassThrow = false;
-                    openPlayed = false;
-                    closePlayed = false;
-                }
 
+            float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
+
+            if (Input.GetMouseButton(0))
+            {
+                dialogue.enabled = true;
+                activated = true;
+                interacting = true;
+                quitInteraction = false;
+                if (verticalInput < 0)
+                {
+                    RotateLid(0);
+
+                    if (!closePlayed && !closeSound.IsNull)
+                    {
+                        openEvent.start();
+                        closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                        openPlayed = false;
+                        closePlayed = true;
+                    }
+                }
+                else if (verticalInput > 0)
+                {
+                    RotateLid(300);
+                    TurnOnCamera();
+                    isInteracting = true;
+
+                    if (!openPlayed && !openSound.IsNull)
+                    {
+                        closeEvent.start();
+                        openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                        closePlayed = false;
+                        openPlayed = true;
+                    }
+                }
+            }
+
+            if (openLid)
+            {
+                playerHolding.lidObj = null;
+                iconHidden = true;
             }
         }
         else
@@ -138,18 +94,17 @@ public class PizzaLid : LivableObject
                 iconHidden = true;
             }
         }
+
         if (isInteracting && openLid)
         {
-            player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
-            player.GetComponent<PlayerRightHand>().inPizzaBox = true;
+            playerLeftHand.inPizzaBox = true;
         }
         else
         {
-            player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
-            player.GetComponent<PlayerRightHand>().inPizzaBox = false;
+            playerLeftHand.inPizzaBox = false;
         }
 
-        if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(0))
         {
             interacting = false;
 
@@ -167,14 +122,6 @@ public class PizzaLid : LivableObject
             }
         }
 
-        if (isInteracting && Input.GetKeyDown(camControl.quitKey))
-        {
-            isInteracting = false;
-            openLid = false;
-            coolDown = true;
-            interacting = false;
-        }
-
 
         if (coolDown)
         {
@@ -184,6 +131,13 @@ public class PizzaLid : LivableObject
         }
             
 
+    }
+
+    protected override void QuitAction()
+    {
+        openLid = false;
+        coolDown = true;
+        interacting = false;
     }
 
     void StopCoolDown()
@@ -208,16 +162,4 @@ public class PizzaLid : LivableObject
             openLid = false;
     }
 
-    IEnumerator LerpRotation(Vector3 targetPosition, float duration)
-    {
-        float time = 0;
-        Vector3 startPosition = transform.localEulerAngles;
-        while (time < duration)
-        {
-            transform.localEulerAngles = Vector3.Lerp(startPosition, targetPosition, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        transform.localEulerAngles = targetPosition;
-    }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class ScriptController : MonoBehaviour
 {
     public bool inZone;
+
+    bool turningFinished;
     public LivableObject[] allLivable;
     public GroupMaster[] allGroupMaster;
     // Start is called before the first frame update
@@ -17,16 +19,14 @@ public class ScriptController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inZone)
-            TurnOnScripts();
-        else
-            TurnOffScripts();
+
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            TurnOnScripts();
             inZone = true;
         }
     }
@@ -35,6 +35,7 @@ public class ScriptController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            TurnOffScripts();
             inZone = false;
         }
     }

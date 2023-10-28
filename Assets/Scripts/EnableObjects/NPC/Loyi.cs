@@ -18,7 +18,7 @@ public class Loyi : NPCControl
      
     public void ExitIzaCutsceneStage()
     {
-        firstTalk = true;
+        talkable = true;
         agent.enabled = true;
         machine.ChangeState(machine.moveState);
 

@@ -9,7 +9,7 @@ public class Xixi : NPCControl
     protected override void Start()
     {
         base.Start();
-        firstTalk = true;
+        talkable = true;
     }
 
     public void XixiAction1()

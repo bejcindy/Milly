@@ -12,7 +12,7 @@ public class Charles : NPCControl
     protected override void Start()
     {
         base.Start();
-        firstTalk = true;
+        talkable = true;
 
     }
     protected override void Update()

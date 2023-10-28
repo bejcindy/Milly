@@ -9,7 +9,7 @@ public class Kelvin : NPCControl
     protected override void Start()
     {
         base.Start();
-        firstTalk = true;
+        talkable = true;
         matColorVal = 1;
     }
 

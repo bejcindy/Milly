@@ -42,7 +42,7 @@ public class PizzaLid : LivableObject
             fixedPos = true;
         else
             fixedPos = false;
-        if (interactable && !coolDown)
+        if (interactable && !coolDown && playerHolding.GetLeftHand())
         {
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
             if (playerHolding.GetLeftHand())

@@ -210,6 +210,11 @@ public class LivableObject : MonoBehaviour
         }
     }
 
+    public void Activate()
+    {
+        activated = true;
+    }
+
     void FadeOutFilter()
     {
         

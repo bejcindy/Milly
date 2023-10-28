@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
+using UnityEngine.Events;
+
 public class NPCControl : MonoBehaviour
 {
 
@@ -47,7 +49,8 @@ public class NPCControl : MonoBehaviour
     protected BaseStateMachine machine;
 
 
-    protected bool firstTalk;
+    public bool talkable;
+    public bool firstTalked;
 
     [Header("[Route Control]")]
     public Transform[] destinations;
@@ -86,6 +89,8 @@ public class NPCControl : MonoBehaviour
 
     [Header("Sound")]
     public EventReference footStepSF;
+
+    public UnityEvent OnActivateEvent;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -132,6 +137,10 @@ public class NPCControl : MonoBehaviour
                 ChangeLayer(17);
                 if (matColorVal > 0f)
                 {
+                    if (OnActivateEvent != null)
+                    {
+                        OnActivateEvent.Invoke();
+                    }
                     ActivateAll(npcMesh);
                     if (!currentDialogue.gameObject.activeSelf)
                         currentDialogue.gameObject.SetActive(true);
@@ -455,7 +464,7 @@ public class NPCControl : MonoBehaviour
         if (interactable && !playerHolding.inDialogue)
         {
             //check npc conditions to trigger conversation
-            if (firstTalk && !noTalkStage && !inCD && !inConversation)
+            if (talkable && !noTalkStage && !inCD && !inConversation)
             {
                 //if npc in idle states are already talked once 
                 if (!DialogueLua.GetVariable(reTriggerName).asBool)
@@ -509,9 +518,14 @@ public class NPCControl : MonoBehaviour
         }
     }
 
-    public bool CheckFirstTalk()
+    public bool CheckTalkable()
     {
-        return firstTalk;
+        return talkable;
+    }
+
+    public bool CheckFirstTalked()
+    {
+        return firstTalked;
     }
 
     public void QuestAccept()
@@ -532,10 +546,6 @@ public class NPCControl : MonoBehaviour
                 StopCoroutine(lookCoroutine);
             lookCoroutine = StartCoroutine(RotateTowards(player));
         }
-        if (!firstTalk)
-        {
-            firstTalk = true;
-        }
 
 
     }
@@ -548,6 +558,8 @@ public class NPCControl : MonoBehaviour
         inCD = true;
         currentDialogue.gameObject.SetActive(false);
         fakeActivated = false;
+        talkable = true;
+        firstTalked = true;
     }
 
     public void EndConversation()

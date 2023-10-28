@@ -9,7 +9,7 @@ public class Gloria : NPCControl
     {
         base.Start();
         overrideNoControl = true;
-        firstTalk = true;
+        talkable = true;
     }
      
     public void GloriaAction1()

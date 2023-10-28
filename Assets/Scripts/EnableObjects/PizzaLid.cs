@@ -45,7 +45,7 @@ public class PizzaLid : LivableObject
             fixedPos = true;
         else
             fixedPos = false;
-        if (interactable && !coolDown)
+        if (interactable && !coolDown && playerHolding.GetLeftHand())
         {
             if (iconHidden)
             {

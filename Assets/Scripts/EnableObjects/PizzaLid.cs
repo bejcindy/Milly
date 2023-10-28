@@ -22,6 +22,9 @@ public class PizzaLid : LivableObject
     public EventReference openSound, closeSound;
     FMOD.Studio.EventInstance openEvent, closeEvent;
     bool openPlayed, closePlayed;
+
+    bool iconHidden;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -44,6 +47,11 @@ public class PizzaLid : LivableObject
             fixedPos = false;
         if (interactable && !coolDown)
         {
+            if (iconHidden)
+            {
+                playerHolding.lidObj = gameObject;
+                iconHidden = false;
+            }
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
             if (playerHolding.GetLeftHand())
             {
@@ -121,29 +129,15 @@ public class PizzaLid : LivableObject
                 }
 
             }
-            //if (playerHolding.GetRightHand())
-            //{
-            //    if (Input.GetMouseButton(1))
-            //    {
-            //        dialogue.enabled = true;
-            //        activated = true;
-            //        interacting = true;
-            //        quitInteraction = false;
-            //        if (verticalInput < 0)
-            //        {
-            //            RotateLid(0);
-            //        }
-            //        else if (verticalInput > 0)
-            //        {
-            //            RotateLid(300);
-            //            camControl.TurnOnCamera();
-            //            isInteracting = true;
-            //        }
-            //    }
-            //}
-
         }
-
+        else
+        {
+            if (!iconHidden)
+            {
+                playerHolding.lidObj = null;
+                iconHidden = true;
+            }
+        }
         if (isInteracting && openLid)
         {
             player.GetComponent<PlayerLeftHand>().inPizzaBox = true;

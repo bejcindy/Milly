@@ -69,11 +69,11 @@ public class FixedCameraObject : LivableObject
                     playerHolding.clickableObj = gameObject;
                     iconHidden = false;
                 }
-                else if (isPizzaBox)
-                {
-                    playerHolding.lidObj = gameObject;
-                    iconHidden = false;
-                }
+                //else if (isPizzaBox)
+                //{
+                //    playerHolding.lidObj = gameObject;
+                //    iconHidden = false;
+                //}
                 else
                 {
                     playerHolding.sitObj = uiHint;
@@ -105,11 +105,11 @@ public class FixedCameraObject : LivableObject
                     playerHolding.clickableObj = null;
                     iconHidden = true;
                 }
-                else if (isPizzaBox)
-                {
-                    playerHolding.lidObj = null;
-                    iconHidden = true;
-                }
+                //else if (isPizzaBox)
+                //{
+                //    playerHolding.lidObj = null;
+                //    iconHidden = true;
+                //}
                 else
                 {
                     playerHolding.sitObj = null;

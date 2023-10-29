@@ -77,7 +77,7 @@ public class FixedCameraObject : LivableObject
                 else if (gameObject.name.Contains("catbox"))
                 {
                     playerHolding.catboxObj = gameObject;
-                    DataHolder.ShowHint("<b>Space</b> See");
+                    DataHolder.ShowHint("<b>F</b> Check");
                     iconHidden = false;
                 }
                 else
@@ -100,7 +100,7 @@ public class FixedCameraObject : LivableObject
                 else if (gameObject.name.Contains("catbox"))
                 {
                     playerHolding.catboxObj = null;
-                    DataHolder.HideHint("<b>Space</b> See");
+                    DataHolder.HideHint("<b>F</b> Check");
                     iconHidden = true;
                 }
             }
@@ -125,7 +125,7 @@ public class FixedCameraObject : LivableObject
                 else if (gameObject.name.Contains("catbox"))
                 {
                     playerHolding.catboxObj = null;
-                    DataHolder.HideHint("<b>F</b> See");
+                    DataHolder.HideHint("<b>F</b> Check");
                     iconHidden = true;
                 }
                 else

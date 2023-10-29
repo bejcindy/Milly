@@ -74,6 +74,12 @@ public class FixedCameraObject : LivableObject
                     playerHolding.lidObj = gameObject;
                     iconHidden = false;
                 }
+                else if (gameObject.name.Contains("catbox"))
+                {
+                    playerHolding.catboxObj = gameObject;
+                    DataHolder.ShowHint("<b>Space</b> See");
+                    iconHidden = false;
+                }
                 else
                 {
                     playerHolding.sitObj = uiHint;
@@ -89,6 +95,12 @@ public class FixedCameraObject : LivableObject
                 if (gameObject.name.Contains("apt_call"))
                 {
                     playerHolding.clickableObj = null;
+                    iconHidden = true;
+                }
+                else if (gameObject.name.Contains("catbox"))
+                {
+                    playerHolding.catboxObj = null;
+                    DataHolder.HideHint("<b>Space</b> See");
                     iconHidden = true;
                 }
             }
@@ -110,6 +122,12 @@ public class FixedCameraObject : LivableObject
                 //    playerHolding.lidObj = null;
                 //    iconHidden = true;
                 //}
+                else if (gameObject.name.Contains("catbox"))
+                {
+                    playerHolding.catboxObj = null;
+                    DataHolder.HideHint("<b>F</b> See");
+                    iconHidden = true;
+                }
                 else
                 {
                     playerHolding.sitObj = null;

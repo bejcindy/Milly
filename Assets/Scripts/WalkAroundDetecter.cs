@@ -11,7 +11,7 @@ public class WalkAroundDetecter : LivableObject
     public Light streetLight;
     public GameObject lightBulb;
     public EventReference lightSound;
-    bool played;
+    bool soundPlayed;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -37,19 +37,19 @@ public class WalkAroundDetecter : LivableObject
         }
         if (matColorVal <= 0)
         {
-            if (streetLight && !played)
+            if (streetLight && !soundPlayed)
             {
                 streetLight.enabled = true;
                 if (!lightSound.IsNull)
                     RuntimeManager.PlayOneShot(lightSound, lightBulb.transform.position);
-                played = true;
+                soundPlayed = true;
             }
-            if (lightBulb && !played)
+            if (lightBulb && !soundPlayed)
             {
                 lightBulb.SetActive(true);
                 if (!lightSound.IsNull)
                     RuntimeManager.PlayOneShot(lightSound, lightBulb.transform.position);
-                played = true;
+                soundPlayed = true;
             }
         }
     }

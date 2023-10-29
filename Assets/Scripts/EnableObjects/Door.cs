@@ -98,6 +98,7 @@ public class Door : LivableObject
             {
                 if (Input.GetMouseButtonDown(0))
                 {
+                    activated = true;
                     GetComponent<DialogueSystemTrigger>().enabled = true;
                 }
             }

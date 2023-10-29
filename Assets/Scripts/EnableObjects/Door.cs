@@ -100,8 +100,15 @@ public class Door : LivableObject
                 {
                     activated = true;
                     GetComponent<DialogueSystemTrigger>().enabled = true;
+                    playedWithDoor = true;
                 }
+                if (!playedWithDoor)
+                    playerHolding.doorHandle = doorHandleCollider.gameObject;
+                else if (playerHolding.doorHandle == doorHandleCollider.gameObject)
+                    playerHolding.doorHandle = null;
             }
+            else if (playerHolding.doorHandle == doorHandleCollider.gameObject)
+                playerHolding.doorHandle = null;
 
         }
 

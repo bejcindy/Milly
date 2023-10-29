@@ -47,12 +47,12 @@ public class PlayerHolding : MonoBehaviour
     public RectTransform CanvasRect;
 
     [HideInInspector]
-    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj;
+    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj,catboxObj;
     bool noControlReset;
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
-    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden;
+    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden,catHidden;
     List<GameObject> trackedObjs;
     List<GameObject> UIs;
     List<Sprite> usedSprites;
@@ -153,6 +153,8 @@ public class PlayerHolding : MonoBehaviour
             UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
         if (clickableObj)
             UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
+        if(catboxObj)
+            UITriggerdByOtherObj(catboxObj, lookingSprite, catHidden);
         #endregion
 
         if (DialogueManager.IsConversationActive)

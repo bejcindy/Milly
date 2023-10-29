@@ -10,9 +10,9 @@ namespace NPCFSM
     public class BaseStateMachine: MonoBehaviour
     {
 
-        [SerializeField] State currentState;
+        State currentState;
         Transform player;
-        public State initialState;
+        State initialState;
         public char initialStateChar;
         public FrozenState frozenState= new FrozenState();
         public MoveState moveState= new MoveState();

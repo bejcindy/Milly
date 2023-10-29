@@ -9,8 +9,19 @@ using UnityEngine.Events;
 
 public class NPCControl : MonoBehaviour
 {
-
     protected float matColorVal;
+    [SerializeField] protected float minDist;
+    [SerializeField] protected bool isVisible;
+    [SerializeField] protected bool interactable;
+    [SerializeField] public bool followingPlayer;
+    [SerializeField] public float npcVincinity;
+    protected Transform player;
+    protected Transform currentDialogue;
+    protected Animator anim;
+    protected NavMeshAgent agent;
+    protected BaseStateMachine machine;
+
+
     [Header("[Activate Check]")]
     public bool mainNPC;
     public bool inCutscene;
@@ -21,11 +32,8 @@ public class NPCControl : MonoBehaviour
     public bool fakeActivated;
     public bool overrideNoControl;
     protected float fadeInterval;
-    [SerializeField] protected float minDist;
-    [SerializeField] protected bool isVisible;
-    [SerializeField] protected bool interactable;
-    [SerializeField] public bool followingPlayer;
-    [SerializeField] public float npcVincinity;
+
+
 
 
     [Header("References")]
@@ -34,6 +42,7 @@ public class NPCControl : MonoBehaviour
 
 
     [Header("Trigger Types")]
+    public bool onHoldChar;
     public bool objectTriggered;
     public LivableObject triggerObject;
     public bool peopleTriggered;
@@ -41,16 +50,6 @@ public class NPCControl : MonoBehaviour
     public bool questTriggered;
     public bool questAccepted;
 
-
-    protected Transform player;
-    public Transform currentDialogue;
-    protected Animator anim;
-    protected NavMeshAgent agent;
-    protected BaseStateMachine machine;
-
-
-    public bool talkable;
-    public bool firstTalked;
 
     [Header("[Route Control]")]
     public Transform[] destinations;
@@ -64,6 +63,8 @@ public class NPCControl : MonoBehaviour
     Transform currentStop;
 
     [Header("[Conversation]")]
+    public bool talkable;
+    public bool firstTalked;
     public bool inConversation;
     private bool inCD;
     private float talkCD = 2f;
@@ -97,9 +98,8 @@ public class NPCControl : MonoBehaviour
     {
         //Setting up basic components
         player = GameObject.Find("Player").transform;
-
+        
         machine = GetComponent<BaseStateMachine>();
-
         dialogueHolder = transform.GetChild(2);
         currentDialogue = dialogueHolder.GetChild(0);
 
@@ -108,12 +108,14 @@ public class NPCControl : MonoBehaviour
 
         playerHolding = player.GetComponent<PlayerHolding>();
 
+        bone = transform.GetChild(3).gameObject;
 
-        foreach (Transform child in transform)
-        {
-            if (child.name == "iconPos")
-                bone = child.gameObject;
-        }
+        //foreach (Transform child in transform)
+        //{
+        //    if (child.name == "iconPos")
+        //        bone = child.gameObject;
+        //}
+
         if (initialActivated)
             ChangeLayer(17);
         fadeInterval = 5;
@@ -185,13 +187,15 @@ public class NPCControl : MonoBehaviour
         }
         else
         {
-            if (npcActivated || initialActivated)
+            if (npcActivated || initialActivated || onHoldChar)
             {
-                ChangeLayer(17);
+                if(npcMesh.gameObject.layer != 17)
+                    ChangeLayer(17);
             }
             else
             {
-                ChangeLayer(0);
+                if (npcMesh.gameObject.layer != 0)
+                    ChangeLayer(0);
             }
         }
 

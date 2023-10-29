@@ -139,6 +139,11 @@ public class StartSequence : MonoBehaviour
 
     public void SetShockCamera()
     {
+        if (tabHintOn)
+        {
+            DataHolder.HideHint(DataHolder.hints.tabHint);
+            tabHintOn = false;
+        }
         shockCam.m_Priority = 10;
         tableCam.m_Priority = 9;
     }

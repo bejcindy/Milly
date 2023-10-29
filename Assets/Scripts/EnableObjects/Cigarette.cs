@@ -28,7 +28,7 @@ public class Cigarette : PickUpObject
         }
         else
         {
-            activeCigObj.gameObject.layer = 7;
+            activeCigObj.gameObject.layer = 17;
         }
 
         if (activated && !activateAll)

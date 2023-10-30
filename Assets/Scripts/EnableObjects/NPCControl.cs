@@ -494,12 +494,12 @@ public class NPCControl : MonoBehaviour
                     }
                 }
             }
-            else if (npcActivated)
+            else if (npcActivated || onHoldChar)
                 ChangeLayer(17);
             else
                 ChangeLayer(0);
         }
-        else if (npcActivated || initialActivated)
+        else if (npcActivated || initialActivated || onHoldChar)
             ChangeLayer(17);
         else
             ChangeLayer(0);

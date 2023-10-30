@@ -296,6 +296,7 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (other.name == "StartConvo" && !smokingHinted)
         {
+            Debug.Log("should hint smoke");
             canSmoke = true;
         }
     }

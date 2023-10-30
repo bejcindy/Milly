@@ -168,6 +168,20 @@ public class PlayerLeftHand : MonoBehaviour
             }
             drinkHintDone = false;
         }
+        else if (isHolding)
+        {
+            DataHolder.ShowHint(DataHolder.hints.throwHint);
+            aimHintDone = false;
+        }
+        else if (canSmoke && !smokingHinted)
+        {
+            DataHolder.ShowHint(DataHolder.hints.cigHint);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                DataHolder.HideHint(DataHolder.hints.cigHint);
+                smokingHinted = true;
+            }
+        }
         else if (!holdingObj)
         {
             DataHolder.HideHint(DataHolder.hints.powderHint);
@@ -177,23 +191,6 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
             DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
             drinkHintDone = true;
-        }
-        else if (isHolding)
-        {
-            DataHolder.ShowHint(DataHolder.hints.throwHint);
-            aimHintDone = false;
-        }
-        else if (canSmoke && !smokingHinted)
-        {
-            if (!smokingHinted)
-            {
-                DataHolder.ShowHint(DataHolder.hints.cigHint);
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    DataHolder.HideHint(DataHolder.hints.cigHint);
-                    smokingHinted = true;
-                }
-            }
         }
         #endregion
     }

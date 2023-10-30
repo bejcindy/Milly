@@ -26,6 +26,10 @@ public class Cigarette : PickUpObject
         {
             activeCigObj.gameObject.layer = 9;
         }
+        else if (inHand)
+        {
+            activeCigObj.gameObject.layer = 7;
+        }
         else
         {
             activeCigObj.gameObject.layer = 17;
@@ -87,5 +91,6 @@ public class Cigarette : PickUpObject
         cigStage = 4;
         activeCigObj.tag = "CigButt";
         gameObject.tag = "CigButt";
+        cigarette = false;
     }
 }

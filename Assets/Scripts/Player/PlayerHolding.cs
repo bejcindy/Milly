@@ -42,7 +42,7 @@ public class PlayerHolding : MonoBehaviour
 
     #region For Object Tracking UI
     public Image objectUI,objectUI2;
-    public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite,catSprite;
+    public Sprite pickUpSprite,grabingSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite,catSprite;
     RectTransform objectUIRect,objectUIRect2;
     public RectTransform CanvasRect;
 
@@ -318,7 +318,10 @@ public class PlayerHolding : MonoBehaviour
     {
         if (obj)
         {
-            DisplayUI(obj, sprite);
+            if (obj == lidObj && Input.GetMouseButton(0))
+                DisplayUI(obj, grabingSprite);
+            else
+                DisplayUI(obj, sprite);
             hidden = false;
         }
         else

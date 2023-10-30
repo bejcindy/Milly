@@ -52,7 +52,7 @@ public class PlayerHolding : MonoBehaviour
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
-    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden,catHidden;
+    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden,catHidden,doorHidden;
     List<GameObject> trackedObjs;
     List<GameObject> UIs;
     List<Sprite> usedSprites;
@@ -105,14 +105,7 @@ public class PlayerHolding : MonoBehaviour
 
 
         atContainer = CheckContainer();
-        if (doorHandle)
-        {
-            //Debug.Log("doorhandeled");
-            if (!doorHandle.GetComponentInParent<Door>().doorMoving)
-                DisplayUI(doorHandle, pickUpSprite);
-            else
-                HideUI(pickUpSprite);
-        }
+        
 
         if (focusedObj != null)
         {
@@ -142,9 +135,31 @@ public class PlayerHolding : MonoBehaviour
             }
             //hintDone = true;
         }
-        
-        //if(kickableObj)
-            UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
+
+        if (doorHandle)
+        {
+
+            if (Input.GetMouseButton(0))
+            {
+                Debug.Log("trying");
+                DisplayUI(doorHandle, grabingSprite);
+                HideUI(pickUpSprite);
+            }
+            else if (!doorHandle.GetComponentInParent<Door>().doorMoving)
+            {
+                DisplayUI(doorHandle, pickUpSprite);
+                HideUI(grabingSprite);
+            }
+            else
+            {
+                HideUI(pickUpSprite);
+                HideUI(grabingSprite);
+            }
+            //if(doorHandle)
+            //    UITriggerdByOtherObj(doorHandle, pickUpSprite, doorHidden);
+        }
+    //if(kickableObj)
+    UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
         //if(talkingTo)
             UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
         if(lidObj)
@@ -318,6 +333,11 @@ public class PlayerHolding : MonoBehaviour
     {
         if (obj)
         {
+            //if (obj == doorHandle && Input.GetMouseButton(0))
+            //{
+            //    Debug.Log("Trying");
+            //    DisplayUI(obj, grabingSprite);
+            //}
             if (obj == lidObj && Input.GetMouseButton(0))
                 DisplayUI(obj, grabingSprite);
             else
@@ -329,6 +349,8 @@ public class PlayerHolding : MonoBehaviour
             if (!hidden)
             {
                 HideUI(sprite);
+                //if (obj == doorHandle || obj == lidObj)
+                //    HideUI(grabingSprite);
                 hidden = true;
             }
         }

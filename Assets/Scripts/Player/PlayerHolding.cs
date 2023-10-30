@@ -46,7 +46,7 @@ public class PlayerHolding : MonoBehaviour
     RectTransform objectUIRect,objectUIRect2;
     public RectTransform CanvasRect;
 
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj,catboxObj;
     bool noControlReset;
     bool displayedLeftHandUI;
@@ -143,17 +143,17 @@ public class PlayerHolding : MonoBehaviour
             //hintDone = true;
         }
         
-        if(kickableObj)
+        //if(kickableObj)
             UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
-        if(talkingTo)
+        //if(talkingTo)
             UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
         if(lidObj)
             UITriggerdByOtherObj(lidObj, pickUpSprite, dragHidden);
-        if(sitObj)
+        //if(sitObj)
             UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
-        if (clickableObj)
+        //if (clickableObj)
             UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
-        if(catboxObj)
+        //if(catboxObj)
             UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
         #endregion
 

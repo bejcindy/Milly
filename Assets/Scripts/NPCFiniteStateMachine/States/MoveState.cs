@@ -33,7 +33,6 @@ public class MoveState : State
             {
                 if (machine.CheckReachDestination())
                 {
-                    Debug.Log("reached dest");
                     machine.SetMainTalkFalse();
                     machine.ChangeState(machine.idleState);
                 }
@@ -52,7 +51,7 @@ public class MoveState : State
                 machine.ChangeState(machine.followState);
         }
 
-        if (machine.CheckInConversation())
+        if (machine.CheckInConversation() && machine.CheckReachDestination())
             machine.ChangeState(machine.talkState);
 
     }

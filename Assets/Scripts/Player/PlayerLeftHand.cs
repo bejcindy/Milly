@@ -26,8 +26,8 @@ public class PlayerLeftHand : MonoBehaviour
     public Animator handAnim;
     public bool drinking;
     public ParticleSystem smokeVFX;
-    Vector2 minThrowForce = new Vector2(100f, 10f);
-    Vector2 maxThrowForce = new Vector2(900f, 50f);
+    Vector2 minThrowForce = new Vector2(100f, 50f);
+    Vector2 maxThrowForce = new Vector2(900f, 250f);
     float holdTime = 2f;
 
     Chopsticks currentChop;
@@ -164,8 +164,7 @@ public class PlayerLeftHand : MonoBehaviour
                 DataHolder.ShowHint(DataHolder.hints.tableDrinkHint);
             else
             {
-                DataHolder.ShowHint(DataHolder.hints.drinkHint);
-                DataHolder.ShowHint(DataHolder.hints.throwHint);
+                DataHolder.ShowHint(DataHolder.hints.drinkAndThrowHint);
             }
             drinkHintDone = false;
         }
@@ -176,6 +175,7 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.throwHint);
             DataHolder.HideHint(DataHolder.hints.smokeHint);
             DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
+            DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
             drinkHintDone = true;
         }
         else if (isHolding)

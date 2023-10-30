@@ -42,7 +42,7 @@ public class PlayerHolding : MonoBehaviour
 
     #region For Object Tracking UI
     public Image objectUI,objectUI2;
-    public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite;
+    public Sprite pickUpSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite,catSprite;
     RectTransform objectUIRect,objectUIRect2;
     public RectTransform CanvasRect;
 
@@ -154,7 +154,7 @@ public class PlayerHolding : MonoBehaviour
         if (clickableObj)
             UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
         if(catboxObj)
-            UITriggerdByOtherObj(catboxObj, lookingSprite, catHidden);
+            UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
         #endregion
 
         if (DialogueManager.IsConversationActive)
@@ -337,6 +337,8 @@ public class PlayerHolding : MonoBehaviour
         {
             selectedObj = null;
             //HideUI();
+            if (!doorHandle)
+                HideUI(pickUpSprite);
         }
         else if (pickUpObjects.Count == 1)
         {
@@ -385,6 +387,7 @@ public class PlayerHolding : MonoBehaviour
         {
             focusedObj = null;
             //HideUI();
+            HideUI(lookingSprite);
         }
         else if (lookingObjects.Count == 1)
         {

@@ -137,14 +137,14 @@ public class TrashLid : LivableObject
 
         }
 
-        if (interacting)
-        {
-            if (!iconHidden)
-            {
-                playerHolding.lidObj = null;
-                iconHidden = true;
-            }
-        }
+        //if (interacting)
+        //{
+        //    if (!iconHidden)
+        //    {
+        //        playerHolding.lidObj = null;
+        //        iconHidden = true;
+        //    }
+        //}
         if (!fixedPos && !interacting)
         {
             if (transform.eulerAngles.z < 290)

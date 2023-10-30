@@ -117,11 +117,11 @@ public class FixedCameraObject : LivableObject
                     playerHolding.clickableObj = null;
                     iconHidden = true;
                 }
-                //else if (isPizzaBox)
-                //{
-                //    playerHolding.lidObj = null;
-                //    iconHidden = true;
-                //}
+                else if (isPizzaBox)
+                {
+                    playerHolding.lidObj = null;
+                    iconHidden = true;
+                }
                 else if (gameObject.name.Contains("catbox"))
                 {
                     playerHolding.catboxObj = null;

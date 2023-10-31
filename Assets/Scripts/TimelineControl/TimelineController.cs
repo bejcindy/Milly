@@ -6,6 +6,8 @@ public class TimelineController : MonoBehaviour
 {
     public GameObject hallwayCutColored;
     public GameObject hallwayCutMono;
+    public GameObject skyCut;
+    public GameObject entranceCut;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,14 @@ public class TimelineController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             hallwayCutMono.SetActive(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            skyCut.SetActive(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            entranceCut.SetActive(true);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class TimelineController : MonoBehaviour
 {
@@ -24,19 +25,48 @@ public class TimelineController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            hallwayCutColored.SetActive(true);
+            if(!hallwayCutColored.activeSelf)
+                hallwayCutColored.SetActive(true);
+            else
+            {
+                hallwayCutColored.GetComponent<PlayableDirector>().Play();
+            }
+            hallwayCutMono.GetComponent<PlayableDirector>().Stop();
+            skyCut.GetComponent<PlayableDirector>().Stop();
+            entranceCut.GetComponent<PlayableDirector>().Stop();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            hallwayCutMono.SetActive(true);
+            if (!hallwayCutMono.activeSelf)
+                hallwayCutMono.SetActive(true);
+            else
+                hallwayCutMono.GetComponent<PlayableDirector>().Play();
+
+            hallwayCutColored.GetComponent<PlayableDirector>().Stop();
+            skyCut.GetComponent<PlayableDirector>().Stop();
+            entranceCut.GetComponent<PlayableDirector>().Stop();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            skyCut.SetActive(true);
+            if (!skyCut.activeSelf)
+                skyCut.SetActive(true);
+            else
+                skyCut.GetComponent<PlayableDirector>().Play();
+
+            hallwayCutColored.GetComponent<PlayableDirector>().Stop();
+            hallwayCutMono.GetComponent<PlayableDirector>().Stop();
+            entranceCut.GetComponent<PlayableDirector>().Stop();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            entranceCut.SetActive(true);
+            if (!entranceCut.activeSelf)
+                entranceCut.SetActive(true);
+            else
+                entranceCut.GetComponent<PlayableDirector>().Play();
+
+            hallwayCutMono.GetComponent<PlayableDirector>().Stop();
+            hallwayCutColored.GetComponent<PlayableDirector>().Stop();
+            skyCut.GetComponent<PlayableDirector>().Stop();
         }
     }
 }

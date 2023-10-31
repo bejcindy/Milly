@@ -8,6 +8,8 @@ public class TableController : MonoBehaviour
     public bool isHolding;
     public bool tableControlOn;
     public PickUpObject[] objects;
+
+    public GameObject[] plates;
     PlayerHolding playerHolding;
     // Start is called before the first frame update
     void Start()
@@ -44,10 +46,17 @@ public class TableController : MonoBehaviour
     {
         if (tableControlOn)
         {
-
+            foreach(GameObject plate in plates)
+            {
+                plate.layer = 17;
+            }
         }
         else
         {
+            foreach (GameObject plate in plates)
+            {
+                plate.layer = 0;
+            }
             playerHolding.ClearPickUp();
         }
     }

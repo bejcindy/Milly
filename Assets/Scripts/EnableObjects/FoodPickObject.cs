@@ -6,6 +6,7 @@ using UnityEngine;
 public class FoodPickObject : MonoBehaviour
 {
     public bool selected;
+    public TableController myTable;
     PlayerLeftHand leftHand;
 
     public Vector3 inChopRot;
@@ -32,6 +33,10 @@ public class FoodPickObject : MonoBehaviour
         {
             gameObject.layer = 9;
             leftHand.selectedFood = this.transform;
+        }
+        else if(myTable.tableControlOn && !picked)
+        {
+            gameObject.layer = 17;
         }
         else if(picked)
         {

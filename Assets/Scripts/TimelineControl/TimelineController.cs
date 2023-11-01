@@ -9,6 +9,8 @@ public class TimelineController : MonoBehaviour
     public GameObject hallwayCutMono;
     public GameObject skyCut;
     public GameObject entranceCut;
+    public GameObject titleCutMono;
+    public GameObject titleCutColored;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,8 @@ public class TimelineController : MonoBehaviour
             hallwayCutMono.GetComponent<PlayableDirector>().Stop();
             skyCut.GetComponent<PlayableDirector>().Stop();
             entranceCut.GetComponent<PlayableDirector>().Stop();
+            titleCutMono.GetComponent<PlayableDirector>().Stop();
+            titleCutColored.GetComponent<PlayableDirector>().Stop();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -45,6 +49,8 @@ public class TimelineController : MonoBehaviour
             hallwayCutColored.GetComponent<PlayableDirector>().Stop();
             skyCut.GetComponent<PlayableDirector>().Stop();
             entranceCut.GetComponent<PlayableDirector>().Stop();
+            titleCutMono.GetComponent<PlayableDirector>().Stop();
+            titleCutColored.GetComponent<PlayableDirector>().Stop();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -56,6 +62,8 @@ public class TimelineController : MonoBehaviour
             hallwayCutColored.GetComponent<PlayableDirector>().Stop();
             hallwayCutMono.GetComponent<PlayableDirector>().Stop();
             entranceCut.GetComponent<PlayableDirector>().Stop();
+            titleCutMono.GetComponent<PlayableDirector>().Stop();
+            titleCutColored.GetComponent<PlayableDirector>().Stop();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
@@ -67,6 +75,33 @@ public class TimelineController : MonoBehaviour
             hallwayCutMono.GetComponent<PlayableDirector>().Stop();
             hallwayCutColored.GetComponent<PlayableDirector>().Stop();
             skyCut.GetComponent<PlayableDirector>().Stop();
+            titleCutMono.GetComponent<PlayableDirector>().Stop();
+            titleCutColored.GetComponent<PlayableDirector>().Stop();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            if(!titleCutColored.activeSelf)
+                titleCutColored.SetActive(true);
+            else
+                titleCutColored.GetComponent<PlayableDirector>().Play();
+            hallwayCutColored.GetComponent<PlayableDirector>().Stop();
+            hallwayCutMono.GetComponent<PlayableDirector>().Stop();
+            skyCut.GetComponent<PlayableDirector>().Stop();
+            entranceCut.GetComponent<PlayableDirector>().Stop();
+            titleCutMono.GetComponent<PlayableDirector>().Stop();
+        }
+        else if (Input.GetKey(KeyCode.Alpha6))
+        {
+            if (!titleCutMono.activeSelf)
+                titleCutMono.SetActive(true);
+            else
+                titleCutMono.GetComponent<PlayableDirector>().Play();
+
+            hallwayCutColored.GetComponent<PlayableDirector>().Stop();
+            hallwayCutMono.GetComponent<PlayableDirector>().Stop();
+            skyCut.GetComponent<PlayableDirector>().Stop();
+            entranceCut.GetComponent<PlayableDirector>().Stop();
+            titleCutColored.GetComponent<PlayableDirector>().Stop();
         }
     }
 }

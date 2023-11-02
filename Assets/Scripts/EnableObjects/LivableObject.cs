@@ -178,8 +178,6 @@ public class LivableObject : MonoBehaviour
     bool fadeOut;
     protected virtual void TurnOnColor(Material material)
     {
-        
-
         if (matColorVal > 0)
         {
             matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
@@ -214,6 +212,7 @@ public class LivableObject : MonoBehaviour
     {
         activated = true;
     }
+
 
     void FadeOutFilter()
     {

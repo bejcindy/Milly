@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using Cinemachine;
 
 public class Xixi : NPCControl
 {
     public EventReference catMeowSF;
+    public CinemachineVirtualCamera catCam;
     protected override void Start()
     {
         base.Start();
@@ -26,27 +28,45 @@ public class Xixi : NPCControl
 
     public void XixiAction3()
     {
-        noTalkStage = true;
-        noTalkInWalk = false;
+        GetComponent<BoxCollider>().enabled = true;
+        noTalkInWalk = true;
     }
     public void Meow()
     {
         if (!catMeowSF.IsNull)
             RuntimeManager.PlayOneShot(catMeowSF, transform.position);
     }
-    void OnConversationEnd(Transform other)
+
+    protected override void OnConversationStart(Transform other)
     {
+        base.OnConversationStart(other);
+        catCam.m_Priority = 10;
+    }
+    protected override void OnConversationEnd(Transform other)
+    {
+        catCam.m_Priority = 9;
         inConversation = false;
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
         currentDialogue.gameObject.SetActive(false);
         noTalkInWalk = true;
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     public void ChangeIntialActivate()
     {
         initialActivated = true;
         ChangeLayer(17);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (!npcActivated)
+                npcActivated = true;
+            StartTalking();
+        }
     }
 
 

@@ -122,16 +122,20 @@ public class LookingObject : LivableObject
 
     void ActivateAll()
     {
-        foreach(GameObject obj in sameTypePosters)
+        if(sameTypePosters.Length > 0)
         {
-            if (obj.GetComponent<LookingObject>())
+            foreach (GameObject obj in sameTypePosters)
             {
-                LookingObject looking = obj.GetComponent<LookingObject>();
-                looking.posterLinkAct = true;
-                looking.TurnOnColor(looking.mat);
-            }
+                if (obj.GetComponent<LookingObject>())
+                {
+                    LookingObject looking = obj.GetComponent<LookingObject>();
+                    looking.posterLinkAct = true;
+                    looking.TurnOnColor(looking.mat);
+                }
 
+            }
         }
+
     }
 
 }

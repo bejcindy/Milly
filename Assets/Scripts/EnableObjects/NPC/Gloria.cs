@@ -14,5 +14,12 @@ public class Gloria : NPCControl
      
     public void GloriaAction1()
     {
+        stopIdleAfterConvo = true;
     }
+
+    public void GloriaAction2()
+    {
+        noTalkStage = true;
+    }
+
 }

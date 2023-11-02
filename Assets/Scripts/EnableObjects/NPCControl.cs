@@ -78,6 +78,7 @@ public class NPCControl : MonoBehaviour
     public bool idling;
     public bool idlePaused;
     public bool idleComplete;
+    public bool stopIdleAfterConvo;
 
 
     protected Coroutine lookCoroutine;
@@ -505,7 +506,7 @@ public class NPCControl : MonoBehaviour
             ChangeLayer(0);
     }
 
-    void StartTalking()
+    protected void StartTalking()
     {
         currentDialogue.gameObject.SetActive(true);
     }
@@ -541,7 +542,7 @@ public class NPCControl : MonoBehaviour
     {
 
     }
-    void OnConversationStart(Transform other)
+    protected virtual void OnConversationStart(Transform other)
     {
         inConversation = true;
         if (HasReached(agent) && !noLookInConvo)
@@ -550,20 +551,22 @@ public class NPCControl : MonoBehaviour
                 StopCoroutine(lookCoroutine);
             lookCoroutine = StartCoroutine(RotateTowards(player));
         }
-
-
     }
 
-    void OnConversationEnd(Transform other)
+    protected virtual void OnConversationEnd(Transform other)
     {
         inConversation = false;
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
         inCD = true;
         currentDialogue.gameObject.SetActive(false);
+
         fakeActivated = false;
         talkable = true;
         firstTalked = true;
+
+        if (stopIdleAfterConvo)
+            StopIdle();
     }
 
     public void EndConversation()

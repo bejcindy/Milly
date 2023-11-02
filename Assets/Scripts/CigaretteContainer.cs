@@ -7,6 +7,7 @@ public class CigaretteContainer : MonoBehaviour
 {
     public int cigCounts;
     public Transform player;
+    public Transform handContainer;
     PlayerHolding playerHolding;
     
     public GameObject fullCig;
@@ -35,7 +36,7 @@ public class CigaretteContainer : MonoBehaviour
             if(cigCounts > 0 && !playerHolding.smoking && !playerHolding.fullHand && !playerHolding.atInterior)
             {
                 cigCounts--;
-                GameObject newCig = GameObject.Instantiate(fullCig);
+                GameObject newCig = GameObject.Instantiate(fullCig, handContainer.position, handContainer.rotation, handContainer);
                 newCig.GetComponent<LivableObject>().activated = true;
                 newCig.GetComponent<Rigidbody>().isKinematic = true;
                 newCig.GetComponent<Cigarette>().inHand = true;

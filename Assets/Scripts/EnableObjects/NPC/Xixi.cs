@@ -44,7 +44,6 @@ public class Xixi : NPCControl
     }
     protected override void OnConversationEnd(Transform other)
     {
-        catCam.m_Priority = 9;
         inConversation = false;
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
@@ -57,6 +56,11 @@ public class Xixi : NPCControl
     {
         initialActivated = true;
         ChangeLayer(17);
+    }
+
+    public void ResetXixiCam()
+    {
+        catCam.m_Priority = 9;
     }
 
     private void OnTriggerEnter(Collider other)

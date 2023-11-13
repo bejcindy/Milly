@@ -130,6 +130,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
         else if (currentChop && !currentChop.hasFood && !chopAiming)
         {
+            DataHolder.HideHint(DataHolder.hints.pickFoodHint);
             DataHolder.HideHint(DataHolder.hints.eatHint);
             DataHolder.ShowHint(DataHolder.hints.chopHint);
             chophinted = true;
@@ -138,12 +139,14 @@ public class PlayerLeftHand : MonoBehaviour
         {
             //关其他的
             DataHolder.HideHint(DataHolder.hints.chopHint);
+            DataHolder.HideHint(DataHolder.hints.eatHint);
             DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
             chophinted = true;
         }
         else if (currentChop && currentChop.hasFood)
         {
             DataHolder.HideHint(DataHolder.hints.pickFoodHint);
+            DataHolder.HideHint(DataHolder.hints.chopHint);
             DataHolder.ShowHint(DataHolder.hints.eatHint);
             chophinted = true;
         }

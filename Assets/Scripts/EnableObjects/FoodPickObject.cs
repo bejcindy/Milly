@@ -47,7 +47,7 @@ public class FoodPickObject : MonoBehaviour
                 leftHand.selectedFood = null;
             }
         }
-        else
+        else if (!MainQuestState.firstGloriaTalk)
         {
             gameObject.layer = 0;
         }

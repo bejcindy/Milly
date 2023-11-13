@@ -24,7 +24,7 @@ public class BeerCup : PickUpObject
 
     protected override void Update()
     {
-        if (playerHolding.atTable &&!moving && !StartSequence.noControl && myTable.tableControlOn)
+        if (!moving && myTable.tableControlOn)
         {
             base.Update();
 
@@ -54,24 +54,35 @@ public class BeerCup : PickUpObject
                 if (Input.GetMouseButtonDown(1))
                 {
                     liquid.gameObject.layer = 17;
-                    playerHolding.UnoccupyLeft();
-                    inHand = false;
-                    StartCoroutine(LerpPosition(startingPos, 1f));
-                    StartCoroutine(LerpRotation(startRotation, 1f));
-                    transform.SetParent(null);
+                    PutDownCup();
                 }
             }
         }
-        else
+        else if (!myTable.tableControlOn)
         {
             selected = false;
-            if (activated && MainQuestState.firstGloriaTalk)
-                gameObject.layer = 17;
-            else
+            playerHolding.RemoveInteractable(gameObject);
+            if (inHand)
+                PutDownCup();
+
+            if (!MainQuestState.firstGloriaTalk)
                 gameObject.layer = 0;
+            else
+                gameObject.layer = 17;
         }
 
 
+
+    }
+
+    public void PutDownCup()
+    {
+
+        playerHolding.UnoccupyLeft();
+        inHand = false;
+        StartCoroutine(LerpPosition(startingPos, 1f));
+        StartCoroutine(LerpRotation(startRotation, 1f));
+        transform.SetParent(null);
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)

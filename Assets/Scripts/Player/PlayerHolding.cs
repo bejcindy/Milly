@@ -24,7 +24,7 @@ public class PlayerHolding : MonoBehaviour
     public bool atInterior;
 
 
-    List<GameObject> pickUpObjects;
+    public List<GameObject> pickUpObjects;
     public List<GameObject> lookingObjects;
     public GameObject[] containers;
     public GameObject selectedObj;

@@ -54,6 +54,7 @@ public class Chopsticks : PickUpObject
         else
         {
             selected = false;
+            playerHolding.RemoveInteractable(gameObject);
             if (activated && MainQuestState.firstGloriaTalk)
             {
                 gameObject.layer = 17;

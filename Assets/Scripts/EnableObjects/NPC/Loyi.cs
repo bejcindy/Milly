@@ -5,6 +5,8 @@ using UnityEngine;
 public class Loyi : NPCControl
 {
     public bool overrideLoyi;
+
+    public bool turnChar;
     protected override void Start()
     {
         base.Start();
@@ -27,7 +29,13 @@ public class Loyi : NPCControl
 
     public void LoyiAction1()
     {
-        noLookInConvo = false;
+        noLookInConvo = true;
+        if (!turnChar)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 1f);
+            turnChar = true;
+        }
+        
     }
 
     public void LoyiAction2()

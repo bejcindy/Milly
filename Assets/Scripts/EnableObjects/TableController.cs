@@ -16,13 +16,14 @@ public class TableController : MonoBehaviour
     {
         objects = GetComponentsInChildren<PickUpObject>();
         playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
-        atTable = playerHolding.atTable;
+
         tableControlOn = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        atTable = playerHolding.atTable;
         isHolding = !playerHolding.GetLeftHand();
         if (atTable)
         {
@@ -38,8 +39,21 @@ public class TableController : MonoBehaviour
 
         }
         playerHolding.tableControl = tableControlOn;
-        
 
+        if (StartSequence.noControl)
+            tableControlOn = false;
+
+    }
+
+    public void DeactivateTable()
+    {
+        tableControlOn = false;
+        foreach (GameObject plate in plates)
+        {
+            plate.layer = 0;
+        }
+        playerHolding.ClearPickUp();
+        atTable = false;
     }
 
     void CheckTableControl()
@@ -51,7 +65,7 @@ public class TableController : MonoBehaviour
                 plate.layer = 17;
             }
         }
-        else
+        else if (!MainQuestState.firstGloriaTalk)
         {
             foreach (GameObject plate in plates)
             {

@@ -127,6 +127,11 @@ public class StartSequence : MonoBehaviour
         activateAll = true;
     }
 
+    public void StopStartFade()
+    {
+        activateAll = false;
+    }
+
     public void DeActivateAll()
     {
         noControl = true;

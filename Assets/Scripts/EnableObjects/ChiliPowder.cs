@@ -24,7 +24,7 @@ public class ChiliPowder : PickUpObject
 
     protected override void Update()
     {
-        if (playerHolding.atTable && !powderMoving && !StartSequence.noControl && myTable.tableControlOn)
+        if (!powderMoving && myTable.tableControlOn)
         {
             base.Update();
 
@@ -57,23 +57,33 @@ public class ChiliPowder : PickUpObject
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    playerHolding.UnoccupyLeft();
-                    inHand = false;
-                    StartCoroutine(LerpPosition(startingPos, 1f));
-                    transform.SetParent(null);
+                    PutDownPowder();
                 }
             }
         }
-        else
+        else if (!myTable.tableControlOn)
         {
             selected = false;
-            if (activated && MainQuestState.firstGloriaTalk)
-                gameObject.layer = 17;
-            else
+            playerHolding.RemoveInteractable(gameObject);
+            if (inHand)
+                PutDownPowder();
+
+            if (!MainQuestState.firstGloriaTalk)
                 gameObject.layer = 0;
+            else
+                gameObject.layer = 17;
         }
 
 
+
+    }
+
+    public void PutDownPowder()
+    {
+        playerHolding.UnoccupyLeft();
+        inHand = false;
+        StartCoroutine(LerpPosition(startingPos, 1f));
+        transform.SetParent(null);
     }
 
     public void PlayChiliParticle()

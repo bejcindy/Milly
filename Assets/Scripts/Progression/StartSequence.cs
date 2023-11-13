@@ -28,6 +28,7 @@ public class StartSequence : MonoBehaviour
     {
         groupColorVal = 0;
         livObjects = FindObjectsOfType<LivableObject>();
+        noControl = false;
     }
 
     // Update is called once per frame

@@ -18,6 +18,8 @@ public class PauseMenu : MonoBehaviour
     {
         player = GameObject.Find("Player");
         playerHolding = player.GetComponent<PlayerHolding>();
+        isPaused = false;
+        pauseAfterCD = false;
     }
 
     // Update is called once per frame

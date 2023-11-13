@@ -12,6 +12,12 @@ public class MainQuestState: MonoBehaviour
     public GameObject AkiConfrontation;
     public Chair izakayaHighChair;
 
+    private void Start()
+    {
+        firstGloriaTalk = false;
+        akiConfronted = false;
+        parentsCalled = false;
+    }
 
     public void Update()
     {

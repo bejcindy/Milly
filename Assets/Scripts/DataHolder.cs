@@ -64,6 +64,14 @@ public class DataHolder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //reset public static variables
+        focusing = false;
+        focused = false;
+        currentFocus = null;
+        camBlended = false;
+        camBlendDone = false;
+        canMakeSound = false;
+
         focusCinemachine = GameObject.Find("FocusCinemachine").GetComponent<CinemachineVirtualCamera>();
         playerCinemachine = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
         playerBrain = Camera.main.GetComponent<CinemachineBrain>();
@@ -73,8 +81,6 @@ public class DataHolder : MonoBehaviour
 
         hintPanel = hintPanelPrefab;
         hintPref = hintPrefab;
-        //hintTMP = hintPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        //hintPanel.SetActive(false);
         hints = hintsReference;
         currentHints = new List<string>();
         hintPanels = new List<GameObject>();
@@ -86,10 +92,6 @@ public class DataHolder : MonoBehaviour
         pov = playerCinemachine.GetCinemachineComponent<CinemachinePOV>();
         originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
         originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
-        //focusCinemachine.Priority = playerCinemachine.Priority + 1;
-        //focusCinemachine.gameObject.SetActive(false);
-        canMakeSound = false;
-        
     }
 
     // Update is called once per frame

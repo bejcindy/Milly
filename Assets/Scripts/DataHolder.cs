@@ -139,7 +139,7 @@ public class DataHolder : MonoBehaviour
             focusCinemachine.Priority = playerCinemachine.Priority + 1;
             focusCinemachine.LookAt = currentFocus.transform;
             //Cursor.lockState = CursorLockMode.Locked;
-            playerHolding.enabled = false;
+            playerHolding.looking = true;
             playerMovement.enabled = false;
             playerLeftHand.enabled = false;
             playerCinemachine.LookAt= currentFocus.transform;
@@ -219,7 +219,7 @@ public class DataHolder : MonoBehaviour
                 focused = false;
                 camBlended = false;
                 camBlendDone = false;
-                playerHolding.enabled = true;
+                playerHolding.looking = false ;
                 playerMovement.enabled = true;
                 playerLeftHand.enabled = true;
                 pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;

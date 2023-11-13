@@ -12,7 +12,7 @@ public class PlayerHolding : MonoBehaviour
     public bool fullHand;
     public bool inDialogue;
     public bool throwing;
-
+    public bool looking;
     public bool atContainer;
     public bool atTable;
 
@@ -77,101 +77,111 @@ public class PlayerHolding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetFullHand();
-        ChooseInteractable();
-        ChooseLookable();
+
+        if (!looking)
+        {
+            GetFullHand();
+            ChooseInteractable();
+            ChooseLookable();
 
 
-        #region UI and Hints
-        if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo)
-        {
-            HideUI(null);
-        }
-        if (atTable)
-        {
-            if (!tableControl)
-                FakeHideUI();
+            #region UI and Hints
+            if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo)
+            {
+                HideUI(null);
+            }
+            if (atTable)
+            {
+                if (!tableControl)
+                    FakeHideUI();
+                else
+                    FakeDisplayUI();
+            }
             else
                 FakeDisplayUI();
-        }
-        else
-            FakeDisplayUI();
 
-        if (StartSequence.noControl && !noControlReset)
-        {
-            pickUpObjects.Clear();
-            noControlReset = true;
-        }
-
-
-        atContainer = CheckContainer();
-        
-
-        if (focusedObj != null)
-        {
-            if (!displayedFocusHint)
+            if (StartSequence.noControl && !noControlReset)
             {
-                //Debug.Log("trying");
-                //focusedHint.SetActive(true);
-                DataHolder.ShowHint(DataHolder.hints.lookHint);
-                //displayedFocusHint = true;
-                hintHiden = false;
-                if (focusedObj.GetComponent<LookingObject>().focusingThis)
-                    displayedFocusHint = true;
+                pickUpObjects.Clear();
+                noControlReset = true;
+            }
+
+
+            atContainer = CheckContainer();
+
+
+            if (focusedObj != null)
+            {
+                if (!displayedFocusHint)
+                {
+                    //Debug.Log("trying");
+                    //focusedHint.SetActive(true);
+                    DataHolder.ShowHint(DataHolder.hints.lookHint);
+                    //displayedFocusHint = true;
+                    hintHiden = false;
+                    if (focusedObj.GetComponent<LookingObject>().focusingThis)
+                        displayedFocusHint = true;
+                }
+                else
+                {
+                    DataHolder.HideHint(DataHolder.hints.lookHint);
+                }
             }
             else
             {
-                DataHolder.HideHint(DataHolder.hints.lookHint);
+                //focusedHint.SetActive(false);
+                if (!hintHiden)
+                {
+                    DataHolder.HideHint(DataHolder.hints.lookHint);
+                    hintHiden = true;
+                    displayedFocusHint = false;
+                }
+                //hintDone = true;
             }
-        }
-        else
-        {
-            //focusedHint.SetActive(false);
-            if (!hintHiden)
-            {
-                DataHolder.HideHint(DataHolder.hints.lookHint);
-                hintHiden = true;
-                displayedFocusHint = false;
-            }
-            //hintDone = true;
-        }
 
-        if (doorHandle)
-        {
+            if (doorHandle)
+            {
 
-            if (Input.GetMouseButton(0))
-            {
-                Debug.Log("trying");
-                DisplayUI(doorHandle, grabingSprite);
-                HideUI(pickUpSprite);
+                if (Input.GetMouseButton(0))
+                {
+                    Debug.Log("trying");
+                    DisplayUI(doorHandle, grabingSprite);
+                    HideUI(pickUpSprite);
+                }
+                else if (!doorHandle.GetComponentInParent<Door>().doorMoving)
+                {
+                    DisplayUI(doorHandle, pickUpSprite);
+                    HideUI(grabingSprite);
+                }
+                else
+                {
+                    HideUI(pickUpSprite);
+                    HideUI(grabingSprite);
+                }
+                //if(doorHandle)
+                //    UITriggerdByOtherObj(doorHandle, pickUpSprite, doorHidden);
             }
-            else if (!doorHandle.GetComponentInParent<Door>().doorMoving)
-            {
-                DisplayUI(doorHandle, pickUpSprite);
-                HideUI(grabingSprite);
-            }
-            else
-            {
-                HideUI(pickUpSprite);
-                HideUI(grabingSprite);
-            }
-            //if(doorHandle)
-            //    UITriggerdByOtherObj(doorHandle, pickUpSprite, doorHidden);
-        }
-    //if(kickableObj)
-    UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
-        //if(talkingTo)
+            //if(kickableObj)
+            UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
+            //if(talkingTo)
             UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
-        if(lidObj)
-            UITriggerdByOtherObj(lidObj, pickUpSprite, dragHidden);
-        //if(sitObj)
+            if (lidObj)
+                UITriggerdByOtherObj(lidObj, pickUpSprite, dragHidden);
+            //if(sitObj)
             UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
-        //if (clickableObj)
+            //if (clickableObj)
             UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
-        //if(catboxObj)
+            //if(catboxObj)
             UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
-        #endregion
+            #endregion
 
+            
+
+            if (leftHand.smoking || rightHand.smoking)
+                smoking = true;
+            else
+                smoking = false;
+        }
         if (DialogueManager.IsConversationActive)
         {
             inDialogue = true;
@@ -180,11 +190,6 @@ public class PlayerHolding : MonoBehaviour
         {
             inDialogue = false;
         }
-
-        if (leftHand.smoking || rightHand.smoking)
-            smoking = true;
-        else
-            smoking = false;
     }
 
     #region Interact & Look Related

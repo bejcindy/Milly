@@ -181,7 +181,8 @@ public class LivableObject : MonoBehaviour
         if (matColorVal > 0)
         {
             matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
-            material.SetFloat("_WhiteDegree", matColorVal);
+            if(material.HasFloat("_WhiteDegree"))
+                material.SetFloat("_WhiteDegree", matColorVal);
             if (!played)
             {
                 if (GetComponent<PickUpObject>())

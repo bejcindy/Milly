@@ -33,4 +33,11 @@ public class MainQuestState: MonoBehaviour
     {
         parentsCalled = true;
     }
+
+    public static void ResetVars()
+    {
+        firstGloriaTalk = false;
+        akiConfronted = false;
+        parentsCalled = false;
+    }
 }

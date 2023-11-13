@@ -274,7 +274,7 @@ public class LivableObject : MonoBehaviour
                     pointsInScreen++;
             }
             
-            if (pointsInScreen < 2)
+            if (pointsInScreen < 3)
                 return false;
             
         }

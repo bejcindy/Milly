@@ -82,7 +82,9 @@ public class PlayerHolding : MonoBehaviour
         {
             GetFullHand();
             ChooseInteractable();
-            ChooseLookable();
+
+            if(!inDialogue)
+                ChooseLookable();
 
 
             #region UI and Hints
@@ -413,6 +415,8 @@ public class PlayerHolding : MonoBehaviour
 
     public void ChooseLookable()
     {
+        if (focusedObj == null)
+            HideUI(lookingSprite);
         if(lookingObjects.Count <= 0)
         {
             focusedObj = null;
@@ -434,7 +438,7 @@ public class PlayerHolding : MonoBehaviour
             }
             else
             {
-                    HideUI(lookingSprite);
+                HideUI(lookingSprite);
             }
         }
         else

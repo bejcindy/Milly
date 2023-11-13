@@ -49,7 +49,7 @@ public class LookingObject : LivableObject
             }
             if (!designatedSpot)
             {
-                if (interactable && !playerHolding.inDialogue)
+                if (interactable)
                 {
                     playerHolding.AddLookable(gameObject);
                     if (selected)
@@ -64,8 +64,8 @@ public class LookingObject : LivableObject
                 }
                 else
                 {
-                    activated = false;
                     playerHolding.RemoveLookable(gameObject);
+                    selected = false;
                 }
             }
 

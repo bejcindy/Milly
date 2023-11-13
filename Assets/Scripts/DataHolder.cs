@@ -141,7 +141,7 @@ public class DataHolder : MonoBehaviour
             //Cursor.lockState = CursorLockMode.Locked;
             playerHolding.looking = true;
             playerMovement.enabled = false;
-            playerLeftHand.enabled = false;
+            playerLeftHand.bypassThrow = true;
             playerCinemachine.LookAt= currentFocus.transform;
             pov.m_HorizontalAxis.m_MaxSpeed = 0f;
             pov.m_VerticalAxis.m_MaxSpeed = 0f;
@@ -194,7 +194,7 @@ public class DataHolder : MonoBehaviour
     {
         if (!focusing)
         {
-            focusCinemachine.Priority = 1;
+            focusCinemachine.Priority = 0;
             //focusCinemachine.gameObject.SetActive(false);
             focusCinemachine.LookAt = null;
             //playerCinemachine.gameObject.SetActive(true);
@@ -221,7 +221,7 @@ public class DataHolder : MonoBehaviour
                 camBlendDone = false;
                 playerHolding.looking = false ;
                 playerMovement.enabled = true;
-                playerLeftHand.enabled = true;
+                playerLeftHand.bypassThrow = false;
                 pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
                 pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
                 //playerCinemachine.Follow = originalPlayerCmFollow;
@@ -236,13 +236,6 @@ public class DataHolder : MonoBehaviour
                 dof.focusDistance.value = focusDist;
             }
         }
-        //else
-        //{
-        //    currentFocus.layer = 0;
-        //    currentFocus = null;
-        //}
-            
-
     }
     #endregion
 

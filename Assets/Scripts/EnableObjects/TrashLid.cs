@@ -86,16 +86,20 @@ public class TrashLid : LivableObject
                     //leftHandUI.SetActive(false);
                     activated = true;
                     interacting = true;
-                    playerLeftHand.bypassThrow = true;
+                    if (!playerLeftHand.aiming)
+                        playerLeftHand.bypassThrow = true;
                     if (verticalInput < 0)
                     {
-                        RotateLid(0);
-                        if (!closePlayed && !closeSound.IsNull)
+                        if (!playerLeftHand.aiming)
                         {
-                            openEvent.start();
-                            closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                            openPlayed = false;
-                            closePlayed = true;
+                            RotateLid(0);
+                            if (!closePlayed && !closeSound.IsNull)
+                            {
+                                openEvent.start();
+                                closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                                openPlayed = false;
+                                closePlayed = true;
+                            }
                         }
                     }
                     else if (verticalInput > 0)

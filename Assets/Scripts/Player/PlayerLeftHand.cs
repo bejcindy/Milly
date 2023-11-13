@@ -52,7 +52,7 @@ public class PlayerLeftHand : MonoBehaviour
     public bool aimHintDone, smokingHintDone, drinkHintDone;
     bool chophinted;
     bool canSmoke;
-    bool aiming;
+    public bool aiming;
     #endregion
     // Start is called before the first frame update
     void Start()

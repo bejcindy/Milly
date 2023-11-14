@@ -23,7 +23,6 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DialogueManager.displaySettings.defaultCanvas.GetComponent<GraphicRaycaster>().enabled = !isPaused;
 
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
@@ -45,7 +44,6 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            DialogueManager.Unpause();
 
             if (!playerHolding.positionFixedWithMouse)
             {
@@ -88,7 +86,6 @@ public class PauseMenu : MonoBehaviour
             
             isPaused = true;
             Time.timeScale = 0.0f;
-            StartCoroutine(ClearSelectionAfterOneFrame());
 
         }
     }

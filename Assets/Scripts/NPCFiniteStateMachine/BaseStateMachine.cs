@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Cinemachine;
 
 namespace NPCFSM
 {
@@ -31,7 +32,12 @@ namespace NPCFSM
         private NPCControl npcControl;
         private NavMeshAgent agent;
         private Coroutine lookCoroutine;
+
+        public CinemachineVirtualCamera charCam;
+        public CinemachineBrain camBrain;
         Vector3 previousPlayerPos = Vector3.zero;
+
+        public float moveWait = 2f;
 
         private void Awake()
         {
@@ -49,6 +55,7 @@ namespace NPCFSM
             npcControl = GetComponent<NPCControl>();
             dialogue = GetComponent<DialogueSystemTrigger>();
             player = GameObject.Find("Player").transform;
+            camBrain = Camera.main.GetComponent<CinemachineBrain>();
             ChangeState(initialState);
         }
 
@@ -340,6 +347,32 @@ namespace NPCFSM
         public void SetMainTalkFalse()
         {
             npcControl.SetMainTalkFalse();
+        }
+
+        public void TurnOnCam()
+        {
+            charCam.m_Priority = 11;
+        }
+
+        public void TurnOffCam()
+        {
+            charCam.m_Priority = 9;
+        }
+
+        public bool CheckBrainBlending()
+        {
+            return camBrain.IsBlending;
+        }
+
+        public void DelayMove()
+        {
+            if (moveWait > 0)
+                moveWait -= Time.deltaTime;
+            else
+            {
+                ChangeState(moveState);
+                moveWait = 2f;
+            }
         }
 
         #endregion

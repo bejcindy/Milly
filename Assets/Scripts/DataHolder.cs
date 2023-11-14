@@ -64,6 +64,14 @@ public class DataHolder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //reset public static variables
+        focusing = false;
+        focused = false;
+        currentFocus = null;
+        camBlended = false;
+        camBlendDone = false;
+        canMakeSound = false;
+
         focusCinemachine = GameObject.Find("FocusCinemachine").GetComponent<CinemachineVirtualCamera>();
         playerCinemachine = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
         playerBrain = Camera.main.GetComponent<CinemachineBrain>();
@@ -73,8 +81,6 @@ public class DataHolder : MonoBehaviour
 
         hintPanel = hintPanelPrefab;
         hintPref = hintPrefab;
-        //hintTMP = hintPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        //hintPanel.SetActive(false);
         hints = hintsReference;
         currentHints = new List<string>();
         hintPanels = new List<GameObject>();
@@ -86,10 +92,6 @@ public class DataHolder : MonoBehaviour
         pov = playerCinemachine.GetCinemachineComponent<CinemachinePOV>();
         originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
         originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
-        //focusCinemachine.Priority = playerCinemachine.Priority + 1;
-        //focusCinemachine.gameObject.SetActive(false);
-        canMakeSound = false;
-        
     }
 
     // Update is called once per frame
@@ -141,7 +143,7 @@ public class DataHolder : MonoBehaviour
             //Cursor.lockState = CursorLockMode.Locked;
             playerHolding.looking = true;
             playerMovement.enabled = false;
-            playerLeftHand.enabled = false;
+            playerLeftHand.bypassThrow = true;
             playerCinemachine.LookAt= currentFocus.transform;
             pov.m_HorizontalAxis.m_MaxSpeed = 0f;
             pov.m_VerticalAxis.m_MaxSpeed = 0f;
@@ -194,7 +196,7 @@ public class DataHolder : MonoBehaviour
     {
         if (!focusing)
         {
-            focusCinemachine.Priority = 1;
+            focusCinemachine.Priority = 0;
             //focusCinemachine.gameObject.SetActive(false);
             focusCinemachine.LookAt = null;
             //playerCinemachine.gameObject.SetActive(true);
@@ -221,7 +223,7 @@ public class DataHolder : MonoBehaviour
                 camBlendDone = false;
                 playerHolding.looking = false ;
                 playerMovement.enabled = true;
-                playerLeftHand.enabled = true;
+                playerLeftHand.bypassThrow = false;
                 pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
                 pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
                 //playerCinemachine.Follow = originalPlayerCmFollow;
@@ -236,13 +238,6 @@ public class DataHolder : MonoBehaviour
                 dof.focusDistance.value = focusDist;
             }
         }
-        //else
-        //{
-        //    currentFocus.layer = 0;
-        //    currentFocus = null;
-        //}
-            
-
     }
     #endregion
 

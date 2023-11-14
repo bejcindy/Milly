@@ -26,6 +26,7 @@ public class PickUpObject : LivableObject
     public bool cigarette;
     public bool freezeRotation;
     public float throwCD;
+    public bool thrownByPlayer;
 
     [Header("Type")]
     public bool npcBound;
@@ -112,6 +113,8 @@ public class PickUpObject : LivableObject
             RuntimeManager.PlayOneShot(collideSound, transform.position);
             canPlayCollideSF = false;
         }
+        if (thrownByPlayer && collision.gameObject != player)
+            thrownByPlayer = false;
     }
 
     void ThrowCoolDown()

@@ -37,7 +37,9 @@ public class CollisionObject : LivableObject
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (tagList.Contains(collision.gameObject.tag))
+        if (gameObject.name.Contains("lantern") && collision.gameObject.name.Contains("roof"))
+            return;
+        if (tagList.Contains(collision.gameObject.tag) || (collision.gameObject.GetComponent<PickUpObject>()&& collision.gameObject.GetComponent<PickUpObject>().thrownByPlayer))
         {
             if (!stairParent)
                 activated = true;
@@ -64,6 +66,7 @@ public class CollisionObject : LivableObject
         }
         if (!collisionSound.IsNull && DataHolder.canMakeSound)
             RuntimeManager.PlayOneShot(collisionSound, transform.position);
+        
     }
 
     private void OnTriggerEnter(Collider other)

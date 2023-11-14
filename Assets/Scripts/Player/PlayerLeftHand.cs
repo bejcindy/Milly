@@ -52,7 +52,7 @@ public class PlayerLeftHand : MonoBehaviour
     public bool aimHintDone, smokingHintDone, drinkHintDone;
     bool chophinted;
     bool canSmoke;
-    bool aiming;
+    public bool aiming;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -130,6 +130,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
         else if (currentChop && !currentChop.hasFood && !chopAiming)
         {
+            DataHolder.HideHint(DataHolder.hints.pickFoodHint);
             DataHolder.HideHint(DataHolder.hints.eatHint);
             DataHolder.ShowHint(DataHolder.hints.chopHint);
             chophinted = true;
@@ -138,12 +139,14 @@ public class PlayerLeftHand : MonoBehaviour
         {
             //关其他的
             DataHolder.HideHint(DataHolder.hints.chopHint);
+            DataHolder.HideHint(DataHolder.hints.eatHint);
             DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
             chophinted = true;
         }
         else if (currentChop && currentChop.hasFood)
         {
             DataHolder.HideHint(DataHolder.hints.pickFoodHint);
+            DataHolder.HideHint(DataHolder.hints.chopHint);
             DataHolder.ShowHint(DataHolder.hints.eatHint);
             chophinted = true;
         }
@@ -390,6 +393,7 @@ public class PlayerLeftHand : MonoBehaviour
                         holdingObj.GetComponent<Rigidbody>().isKinematic = false;
                         holdingObj.GetComponent<PickUpObject>().inHand = false;
                         holdingObj.GetComponent<PickUpObject>().thrown = true;
+                        holdingObj.GetComponent<PickUpObject>().thrownByPlayer = true;
                         holdingObj.SetParent(null);
                         //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward+new Vector3(xOffset,0,0) + new Vector3(0, throwForce.y, 0));
                         if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))

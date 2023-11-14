@@ -218,7 +218,7 @@ public class Door : LivableObject
 
     public void NPCOpenDoor()
     {
-        if (!doorOpen)
+        if (!doorOpen && !doorMoving)
         {
             StartCoroutine(LerpPosition(openPos, 1f));
         }

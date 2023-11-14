@@ -16,6 +16,7 @@ public class StartSequence : MonoBehaviour
 
     public CinemachineVirtualCamera tableCam;
     public CinemachineVirtualCamera shockCam;
+    public CinemachineVirtualCamera loyiCam;
 
     public StudioEventEmitter izaInEmitter;
     bool fadingIzaAmbience;
@@ -94,6 +95,8 @@ public class StartSequence : MonoBehaviour
 
     }
 
+
+
     void TurnOnColor(Material material)
     {
         material.SetFloat("_WhiteDegree", groupColorVal);
@@ -152,11 +155,31 @@ public class StartSequence : MonoBehaviour
         }
         shockCam.m_Priority = 10;
         tableCam.m_Priority = 9;
+        loyiCam.m_Priority = 9;
     }
 
     public void ResetShockCamera()
     {
+
         tableCam.m_Priority = 10;
+        loyiCam.m_Priority = 11;
         shockCam.m_Priority = 0;
+    }
+
+    public void LoyiCamOn()
+    {
+        loyiCam.m_Priority = 10;
+        tableCam.m_Priority = 9;
+    }
+
+    public void AkiCam()
+    {
+        tableCam.m_Priority = 10;
+        loyiCam.m_Priority = 9;
+    }
+
+    public void IzaPrologueFinalCam()
+    {
+        loyiCam.m_Priority = 8;
     }
 }

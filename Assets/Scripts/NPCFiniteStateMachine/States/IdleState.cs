@@ -26,7 +26,7 @@ public class IdleState : State
     
     protected override void OnUpdate()
     {
-        if (machine.CheckIdleFinished())
+        if (machine.GetMainTalkTrue() || machine.CheckIdleFinished())
         {
             if (!machine.CheckPathFinished())
             {
@@ -41,7 +41,7 @@ public class IdleState : State
         else
         {
             machine.InvokeIdleFunction();
-            if (machine.CheckInConversation())
+            if (machine.CheckInConversation() && !machine.GetMainTalkTrue())
             {
                 machine.ChangeState(machine.talkState);
             }

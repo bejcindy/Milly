@@ -8,6 +8,8 @@ public class Xixi : NPCControl
 {
     public EventReference catMeowSF;
     public CinemachineVirtualCamera catCam;
+
+    float waitTime = 3f;
     protected override void Start()
     {
         base.Start();
@@ -18,6 +20,13 @@ public class Xixi : NPCControl
     {
         noTalkStage = true;
         noTalkInWalk = false;
+        waitTime -= Time.deltaTime;
+        if (waitTime < 0)
+        {
+            StopIdle();
+            waitTime = 3f;
+        }
+            
     }
 
     public void XixiAction2()
@@ -69,6 +78,7 @@ public class Xixi : NPCControl
         {
             if (!npcActivated)
                 npcActivated = true;
+            ChangeLayer(17);
             StartTalking();
         }
     }

@@ -187,7 +187,6 @@ namespace NPCFSM
         public void BeginIdling()
         {
             npcControl.idling = true;
-            npcControl.SetWaitTime();
             npcControl.SetWaitAction();
             npcControl.SetDialogue();
         }
@@ -347,6 +346,11 @@ namespace NPCFSM
         public void SetMainTalkFalse()
         {
             npcControl.SetMainTalkFalse();
+        }
+
+        public bool GetMainTalkTrue()
+        {
+            return npcControl.GetMainTalked();
         }
 
         public void TurnOnCam()

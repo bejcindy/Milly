@@ -28,30 +28,36 @@ public class TalkState : State {
 
         if (!machine.CheckInConversation())
         {
+            machine.SetMainTalkTrue();
             machine.TurnOffCam();
-            //NOT FOLLOWING NPC AFTER
-            if (!machine.CheckFollowPlayer())
-            {
-                if (machine.CheckIdleFinished())
-                {
-                    if (!machine.CheckBrainBlending())
-                        machine.DelayMove();
-                }
+            machine.StopIdling();
+            if (!machine.CheckBrainBlending())
+                machine.DelayMove();
 
-                else
-                {
-                    machine.ChangeState(machine.idleState);
-                }
 
-            }
-            //FOLLOWING NPC AFTER
-            else
-            {
-                machine.StopIdling();
-                if (!machine.CheckPlayerInVincinity())
-                    machine.ChangeState(machine.moveState);
+            ////NOT FOLLOWING NPC AFTER
+            //if (!machine.CheckFollowPlayer())
+            //{
+            //    if (machine.CheckIdleFinished())
+            //    {
+            //        if (!machine.CheckBrainBlending())
+            //            machine.DelayMove();
+            //    }
 
-            }
+            //    else
+            //    {
+            //        machine.ChangeState(machine.idleState);
+            //    }
+
+            //}
+            ////FOLLOWING NPC AFTER
+            //else
+            //{
+            //    machine.StopIdling();
+            //    if (!machine.CheckPlayerInVincinity())
+            //        machine.ChangeState(machine.moveState);
+
+            //}
 
         }
 

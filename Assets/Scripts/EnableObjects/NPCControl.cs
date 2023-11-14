@@ -54,7 +54,6 @@ public class NPCControl : MonoBehaviour
     [Header("[Route Control]")]
     public Transform[] destinations;
     public Component[] destObjects;
-    public float[] waitTimes;
     public bool[] destSpecialAnim;
     protected Transform dialogueHolder;
 
@@ -117,8 +116,7 @@ public class NPCControl : MonoBehaviour
         //        bone = child.gameObject;
         //}
 
-        if (initialActivated)
-            ChangeLayer(17);
+
         fadeInterval = 5;
     }
 
@@ -131,13 +129,13 @@ public class NPCControl : MonoBehaviour
 
         CheckNPCActivation();
         CheckTalkCD();
-        CheckIdle();
+        //CheckIdle();
 
         if (!mainNPC)
         {
             if (npcActivated)
             {
-                ChangeLayer(17);
+                //ChangeLayer(17);
                 if (matColorVal > 0f)
                 {
                     if (OnActivateEvent != null)
@@ -153,7 +151,6 @@ public class NPCControl : MonoBehaviour
 
             if (fakeActivated)
             {
-                ChangeLayer(17);
                 if (matColorVal > 0f)
                 {
                     ActivateAll(npcMesh);
@@ -163,7 +160,6 @@ public class NPCControl : MonoBehaviour
             }
             else if(hasFakeActivate && !fakeActivated && !npcActivated && !initialActivated)
             {
-                ChangeLayer(0);
                 DeactivateAll(npcMesh);
 
             }
@@ -172,34 +168,29 @@ public class NPCControl : MonoBehaviour
 
         if (interactable)
         {
-            if (!mainNPC)
+            if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk && !playerHolding.inDialogue)
             {
-                if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk)
-                {
-                    CheckTriggerConversation();
-                }
+                CheckTriggerConversation();
+            }
 
-            }
-            else
-            {
-                if ((!StartSequence.noControl || overrideNoControl) && !inCutscene)
-                    CheckTriggerConversation();
-            }
         }
-        else
+        else if(!inConversation)
         {
-            if (npcActivated || initialActivated || onHoldChar)
-            {
-                if(npcMesh.gameObject.layer != 17)
-                    ChangeLayer(17);
-            }
-            else
-            {
-                if (npcMesh.gameObject.layer != 0)
-                    ChangeLayer(0);
-            }
+            ChangeLayer(0);
         }
-
+        //else
+        //{
+        //    if (npcActivated || initialActivated || onHoldChar)
+        //    {
+        //        if(npcMesh.gameObject.layer != 17)
+        //            ChangeLayer(17);
+        //    }
+        //    else
+        //    {
+        //        if (npcMesh.gameObject.layer != 0)
+        //            ChangeLayer(0);
+        //    }
+        //}
 
 
 
@@ -433,6 +424,7 @@ public class NPCControl : MonoBehaviour
                 iconHidden = true;
             }
         }
+
         npcMesh.gameObject.layer = layerNumber;
         var children = npcMesh.GetComponentsInChildren<Transform>();
         foreach (var child in children)
@@ -465,45 +457,37 @@ public class NPCControl : MonoBehaviour
     {
         string reTriggerName = "NPC_" + gameObject.name + "_Other_Interacted";
 
-        //in distance with player and player not already in conversation
-        if (interactable && !playerHolding.inDialogue)
+        //check npc conditions to trigger conversation
+        if (talkable && !noTalkStage && !inCD && !inConversation)
         {
-            //check npc conditions to trigger conversation
-            if (talkable && !noTalkStage && !inCD && !inConversation)
+            //if npc in idle states are already talked once 
+            if (!DialogueLua.GetVariable(reTriggerName).asBool)
             {
-                //if npc in idle states are already talked once 
-                if (!DialogueLua.GetVariable(reTriggerName).asBool)
+                //move player to interactable layer
+                ChangeLayer(9);
+
+                //check player interaction command
+                if (Input.GetMouseButtonDown(0))
                 {
-                    //move player to interactable layer
-                    ChangeLayer(9);
-
-                    //check player interaction command
-                    if (Input.GetMouseButtonDown(0))
+                    ChangeLayer(17);
+                    if (!questTriggered)
                     {
-                        if (!questTriggered)
-                        {
-                            if (!npcActivated)
-                                npcActivated = true;
-                        }
-                        else if (questAccepted)
-                        {
-                            if (!npcActivated)
-                                npcActivated = true;
-                        }
-
-                        StartTalking();
+                        if (!npcActivated)
+                            npcActivated = true;
                     }
+                    else if (questAccepted)
+                    {
+                        if (!npcActivated)
+                            npcActivated = true;
+                    }
+
+                    StartTalking();
                 }
             }
-            else if (npcActivated || onHoldChar)
-                ChangeLayer(17);
-            else
-                ChangeLayer(0);
         }
-        else if (npcActivated || initialActivated || onHoldChar)
+        else if (inConversation)
             ChangeLayer(17);
-        else
-            ChangeLayer(0);
+        
     }
 
     protected void StartTalking()
@@ -545,6 +529,7 @@ public class NPCControl : MonoBehaviour
     protected virtual void OnConversationStart(Transform other)
     {
         inConversation = true;
+        ChangeLayer(17);
         if (HasReached(agent) && !noLookInConvo)
         {
             if (lookCoroutine != null)
@@ -633,10 +618,6 @@ public class NPCControl : MonoBehaviour
         return destinations;
     }
 
-    public void SetWaitTime()
-    {
-        idleTime =  waitTimes[_counter - 1];
-    }
 
     public void SetWaitAction()
     {
@@ -665,6 +646,12 @@ public class NPCControl : MonoBehaviour
     public void SetMainTalkFalse() {
         string seTalkName = "NPC/" + gameObject.name + "/Main_Talked";
         DialogueLua.SetVariable(seTalkName, false);
+    }
+
+    public bool GetMainTalked()
+    {
+        string seTalkName = "NPC/" + gameObject.name + "/Main_Talked";
+        return DialogueLua.GetVariable(seTalkName).asBool;
     }
 
     public bool GetSpecialIdleAnim()

@@ -71,6 +71,7 @@ public class TalkState : State {
     protected override void OnExit()
     {
         machine.TurnOffCam();
+        machine.ResetCam();
         //machine.ResetAnimTrigger("Stop");
 
     }

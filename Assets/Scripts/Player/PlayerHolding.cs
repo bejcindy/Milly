@@ -40,6 +40,8 @@ public class PlayerHolding : MonoBehaviour
     public ContainerObject currentContainer;
     public bool tableControl;
 
+    PlayerMovement pm;
+
     #region For Object Tracking UI
     public Image objectUI,objectUI2;
     public Sprite pickUpSprite,grabingSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite,catSprite;
@@ -64,6 +66,7 @@ public class PlayerHolding : MonoBehaviour
     {
         leftHand = GetComponent<PlayerLeftHand>();
         rightHand = GetComponent<PlayerRightHand>();
+        pm = GetComponent<PlayerMovement>();
         pickUpObjects = new List<GameObject>();
         lookingObjects = new List<GameObject>();
         focusedHint = GameObject.Find("QTEPanel").transform.GetChild(3).gameObject;
@@ -191,6 +194,15 @@ public class PlayerHolding : MonoBehaviour
         else
         {
             inDialogue = false;
+        }
+
+        if (inDialogue)
+        {
+            pm.enabled = false;
+        }
+        else
+        {
+            pm.enabled = true;
         }
     }
 

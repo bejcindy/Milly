@@ -31,9 +31,12 @@ namespace NPCFSM
         private DialogueSystemTrigger dialogue;
         private NPCControl npcControl;
         private NavMeshAgent agent;
+        private NavMeshObstacle navObstacle;
         private Coroutine lookCoroutine;
 
         public CinemachineVirtualCamera charCam;
+        public float camXAxis;
+        public float camYAxis;
         public CinemachineBrain camBrain;
         Vector3 previousPlayerPos = Vector3.zero;
 
@@ -57,6 +60,8 @@ namespace NPCFSM
             player = GameObject.Find("Player").transform;
             camBrain = Camera.main.GetComponent<CinemachineBrain>();
             ChangeState(initialState);
+            camXAxis = charCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value;
+            camYAxis = charCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value;
         }
 
         private void Update()
@@ -366,6 +371,12 @@ namespace NPCFSM
         public bool CheckBrainBlending()
         {
             return camBrain.IsBlending;
+        }
+
+        public void ResetCam()
+        {
+            charCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = camYAxis;
+            charCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = camXAxis;
         }
 
         public void DelayMove()

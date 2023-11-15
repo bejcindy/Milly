@@ -15,17 +15,18 @@ public class Kelvin : NPCControl
 
     public void KelvinAction1()
     {
-        noLookInConvo = true;
+
     }
 
     public void KelvinAction2()
     {
-        noLookInConvo = true;
+
     }
 
     public void KelvinAction3()
     {
         noTalkStage = true;
+        gameObject.SetActive(false);
     }
 
 

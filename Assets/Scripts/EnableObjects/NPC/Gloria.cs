@@ -20,6 +20,7 @@ public class Gloria : NPCControl
     public void GloriaAction2()
     {
         noTalkStage = true;
+        gameObject.SetActive(false);
     }
 
 }

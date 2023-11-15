@@ -24,13 +24,13 @@ public class Felix : NPCControl
     }
     public void FelixAction1()
     {
-        noLookInConvo = true;
 
     }
 
     public void FelixAction2()
     {
         noTalkStage = true;
+        gameObject.SetActive(false);
     }
 
     public void FelixStandUp()
@@ -45,6 +45,7 @@ public class Felix : NPCControl
 
     public void ChangeFelixQuestDialogue()
     {
+        firstTalked = false;
         currentDialogue = dialogueHolder.GetChild(1);
         machine.SetMainTalkFalse();
         string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";

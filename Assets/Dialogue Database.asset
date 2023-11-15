@@ -23815,12 +23815,6 @@ MonoBehaviour:
       - originConversationID: 24
         originDialogueID: 0
         destinationConversationID: 24
-        destinationDialogueID: 2
-        isConnector: 0
-        priority: 2
-      - originConversationID: 24
-        originDialogueID: 0
-        destinationConversationID: 24
         destinationDialogueID: 20
         isConnector: 0
         priority: 2
@@ -23879,16 +23873,15 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Felix_Talk_State"] == "Uninitiated" and (Variable["NPC_Felix_ActivateType"]
-        == "CanActivate")
+      conditionsString: Variable["NPC_Felix_Talk_State"] == "Uninitiated"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 275.46954
-        y: 62.408585
+        x: 272.06042
+        y: 143.09038
         width: 160
         height: 30
     - id: 2
@@ -23935,8 +23928,7 @@ MonoBehaviour:
         destinationDialogueID: 3
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Felix_Talk_State"] == "Uninitiated" and (Variable["NPC_Felix_ActivateType"]
-        == "Normal")
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -23999,7 +23991,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 269.21957
-        y: 268.65857
+        y: 267.52222
         width: 160
         height: 30
     - id: 4

@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using PixelCrushers.DialogueSystem;
 
 public class Chair : FixedCameraObject
 {
     [SerializeField]
-    
     bool stand, sit;
+
+    protected override void Start()
+    {
+        base.Start();
+        dialogue = GetComponent<DialogueSystemTrigger>();
+    }
     protected override void Update()
     {
         base.Update();

@@ -158,7 +158,7 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void DetectInteractable()
     {
-            if (Vector3.Distance(transform.position, player.position) <= minDist)
+            if (Vector3.Distance(transform.position, player.position) <= minDist || Vector3.Distance(transform.position, Camera.main.transform.position) <= minDist)
             {
                 if (isVisible)
                     interactable = true;

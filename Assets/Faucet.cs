@@ -7,6 +7,7 @@ public class Faucet : LivableObject
 {
 
     public Animator faucetWater;
+    public ParticleSystem water;
     Animator faucetHandleAnim;
     public bool waterOn;
     public bool controlCD;
@@ -49,6 +50,7 @@ public class Faucet : LivableObject
                 if (waterOn)
                 {
                     faucetWater.SetTrigger("Off");
+                    water.Stop();
                     faucetHandleAnim.SetTrigger("Off");
                     waterOn = false;
                     waterEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -58,6 +60,7 @@ public class Faucet : LivableObject
                 else
                 {
                     faucetWater.SetTrigger("On");
+                    water.Play();
                     faucetHandleAnim.SetTrigger("On");
                     waterOn = true;
                     waterEvent.start();

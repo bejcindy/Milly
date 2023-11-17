@@ -8,34 +8,46 @@ public class Toilet : FixedCameraObject
     public bool toiletUsed;
     public int useCount;
 
+    bool addCount;
+    bool diaDone;
     float useTime;
     DialogueSystemTrigger toiletDialogue;
 
     protected override void Update()
     {
         base.Update();
-        if(isInteracting)
+        if (isInteracting)
+        {
+            if (!addCount)
+                AddCount();
             CheckDialogue();
+        }
+
         else if(useCount == 2)
         {
+            addCount = false;
             this.enabled = false;
+        }
+        else
+        {
+            addCount = false;
         }
     }
 
     public void AddCount()
     {
+        addCount = true;
         useCount++;
         DialogueLua.SetVariable("Bathroom/ToiletCount", useCount);
+        diaDone = false;
     }
 
     public void CheckDialogue()
     {
-        useTime += Time.deltaTime;
-        if (useTime >= 5f)
+        if (!diaDone)
         {
-            useTime = 0;
             DialogueManager.StartConversation("Bathroom/Toilet");
-            StartCoroutine(UnfixPlayer());
+            diaDone = true;
         }
     }
 }

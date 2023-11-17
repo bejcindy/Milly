@@ -50,4 +50,9 @@ public class Toilet : FixedCameraObject
             diaDone = true;
         }
     }
+
+    private void OnDisable()
+    {
+        interactable = false;
+    }
 }

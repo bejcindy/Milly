@@ -47,7 +47,7 @@ public class Lid : LivableObject
             gameObject.layer = 0;
         }
 
-        if (!lidOpen)
+        if (!lidOpen || lidMoving)
         {
             if(controlledContainer != null)
             {

@@ -32,7 +32,11 @@ public class Door : LivableObject
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
         if (slidingDoor)
+        {
             closedPos = door.localPosition;
+            enabled = false;
+        }
+
         else
             closedPos = door.localEulerAngles;
         

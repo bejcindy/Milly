@@ -196,14 +196,7 @@ public class PlayerHolding : MonoBehaviour
             inDialogue = false;
         }
 
-        if (inDialogue)
-        {
-            pm.enabled = false;
-        }
-        else
-        {
-            pm.enabled = true;
-        }
+
     }
 
     #region Interact & Look Related

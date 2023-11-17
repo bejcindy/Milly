@@ -22,6 +22,9 @@ public class Door : LivableObject
     public Collider doorHandleCollider;
     public EventReference doorMoveEvent;
 
+    public EventReference doorOpenEvent;
+    public EventReference doorCloseEvent;
+
     bool playedWithDoor;
 
     protected override void Start()
@@ -262,6 +265,11 @@ public class Door : LivableObject
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)
     {
+        if (!doorMoving)
+        {
+            if (endValue == Quaternion.Euler(openPos))
+                RuntimeManager.PlayOneShot(doorOpenEvent, transform.position);
+        }
         doorMoving = true;
         float time = 0;
         Quaternion startValue = door.localRotation;
@@ -272,6 +280,9 @@ public class Door : LivableObject
             yield return null;
         }
         door.localRotation = endValue;
+        if (endValue == Quaternion.Euler(closedPos))
+            RuntimeManager.PlayOneShot(doorCloseEvent, transform.position);
+
         doorMoving = false;
     }
 }

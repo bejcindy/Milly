@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class Faucet : LivableObject
 {
@@ -11,10 +12,16 @@ public class Faucet : LivableObject
     public bool controlCD;
     public float cdVal = 2f;
 
+    public EventReference waterRunning;
+    FMOD.Studio.EventInstance waterEvent;
+
     protected override void Start()
     {
         base.Start();
         faucetHandleAnim = GetComponent<Animator>();
+        waterEvent = FMODUnity.RuntimeManager.CreateInstance(waterRunning);
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(waterEvent, faucetWater.transform);
+        waterEvent.start();
     }
     protected override void Update()
     {
@@ -44,6 +51,8 @@ public class Faucet : LivableObject
                     faucetWater.SetTrigger("Off");
                     faucetHandleAnim.SetTrigger("Off");
                     waterOn = false;
+                    waterEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
                 }
 
                 else
@@ -51,6 +60,8 @@ public class Faucet : LivableObject
                     faucetWater.SetTrigger("On");
                     faucetHandleAnim.SetTrigger("On");
                     waterOn = true;
+                    waterEvent.start();
+
                 }
             }
         }

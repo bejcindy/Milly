@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
+using PixelCrushers.DialogueSystem;
 
 public class Lid : LivableObject
 {
     public bool lidMoving;
     public bool lidOpen;
+    public int useCount;
     public Vector3 targetRot;
     Quaternion openRotation;
     Quaternion closeRotation;
+    DialogueSystemTrigger lidDialogue;
 
     public LivableObject controlledContainer;
+    public EventReference lidSound;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -56,6 +61,8 @@ public class Lid : LivableObject
                 controlledContainer.enabled = true;
             }
         }
+
+
     }
 
     void LidControl()
@@ -86,6 +93,13 @@ public class Lid : LivableObject
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)
     {
+        if (!lidMoving)
+        {
+            useCount++;
+            if (useCount == 5)
+                DialogueManager.StartConversation("Bathroom/ToiletSeat");
+        }
+
         lidMoving = true;
         float time = 0;
         Quaternion startValue = transform.localRotation;
@@ -95,6 +109,7 @@ public class Lid : LivableObject
             time += Time.deltaTime;
             yield return null;
         }
+        FMODUnity.RuntimeManager.PlayOneShot(lidSound, transform.position);
         transform.localRotation = endValue;
         lidMoving = false;
 
@@ -106,5 +121,6 @@ public class Lid : LivableObject
         {
             lidOpen = false;
         }
+        
     }
 }

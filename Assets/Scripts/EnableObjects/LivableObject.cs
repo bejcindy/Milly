@@ -64,7 +64,7 @@ public class LivableObject : MonoBehaviour
         {
             mat = rend.material;
             mat.EnableKeyword("_WhiteDegree");
-            mat.SetFloat("_WhiteDegree", 1);
+//            mat.SetFloat("_WhiteDegree", 1);
         }
         checkBoundVisible = new bool[8];
         matColorVal = 1;
@@ -134,18 +134,18 @@ public class LivableObject : MonoBehaviour
                     GetComponent<GroupMaster>().activateAll = true;
                 }
 
-                if(!StartSequence.noControl || overrideStartSequence)
-                {
-                    if (gameObject.layer != 17 && gameObject.layer != 18)
-                    {
-                        if (gameObject.layer == 6 || gameObject.layer == 18)
-                        {
-                            gameObject.layer = 18;
-                        }
-                        else
-                            gameObject.layer = 17;
-                    }
-                }
+                //if(!StartSequence.noControl || overrideStartSequence)
+                //{
+                //    if (gameObject.layer != 17 && gameObject.layer != 18)
+                //    {
+                //        if (gameObject.layer == 6 || gameObject.layer == 18)
+                //        {
+                //            gameObject.layer = 18;
+                //        }
+                //        else
+                //            gameObject.layer = 17;
+                //    }
+                //}
 
 
             }

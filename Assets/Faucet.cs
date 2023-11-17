@@ -15,6 +15,8 @@ public class Faucet : LivableObject
 
     public EventReference waterRunning;
     FMOD.Studio.EventInstance waterEvent;
+    PlayerHolding playerHolding;
+    bool setNull;
 
     protected override void Start()
     {
@@ -23,6 +25,7 @@ public class Faucet : LivableObject
         waterEvent = FMODUnity.RuntimeManager.CreateInstance(waterRunning);
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(waterEvent, faucetWater.transform);
         waterEvent.start();
+        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
     }
     protected override void Update()
     {
@@ -34,7 +37,14 @@ public class Faucet : LivableObject
         }
 
         else
+        {
             gameObject.layer = 0;
+            if (!setNull)
+            {
+                playerHolding.clickableObj = null;
+                setNull = true;
+            }
+        }
     }
 
     void FaucetControl()
@@ -43,10 +53,11 @@ public class Faucet : LivableObject
         if (!controlCD)
         {
             gameObject.layer = 9;
+            playerHolding.clickableObj = gameObject;
+            setNull = false;
             if (Input.GetMouseButtonDown(0))
             {
                 controlCD = true;
-
                 if (waterOn)
                 {
                     faucetWater.SetTrigger("Off");
@@ -71,6 +82,11 @@ public class Faucet : LivableObject
         else
         {
             gameObject.layer = 0;
+            if (!setNull)
+            {
+                playerHolding.clickableObj = null;
+                setNull = true;
+            }
             if (cdVal > 0)
                 cdVal -= Time.deltaTime;
             else

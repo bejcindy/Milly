@@ -15,6 +15,7 @@ public class StartGame : MonoBehaviour
     public CinemachineVirtualCamera izakayaStartCam;
 
     public GameObject startFade;
+    public Door door;
 
     float startDelay = 5f;
     bool startCountDown;
@@ -52,6 +53,7 @@ public class StartGame : MonoBehaviour
             izakayaStartCam.m_Priority = 9;
             playerCinemachine.m_Priority = 10;
             playerMovement.enabled = true;
+            door.enabled = true;
 
         }
     }

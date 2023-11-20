@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gloria : NPCControl
 {
-
+    float waitTime = 3f;
     protected override void Start()
     {
         base.Start();
@@ -20,7 +20,19 @@ public class Gloria : NPCControl
     public void GloriaAction2()
     {
         noTalkStage = true;
-        gameObject.SetActive(false);
+        destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
+
+        waitTime -= Time.deltaTime;
+        if (waitTime < 0)
+        {
+            StopIdle();
+            waitTime = 3f;
+        }
+    }
+
+    public void GloriaAction3()
+    {
+        noTalkStage = false;
     }
 
 }

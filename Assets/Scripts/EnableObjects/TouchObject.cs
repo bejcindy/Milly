@@ -11,12 +11,15 @@ public class TouchObject : LivableObject
     public Animator toiletAnim;
     public EventReference flushSound;
     FMOD.Studio.EventInstance flushEvent;
+    PlayerHolding playerHolding;
+    bool setNull;
 
     protected override void Start()
     {
         base.Start();
         flushEvent = FMODUnity.RuntimeManager.CreateInstance(flushSound);
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(flushEvent, toiletAnim.transform);
+        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
     }
     protected override void Update()
     {
@@ -25,11 +28,18 @@ public class TouchObject : LivableObject
         if (interactable && !inCD)
         {
             UseTouchable();
+            playerHolding.clickableObj = gameObject;
+            setNull = false;
         }
         else if(inCD)
         {
             gameObject.layer = 0;
-            if(coolDown > 0)
+            if (!setNull)
+            {
+                playerHolding.clickableObj = null;
+                setNull = true;
+            }
+            if (coolDown > 0)
             {
                 coolDown -= Time.deltaTime;
             }
@@ -42,6 +52,11 @@ public class TouchObject : LivableObject
         else
         {
             gameObject.layer = 0;
+            if (!setNull)
+            {
+                playerHolding.clickableObj = null;
+                setNull = true;
+            }
         }
     }
 

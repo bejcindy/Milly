@@ -71,10 +71,12 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (!inPizzaBox)
             {
-                if (holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
-                    Drink();
-                if (!drinking && !playerHolding.atInterior)
-                    DetectHolding();
+                //if (holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
+                //    Drink();
+                //if (!drinking && !playerHolding.atInterior)
+                //    DetectHolding();
+
+                HoldingAction();
             }
 
             else
@@ -83,38 +85,36 @@ public class PlayerLeftHand : MonoBehaviour
             }
 
 
-            if (holdingObj != null && holdingObj.TryGetComponent<Chopsticks>(out Chopsticks chop))
-            {
-                if (holdingObj.GetComponent<Chopsticks>())
-                {
-                    currentChop = holdingObj.GetComponent<Chopsticks>();
-                    UsingChopsticks();
-                    ChopUIDetect();
-                }
-                else
-                {
-                    currentChop = null;
-                }
-            }
-            if (smoking)
-            {
-                Smoke();
-                if (!smokingHinted)
-                {
-                    DataHolder.HideHint(DataHolder.hints.cigHint);
-                    smokingHinted = true;
-                }
-            }
-            //if (holdingObj)
+            //if (holdingObj != null && holdingObj.TryGetComponent<Chopsticks>(out Chopsticks chop))
             //{
-            //    holdingObj.gameObject.layer = 16;
+            //    if (holdingObj.GetComponent<Chopsticks>())
+            //    {
+            //        currentChop = holdingObj.GetComponent<Chopsticks>();
+            //        UsingChopsticks();
+            //        ChopUIDetect();
+            //    }
+            //    else
+            //    {
+            //        currentChop = null;
+            //    }
             //}
+            //if (smoking)
+            //{
+            //    Smoke();
+            //    if (!smokingHinted)
+            //    {
+            //        DataHolder.HideHint(DataHolder.hints.cigHint);
+            //        smokingHinted = true;
+            //    }
+            //}
+
         }
         else
         {
             inhaling = false;
             drinking = false;
             smoking = false;
+            currentChop = null;
         }
 
 
@@ -196,6 +196,39 @@ public class PlayerLeftHand : MonoBehaviour
             drinkHintDone = true;
         }
         #endregion
+    }
+
+    public void HoldingAction()
+    {
+        PickUpObject pickUp = holdingObj.GetComponent<PickUpObject>();
+        switch (pickUp.objType)
+        {
+            case HandObjectType.DRINK:
+                Drink();
+                if (!drinking && !playerHolding.atInterior)
+                    DetectHolding();
+                break;
+            case HandObjectType.CHOPSTICKS:
+                currentChop = holdingObj.GetComponent<Chopsticks>();
+                UsingChopsticks();
+                ChopUIDetect();
+                break;
+            case HandObjectType.CIGARETTE:
+                Smoke();
+                if (!playerHolding.atInterior)
+                    DetectHolding();
+                if (!smokingHinted)
+                {
+                    DataHolder.HideHint(DataHolder.hints.cigHint);
+                    smokingHinted = true;
+                }
+                break;
+
+            default:
+                if (!drinking && !playerHolding.atInterior)
+                    DetectHolding();
+                break;
+        }
     }
 
 

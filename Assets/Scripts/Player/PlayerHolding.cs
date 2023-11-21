@@ -21,6 +21,7 @@ public class PlayerHolding : MonoBehaviour
 
     public Transform handContainer;
     public Transform chopsticksContainer;
+    public Transform doubleHandContainer;
     public bool atInterior;
 
 
@@ -551,29 +552,56 @@ public class PlayerHolding : MonoBehaviour
         RemoveInteractable(obj.gameObject);
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;
-
-        if (!obj.GetComponent<Chopsticks>())
+        switch (obj.GetComponent<PickUpObject>().objType)
         {
-            obj.SetParent(handContainer);
-            StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+            case HandObjectType.CHOPSTICKS:
+                obj.parent.SetParent(chopsticksContainer);
+                StartCoroutine(LerpPosition(obj.parent, Vector3.zero, 1f));
+                StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(Vector3.zero), 1f));
+                break;
+            case HandObjectType.DOUBLE:
+                obj.SetParent(doubleHandContainer);
+                StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+                break;
+            case HandObjectType.CIGARETTE:
+                obj.SetParent(handContainer);
+                obj.localEulerAngles = new Vector3(0, 160, 0);
+                StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+                leftHand.smoking = true;
+                break;
+            default:
+                obj.SetParent(handContainer);
+                StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+                StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
+                break;
+
         }
 
-        else
-        {
-            obj.parent.SetParent(chopsticksContainer);
-            StartCoroutine(LerpPosition(obj.parent, Vector3.zero, 1f));
-        }
+        //if (!obj.GetComponent<Chopsticks>())
+        //{
+        //    obj.SetParent(handContainer);
+        //    StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+        //}
+
+        //else
+        //{
+        //    obj.parent.SetParent(chopsticksContainer);
+        //    StartCoroutine(LerpPosition(obj.parent, Vector3.zero, 1f));
+        //}
 
 
-        if(!obj.GetComponent<Cigarette>() && !obj.GetComponent<Chopsticks>())
-            StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
-        else if (obj.GetComponent<Chopsticks>())
-            StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(Vector3.zero), 1f));
-        if (obj.GetComponent<PickUpObject>().cigarette)
-        {
-            obj.localEulerAngles = new Vector3(0, 160, 0);
-            leftHand.smoking = true;
-        }
+        //if(!obj.GetComponent<Cigarette>() && !obj.GetComponent<Chopsticks>())
+        //    StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
+        //else if (obj.GetComponent<Chopsticks>())
+        //    StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(Vector3.zero), 1f));
+
+
+        //if (obj.GetComponent<PickUpObject>().cigarette)
+        //{
+        //    obj.localEulerAngles = new Vector3(0, 160, 0);
+        //    leftHand.smoking = true;
+        //}
+
         if (obj.GetComponent<PickUpObject>().freezeRotation)
         {
             obj.localRotation = Quaternion.Euler(0, 0, 0);

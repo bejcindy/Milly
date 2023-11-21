@@ -562,6 +562,8 @@ public class PlayerHolding : MonoBehaviour
             case HandObjectType.DOUBLE:
                 obj.SetParent(doubleHandContainer);
                 StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+                Quaternion objRot = Quaternion.Euler(new Vector3(0, obj.localRotation.y, 0));
+                StartCoroutine(LerpRotation(obj, objRot, 1f));
                 break;
             case HandObjectType.CIGARETTE:
                 obj.SetParent(handContainer);

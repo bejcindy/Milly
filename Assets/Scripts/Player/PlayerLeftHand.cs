@@ -223,6 +223,9 @@ public class PlayerLeftHand : MonoBehaviour
                     smokingHinted = true;
                 }
                 break;
+            case HandObjectType.DOUBLE:
+                DetectDoubleHand();
+                break;
 
             default:
                 if (!drinking && !playerHolding.atInterior)
@@ -393,6 +396,7 @@ public class PlayerLeftHand : MonoBehaviour
         if (handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "HandDrink")
             drinking = false;
     }
+
     public bool bypassThrow;
     private void DetectHolding()
     {
@@ -504,6 +508,25 @@ public class PlayerLeftHand : MonoBehaviour
             throwForce = Vector2.zero;
             aimUI.SetActive(false);
             aimUI.transform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
+    private void DetectDoubleHand()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (!noThrow)
+            {
+                isHolding = false;
+                holdingObj.SetParent(null);
+                Vector3 placeRot = new Vector3(0, holdingObj.transform.localRotation.y, 0);
+                holdingObj.transform.rotation = Quaternion.Euler(placeRot);
+                holdingObj.GetComponent<Rigidbody>().isKinematic = false;
+                holdingObj.GetComponent<PickUpObject>().inHand = false;
+                holdingObj.GetComponent<PickUpObject>().thrown = true;
+                holdingObj.GetComponent<PickUpObject>().thrownByPlayer = true;
+                playerHolding.UnoccupyLeft();
+            }
         }
     }
 

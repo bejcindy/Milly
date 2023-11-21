@@ -35,6 +35,8 @@ public class FixedCameraObject : LivableObject
 
     protected bool iconHidden;
     protected bool isPizzaBox;
+
+    protected bool movingCam;
     public float camXAxisSpeed;
     public float camYAxisSpeed;
     protected override void Start()
@@ -205,7 +207,8 @@ public class FixedCameraObject : LivableObject
 
     protected void PositionPlayer()
     {
-        playerMovement.enabled = false;
+        if(!moveCam)
+            playerMovement.enabled = false;
         playerBody.enabled = false;
         playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
         playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;

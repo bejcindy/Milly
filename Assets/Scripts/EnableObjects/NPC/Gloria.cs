@@ -32,7 +32,14 @@ public class Gloria : NPCControl
 
     public void GloriaAction3()
     {
-        noTalkStage = false;
+        noTalkStage = true;
+        currentDialogue.gameObject.SetActive(true);
+
+    }
+
+    public void GloriaAction4()
+    {
+        
     }
 
 }

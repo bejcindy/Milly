@@ -553,11 +553,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26601011caedcab48ace720f6fe7defa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kickForce: 0
   activateTrigger: {fileID: 0}
   detector: {fileID: 495918105695498000}
   kickHint: {fileID: 5240439598122696002, guid: c4ce596f8615cf14cb177cbe6cd45aa9, type: 3}
   instantiatedHint: {fileID: 0}
   hintPosition: {x: 0, y: 0, z: 0}
+  kickedSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &7638596200539802081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2659,9 +2667,9 @@ MonoBehaviour:
   interactable: 0
   isVisible: 0
   checkVisible: 0
+  tableObj: 0
   minDist: 3
   rend: {fileID: 0}
-  coll: {fileID: 0}
   activated: 0
   firstActivated: 0
   matColorVal: 1
@@ -2672,13 +2680,24 @@ MonoBehaviour:
   visibleDetector: {fileID: 0}
   centerFocused: 0
   noRend: 0
+  overrideStartSequence: 0
   onlyFront: 1
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   tagName: Throwable,Food,CigButt
   tagList: []
   stairParent: 0
   brokenAC: 0
   eventName: 
   assistant: 0
+  collisionSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   containedPos: {x: 0, y: 0.5, z: 0}
   table: 0
 --- !u!114 &4589624555546094044

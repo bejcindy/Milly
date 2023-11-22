@@ -12,26 +12,23 @@ public class PannelController : MonoBehaviour
     public RectTransform CanvasRect;
     public Image pannelBG;
     public RectTransform currentTattoo;
-    public float mouseDragSpeed,scrollSizeSpeed;
+    public float mouseDragSpeed, scrollSizeSpeed;
 
     Image[] childImgs;
-    UILineRendererList[] lines;
+    public UILineRendererList blackLine, greyLine;
 
-    public bool gotPos, noDrag;
-
+    bool gotPos, noDrag, firstActivated;
+    float timer;
 
     private void Awake()
     {
         childImgs = GetComponentsInChildren<Image>();
-        lines = GetComponentsInChildren<UILineRendererList>();
         foreach (Image img in childImgs)
         {
             img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
         }
-        foreach (UILineRendererList line in lines)
-        {
-            line.color = new Color(line.color.r, line.color.g, line.color.b, 0);
-        }
+        blackLine.color = new Color(blackLine.color.r, blackLine.color.g, blackLine.color.b, 0);
+        greyLine.color = new Color(greyLine.color.r, greyLine.color.g, greyLine.color.b, 0);
         pannelBG.color = new Color(pannelBG.color.r, pannelBG.color.g, pannelBG.color.b, 0);
     }
 
@@ -64,12 +61,64 @@ public class PannelController : MonoBehaviour
             else if (!targetObj || gotPos)
             {
                 if (currentTattoo)
+                {
                     currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
-                if (currentTattoo.GetComponent<Image>().color.a == 1 || !currentTattoo)
+                    if (currentTattoo.GetComponent<Image>().color.a == 1)
+                    {
+                        if (greyLine.color.a != 1)
+                            timer += Time.deltaTime;
+                        //Debug.Log(timer);
+                        if (timer > .5f && timer < 2f)
+                        {
+                            pannelBG.color = FadeInColor(pannelBG.color, 1);
+                        }
+                        if (timer > 2f && timer < 3.5f)
+                        {
+                            if (firstActivated)
+                            {
+                                foreach (Image img in childImgs)
+                                {
+                                    if (img.GetComponent<TattooConnection>())
+                                    {
+                                        if (img.GetComponent<TattooConnection>().activated)
+                                            img.color = FadeInColor(img.color, 1);
+                                    }
+                                }
+                                blackLine.color = FadeInColor(blackLine.color, 1);
+                            }
+                            else
+                            {
+                                Debug.Log("here");
+                                foreach (Image img in childImgs)
+                                {
+                                    if (img.GetComponent<TattooConnection>())
+                                    {
+                                        if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
+                                            img.color = FadeInColor(img.color, .5f);
+                                    }
+                                }
+                                greyLine.color = FadeInColor(greyLine.color, 1);
+                            }
+                        }
+                        if (firstActivated && timer > 3.5f)
+                        {
+                            foreach (Image img in childImgs)
+                            {
+                                if (img.GetComponent<TattooConnection>())
+                                {
+                                    if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
+                                        img.color = FadeInColor(img.color, .5f);
+                                }
+                            }
+                            greyLine.color = FadeInColor(greyLine.color, 1);
+                        }
+
+                    }
+                }
+                if (!currentTattoo)
                 {
                     foreach (Image img in childImgs)
                     {
-                        //img.color = FadeInColor(img.color);
                         if (img.GetComponent<TattooConnection>())
                         {
                             if (img.GetComponent<TattooConnection>().activated)
@@ -78,16 +127,16 @@ public class PannelController : MonoBehaviour
                                 img.color = FadeInColor(img.color, .5f);
                         }
                     }
-                    foreach (UILineRendererList line in lines)
-                    {
-                        line.color = FadeInColor(line.color, 1);
-                    }
+
+                    blackLine.color = FadeInColor(blackLine.color, 1);
+                    greyLine.color = FadeInColor(greyLine.color, 1);
                     pannelBG.color = FadeInColor(pannelBG.color, 1);
                 }
             }
-            if (pannelBG.color.a == 1)
+            if (greyLine.color.a == 1)
             {
                 noDrag = false;
+                firstActivated = true;
             }
 
         }
@@ -95,14 +144,13 @@ public class PannelController : MonoBehaviour
         {
             gotPos = false;
             noDrag = true;
+            timer = 0;
             foreach (Image img in childImgs)
             {
                 img.color = FadeOutColor(img.color);
             }
-            foreach (UILineRendererList line in lines)
-            {
-                line.color = FadeOutColor(line.color);
-            }
+            blackLine.color = FadeOutColor(blackLine.color);
+            greyLine.color = FadeOutColor(greyLine.color);
             pannelBG.color = FadeOutColor(pannelBG.color);
         }
 
@@ -116,7 +164,7 @@ public class PannelController : MonoBehaviour
             if (Input.mouseScrollDelta.y != 0)
             {
                 float scrollAmount = Input.mouseScrollDelta.y;
-                transform.localScale = new Vector2(Mathf.Clamp(transform.localScale.x+scrollAmount*scrollSizeSpeed, .5f, 2f), Mathf.Clamp(transform.localScale.y + scrollAmount * scrollSizeSpeed, .5f, 2f));
+                transform.localScale = new Vector2(Mathf.Clamp(transform.localScale.x + scrollAmount * scrollSizeSpeed, .5f, 2f), Mathf.Clamp(transform.localScale.y + scrollAmount * scrollSizeSpeed, .5f, 2f));
             }
         }
     }

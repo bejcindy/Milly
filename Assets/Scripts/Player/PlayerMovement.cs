@@ -95,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         else
             rb.drag = 0;
 
+
         PlayerInput();
         //Debug.DrawRay(lowerRay.transform.position, transform.forward * lowerDetect, Color.red);
         //Debug.DrawRay(upperRay.transform.position, transform.forward * upperDetect, Color.blue);

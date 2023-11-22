@@ -10,8 +10,8 @@ public class ConnectionManager : MonoBehaviour
     List<List<RectTransform>> connections;
     List<RectTransform> connectionList;
     public List<Vector2> positions;
-
     public LineRendererManager LRM;
+    bool[] conditionStorage;
 
     private void Awake()
     {
@@ -67,36 +67,43 @@ public class ConnectionManager : MonoBehaviour
                 }
             }
         }
-
+        conditionStorage = new bool[positions.Count];
     }
 
     List<Vector2> referenceList;
+    List<Vector2> greyRefList;
 
     public void ActivateLines(TattooConnection tattooConnection)
     {
-        
         Vector2 currentPos = tattooConnection.GetComponent<RectTransform>().anchoredPosition;
         referenceList = new List<Vector2>();
-        for (int i = 0; i < positions.Count; i += 2)
+        greyRefList = new List<Vector2>();
+        for(int i = 0; i < connectionList.Count; i++)
         {
-            if (positions[i] == currentPos|| positions[i + 1] == currentPos)
+            if (connectionList[i].GetComponent<TattooConnection>().activated)
+                conditionStorage[i] = true;
+        }
+        for (int i = 0; i < conditionStorage.Length; i += 2)
+        {
+            //if both true, solid black line
+            if (conditionStorage[i] && conditionStorage[i + 1])
             {
                 Vector2 direction = (positions[i + 1] - positions[i]).normalized;
-                LRM.pts.Add(positions[i]+ direction * avoidRadius);
-                LRM.pts.Add(positions[i + 1]- direction * avoidRadius);
-                referenceList.Add(positions[i]);
-                referenceList.Add(positions[i + 1]);
+                referenceList.Add(positions[i] + direction * avoidRadius);
+                referenceList.Add(positions[i + 1] - direction * avoidRadius);
             }
+            //if one is true, grey line
+            else if ((conditionStorage[i] && !conditionStorage[i + 1]) || (!conditionStorage[i] && conditionStorage[i + 1]))
+            {
+                Vector2 direction = (positions[i + 1] - positions[i]).normalized;
+                greyRefList.Add(positions[i] + direction * avoidRadius);
+                greyRefList.Add(positions[i + 1] - direction * avoidRadius);
+            }
+
         }
-        Invoke("ClearList", .5f);
+        LRM.pts = referenceList;
+        LRM.greyPts = greyRefList;
     }
 
-    void ClearList()
-    {
-        foreach(Vector2 v in referenceList)
-        {
-            positions.Remove(v);
-        }
-        referenceList.Clear();
-    }
+
 }

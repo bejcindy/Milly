@@ -12,16 +12,27 @@ public class PannelController : MonoBehaviour
     public RectTransform CanvasRect;
     public Image pannelBG;
     public RectTransform currentTattoo;
+    public float mouseDragSpeed,scrollSizeSpeed;
 
     Image[] childImgs;
-    UILineRendererList lines;
-    bool gotPos,noDrag;
-    
+    UILineRendererList[] lines;
+
+    public bool gotPos, noDrag;
+
 
     private void Awake()
     {
         childImgs = GetComponentsInChildren<Image>();
-        lines = GetComponentInChildren<UILineRendererList>();
+        lines = GetComponentsInChildren<UILineRendererList>();
+        foreach (Image img in childImgs)
+        {
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
+        }
+        foreach (UILineRendererList line in lines)
+        {
+            line.color = new Color(line.color.r, line.color.g, line.color.b, 0);
+        }
+        pannelBG.color = new Color(pannelBG.color.r, pannelBG.color.g, pannelBG.color.b, 0);
     }
 
     // Start is called before the first frame update
@@ -41,18 +52,19 @@ public class PannelController : MonoBehaviour
                 Vector2 WorldObject_ScreenPosition = new Vector2(
                 ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
                 ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-                GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition-currentTattoo.anchoredPosition;
+                GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition - currentTattoo.anchoredPosition;
                 currentTattoo.GetComponent<TattooConnection>().activated = true;
                 foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)
                     relate.GetComponent<TattooConnection>().related = true;
                 GetComponent<ConnectionManager>().ActivateLines(currentTattoo.GetComponent<TattooConnection>());
+                transform.localScale = new Vector2(1, 1);
                 gotPos = true;
                 noDrag = true;
             }
             else if (!targetObj || gotPos)
             {
                 if (currentTattoo)
-                    currentTattoo.GetComponent<Image>().color= FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+                    currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
                 if (currentTattoo.GetComponent<Image>().color.a == 1 || !currentTattoo)
                 {
                     foreach (Image img in childImgs)
@@ -66,28 +78,50 @@ public class PannelController : MonoBehaviour
                                 img.color = FadeInColor(img.color, .5f);
                         }
                     }
-                    lines.color = FadeInColor(lines.color, 1);
+                    foreach (UILineRendererList line in lines)
+                    {
+                        line.color = FadeInColor(line.color, 1);
+                    }
                     pannelBG.color = FadeInColor(pannelBG.color, 1);
                 }
-            }else if (pannelBG.color.a == 1)
+            }
+            if (pannelBG.color.a == 1)
             {
-                
+                noDrag = false;
             }
 
         }
         else
         {
             gotPos = false;
+            noDrag = true;
             foreach (Image img in childImgs)
             {
                 img.color = FadeOutColor(img.color);
             }
-            lines.color = FadeOutColor(lines.color);
+            foreach (UILineRendererList line in lines)
+            {
+                line.color = FadeOutColor(line.color);
+            }
             pannelBG.color = FadeOutColor(pannelBG.color);
+        }
+
+        if (!noDrag)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                Vector2 dragAmount = new Vector2(Input.GetAxis("Mouse X") * mouseDragSpeed, Input.GetAxis("Mouse Y") * mouseDragSpeed);
+                GetComponent<RectTransform>().anchoredPosition += dragAmount;
+            }
+            if (Input.mouseScrollDelta.y != 0)
+            {
+                float scrollAmount = Input.mouseScrollDelta.y;
+                transform.localScale = new Vector2(Mathf.Clamp(transform.localScale.x+scrollAmount*scrollSizeSpeed, .5f, 2f), Mathf.Clamp(transform.localScale.y + scrollAmount * scrollSizeSpeed, .5f, 2f));
+            }
         }
     }
 
-    Color FadeInColor(Color c,float targetAlpha)
+    Color FadeInColor(Color c, float targetAlpha)
     {
 
         if (c.a < targetAlpha)

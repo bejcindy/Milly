@@ -9,12 +9,12 @@ using FMODUnity;
 public enum HandObjectType
 {
     DRINK,
-    FOOD,
     TRASH,
     CIGARETTE,
     DISH,
     CHOPSTICKS,
-    DOUBLE
+    DOUBLE,
+    PLACEMENT
 }
 public class PickUpObject : LivableObject
 {

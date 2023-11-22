@@ -34,6 +34,7 @@ public class PlayerCam : MonoBehaviour
         ////transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         //orientation.rotation = Quaternion.Euler(0, yRotation, 0);
         orientation.forward = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up);
+        transform.forward = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up);
 
     }
 

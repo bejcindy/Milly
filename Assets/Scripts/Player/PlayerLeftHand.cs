@@ -46,6 +46,10 @@ public class PlayerLeftHand : MonoBehaviour
     public bool readyToThrow;
     bool notHoldingAnyThing;
 
+    public Transform groundDetector;
+    public Transform surfaceDetector;
+    public LayerMask groundLayer;
+
 
     #region UI variables
     bool aimHinted, smokingHinted, drinkHinted;
@@ -528,6 +532,11 @@ public class PlayerLeftHand : MonoBehaviour
                 playerHolding.UnoccupyLeft();
             }
         }
+    }
+
+    private void DetectSurface()
+    {
+
     }
 
     private void DetectPizzaHolding()

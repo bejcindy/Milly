@@ -13,7 +13,8 @@ public enum HandObjectType
     TRASH,
     CIGARETTE,
     DISH,
-    CHOPSTICKS
+    CHOPSTICKS,
+    DOUBLE
 }
 public class PickUpObject : LivableObject
 {

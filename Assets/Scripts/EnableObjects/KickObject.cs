@@ -7,6 +7,7 @@ using FMODUnity;
 public class KickObject : MonoBehaviour
 {
     // Start is called before the first frame update
+    public float kickForce;
     Rigidbody rb;
     Transform player;
     public LivableObject activateTrigger;
@@ -70,10 +71,12 @@ public class KickObject : MonoBehaviour
                 Destroy(instantiatedHint);
                 activated = true;
                 //transform.GetChild(0).gameObject.GetComponent<MeshCollider>().enabled = false;
-                transform.GetChild(1).gameObject.GetComponent<Collider>().enabled = false;
+                if(transform.GetChild(1).gameObject.GetComponent<Collider>())
+                    transform.GetChild(1).gameObject.GetComponent<Collider>().enabled = false;
+
                 coll.enabled = true;
                 rb.isKinematic = false;
-                rb.AddForce(Camera.main.transform.forward * 20f, ForceMode.Impulse);
+                rb.AddForce(Camera.main.transform.forward * kickForce, ForceMode.Impulse);
                 if (hinted)
                 {
                     DataHolder.HideHint(DataHolder.hints.kickHint);
@@ -97,7 +100,8 @@ public class KickObject : MonoBehaviour
 
         if (activated)
         {
-            usefulChild.GetComponent<GroupMaster>().activateAll = true;
+            if(usefulChild != null)
+                usefulChild.GetComponent<GroupMaster>().activateAll = true;
             //GetComponent<KickObject>().enabled = false;
 
         }

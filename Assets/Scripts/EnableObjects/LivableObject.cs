@@ -91,7 +91,6 @@ public class LivableObject : MonoBehaviour
                     }
                     else
                         isVisible = false;
-
                 }
                 else
                 {

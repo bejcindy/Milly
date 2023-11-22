@@ -71,10 +71,12 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (!inPizzaBox)
             {
-                if (holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
-                    Drink();
-                if (!drinking && !playerHolding.atInterior)
-                    DetectHolding();
+                //if (holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
+                //    Drink();
+                //if (!drinking && !playerHolding.atInterior)
+                //    DetectHolding();
+
+                HoldingAction();
             }
 
             else
@@ -83,38 +85,36 @@ public class PlayerLeftHand : MonoBehaviour
             }
 
 
-            if (holdingObj != null && holdingObj.TryGetComponent<Chopsticks>(out Chopsticks chop))
-            {
-                if (holdingObj.GetComponent<Chopsticks>())
-                {
-                    currentChop = holdingObj.GetComponent<Chopsticks>();
-                    UsingChopsticks();
-                    ChopUIDetect();
-                }
-                else
-                {
-                    currentChop = null;
-                }
-            }
-            if (smoking)
-            {
-                Smoke();
-                if (!smokingHinted)
-                {
-                    DataHolder.HideHint(DataHolder.hints.cigHint);
-                    smokingHinted = true;
-                }
-            }
-            //if (holdingObj)
+            //if (holdingObj != null && holdingObj.TryGetComponent<Chopsticks>(out Chopsticks chop))
             //{
-            //    holdingObj.gameObject.layer = 16;
+            //    if (holdingObj.GetComponent<Chopsticks>())
+            //    {
+            //        currentChop = holdingObj.GetComponent<Chopsticks>();
+            //        UsingChopsticks();
+            //        ChopUIDetect();
+            //    }
+            //    else
+            //    {
+            //        currentChop = null;
+            //    }
             //}
+            //if (smoking)
+            //{
+            //    Smoke();
+            //    if (!smokingHinted)
+            //    {
+            //        DataHolder.HideHint(DataHolder.hints.cigHint);
+            //        smokingHinted = true;
+            //    }
+            //}
+
         }
         else
         {
             inhaling = false;
             drinking = false;
             smoking = false;
+            currentChop = null;
         }
 
 
@@ -196,6 +196,42 @@ public class PlayerLeftHand : MonoBehaviour
             drinkHintDone = true;
         }
         #endregion
+    }
+
+    public void HoldingAction()
+    {
+        PickUpObject pickUp = holdingObj.GetComponent<PickUpObject>();
+        switch (pickUp.objType)
+        {
+            case HandObjectType.DRINK:
+                Drink();
+                if (!drinking && !playerHolding.atInterior)
+                    DetectHolding();
+                break;
+            case HandObjectType.CHOPSTICKS:
+                currentChop = holdingObj.GetComponent<Chopsticks>();
+                UsingChopsticks();
+                ChopUIDetect();
+                break;
+            case HandObjectType.CIGARETTE:
+                Smoke();
+                if (!playerHolding.atInterior)
+                    DetectHolding();
+                if (!smokingHinted)
+                {
+                    DataHolder.HideHint(DataHolder.hints.cigHint);
+                    smokingHinted = true;
+                }
+                break;
+            case HandObjectType.DOUBLE:
+                DetectDoubleHand();
+                break;
+
+            default:
+                if (!drinking && !playerHolding.atInterior)
+                    DetectHolding();
+                break;
+        }
     }
 
 
@@ -360,6 +396,7 @@ public class PlayerLeftHand : MonoBehaviour
         if (handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "HandDrink")
             drinking = false;
     }
+
     public bool bypassThrow;
     private void DetectHolding()
     {
@@ -471,6 +508,25 @@ public class PlayerLeftHand : MonoBehaviour
             throwForce = Vector2.zero;
             aimUI.SetActive(false);
             aimUI.transform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
+    private void DetectDoubleHand()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (!noThrow)
+            {
+                isHolding = false;
+                holdingObj.SetParent(null);
+                Vector3 placeRot = new Vector3(0, holdingObj.transform.localRotation.y, 0);
+                holdingObj.transform.rotation = Quaternion.Euler(placeRot);
+                holdingObj.GetComponent<Rigidbody>().isKinematic = false;
+                holdingObj.GetComponent<PickUpObject>().inHand = false;
+                holdingObj.GetComponent<PickUpObject>().thrown = true;
+                holdingObj.GetComponent<PickUpObject>().thrownByPlayer = true;
+                playerHolding.UnoccupyLeft();
+            }
         }
     }
 

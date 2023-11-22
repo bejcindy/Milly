@@ -8,15 +8,17 @@ public class LineRendererManager : MonoBehaviour
     public UILineRendererList UILRL;
     //public List<RectTransform> tatts;
     public List<Vector2> pts;
+    public List<Vector2> solidPts;
     // Start is called before the first frame update
     void Start()
     {
-        UILRL.Points = pts;
+        //UILRL.Points = pts;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        UILRL.Points = pts;
+
     }
 }

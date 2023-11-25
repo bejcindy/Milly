@@ -64,7 +64,6 @@ public class LivableObject : MonoBehaviour
         {
             mat = rend.material;
             mat.EnableKeyword("_WhiteDegree");
-//            mat.SetFloat("_WhiteDegree", 1);
         }
         checkBoundVisible = new bool[8];
         matColorVal = 1;

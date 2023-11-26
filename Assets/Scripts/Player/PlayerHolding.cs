@@ -31,7 +31,6 @@ public class PlayerHolding : MonoBehaviour
     public GameObject selectedObj;
     public GameObject focusedObj;
     PlayerLeftHand leftHand;
-    PlayerRightHand rightHand;
 
     public GameObject leftHandUI;
     public GameObject rightHandUI;
@@ -66,7 +65,6 @@ public class PlayerHolding : MonoBehaviour
     void Start()
     {
         leftHand = GetComponent<PlayerLeftHand>();
-        rightHand = GetComponent<PlayerRightHand>();
         pm = GetComponent<PlayerMovement>();
         pickUpObjects = new List<GameObject>();
         lookingObjects = new List<GameObject>();
@@ -135,14 +133,12 @@ public class PlayerHolding : MonoBehaviour
             }
             else
             {
-                //focusedHint.SetActive(false);
                 if (!hintHiden)
                 {
                     DataHolder.HideHint(DataHolder.hints.lookHint);
                     hintHiden = true;
                     displayedFocusHint = false;
                 }
-                //hintDone = true;
             }
 
             if (doorHandle)
@@ -150,7 +146,6 @@ public class PlayerHolding : MonoBehaviour
 
                 if (Input.GetMouseButton(0))
                 {
-                    Debug.Log("trying");
                     DisplayUI(doorHandle, grabingSprite);
                     HideUI(pickUpSprite);
                 }
@@ -164,8 +159,7 @@ public class PlayerHolding : MonoBehaviour
                     HideUI(pickUpSprite);
                     HideUI(grabingSprite);
                 }
-                //if(doorHandle)
-                //    UITriggerdByOtherObj(doorHandle, pickUpSprite, doorHidden);
+
             }
             //if(kickableObj)
             UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
@@ -183,7 +177,7 @@ public class PlayerHolding : MonoBehaviour
 
             
 
-            if (leftHand.smoking || rightHand.smoking)
+            if (leftHand.smoking)
                 smoking = true;
             else
                 smoking = false;
@@ -251,6 +245,7 @@ public class PlayerHolding : MonoBehaviour
         return false;
     }
     #endregion
+
     #region Object-Tracking UI
     void DisplayUI(GameObject trackingObject,Sprite interactionSprite)
     {
@@ -374,7 +369,6 @@ public class PlayerHolding : MonoBehaviour
         if (pickUpObjects.Count <= 0)
         {
             selectedObj = null;
-            //HideUI();
             if (!doorHandle)
                 HideUI(pickUpSprite);
         }
@@ -383,7 +377,6 @@ public class PlayerHolding : MonoBehaviour
             if (selectedObj != pickUpObjects[0] && selectedObj != null)
             {
                 selectedObj.GetComponent<PickUpObject>().selected = false;
-                //HideUI();
             }
             selectedObj = pickUpObjects[0];
             selectedObj.GetComponent<PickUpObject>().selected = true;
@@ -404,7 +397,6 @@ public class PlayerHolding : MonoBehaviour
                     if (selectedObj != null)
                     {
                         selectedObj.GetComponent<PickUpObject>().selected = false;
-                        //HideUI();
                     }
                     minDist = distance;
                     selectedObj = obj;
@@ -426,7 +418,6 @@ public class PlayerHolding : MonoBehaviour
         if(lookingObjects.Count <= 0)
         {
             focusedObj = null;
-            //HideUI();
             HideUI(lookingSprite);
         }
         else if (lookingObjects.Count == 1)
@@ -434,7 +425,6 @@ public class PlayerHolding : MonoBehaviour
             if (focusedObj != lookingObjects[0] && focusedObj != null)
             {
                 focusedObj.GetComponent<LookingObject>().selected = false;
-                //HideUI();
             }
             focusedObj = lookingObjects[0];
             focusedObj.GetComponent<LookingObject>().selected = true;
@@ -462,7 +452,6 @@ public class PlayerHolding : MonoBehaviour
                     if (focusedObj != null)
                     {
                         focusedObj.GetComponent<LookingObject>().selected = false;
-                        //HideUI();
                     }
                     toScreenDist = distance;
                     focusedObj = obj;
@@ -518,29 +507,10 @@ public class PlayerHolding : MonoBehaviour
         return true;
     }
 
-    public bool GetRightHand()
-    {
-        if (rightHand.isHolding)
-        {
-            return false;
-        }
-        rightHand.noThrow = true;
-        return true;
-    }
 
-    public bool GetRightHandSmoking()
-    {
-        if (rightHand.isHolding)
-            return false;
-        if (rightHand.smoking)
-            return false;
-        return true;
-    }
 
     public void GetFullHand()
     {
-        //if (leftHand.isHolding && rightHand.isHolding)
-        //    fullHand = true;
         if (leftHand.isHolding)
             fullHand = true;
         else
@@ -579,30 +549,6 @@ public class PlayerHolding : MonoBehaviour
 
         }
 
-        //if (!obj.GetComponent<Chopsticks>())
-        //{
-        //    obj.SetParent(handContainer);
-        //    StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
-        //}
-
-        //else
-        //{
-        //    obj.parent.SetParent(chopsticksContainer);
-        //    StartCoroutine(LerpPosition(obj.parent, Vector3.zero, 1f));
-        //}
-
-
-        //if(!obj.GetComponent<Cigarette>() && !obj.GetComponent<Chopsticks>())
-        //    StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
-        //else if (obj.GetComponent<Chopsticks>())
-        //    StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(Vector3.zero), 1f));
-
-
-        //if (obj.GetComponent<PickUpObject>().cigarette)
-        //{
-        //    obj.localEulerAngles = new Vector3(0, 160, 0);
-        //    leftHand.smoking = true;
-        //}
 
         if (obj.GetComponent<PickUpObject>().freezeRotation)
         {
@@ -612,24 +558,7 @@ public class PlayerHolding : MonoBehaviour
         pickUpObjects.Clear();
     }
 
-    public void OccupyRight(Transform obj)
-    {
-        RemoveInteractable(obj.gameObject);
-        rightHand.isHolding = true;
-        rightHand.holdingObj = obj;
-        obj.SetParent(Camera.main.transform);
-        obj.localPosition = rightHand.holdingPosition;
-        if (obj.GetComponent<PickUpObject>().cigarette)
-        {
-            obj.localEulerAngles = new Vector3(0, 160, 0);
-            rightHand.smoking = true;
-        }
-        if (obj.GetComponent<PickUpObject>().freezeRotation)
-        {
-            obj.localRotation = Quaternion.Euler(0, 0, 0);
-        }
-        Invoke(nameof(EnableThrowRight), 0.2f);
-    }
+
 
     public void UnoccupyLeft()
     {
@@ -638,22 +567,14 @@ public class PlayerHolding : MonoBehaviour
         leftHand.noThrow = true;
     }
 
-    public void UnoccupyRight()
-    {
-        rightHand.isHolding = false;
-        rightHand.holdingObj = null;
-        rightHand.noThrow = true;
-    }
+
 
     public void EnableThrowLeft()
     {
         leftHand.noThrow = false;
     }
 
-    public void EnableThrowRight()
-    {
-        rightHand.noThrow = false;
-    }
+
     #endregion
 
     private void OnTriggerEnter(Collider other)

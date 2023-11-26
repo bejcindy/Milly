@@ -128,13 +128,6 @@ public class IzakayaDoor : LivableObject
                     dialogue.enabled = true;
                 }
             }
-            else if (playerHolding.GetRightHand())
-            {
-                if (Input.GetMouseButtonDown(1))
-                {
-                    dialogue.enabled = true;
-                }
-            }
         }
         else
         {

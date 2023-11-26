@@ -184,7 +184,6 @@ public class FixedCameraObject : LivableObject
         if (isPizzaBox)
         {
             player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
-            player.GetComponent<PlayerRightHand>().inPizzaBox = true;
         }
 
     }
@@ -230,7 +229,6 @@ public class FixedCameraObject : LivableObject
             if (transform.parent.name.Contains("pizza"))
             {
                 player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
-                player.GetComponent<PlayerRightHand>().inPizzaBox = false;
             }
         }
         if (doubleSided)

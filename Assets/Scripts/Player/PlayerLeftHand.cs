@@ -436,7 +436,7 @@ public class PlayerLeftHand : MonoBehaviour
                         holdingObj.GetComponent<PickUpObject>().thrown = true;
                         holdingObj.GetComponent<PickUpObject>().thrownByPlayer = true;
                         holdingObj.SetParent(null);
-                        //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * Camera.main.transform.forward+new Vector3(xOffset,0,0) + new Vector3(0, throwForce.y, 0));
+
                         if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
                         {
                             isHolding = false;
@@ -444,20 +444,15 @@ public class PlayerLeftHand : MonoBehaviour
                         }
                         else
                         {
-                            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                            //Ray ray = Camera.main.transform.forward;
                             RaycastHit hit;
-                            //if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                             if (Physics.Raycast(transform.position,Camera.main.transform.forward, out hit, Mathf.Infinity,~0, QueryTriggerInteraction.Ignore))
                             {
                                 holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                                //holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - transform.position).normalized);
                                 Debug.Log("hit " + hit.transform.gameObject.name);
                             }
                             else
                             {
                                 holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + Camera.main.transform.forward * 300f - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                                //Debug.Log("didn't hit");
                             }
                             FMODUnity.RuntimeManager.PlayOneShot(holdingObj.GetComponent<PickUpObject>().throwEventName, transform.position);
                         }

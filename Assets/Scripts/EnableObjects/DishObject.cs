@@ -5,7 +5,6 @@ using UnityEngine;
 public class DishObject : LivableObject
 {
     public bool inHand;
-
     PlayerHolding playerHolding;
 
     protected override void Start()
@@ -17,13 +16,10 @@ public class DishObject : LivableObject
     protected override void Update()
     {
         base.Update();
-
         if(interactable && !inHand)
         {
             if (Input.GetMouseButtonDown(0) && playerHolding.GetLeftHand())
-            {
                 inHand = true;
-            }
         }
     }
 }

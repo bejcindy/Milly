@@ -22,6 +22,7 @@ public class ChopsticksHolder : LivableObject
         playerLeftHand = player.GetComponent<PlayerLeftHand>();
         playerHolding = player.GetComponent<PlayerHolding>();
     }
+
     protected override void Update()
     {
         base.Update();
@@ -39,14 +40,10 @@ public class ChopsticksHolder : LivableObject
         else if (activated && MainQuestState.firstGloriaTalk)
             gameObject.layer = 17;
         else
-        {
             gameObject.layer = 0;
-        }
 
-        if ((StartSequence.noControl || !playerHolding.atTable) && !hasChop)
-        {
-            PutChops();
-        }
+        if ((StartSequence.noControl || !playerHolding.atTable) && !hasChop)        
+            PutChops();        
 
         if(myChops != null)
         {
@@ -55,16 +52,12 @@ public class ChopsticksHolder : LivableObject
             else
                 myChops.enabled = true;
         }
-        else
-        {
+        else        
             chopMoving = false;
-        }
-
     } 
 
     public void PutChops()
     {
-
         Chopsticks targetChops = playerLeftHand.GetCurrentChops();
         myChops = targetChops;
         targetChops.inHand = false;
@@ -74,7 +67,6 @@ public class ChopsticksHolder : LivableObject
         playerHolding.UnoccupyLeft();
         playerLeftHand.RemoveCurrentChops();
         hasChop = true;
-
     }
 
     IEnumerator LerpPosition(Transform chops, float duration)

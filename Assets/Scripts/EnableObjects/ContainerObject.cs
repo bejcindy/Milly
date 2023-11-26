@@ -4,30 +4,21 @@ using UnityEngine;
 
 public class ContainerObject : CollisionObject
 {
-    PlayerHolding playerHolding;
     public Vector3 containedPos;
     public bool table;
-
-    protected override void Start()
-    {
-        base.Start();
-        playerHolding = player.GetComponent<PlayerHolding>();
-    }
 
     protected override void Update()
     {
         if(!table)
             base.Update();
-
     }
 
     public bool CheckMatchingObject(GameObject obj)
     {
-        if (tagList.Contains(obj.tag)){
-            Debug.Log("MATCHING TAG!");
+        if (tagList.Contains(obj.tag))
+        {
             return true;
         }
-        Debug.Log("NOT MATCHING TAG");
         return false;
     }
 
@@ -49,8 +40,4 @@ public class ContainerObject : CollisionObject
         obj.GetComponent<Rigidbody>().isKinematic = false;
         activated = true;
     }
-
-
-
-
 }

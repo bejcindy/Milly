@@ -30,16 +30,15 @@ public class CollisionObject : LivableObject
         {
             tagList.Add(tagName);
         }
-
-
     }
 
 
     private void OnCollisionEnter(Collision collision)
     {
+        //stop the annoying collision sound from lanterns bumping into the roof
         if (gameObject.name.Contains("lantern") && collision.gameObject.name.Contains("roof"))
             return;
-        if (tagList.Contains(collision.gameObject.tag) || (collision.gameObject.GetComponent<PickUpObject>()&& collision.gameObject.GetComponent<PickUpObject>().thrownByPlayer))
+        if (tagList.Contains(collision.gameObject.tag) || (collision.gameObject.GetComponent<PickUpObject>() && collision.gameObject.GetComponent<PickUpObject>().thrownByPlayer))
         {
             if (!stairParent)
                 activated = true;
@@ -61,12 +60,9 @@ public class CollisionObject : LivableObject
                 if (GetComponent<DialogueSystemTrigger>())
                     GetComponent<DialogueSystemTrigger>().enabled = true;
             }
-
-
         }
         if (!collisionSound.IsNull && DataHolder.canMakeSound)
             RuntimeManager.PlayOneShot(collisionSound, transform.position);
-        
     }
 
     private void OnTriggerEnter(Collider other)

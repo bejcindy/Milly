@@ -11,13 +11,12 @@ public class FoodPickObject : MonoBehaviour
 
     public Vector3 inChopRot;
     public bool picked;
-    // Start is called before the first frame update
+
     void Start()
     {
         leftHand = GameObject.Find("Player").GetComponent<PlayerLeftHand>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (leftHand.chopAiming)

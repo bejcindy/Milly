@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BuildingGroupController : MonoBehaviour
 {
-    // Start is called before the first frame update
     public bool activateAll;
     public bool groupControl;
     public float groupColorVal;
@@ -12,12 +11,12 @@ public class BuildingGroupController : MonoBehaviour
 
     public BuildingGroupController bgc;
     public BuildingGroupController targetBgc;
+
     void Start()
     {
         groupColorVal = 1;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (activateAll)
@@ -32,7 +31,7 @@ public class BuildingGroupController : MonoBehaviour
                 enabled = false;
             }
 
-            ActivateAll(this.transform);
+            ActivateAll(transform);
 
             if (groupControl)
             {
@@ -55,7 +54,6 @@ public class BuildingGroupController : MonoBehaviour
                 if (mat.GetFloat("_WhiteDegree") >= 0)
                     TurnOnColor(mat);
             }
-
         }
 
         if (obj.GetComponent<LivableObject>() != null)
@@ -76,14 +74,11 @@ public class BuildingGroupController : MonoBehaviour
                     if (childMat.GetFloat("_WhiteDegree") >= 0)
                         TurnOnColor(childMat);
                 }
-
             }
             else
             {
                 ActivateAll(child);
             }
-
-
         }
 
     }

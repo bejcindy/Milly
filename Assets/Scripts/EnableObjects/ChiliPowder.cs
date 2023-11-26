@@ -28,7 +28,7 @@ public class ChiliPowder : PickUpObject
         {
             base.Update();
 
-            if(selected && !powderMoving)
+            if (selected && !powderMoving)
             {
                 gameObject.layer = 9;
             }
@@ -52,9 +52,7 @@ public class ChiliPowder : PickUpObject
                     anim.SetTrigger("Use");
                     if (!powderSound.IsNull)
                         RuntimeManager.PlayOneShot(powderSound, transform.position);
-                    
                 }
-
                 if (Input.GetMouseButtonDown(1))
                 {
                     PutDownPowder();
@@ -73,9 +71,6 @@ public class ChiliPowder : PickUpObject
             else
                 gameObject.layer = 17;
         }
-
-
-
     }
 
     public void PutDownPowder()
@@ -90,7 +85,7 @@ public class ChiliPowder : PickUpObject
     {
         powderParticle.Play();
     }
-    
+
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
         powderMoving = true;

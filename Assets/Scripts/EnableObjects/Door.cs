@@ -13,7 +13,6 @@ public class Door : LivableObject
 
     public bool slidingDoor;
     public bool barDoor;
-    DialogueSystemTrigger barWarning;
 
     public bool playerInFront;
     PlayerHolding playerHolding;
@@ -36,10 +35,8 @@ public class Door : LivableObject
             closedPos = door.localPosition;
             enabled = false;
         }
-
         else
-            closedPos = door.localEulerAngles;
-        
+            closedPos = door.localEulerAngles;        
     }
 
     protected override void Update()
@@ -79,24 +76,16 @@ public class Door : LivableObject
             if (slidingDoor)
             {
                 if (door.localPosition == openPos)
-                {
                     doorOpen = true;
-                }
                 else
-                {
                     doorOpen = false;
-                }
             }
             else
             {
                 if (door.localRotation == Quaternion.Euler(openPos))
-                {
                     doorOpen = true;
-                }
                 else
-                {
                     doorOpen = false;
-                }
             }
         }
         else
@@ -116,16 +105,11 @@ public class Door : LivableObject
             }
             else if (playerHolding.doorHandle == doorHandleCollider.gameObject)
                 playerHolding.doorHandle = null;
-
         }
-
-
-
     }
 
     protected virtual void DoorControl()
     {
-
         if (playerHolding.GetLeftHand())
         {
             if (Input.GetMouseButton(0))
@@ -157,7 +141,6 @@ public class Door : LivableObject
                             if (horizontalInput > 0)
                                 StartCoroutine(LerpPosition(openPos, 1.5f));
                         }
-
                     }
                     else
                     {
@@ -170,11 +153,8 @@ public class Door : LivableObject
                         {
                             if (verticalInput < 0)
                                 StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
-
                         }
-
                     }
-
                 }
                 else
                 {
@@ -189,9 +169,7 @@ public class Door : LivableObject
                         {
                             if (horizontalInput < 0)
                                 StartCoroutine(LerpPosition(closedPos, 1.5f));
-
                         }
-
                     }
                     else
                     {
@@ -205,30 +183,19 @@ public class Door : LivableObject
                             if (verticalInput > 0)
                                 StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
                         }
-
                     }
-
                 }
             }
-
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
+        if (Input.GetMouseButtonUp(0))        
             isInteracting = false;
-        }
-
-
     }
-
-
 
     public void NPCOpenDoor()
     {
-        if (!doorOpen && !doorMoving)
-        {
-            StartCoroutine(LerpPosition(openPos, 1f));
-        }
+        if (!doorOpen && !doorMoving)        
+            StartCoroutine(LerpPosition(openPos, 1f));        
     }
 
     public void CloseDoor()

@@ -15,32 +15,22 @@ public class BarkTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         if (!npcTrigger)
         {
             bark = GetComponent<BarkOnIdle>();
             activateTrigger = GetComponent<LivableObject>();
         }
-
         else
         {
             hitDialogue = GetComponent<DialogueSystemTrigger>();
         }
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Throwable"))
         {
-            if(!npcTrigger)
+            if (!npcTrigger)
             {
                 activateTrigger.activated = true;
                 bark.enabled = true;

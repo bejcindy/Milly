@@ -21,7 +21,7 @@ public class LivableObject : MonoBehaviour
     protected Material mat;
     [SerializeField] protected Renderer rend;
     [SerializeField] public bool activated;
-    [SerializeField] public bool firstActivated; 
+    [SerializeField] public bool firstActivated;
     [SerializeField] protected float matColorVal;
     [SerializeField] protected float fadeInterval;
 
@@ -46,12 +46,6 @@ public class LivableObject : MonoBehaviour
     public UnityEvent OnActivateEvent;
     bool[] checkBoundVisible;
 
-    int originalLayer;
-    bool isGround;
-
-
-
-
     protected virtual void Start()
     {
         player = GameObject.Find("Player").transform;
@@ -64,16 +58,10 @@ public class LivableObject : MonoBehaviour
         {
             mat = rend.material;
             mat.EnableKeyword("_WhiteDegree");
-//            mat.SetFloat("_WhiteDegree", 1);
         }
         checkBoundVisible = new bool[8];
         matColorVal = 1;
         playerCam = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
-        originalLayer = gameObject.layer;
-
-
-        if (gameObject.name.Contains("road") || gameObject.name.Contains("walk"))
-            isGround = true;
     }
 
     protected virtual void Update()
@@ -105,8 +93,6 @@ public class LivableObject : MonoBehaviour
                     FadeOutFilter();
             }
 
-
-            //isVisible = IsInView();
             if (activated)
             {
                 if (!firstActivated)
@@ -121,7 +107,7 @@ public class LivableObject : MonoBehaviour
                         TurnOnColor(mat);
                     }
 
-                    if(OnActivateEvent != null)
+                    if (OnActivateEvent != null)
                     {
                         OnActivateEvent.Invoke();
                     }
@@ -133,6 +119,7 @@ public class LivableObject : MonoBehaviour
                     GetComponent<GroupMaster>().activateAll = true;
                 }
 
+                //change layer related code
                 //if(!StartSequence.noControl || overrideStartSequence)
                 //{
                 //    if (gameObject.layer != 17 && gameObject.layer != 18)
@@ -145,8 +132,6 @@ public class LivableObject : MonoBehaviour
                 //            gameObject.layer = 17;
                 //    }
                 //}
-
-
             }
 
         }
@@ -157,18 +142,17 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void DetectInteractable()
     {
-            if (Vector3.Distance(transform.position, player.position) <= minDist || Vector3.Distance(transform.position, Camera.main.transform.position) <= minDist)
-            {
-                if (isVisible)
-                    interactable = true;
-                else
-                    interactable = false;
-            }
+        if (Vector3.Distance(transform.position, player.position) <= minDist || Vector3.Distance(transform.position, Camera.main.transform.position) <= minDist)
+        {
+            if (isVisible)
+                interactable = true;
             else
-            {
                 interactable = false;
-            }
-        
+        }
+        else
+        {
+            interactable = false;
+        }
     }
 
     FMOD.Studio.EventInstance snapshot;
@@ -180,8 +164,9 @@ public class LivableObject : MonoBehaviour
         if (matColorVal > 0)
         {
             matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
-            if(material.HasFloat("_WhiteDegree"))
+            if (material.HasFloat("_WhiteDegree"))
                 material.SetFloat("_WhiteDegree", matColorVal);
+            //Audio Related Stuff
             if (!played)
             {
                 if (GetComponent<PickUpObject>())
@@ -204,7 +189,6 @@ public class LivableObject : MonoBehaviour
             firstActivated = true;
             if (specialEffect != null)
                 specialEffect.SetActive(true);
-            
         }
     }
 
@@ -216,7 +200,6 @@ public class LivableObject : MonoBehaviour
 
     void FadeOutFilter()
     {
-        
         if (I > 0)
         {
             I -= 0.1f * fadeInterval * Time.deltaTime;
@@ -230,13 +213,11 @@ public class LivableObject : MonoBehaviour
             snapshot.release();
             fadeOut = false;
         }
-        
     }
 
     protected virtual bool IsInView()
     {
         Vector3 pointOnScreen = Camera.main.WorldToScreenPoint(rend.bounds.center);
-
 
         //Is in front
         if (pointOnScreen.z < 0)
@@ -272,10 +253,10 @@ public class LivableObject : MonoBehaviour
                 if (checkBoundVisible[i])
                     pointsInScreen++;
             }
-            
+
             if (pointsInScreen < 3)
                 return false;
-            
+
         }
         else if (tableObj)
         {
@@ -292,7 +273,7 @@ public class LivableObject : MonoBehaviour
             {
                 return false;
             }
-            
+
         }
 
         if (!centerFocused)
@@ -302,11 +283,8 @@ public class LivableObject : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                 {
-                    //if (hit.collider)
-                    //    Debug.Log(gameObject.name+" raycast hit this: "+hit.collider.gameObject.name);
                     if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
                     {
-
                         return false;
                     }
 
@@ -327,7 +305,7 @@ public class LivableObject : MonoBehaviour
         }
         return true;
     }
-    public static bool IsObjectVisible( Renderer renderer)
+    public static bool IsObjectVisible(Renderer renderer)
     {
         Transform go = renderer.transform;
         if (go.GetComponent<LookingObject>() && go.GetComponent<LookingObject>().onlyFront)

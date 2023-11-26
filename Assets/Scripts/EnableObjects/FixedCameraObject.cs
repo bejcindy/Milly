@@ -39,6 +39,7 @@ public class FixedCameraObject : LivableObject
     protected bool movingCam;
     public float camXAxisSpeed;
     public float camYAxisSpeed;
+
     protected override void Start()
     {
         base.Start();
@@ -53,10 +54,7 @@ public class FixedCameraObject : LivableObject
             if (transform.parent.name.Contains("pizza"))
                 isPizzaBox = true;
         }
-
     }
-
-
 
     protected override void Update()
     {
@@ -65,7 +63,6 @@ public class FixedCameraObject : LivableObject
         {
             if (!isInteracting)
             {
-                //uiHint.SetActive(true);
                 if (gameObject.name.Contains("apt_call"))
                 {
                     playerHolding.clickableObj = gameObject;
@@ -89,7 +86,6 @@ public class FixedCameraObject : LivableObject
                     iconHidden = false;
                 }
 
-
                 TriggerInteraction();
             }
             else
@@ -106,12 +102,9 @@ public class FixedCameraObject : LivableObject
                     iconHidden = true;
                 }
             }
-
         }
         else
         {
-            //gameObject.layer = 0;
-            //uiHint.SetActive(false);
             if (!iconHidden)
             {
                 if (gameObject.name.Contains("apt_call"))
@@ -139,10 +132,8 @@ public class FixedCameraObject : LivableObject
             }
         }
 
-        if(!dialogueBound || (dialogueBound && !playerHolding.inDialogue))
+        if (!dialogueBound || (dialogueBound && !playerHolding.inDialogue))
             QuitInteraction();
-
-
     }
 
     public void QuitInteraction()
@@ -154,11 +145,9 @@ public class FixedCameraObject : LivableObject
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 StartCoroutine(UnfixPlayer());
-                QuitAction();
             }
         }
     }
-
 
     public virtual void TriggerInteraction()
     {
@@ -172,14 +161,9 @@ public class FixedCameraObject : LivableObject
             else
             {
                 if (Input.GetKeyDown(interactKey))
-                {
-                    //gameObject.layer = 0;
                     TurnOnCamera();
-                }
             }
         }
-
-
     }
 
     public void TurnOnCamera()
@@ -194,9 +178,10 @@ public class FixedCameraObject : LivableObject
             Cursor.visible = true;
             playerHolding.positionFixedWithMouse = true;
         }
+
         PositionPlayer();
 
-        if(isPizzaBox)
+        if (isPizzaBox)
         {
             player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
             player.GetComponent<PlayerRightHand>().inPizzaBox = true;
@@ -207,7 +192,7 @@ public class FixedCameraObject : LivableObject
 
     protected void PositionPlayer()
     {
-        if(!moveCam)
+        if (!moveCam)
             playerMovement.enabled = false;
         playerBody.enabled = false;
         playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
@@ -251,18 +236,12 @@ public class FixedCameraObject : LivableObject
         if (doubleSided)
         {
             if (onLeft)
-            {
                 fixedCamera.m_Priority = 9;
-            }
             else if (onRight)
-            {
                 otherCamera.m_Priority = 9;
-            }
         }
         else
-        {
             fixedCamera.m_Priority = 9;
-        }
 
         playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
         playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
@@ -273,17 +252,10 @@ public class FixedCameraObject : LivableObject
             fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
             fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
         }
-        //playerBody.enabled = true;
+
         camController.enabled = true;
         playerMovement.enabled = true;
         positionFixed = false;
         playerHolding.positionFixedWithMouse = false;
-
     }
-
-    protected virtual void QuitAction()
-    {
-
-    }
-
 }

@@ -25,16 +25,17 @@ public class ClickableObject : LivableObject
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
-        if(TryGetComponent<Animator>(out Animator anim))
+
+        if (TryGetComponent(out Animator anim))
         {
             animator = anim;
         }
 
-        if(TryGetComponent<DialogueSystemTrigger>(out DialogueSystemTrigger dia))
+        if (TryGetComponent(out DialogueSystemTrigger dia))
         {
             dialogue = dia;
         }
-        if(TryGetComponent<Usable>(out Usable usableCom))
+        if (TryGetComponent(out Usable usableCom))
         {
             dialogueUsable = usableCom;
         }
@@ -44,8 +45,7 @@ public class ClickableObject : LivableObject
         base.Update();
         if (interactable)
         {
-            
-            if(bellBinding && bindedObject.isInteracting && !playerHolding.inDialogue)
+            if (bellBinding && bindedObject.isInteracting && !playerHolding.inDialogue)
             {
                 dialogueUsable.enabled = true;
                 if (Input.GetMouseButton(0))
@@ -63,16 +63,10 @@ public class ClickableObject : LivableObject
                 }
 
                 if (Input.GetMouseButtonUp(0) && activated)
-                {
-
                     UnpressButton();
-                }
             }
             else
-            {
                 dialogueUsable.enabled = false;
-            }
-
         }
     }
 
@@ -106,10 +100,6 @@ public class ClickableObject : LivableObject
 
     void OnConversationEnd(Transform other)
     {
-        if(gameObject.name.Contains("button"))
-        {
-            Debug.Log("Conversation over");
-        }
         if (groupControl)
         {
             if (!buildingGroup.activateAll)

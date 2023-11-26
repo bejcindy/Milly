@@ -16,13 +16,12 @@ public class Chopsticks : PickUpObject
     Animator anim;
     public EventReference eatSound;
 
-    protected override void Start() 
+    protected override void Start()
     {
         base.Start();
         otherChopstick = transform.parent.GetChild(1).transform;
         anim = transform.parent.GetComponent<Animator>();
         chopOriginalRot = transform.localRotation;
-
     }
 
     protected override void Update()
@@ -66,7 +65,6 @@ public class Chopsticks : PickUpObject
                 otherChopstick.gameObject.layer = 0;
             }
         }
-
     }
 
     public void SetChopAnimPick()
@@ -84,13 +82,14 @@ public class Chopsticks : PickUpObject
     public void SetEatAnim()
     {
         anim.SetTrigger("Eat");
-        
     }
+
     public void PlayEatSound()
     {
         if (!eatSound.IsNull)
             RuntimeManager.PlayOneShot(eatSound, transform.position);
     }
+
     public IEnumerator LerpChopPicking(float duration)
     {
         float time = 0;
@@ -105,7 +104,6 @@ public class Chopsticks : PickUpObject
         }
         transform.parent.localPosition = chopPickingPos;
         transform.localRotation = Quaternion.Euler(chopPickingRot);
-
     }
 
     public IEnumerator LerpChopUnpicking(float duration)

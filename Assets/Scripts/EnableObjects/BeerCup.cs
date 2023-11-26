@@ -4,13 +4,13 @@ using UnityEngine;
 using FMODUnity;
 
 public class BeerCup : PickUpObject
-{
-    public TableController myTable;
-    Transform liquid;
-    public bool moving;
+{    
+    Transform liquid;    
     Vector3 startingPos;
     Quaternion startRotation;
 
+    public bool moving;
+    public TableController myTable;
     public EventReference powderSound;
     public bool playedSF;
 
@@ -27,11 +27,10 @@ public class BeerCup : PickUpObject
         if (!moving && myTable.tableControlOn)
         {
             base.Update();
-
             if (selected)
             {
                 gameObject.layer = 9;
-           
+
             }
             else if (inHand)
             {
@@ -70,14 +69,10 @@ public class BeerCup : PickUpObject
             else
                 gameObject.layer = 17;
         }
-
-
-
     }
 
     public void PutDownCup()
     {
-
         playerHolding.UnoccupyLeft();
         inHand = false;
         StartCoroutine(LerpPosition(startingPos, 1f));

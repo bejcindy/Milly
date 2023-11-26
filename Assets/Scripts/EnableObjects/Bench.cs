@@ -9,13 +9,6 @@ public class Bench : FixedCameraObject
     public bool npcBound;
     public NPCControl npcControl;
     public bool thoughtDone;
-    float sitTimeVal;
-
-    protected override void Start()
-    {
-        base.Start();
-        sitTimeVal = sitTime;
-    }
 
     protected override void Update()
     {

@@ -23,23 +23,14 @@ public class Cigarette : PickUpObject
         SwitchCig();
 
         if (selected && !thrown)
-        {
             activeCigObj.gameObject.layer = 9;
-        }
         else if (inHand)
-        {
             activeCigObj.gameObject.layer = 7;
-        }
         else
-        {
             activeCigObj.gameObject.layer = 17;
-        }
 
         if (activated && !activateAll)
-        {
             ActivateAllCig();
-        }
-
     }
 
 
@@ -53,9 +44,7 @@ public class Cigarette : PickUpObject
         foreach(Transform child in transform)
         {
             if(child != activeCigObj)
-            {
-                child.gameObject.SetActive(false);
-            }
+                child.gameObject.SetActive(false);            
         }
     }
 

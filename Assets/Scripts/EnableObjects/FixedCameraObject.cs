@@ -256,4 +256,9 @@ public class FixedCameraObject : LivableObject
         positionFixed = false;
         playerHolding.positionFixedWithMouse = false;
     }
+
+    protected virtual void QuitAction()
+    {
+
+    }
 }

@@ -58,6 +58,7 @@ public class Lid : LivableObject
         {
             if(controlledContainer != null)
             {
+                controlledContainer.interactable = false;
                 controlledContainer.enabled = false;
             }
         }

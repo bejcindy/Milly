@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gloria : NPCControl
 {
     float waitTime = 3f;
+    public Transform chair;
     protected override void Start()
     {
         base.Start();
@@ -39,7 +40,10 @@ public class Gloria : NPCControl
 
     public void GloriaAction4()
     {
-        
+        noTalkStage = false;
+        transform.SetParent(chair);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, -1.5f, 0), 1f);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(Vector3.zero), 1f);
     }
 
 }

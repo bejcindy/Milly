@@ -1168,7 +1168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 59e3a6233e2dde3408ffd53e99492384, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: 59e3a6233e2dde3408ffd53e99492384, type: 3}
       propertyPath: m_Layer
@@ -1475,7 +1475,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: e3ec825cbfed245639a47034e84e7a2f, type: 2}
   m_BuildHeightMesh: 0
@@ -3781,6 +3781,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efec22bf1850232409eed3655aa2d0de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDist: 3
+  isVisible: 0
+  interactable: 0
+  followingPlayer: 0
+  npcVincinity: 5
   mainNPC: 0
   inCutscene: 0
   initialActivated: 0
@@ -3788,38 +3793,33 @@ MonoBehaviour:
   hasFakeActivate: 0
   fakeActivated: 0
   overrideNoControl: 0
-  minDist: 3
-  isVisible: 0
-  interactable: 0
-  followingPlayer: 0
-  npcVincinity: 5
   npcMesh: {fileID: 736956883}
   visibleDetector: {fileID: 736956886}
+  onHoldChar: 0
   objectTriggered: 0
   triggerObject: {fileID: 0}
   peopleTriggered: 0
   otherNPC: {fileID: 0}
   questTriggered: 0
   questAccepted: 0
-  currentDialogue: {fileID: 0}
   destinations:
   - {fileID: 1071298789}
   - {fileID: 1964230744}
   destObjects:
   - {fileID: 0}
   - {fileID: 0}
-  waitTimes:
-  - 120
-  - 500
   destSpecialAnim: 0001
   _counter: 0
   finalStop: 0
+  talkable: 0
+  firstTalked: 0
   inConversation: 0
   noTalkInWalk: 0
   idleTime: 0
   idling: 0
   idlePaused: 0
   idleComplete: 0
+  stopIdleAfterConvo: 0
   footStepSF:
     Guid:
       Data1: -387047116
@@ -3827,7 +3827,11 @@ MonoBehaviour:
       Data3: -1448440438
       Data4: -1483750141
     Path: event:/NPC/Footstep_Boots
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   overrideLoyi: 0
+  turnChar: 0
 --- !u!114 &736956889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3840,12 +3844,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23de38afe8a948047b0edc0997ac4c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState:
-    machine: {fileID: 0}
-  initialState:
-    machine: {fileID: 0}
   initialStateChar: 70
   toPlayerDistance: 0
+  charCam: {fileID: 0}
+  camXAxis: 0
+  camYAxis: 0
+  camBrain: {fileID: 0}
+  moveWait: 2
 --- !u!54 &736956890
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5180,6 +5185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b9b190160266b4787581b13733a3e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDist: 3
+  isVisible: 0
+  interactable: 0
+  followingPlayer: 0
+  npcVincinity: 5
   mainNPC: 0
   inCutscene: 0
   initialActivated: 0
@@ -5187,20 +5197,15 @@ MonoBehaviour:
   hasFakeActivate: 0
   fakeActivated: 0
   overrideNoControl: 0
-  minDist: 3
-  isVisible: 0
-  interactable: 0
-  followingPlayer: 0
-  npcVincinity: 5
   npcMesh: {fileID: 888171967}
   visibleDetector: {fileID: 888171970}
+  onHoldChar: 0
   objectTriggered: 0
   triggerObject: {fileID: 0}
   peopleTriggered: 1
   otherNPC: {fileID: 1543771063}
   questTriggered: 0
   questAccepted: 0
-  currentDialogue: {fileID: 0}
   destinations:
   - {fileID: 455132751}
   - {fileID: 241732989}
@@ -5209,19 +5214,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  waitTimes:
-  - 30
-  - 30
-  - 3
   destSpecialAnim: 000001
   _counter: 0
   finalStop: 0
+  talkable: 0
+  firstTalked: 0
   inConversation: 0
   noTalkInWalk: 0
   idleTime: 0
   idling: 0
   idlePaused: 0
   idleComplete: 0
+  stopIdleAfterConvo: 0
   footStepSF:
     Guid:
       Data1: -1495894192
@@ -5229,6 +5233,9 @@ MonoBehaviour:
       Data3: 1648810882
       Data4: -1777007604
     Path: event:/NPC/Footstep_Sneaker
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &888171972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5241,12 +5248,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23de38afe8a948047b0edc0997ac4c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState:
-    machine: {fileID: 0}
-  initialState:
-    machine: {fileID: 0}
   initialStateChar: 70
   toPlayerDistance: 0
+  charCam: {fileID: 0}
+  camXAxis: 0
+  camYAxis: 0
+  camBrain: {fileID: 0}
+  moveWait: 2
 --- !u!195 &888171973
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5954,6 +5962,7 @@ GameObject:
   - component: {fileID: 981675706}
   - component: {fileID: 981675705}
   - component: {fileID: 981675704}
+  - component: {fileID: 981675707}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6002,7 +6011,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 34.4
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -6027,14 +6036,58 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 981675703}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.0000021770163, y: -0.9999966, z: -0.0024696833, w: 0.00088149315}
+  m_LocalPosition: {x: -9.64, y: 1.54, z: 3.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.283, y: -179.899, z: 0}
+--- !u!114 &981675707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981675703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &1039922039
 GameObject:
   m_ObjectHideFlags: 0
@@ -7235,7 +7288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c9cba528c9571074087bf41db0245c92, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: c9cba528c9571074087bf41db0245c92, type: 3}
       propertyPath: m_Layer
@@ -7793,6 +7846,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd2eb91cc9d155049af3fa6d84d3ca1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDist: 3
+  isVisible: 0
+  interactable: 0
+  followingPlayer: 0
+  npcVincinity: 5
   mainNPC: 0
   inCutscene: 0
   initialActivated: 0
@@ -7800,35 +7858,31 @@ MonoBehaviour:
   hasFakeActivate: 0
   fakeActivated: 0
   overrideNoControl: 0
-  minDist: 3
-  isVisible: 0
-  interactable: 0
-  followingPlayer: 0
-  npcVincinity: 5
   npcMesh: {fileID: 1231009559}
   visibleDetector: {fileID: 1231009562}
+  onHoldChar: 0
   objectTriggered: 0
   triggerObject: {fileID: 0}
   peopleTriggered: 0
   otherNPC: {fileID: 0}
   questTriggered: 0
   questAccepted: 0
-  currentDialogue: {fileID: 0}
   destinations:
   - {fileID: 532259834}
   destObjects:
   - {fileID: 0}
-  waitTimes:
-  - 3
   destSpecialAnim: 01
   _counter: 0
   finalStop: 0
+  talkable: 0
+  firstTalked: 0
   inConversation: 0
   noTalkInWalk: 0
   idleTime: 0
   idling: 0
   idlePaused: 0
   idleComplete: 0
+  stopIdleAfterConvo: 0
   footStepSF:
     Guid:
       Data1: 0
@@ -7836,6 +7890,10 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  chair: {fileID: 0}
 --- !u!114 &1231009566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7848,12 +7906,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23de38afe8a948047b0edc0997ac4c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState:
-    machine: {fileID: 0}
-  initialState:
-    machine: {fileID: 0}
   initialStateChar: 70
   toPlayerDistance: 0
+  charCam: {fileID: 0}
+  camXAxis: 0
+  camYAxis: 0
+  camBrain: {fileID: 0}
+  moveWait: 2
 --- !u!54 &1231009567
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8851,7 +8910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: de7822b6787ef014eb2bc95e9d765377, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: de7822b6787ef014eb2bc95e9d765377, type: 3}
       propertyPath: m_Layer
@@ -9514,7 +9573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c32454874d1e2964c836f6be6f859411, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.9099998
+      value: -3.604
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c32454874d1e2964c836f6be6f859411, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9522,7 +9581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c32454874d1e2964c836f6be6f859411, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.19899988
+      value: -0.497
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c32454874d1e2964c836f6be6f859411, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10075,6 +10134,7 @@ MonoBehaviour:
   cigarette: 1
   freezeRotation: 0
   throwCD: 0
+  thrownByPlayer: 0
   npcBound: 0
   foodObj: 0
   pickUpEventName: 
@@ -11372,12 +11432,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23de38afe8a948047b0edc0997ac4c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState:
-    machine: {fileID: 0}
-  initialState:
-    machine: {fileID: 0}
   initialStateChar: 77
   toPlayerDistance: 5
+  charCam: {fileID: 0}
+  camXAxis: 0
+  camYAxis: 0
+  camBrain: {fileID: 0}
+  moveWait: 2
 --- !u!114 &1543771075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11390,6 +11451,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44871f1f0564ae24eb6a8db3c9cd6f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDist: 3
+  isVisible: 0
+  interactable: 0
+  followingPlayer: 0
+  npcVincinity: 5
   mainNPC: 0
   inCutscene: 0
   initialActivated: 0
@@ -11397,20 +11463,15 @@ MonoBehaviour:
   hasFakeActivate: 0
   fakeActivated: 0
   overrideNoControl: 0
-  minDist: 3
-  isVisible: 0
-  interactable: 0
-  followingPlayer: 0
-  npcVincinity: 5
   npcMesh: {fileID: 1543771064}
   visibleDetector: {fileID: 1543771069}
+  onHoldChar: 0
   objectTriggered: 0
   triggerObject: {fileID: 0}
   peopleTriggered: 0
   otherNPC: {fileID: 0}
   questTriggered: 0
   questAccepted: 0
-  currentDialogue: {fileID: 0}
   destinations:
   - {fileID: 1145047199}
   - {fileID: 950347168}
@@ -11419,19 +11480,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  waitTimes:
-  - 30
-  - 3
-  - 3
   destSpecialAnim: 010100
   _counter: 0
   finalStop: 0
+  talkable: 0
+  firstTalked: 0
   inConversation: 0
   noTalkInWalk: 0
   idleTime: 0
   idling: 0
   idlePaused: 0
   idleComplete: 0
+  stopIdleAfterConvo: 0
   footStepSF:
     Guid:
       Data1: -1495894192
@@ -11439,6 +11499,9 @@ MonoBehaviour:
       Data3: 1648810882
       Data4: -1777007604
     Path: event:/NPC/Footstep_Sneaker
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   charlesSmoking: 0
   charlesOpenDoor: 0
 --- !u!1 &1569473169
@@ -11540,7 +11603,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1635837176
 Transform:
   m_ObjectHideFlags: 0
@@ -11549,7 +11612,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635837175}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.46, y: 1.0620003, z: -2.922}
+  m_LocalPosition: {x: -8.125, y: 1.0620003, z: -2.922}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13250,6 +13313,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbbaf738f31b714ea6f3e7e17caeb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDist: 3
+  isVisible: 0
+  interactable: 0
+  followingPlayer: 0
+  npcVincinity: 5
   mainNPC: 0
   inCutscene: 0
   initialActivated: 0
@@ -13257,38 +13325,33 @@ MonoBehaviour:
   hasFakeActivate: 0
   fakeActivated: 0
   overrideNoControl: 0
-  minDist: 3
-  isVisible: 0
-  interactable: 0
-  followingPlayer: 0
-  npcVincinity: 5
   npcMesh: {fileID: 2010155281}
   visibleDetector: {fileID: 2010155285}
+  onHoldChar: 0
   objectTriggered: 0
   triggerObject: {fileID: 0}
   peopleTriggered: 0
   otherNPC: {fileID: 0}
   questTriggered: 1
   questAccepted: 0
-  currentDialogue: {fileID: 0}
   destinations:
   - {fileID: 669403001}
   - {fileID: 1368912796}
   destObjects:
   - {fileID: 0}
   - {fileID: 0}
-  waitTimes:
-  - 30
-  - 5
   destSpecialAnim: 0000
   _counter: 0
   finalStop: 0
+  talkable: 0
+  firstTalked: 0
   inConversation: 0
   noTalkInWalk: 0
   idleTime: 0
   idling: 0
   idlePaused: 0
   idleComplete: 0
+  stopIdleAfterConvo: 0
   footStepSF:
     Guid:
       Data1: 749099939
@@ -13296,6 +13359,9 @@ MonoBehaviour:
       Data3: 1710171823
       Data4: -1823897393
     Path: event:/NPC/Footstep_Drag
+  OnActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
   hintOne: {fileID: 0}
 --- !u!114 &2010155287
 MonoBehaviour:
@@ -13409,12 +13475,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23de38afe8a948047b0edc0997ac4c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState:
-    machine: {fileID: 0}
-  initialState:
-    machine: {fileID: 0}
   initialStateChar: 70
   toPlayerDistance: 0
+  charCam: {fileID: 0}
+  camXAxis: 0
+  camYAxis: 0
+  camBrain: {fileID: 0}
+  moveWait: 2
 --- !u!195 &2010155290
 NavMeshAgent:
   m_ObjectHideFlags: 0

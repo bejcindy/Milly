@@ -10,4 +10,13 @@ public class Akihito : NPCControl
         onHoldChar = true;
         ChangeLayer(17);
     }
+
+    public void AkihitoAction1()
+    {
+        noMoveAfterTalk = true;
+        noTalkInWalk = true;
+    }
+
+
+
 }

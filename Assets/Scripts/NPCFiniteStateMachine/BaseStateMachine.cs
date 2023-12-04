@@ -138,11 +138,6 @@ namespace NPCFSM
             StartCoroutine(RotateTowards(target));  
         }
 
-        public void StopRotatingNPC()
-        {
-            if (lookCoroutine != null)
-                StopCoroutine(lookCoroutine);
-        }
 
         public IEnumerator RotateTowards(Transform target)
         {
@@ -231,6 +226,16 @@ namespace NPCFSM
         public bool CheckSpecialIdleAnim()
         {
             return npcControl.GetSpecialIdleAnim();
+        }
+
+        public void SetIdleRotation()
+        {
+            npcControl.IdleRotate();
+        }
+
+        public void StopRotation()
+        {
+            npcControl.StopLookRotation();
         }
 
 
@@ -368,6 +373,11 @@ namespace NPCFSM
         public bool CheckNoMoveAfterTalk()
         {
             return npcControl.CheckNoMoveAfterTalk();
+        }
+
+        public bool CheckNoLookInTalk()
+        {
+            return npcControl.noLookInConvo;
         }
 
         public void TurnOnCam()

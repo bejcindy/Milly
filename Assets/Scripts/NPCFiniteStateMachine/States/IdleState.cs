@@ -9,7 +9,7 @@ public class IdleState : State
     {
         //if (!machine.CheckNPCActivation())
         //    machine.ActivateNPC();
-
+        machine.SetIdleRotation();
         if(!machine.CheckSpecialIdleAnim())
             machine.SetAnimatorTrigger("Stop");
         else
@@ -31,7 +31,7 @@ public class IdleState : State
         {
             if (!machine.CheckPathFinished())
             {
-                machine.StopRotatingNPC();
+                machine.StopRotation();
                 machine.SetMainTalkTrue();
 
 

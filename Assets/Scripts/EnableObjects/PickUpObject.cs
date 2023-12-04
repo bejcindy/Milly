@@ -14,7 +14,8 @@ public enum HandObjectType
     DISH,
     CHOPSTICKS,
     DOUBLE,
-    PLACEMENT
+    PLACEMENT,
+    CATFOOD
 }
 public class PickUpObject : LivableObject
 {

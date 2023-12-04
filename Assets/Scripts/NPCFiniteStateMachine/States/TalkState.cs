@@ -7,8 +7,9 @@ public class TalkState : State {
 
     protected override void OnEnter()
     {
-        machine.TurnOnCam();
-
+        
+        if(!machine.CheckNoLookInTalk())
+            machine.TurnOnCam();
         if (machine.CheckReachDestination())
         {
             if (machine.CheckTalkable() && !machine.CheckSpecialIdleAnim() && machine.CheckFirstTalked())
@@ -41,6 +42,8 @@ public class TalkState : State {
             {
                 machine.ChangeState(machine.idleState);
             }
+
+
 
 
         }

@@ -8,12 +8,16 @@ public class Xixi : NPCControl
 {
     public EventReference catMeowSF;
     public CinemachineVirtualCamera catCam;
+    public Vector3 catFoodPos;
+    public Vector3 catFoodRot;
+    PlayerLeftHand playerLeftHand;
 
     float waitTime = 3f;
     protected override void Start()
     {
         base.Start();
         talkable = true;
+        playerLeftHand = player.GetComponent<PlayerLeftHand>();
     }
 
     public void XixiAction1()
@@ -40,6 +44,15 @@ public class Xixi : NPCControl
     {
         noMoveAfterTalk = true;
         noTalkInWalk = false;
+
+        if(playerLeftHand.isHolding && playerLeftHand.holdingObj.name.Contains("Cat_can"))
+        {
+            noTalkStage = false;
+        }
+        else
+        {
+            noTalkStage = true;
+        }
 
     }
     public void Meow()

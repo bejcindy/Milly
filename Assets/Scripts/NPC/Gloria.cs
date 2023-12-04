@@ -21,18 +21,21 @@ public class Gloria : NPCControl
     public void GloriaAction2()
     {
         stopIdleAfterConvo = true;
+        noLookInConvo = true;
     }
 
     public void GloriaAction3()
     {
         noTalkStage = true;
-        destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
+        noLookInConvo = false;
+        
 
         waitTime -= Time.deltaTime;
         if (waitTime < 0)
         {
             StopIdle();
             waitTime = 3f;
+            destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
         }
     }
 
@@ -40,15 +43,16 @@ public class Gloria : NPCControl
     {
         noTalkStage = true;
         currentDialogue.gameObject.SetActive(true);
-
+        noLookInConvo = true;
     }
 
     public void GloriaAction5()
     {
         noTalkStage = false;
         transform.SetParent(chair);
-        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, -1.5f, 0), 1f);
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(Vector3.zero), 1f);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0.4f, -0.6f, 0.2f), 1f);
+        Vector3 sitRotation = new Vector3(0, 180, 0);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(sitRotation), 1f);
     }
 
 }

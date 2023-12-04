@@ -80,7 +80,7 @@ public class NPCControl : MonoBehaviour
 
     protected Coroutine lookCoroutine;
     bool lookCoroutineRuning;
-    protected bool noLookInConvo;
+    public bool noLookInConvo;
     protected bool noTalkStage;
     PlayerHolding playerHolding;
 
@@ -552,16 +552,29 @@ public class NPCControl : MonoBehaviour
     #endregion
 
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.name.Contains(gameObject.name))
+    //    {
+
+    //        if (lookCoroutine != null)
+    //            StopCoroutine(lookCoroutine);
+    //        lookCoroutine = StartCoroutine(RotateTowards(other.transform.GetChild(0).transform));
+    //    }
+
+    //}
+
+    public void IdleRotate()
     {
-        if (other.gameObject.name.Contains(gameObject.name))
-        {
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
+        lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter-1].transform.GetChild(0).transform));
+    }
 
-            if (lookCoroutine != null)
-                StopCoroutine(lookCoroutine);
-            lookCoroutine = StartCoroutine(RotateTowards(other.transform.GetChild(0).transform));
-        }
-
+    public void StopLookRotation()
+    {
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
     }
 
     #region AI Region

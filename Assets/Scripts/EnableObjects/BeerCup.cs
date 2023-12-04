@@ -37,11 +37,11 @@ public class BeerCup : PickUpObject
                 gameObject.layer = 7;
                 liquid.gameObject.layer = 7;
             }
-            else if (activated)
-            {
-                gameObject.layer = 17;
-                liquid.gameObject.layer = 17;
-            }
+            //else if (activated)
+            //{
+            //    gameObject.layer = 17;
+            //    liquid.gameObject.layer = 17;
+            //}
             else
             {
                 gameObject.layer = 0;

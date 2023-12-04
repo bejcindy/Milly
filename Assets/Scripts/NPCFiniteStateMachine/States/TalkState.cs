@@ -8,7 +8,7 @@ public class TalkState : State {
     protected override void OnEnter()
     {
         machine.TurnOnCam();
-        machine.PauseIdling();
+
         if (machine.CheckReachDestination())
         {
             if (machine.CheckTalkable() && !machine.CheckSpecialIdleAnim() && machine.CheckFirstTalked())
@@ -30,34 +30,18 @@ public class TalkState : State {
         {
             machine.SetMainTalkTrue();
             machine.TurnOffCam();
-            machine.StopIdling();
-            if (!machine.CheckBrainBlending())
-                machine.DelayMove();
 
+            if (!machine.CheckNoMoveAfterTalk())
+            {
+                machine.StopIdling();
+                if (!machine.CheckBrainBlending())
+                    machine.DelayMove();
+            }
+            else
+            {
+                machine.ChangeState(machine.idleState);
+            }
 
-            ////NOT FOLLOWING NPC AFTER
-            //if (!machine.CheckFollowPlayer())
-            //{
-            //    if (machine.CheckIdleFinished())
-            //    {
-            //        if (!machine.CheckBrainBlending())
-            //            machine.DelayMove();
-            //    }
-
-            //    else
-            //    {
-            //        machine.ChangeState(machine.idleState);
-            //    }
-
-            //}
-            ////FOLLOWING NPC AFTER
-            //else
-            //{
-            //    machine.StopIdling();
-            //    if (!machine.CheckPlayerInVincinity())
-            //        machine.ChangeState(machine.moveState);
-
-            //}
 
         }
 

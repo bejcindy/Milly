@@ -18,21 +18,24 @@ public class IdleState : State
         }
 
         machine.StopNavigation();
-        if (!machine.CheckIdlePaused())
+        if (!machine.GetIdling())
             machine.BeginIdling();
         else
-            machine.UnPauseIdling();
+            machine.StartIdling();
     }
     
     protected override void OnUpdate()
     {
 
-        if (machine.GetMainTalkTrue() || machine.CheckIdleFinished())
+        if (machine.CheckNotIdling())
         {
             if (!machine.CheckPathFinished())
             {
                 machine.StopRotatingNPC();
                 machine.SetMainTalkTrue();
+
+
+
                 machine.ChangeState(machine.moveState);
             }
 
@@ -42,6 +45,7 @@ public class IdleState : State
             machine.InvokeIdleFunction();
             if (machine.CheckInConversation() && !machine.GetMainTalkTrue())
             {
+
                 machine.ChangeState(machine.talkState);
             }
 
@@ -50,8 +54,7 @@ public class IdleState : State
 
     protected override void OnExit()
     {
-        //if(!machine.CheckSpecialIdleAnim())
-        //    machine.ResetAnimTrigger("Stop");
-        //machine.StopRotatingNPC();
+
     }
 }
+ 

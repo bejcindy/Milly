@@ -35,7 +35,7 @@ public class FoodPickObject : MonoBehaviour
         }
         else if(myTable.tableControlOn && !picked)
         {
-            gameObject.layer = 17;
+            gameObject.layer = 0;
         }
         else if(picked)
         {

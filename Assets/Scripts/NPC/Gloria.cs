@@ -12,13 +12,18 @@ public class Gloria : NPCControl
         overrideNoControl = true;
         talkable = true;
     }
-     
+
     public void GloriaAction1()
     {
         stopIdleAfterConvo = true;
     }
-
+     
     public void GloriaAction2()
+    {
+        stopIdleAfterConvo = true;
+    }
+
+    public void GloriaAction3()
     {
         noTalkStage = true;
         destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
@@ -31,14 +36,14 @@ public class Gloria : NPCControl
         }
     }
 
-    public void GloriaAction3()
+    public void GloriaAction4()
     {
         noTalkStage = true;
         currentDialogue.gameObject.SetActive(true);
 
     }
 
-    public void GloriaAction4()
+    public void GloriaAction5()
     {
         noTalkStage = false;
         transform.SetParent(chair);

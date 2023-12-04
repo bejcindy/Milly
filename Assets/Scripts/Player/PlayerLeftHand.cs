@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using FMODUnity;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class PlayerLeftHand : MonoBehaviour
@@ -35,6 +36,8 @@ public class PlayerLeftHand : MonoBehaviour
     float chopHoldTimeMax = 1f;
     public float chopHoldVal = 0;
     public bool chopAiming;
+    public int foodAte;
+    bool foodEatingDialogueDone;
 
     public Transform selectedFood;
     Transform currentFood;
@@ -122,7 +125,11 @@ public class PlayerLeftHand : MonoBehaviour
         }
 
 
-
+        if(foodAte > 3 && !foodEatingDialogueDone)
+        {
+            DialogueManager.StartConversation("MainQuest/Eating");
+            foodEatingDialogueDone = true;
+        }
 
 
 
@@ -308,6 +315,7 @@ public class PlayerLeftHand : MonoBehaviour
         Destroy(currentFood.gameObject);
         currentChop.chopMoving = false;
         currentChop.PlayEatSound();
+        foodAte++;
     }
 
     private void DrawBackChop(Chopsticks chop)

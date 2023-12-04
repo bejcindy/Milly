@@ -30,7 +30,7 @@ public class TableController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Tab) && !isHolding)
             {
                 tableControlOn = !tableControlOn;
-                CheckTableControl();
+                //CheckTableControl();
             }
         }
         else

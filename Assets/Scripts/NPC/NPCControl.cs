@@ -68,15 +68,13 @@ public class NPCControl : MonoBehaviour
     private bool inCD;
     private float talkCD = 2f;
     public bool noTalkInWalk;
+    public bool noMoveAfterTalk;
 
 
 
     [Header("[Idle State]")]
-    public float idleTime;
     protected string idleAction;
     public bool idling;
-    public bool idlePaused;
-    public bool idleComplete;
     public bool stopIdleAfterConvo;
 
 
@@ -177,6 +175,10 @@ public class NPCControl : MonoBehaviour
         else if(!inConversation)
         {
             ChangeLayer(0);
+        }
+        else if (initialActivated)
+        {
+            ChangeLayer(17);
         }
         //else
         //{
@@ -359,26 +361,10 @@ public class NPCControl : MonoBehaviour
     #endregion
 
     #region Idle Region
-    void CheckIdle()
-    {
-        if (idling && !idlePaused)
-        {
-            if (idleTime > 0)
-                idleTime -= Time.deltaTime;
-            else
-            {
-                idling = false;
-                if (lookCoroutine != null)
-                    StopCoroutine(lookCoroutine);
-            }
-        }
-    }
 
     public void StopIdle()
     {
-        idleTime = 0;
         idling = false;
-        idlePaused = false;
     }
 
 
@@ -522,6 +508,11 @@ public class NPCControl : MonoBehaviour
         questAccepted = true;
     }
 
+    public bool CheckNoMoveAfterTalk()
+    {
+        return noMoveAfterTalk;
+    }
+
     protected virtual void QuestAcceptChange()
     {
 
@@ -568,7 +559,7 @@ public class NPCControl : MonoBehaviour
 
             if (lookCoroutine != null)
                 StopCoroutine(lookCoroutine);
-            lookCoroutine = StartCoroutine(RotateTowards(destObjects[_counter - 1].transform));
+            lookCoroutine = StartCoroutine(RotateTowards(other.transform.GetChild(0).transform));
         }
 
     }

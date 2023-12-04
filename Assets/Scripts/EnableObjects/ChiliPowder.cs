@@ -36,10 +36,10 @@ public class ChiliPowder : PickUpObject
             {
                 gameObject.layer = 7;
             }
-            else if (activated)
-            {
-                gameObject.layer = 17;
-            }
+            //else if (activated)
+            //{
+            //    gameObject.layer = 17;
+            //}
             else
             {
                 gameObject.layer = 0;

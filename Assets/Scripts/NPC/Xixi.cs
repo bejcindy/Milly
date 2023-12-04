@@ -32,13 +32,15 @@ public class Xixi : NPCControl
     public void XixiAction2()
     {
         noTalkStage = false;
-        noTalkInWalk = false;
+
+
     }
 
     public void XixiAction3()
     {
-        GetComponent<BoxCollider>().enabled = true;
-        noTalkInWalk = true;
+        noMoveAfterTalk = true;
+        noTalkInWalk = false;
+
     }
     public void Meow()
     {

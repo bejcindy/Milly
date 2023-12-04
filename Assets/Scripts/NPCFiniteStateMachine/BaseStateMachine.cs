@@ -12,6 +12,7 @@ namespace NPCFSM
     {
 
         State currentState;
+        State previousState;
         Transform player;
         State initialState;
         public char initialStateChar;
@@ -82,6 +83,18 @@ namespace NPCFSM
             }
             currentState = newState;
             currentState.OnStateEnter(this);
+        }
+
+
+        public void SetPreviousState(State newState)
+        {
+            previousState = newState;
+        }
+
+
+        public State GetPreviousState()
+        {
+            return previousState;
         }
 
         public State ChooseInitialState(char c)
@@ -196,21 +209,15 @@ namespace NPCFSM
             npcControl.SetDialogue();
         }
 
-        public void PauseIdling()
+        public void StartIdling()
         {
-            if (npcControl.idling)
-                npcControl.idlePaused = true;
+            npcControl.idling = true;
         }
 
-        public bool CheckIdlePaused()
+        public bool GetIdling()
         {
-            return npcControl.idlePaused;
+            return npcControl.idling;
         }
-        public void UnPauseIdling()
-        {
-            npcControl.idlePaused = false;
-        }
-
         public void StopIdling()
         {
             npcControl.StopIdle();
@@ -232,7 +239,7 @@ namespace NPCFSM
             SetAnimatorTrigger("Special" + npcControl._counter);
         }
 
-        public bool CheckIdleFinished()
+        public bool CheckNotIdling()
         {
             return !npcControl.idling;
         }
@@ -356,6 +363,11 @@ namespace NPCFSM
         public bool GetMainTalkTrue()
         {
             return npcControl.GetMainTalked();
+        }
+
+        public bool CheckNoMoveAfterTalk()
+        {
+            return npcControl.CheckNoMoveAfterTalk();
         }
 
         public void TurnOnCam()

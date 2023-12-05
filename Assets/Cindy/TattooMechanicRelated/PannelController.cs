@@ -20,6 +20,9 @@ public class PannelController : MonoBehaviour
 
     bool gotPos, noDrag, firstActivated;
     float timer;
+    Renderer previousObj;
+    RectTransform previousTattoo;
+    bool clearedCurrent;
 
     private void Awake()
     {
@@ -32,31 +35,38 @@ public class PannelController : MonoBehaviour
         greyLine.color = new Color(greyLine.color.r, greyLine.color.g, greyLine.color.b, 0);
         pannelBG.color = new Color(pannelBG.color.r, pannelBG.color.g, pannelBG.color.b, 0);
         mechanicActivated = false;
+
+        //for demo purpos only
+        clearedCurrent = true;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    DemoCatActivation();
         if (activated)
         {
+            clearedCurrent = false;
+            if (!mechanicActivated)
+                mechanicActivated = true;
             if (targetObj && currentTattoo && !gotPos)
             {
                 Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(targetObj.bounds.center);
                 Vector2 WorldObject_ScreenPosition = new Vector2(
                 ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
                 ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-                GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition - currentTattoo.anchoredPosition;
+                if (pannelBG.color.a == 0)
+                    GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition - currentTattoo.anchoredPosition;
+                else
+                    StartCoroutine(LerpPosition(WorldObject_ScreenPosition - currentTattoo.anchoredPosition, 1f));
+
                 currentTattoo.GetComponent<TattooConnection>().activated = true;
                 foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)
                     relate.GetComponent<TattooConnection>().related = true;
                 GetComponent<ConnectionManager>().ActivateLines(currentTattoo.GetComponent<TattooConnection>());
                 transform.localScale = new Vector2(1, 1);
+                previousObj = targetObj;
+                previousTattoo = currentTattoo;
                 gotPos = true;
                 noDrag = true;
             }
@@ -64,6 +74,8 @@ public class PannelController : MonoBehaviour
             {
                 if (currentTattoo)
                 {
+                    if (targetObj != previousObj || currentTattoo != previousTattoo)
+                        gotPos = false;
                     currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
                     if (currentTattoo.GetComponent<Image>().color.a == 1)
                     {
@@ -154,6 +166,12 @@ public class PannelController : MonoBehaviour
             blackLine.color = FadeOutColor(blackLine.color);
             greyLine.color = FadeOutColor(greyLine.color);
             pannelBG.color = FadeOutColor(pannelBG.color);
+            if (!clearedCurrent)
+            {
+                currentTattoo = null;
+                targetObj = null;
+                clearedCurrent = true;
+            }
         }
 
         if (!noDrag)
@@ -179,6 +197,17 @@ public class PannelController : MonoBehaviour
         }
     }
 
+    public void DemoCatActivation()
+    {
+        activated = true;
+        Invoke("ActivateCat", 5f);
+    }
+
+    void ActivateCat()
+    {
+        currentTattoo = transform.GetChild(3).GetComponent<RectTransform>();
+    }
+
     Color FadeInColor(Color c, float targetAlpha)
     {
 
@@ -199,4 +228,18 @@ public class PannelController : MonoBehaviour
         return c;
     }
 
+    IEnumerator LerpPosition(Vector2 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = transform.localPosition;
+        while (time < duration)
+        {
+            Debug.Log("running");
+            transform.localPosition = Vector2.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        GetComponent<RectTransform>().anchoredPosition = targetPosition;
+
+    }
 }

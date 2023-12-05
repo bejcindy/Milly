@@ -251,6 +251,11 @@ namespace NPCFSM
         #endregion
 
         #region NavMeshControlRegion
+
+        public bool CheckNavOn()
+        {
+            return agent.isActiveAndEnabled;
+        }
         public void StopNavigation()
         {
             agent.isStopped = true;

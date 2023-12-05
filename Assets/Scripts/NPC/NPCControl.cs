@@ -520,13 +520,18 @@ public class NPCControl : MonoBehaviour
     protected virtual void OnConversationStart(Transform other)
     {
         inConversation = true;
-        ChangeLayer(17);
-        if (HasReached(agent) && !noLookInConvo)
+        //ChangeLayer(17);
+
+        if (agent.isActiveAndEnabled)
         {
-            if (lookCoroutine != null)
-                StopCoroutine(lookCoroutine);
-            lookCoroutine = StartCoroutine(RotateTowards(player));
+            if (HasReached(agent) && !noLookInConvo)
+            {
+                if (lookCoroutine != null)
+                    StopCoroutine(lookCoroutine);
+                lookCoroutine = StartCoroutine(RotateTowards(player));
+            }
         }
+
     }
 
     protected virtual void OnConversationEnd(Transform other)

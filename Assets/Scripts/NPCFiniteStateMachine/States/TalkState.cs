@@ -10,16 +10,21 @@ public class TalkState : State {
         
         if(!machine.CheckNoLookInTalk())
             machine.TurnOnCam();
-        if (machine.CheckReachDestination())
+
+        if (machine.CheckNavOn())
         {
-            if (machine.CheckTalkable() && !machine.CheckSpecialIdleAnim() && machine.CheckFirstTalked())
+            if (machine.CheckReachDestination())
             {
-                machine.StopNavigation();
-                machine.SetAnimatorTrigger("Stop");
+                if (machine.CheckTalkable() && !machine.CheckSpecialIdleAnim() && machine.CheckFirstTalked())
+                {
+                    machine.StopNavigation();
+                    machine.SetAnimatorTrigger("Stop");
+
+                }
 
             }
-
         }
+
 
 
 

@@ -17,7 +17,11 @@ public class IdleState : State
             machine.SetSpecialIdleAnim();
         }
 
-        machine.StopNavigation();
+        if (machine.CheckNavOn())
+        {
+            machine.StopNavigation();
+        }
+
         if (!machine.GetIdling())
             machine.BeginIdling();
         else

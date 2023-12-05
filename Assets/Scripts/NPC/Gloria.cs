@@ -52,6 +52,7 @@ public class Gloria : NPCControl
         transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0.4f, -0.6f, 0.2f), 1f);
         Vector3 sitRotation = new Vector3(0, 180, 0);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(sitRotation), 1f);
+
     }
 
 }

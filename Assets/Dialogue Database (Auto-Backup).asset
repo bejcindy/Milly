@@ -1423,6 +1423,34 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 55
+    fields:
+    - title: Name
+      value: NPC/Zayne/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 56
+    fields:
+    - title: Name
+      value: NPC/Zayne/Other_Interacted
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
@@ -30136,7 +30164,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 158.51062, y: 1197.8733}
+    canvasScrollPosition: {x: 175.53186, y: 380.85165}
     canvasZoom: 0.94000006
   - id: 41
     fields:
@@ -32129,7 +32157,7 @@ MonoBehaviour:
         destinationDialogueID: 3
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Loyi_Talk_State"] == "Uninitiated"
+      conditionsString: Variable["NPC_Loyi_Main_Talked"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -33768,6 +33796,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 8d3f3ea7-0267-4814-abd4-a0a8f8773bd1
+        type: 0
+        typeString: 
       conversationID: 42
       isRoot: 0
       isGroup: 0
@@ -33788,7 +33820,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 328.02863, y: 0}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 0.5500008
   - id: 43
     fields:
@@ -41947,7 +41979,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 342.46835
+        x: 341.2025
         y: 164
         width: 160
         height: 30
@@ -45273,7 +45305,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 369.87805
-        y: 405.1951
+        y: 406.1613
         width: 160
         height: 30
     - id: 7
@@ -45439,8 +45471,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.8200001
+    canvasScrollPosition: {x: 97.02439, y: 74.73156}
+    canvasZoom: 1.0349989
   - id: 60
     fields:
     - title: Title
@@ -48183,6 +48215,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: EventGuid
+        value: 41e43245-1e99-4e9f-97c6-3d5a53b3ad85
+        type: 0
+        typeString: 
       conversationID: 69
       isRoot: 0
       isGroup: 0
@@ -50154,7 +50190,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 185.46048, y: 1344.7461}
+    canvasScrollPosition: {x: 28.409058, y: 1574.292}
     canvasZoom: 0.88000005
   - id: 70
     fields:
@@ -53879,6 +53915,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: eef5a1c0-e530-4457-8814-e83b612333bf
+        type: 0
+        typeString: 
       conversationID: 73
       isRoot: 0
       isGroup: 0
@@ -53899,7 +53939,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 984.7017, y: 1233.102}
+    canvasScrollPosition: {x: 1197.2017, y: 398.72708}
     canvasZoom: 0.6399998
   - id: 74
     fields:
@@ -57864,8 +57904,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1147.782
-        y: 29.869553
+        x: 1262.2556
+        y: 33.81691
         width: 160
         height: 30
     - id: 1
@@ -57912,7 +57952,7 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Zayne_Main_Talked"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -57974,7 +58014,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1144.782
+        x: 1150.045
         y: 180.86955
         width: 160
         height: 30
@@ -59356,7 +59396,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Zayne_Main_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -59642,8 +59682,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 275.3038, y: 1187.1144}
-    canvasZoom: 0.7600004
+    canvasScrollPosition: {x: 435.42792, y: 0}
+    canvasZoom: 0.7300005
   syncInfo:
     syncActors: 0
     syncItems: 0

@@ -520,7 +520,11 @@ public class NPCControl : MonoBehaviour
     protected virtual void OnConversationStart(Transform other)
     {
         inConversation = true;
-        //ChangeLayer(17);
+
+        if (transformed)
+            ChangeLayer(17);
+        else
+            ChangeLayer(0);
 
         if (agent.isActiveAndEnabled)
         {

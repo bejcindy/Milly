@@ -27,6 +27,7 @@ public class NPCControl : MonoBehaviour
     public bool inCutscene;
     public bool initialActivated;
     public bool npcActivated;
+    public bool transformed;
 
     public bool hasFakeActivate;
     public bool fakeActivated;
@@ -174,11 +175,10 @@ public class NPCControl : MonoBehaviour
         }
         else if(!inConversation)
         {
-            ChangeLayer(0);
-        }
-        else if (initialActivated)
-        {
-            ChangeLayer(17);
+            if (!transformed)
+                ChangeLayer(0);
+            else
+                ChangeLayer(17);
         }
         //else
         //{
@@ -455,7 +455,7 @@ public class NPCControl : MonoBehaviour
                 //check player interaction command
                 if (Input.GetMouseButtonDown(0))
                 {
-                    ChangeLayer(17);
+                    //ChangeLayer(17);
                     if (!questTriggered)
                     {
                         if (!npcActivated)
@@ -471,8 +471,8 @@ public class NPCControl : MonoBehaviour
                 }
             }
         }
-        else if (inConversation)
-            ChangeLayer(17);
+        //else if (inConversation)
+        //    ChangeLayer(17);
         
     }
 

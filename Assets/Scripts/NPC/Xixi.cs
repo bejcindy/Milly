@@ -78,7 +78,7 @@ public class Xixi : NPCControl
 
     public void ChangeIntialActivate()
     {
-        initialActivated = true;
+        transformed = true;
         ChangeLayer(17);
     }
 

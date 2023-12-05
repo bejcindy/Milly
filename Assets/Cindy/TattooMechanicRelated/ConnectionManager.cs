@@ -70,6 +70,8 @@ public class ConnectionManager : MonoBehaviour
         conditionStorage = new bool[positions.Count];
     }
 
+
+
     List<Vector2> referenceList;
     List<Vector2> greyRefList;
 
@@ -105,5 +107,60 @@ public class ConnectionManager : MonoBehaviour
         LRM.greyPts = greyRefList;
     }
 
+    public void LinesEditorPreview()
+    {
+        tattoos = new List<RectTransform>();
+        connections = new List<List<RectTransform>>();
+        foreach (RectTransform child in transform)
+        {
+            if (child.GetComponent<TattooConnection>())
+            {
+                tattoos.Add(child);
+                connections.Add(child.GetComponent<TattooConnection>().relatedTattoos);
+            }
+        }
+
+        connectionList = new List<RectTransform>();
+        positions = new List<Vector2>();
+
+        for (int i = 0; i < tattoos.Count; i++)
+        {
+            if (connections[i].Count != 0)
+            {
+                for (int j = 0; j < connections[i].Count; j++)
+                {
+                    if (i == 0)
+                    {
+                        connectionList.Add(tattoos[i]);
+                        connectionList.Add(connections[i][j]);
+
+                        Vector2 direction = (connections[i][j].anchoredPosition - tattoos[i].anchoredPosition).normalized;
+                        
+                        positions.Add(tattoos[i].anchoredPosition + direction * avoidRadius);
+                        positions.Add(connections[i][j].anchoredPosition - direction * avoidRadius);
+                    }
+                    else
+                    {
+                        if (connectionList.Contains(tattoos[i]))
+                        {
+                            int previous = connectionList.IndexOf(tattoos[i]) - 1;
+                            int next = previous + 2;
+                            if (connectionList[previous] != connections[i][j] && connectionList[next] != connections[i][j])
+                            {
+                                connectionList.Add(tattoos[i]);
+                                connectionList.Add(connections[i][j]);
+                                Vector2 direction = (connections[i][j].anchoredPosition - tattoos[i].anchoredPosition).normalized;
+
+                                positions.Add(tattoos[i].anchoredPosition + direction * avoidRadius);
+                                positions.Add(connections[i][j].anchoredPosition - direction * avoidRadius);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        LRM.UILRL.Points = positions;
+    }
 
 }

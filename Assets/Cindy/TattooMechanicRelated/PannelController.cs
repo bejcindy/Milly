@@ -6,11 +6,12 @@ using UnityEngine.UI.Extensions;
 
 public class PannelController : MonoBehaviour
 {
-    public Renderer targetObj;
+    public static bool mechanicActivated;
     public bool activated;
     public float fadeSpeed;
     public RectTransform CanvasRect;
     public Image pannelBG;
+    public Renderer targetObj;
     public RectTransform currentTattoo;
     public float mouseDragSpeed, scrollSizeSpeed;
 
@@ -30,6 +31,7 @@ public class PannelController : MonoBehaviour
         blackLine.color = new Color(blackLine.color.r, blackLine.color.g, blackLine.color.b, 0);
         greyLine.color = new Color(greyLine.color.r, greyLine.color.g, greyLine.color.b, 0);
         pannelBG.color = new Color(pannelBG.color.r, pannelBG.color.g, pannelBG.color.b, 0);
+        mechanicActivated = false;
     }
 
     // Start is called before the first frame update
@@ -165,6 +167,14 @@ public class PannelController : MonoBehaviour
             {
                 float scrollAmount = Input.mouseScrollDelta.y;
                 transform.localScale = new Vector2(Mathf.Clamp(transform.localScale.x + scrollAmount * scrollSizeSpeed, .5f, 2f), Mathf.Clamp(transform.localScale.y + scrollAmount * scrollSizeSpeed, .5f, 2f));
+            }
+        }
+
+        if (mechanicActivated)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                activated = !activated;
             }
         }
     }

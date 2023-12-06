@@ -13,8 +13,8 @@ public class CatFood : PickUpObject
     {
         base.Start();
         objType = HandObjectType.TRASH;
-        openCan = transform.GetChild(0);
-        closeCan = transform.GetChild(1);
+        openCan = transform.GetChild(1);
+        closeCan = transform.GetChild(0);
     }
 
     protected override void Update()
@@ -36,6 +36,7 @@ public class CatFood : PickUpObject
         {
             if (!openCan.gameObject.activeSelf)
             {
+                rend = openCan.GetComponent<Renderer>();
                 openCan.gameObject.SetActive(true);
                 closeCan.gameObject.SetActive(false);
             }
@@ -46,6 +47,15 @@ public class CatFood : PickUpObject
             transform.SetParent(null);
             objType = HandObjectType.TRASH;
         }
+
+        if (selected && !thrown)
+            rend.gameObject.layer = 9;
+        else if (inHand)
+            rend.gameObject.layer = 7;
+        else if (transformed)
+            rend.gameObject.layer = 17;
+        else
+            rend.gameObject.layer = 0;
     }
 
     public void PlaceCan()

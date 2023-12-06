@@ -65,7 +65,6 @@ public class Xixi : NPCControl
     protected override void OnConversationStart(Transform other)
     {
         base.OnConversationStart(other);
-        catCam.m_Priority = 10;
     }
     protected override void OnConversationEnd(Transform other)
     {

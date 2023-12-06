@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using PixelCrushers.DialogueSystem;
+using Cinemachine;
 
 public class PannelController : MonoBehaviour
 {
@@ -23,7 +24,12 @@ public class PannelController : MonoBehaviour
     float timer;
     Renderer previousObj;
     RectTransform previousTattoo;
+
     [SerializeField] PlayerHolding playerHolding;
+    [SerializeField] PlayerMovement playerMovement;
+    [SerializeField] CinemachineVirtualCamera playerCamera;
+
+
     bool clearedCurrent;
     bool fadingColor;
 
@@ -49,10 +55,8 @@ public class PannelController : MonoBehaviour
         //    DemoCatActivation();
         if (activated)
         {
-            foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
-            {
-                if (panel.continueButton != null) panel.continueButton.interactable = false;
-            }
+            PausePlayer();
+
             //PixelCrushers.UIPanel.monitorSelection = false; // Don't allow dialogue UI to steal back input focus.
             //PixelCrushers.DialogueSystem.DialogueManager.Pause(); // Stop DS timers (e.g., sequencer commands).
 
@@ -176,10 +180,8 @@ public class PannelController : MonoBehaviour
         }
         else
         {
-            foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
-            {
-                if (panel.continueButton != null) panel.continueButton.interactable = true;
-            }
+
+            UnpausePlayer();
             gotPos = false;
             noDrag = true;
             timer = 0;
@@ -231,6 +233,28 @@ public class PannelController : MonoBehaviour
 
             }
         }
+    }
+
+    public void PausePlayer()
+    {
+        foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
+        {
+            if (panel.continueButton != null) panel.continueButton.interactable = false;
+        }
+        playerMovement.enabled = false;
+        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+    }
+
+    public void UnpausePlayer()
+    {
+        foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
+        {
+            if (panel.continueButton != null) panel.continueButton.interactable = true;
+        }
+        playerMovement.enabled = true;
+        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
+        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
     }
 
     public void DemoCatActivation()

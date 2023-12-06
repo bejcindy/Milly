@@ -72,14 +72,14 @@ public class CatFood : PickUpObject
     IEnumerator LerpRotation(Quaternion targetRot, float duration)
     {
         float time = 0;
-        Quaternion startValue = transform.rotation;
+        Quaternion startValue = transform.localRotation;
         while (time < duration)
         {
-            transform.rotation = Quaternion.Lerp(startValue, targetRot, time / duration);
+            transform.localRotation = Quaternion.Lerp(startValue, targetRot, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
-        transform.rotation = targetRot;
+        transform.localRotation = targetRot;
         opened = true;
     }
 }

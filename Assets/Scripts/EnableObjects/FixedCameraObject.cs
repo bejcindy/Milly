@@ -261,4 +261,9 @@ public class FixedCameraObject : LivableObject
     {
 
     }
+
+    public void ManualQuit()
+    {
+        StartCoroutine(UnfixPlayer());
+    }
 }

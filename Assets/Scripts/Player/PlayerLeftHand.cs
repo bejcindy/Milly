@@ -125,7 +125,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
 
 
-        if(foodAte > 3 && !foodEatingDialogueDone)
+        if(foodAte >= 3 && !foodEatingDialogueDone)
         {
             DialogueManager.StartConversation("MainQuest/Eating");
             foodEatingDialogueDone = true;

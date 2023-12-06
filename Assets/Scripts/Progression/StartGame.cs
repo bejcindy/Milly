@@ -16,6 +16,7 @@ public class StartGame : MonoBehaviour
 
     public GameObject startFade;
     public Door door;
+    public FixedCameraObject izaChair;
 
     float startDelay = 5f;
     bool startCountDown;

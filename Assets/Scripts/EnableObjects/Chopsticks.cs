@@ -54,16 +54,19 @@ public class Chopsticks : PickUpObject
         {
             selected = false;
             playerHolding.RemoveInteractable(gameObject);
-            if (activated && MainQuestState.firstGloriaTalk)
-            {
-                gameObject.layer = 17;
-                otherChopstick.gameObject.layer = 17;
-            }
-            else
-            {
-                gameObject.layer = 0;
-                otherChopstick.gameObject.layer = 0;
-            }
+
+            gameObject.layer = 0;
+            otherChopstick.gameObject.layer = 0;
+            //if (activated && MainQuestState.firstGloriaTalk)
+            //{
+            //    gameObject.layer = 17;
+            //    otherChopstick.gameObject.layer = 17;
+            //}
+            //else
+            //{
+            //    gameObject.layer = 0;
+            //    otherChopstick.gameObject.layer = 0;
+            //}
         }
     }
 

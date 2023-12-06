@@ -104,11 +104,11 @@ public class PlayerHolding : MonoBehaviour
             else
                 FakeDisplayUI();
 
-            if (StartSequence.noControl && !noControlReset)
-            {
-                pickUpObjects.Clear();
-                noControlReset = true;
-            }
+            //if (StartSequence.noControl && !noControlReset)
+            //{
+            //    pickUpObjects.Clear();
+            //    noControlReset = true;
+            //}
 
 
             atContainer = CheckContainer();
@@ -594,6 +594,11 @@ public class PlayerHolding : MonoBehaviour
     {
         pickUpObjects.Clear();
         HideUI(null);
+    }
+
+    public void SetAtTableFalse()
+    {
+        atTable = false;
     }
 
     IEnumerator LerpPosition(Transform obj, Vector3 targetPosition, float duration)

@@ -60,7 +60,7 @@ public class LivableObject : MonoBehaviour
             mat.EnableKeyword("_WhiteDegree");
         }
         checkBoundVisible = new bool[8];
-        matColorVal = 1;
+        //matColorVal = 1;
         playerCam = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
     }
 
@@ -195,6 +195,11 @@ public class LivableObject : MonoBehaviour
     public void Activate()
     {
         activated = true;
+    }
+
+    public void EnableInteract()
+    {
+        overrideStartSequence = true;
     }
 
 

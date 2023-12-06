@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Akihito : NPCControl 
 {
+    public Transform akiLantern;
 
     public void ActivateAki()
     {
@@ -15,6 +16,15 @@ public class Akihito : NPCControl
     {
         noMoveAfterTalk = true;
         noTalkInWalk = true;
+    }
+
+    public void LanternFall()
+    {
+        akiLantern.GetComponent<HingeJoint>().breakForce = 0;
+        akiLantern.GetComponent<HingeJoint>().connectedBody = null;
+        akiLantern.GetComponent<CollisionObject>().enabled = false;
+        akiLantern.GetComponent<GroupMaster>().enabled = false;
+        akiLantern.GetComponent<PickUpObject>().enabled = true;
     }
 
 

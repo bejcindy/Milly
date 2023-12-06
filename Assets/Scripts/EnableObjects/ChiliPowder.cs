@@ -66,10 +66,11 @@ public class ChiliPowder : PickUpObject
             if (inHand)
                 PutDownPowder();
 
-            if (!MainQuestState.firstGloriaTalk)
-                gameObject.layer = 0;
-            else
-                gameObject.layer = 17;
+            gameObject.layer = 0;
+            //if (!MainQuestState.firstGloriaTalk)
+            //    gameObject.layer = 0;
+            //else
+            //    gameObject.layer = 17;
         }
     }
 

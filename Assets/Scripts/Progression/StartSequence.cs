@@ -18,6 +18,9 @@ public class StartSequence : MonoBehaviour
     public CinemachineVirtualCamera shockCam;
     public CinemachineVirtualCamera loyiCam;
 
+    public Kelvin kelvin;
+    public Felix felix;
+
     public StudioEventEmitter izaInEmitter;
     bool fadingIzaAmbience;
     float izaInFadeVal;

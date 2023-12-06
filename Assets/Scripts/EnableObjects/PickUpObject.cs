@@ -59,7 +59,7 @@ public class PickUpObject : LivableObject
         {
             if (playerHolding.GetLeftHand())
             {
-                if (!player.GetComponent<PlayerLeftHand>().inPizzaBox && !StartSequence.noControl)
+                if (!player.GetComponent<PlayerLeftHand>().inPizzaBox && (!StartSequence.noControl||overrideStartSequence))
                 {
                     playerHolding.AddInteractable(gameObject);
                 }

@@ -561,23 +561,13 @@ public class NPCControl : MonoBehaviour
     #endregion
 
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.name.Contains(gameObject.name))
-    //    {
-
-    //        if (lookCoroutine != null)
-    //            StopCoroutine(lookCoroutine);
-    //        lookCoroutine = StartCoroutine(RotateTowards(other.transform.GetChild(0).transform));
-    //    }
-
-    //}
-
     public void IdleRotate()
     {
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
-        lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter-1].transform.GetChild(0).transform));
+
+        if(destinations.Length > 0)
+            lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter-1].transform.GetChild(0).transform));
     }
 
     public void StopLookRotation()

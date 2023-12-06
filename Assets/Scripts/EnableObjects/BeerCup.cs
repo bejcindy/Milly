@@ -64,10 +64,12 @@ public class BeerCup : PickUpObject
             if (inHand)
                 PutDownCup();
 
-            if (!MainQuestState.firstGloriaTalk)
-                gameObject.layer = 0;
-            else
-                gameObject.layer = 17;
+            gameObject.layer = 0;
+            liquid.gameObject.layer = 0;
+            //if (!MainQuestState.firstGloriaTalk)
+            //    gameObject.layer = 0;
+            //else
+            //    gameObject.layer = 17;
         }
     }
 

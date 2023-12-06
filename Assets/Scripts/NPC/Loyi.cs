@@ -24,7 +24,6 @@ public class Loyi : NPCControl
         agent.enabled = true;
         machine.ChangeState(machine.moveState);
 
-
     }
 
     public void LoyiAction1()

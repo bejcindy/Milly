@@ -25,6 +25,7 @@ public class PannelController : MonoBehaviour
     RectTransform previousTattoo;
     [SerializeField] PlayerHolding playerHolding;
     bool clearedCurrent;
+    bool fadingColor;
 
     private void Awake()
     {
@@ -87,10 +88,14 @@ public class PannelController : MonoBehaviour
                     if (targetObj != previousObj || currentTattoo != previousTattoo)
                         gotPos = false;
                     currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+                    if (currentTattoo.GetComponent<Image>().color.a < 1)
+                        fadingColor = true;
                     if (currentTattoo.GetComponent<Image>().color.a == 1)
                     {
                         if (greyLine.color.a != 1)
                             timer += Time.deltaTime;
+                        else
+                            fadingColor = false;
                         //Debug.Log(timer);
                         if (timer > .5f && timer < 2f)
                         {
@@ -155,12 +160,17 @@ public class PannelController : MonoBehaviour
                     blackLine.color = FadeInColor(blackLine.color, 1);
                     greyLine.color = FadeInColor(greyLine.color, 1);
                     pannelBG.color = FadeInColor(pannelBG.color, 1);
+                    if (greyLine.color.a < 1)
+                        fadingColor = true;
+                    else
+                        fadingColor = false;
                 }
             }
             if (greyLine.color.a == 1)
             {
                 noDrag = false;
                 firstActivated = true;
+                fadingColor = false;
             }
 
         }
@@ -181,6 +191,10 @@ public class PannelController : MonoBehaviour
             blackLine.color = FadeOutColor(blackLine.color);
             greyLine.color = FadeOutColor(greyLine.color);
             pannelBG.color = FadeOutColor(pannelBG.color);
+            if (greyLine.color.a > 0)
+                fadingColor = true;
+            else
+                fadingColor = false;
             if (!clearedCurrent)
             {
                 currentTattoo = null;
@@ -205,16 +219,13 @@ public class PannelController : MonoBehaviour
 
         if (mechanicActivated)
         {
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab) && !fadingColor)
             {
                 if (activated)
-                {
                     activated = false;
-                }
-                    
                 else
                 {
-                    if(!playerHolding.inDialogue)
+                    if (!playerHolding.inDialogue)
                         activated = true;
                 }
 

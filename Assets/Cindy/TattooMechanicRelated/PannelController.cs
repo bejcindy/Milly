@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using PixelCrushers.DialogueSystem;
 
 public class PannelController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class PannelController : MonoBehaviour
     float timer;
     Renderer previousObj;
     RectTransform previousTattoo;
+    [SerializeField] PlayerHolding playerHolding;
     bool clearedCurrent;
 
     private void Awake()
@@ -46,6 +48,13 @@ public class PannelController : MonoBehaviour
         //    DemoCatActivation();
         if (activated)
         {
+            foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
+            {
+                if (panel.continueButton != null) panel.continueButton.interactable = false;
+            }
+            //PixelCrushers.UIPanel.monitorSelection = false; // Don't allow dialogue UI to steal back input focus.
+            //PixelCrushers.DialogueSystem.DialogueManager.Pause(); // Stop DS timers (e.g., sequencer commands).
+
             clearedCurrent = false;
             DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
             if (!mechanicActivated)
@@ -157,6 +166,10 @@ public class PannelController : MonoBehaviour
         }
         else
         {
+            foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
+            {
+                if (panel.continueButton != null) panel.continueButton.interactable = true;
+            }
             gotPos = false;
             noDrag = true;
             timer = 0;
@@ -194,7 +207,17 @@ public class PannelController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                activated = !activated;
+                if (activated)
+                {
+                    activated = false;
+                }
+                    
+                else
+                {
+                    if(!playerHolding.inDialogue)
+                        activated = true;
+                }
+
             }
         }
     }
@@ -203,6 +226,10 @@ public class PannelController : MonoBehaviour
     {
         activated = true;
         Invoke("ActivateCat", 5f);
+        foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
+        {
+            if (panel.continueButton != null) panel.continueButton.interactable = false;
+        }
     }
 
     void ActivateCat()

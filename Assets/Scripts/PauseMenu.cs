@@ -72,11 +72,6 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    IEnumerator ClearSelectionAfterOneFrame() // Could select a pause menu button instead.
-    {
-        yield return null;
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-    }
 
     public void PauseGame()
     {

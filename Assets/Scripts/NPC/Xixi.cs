@@ -36,7 +36,7 @@ public class Xixi : NPCControl
     public void XixiAction2()
     {
         noTalkStage = false;
-
+        noLookInConvo = true;
 
     }
 
@@ -44,6 +44,7 @@ public class Xixi : NPCControl
     {
         noMoveAfterTalk = true;
         noTalkInWalk = false;
+        noLookInConvo = false;
 
         if(playerLeftHand.isHolding && playerLeftHand.holdingObj.name.Contains("Cat_can"))
         {

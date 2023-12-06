@@ -47,6 +47,7 @@ public class PannelController : MonoBehaviour
         if (activated)
         {
             clearedCurrent = false;
+            DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
             if (!mechanicActivated)
                 mechanicActivated = true;
             if (targetObj && currentTattoo && !gotPos)
@@ -159,6 +160,7 @@ public class PannelController : MonoBehaviour
             gotPos = false;
             noDrag = true;
             timer = 0;
+            DataHolder.HideHint(DataHolder.hints.tattooViewHint);
             foreach (Image img in childImgs)
             {
                 img.color = FadeOutColor(img.color);

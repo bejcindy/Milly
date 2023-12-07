@@ -11,6 +11,9 @@ public class TableController : MonoBehaviour
 
     public GameObject[] plates;
     PlayerHolding playerHolding;
+
+    public bool firstTableOn;
+    public Chopsticks chopsticks;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,8 @@ public class TableController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Tab) && !isHolding)
             {
                 tableControlOn = !tableControlOn;
+                if (!firstTableOn)
+                    ChooseChopsFirst();
                 //CheckTableControl();
             }
         }
@@ -43,6 +48,14 @@ public class TableController : MonoBehaviour
         if (StartSequence.noControl)
             tableControlOn = false;
 
+    }
+
+    public void ChooseChopsFirst()
+    {
+        firstTableOn = true;
+        playerHolding.AddInteractable(chopsticks.gameObject);
+        chopsticks.selected = true;
+        playerHolding.selectedObj = chopsticks.gameObject;
     }
 
     public void DeactivateTable()

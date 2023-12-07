@@ -17,6 +17,8 @@ public class StartGame : MonoBehaviour
     public GameObject startFade;
     public Door door;
     public FixedCameraObject izaChair;
+    public GameObject prologue1;
+    public GameObject prologue2;
 
     float startDelay = 5f;
     bool startCountDown;
@@ -46,6 +48,9 @@ public class StartGame : MonoBehaviour
             playerCinemachine.m_Priority = 9;
             playerMovement.enabled = false;
             startCountDown = true;
+            door.enabled = false;
+            prologue1.SetActive(true);
+            prologue2.SetActive(true);
 
         }
         else
@@ -55,6 +60,8 @@ public class StartGame : MonoBehaviour
             playerCinemachine.m_Priority = 10;
             playerMovement.enabled = true;
             door.enabled = true;
+            prologue1.SetActive(false);
+            prologue2.SetActive(false);
 
         }
     }

@@ -33,7 +33,6 @@ public class Door : LivableObject
         if (slidingDoor)
         {
             closedPos = door.localPosition;
-            enabled = false;
         }
         else
             closedPos = door.localEulerAngles;        

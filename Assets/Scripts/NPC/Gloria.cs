@@ -6,6 +6,8 @@ public class Gloria : NPCControl
 {
     float waitTime = 3f;
     public Transform chair;
+
+    bool gloriaOpenDoor;
     protected override void Start()
     {
         base.Start();
@@ -33,9 +35,17 @@ public class Gloria : NPCControl
         waitTime -= Time.deltaTime;
         if (waitTime < 0)
         {
+            Door izaDoor = destObjects[_counter - 1].GetComponent<Door>();
             StopIdle();
             waitTime = 3f;
-            destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
+
+            if (!izaDoor.doorOpen && !gloriaOpenDoor)
+            {
+                gloriaOpenDoor = true;
+                anim.SetTrigger("Special3");
+                destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
+            }
+                
         }
     }
 

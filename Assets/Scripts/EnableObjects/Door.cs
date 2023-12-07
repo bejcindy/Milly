@@ -65,6 +65,7 @@ public class Door : LivableObject
             }
             else
             {
+                isInteracting = false;
                 if (playerHolding.doorHandle == doorHandleCollider.gameObject)
                 {
                     playerHolding.doorHandle = null;

@@ -292,14 +292,19 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (Input.mouseScrollDelta.y < 0)
             {
-                currentChop.chopMoving = true;
-                currentChop.SetEatAnim();
-                currentChop.hasFood = false;
-                Invoke(nameof(DestroyFood), 1f);
+                Eat();
             }
         }
 
 
+    }
+
+    public void Eat()
+    {
+        currentChop.chopMoving = true;
+        currentChop.SetEatAnim();
+        currentChop.hasFood = false;
+        Invoke(nameof(DestroyFood), 1f);
     }
 
     private void ChopUIDetect()
@@ -310,7 +315,7 @@ public class PlayerLeftHand : MonoBehaviour
             chopAimUI.SetActive(false);
     }
 
-    private void DestroyFood()
+    public void DestroyFood()
     {
         Destroy(currentFood.gameObject);
         currentChop.chopMoving = false;

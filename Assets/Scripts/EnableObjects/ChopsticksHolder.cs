@@ -41,8 +41,16 @@ public class ChopsticksHolder : LivableObject
         else
             gameObject.layer = 0;
 
-        if ((StartSequence.noControl || !playerHolding.atTable) && !hasChop)        
-            PutChops();        
+        if ((StartSequence.noControl || !playerHolding.atTable) && !hasChop)
+        {
+            if (myChops.hasFood)
+            {
+                myChops.hasFood = false;
+                playerLeftHand.DestroyFood();
+            }
+            PutChops();
+        }        
+     
 
         if(myChops != null)
         {

@@ -65,8 +65,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avoidRadius: 100
-  positions: []
-  LRM: {fileID: 0}
+  positions:
+  - {x: -206.41646, y: 129.00156}
+  - {x: -205.58354, y: -28.001549}
+  LRM: {fileID: 5556159420806620390}
 --- !u!114 &4405457667901229225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,16 +81,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc43fcff52da94bc1a0599fcfeb70d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObj: {fileID: 0}
   activated: 0
   fadeSpeed: 1
   CanvasRect: {fileID: 2718936292542430644}
   pannelBG: {fileID: 7352387309437145994}
+  targetObj: {fileID: 0}
   currentTattoo: {fileID: 207388239596234534}
   mouseDragSpeed: 70
-  scrollSizeSpeed: -0.1
+  scrollSizeSpeed: 0.1
   blackLine: {fileID: 1770847804429312658}
   greyLine: {fileID: 3461349202519611294}
+  playerHolding: {fileID: 0}
+  playerMovement: {fileID: 0}
+  playerCamera: {fileID: 0}
+  blurMaterial: {fileID: 2100000, guid: b89fe5ba919488448932eec0a1caf6fb, type: 2}
 --- !u!114 &5556159420806620390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,12 +182,8 @@ MonoBehaviour:
   m_Resolution: 0
   m_useNativeSize: 0
   m_points:
-  - {x: -145.2, y: 207.4}
-  - {x: 253, y: 75}
-  - {x: -201.9, y: 179.4}
-  - {x: -19, y: -255}
-  - {x: -261.3, y: 185.3}
-  - {x: -418.3, y: 19.4}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
   lineThickness: 100
   relativeSize: 0
   lineList: 1
@@ -249,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.2627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -300,7 +302,7 @@ RectTransform:
   - {fileID: 6406877132809750510}
   - {fileID: 8472257243794069250}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -328,7 +330,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &8605793222710832704
 MonoBehaviour:
@@ -360,7 +362,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4262862688808725307}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -398,7 +400,7 @@ RectTransform:
   m_GameObject: {fileID: 6138611011860659445}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8472257243794069250}
@@ -407,7 +409,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -207, y: 239}
-  m_SizeDelta: {x: 315, y: 374}
+  m_SizeDelta: {x: 643, y: 638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6101498645321128725
 CanvasRenderer:
@@ -437,7 +439,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d2712cd9521a443c6be67a76350b50c8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5e368d428a5b94826b6c33fe71e85008, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -461,7 +463,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relatedTattoos:
   - {fileID: 2354141117117094303}
-  - {fileID: 0}
   activated: 0
   related: 0
 --- !u!1 &7007387204394521145
@@ -492,7 +493,7 @@ RectTransform:
   m_GameObject: {fileID: 7007387204394521145}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8472257243794069250}
@@ -500,8 +501,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 311, y: 65}
-  m_SizeDelta: {x: 344, y: 556}
+  m_AnchoredPosition: {x: -205, y: -138}
+  m_SizeDelta: {x: 711, y: 590}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2595263837499009801
 CanvasRenderer:
@@ -531,7 +532,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 964e00681868149ddbd1ee0960aed266, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 688c7c35a2f034a40a31c9a57b4ceb62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -555,7 +556,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relatedTattoos:
   - {fileID: 207388239596234534}
-  - {fileID: 0}
   activated: 0
   related: 0
 --- !u!1 &9221936966446317008
@@ -629,12 +629,8 @@ MonoBehaviour:
   m_Resolution: 0
   m_useNativeSize: 0
   m_points:
-  - {x: -145.2, y: 207.4}
-  - {x: 253, y: 75}
-  - {x: -201.9, y: 179.4}
-  - {x: -19, y: -255}
-  - {x: -261.3, y: 185.3}
-  - {x: -418.3, y: 19.4}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
   lineThickness: 100
   relativeSize: 0
   lineList: 1

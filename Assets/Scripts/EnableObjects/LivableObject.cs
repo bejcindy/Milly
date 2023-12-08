@@ -67,6 +67,11 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (transformed)
+        {
+            gameObject.layer = 17;
+        }
+
         if (!StartSequence.noControl || overrideStartSequence)
         {
             if (!GetComponent<Door>() && rend)
@@ -121,18 +126,20 @@ public class LivableObject : MonoBehaviour
                 }
 
                 //change layer related code
-                //if(!StartSequence.noControl || overrideStartSequence)
-                //{
-                //    if (gameObject.layer != 17 && gameObject.layer != 18)
-                //    {
-                //        if (gameObject.layer == 6 || gameObject.layer == 18)
-                //        {
-                //            gameObject.layer = 18;
-                //        }
-                //        else
-                //            gameObject.layer = 17;
-                //    }
-                //}
+                if (!StartSequence.noControl || overrideStartSequence)
+                {
+                    if (gameObject.layer != 17 && gameObject.layer != 18)
+                    {
+                        if (gameObject.layer == 6 || gameObject.layer == 18)
+                        {
+                            gameObject.layer = 18;
+                        }
+                        else
+                            gameObject.layer = 17;
+                    }
+                }
+
+
             }
 
         }
@@ -196,6 +203,11 @@ public class LivableObject : MonoBehaviour
     public void Activate()
     {
         activated = true;
+    }
+
+    public void TransformColor()
+    {
+        transformed = true;
     }
 
     public void EnableInteract()

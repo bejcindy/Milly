@@ -20,7 +20,8 @@ public enum HandObjectType
 public class PickUpObject : LivableObject
 {
     public HandObjectType objType;
-    public PlayerHolding playerHolding;
+    public Vector3 targetRot;
+    protected PlayerHolding playerHolding;
     protected Rigidbody rb;
     public bool inHand;
     public bool selected;

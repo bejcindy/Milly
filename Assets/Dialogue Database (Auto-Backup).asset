@@ -33545,8 +33545,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1048.536
-        y: 1162.3651
+        x: 1051.2759
+        y: 1163.735
         width: 160
         height: 30
     - id: 45
@@ -33572,7 +33572,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: I think because you always have a very different way of seeing things.
+        value: To me at least--it just seems like you always had a very different
+          way of seeing things.
         type: 0
         typeString: 
       - title: Sequence
@@ -33682,7 +33683,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Hold on, my parents are calling.
+        value: Gimme a sec--
         type: 0
         typeString: 
       - title: Sequence
@@ -33737,7 +33738,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: I'll talk to you later? Back at Aki's?
+        value: Shoot, my parents are calling. I'll talk to you later? Back at Aki's?
         type: 0
         typeString: 
       - title: Sequence
@@ -39618,8 +39619,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1314.1644
-        y: 1291.7058
+        x: 1369.7227
+        y: 1790.9331
         width: 160
         height: 30
     - id: 32
@@ -39673,8 +39674,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1314.8114
-        y: 1210.5295
+        x: 1370.3696
+        y: 1709.7568
         width: 160
         height: 30
     - id: 33
@@ -39871,7 +39872,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: <i>Hello...? Milly?</i>
+        value: <i>Milly?</i>
         type: 0
         typeString: 
       - title: Sequence
@@ -40128,6 +40129,61 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>Sorry, I know it's been a while since we talked and...</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 47
+        originDialogueID: 41
+        destinationConversationID: 47
+        destinationDialogueID: 42
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1359.6052
+        y: 669.09094
+        width: 160
+        height: 30
+    - id: 42
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
         value: 1
         type: 5
         typeString: CustomFieldType_Actor
@@ -40140,7 +40196,178 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
+        value: <i>Is she with you guys?</i>
+        type: 0
+        typeString: 
+      - title: Sequence
         value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 47
+        originDialogueID: 42
+        destinationConversationID: 47
+        destinationDialogueID: 43
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1362.9019
+        y: 739.9701
+        width: 160
+        height: 30
+    - id: 43
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>......So you've heard already.</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 47
+        originDialogueID: 43
+        destinationConversationID: 47
+        destinationDialogueID: 44
+        isConnector: 0
+        priority: 2
+      - originConversationID: 47
+        originDialogueID: 43
+        destinationConversationID: 47
+        destinationDialogueID: 45
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1362.9019
+        y: 811.9481
+        width: 160
+        height: 30
+    - id: 44
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: '[Ask to talk to Molly.]'
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>Lemme talk to her.</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 47
+        originDialogueID: 44
+        destinationConversationID: 47
+        destinationDialogueID: 46
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1144.9259
+        y: 881.72833
+        width: 160
+        height: 30
+    - id: 45
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: '[Do not ask to talk to Molly.]'
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>That's what this is about? Finally willing to let me know?</i>
         type: 0
         typeString: 
       - title: Sequence
@@ -40162,13 +40389,283 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1359.6052
-        y: 669.09094
+        x: 1571.8352
+        y: 883.9261
+        width: 160
+        height: 30
+    - id: 46
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>Wait so--she didn't go see you?</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 47
+        originDialogueID: 46
+        destinationConversationID: 47
+        destinationDialogueID: 47
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1146.4185
+        y: 949.3107
+        width: 160
+        height: 30
+    - id: 47
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>......What?</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 47
+        originDialogueID: 47
+        destinationConversationID: 47
+        destinationDialogueID: 49
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1147.5173
+        y: 1022.38763
+        width: 160
+        height: 30
+    - id: 49
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>Shit. She's ummm, she's left. Two days ago.</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 47
+        originDialogueID: 49
+        destinationConversationID: 47
+        destinationDialogueID: 50
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1145.1643
+        y: 1096.7775
+        width: 160
+        height: 30
+    - id: 50
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>Didn't say anything to us, she was just gone.</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 47
+        originDialogueID: 50
+        destinationConversationID: 47
+        destinationDialogueID: 51
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1143.9878
+        y: 1162.3877
+        width: 160
+        height: 30
+    - id: 51
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <i>And I just thought maybe she finally made up her mind so she went
+          to you but...fuck.</i>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 47
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1143.9878
+        y: 1230.0348
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 894.4719, y: 425.95993}
-    canvasZoom: 0.91000044
+    canvasScrollPosition: {x: 279.16852, y: 1180.7566}
+    canvasZoom: 0.5500007
   - id: 48
     fields:
     - title: Title
@@ -52611,8 +53108,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1694.3956
-        y: 1590.243
+        x: 1688.6813
+        y: 1594.5288
         width: 160
         height: 30
     - id: 56
@@ -52668,7 +53165,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1693.9445
-        y: 1659.8159
+        y: 1658.3873
         width: 160
         height: 30
     - id: 57
@@ -52780,7 +53277,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1691.1332
-        y: 1730.1759
+        y: 1728.7474
         width: 160
         height: 30
     - id: 59
@@ -52943,7 +53440,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1692.4435
+        x: 1693.8722
         y: 1925.8928
         width: 160
         height: 30
@@ -53053,13 +53550,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1722.4434
+        x: 1695.3007
         y: 2060.179
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 545.5309, y: 915.21735}
-    canvasZoom: 0.46000004
+    canvasScrollPosition: {x: 1113.1913, y: 1416.7458}
+    canvasZoom: 0.7
   - id: 74
     fields:
     - title: Title
@@ -57496,8 +57993,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: It's like everything I believed...everyone I thought I knew...all
-          tells me that I'm wrong here.
+        value: It almost feels like...I've been at fault this whole time with...with
+          everything.
         type: 0
         typeString: 
       - title: Sequence
@@ -57607,7 +58104,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Nothing can be rebuilt without being destroyed first.
+        value: You know--I started to think demolition might not necessarily be a
+          bad thing for us.
         type: 0
         typeString: 
       - title: Sequence
@@ -57662,8 +58160,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: And nothing will be rebuilt if we don't move away from the destroyed
-          first.
+        value: Since after all--nothing will be rebuilt without being destroyed first,
+          right?
         type: 0
         typeString: 
       - title: Sequence
@@ -57801,8 +58299,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 975.4835
-        y: 980.06396
+        x: 981.19775
+        y: 972.92114
         width: 160
         height: 30
     - id: 16
@@ -57883,8 +58381,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: He wants us to commemorate everything, everyone that's here and has
-          been here, through our designs.
+        value: Designing something for everyone that is and has been here before--a
+          form of commemoration.
         type: 0
         typeString: 
       - title: Sequence
@@ -58028,8 +58526,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 742.06714
-        y: 1258.3304
+        x: 721.17163
+        y: 1259.8229
         width: 160
         height: 30
     - id: 20
@@ -58111,8 +58609,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: And what even is the point in doing something like this? Place will
-          be gone and no one will give half a damn about it!
+        value: And what even is the point in doing something like this??
         type: 0
         typeString: 
       - title: Sequence
@@ -58222,7 +58719,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: To rebuild what is breaking apart inside of you.
+        value: To rebuild.
         type: 0
         typeString: 
       - title: Sequence
@@ -58295,7 +58792,7 @@ MonoBehaviour:
       - originConversationID: 78
         originDialogueID: 24
         destinationConversationID: 78
-        destinationDialogueID: 25
+        destinationDialogueID: 26
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -58307,61 +58804,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 1001.7562
         y: 1529.3894
-        width: 160
-        height: 30
-    - id: 25
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 9
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: So that we can see clearly the right and wrong in what had existed.
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 78
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 78
-        originDialogueID: 25
-        destinationConversationID: 78
-        destinationDialogueID: 26
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1002.2079
-        y: 1606.4806
         width: 160
         height: 30
     - id: 26
@@ -58387,8 +58829,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: And all that you will be doing--is to pick up the pieces necessary
-          for whatever that comes after.
+        value: And you just pick up the pieces necessary for whatever that comes
+          after.
         type: 0
         typeString: 
       - title: Sequence
@@ -58416,8 +58858,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1000.0802
-        y: 1671.3741
+        x: 1001.57263
+        y: 1596.7473
         width: 160
         height: 30
     - id: 27
@@ -58443,7 +58885,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: ......
+        value: Z, I'm not sure if I'm the best option for--
         type: 0
         typeString: 
       - title: Sequence
@@ -58471,8 +58913,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1000.0802
-        y: 1737.8125
+        x: 1006.0503
+        y: 1664.6782
         width: 160
         height: 30
     - id: 28
@@ -58498,8 +58940,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: After all, you'd wanna take a good look at this place one more time--before
-          it's gone, right?
+        value: After all, you'd wanna take a good look at this place one more time,
+          right?
         type: 0
         typeString: 
       - title: Sequence
@@ -58525,8 +58967,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 997.4486
-        y: 1800.3265
+        x: 1007.89636
+        y: 1736.1475
         width: 160
         height: 30
     - id: 29
@@ -58607,7 +59049,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Said she left because you were having a fight with Aki.
+        value: Said she left Miyoshiya because you were having a fight with Aki.
         type: 0
         typeString: 
       - title: Sequence
@@ -58717,7 +59159,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Where did she go then?
+        value: Where did she go?
         type: 0
         typeString: 
       - title: Sequence
@@ -58772,7 +59214,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: That's not the point right now. How are you...holding up?
+        value: Not the point right now. How are you...holding up?
         type: 0
         typeString: 
       - title: Sequence
@@ -58805,8 +59247,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 290.78992, y: 817.6925}
-    canvasZoom: 0.7000005
+    canvasScrollPosition: {x: 110.07234, y: 1089.7917}
+    canvasZoom: 0.67000055
   - id: 79
     fields:
     - title: Title

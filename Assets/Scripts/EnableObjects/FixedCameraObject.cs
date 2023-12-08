@@ -35,6 +35,7 @@ public class FixedCameraObject : LivableObject
 
     protected bool iconHidden;
     protected bool isPizzaBox;
+    public bool nearPlayer;
 
     protected bool movingCam;
     public float camXAxisSpeed;
@@ -59,7 +60,7 @@ public class FixedCameraObject : LivableObject
     protected override void Update()
     {
         base.Update();
-        if (interactable)
+        if (nearPlayer && checkVisible)
         {
             if (!isInteracting)
             {
@@ -265,5 +266,17 @@ public class FixedCameraObject : LivableObject
     public void ManualQuit()
     {
         StartCoroutine(UnfixPlayer());
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            nearPlayer = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            nearPlayer = false;
     }
 }

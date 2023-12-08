@@ -13,6 +13,7 @@ public class MainQuestState: MonoBehaviour
     public static bool gloriaArrivesIza;
     public static bool akiConfronted;
     public static bool parentsCalled;
+    public static bool mainQuestStarted;
 
     public GameObject AkiConfrontation;
     public Chair izakayaHighChair;
@@ -57,6 +58,13 @@ public class MainQuestState: MonoBehaviour
     {
         parentsCalled = true;
     }
+
+    public void SetMainQuestStart()
+    {
+        mainQuestStarted = true;
+    }
+
+
 
     public void SetReadyAkiConfrontation()
     {

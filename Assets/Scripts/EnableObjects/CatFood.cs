@@ -19,43 +19,48 @@ public class CatFood : PickUpObject
 
     protected override void Update()
     {
-        if(!cat.inConversation)
-            base.Update();
-        if (inHand)
+        if(!StartSequence.noControl || overrideStartSequence)
         {
-            if (cat.inConversation && !DataHolder.camBlended && !opened)
+            if (!cat.inConversation)
+                base.Update();
+
+            if (inHand)
             {
-                transform.SetParent(cat.transform);
-                objType = HandObjectType.CATFOOD;
-                playerHolding.UnoccupyLeft();
-                PlaceCan();
+                if (cat.inConversation && !DataHolder.camBlended && !opened)
+                {
+                    transform.SetParent(cat.transform);
+                    objType = HandObjectType.CATFOOD;
+                    playerHolding.UnoccupyLeft();
+                    PlaceCan();
+                }
             }
-        }
 
-        if (opened)
-        {
-            if (!openCan.gameObject.activeSelf)
+            if (opened)
             {
-                rend = openCan.GetComponent<Renderer>();
-                openCan.gameObject.SetActive(true);
-                closeCan.gameObject.SetActive(false);
+                if (!openCan.gameObject.activeSelf)
+                {
+                    rend = openCan.GetComponent<Renderer>();
+                    openCan.gameObject.SetActive(true);
+                    closeCan.gameObject.SetActive(false);
+                }
             }
+
+            if (!cat.inConversation && !inHand)
+            {
+                transform.SetParent(null);
+                objType = HandObjectType.TRASH;
+            }
+
+            if (selected && !thrown)
+                rend.gameObject.layer = 9;
+            else if (inHand)
+                rend.gameObject.layer = 7;
+            else if (transformed)
+                rend.gameObject.layer = 17;
+            else
+                rend.gameObject.layer = 0;
         }
 
-        if (!cat.inConversation && !inHand)
-        {
-            transform.SetParent(null);
-            objType = HandObjectType.TRASH;
-        }
-
-        if (selected && !thrown)
-            rend.gameObject.layer = 9;
-        else if (inHand)
-            rend.gameObject.layer = 7;
-        else if (transformed)
-            rend.gameObject.layer = 17;
-        else
-            rend.gameObject.layer = 0;
     }
 
     public void PlaceCan()

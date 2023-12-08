@@ -30,6 +30,7 @@ public class PlayerHolding : MonoBehaviour
     public GameObject[] containers;
     public GameObject selectedObj;
     public GameObject focusedObj;
+    public Transform holdingObject;
     PlayerLeftHand leftHand;
 
     public GameObject leftHandUI;
@@ -79,7 +80,7 @@ public class PlayerHolding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        holdingObject = leftHand.holdingObj;
         if (!looking)
         {
             GetFullHand();
@@ -522,12 +523,13 @@ public class PlayerHolding : MonoBehaviour
         RemoveInteractable(obj.gameObject);
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;
-        switch (obj.GetComponent<PickUpObject>().objType)
+        PickUpObject pickUp = obj.GetComponent<PickUpObject>();
+        switch (pickUp.objType)
         {
             case HandObjectType.CHOPSTICKS:
                 obj.parent.SetParent(chopsticksContainer);
                 StartCoroutine(LerpPosition(obj.parent, Vector3.zero, 1f));
-                StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(Vector3.zero), 1f));
+                StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(pickUp.targetRot), 1f));
                 break;
             case HandObjectType.DOUBLE:
                 obj.SetParent(doubleHandContainer);
@@ -544,7 +546,7 @@ public class PlayerHolding : MonoBehaviour
             default:
                 obj.SetParent(handContainer);
                 StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
-                StartCoroutine(LerpRotation(obj, Quaternion.Euler(Vector3.zero), 1f));
+                StartCoroutine(LerpRotation(obj, Quaternion.Euler(pickUp.targetRot), 1f));
                 break;
 
         }
@@ -581,6 +583,12 @@ public class PlayerHolding : MonoBehaviour
     {
         if (other.CompareTag("Interior"))
             atInterior = true;
+
+        if (other.CompareTag("DoorDetector"))
+        {
+            if (leftHand.isHolding)
+                leftHand.enabled = false;
+        }
         
     }
 
@@ -588,6 +596,9 @@ public class PlayerHolding : MonoBehaviour
     {
         if (other.CompareTag("Interior"))
             atInterior = false;
+
+        if (other.CompareTag("DoorDetector"))
+            leftHand.enabled = true;
     }
     
     public void ClearPickUp()

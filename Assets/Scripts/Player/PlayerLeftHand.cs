@@ -78,11 +78,6 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (!inPizzaBox)
             {
-                //if (holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
-                //    Drink();
-                //if (!drinking && !playerHolding.atInterior)
-                //    DetectHolding();
-
                 HoldingAction();
             }
 
@@ -91,29 +86,6 @@ public class PlayerLeftHand : MonoBehaviour
                 DetectPizzaHolding();
             }
 
-
-            //if (holdingObj != null && holdingObj.TryGetComponent<Chopsticks>(out Chopsticks chop))
-            //{
-            //    if (holdingObj.GetComponent<Chopsticks>())
-            //    {
-            //        currentChop = holdingObj.GetComponent<Chopsticks>();
-            //        UsingChopsticks();
-            //        ChopUIDetect();
-            //    }
-            //    else
-            //    {
-            //        currentChop = null;
-            //    }
-            //}
-            //if (smoking)
-            //{
-            //    Smoke();
-            //    if (!smokingHinted)
-            //    {
-            //        DataHolder.HideHint(DataHolder.hints.cigHint);
-            //        smokingHinted = true;
-            //    }
-            //}
 
         }
         else

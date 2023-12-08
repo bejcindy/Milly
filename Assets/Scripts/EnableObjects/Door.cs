@@ -54,72 +54,66 @@ public class Door : LivableObject
         else
             isVisible = false;
 
-        if (!barDoor)
+
+        playerInFront = CheckPlayerForward();
+
+        if (interactable)
         {
-            playerInFront = CheckPlayerForward();
-            if (interactable && !playerHolding.atTable)
+            if (!playerHolding.GetLeftHand())
+            {
+                playerHolding.GetComponent<PlayerLeftHand>().enabled = false;
+            }
+            if (!playerHolding.atTable)
             {
                 DoorControl();
                 playedWithDoor = true;
             }
-            else
-            {
-                isInteracting = false;
-                if (playerHolding.doorHandle == doorHandleCollider.gameObject)
-                {
-                    playerHolding.doorHandle = null;
-                    playedWithDoor = false;
-                }
 
-            }
-
-            if (slidingDoor)
-            {
-                if (door.localPosition == openPos)
-                    doorOpen = true;
-                else
-                    doorOpen = false;
-            }
-            else
-            {
-                if (door.localRotation == Quaternion.Euler(openPos))
-                    doorOpen = true;
-                else
-                    doorOpen = false;
-            }
         }
         else
         {
-            if (interactable)
+            if (!playerHolding.GetLeftHand())
+                playerHolding.GetComponent<PlayerLeftHand>().enabled = true;
+
+
+            isInteracting = false;
+            if (playerHolding.doorHandle == doorHandleCollider.gameObject)
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    activated = true;
-                    GetComponent<DialogueSystemTrigger>().enabled = true;
-                    playedWithDoor = true;
-                }
-                if (!playedWithDoor)
-                    playerHolding.doorHandle = doorHandleCollider.gameObject;
-                else if (playerHolding.doorHandle == doorHandleCollider.gameObject)
-                    playerHolding.doorHandle = null;
-            }
-            else if (playerHolding.doorHandle == doorHandleCollider.gameObject)
                 playerHolding.doorHandle = null;
+                playedWithDoor = false;
+            }
+
         }
+
+        if (slidingDoor)
+        {
+            if (door.localPosition == openPos)
+                doorOpen = true;
+            else
+                doorOpen = false;
+        }
+        else
+        {
+            if (door.localRotation == Quaternion.Euler(openPos))
+                doorOpen = true;
+            else
+                doorOpen = false;
+        }
+        
+
     }
 
     protected virtual void DoorControl()
     {
-        if (playerHolding.GetLeftHand())
+
+        if (Input.GetMouseButton(0))
         {
-            if (Input.GetMouseButton(0))
-            {
-                activated = true;
-                isInteracting = true;
-                playedWithDoor = true;
-            }
-            playerHolding.doorHandle = doorHandleCollider.gameObject;
+            activated = true;
+            isInteracting = true;
+            playedWithDoor = true;
         }
+        playerHolding.doorHandle = doorHandleCollider.gameObject;
+
 
         if (isInteracting)
         {

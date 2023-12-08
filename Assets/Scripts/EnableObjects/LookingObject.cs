@@ -100,7 +100,7 @@ public class LookingObject : LivableObject
             {
                 gameObject.layer = 9;
             }
-            else if (activated)
+            else if (activated || transformed)
                 gameObject.layer = 17;
             else
             {

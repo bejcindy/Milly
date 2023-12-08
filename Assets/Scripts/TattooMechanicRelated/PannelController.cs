@@ -5,6 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using PixelCrushers.DialogueSystem;
 using Cinemachine;
+using UnityEngine.Rendering.Universal;
+using System.Reflection;
+using UnityEngine.Rendering;
+using UnityEditor;
+using UnityEditor.VersionControl;
 
 public class PannelController : MonoBehaviour
 {
@@ -13,6 +18,7 @@ public class PannelController : MonoBehaviour
     public float fadeSpeed;
     public RectTransform CanvasRect;
     public Image pannelBG;
+    float BGAlpha;
     public Renderer targetObj;
     public RectTransform currentTattoo;
     public float mouseDragSpeed, scrollSizeSpeed;
@@ -32,6 +38,7 @@ public class PannelController : MonoBehaviour
 
     bool clearedCurrent;
     bool fadingColor;
+    [SerializeField] Material blurMaterial;
 
     private void Awake()
     {
@@ -42,17 +49,15 @@ public class PannelController : MonoBehaviour
         }
         blackLine.color = new Color(blackLine.color.r, blackLine.color.g, blackLine.color.b, 0);
         greyLine.color = new Color(greyLine.color.r, greyLine.color.g, greyLine.color.b, 0);
+        BGAlpha = pannelBG.color.a;
         pannelBG.color = new Color(pannelBG.color.r, pannelBG.color.g, pannelBG.color.b, 0);
         mechanicActivated = false;
-
-        //for demo purpos only
         clearedCurrent = true;
+        blurMaterial.SetFloat("_Alpha", 0);
     }
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.P))
-        //    DemoCatActivation();
         if (activated)
         {
             PausePlayer();
@@ -103,7 +108,8 @@ public class PannelController : MonoBehaviour
                         //Debug.Log(timer);
                         if (timer > .5f && timer < 2f)
                         {
-                            pannelBG.color = FadeInColor(pannelBG.color, 1);
+                            pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
+                            FadeInBlur();
                         }
                         if (timer > 2f && timer < 3.5f)
                         {
@@ -163,7 +169,8 @@ public class PannelController : MonoBehaviour
 
                     blackLine.color = FadeInColor(blackLine.color, 1);
                     greyLine.color = FadeInColor(greyLine.color, 1);
-                    pannelBG.color = FadeInColor(pannelBG.color, 1);
+                    pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
+                    FadeInBlur();
                     if (greyLine.color.a < 1)
                         fadingColor = true;
                     else
@@ -193,6 +200,7 @@ public class PannelController : MonoBehaviour
             blackLine.color = FadeOutColor(blackLine.color);
             greyLine.color = FadeOutColor(greyLine.color);
             pannelBG.color = FadeOutColor(pannelBG.color);
+            FadeOutBlur();
             if (greyLine.color.a > 0)
                 fadingColor = true;
             else
@@ -242,8 +250,16 @@ public class PannelController : MonoBehaviour
             if (panel.continueButton != null) panel.continueButton.interactable = false;
         }
         playerMovement.enabled = false;
-        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+        if (Input.GetMouseButton(0))
+        {
+            playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+            playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+        }
+        else
+        {
+            playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+            playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+        }
     }
 
     public void UnpausePlayer()
@@ -290,6 +306,36 @@ public class PannelController : MonoBehaviour
         else
             c = new Color(c.r, c.g, c.b, 0);
         return c;
+    }
+
+    void FadeInBlur()
+    {
+        if (blurMaterial.GetFloat("_Alpha") != 1)
+        {
+            float timeElapsed = 0;
+            while (timeElapsed < 2f)
+            {
+                float a = Mathf.Lerp(0, 1, timeElapsed / 1.5f);
+                blurMaterial.SetFloat("_Alpha", a);
+                timeElapsed += Time.deltaTime;
+            }
+        }
+        blurMaterial.SetFloat("_Alpha", 1);
+    }
+
+    void FadeOutBlur()
+    {
+        if (blurMaterial.GetFloat("_Alpha") != 0)
+        {
+            float timeElapsed = 0;
+            while (timeElapsed < 2f)
+            {
+                float a = Mathf.Lerp(1, 0, timeElapsed / 1.5f);
+                blurMaterial.SetFloat("_Alpha", a);
+                timeElapsed += Time.deltaTime;
+            }
+        }
+        blurMaterial.SetFloat("_Alpha", 0);
     }
 
     IEnumerator LerpPosition(Vector2 targetPosition, float duration)

@@ -75,10 +75,17 @@ public class PannelController : MonoBehaviour
                 Vector2 WorldObject_ScreenPosition = new Vector2(
                 ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
                 ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-                if (pannelBG.color.a == 0)
-                    GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition - currentTattoo.anchoredPosition;
+                if (targetObj.isVisible)
+                {
+                    if (pannelBG.color.a == 0)
+                        GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition - currentTattoo.anchoredPosition;
+                    else
+                        StartCoroutine(LerpPosition(WorldObject_ScreenPosition - currentTattoo.anchoredPosition, 1f));
+                }
                 else
-                    StartCoroutine(LerpPosition(WorldObject_ScreenPosition - currentTattoo.anchoredPosition, 1f));
+                {
+                    GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                }
 
                 currentTattoo.GetComponent<TattooConnection>().activated = true;
                 foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)

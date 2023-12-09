@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,12 @@ public class CatFood : PickUpObject
 {
     public Xixi cat;
     public bool opened;
+    public bool finishedEating;
+
+    public bool finishDiaDone;
     Transform openCan;
     Transform closeCan;
+    Transform wetFood;
 
     protected override void Start()
     {
@@ -15,6 +20,7 @@ public class CatFood : PickUpObject
         objType = HandObjectType.TRASH;
         openCan = transform.GetChild(1);
         closeCan = transform.GetChild(0);
+        wetFood = transform.GetChild(2);
     }
 
     protected override void Update()
@@ -32,6 +38,16 @@ public class CatFood : PickUpObject
                     objType = HandObjectType.CATFOOD;
                     playerHolding.UnoccupyLeft();
                     PlaceCan();
+                }
+
+                if (!finishDiaDone)
+                {
+                    if (overrideStartSequence)
+                    {
+                        DialogueManager.StartConversation("NPC/Xixi/FirstEat");
+                        finishDiaDone = true;
+                    }
+
                 }
             }
 
@@ -66,8 +82,16 @@ public class CatFood : PickUpObject
     public void PlaceCan()
     {
         inHand = false;
+        wetFood.gameObject.layer = 17;
         StartCoroutine(LerpPosition(cat.catFoodPos, 1f));
         StartCoroutine(LerpRotation(Quaternion.Euler(cat.catFoodRot), 1f));
+    }
+
+    public void FinishEating()
+    {
+        transform.SetParent(null);
+        finishedEating = true;
+        wetFood.gameObject.SetActive(false);
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)

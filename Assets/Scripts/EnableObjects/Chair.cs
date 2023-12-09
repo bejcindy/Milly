@@ -31,12 +31,12 @@ public class Chair : FixedCameraObject
         else
         {
             playerHolding.atTable = false;
-            if (!stand)
-            {
-                RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Chair_Pull", transform.position);
-                sit = false;
-                stand = true;
-            }
+            //if (!stand)
+            //{
+            //    RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Chair_Pull", transform.position);
+            //    sit = false;
+            //    stand = true;
+            //}
         }
     }
 }

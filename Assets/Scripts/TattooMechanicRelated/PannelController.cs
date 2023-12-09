@@ -34,6 +34,8 @@ public class PannelController : MonoBehaviour
     [SerializeField] PlayerHolding playerHolding;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] CinemachineVirtualCamera playerCamera;
+    [SerializeField] CinemachineVirtualCamera catCamera;
+    bool catActivated;
 
 
     bool clearedCurrent;
@@ -261,16 +263,30 @@ public class PannelController : MonoBehaviour
         {
             playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
             playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+
+            if (catActivated)
+            {
+                catCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+                catCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+            }
         }
         else
         {
             playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
             playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+
+            if (catActivated)
+            {
+                catCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+                catCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+            }
         }
     }
 
     public void UnpausePlayer()
     {
+        catActivated = false;
+
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
             if (panel.continueButton != null) panel.continueButton.interactable = true;
@@ -283,11 +299,8 @@ public class PannelController : MonoBehaviour
     public void DemoCatActivation()
     {
         activated = true;
+        catActivated = true;
         Invoke("ActivateCat", 5f);
-        foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
-        {
-            if (panel.continueButton != null) panel.continueButton.interactable = false;
-        }
     }
 
     void ActivateCat()

@@ -13,6 +13,7 @@ public class Door : LivableObject
 
     public bool slidingDoor;
     public bool barDoor;
+    public bool invertControl;
 
     public bool playerInFront;
     PlayerHolding playerHolding;
@@ -140,13 +141,31 @@ public class Door : LivableObject
                     {
                         if (playerInFront)
                         {
-                            if (verticalInput > 0)
-                                StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                            if (!invertControl)
+                            {
+                                if (verticalInput > 0)
+                                    StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                            }
+                            else
+                            {
+                                if (verticalInput < 0)
+                                    StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                            }
+
                         }
                         else
                         {
-                            if (verticalInput < 0)
-                                StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                            if (!invertControl)
+                            {
+                                if (verticalInput < 0)
+                                    StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                            }
+                            else
+                            {
+                                if (verticalInput > 0)
+                                    StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                            }
+
                         }
                     }
                 }

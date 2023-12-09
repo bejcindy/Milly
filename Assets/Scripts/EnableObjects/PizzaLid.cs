@@ -41,7 +41,7 @@ public class PizzaLid : FixedCameraObject
         else
             fixedPos = false;
 
-        if (interactable && !coolDown && playerHolding.GetLeftHand())
+        if (nearPlayer && !coolDown && playerHolding.GetLeftHand())
         {
 
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;

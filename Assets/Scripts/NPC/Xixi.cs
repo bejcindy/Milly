@@ -87,6 +87,11 @@ public class Xixi : NPCControl
         catCam.m_Priority = 9;
     }
 
+    public void EatCan()
+    {
+        anim.SetTrigger("Eat");
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

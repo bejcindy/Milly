@@ -55,6 +55,7 @@ public class CatFood : PickUpObject
             {
                 if (!openCan.gameObject.activeSelf)
                 {
+                    cat.EatCan();
                     rend = openCan.GetComponent<Renderer>();
                     openCan.gameObject.SetActive(true);
                     closeCan.gameObject.SetActive(false);

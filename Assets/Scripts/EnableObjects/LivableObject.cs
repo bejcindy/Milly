@@ -60,8 +60,8 @@ public class LivableObject : MonoBehaviour
             mat = rend.material;
             mat.EnableKeyword("_WhiteDegree");
         }
+
         checkBoundVisible = new bool[8];
-        //matColorVal = 1;
         playerCam = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
     }
 

@@ -27,6 +27,7 @@ public class PannelController : MonoBehaviour
     public UILineRendererList blackLine, greyLine;
 
     bool gotPos, noDrag, firstActivated;
+    bool lerping;
     float timer;
     Renderer previousObj;
     RectTransform previousTattoo;
@@ -186,7 +187,7 @@ public class PannelController : MonoBehaviour
                         fadingColor = false;
                 }
             }
-            if (greyLine.color.a == 1)
+            if (greyLine.color.a == 1 && !lerping)
             {
                 noDrag = false;
                 firstActivated = true;
@@ -364,12 +365,13 @@ public class PannelController : MonoBehaviour
         Vector3 startPosition = transform.localPosition;
         while (time < duration)
         {
-            Debug.Log("running");
+            lerping = true;
             transform.localPosition = Vector2.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
         GetComponent<RectTransform>().anchoredPosition = targetPosition;
+        lerping = false;
 
     }
 }

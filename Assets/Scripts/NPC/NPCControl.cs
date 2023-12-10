@@ -67,7 +67,7 @@ public class NPCControl : MonoBehaviour
     public bool firstTalked;
     public bool inConversation;
     private bool inCD;
-    private float talkCD = 2f;
+    private float talkCD = 1.5f;
     public bool noTalkInWalk;
     public bool noMoveAfterTalk;
 

@@ -12,6 +12,7 @@ public class Cigarette : PickUpObject
     public EventReference exhaleEvent;
 
 
+
     protected override void Start()
     {
         base.Start();
@@ -77,7 +78,7 @@ public class Cigarette : PickUpObject
 
     public void FinishSmoking()
     {
-        cigStage = 4;
+        cigStage = Random.Range(4, 7);
         activeCigObj.tag = "CigButt";
         gameObject.tag = "CigButt";
         cigarette = false;

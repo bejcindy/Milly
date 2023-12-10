@@ -9,7 +9,7 @@ public class Bench : FixedCameraObject
     public bool npcBound;
     public NPCControl npcControl;
     public bool thoughtDone;
-
+    
     protected override void Update()
     {
         base.Update();
@@ -17,6 +17,7 @@ public class Bench : FixedCameraObject
         {
             DetectSitThought();
         }
+        
     }
 
     void DetectSitThought()

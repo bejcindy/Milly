@@ -29,6 +29,7 @@ public class LookingObject : LivableObject
             dialogue = dia;
         }
         sameTypePosters = GameObject.FindGameObjectsWithTag(gameObject.tag);
+        
     }
 
     protected override void Update()

@@ -16,6 +16,8 @@ public class PizzaLid : FixedCameraObject
     public bool fixedPos;
 
     PlayerLeftHand playerLeftHand;
+    string openEventName = "event:/Sound Effects/ObjectInteraction/PizzaBox_Open";
+    string closeEventName = "event:/Sound Effects/ObjectInteraction/PizzaBox_Close";
     public EventReference openSound, closeSound;
     FMOD.Studio.EventInstance openEvent, closeEvent;
     bool openPlayed, closePlayed;
@@ -44,22 +46,22 @@ public class PizzaLid : FixedCameraObject
         if (nearPlayer && !coolDown && playerHolding.GetLeftHand())
         {
 
-            float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
-
             if (Input.GetMouseButton(0))
             {
+                float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime;
+
                 dialogue.enabled = true;
                 activated = true;
                 interacting = true;
                 quitInteraction = false;
+
                 if (verticalInput < 0)
                 {
                     RotateLid(0);
 
-                    if (!closePlayed && !closeSound.IsNull)
+                    if (!closePlayed)
                     {
-                        openEvent.start();
-                        closeEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                        RuntimeManager.PlayOneShot(closeEventName);
                         openPlayed = false;
                         closePlayed = true;
                     }
@@ -70,10 +72,9 @@ public class PizzaLid : FixedCameraObject
                     TurnOnCamera();
                     isInteracting = true;
 
-                    if (!openPlayed && !openSound.IsNull)
+                    if (!openPlayed)
                     {
-                        closeEvent.start();
-                        openEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                        RuntimeManager.PlayOneShot(openEventName);
                         closePlayed = false;
                         openPlayed = true;
                     }
@@ -138,6 +139,7 @@ public class PizzaLid : FixedCameraObject
         openLid = false;
         coolDown = true;
         interacting = false;
+        RotateLid(0);
     }
 
     void StopCoolDown()

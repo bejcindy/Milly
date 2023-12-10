@@ -28,6 +28,10 @@ public class Pizza : PickUpObject
             {
                 base.Update();
             }
+            else
+            {
+                selected = false;
+            }
 
             if (inHand)
             {

@@ -258,7 +258,17 @@ public class PlayerHolding : MonoBehaviour
             {
                 if (usedSprites.Count == 0 || !usedSprites.Contains(interactionSprite))
                 {
-                    Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
+                    PizzaLid pizzaLid = trackingObject.GetComponent<PizzaLid>();
+                    Vector2 ViewportPosition;
+                    if (pizzaLid == null)
+                    {
+                        ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
+                    }
+                    else
+                    {
+                        ViewportPosition = Camera.main.WorldToViewportPoint(pizzaLid.uiHint.transform.position);
+                    }
+
                     Vector2 WorldObject_ScreenPosition = new Vector2(
                     ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
                     ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));

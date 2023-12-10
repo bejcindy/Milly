@@ -143,6 +143,7 @@ public class FixedCameraObject : LivableObject
         {
             if (Input.GetKeyDown(quitKey) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
             {
+                        QuitAction();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 StartCoroutine(UnfixPlayer());
@@ -256,6 +257,7 @@ public class FixedCameraObject : LivableObject
         playerMovement.enabled = true;
         positionFixed = false;
         playerHolding.positionFixedWithMouse = false;
+
     }
 
     protected virtual void QuitAction()

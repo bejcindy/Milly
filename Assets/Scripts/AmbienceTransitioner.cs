@@ -62,7 +62,7 @@ public class AmbienceTransitioner : MonoBehaviour
                 fadeIn = false;
             }
         }
-        currentAmb.setVolume(currentVol);
+        //currentAmb.setVolume(currentVol);
         fadeToAmb.setVolume(1 - currentVol);
         if (currentVol == 1)
         {
@@ -72,14 +72,14 @@ public class AmbienceTransitioner : MonoBehaviour
         {
             fadeToAmb.setPaused(false);
         }
-        if (currentVol == 0)
-        {
-            currentAmb.setPaused(true);
-        }
-        else
-        {
-            currentAmb.setPaused(false);
-        }
+        //if (currentVol == 0)
+        //{
+        //    currentAmb.setPaused(true);
+        //}
+        //else
+        //{
+        //    currentAmb.setPaused(false);
+        //}
 
     }
 

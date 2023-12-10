@@ -93,11 +93,11 @@ public class LivableObject : MonoBehaviour
             }
             DetectInteractable();
 
-            if (fadeOut)
-            {
-                if (GetComponent<PickUpObject>())
-                    FadeOutFilter();
-            }
+            //if (fadeOut)
+            //{
+            //    if (GetComponent<PickUpObject>())
+            //        FadeOutFilter();
+            //}
 
             if (activated)
             {
@@ -184,15 +184,15 @@ public class LivableObject : MonoBehaviour
                 }
                 played = true;
             }
-            I = 1 - matColorVal;
-            if (GetComponent<PickUpObject>())
-            {
-                snapshot.setParameterByName("EnableFilterIntensity", I);
-            }
+            //I = 1 - matColorVal;
+            //if (GetComponent<PickUpObject>())
+            //{
+            //    snapshot.setParameterByName("EnableFilterIntensity", I);
+            //}
         }
         else
         {
-            fadeOut = true;
+            //fadeOut = true;
             matColorVal = 0;
             firstActivated = true;
             if (specialEffect != null)

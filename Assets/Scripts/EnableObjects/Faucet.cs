@@ -15,6 +15,7 @@ public class Faucet : LivableObject
 
     public EventReference waterRunning;
     FMOD.Studio.EventInstance waterEvent;
+    string faucetUseEvent = "event:/Sound Effects/FaucetHandle";
     PlayerHolding playerHolding;
     bool setNull;
 
@@ -57,6 +58,7 @@ public class Faucet : LivableObject
             setNull = false;
             if (Input.GetMouseButtonDown(0))
             {
+                FMODUnity.RuntimeManager.PlayOneShot(faucetUseEvent, transform. position);
                 controlCD = true;
                 if (waterOn)
                 {

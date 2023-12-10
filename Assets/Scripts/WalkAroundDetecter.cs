@@ -47,8 +47,8 @@ public class WalkAroundDetecter : LivableObject
             if (lightBulb && !soundPlayed)
             {
                 lightBulb.SetActive(true);
-                if (!lightSound.IsNull)
-                    RuntimeManager.PlayOneShot(lightSound, lightBulb.transform.position);
+                //if (!lightSound.IsNull)
+                //    RuntimeManager.PlayOneShot(lightSound, lightBulb.transform.position);
                 soundPlayed = true;
             }
         }

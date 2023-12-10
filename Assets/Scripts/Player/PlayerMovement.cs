@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using Cinemachine.Utility;
 using UnityEngine;
+using FMODUnity;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -63,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected LayerMask flatGround;
     [SerializeField] protected LayerMask stairs;
     [SerializeField] protected float stairForce;
+
+
 
     public bool initialCutsceneMove;
     public Transform currentTarget;
@@ -494,6 +497,10 @@ public class PlayerMovement : MonoBehaviour
             tooLeft = true;
         if (other.name == "TooRight")
             tooRight = true;
+
+
+
+        
     }
 
     private void OnTriggerExit(Collider other)
@@ -516,7 +523,7 @@ public class PlayerMovement : MonoBehaviour
             //ladderTrigger.gameObject.layer = 6;
             if ((other.transform.position - transform.position).y < 0)
             {
-                rb.AddForce(Vector3.ProjectOnPlane( orientation.forward,Vector3.up) * 200f);
+                rb.AddForce(Vector3.ProjectOnPlane(orientation.forward, Vector3.up) * 200f);
                 Debug.Log("added");
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             }
@@ -525,9 +532,10 @@ public class PlayerMovement : MonoBehaviour
             tooLeft = false;
         if (other.name == "TooRight")
             tooRight = false;
+
+
+
     }
-
-
 
 
     public void OpenSurvey()

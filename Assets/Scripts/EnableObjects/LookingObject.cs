@@ -18,6 +18,7 @@ public class LookingObject : LivableObject
 
     public GameObject[] sameTypePosters;
     bool playedSF;
+    string lookSound = "event:/Sound Effects/Poster_Look";
 
     protected override void Start()
     {
@@ -42,7 +43,7 @@ public class LookingObject : LivableObject
                 DataHolder.currentFocus = gameObject;
                 if (!playedSF && DataHolder.camBlended && DataHolder.camBlendDone)
                 {
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
+                    RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
                     
                     playedSF = true;
                 }
@@ -56,6 +57,8 @@ public class LookingObject : LivableObject
                     {
                         if (Input.GetKeyDown(KeyCode.Space))
                         {
+                            if(gameObject.tag.Contains("Poster"))
+                                RuntimeManager.PlayOneShot(lookSound, transform.position);
                             activated = true;
                             focusingThis = true;
                         }

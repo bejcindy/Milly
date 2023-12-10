@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using PixelCrushers.DialogueSystem;
+using FMODUnity;
 
 public class FixedCameraObject : LivableObject
 {
@@ -40,6 +41,8 @@ public class FixedCameraObject : LivableObject
     protected bool movingCam;
     public float camXAxisSpeed;
     public float camYAxisSpeed;
+
+    string sitSound = "event:/Player/Player_Sit";
 
     protected override void Start()
     {
@@ -170,6 +173,7 @@ public class FixedCameraObject : LivableObject
 
     public void TurnOnCamera()
     {
+        RuntimeManager.PlayOneShot(sitSound, player.transform.position);
         playerBody.enabled = false;
         uiHint.SetActive(false);
         activated = true;

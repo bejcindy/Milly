@@ -140,6 +140,12 @@ public class PizzaLid : FixedCameraObject
         coolDown = true;
         interacting = false;
         RotateLid(0);
+        if (!closePlayed)
+        {
+            RuntimeManager.PlayOneShot(closeEventName);
+            openPlayed = false;
+            closePlayed = true;
+        }
     }
 
     void StopCoolDown()

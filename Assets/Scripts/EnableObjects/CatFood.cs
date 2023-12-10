@@ -10,6 +10,7 @@ public class CatFood : PickUpObject
     public bool finishedEating;
 
     public bool finishDiaDone;
+    string openCanSound = "event:/Sound Effects/ObjectInteraction/CatCan/CanOpen";
     Transform openCan;
     Transform closeCan;
     Transform wetFood;
@@ -40,7 +41,7 @@ public class CatFood : PickUpObject
                     PlaceCan();
                 }
 
-                if (!finishDiaDone)
+                if (!finishDiaDone && opened)
                 {
                     if (overrideStartSequence)
                     {
@@ -82,6 +83,7 @@ public class CatFood : PickUpObject
 
     public void PlaceCan()
     {
+        FMODUnity.RuntimeManager.PlayOneShot(openCanSound, transform.position);
         inHand = false;
         wetFood.gameObject.layer = 17;
         StartCoroutine(LerpPosition(cat.catFoodPos, 1f));

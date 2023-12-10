@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using FMODUnity;
 
 public class CigaretteContainer : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class CigaretteContainer : MonoBehaviour
     public Transform player;
     public Transform handContainer;
     PlayerHolding playerHolding;
-    
+    string cigLightSound = "event:/Sound Effects/ObjectInteraction/Cigarette/Cigarette_Light";
+
+
     public GameObject fullCig;
 
     bool beforeGloriaThought;
@@ -35,6 +38,7 @@ public class CigaretteContainer : MonoBehaviour
         {
             if(cigCounts > 0 && !playerHolding.smoking && !playerHolding.fullHand && !playerHolding.atInterior)
             {
+                RuntimeManager.PlayOneShot(cigLightSound, transform.position);
                 cigCounts--;
                 GameObject newCig = GameObject.Instantiate(fullCig, handContainer.position, handContainer.rotation, handContainer);
                 newCig.GetComponent<LivableObject>().activated = true;

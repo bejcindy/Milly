@@ -9,6 +9,8 @@ using UnityEngine.Events;
 
 public class NPCControl : MonoBehaviour
 {
+    
+
     protected float matColorVal;
     [SerializeField] protected float minDist;
     [SerializeField] protected bool isVisible;
@@ -92,6 +94,8 @@ public class NPCControl : MonoBehaviour
 
     public UnityEvent OnActivateEvent;
 
+
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -109,12 +113,11 @@ public class NPCControl : MonoBehaviour
 
         bone = transform.GetChild(3).gameObject;
 
-        //foreach (Transform child in transform)
-        //{
-        //    if (child.name == "iconPos")
-        //        bone = child.gameObject;
-        //}
-
+        foreach(Transform child in GetComponentsInChildren<Transform>())
+        {
+            if (child.name.Contains("Head") && !child.name.Contains("HeadTop"))
+                head = child;
+        }
 
         fadeInterval = 5;
     }
@@ -125,7 +128,7 @@ public class NPCControl : MonoBehaviour
         //Basic visible and interactable detection
         isVisible = visibleDetector.isVisible;
         interactable = CheckInteractable();
-
+        //LookAtPlayer();
         CheckNPCActivation();
         CheckTalkCD();
         //CheckIdle();
@@ -197,6 +200,10 @@ public class NPCControl : MonoBehaviour
 
 
 
+    }
+    private void LateUpdate()
+    {
+        LookAtPlayer();
     }
 
     public void PlayFootstepSF()
@@ -560,6 +567,48 @@ public class NPCControl : MonoBehaviour
     }
     #endregion
 
+    #region Look At Player
+    [Header("Look At Player")]
+    bool inDistance, inAngle;
+    float lookWeight;
+    Transform head;
+    public bool allowLookPlayer;
+    public float lookPlayerDist = 20;
+    public float lookPlayerAngle = 45;
+    public float lookPlayerSpeed = 2;
+
+    void LookAtPlayer()
+    {
+        if (Vector3.Distance(player.position, transform.position) < lookPlayerDist)
+        {
+            inDistance = true;
+            if (Mathf.Abs(Vector3.SignedAngle(transform.forward, player.position - head.position, Vector3.up)) < lookPlayerAngle)
+                inAngle = true;
+            else
+                inAngle = false;
+        }
+        else
+            inDistance = false;
+
+        if (inDistance && inAngle)
+            lookWeight = Mathf.Lerp(lookWeight, 1, lookPlayerSpeed * Time.deltaTime);
+        else
+            lookWeight = Mathf.Lerp(lookWeight, 0, lookPlayerSpeed * Time.deltaTime);
+
+    }
+    private void OnAnimatorIK()
+    {
+        if (allowLookPlayer)
+        {
+            anim.SetLookAtWeight(lookWeight);
+            anim.SetLookAtPosition(Camera.main.transform.position);
+        }
+        else
+        {
+            anim.SetLookAtWeight(0);
+        }
+    }
+    #endregion
 
     public void IdleRotate()
     {

@@ -111,7 +111,7 @@ public class PannelController : MonoBehaviour
                         fadingColor = true;
                     if (currentTattoo.GetComponent<Image>().color.a == 1)
                     {
-                        if (greyLine.color.a != 1)
+                        if (greyLine.color.a != .5f)
                             timer += Time.deltaTime;
                         else
                             fadingColor = false;
@@ -146,7 +146,7 @@ public class PannelController : MonoBehaviour
                                             img.color = FadeInColor(img.color, .5f);
                                     }
                                 }
-                                greyLine.color = FadeInColor(greyLine.color, 1);
+                                greyLine.color = FadeInColor(greyLine.color, .5f);
                             }
                         }
                         if (firstActivated && timer > 3.5f)
@@ -159,7 +159,7 @@ public class PannelController : MonoBehaviour
                                         img.color = FadeInColor(img.color, .5f);
                                 }
                             }
-                            greyLine.color = FadeInColor(greyLine.color, 1);
+                            greyLine.color = FadeInColor(greyLine.color, .5f);
                         }
 
                     }
@@ -178,16 +178,16 @@ public class PannelController : MonoBehaviour
                     }
 
                     blackLine.color = FadeInColor(blackLine.color, 1);
-                    greyLine.color = FadeInColor(greyLine.color, 1);
+                    greyLine.color = FadeInColor(greyLine.color, .5f);
                     pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
                     FadeInBlur();
-                    if (greyLine.color.a < 1)
+                    if (greyLine.color.a < .5f)
                         fadingColor = true;
                     else
                         fadingColor = false;
                 }
             }
-            if (greyLine.color.a == 1 && !lerping)
+            if (greyLine.color.a == .5f && !lerping)
             {
                 noDrag = false;
                 firstActivated = true;

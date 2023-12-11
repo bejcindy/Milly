@@ -128,7 +128,10 @@ public class NPCControl : MonoBehaviour
         //Basic visible and interactable detection
         isVisible = visibleDetector.isVisible;
         interactable = CheckInteractable();
-        //LookAtPlayer();
+        if (!noLookInConvo && allowLookPlayer)
+        {
+            LookAtPlayer();
+        }
         CheckNPCActivation();
         CheckTalkCD();
         //CheckIdle();
@@ -200,10 +203,6 @@ public class NPCControl : MonoBehaviour
 
 
 
-    }
-    private void LateUpdate()
-    {
-        LookAtPlayer();
     }
 
     public void PlayFootstepSF()
@@ -579,21 +578,24 @@ public class NPCControl : MonoBehaviour
 
     void LookAtPlayer()
     {
-        if (Vector3.Distance(player.position, transform.position) < lookPlayerDist)
+        if (allowLookPlayer)
         {
-            inDistance = true;
-            if (Mathf.Abs(Vector3.SignedAngle(transform.forward, player.position - head.position, Vector3.up)) < lookPlayerAngle)
-                inAngle = true;
+            if (Vector3.Distance(player.position, transform.position) < lookPlayerDist)
+            {
+                inDistance = true;
+                if (Mathf.Abs(Vector3.SignedAngle(transform.forward, player.position - head.position, Vector3.up)) < lookPlayerAngle)
+                    inAngle = true;
+                else
+                    inAngle = false;
+            }
             else
-                inAngle = false;
-        }
-        else
-            inDistance = false;
+                inDistance = false;
 
-        if (inDistance && inAngle)
-            lookWeight = Mathf.Lerp(lookWeight, 1, lookPlayerSpeed * Time.deltaTime);
-        else
-            lookWeight = Mathf.Lerp(lookWeight, 0, lookPlayerSpeed * Time.deltaTime);
+            if (inDistance && inAngle)
+                lookWeight = Mathf.Lerp(lookWeight, 1, lookPlayerSpeed * Time.deltaTime);
+            else
+                lookWeight = Mathf.Lerp(lookWeight, 0, lookPlayerSpeed * Time.deltaTime);
+        }
 
     }
     private void OnAnimatorIK()
@@ -605,7 +607,11 @@ public class NPCControl : MonoBehaviour
         }
         else
         {
-            anim.SetLookAtWeight(0);
+            if (lookWeight > 0)
+                lookWeight -= .05f;
+            else
+                lookWeight = 0;
+            anim.SetLookAtWeight(lookWeight);
         }
     }
     #endregion

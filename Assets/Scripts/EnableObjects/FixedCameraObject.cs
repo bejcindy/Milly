@@ -230,13 +230,13 @@ public class FixedCameraObject : LivableObject
     {
         playerCamera.m_Priority = 10;
         isInteracting = false;
-        if (transform.parent != null)
-        {
-            if (transform.parent.name.Contains("pizza"))
-            {
-                player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
-            }
-        }
+        //if (transform.parent != null)
+        //{
+        //    if (transform.parent.name.Contains("pizza"))
+        //    {
+        //        player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
+        //    }
+        //}
         if (doubleSided)
         {
             if (onLeft)

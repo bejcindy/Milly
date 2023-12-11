@@ -30,23 +30,32 @@ public class Gloria : NPCControl
     {
         noTalkStage = true;
         noLookInConvo = false;
-        
 
-        waitTime -= Time.deltaTime;
-        if (waitTime < 0)
+        Door izaDoor = destObjects[_counter - 1].GetComponent<Door>();
+        if (!izaDoor.doorOpen)
         {
-            Door izaDoor = destObjects[_counter - 1].GetComponent<Door>();
-            StopIdle();
-            waitTime = 3f;
 
-            if (!izaDoor.doorOpen && !gloriaOpenDoor)
+            if (!gloriaOpenDoor)
             {
-                gloriaOpenDoor = true;
                 anim.SetTrigger("Special3");
-                destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
+                gloriaOpenDoor = true;
+
             }
-                
+            waitTime -= Time.deltaTime;
+            if (waitTime < 0)
+            {
+
+                StopIdle();
+                waitTime = 3f;
+                destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
+
+            }
         }
+        else
+        {
+            StopIdle();
+        }
+
     }
 
     public void GloriaAction4()

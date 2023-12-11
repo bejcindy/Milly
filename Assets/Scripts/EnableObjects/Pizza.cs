@@ -27,6 +27,13 @@ public class Pizza : PickUpObject
             if (lid.openLid)
             {
                 base.Update();
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit))
+                {
+                    Debug.Log(hit.collider.name);
+                }
+
             }
             else
             {
@@ -62,15 +69,24 @@ public class Pizza : PickUpObject
     private void OnMouseOver()
     {
         if(lid.openLid && inBox)
+        {
             selected = true;
+            playerHolding.selectedObj = gameObject;
+        }
+
         if (!lid.openLid)
             selected = false;
     }
 
     private void OnMouseExit()
     {
-        //if(lid.openLid && inBox)
+        if(lid.openLid && inBox)
+        {
             selected = false;
+            if (playerHolding.selectedObj == this)
+                playerHolding.selectedObj = null;
+        }
+
     }
 
     //protected override void OnBecameInvisible()

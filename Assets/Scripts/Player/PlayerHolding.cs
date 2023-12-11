@@ -84,7 +84,8 @@ public class PlayerHolding : MonoBehaviour
         if (!looking)
         {
             GetFullHand();
-            ChooseInteractable();
+            if(!leftHand.inPizzaBox)
+                ChooseInteractable();
 
             if(!inDialogue)
                 ChooseLookable();

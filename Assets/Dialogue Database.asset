@@ -43967,7 +43967,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Gloria_Main_Talked"] == false
+      conditionsString: Variable["NPC_Gloria_Main_Talked"] == false and (Variable["NPC_Gloria_Other_Interacted"]
+        == true)
       userScript: 
       onExecute:
         m_PersistentCalls:

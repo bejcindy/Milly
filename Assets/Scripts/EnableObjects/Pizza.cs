@@ -27,12 +27,12 @@ public class Pizza : PickUpObject
             if (lid.openLid)
             {
                 base.Update();
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit))
-                {
-                    Debug.Log(hit.collider.name);
-                }
+                //RaycastHit hit;
+                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //if (Physics.Raycast(ray, out hit))
+                //{
+                //    Debug.Log(hit.collider.name);
+                //}
 
             }
             else
@@ -70,8 +70,11 @@ public class Pizza : PickUpObject
     {
         if(lid.openLid && inBox)
         {
-            selected = true;
-            playerHolding.selectedObj = gameObject;
+            if (playerHolding.GetLeftHand())
+            {
+                selected = true;
+                playerHolding.selectedObj = gameObject;
+            }
         }
 
         if (!lid.openLid)
@@ -83,8 +86,10 @@ public class Pizza : PickUpObject
         if(lid.openLid && inBox)
         {
             selected = false;
-            if (playerHolding.selectedObj == this)
+            if (playerHolding.selectedObj == gameObject)
+            {
                 playerHolding.selectedObj = null;
+            }
         }
 
     }

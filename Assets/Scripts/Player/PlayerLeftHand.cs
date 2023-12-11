@@ -111,6 +111,10 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.ShowHint(DataHolder.hints.smokeHint);
             smokingHintDone = false;
         }
+        else if (isHolding && holdingObj.GetComponent<Pizza>() && inPizzaBox)
+        {
+            DataHolder.ShowHint(DataHolder.hints.pizzaHint);
+        }
         else if (currentChop && !currentChop.hasFood && !chopAiming)
         {
             DataHolder.HideHint(DataHolder.hints.pickFoodHint);
@@ -176,6 +180,7 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.smokeHint);
             DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
             DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
+            DataHolder.HideHint(DataHolder.hints.pizzaHint);
             drinkHintDone = true;
         }
         #endregion

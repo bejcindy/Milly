@@ -10,7 +10,6 @@ public class PizzaBox : MonoBehaviour
 
     public BuildingGroupController pizzaShop;
 
-    public TrashLid boxLid;
     // Start is called before the first frame update
     void Start()
     {

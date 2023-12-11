@@ -6,14 +6,12 @@ using FMODUnity;
 
 public class PizzaLid : FixedCameraObject
 {
-    public bool interacting;
-    public bool openLid;
-    public float rotateSpeed;
-    public bool quitInteraction;
-    public bool coolDown;
 
-    public float coolDownVal;
-    public bool fixedPos;
+    public bool openLid;
+    public bool lidMoving;
+    public Vector3 targetRot;
+    Quaternion openRotation;
+    Quaternion closeRotation;
 
     PlayerLeftHand playerLeftHand;
     string openEventName = "event:/Sound Effects/ObjectInteraction/PizzaBox_Open";
@@ -27,6 +25,8 @@ public class PizzaLid : FixedCameraObject
     {
         base.Start();
         isPizzaBox = true;
+        openRotation = Quaternion.Euler(targetRot);
+        closeRotation = transform.localRotation;
         dialogue = GetComponent<DialogueSystemTrigger>();
         playerLeftHand = player.GetComponent<PlayerLeftHand>();
         openEvent = RuntimeManager.CreateInstance(openSound);
@@ -37,27 +37,35 @@ public class PizzaLid : FixedCameraObject
     protected override void Update()
     {
         base.Update();
-
-        if (transform.eulerAngles.z == 0 || transform.eulerAngles.z >= 359 || transform.eulerAngles.z == 300)
-            fixedPos = true;
-        else
-            fixedPos = false;
-
-        if (nearPlayer && !coolDown && playerHolding.GetLeftHand())
+        if (interactable)
         {
-
+            nearPlayer = true;
+        }
+        else
+        {
+            nearPlayer = false;
+        }
+        if (nearPlayer && !lidMoving)
+        {
+            if(!openLid) 
+                gameObject.layer = 9;
+            else
+            {
+                if (activated)
+                    gameObject.layer = 17;
+                else
+                    gameObject.layer = 0;
+            }
             if (Input.GetMouseButton(0))
             {
                 float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime;
 
-                dialogue.enabled = true;
-                activated = true;
-                interacting = true;
-                quitInteraction = false;
 
-                if (verticalInput < 0)
+
+                if (verticalInput < 0 && openLid)
                 {
-                    RotateLid(0);
+                    openLid = false;
+                    StartCoroutine(LerpRotation(closeRotation, 1f));
 
                     if (!closePlayed)
                     {
@@ -66,11 +74,13 @@ public class PizzaLid : FixedCameraObject
                         closePlayed = true;
                     }
                 }
-                else if (verticalInput > 0)
+                else if (verticalInput > 0 && !openLid)
                 {
-                    RotateLid(300);
+                    openLid = true;
+                    dialogue.enabled = true;
+                    activated = true;
+                    StartCoroutine(LerpRotation(openRotation, 1f));
                     TurnOnCamera();
-                    isInteracting = true;
 
                     if (!openPlayed)
                     {
@@ -89,6 +99,10 @@ public class PizzaLid : FixedCameraObject
         }
         else
         {
+            if (activated)
+                gameObject.layer = 17;
+            else
+                gameObject.layer = 0;
             if (!iconHidden)
             {
                 playerHolding.lidObj = null;
@@ -100,46 +114,25 @@ public class PizzaLid : FixedCameraObject
         {
             playerLeftHand.inPizzaBox = true;
         }
-        else
+        else if(!isInteracting)
         {
             playerLeftHand.inPizzaBox = false;
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            interacting = false;
-
-        }
-
-        if (!fixedPos && !interacting && !coolDown)
-        {
-            if (transform.eulerAngles.z < 310)
+            if (openLid && !lidMoving)
             {
-                RotateLid(300);
-            }
-            else if (transform.eulerAngles.z != 360)
-            {
-                RotateLid(0);
+                openLid = false;
+                StartCoroutine(LerpRotation(closeRotation, 1f));
             }
         }
 
 
-        if (coolDown)
-        {
-            StopCoolDown();
-            if(transform.eulerAngles.z < 359) 
-                RotateLid(0);
-        }
             
 
     }
 
     protected override void QuitAction()
     {
-        openLid = false;
-        coolDown = true;
-        interacting = false;
-        RotateLid(0);
+        if(!lidMoving)
+            StartCoroutine(LerpRotation(closeRotation, 1f));
         if (!closePlayed)
         {
             RuntimeManager.PlayOneShot(closeEventName);
@@ -148,26 +141,25 @@ public class PizzaLid : FixedCameraObject
         }
     }
 
-    void StopCoolDown()
+
+
+
+    IEnumerator LerpRotation(Quaternion endValue, float duration)
     {
-        if (coolDownVal > 0)
-            coolDownVal -= Time.deltaTime;
-        else
+
+        lidMoving = true;
+        float time = 0;
+        Quaternion startValue = transform.localRotation;
+        while (time < duration)
         {
-            coolDown = false;
-            coolDownVal = 2;
+            transform.localRotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
         }
-    }
+        transform.localRotation = endValue;
+        lidMoving = false;
 
 
-    void RotateLid(float zTargetAngle)
-    {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,
-            Mathf.LerpAngle(transform.eulerAngles.z, zTargetAngle, Time.deltaTime * rotateSpeed));
-        if (zTargetAngle == 300)
-            openLid = true;
-        else
-            openLid = false;
     }
 
 }

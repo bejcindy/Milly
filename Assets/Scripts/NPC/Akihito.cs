@@ -27,6 +27,18 @@ public class Akihito : NPCControl
         akiLantern.GetComponent<PickUpObject>().enabled = true;
     }
 
+    protected override void OnConversationStart(Transform other)
+    {
+        base.OnConversationStart(other);
+        anim.SetTrigger("Talk");
+    }
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        base.OnConversationEnd(other);
+        anim.SetTrigger("Stop");
+    }
+
 
 
 }

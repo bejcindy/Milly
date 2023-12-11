@@ -9,7 +9,8 @@ public class FakeNPCLookPlayer : MonoBehaviour
     Transform player;
     Vector3 originalForward;
     Vector3 lastForward;
-    float t;
+    float lookWeight;
+    Animator anim;
 
     public float lookPlayerDist;
     public float lookPlayerAngle;
@@ -27,6 +28,7 @@ public class FakeNPCLookPlayer : MonoBehaviour
                 head = child;
         }
         originalForward = head.forward;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -34,52 +36,43 @@ public class FakeNPCLookPlayer : MonoBehaviour
     {
         if (allowLookPlayer)
         {
-            if (Vector3.Distance(player.position, transform.position) < lookPlayerDist)
-            {
-                inDistance = true;
-                if (Mathf.Abs(Vector3.SignedAngle(transform.forward, player.position - head.position, Vector3.up)) < lookPlayerAngle)
-                    inAngle = true;
-                else
-                    inAngle = false;
-            }
-            else
-                inDistance = false;
+            LookAtPlayer();
+        }
+    }
 
-            if (inDistance && inAngle)
-            {
-                head.forward = Vector3.Lerp(head.forward, Camera.main.transform.position - head.position, lookPlayerSpeed * Time.deltaTime);
-                //head.forward = Camera.main.transform.position - head.forward;
-                lastForward = head.forward;
-                t = 0;
-            }
+    void LookAtPlayer()
+    {
+        if (Vector3.Distance(player.position, transform.position) < lookPlayerDist)
+        {
+            inDistance = true;
+            if (Mathf.Abs(Vector3.SignedAngle(transform.forward, player.position - head.position, Vector3.up)) < lookPlayerAngle)
+                inAngle = true;
             else
-            {
-                if (t < .5f)
-                {
-                    t += Time.deltaTime;
-                    head.forward = Vector3.Lerp(lastForward, originalForward, t/.5f);
-                }
-                else
-                {
-                    head.forward = originalForward;
-                }
-            }
+                inAngle = false;
+        }
+        else
+            inDistance = false;
+
+        if (inDistance && inAngle)
+            lookWeight = Mathf.Lerp(lookWeight, 1, lookPlayerSpeed * Time.deltaTime);
+        else
+            lookWeight = Mathf.Lerp(lookWeight, 0, lookPlayerSpeed * Time.deltaTime);
+    }
+
+    private void OnAnimatorIK()
+    {
+        if (allowLookPlayer)
+        {
+            anim.SetLookAtWeight(lookWeight);
+            anim.SetLookAtPosition(Camera.main.transform.position);
         }
         else
         {
-            if (head.forward != originalForward)
-            {
-                if (t < .5f)
-                {
-                    t += Time.deltaTime;
-                    head.forward = Vector3.Lerp(lastForward, originalForward, t / .5f);
-                }
-                else
-                {
-                    head.forward = originalForward;
-                }
-            }
+            if (lookWeight > 0)
+                lookWeight -= .05f;
+            else
+                lookWeight = 0;
+            anim.SetLookAtWeight(lookWeight);
         }
-        
     }
 }

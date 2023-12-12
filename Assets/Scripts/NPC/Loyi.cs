@@ -39,7 +39,7 @@ public class Loyi : NPCControl
 
     public void LoyiAction2()
     {
-        noLookInConvo = false;
+        allowLookPlayer = false;
     }
 
     public void ExitCutscene()

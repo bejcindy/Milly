@@ -78,6 +78,7 @@ public class Cigarette : PickUpObject
 
     public void FinishSmoking()
     {
+        objType = HandObjectType.TRASH;
         cigStage = Random.Range(4, 7);
         activeCigObj.tag = "CigButt";
         gameObject.tag = "CigButt";

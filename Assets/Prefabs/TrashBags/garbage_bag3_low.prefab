@@ -124,9 +124,11 @@ MonoBehaviour:
   interactable: 0
   isVisible: 0
   checkVisible: 0
+  tableObj: 0
   minDist: 3
   rend: {fileID: 0}
   activated: 0
+  transformed: 0
   firstActivated: 0
   matColorVal: 1
   fadeInterval: 10
@@ -142,13 +144,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   objType: 2
-  playerHolding: {fileID: 0}
+  targetRot: {x: 0, y: 0, z: 0}
   inHand: 0
   selected: 0
   thrown: 0
   cigarette: 0
   freezeRotation: 0
   throwCD: 0
+  thrownByPlayer: 0
   npcBound: 0
   foodObj: 0
   pickUpEventName: 
@@ -162,11 +165,11 @@ MonoBehaviour:
     Path: event:/Sound Effects/ObjectInteraction/Trash
   collideSound:
     Guid:
-      Data1: 903459537
-      Data2: 1119517988
-      Data3: -1947752567
-      Data4: -685133880
-    Path: event:/Sound Effects/ObjectInteraction/Trash
+      Data1: 805898839
+      Data2: 1122461346
+      Data3: 1184911288
+      Data4: 1024877830
+    Path: event:/Sound Effects/ObjectInteraction/TrashDrop
 --- !u!54 &7577772145940883614
 Rigidbody:
   m_ObjectHideFlags: 0

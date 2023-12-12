@@ -21,7 +21,6 @@ public class Door : LivableObject
     public Vector3 openPos;
     public Collider doorHandleCollider;
     public EventReference doorMoveEvent;
-
     public EventReference doorOpenEvent;
     public EventReference doorCloseEvent;
 
@@ -233,7 +232,7 @@ public class Door : LivableObject
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
         if (!doorMoving)
-            RuntimeManager.PlayOneShot(doorMoveEvent, transform.position);
+            RuntimeManager.PlayOneShot(doorMoveEvent, doorHandleCollider.transform.position);
         doorMoving = true;
         float time = 0;
         Vector3 startPosition = door.localPosition;
@@ -252,7 +251,7 @@ public class Door : LivableObject
         if (!doorMoving)
         {
             if (endValue == Quaternion.Euler(openPos))
-                RuntimeManager.PlayOneShot(doorOpenEvent, transform.position);
+                RuntimeManager.PlayOneShot(doorOpenEvent, doorHandleCollider.transform.position);
         }
         doorMoving = true;
         float time = 0;

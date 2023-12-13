@@ -22,11 +22,13 @@ public class DataHolder : MonoBehaviour
     static float maxBlur = .75f;
     static float focusDist = .75f;
     static DepthOfField dof;
+    static DepthOfField colorDof;
     static GameObject postProcessingVolume;
+    static GameObject chromaticVolume;
 
     public static bool focusing;
     public static bool focused;
-    static Volume v;
+    static Volume v,cv;
 
     public static GameObject currentFocus;
 
@@ -77,7 +79,9 @@ public class DataHolder : MonoBehaviour
         playerBrain = Camera.main.GetComponent<CinemachineBrain>();
         originalPlayerCmFollow = playerCinemachine.Follow;
         postProcessingVolume = GameObject.Find("MonoVolume");
+        chromaticVolume = GameObject.Find("ChromeVolume");
         v = postProcessingVolume.GetComponent<Volume>();
+        cv = chromaticVolume.GetComponent<Volume>();
 
         hintPanel = hintPanelPrefab;
         hintPref = hintPrefab;
@@ -173,6 +177,10 @@ public class DataHolder : MonoBehaviour
             {
                 dof.focusDistance.value = focusDist;
             }
+            if (cv.profile.TryGet<DepthOfField>(out colorDof))
+            {
+                colorDof.focusDistance.value = focusDist;
+            }
         }
         
 
@@ -210,7 +218,11 @@ public class DataHolder : MonoBehaviour
         {
             dof.focusDistance.value = focusDist;
         }
-        
+        if (cv.profile.TryGet<DepthOfField>(out colorDof))
+        {
+            colorDof.focusDistance.value = focusDist;
+        }
+
     }
     #endregion
 

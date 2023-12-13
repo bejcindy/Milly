@@ -546,6 +546,7 @@ public class NPCControl : MonoBehaviour
 
     protected virtual void OnConversationEnd(Transform other)
     {
+        player.GetComponent<PlayerMovement>().enabled = true;
         inConversation = false;
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);

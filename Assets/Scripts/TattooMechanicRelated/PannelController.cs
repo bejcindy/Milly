@@ -29,6 +29,7 @@ public class PannelController : MonoBehaviour
     bool gotPos, noDrag, firstActivated;
     bool lerping;
     float timer;
+    bool playerUnpaused;
     Renderer previousObj;
     RectTransform previousTattoo;
 
@@ -197,8 +198,8 @@ public class PannelController : MonoBehaviour
         }
         else
         {
-
-            UnpausePlayer();
+            if(!playerUnpaused)
+                UnpausePlayer();
             gotPos = false;
             noDrag = true;
             timer = 0;
@@ -255,6 +256,7 @@ public class PannelController : MonoBehaviour
 
     public void PausePlayer()
     {
+        playerUnpaused = false;
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
             if (panel.continueButton != null) panel.continueButton.interactable = false;
@@ -286,6 +288,7 @@ public class PannelController : MonoBehaviour
 
     public void UnpausePlayer()
     {
+        playerUnpaused = true;
         catActivated = false;
 
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)

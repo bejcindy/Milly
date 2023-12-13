@@ -180,7 +180,8 @@ public class FixedCameraObject : LivableObject
 
     public void TurnOnCamera()
     {
-        RuntimeManager.PlayOneShot(sitSound, player.transform.position);
+        if(!gameObject.name.Contains("apt_call"))
+            RuntimeManager.PlayOneShot(sitSound, player.transform.position);
         playerBody.enabled = false;
         uiHint.SetActive(false);
         activated = true;

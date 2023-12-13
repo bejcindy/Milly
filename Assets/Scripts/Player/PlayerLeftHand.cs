@@ -394,7 +394,7 @@ public class PlayerLeftHand : MonoBehaviour
     public bool bypassThrow;
     private void DetectHolding()
     {
-        if (!bypassThrow)
+        if (!bypassThrow && !playerHolding.inDialogue)
         {
             if (Input.GetMouseButtonDown(0) && holdingObj && !PauseMenu.isPaused)
             {

@@ -3475,7 +3475,8 @@ MonoBehaviour:
         destinationDialogueID: 13
         isConnector: 0
         priority: 2
-      conditionsString: Variable["BrokenAC"] == true
+      conditionsString: Variable["BrokenAC"] == true and (Variable["201_Talked"]
+        == false)
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -3640,8 +3641,8 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: Variable["202_Talked"] == true
-      userScript: 
+      conditionsString: 
+      userScript: Variable["201_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3915,8 +3916,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 20.72096, y: 6.640227}
-    canvasZoom: 0.75999993
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.55000013
   - id: 8
     fields:
     - title: Title
@@ -7954,8 +7955,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 690
-        y: 39
+        x: 1008.5713
+        y: 41.857155
         width: 160
         height: 30
     - id: 1
@@ -8002,7 +8003,7 @@ MonoBehaviour:
         destinationDialogueID: 3
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["202_Talked"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -8278,7 +8279,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["202_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8560,8 +8561,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 276.82507, y: 0}
-    canvasZoom: 0.7900002
+    canvasScrollPosition: {x: 176.26123, y: 0}
+    canvasZoom: 0.7000003
   - id: 12
     fields:
     - title: Title

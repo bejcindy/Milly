@@ -388,6 +388,7 @@ namespace NPCFSM
         public void TurnOnCam()
         {
             charCam.m_Priority = 11;
+            player.GetComponent<PlayerMovement>().enabled = false;
         }
 
         public void TurnOffCam()

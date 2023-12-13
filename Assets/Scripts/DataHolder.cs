@@ -111,6 +111,7 @@ public class DataHolder : MonoBehaviour
 
         if (!focusing && focused)
         {
+            Debug.Log("checking focus");
             Unfocus();
         }
 
@@ -180,36 +181,40 @@ public class DataHolder : MonoBehaviour
 
     public static void Unfocus()
     {
-        focusCinemachine.Priority = 0;
-        focusCinemachine.LookAt = null;
-        playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
-        playerCinemachine.LookAt = null;
-
-        if (focusDist < .75f)
+        if(currentFocus != null)
         {
-            currentFocus.layer = 13;
-            focusDist += .5f * Time.deltaTime;
-        }
-        else
-        {
-            focusDist = .75f;
-            currentFocus.layer = 17;
-            currentFocus = null;
-            focused = false;
-            camBlended = false;
-            camBlendDone = false;
-            playerHolding.looking = false ;
-            playerMovement.enabled = true;
-            playerLeftHand.bypassThrow = false;
-            pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
-            pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
-        }
+            focusCinemachine.Priority = 0;
+            focusCinemachine.LookAt = null;
+            playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
+            playerCinemachine.LookAt = null;
+
+            if (focusDist < .75f)
+            {
+                currentFocus.layer = 13;
+                focusDist += .5f * Time.deltaTime;
+            }
+            else
+            {
+                focusDist = .75f;
+                currentFocus.layer = 17;
+                currentFocus = null;
+                focused = false;
+                camBlended = false;
+                camBlendDone = false;
+                playerHolding.looking = false;
+                playerMovement.enabled = true;
+                playerLeftHand.bypassThrow = false;
+                pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
+                pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
+            }
 
 
-        if (v.profile.TryGet<DepthOfField>(out dof))
-        {
-            dof.focusDistance.value = focusDist;
+            if (v.profile.TryGet<DepthOfField>(out dof))
+            {
+                dof.focusDistance.value = focusDist;
+            }
         }
+
         
     }
     #endregion

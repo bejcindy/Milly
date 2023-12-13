@@ -530,6 +530,12 @@ public class PlayerHolding : MonoBehaviour
         }
     }
 
+    public void HideLookingHint()
+    {
+        HideUI(lookingSprite);
+        DataHolder.HideHint(DataHolder.hints.lookHint);
+    }
+
     bool CheckContainer()
     {
         foreach(GameObject obj in containers)

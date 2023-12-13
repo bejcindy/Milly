@@ -130,7 +130,7 @@ public class LookingObject : LivableObject
         gameObject.layer = 12;
         playerHolding.looking = true;
         pm.enabled = false;
-
+        playerHolding.HideLookingHint();
 
     }
 

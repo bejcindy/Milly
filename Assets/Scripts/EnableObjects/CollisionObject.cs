@@ -38,50 +38,59 @@ public class CollisionObject : LivableObject
         //stop the annoying collision sound from lanterns bumping into the roof
         if (gameObject.name.Contains("lantern") && collision.gameObject.name.Contains("roof"))
             return;
-        if (tagList.Contains(collision.gameObject.tag) || (collision.gameObject.GetComponent<PickUpObject>() && collision.gameObject.GetComponent<PickUpObject>().thrownByPlayer))
+
+        if(!StartSequence.noControl || overrideStartSequence)
         {
-            if (!stairParent)
-                activated = true;
-            else
+            if (tagList.Contains(collision.gameObject.tag) || (collision.gameObject.GetComponent<PickUpObject>() && collision.gameObject.GetComponent<PickUpObject>().thrownByPlayer))
             {
-                Material parentMat = transform.parent.GetComponent<Renderer>().material;
-                parentMat.EnableKeyword("_WhiteDegree");
-                TurnOnColor(parentMat);
-            }
+                if (!stairParent)
+                    activated = true;
+                else
+                {
+                    Material parentMat = transform.parent.GetComponent<Renderer>().material;
+                    parentMat.EnableKeyword("_WhiteDegree");
+                    TurnOnColor(parentMat);
+                }
 
-            if (gameObject.CompareTag("Ladder"))
-            {
-                GetComponent<Rigidbody>().isKinematic = false;
-            }
+                if (gameObject.CompareTag("Ladder"))
+                {
+                    GetComponent<Rigidbody>().isKinematic = false;
+                }
 
-            if (brokenAC)
-            {
-                GetComponent<Rigidbody>().isKinematic = false;
-                if (GetComponent<DialogueSystemTrigger>())
-                    GetComponent<DialogueSystemTrigger>().enabled = true;
+                if (brokenAC)
+                {
+                    GetComponent<Rigidbody>().isKinematic = false;
+                    if (GetComponent<DialogueSystemTrigger>())
+                        GetComponent<DialogueSystemTrigger>().enabled = true;
+                }
             }
         }
+
         if (!collisionSound.IsNull && DataHolder.canMakeSound)
             RuntimeManager.PlayOneShot(collisionSound, transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!assistant)
+        if(!StartSequence.noControl || overrideStartSequence)
         {
-            if (other.CompareTag("Player"))
+            if (!assistant)
             {
-                activated = true;
+                if (other.CompareTag("Player"))
+                {
+                    activated = true;
+                }
+                if (tagList.Contains(other.gameObject.tag))
+                {
+                    activated = true;
+                }
             }
-            if (tagList.Contains(other.gameObject.tag))
+            else
             {
-                activated = true;
+                transform.parent.GetComponent<LivableObject>().activated = true;
             }
         }
-        else
-        {
-            transform.parent.GetComponent<LivableObject>().activated = true;
-        }
+
 
     }
 }

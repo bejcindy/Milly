@@ -9,7 +9,9 @@ public class FirstPersonOcclusion : MonoBehaviour
     [SerializeField]
 
     private EventReference SelectAudio;
+    [SerializeField] private EventReference ConfrontSong;
     private EventInstance Audio;
+    private EventInstance ConfrontAudio;
     private EventDescription AudioDes;
     private StudioListener Listener;
     private PLAYBACK_STATE pb;
@@ -31,6 +33,8 @@ public class FirstPersonOcclusion : MonoBehaviour
     private float lineCastHitCount = 0f;
     private Color colour;
 
+    public bool change;
+
     private void Start()
     {
         Audio = RuntimeManager.CreateInstance(SelectAudio);
@@ -45,6 +49,15 @@ public class FirstPersonOcclusion : MonoBehaviour
         Listener = FindObjectOfType<StudioListener>();
     }
 
+    public void Update()
+    {
+        if (change)
+        {
+            ChangeSong();
+            change = false;
+        }
+    }
+
     private void FixedUpdate()
     {
         Audio.isVirtual(out AudioIsVirtual);
@@ -55,6 +68,15 @@ public class FirstPersonOcclusion : MonoBehaviour
             OccludeBetween(transform.position, Listener.transform.position);
 
         lineCastHitCount = 0f;
+    }
+
+    public void ChangeSong()
+    {
+        Audio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ConfrontAudio = RuntimeManager.CreateInstance(ConfrontSong);
+        RuntimeManager.AttachInstanceToGameObject(ConfrontAudio, GetComponent<Transform>(), GetComponent<Rigidbody>());
+        ConfrontAudio.start();
+        ConfrontAudio.release();
     }
 
     private void OccludeBetween(Vector3 sound, Vector3 listener)

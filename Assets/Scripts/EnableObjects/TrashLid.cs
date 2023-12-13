@@ -71,6 +71,7 @@ public class TrashLid : LivableObject
                         }
                     }
                     playerHolding.dragAnimDirection = "UpDown";
+                    Debug.Log(playerHolding.dragAnimDirection);
                 }
                 else
                 {

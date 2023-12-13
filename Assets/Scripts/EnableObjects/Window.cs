@@ -6,8 +6,6 @@ using FMODUnity;
 public class Window : LivableObject
 {
     public bool isInteracting;
-
-
     public GameObject leftHandUI;
 
     public bool windowOpen;
@@ -35,7 +33,6 @@ public class Window : LivableObject
             {
                 child.gameObject.layer = 9;
             }
-
             if (!isInteracting)
             {
                 if (playerHolding.GetLeftHand())
@@ -60,14 +57,9 @@ public class Window : LivableObject
                     isInteracting = false;
                 }
 
-                if (!iconHidden)
-                {
-                    playerHolding.lidObj = null;
-                    iconHidden = true;
-                }
+                
                 UseWindow();
             }
-
         }
         else
         {
@@ -79,16 +71,16 @@ public class Window : LivableObject
                 else
                     child.gameObject.layer = 0;
             }
-
+        }
+        if (!interactable)
+        {
             if (!iconHidden)
             {
                 playerHolding.lidObj = null;
                 iconHidden = true;
             }
         }
-
     }
-
 
     public void UseWindow()
     {
@@ -132,6 +124,7 @@ public class Window : LivableObject
             //}
         
         }
+        playerHolding.dragAnimDirection = "UpDown";
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)

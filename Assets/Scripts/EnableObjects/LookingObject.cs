@@ -8,7 +8,7 @@ using FMODUnity;
 public class LookingObject : LivableObject
 {
     PlayerHolding playerHolding;
-
+    PlayerMovement pm;
     public bool designatedSpot;
     public bool inSpot;
     public bool selected;
@@ -24,6 +24,7 @@ public class LookingObject : LivableObject
     {
         base.Start();
         playerHolding = player.GetComponent<PlayerHolding>();
+        pm = player.GetComponent<PlayerMovement>(); 
         if (TryGetComponent<DialogueSystemTrigger>(out DialogueSystemTrigger dia))
         {
             dialogue = dia;
@@ -40,8 +41,8 @@ public class LookingObject : LivableObject
         {
             if (focusingThis)
             {
-                DataHolder.currentFocus = gameObject;
-                DataHolder.FocusOnThis(fadeInterval, matColorVal);
+                //DataHolder.currentFocus = gameObject;
+                DataHolder.FocusOnThis(matColorVal);
                 if (!playedSF && DataHolder.camBlended && DataHolder.camBlendDone)
                 {
                     RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
@@ -60,8 +61,10 @@ public class LookingObject : LivableObject
                         {
                             if(gameObject.tag.Contains("Poster"))
                                 RuntimeManager.PlayOneShot(lookSound, transform.position);
+
                             activated = true;
                             focusingThis = true;
+                            FocusOnObject();
                         }
                     }
 
@@ -112,6 +115,22 @@ public class LookingObject : LivableObject
                 gameObject.layer = 0;
             }
         }
+
+    }
+
+    public void FocusOnObject()
+    {
+        DataHolder.currentFocus = this.gameObject;
+        DataHolder.focusCinemachine.LookAt = gameObject.transform;
+        playerCam.LookAt = gameObject.transform;
+        DataHolder.pov.m_HorizontalAxis.m_MaxSpeed = 0f;
+        DataHolder.pov.m_VerticalAxis.m_MaxSpeed = 0f;
+
+        DataHolder.focusCinemachine.m_Priority = playerCam.m_Priority + 1;
+        gameObject.layer = 12;
+        playerHolding.looking = true;
+        pm.enabled = false;
+
 
     }
 

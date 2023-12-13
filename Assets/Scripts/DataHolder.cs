@@ -32,7 +32,7 @@ public class DataHolder : MonoBehaviour
 
     public static GameObject currentFocus;
 
-    static CinemachineVirtualCamera focusCinemachine;
+    public static CinemachineVirtualCamera focusCinemachine;
     static CinemachineVirtualCamera playerCinemachine;
     public static CinemachineBrain playerBrain;
     public static bool camBlended, camBlendDone;
@@ -54,7 +54,7 @@ public class DataHolder : MonoBehaviour
     static PlayerHolding playerHolding;
     static PlayerLeftHand playerLeftHand;
     static PlayerMovement playerMovement;
-    static CinemachinePOV pov;
+    public static CinemachinePOV pov;
     static float originalVerticalSpeed, originalHorizontalSpeed;
     //static string currentHint;
     static List<string> currentHints;
@@ -101,6 +101,10 @@ public class DataHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log("Current focus is " + currentFocus);
+        Debug.Log("focusing is " + focusing);
+        Debug.Log("focused is " + focused);
         if (beginningAudioCoolDownTimer < 2)
             beginningAudioCoolDownTimer += Time.deltaTime;
         else
@@ -108,14 +112,19 @@ public class DataHolder : MonoBehaviour
             canMakeSound = true;
         }
 
-        if(currentFocus != null && currentFocus.GetComponent<LookingObject>().firstActivated)
-        {
-            focusing = false;
-        }
+        //if(currentFocus != null && currentFocus.GetComponent<LookingObject>().firstActivated)
+        //{
+        //    focusing = false;
+        //}
 
-        if (!focusing && focused)
+        //if (!focusing && focused)
+        //{
+        //    Debug.Log("checking focus");
+        //    Unfocus();
+        //}
+
+        if (focused)
         {
-            Debug.Log("checking focus");
             Unfocus();
         }
 
@@ -139,38 +148,29 @@ public class DataHolder : MonoBehaviour
     }
 
     #region Focusing and Unfocusing
-    public static void FocusOnThis(float fadeInterval,float matColorVal)
+    public static void FocusOnThis(float matColorVal)
     {
-        currentFocus.layer = 12;
-        pov.m_HorizontalAxis.m_MaxSpeed = 0f;
-        pov.m_VerticalAxis.m_MaxSpeed = 0f;
-
-        focusCinemachine.Priority = playerCinemachine.Priority + 1;
-        focusCinemachine.LookAt = currentFocus.transform;
-
-        playerHolding.looking = true;
-        playerMovement.enabled = false;
         playerLeftHand.bypassThrow = true;
-        playerCinemachine.LookAt= currentFocus.transform;
 
         if (playerBrain.IsBlending)
             camBlended = true;
         if (camBlended && !playerBrain.IsBlending)
             camBlendDone = true;
 
-        if (!playerBrain.IsBlending)
+        if (camBlendDone)
         {
-            focused = true;
+//            focused = true;
             if (focusDist > .1f)
             {
                 float speed = Mathf.Lerp(0.75f, 0.001f, Mathf.InverseLerp(1, 0, matColorVal));
                 focusDist = speed;
-                focusing = true;
+//                focusing = true;
             }
             else
             {
                 focusDist = .001f;
-                focusing = false;
+                focused = true;
+//                focusing = false;
             }
 
 
@@ -189,36 +189,33 @@ public class DataHolder : MonoBehaviour
 
     public static void Unfocus()
     {
-        if(currentFocus != null)
+        playerCinemachine.LookAt = null;
+        focusCinemachine.Priority = 1;
+        focusCinemachine.LookAt = null;
+        playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
+
+
+        if (focusDist < .75f)
         {
-            focusCinemachine.Priority = 0;
-            focusCinemachine.LookAt = null;
-            playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
-            playerCinemachine.LookAt = null;
-
-            if (focusDist < .75f)
-            {
-                currentFocus.layer = 13;
-                focusDist += .5f * Time.deltaTime;
-            }
-            else
-            {
-                focusDist = .75f;
-                currentFocus.layer = 17;
-                currentFocus = null;
-                focused = false;
-                camBlended = false;
-                camBlendDone = false;
-                playerHolding.looking = false;
-                playerMovement.enabled = true;
-                playerLeftHand.bypassThrow = false;
-                pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
-                pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
-            }
-
-
-
+            currentFocus.layer = 13;
+            focusDist += .5f * Time.deltaTime;
         }
+        else
+        {
+            pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
+            pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
+            focusDist = .75f;
+            currentFocus.layer = 17;
+            camBlended = false;
+            camBlendDone = false;
+            playerHolding.looking = false;
+            playerMovement.enabled = true;
+            playerLeftHand.bypassThrow = false;
+
+            currentFocus = null;
+            focused = false;
+        }
+
         if (v.profile.TryGet<DepthOfField>(out dof))
         {
             dof.focusDistance.value = focusDist;
@@ -227,7 +224,6 @@ public class DataHolder : MonoBehaviour
         {
             colorDof.focusDistance.value = focusDist;
         }
-
 
     }
     #endregion

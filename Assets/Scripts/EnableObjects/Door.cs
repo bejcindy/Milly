@@ -129,11 +129,13 @@ public class Door : LivableObject
                         {
                             if (horizontalInput < 0)
                                 StartCoroutine(LerpPosition(openPos, 1.5f));
+                            playerHolding.dragAnimDirection = "Left";
                         }
                         else
                         {
                             if (horizontalInput > 0)
                                 StartCoroutine(LerpPosition(openPos, 1.5f));
+                            playerHolding.dragAnimDirection = "Right";
                         }
                     }
                     else
@@ -144,11 +146,13 @@ public class Door : LivableObject
                             {
                                 if (verticalInput > 0)
                                     StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                                playerHolding.dragAnimDirection = "Up";
                             }
                             else
                             {
                                 if (verticalInput < 0)
                                     StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                                playerHolding.dragAnimDirection = "Down";
                             }
 
                         }
@@ -158,11 +162,13 @@ public class Door : LivableObject
                             {
                                 if (verticalInput < 0)
                                     StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                                playerHolding.dragAnimDirection = "Down";
                             }
                             else
                             {
                                 if (verticalInput > 0)
                                     StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                                playerHolding.dragAnimDirection = "Up";
                             }
 
                         }
@@ -176,11 +182,13 @@ public class Door : LivableObject
                         {
                             if (horizontalInput > 0)
                                 StartCoroutine(LerpPosition(closedPos, 1.5f));
+                            playerHolding.dragAnimDirection = "Right";
                         }
                         else
                         {
                             if (horizontalInput < 0)
                                 StartCoroutine(LerpPosition(closedPos, 1.5f));
+                            playerHolding.dragAnimDirection = "Left";
                         }
                     }
                     else
@@ -189,11 +197,13 @@ public class Door : LivableObject
                         {
                             if (verticalInput < 0)
                                 StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
+                            playerHolding.dragAnimDirection = "Down";
                         }
                         else
                         {
                             if (verticalInput > 0)
                                 StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
+                            playerHolding.dragAnimDirection = "Up";
                         }
                     }
                 }

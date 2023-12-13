@@ -44,8 +44,10 @@ public class PlayerHolding : MonoBehaviour
     PlayerMovement pm;
 
     #region For Object Tracking UI
-    public Image objectUI,objectUI2;
-    public Sprite pickUpSprite,grabingSprite, lookingSprite, talkSprite, kickSprite,sitSprite,clickSprite,catSprite;
+    public Image objectUI;
+    public GameObject dragUIAnimation;
+    public String dragAnimDirection;
+    public Sprite pickUpSprite, dragSprite, grabingSprite, lookingSprite, talkSprite, kickSprite, sitSprite, clickSprite, catSprite;
     RectTransform objectUIRect,objectUIRect2;
     public RectTransform CanvasRect;
 
@@ -113,15 +115,7 @@ public class PlayerHolding : MonoBehaviour
             else
                 FakeDisplayUI();
 
-            //if (StartSequence.noControl && !noControlReset)
-            //{
-            //    pickUpObjects.Clear();
-            //    noControlReset = true;
-            //}
-
-
             atContainer = CheckContainer();
-
 
             if (focusedObj != null)
             {
@@ -156,16 +150,16 @@ public class PlayerHolding : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     DisplayUI(doorHandle, grabingSprite);
-                    HideUI(pickUpSprite);
+                    HideUI(dragSprite);
                 }
                 else if (!doorHandle.GetComponentInParent<Door>().doorMoving)
                 {
-                    DisplayUI(doorHandle, pickUpSprite);
+                    DisplayUI(doorHandle, dragSprite);
                     HideUI(grabingSprite);
                 }
                 else
                 {
-                    HideUI(pickUpSprite);
+                    HideUI(dragSprite);
                     HideUI(grabingSprite);
                 }
 
@@ -175,7 +169,7 @@ public class PlayerHolding : MonoBehaviour
             //if(talkingTo)
             UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
             if (lidObj)
-                UITriggerdByOtherObj(lidObj, pickUpSprite, dragHidden);
+                UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
             //if(sitObj)
             UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
             //if (clickableObj)
@@ -282,6 +276,8 @@ public class PlayerHolding : MonoBehaviour
                     ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
                     ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
                     GameObject instantiatedUI = Instantiate(objectUI.gameObject, CanvasRect.transform);
+                    if (interactionSprite == grabingSprite)
+                        InstantiateDragUIAnimation(instantiatedUI.transform);
                     instantiatedUI.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
                     if (interactionSprite == talkSprite)
                         instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.15f, .15f, .15f);
@@ -325,6 +321,7 @@ public class PlayerHolding : MonoBehaviour
                 usedSprites.Clear();
                 trackedObjs.Clear();
                 UIs.Clear();
+                dragAnimDirection = "";
             }
         }
         else
@@ -336,6 +333,8 @@ public class PlayerHolding : MonoBehaviour
                     Destroy(UIs[i]);
                     usedSprites.Remove(UIs[i].GetComponent<TrackObject>().sprite);
                     trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
+                    if (toHide == grabingSprite)
+                        dragAnimDirection = "";
                     UIs.Remove(UIs[i]);
                 }
             }
@@ -361,11 +360,6 @@ public class PlayerHolding : MonoBehaviour
     {
         if (obj)
         {
-            //if (obj == doorHandle && Input.GetMouseButton(0))
-            //{
-            //    Debug.Log("Trying");
-            //    DisplayUI(obj, grabingSprite);
-            //}
             if (obj == lidObj && Input.GetMouseButton(0))
                 DisplayUI(obj, grabingSprite);
             else
@@ -377,11 +371,42 @@ public class PlayerHolding : MonoBehaviour
             if (!hidden)
             {
                 HideUI(sprite);
-                //if (obj == doorHandle || obj == lidObj)
-                //    HideUI(grabingSprite);
                 hidden = true;
             }
         }
+    }
+    void InstantiateDragUIAnimation(Transform parent)
+    {
+        GameObject obj = Instantiate(dragUIAnimation, parent);
+        Animator dragAnim = obj.GetComponent<Animator>();
+        switch (dragAnimDirection)
+        {
+            case "Left":
+                dragAnim.SetBool("Left", true);
+                dragAnim.SetBool("Right", false);
+                break;
+            case "Right":
+                dragAnim.SetBool("Left", false);
+                dragAnim.SetBool("Right", true);
+                break;
+            case "LeftRight":
+                dragAnim.SetBool("Left", true);
+                dragAnim.SetBool("Right", true);
+                break;
+            case "Up":
+                dragAnim.SetBool("Up", true);
+                dragAnim.SetBool("Down", false);
+                break;
+            case "Down":
+                dragAnim.SetBool("Up", false);
+                dragAnim.SetBool("Down", true);
+                break;
+            case "UpDown":
+                dragAnim.SetBool("Up", true);
+                dragAnim.SetBool("Down", true);
+                break;
+        }
+        obj.SetActive(true);
     }
     #endregion
     public void ChooseInteractable()

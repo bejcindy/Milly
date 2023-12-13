@@ -70,6 +70,7 @@ public class TrashLid : LivableObject
                             openPlayed = true;
                         }
                     }
+                    playerHolding.dragAnimDirection = "UpDown";
                 }
                 else
                 {
@@ -113,6 +114,7 @@ public class TrashLid : LivableObject
                             openPlayed = true;
                         }
                     }
+                    playerHolding.dragAnimDirection = "UpDown";
                 }
                 else
                 {

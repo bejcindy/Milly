@@ -7,6 +7,7 @@ public class PizzaBox : MonoBehaviour
     public List<Vector3> pizzaPos;
     public List<int> pizzaRot;
     public List<Transform> pizzas;
+    public bool movingPizza;
 
     public BuildingGroupController pizzaShop;
 
@@ -67,6 +68,7 @@ public class PizzaBox : MonoBehaviour
 
     IEnumerator LerpPosition(Transform pizza, Vector3 targetPosition, float duration)
     {
+        movingPizza = true;
         float time = 0;
         Vector3 startPosition = pizza.localPosition;
         while (time < duration)
@@ -76,6 +78,7 @@ public class PizzaBox : MonoBehaviour
             yield return null;
         }
         pizza.localPosition = targetPosition;
+        movingPizza = false;
     }
 
     IEnumerator LerpRotation(Transform pizza, Vector3 targetPosition, float duration)

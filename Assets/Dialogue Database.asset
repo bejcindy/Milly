@@ -27018,8 +27018,7 @@ MonoBehaviour:
         destinationDialogueID: 24
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "FirstInitiated" and
-        (Variable["NPC_Kelvin_Main_Talked"] == false)
+      conditionsString: Variable["NPC_Kelvin_Main_Talked"] == false
       userScript: Variable["NPC_Kelvin_Main_Talked"] = true
       onExecute:
         m_PersistentCalls:
@@ -27240,7 +27239,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["NPC_Kelvin_Talk_State"] = "SecondInitiated"
+      userScript: Variable["NPC_Kelvin_Main_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -27251,7 +27250,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 485.24313, y: 12.087921}
+    canvasScrollPosition: {x: 639.0893, y: 406.59332}
     canvasZoom: 0.91000026
   - id: 38
     fields:
@@ -28740,7 +28739,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 790.38}
+    canvasScrollPosition: {x: 203.12488, y: 0}
     canvasZoom: 0.6400002
   - id: 40
     fields:
@@ -38558,8 +38557,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 990.0306
-        y: 40.344246
+        x: 1210.6178
+        y: 31.520737
         width: 160
         height: 30
     - id: 1
@@ -38606,16 +38605,15 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "Uninitiated" and (Variable["NPC_Kelvin_PlayerAtRock"]
-        == false)
+      conditionsString: Variable["NPC_Kelvin_Talk_State"] == "Uninitiated"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 387.11362
-        y: 33.69005
+        x: 842.9949
+        y: 139.57216
         width: 160
         height: 30
     - id: 2
@@ -38669,8 +38667,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 383.36606
-        y: 102.19627
+        x: 839.2473
+        y: 208.07838
         width: 160
         height: 30
     - id: 8
@@ -38724,8 +38722,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 383.25876
-        y: 168.04988
+        x: 839.14
+        y: 273.932
         width: 160
         height: 30
     - id: 34
@@ -38766,16 +38764,15 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: Variable["NPC_Kelvin_Other_Interacted"] == false and (Variable["NPC_Kelvin_RudeMilly"]
-        == false)
+      conditionsString: Variable["NPC_Kelvin_Other_Interacted"] == false
       userScript: Variable["NPC_Kelvin_Other_Interacted"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1659.6504
-        y: 168.64725
+        x: 1494.945
+        y: 133.35324
         width: 160
         height: 30
     - id: 39
@@ -38829,8 +38826,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 385.99844
-        y: 229.00873
+        x: 841.87976
+        y: 334.89084
         width: 160
         height: 30
     - id: 40
@@ -38884,8 +38881,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 383.25876
-        y: 291.33737
+        x: 839.14
+        y: 397.21948
         width: 160
         height: 30
     - id: 41
@@ -38940,8 +38937,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 385.728
-        y: 356.40588
+        x: 841.60925
+        y: 462.28796
         width: 160
         height: 30
     - id: 42
@@ -38995,8 +38992,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 380.40665
-        y: 421.57837
+        x: 836.28796
+        y: 527.46045
         width: 160
         height: 30
     - id: 43
@@ -39056,8 +39053,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 381.78064
-        y: 486.70093
+        x: 837.6619
+        y: 592.5829
         width: 160
         height: 30
     - id: 44
@@ -39111,8 +39108,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 106.59219
-        y: 562.9148
+        x: 562.4735
+        y: 668.79675
         width: 160
         height: 30
     - id: 45
@@ -39166,8 +39163,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 672.0241
-        y: 570.55566
+        x: 1127.9053
+        y: 676.4376
         width: 160
         height: 30
     - id: 46
@@ -39221,8 +39218,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 105.4877
-        y: 678.896
+        x: 561.369
+        y: 784.77795
         width: 160
         height: 30
     - id: 47
@@ -39276,8 +39273,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 672.0241
-        y: 620.55566
+        x: 1127.9053
+        y: 726.4376
         width: 160
         height: 30
     - id: 48
@@ -39331,8 +39328,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 670.7583
-        y: 669.28986
+        x: 1126.6394
+        y: 775.1719
         width: 160
         height: 30
     - id: 49
@@ -39386,8 +39383,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 386.28845
-        y: 773.5054
+        x: 842.16974
+        y: 879.3873
         width: 160
         height: 30
     - id: 50
@@ -39441,8 +39438,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 383.93875
-        y: 845.449
+        x: 839.82007
+        y: 951.33093
         width: 160
         height: 30
     - id: 51
@@ -39497,8 +39494,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 385.5781
-        y: 907.64417
+        x: 841.45935
+        y: 1013.5261
         width: 160
         height: 30
     - id: 52
@@ -39552,8 +39549,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 385.5781
-        y: 973.64417
+        x: 841.45935
+        y: 1079.5261
         width: 160
         height: 30
     - id: 53
@@ -39595,19 +39592,22 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["NPC_Kelvin_Main_Talked"] = true
+      userScript: 'Variable["NPC_Kelvin_Main_Talked"] = true;
+
+        Variable["NPC_Kelvin_Talk_State"]
+        = "FirstInitiated"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 385.5781
-        y: 1041.6442
+        x: 841.45935
+        y: 1147.5261
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 192.00818, y: 479.65768}
-    canvasZoom: 1.0000004
+    canvasScrollPosition: {x: 448.96274, y: 0}
+    canvasZoom: 0.5200008
   - id: 46
     fields:
     - title: Title
@@ -47924,7 +47924,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 170, y: 125}
+    canvasScrollPosition: {x: 201, y: 0}
     canvasZoom: 1
   - id: 67
     fields:
@@ -48290,7 +48290,7 @@ MonoBehaviour:
         height: 30
     entryGroups: []
     canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.85000014
+    canvasZoom: 0.64000034
   - id: 69
     fields:
     - title: Title
@@ -55776,8 +55776,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 2387.4153, y: 415.67926}
-    canvasZoom: 0.82000005
+    canvasScrollPosition: {x: 2277.3489, y: 1411.1337}
+    canvasZoom: 0.5500003
   - id: 75
     fields:
     - title: Title
@@ -57750,7 +57750,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 257.31705, y: 324.39023}
     canvasZoom: 0.82000005
   - id: 77
     fields:

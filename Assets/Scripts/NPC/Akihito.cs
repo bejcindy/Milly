@@ -39,6 +39,16 @@ public class Akihito : NPCControl
         anim.SetTrigger("Stop");
     }
 
+    public void AkiStopLooking()
+    {
+        allowLookPlayer = false;
+    }
+
+    public void AkiStartLooking()
+    {
+        allowLookPlayer = true;
+    }
+
 
 
 }

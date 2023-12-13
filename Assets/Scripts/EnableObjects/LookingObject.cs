@@ -40,8 +40,8 @@ public class LookingObject : LivableObject
         {
             if (focusingThis)
             {
-                DataHolder.FocusOnThis(fadeInterval, matColorVal);
                 DataHolder.currentFocus = gameObject;
+                DataHolder.FocusOnThis(fadeInterval, matColorVal);
                 if (!playedSF && DataHolder.camBlended && DataHolder.camBlendDone)
                 {
                     RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
@@ -76,6 +76,7 @@ public class LookingObject : LivableObject
         }
         else
         {
+            focusingThis = false;
             if (activated)
             {
                 if (specialEffect != null)

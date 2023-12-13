@@ -28,7 +28,6 @@ public class Loyi : NPCControl
 
     public void LoyiAction1()
     {
-        noLookInConvo = true;
         if (!turnChar)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 1f);

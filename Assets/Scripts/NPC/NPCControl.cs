@@ -377,7 +377,7 @@ public class NPCControl : MonoBehaviour
     public void InvokeIdleFunction()
     {
         Invoke(idleAction, 0);
-        ActivateDesignatedObject();
+        //ActivateDesignatedObject();
     }
 
     #endregion

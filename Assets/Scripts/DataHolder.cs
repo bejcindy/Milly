@@ -103,6 +103,12 @@ public class DataHolder : MonoBehaviour
         {
             canMakeSound = true;
         }
+
+        if(currentFocus != null && currentFocus.GetComponent<LookingObject>().firstActivated)
+        {
+            focusing = false;
+        }
+
         if (!focusing && focused)
         {
             Unfocus();
@@ -110,16 +116,13 @@ public class DataHolder : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Y))
             hintOff = !hintOff;
-        //if (hintOff && hintPanels.Count != 0 && !turnedOffHint)
         if (hintOff && hintPanels.Count != 0)
         {
             for(int i=0;i< hintPanels.Count; i++)
             {
                 hintPanels[i].SetActive(false);
             }
-            //turnedOffHint = true;
         }
-        //else if(!hintOff && hintPanels.Count != 0 && turnedOffHint)
         else if (!hintOff && hintPanels.Count != 0)
         {
             for (int i = 0; i < hintPanels.Count; i++)
@@ -133,111 +136,81 @@ public class DataHolder : MonoBehaviour
     #region Focusing and Unfocusing
     public static void FocusOnThis(float fadeInterval,float matColorVal)
     {
-        if (currentFocus)
+        currentFocus.layer = 12;
+        pov.m_HorizontalAxis.m_MaxSpeed = 0f;
+        pov.m_VerticalAxis.m_MaxSpeed = 0f;
+
+        focusCinemachine.Priority = playerCinemachine.Priority + 1;
+        focusCinemachine.LookAt = currentFocus.transform;
+
+        playerHolding.looking = true;
+        playerMovement.enabled = false;
+        playerLeftHand.bypassThrow = true;
+        playerCinemachine.LookAt= currentFocus.transform;
+
+        if (playerBrain.IsBlending)
+            camBlended = true;
+        if (camBlended && !playerBrain.IsBlending)
+            camBlendDone = true;
+
+        if (!playerBrain.IsBlending)
         {
-            currentFocus.layer = 12;
-            //focused = true;
-            //focusCinemachine.gameObject.SetActive(true);
-            focusCinemachine.Priority = playerCinemachine.Priority + 1;
-            focusCinemachine.LookAt = currentFocus.transform;
-            //Cursor.lockState = CursorLockMode.Locked;
-            playerHolding.looking = true;
-            playerMovement.enabled = false;
-            playerLeftHand.bypassThrow = true;
-            playerCinemachine.LookAt= currentFocus.transform;
-            pov.m_HorizontalAxis.m_MaxSpeed = 0f;
-            pov.m_VerticalAxis.m_MaxSpeed = 0f;
-            if (playerBrain.IsBlending)
-                camBlended = true;
-            if (camBlended && !playerBrain.IsBlending)
-                camBlendDone = true;
-            //playerCinemachine.gameObject.SetActive(false);
-            //playerCinemachine.Follow = focusCinemachine.transform;
-            //Debug.Log("focusing");
-            if (camBlendDone)
+            focused = true;
+            if (focusDist > .1f)
             {
-                focused = true;
-                if (focusDist > .1f)
-                {
-                    //focusDist -= 0.1f * fadeInterval * Time.deltaTime;
-                    //0.75f,0.1f
-                    float speed = Mathf.Lerp(0.75f, 0.001f, Mathf.InverseLerp(1, 0, matColorVal));
-                    focusDist = speed;
-                    focusing = true;
-                }
-                else
-                {
-                    focusDist = .001f;
-                    //currentFocus = null;
-                    focusing = false;
-                    Debug.Log("false1");
-                    currentFocus.GetComponent<LookingObject>().focusingThis = false;
-                    //playerCinemachine.Follow = focusCinemachine.transform;
-                }
-
-                //Debug.Log("focus dist" + focusDist);
-                //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
-                //Volume v = postProcessingVolume.GetComponent<Volume>();
-                if (v.profile.TryGet<DepthOfField>(out dof))
-                {
-                    dof.focusDistance.value = focusDist;
-                }
-            }
-        }
-        else
-        {
-            focusing = false;
-            //Debug.Log("false2");
-        }
-        //playerCam.m_Lens.FieldOfView = 120;
-    }
-
-    public static void Unfocus()
-    {
-        if (!focusing)
-        {
-            focusCinemachine.Priority = 0;
-            //focusCinemachine.gameObject.SetActive(false);
-            focusCinemachine.LookAt = null;
-            //playerCinemachine.gameObject.SetActive(true);
-            playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
-            //playerCinemachine.Follow = originalPlayerCmFollow;
-            playerCinemachine.LookAt = null;
-            //focusCinemachine.GetCinemachineComponent<CinemachinePOV>().
-            //Cursor.lockState = CursorLockMode.None;
-
-            if (focusDist < .75f)
-            {
-                currentFocus.layer = 13;
-                focusDist += .5f * Time.deltaTime;
+                float speed = Mathf.Lerp(0.75f, 0.001f, Mathf.InverseLerp(1, 0, matColorVal));
+                focusDist = speed;
+                focusing = true;
             }
             else
             {
-                focusDist = .75f;
-                //changeThis = false;
-                //currentFocus.layer = 0;
-                currentFocus.layer = 17;
-                currentFocus = null;
-                focused = false;
-                camBlended = false;
-                camBlendDone = false;
-                playerHolding.looking = false ;
-                playerMovement.enabled = true;
-                playerLeftHand.bypassThrow = false;
-                pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
-                pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
-                //playerCinemachine.Follow = originalPlayerCmFollow;
-                //if (matColorVal <= 0)
-                //    go.GetComponent<LookingObject>().enabled = false;
+                focusDist = .001f;
+                focusing = false;
             }
 
-            //postProcessingVolume.GetComponent<DepthOfField>().focusDistance.value = focusDist;
-            //Volume v = postProcessingVolume.GetComponent<Volume>();
+
             if (v.profile.TryGet<DepthOfField>(out dof))
             {
                 dof.focusDistance.value = focusDist;
             }
         }
+        
+
+    }
+
+    public static void Unfocus()
+    {
+        focusCinemachine.Priority = 0;
+        focusCinemachine.LookAt = null;
+        playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
+        playerCinemachine.LookAt = null;
+
+        if (focusDist < .75f)
+        {
+            currentFocus.layer = 13;
+            focusDist += .5f * Time.deltaTime;
+        }
+        else
+        {
+            focusDist = .75f;
+            currentFocus.layer = 17;
+            currentFocus = null;
+            focused = false;
+            camBlended = false;
+            camBlendDone = false;
+            playerHolding.looking = false ;
+            playerMovement.enabled = true;
+            playerLeftHand.bypassThrow = false;
+            pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
+            pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
+        }
+
+
+        if (v.profile.TryGet<DepthOfField>(out dof))
+        {
+            dof.focusDistance.value = focusDist;
+        }
+        
     }
     #endregion
 

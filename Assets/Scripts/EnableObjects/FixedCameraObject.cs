@@ -136,8 +136,15 @@ public class FixedCameraObject : LivableObject
             }
         }
 
-        if (!dialogueBound || (dialogueBound && !playerHolding.inDialogue))
+        if ((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox)
             QuitInteraction();
+        else if (isPizzaBox)
+        {
+            if (!GetComponent<PizzaLid>().myBox.movingPizza)
+            {
+                QuitInteraction();
+            }
+        }
     }
 
     public void QuitInteraction()
@@ -146,7 +153,7 @@ public class FixedCameraObject : LivableObject
         {
             if (Input.GetKeyDown(quitKey) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
             {
-                        QuitAction();
+                QuitAction();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 StartCoroutine(UnfixPlayer());

@@ -23,6 +23,10 @@ public class Cigarette : PickUpObject
         base.Update();
         SwitchCig();
 
+        if(cigStage > 3)
+            objType = HandObjectType.TRASH;
+
+
         if (selected && !thrown)
             activeCigObj.gameObject.layer = 9;
         else if (inHand)

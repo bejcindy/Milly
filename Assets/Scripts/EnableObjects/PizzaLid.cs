@@ -9,6 +9,7 @@ public class PizzaLid : FixedCameraObject
 
     public bool openLid;
     public bool lidMoving;
+    public PizzaBox myBox;
     public Vector3 targetRot;
     Quaternion openRotation;
     Quaternion closeRotation;

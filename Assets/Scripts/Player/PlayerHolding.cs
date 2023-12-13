@@ -101,7 +101,7 @@ public class PlayerHolding : MonoBehaviour
 
 
             #region UI and Hints
-            if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo)
+            if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo && !kickableObj && !lidObj && !sitObj && !catboxObj)
             {
                 HideUI(null);
             }
@@ -360,8 +360,20 @@ public class PlayerHolding : MonoBehaviour
     {
         if (obj)
         {
-            if (obj == lidObj && Input.GetMouseButton(0))
-                DisplayUI(obj, grabingSprite);
+            if (obj == lidObj)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    DisplayUI(obj, grabingSprite);
+                    HideUI(dragSprite);
+                }
+                else
+                {
+                    DisplayUI(obj, dragSprite);
+                    HideUI(grabingSprite);
+                }
+                
+            }
             else
                 DisplayUI(obj, sprite);
             hidden = false;

@@ -161,6 +161,7 @@ public class PlayerLeftHand : MonoBehaviour
         else if (isHolding)
         {
             DataHolder.ShowHint(DataHolder.hints.throwHint);
+            DataHolder.HideHint(DataHolder.hints.pizzaHint);
             aimHintDone = false;
         }
         else if (canSmoke && !smokingHinted)

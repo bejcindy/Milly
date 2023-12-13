@@ -217,13 +217,18 @@ public class DataHolder : MonoBehaviour
             }
 
 
-            if (v.profile.TryGet<DepthOfField>(out dof))
-            {
-                dof.focusDistance.value = focusDist;
-            }
+
+        }
+        if (v.profile.TryGet<DepthOfField>(out dof))
+        {
+            dof.focusDistance.value = focusDist;
+        }
+        if (cv.profile.TryGet<DepthOfField>(out colorDof))
+        {
+            colorDof.focusDistance.value = focusDist;
         }
 
-        
+
     }
     #endregion
 

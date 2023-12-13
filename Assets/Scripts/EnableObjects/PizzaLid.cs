@@ -61,7 +61,10 @@ public class PizzaLid : FixedCameraObject
             {
                 float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime;
 
-
+                if (openLid)
+                    playerHolding.dragAnimDirection = "Down";
+                else
+                    playerHolding.dragAnimDirection = "Up";
 
                 if (verticalInput < 0 && openLid)
                 {

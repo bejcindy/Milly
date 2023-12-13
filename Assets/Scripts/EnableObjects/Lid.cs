@@ -86,6 +86,7 @@ public class Lid : LivableObject
                 {
                     StartCoroutine(LerpRotation(closeRotation, 1f));
                 }
+                playerHolding.dragAnimDirection = "Down";
             }
             else
             {
@@ -93,6 +94,7 @@ public class Lid : LivableObject
                 {
                     StartCoroutine(LerpRotation(openRotation, 1f));
                 }
+                playerHolding.dragAnimDirection = "Up";
             }
         }
         else

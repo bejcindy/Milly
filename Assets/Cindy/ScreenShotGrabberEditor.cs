@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(ScreenShotGrabber))]
 public class ScreenShotGrabberEditor : Editor
 {
@@ -20,3 +20,4 @@ public class ScreenShotGrabberEditor : Editor
         }
     }
 }
+#endif

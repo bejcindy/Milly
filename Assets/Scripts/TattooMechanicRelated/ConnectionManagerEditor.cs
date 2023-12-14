@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ConnectionManager))]
 public class ConnectionManagerEditor : Editor
 {
@@ -16,3 +17,4 @@ public class ConnectionManagerEditor : Editor
         }
     }
 }
+#endif

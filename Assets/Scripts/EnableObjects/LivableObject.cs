@@ -56,7 +56,7 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Start()
     {
-        player = GameObject.Find("Player").transform;
+        player = ReferenceTool.player;
         postProcessingVolume = GameObject.Find("GlowVolume");
         if (GetComponent<Renderer>() != null)
         {
@@ -74,7 +74,7 @@ public class LivableObject : MonoBehaviour
             groupControl = GetComponent<GroupMaster>();
         }
         checkBoundVisible = new bool[8];
-        playerCam = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
+        playerCam = ReferenceTool.playerCinemachine;
     }
 
     protected virtual void Update()
@@ -335,7 +335,7 @@ public class LivableObject : MonoBehaviour
                 Transform playerT = GameObject.Find("Player").transform;
                 LookingObject lo;
                 lo = go.GetComponent<LookingObject>();
-                if (Vector3.Distance(go.position, playerT.position) <= lo.minDist)
+                if ( (go.position - playerT.position).sqrMagnitude <= lo.minDist)
                 {
                     //get direction
                     if (Vector3.Dot(playerT.position - go.position, go.forward) > allowedAngle)

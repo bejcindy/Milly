@@ -100,14 +100,15 @@ public class NPCControl : MonoBehaviour
     protected virtual void Start()
     {
         //Setting up basic components
-        player = GameObject.Find("Player").transform;
+        player = ReferenceTool.player;
         
         machine = GetComponent<BaseStateMachine>();
+        anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
         dialogueHolder = transform.GetChild(2);
         currentDialogue = dialogueHolder.GetChild(0);
 
-        anim = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
+
 
         playerHolding = player.GetComponent<PlayerHolding>();
 
@@ -136,38 +137,36 @@ public class NPCControl : MonoBehaviour
         CheckTalkCD();
         //CheckIdle();
 
-        if (!mainNPC)
+
+        if (npcActivated)
         {
-            if (npcActivated)
+            //ChangeLayer(17);
+            if (matColorVal > 0f)
             {
-                //ChangeLayer(17);
-                if (matColorVal > 0f)
+                if (OnActivateEvent != null)
                 {
-                    if (OnActivateEvent != null)
-                    {
-                        OnActivateEvent.Invoke();
-                    }
-                    ActivateAll(npcMesh);
-                    if (!currentDialogue.gameObject.activeSelf)
-                        currentDialogue.gameObject.SetActive(true);
+                    OnActivateEvent.Invoke();
                 }
-
+                ActivateAll(npcMesh);
+                if (!currentDialogue.gameObject.activeSelf)
+                    currentDialogue.gameObject.SetActive(true);
             }
 
-            if (fakeActivated)
+        }
+
+        if (fakeActivated)
+        {
+            if (matColorVal > 0f)
             {
-                if (matColorVal > 0f)
-                {
-                    ActivateAll(npcMesh);
-                    if (!currentDialogue.gameObject.activeSelf)
-                        currentDialogue.gameObject.SetActive(true);
-                }
+                ActivateAll(npcMesh);
+                if (!currentDialogue.gameObject.activeSelf)
+                    currentDialogue.gameObject.SetActive(true);
             }
-            else if(hasFakeActivate && !fakeActivated && !npcActivated && !initialActivated)
-            {
-                DeactivateAll(npcMesh);
+        }
+        else if(hasFakeActivate && !fakeActivated && !npcActivated && !initialActivated)
+        {
+            DeactivateAll(npcMesh);
 
-            }
         }
 
 
@@ -233,10 +232,10 @@ public class NPCControl : MonoBehaviour
 
     bool CheckInteractable()
     {
-        if (Vector3.Distance(transform.position, player.position) <= minDist)
+        if ((transform.position - player.position).sqrMagnitude <= minDist)
         {
             if (isVisible)
-                return true;
+                return true;    
             else
                 return false;
         }
@@ -341,7 +340,7 @@ public class NPCControl : MonoBehaviour
 
     public void ActivateDesignatedObject()
     {
-        if (Vector3.Distance(transform.position, player.position) < npcVincinity)
+        if ((transform.position - player.position).sqrMagnitude < npcVincinity)
         {
             if (destObjects[_counter - 1] != null)
             {
@@ -581,7 +580,7 @@ public class NPCControl : MonoBehaviour
     {
         if (allowLookPlayer)
         {
-            if (Vector3.Distance(player.position, transform.position) < lookPlayerDist)
+            if ((player.position - transform.position).sqrMagnitude < lookPlayerDist)
             {
                 inDistance = true;
                 if (Mathf.Abs(Vector3.SignedAngle(transform.forward, player.position - head.position, Vector3.up)) < lookPlayerAngle)

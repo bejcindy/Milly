@@ -29,6 +29,8 @@ public class Door : LivableObject
     protected override void Start()
     {
         base.Start();
+        doorType = true;
+        
         playerHolding = player.GetComponent<PlayerHolding>();
         if (slidingDoor)
         {

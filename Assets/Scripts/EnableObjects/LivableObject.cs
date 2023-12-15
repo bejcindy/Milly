@@ -47,6 +47,13 @@ public class LivableObject : MonoBehaviour
     public UnityEvent OnActivateEvent;
     bool[] checkBoundVisible;
 
+    protected bool lookingType;
+    protected bool doorType;
+    protected bool pickType;
+    protected bool hasGroupControl;
+    protected GroupMaster groupControl;
+    protected Vector3 pointOnScreen;
+
     protected virtual void Start()
     {
         player = GameObject.Find("Player").transform;
@@ -61,6 +68,11 @@ public class LivableObject : MonoBehaviour
             mat.EnableKeyword("_WhiteDegree");
         }
 
+        if(GetComponent<GroupMaster>() != null)
+        {
+            hasGroupControl = true;
+            groupControl = GetComponent<GroupMaster>();
+        }
         checkBoundVisible = new bool[8];
         playerCam = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
     }
@@ -74,7 +86,7 @@ public class LivableObject : MonoBehaviour
 
         if (!StartSequence.noControl || overrideStartSequence)
         {
-            if (!GetComponent<Door>() && rend)
+            if (!doorType && rend)
             {
                 checkVisible = IsObjectVisible(rend);
                 if (!rigged)
@@ -93,17 +105,12 @@ public class LivableObject : MonoBehaviour
             }
             DetectInteractable();
 
-            //if (fadeOut)
-            //{
-            //    if (GetComponent<PickUpObject>())
-            //        FadeOutFilter();
-            //}
 
             if (activated)
             {
                 if (!firstActivated)
                 {
-                    if (GetComponent<LookingObject>())
+                    if (lookingType)
                     {
                         if (DataHolder.camBlended && DataHolder.camBlendDone)
                             TurnOnColor(mat);
@@ -120,9 +127,9 @@ public class LivableObject : MonoBehaviour
 
                 }
 
-                if (GetComponent<GroupMaster>() && matColorVal <= 0)
+                if (hasGroupControl && matColorVal <= 0)
                 {
-                    GetComponent<GroupMaster>().activateAll = true;
+                    groupControl.activateAll = true;
                 }
 
                 //change layer related code
@@ -177,18 +184,13 @@ public class LivableObject : MonoBehaviour
             //Audio Related Stuff
             if (!played)
             {
-                if (GetComponent<PickUpObject>())
+                if (pickType)
                 {
                     snapshot = FMODUnity.RuntimeManager.CreateInstance("snapshot:/EnableObject");
                     snapshot.start();
                 }
                 played = true;
             }
-            //I = 1 - matColorVal;
-            //if (GetComponent<PickUpObject>())
-            //{
-            //    snapshot.setParameterByName("EnableFilterIntensity", I);
-            //}
         }
         else
         {
@@ -235,7 +237,7 @@ public class LivableObject : MonoBehaviour
 
     protected virtual bool IsInView()
     {
-        Vector3 pointOnScreen = Camera.main.WorldToScreenPoint(rend.bounds.center);
+        pointOnScreen = Camera.main.WorldToScreenPoint(rend.bounds.center);
 
         //Is in front
         if (pointOnScreen.z < 0)
@@ -296,10 +298,10 @@ public class LivableObject : MonoBehaviour
 
         if (!centerFocused)
         {
-            if (GetComponent<Renderer>())
+            if (rend != null)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), GetComponent<Renderer>().bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(Camera.main.transform.position - new Vector3(0, 0.1f, 0), rend.bounds.center - (Camera.main.transform.position - new Vector3(0, 0.1f, 0)), out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                 {
                     if (hit.collider.name != gameObject.name && !hit.collider.CompareTag("Player"))
                     {

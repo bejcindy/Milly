@@ -44,6 +44,7 @@ public class PickUpObject : LivableObject
     protected override void Start()
     {
         base.Start();
+        pickType = true;
         playerHolding = player.GetComponent<PlayerHolding>();
         rb = GetComponent<Rigidbody>();
         throwCD = 1f;

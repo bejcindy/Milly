@@ -349,6 +349,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
         if (Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !inhaling)
         {
+            Debug.Log("Returning cig");
             holdingObj.GetComponent<Cigarette>().PlayExhaleSound();
             if (!smokeVFX.gameObject.activeSelf)
             {
@@ -490,7 +491,7 @@ public class PlayerLeftHand : MonoBehaviour
                 aimUI.transform.localScale = new Vector3(1, 1, 1);
             }
         }
-        else
+        else if(bypassThrow)
         {
             readyToThrow = false;
             holdingObj.localPosition = Vector3.zero;

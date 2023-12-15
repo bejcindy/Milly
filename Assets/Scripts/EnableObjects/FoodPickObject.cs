@@ -36,6 +36,8 @@ public class FoodPickObject : MonoBehaviour
         else if(myTable.tableControlOn && !picked)
         {
             gameObject.layer = 0;
+            if (leftHand.selectedFood == this.transform)
+                leftHand.selectedFood = null;
         }
         else if(picked)
         {

@@ -78,6 +78,8 @@ public class Cigarette : PickUpObject
     {
         if (cigStage < 3)
             cigStage++;
+        else
+            FinishSmoking();
     }
 
     public void FinishSmoking()

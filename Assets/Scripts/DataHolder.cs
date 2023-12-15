@@ -102,9 +102,6 @@ public class DataHolder : MonoBehaviour
     void Update()
     {
 
-        Debug.Log("Current focus is " + currentFocus);
-        Debug.Log("focusing is " + focusing);
-        Debug.Log("focused is " + focused);
         if (beginningAudioCoolDownTimer < 2)
             beginningAudioCoolDownTimer += Time.deltaTime;
         else
@@ -112,16 +109,6 @@ public class DataHolder : MonoBehaviour
             canMakeSound = true;
         }
 
-        //if(currentFocus != null && currentFocus.GetComponent<LookingObject>().firstActivated)
-        //{
-        //    focusing = false;
-        //}
-
-        //if (!focusing && focused)
-        //{
-        //    Debug.Log("checking focus");
-        //    Unfocus();
-        //}
 
         if (focused)
         {
@@ -143,7 +130,6 @@ public class DataHolder : MonoBehaviour
             {
                 hintPanels[i].SetActive(true);
             }
-            //turnedOffHint = false;
         }
     }
 
@@ -159,18 +145,15 @@ public class DataHolder : MonoBehaviour
 
         if (camBlendDone)
         {
-//            focused = true;
             if (focusDist > .1f)
             {
                 float speed = Mathf.Lerp(0.75f, 0.001f, Mathf.InverseLerp(1, 0, matColorVal));
                 focusDist = speed;
-//                focusing = true;
             }
             else
             {
                 focusDist = .001f;
                 focused = true;
-//                focusing = false;
             }
 
 

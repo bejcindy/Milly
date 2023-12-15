@@ -289,7 +289,13 @@ public class PannelController : MonoBehaviour
     public void UnpausePlayer()
     {
         playerUnpaused = true;
-        catActivated = false;
+        if (catActivated)
+        {
+            catActivated = false;
+            catCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
+            catCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
+        }
+
 
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
@@ -298,6 +304,7 @@ public class PannelController : MonoBehaviour
         playerMovement.enabled = true;
         playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
         playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
+
     }
 
     public void DemoCatActivation()

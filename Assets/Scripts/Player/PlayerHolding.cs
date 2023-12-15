@@ -582,6 +582,7 @@ public class PlayerHolding : MonoBehaviour
 
     public void OccupyLeft(Transform obj)
     {
+        Debug.Log("Are we calling this over and over");
         RemoveInteractable(obj.gameObject);
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;

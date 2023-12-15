@@ -11,7 +11,7 @@ public class ReferenceTool : MonoBehaviour
     public Transform playerRef;
     public CinemachineVirtualCamera playerCamRef;
 
-    public void Start()
+    public void Awake()
     {
         player = playerRef;
         playerCinemachine = playerCamRef;

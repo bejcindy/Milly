@@ -11,6 +11,8 @@ using static Cinemachine.CinemachineOrbitalTransposer;
 public class LivableObject : MonoBehaviour
 {
     protected Transform player;
+    protected PlayerHolding playerHolding;
+    protected PlayerLeftHand playerLeftHand;
     [SerializeField] public bool interactable;
     [SerializeField] protected bool isVisible;
     [SerializeField] protected bool checkVisible;
@@ -57,6 +59,8 @@ public class LivableObject : MonoBehaviour
     protected virtual void Start()
     {
         player = ReferenceTool.player;
+        playerHolding = ReferenceTool.playerHolding;
+        playerLeftHand = ReferenceTool.playerLeftHand;
         postProcessingVolume = GameObject.Find("GlowVolume");
         if (GetComponent<Renderer>() != null)
         {
@@ -335,7 +339,7 @@ public class LivableObject : MonoBehaviour
                 Transform playerT = GameObject.Find("Player").transform;
                 LookingObject lo;
                 lo = go.GetComponent<LookingObject>();
-                if ( (go.position - playerT.position).sqrMagnitude <= lo.minDist)
+                if ( Vector3.Distance(go.position, playerT.position) <= lo.minDist)
                 {
                     //get direction
                     if (Vector3.Dot(playerT.position - go.position, go.forward) > allowedAngle)

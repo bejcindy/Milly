@@ -7,7 +7,6 @@ public class ChiliPowder : PickUpObject
 {
     Animator anim;
     Vector3 startingPos;
-    PlayerLeftHand leftHand;
     bool powderMoving;
     public ParticleSystem powderParticle;
     public TableController myTable;
@@ -19,7 +18,6 @@ public class ChiliPowder : PickUpObject
         base.Start();
         anim = GetComponent<Animator>();
         startingPos = transform.position;
-        leftHand = player.GetComponent<PlayerLeftHand>();
     }
 
     protected override void Update()
@@ -45,7 +43,7 @@ public class ChiliPowder : PickUpObject
                 gameObject.layer = 0;
             }
 
-            if (inHand && !leftHand.noThrow)
+            if (inHand && !playerLeftHand.noThrow)
             {
                 if (Input.GetMouseButtonDown(0))
                 {

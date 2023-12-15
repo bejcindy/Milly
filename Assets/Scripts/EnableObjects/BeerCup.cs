@@ -48,7 +48,7 @@ public class BeerCup : PickUpObject
                 liquid.gameObject.layer = 0;
             }
 
-            if (inHand && !playerHolding.GetComponent<PlayerLeftHand>().noThrow)
+            if (inHand && !ReferenceTool.playerLeftHand.noThrow)
             {
                 if (Input.GetMouseButtonDown(1))
                 {

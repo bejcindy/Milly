@@ -16,7 +16,6 @@ public class Door : LivableObject
     public bool invertControl;
 
     public bool playerInFront;
-    PlayerHolding playerHolding;
     Vector3 closedPos;
     public Vector3 openPos;
     public Collider doorHandleCollider;
@@ -24,14 +23,10 @@ public class Door : LivableObject
     public EventReference doorOpenEvent;
     public EventReference doorCloseEvent;
 
-    bool playedWithDoor;
-
     protected override void Start()
     {
         base.Start();
         doorType = true;
-        
-        playerHolding = player.GetComponent<PlayerHolding>();
         if (slidingDoor)
         {
             closedPos = door.localPosition;
@@ -63,26 +58,24 @@ public class Door : LivableObject
         {
             if (!playerHolding.GetLeftHand())
             {
-                playerHolding.GetComponent<PlayerLeftHand>().enabled = false;
+                playerLeftHand.enabled = false;
             }
             if (!playerHolding.atTable)
             {
                 DoorControl();
-                playedWithDoor = true;
             }
 
         }
         else
         {
             if (!playerHolding.GetLeftHand())
-                playerHolding.GetComponent<PlayerLeftHand>().enabled = true;
+                playerLeftHand.enabled = true;
 
 
             isInteracting = false;
             if (playerHolding.doorHandle == doorHandleCollider.gameObject)
             {
                 playerHolding.doorHandle = null;
-                playedWithDoor = false;
             }
 
         }
@@ -112,7 +105,6 @@ public class Door : LivableObject
         {
             activated = true;
             isInteracting = true;
-            playedWithDoor = true;
         }
         playerHolding.doorHandle = doorHandleCollider.gameObject;
 

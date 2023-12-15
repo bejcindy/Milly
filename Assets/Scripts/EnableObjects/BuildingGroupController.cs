@@ -80,12 +80,10 @@ public class BuildingGroupController : MonoBehaviour
                 ActivateAll(child);
             }
         }
-
     }
 
     void TurnOnColor(Material material)
     {
         material.SetFloat("_WhiteDegree", groupColorVal);
-
     }
 }

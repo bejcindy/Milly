@@ -8,7 +8,7 @@ using FMODUnity;
 public class ClickableObject : LivableObject
 {
     Animator animator;
-    public bool groupControl;
+    public bool isGroupControl;
     public BuildingGroupController buildingGroup;
 
     [Header("Bell Binding")]
@@ -18,13 +18,11 @@ public class ClickableObject : LivableObject
     DialogueSystemTrigger dialogue;
 
     bool iconHidden;
-    PlayerHolding playerHolding;
     public EventReference buzzSound;
     bool playedSound;
     protected override void Start()
     {
         base.Start();
-        playerHolding = player.GetComponent<PlayerHolding>();
 
         if (TryGetComponent(out Animator anim))
         {
@@ -100,7 +98,7 @@ public class ClickableObject : LivableObject
 
     void OnConversationEnd(Transform other)
     {
-        if (groupControl)
+        if (isGroupControl)
         {
             if (!buildingGroup.activateAll)
             {

@@ -18,53 +18,48 @@ public class HintTexts
 
 public class DataHolder : MonoBehaviour
 {
-    static float minBlur = .1f;
-    static float maxBlur = .75f;
-    static float focusDist = .75f;
-    static DepthOfField dof;
-    static DepthOfField colorDof;
-    static GameObject postProcessingVolume;
-    static GameObject chromaticVolume;
-
+    #region Blur Related
     public static bool focusing;
     public static bool focused;
-    static Volume v,cv;
-
-    public static GameObject currentFocus;
-
-    public static CinemachineVirtualCamera focusCinemachine;
-    static CinemachineVirtualCamera playerCinemachine;
-    public static CinemachineBrain playerBrain;
     public static bool camBlended, camBlendDone;
+    public static GameObject currentFocus;
+    public CinemachineVirtualCamera focusVcam;
+    public static CinemachineVirtualCamera focusCinemachine;
+    public static CinemachineBrain playerBrain;
+    public static CinemachinePOV pov;
 
-    static Transform originalPlayerCmFollow;
+    static float focusDist = .75f;
+    static float originalVerticalSpeed, originalHorizontalSpeed;
+    static DepthOfField dof;
+    static DepthOfField colorDof;
+    public Volume postProcessingVolume, chromaticVolume;
+    static Volume v,cv;
+    static CinemachineVirtualCamera playerCinemachine;
+    #endregion
 
+    #region Hint Related
     [SerializeField]
     [InspectorName("Hints")]
     HintTexts hintsReference;
-    public static HintTexts hints;
     public GameObject hintPanelPrefab;
     public GameObject hintPrefab;
     public Transform canvasRef;
+    
+    public static HintTexts hints;
+
     static Transform canvas;
     static GameObject hintPanel;
     static GameObject hintPref;
-
-    //static TextMeshProUGUI hintTMP;
-    static PlayerHolding playerHolding;
-    static PlayerLeftHand playerLeftHand;
-    static PlayerMovement playerMovement;
-    public static CinemachinePOV pov;
-    static float originalVerticalSpeed, originalHorizontalSpeed;
-    //static string currentHint;
     static List<string> currentHints;
     static List<GameObject> hintPanels;
+
+    bool hintOff;
+    #endregion
+
     public static bool canMakeSound;
     float beginningAudioCoolDownTimer;
-    bool hintOff,turnedOffHint;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //reset public static variables
         focusing = false;
@@ -74,14 +69,11 @@ public class DataHolder : MonoBehaviour
         camBlendDone = false;
         canMakeSound = false;
 
-        focusCinemachine = GameObject.Find("FocusCinemachine").GetComponent<CinemachineVirtualCamera>();
-        playerCinemachine = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
-        playerBrain = Camera.main.GetComponent<CinemachineBrain>();
-        originalPlayerCmFollow = playerCinemachine.Follow;
-        postProcessingVolume = GameObject.Find("MonoVolume");
-        chromaticVolume = GameObject.Find("ChromeVolume");
-        v = postProcessingVolume.GetComponent<Volume>();
-        cv = chromaticVolume.GetComponent<Volume>();
+        focusCinemachine = focusVcam;
+        playerCinemachine = ReferenceTool.playerCinemachine;
+        playerBrain = ReferenceTool.playerBrain;
+        v = postProcessingVolume;
+        cv = chromaticVolume;
 
         hintPanel = hintPanelPrefab;
         hintPref = hintPrefab;
@@ -89,26 +81,19 @@ public class DataHolder : MonoBehaviour
         currentHints = new List<string>();
         hintPanels = new List<GameObject>();
         canvas = canvasRef;
-
-        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
-        playerLeftHand = GameObject.Find("Player").GetComponent<PlayerLeftHand>();
-        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        pov = playerCinemachine.GetCinemachineComponent<CinemachinePOV>();
+        pov = ReferenceTool.playerPOV;
         originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
         originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
     }
 
-    // Update is called once per frame
     void Update()
     {
-
         if (beginningAudioCoolDownTimer < 2)
             beginningAudioCoolDownTimer += Time.deltaTime;
         else
         {
             canMakeSound = true;
         }
-
 
         if (focused)
         {
@@ -136,7 +121,7 @@ public class DataHolder : MonoBehaviour
     #region Focusing and Unfocusing
     public static void FocusOnThis(float matColorVal)
     {
-        playerLeftHand.bypassThrow = true;
+        ReferenceTool.playerLeftHand.bypassThrow = true;
 
         if (playerBrain.IsBlending)
             camBlended = true;
@@ -156,7 +141,6 @@ public class DataHolder : MonoBehaviour
                 focused = true;
             }
 
-
             if (v.profile.TryGet<DepthOfField>(out dof))
             {
                 dof.focusDistance.value = focusDist;
@@ -165,9 +149,7 @@ public class DataHolder : MonoBehaviour
             {
                 colorDof.focusDistance.value = focusDist;
             }
-        }
-        
-
+        }       
     }
 
     public static void Unfocus()
@@ -176,7 +158,6 @@ public class DataHolder : MonoBehaviour
         focusCinemachine.Priority = 1;
         focusCinemachine.LookAt = null;
         playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
-
 
         if (focusDist < .75f)
         {
@@ -191,9 +172,9 @@ public class DataHolder : MonoBehaviour
             currentFocus.layer = 17;
             camBlended = false;
             camBlendDone = false;
-            playerHolding.looking = false;
-            playerMovement.enabled = true;
-            playerLeftHand.bypassThrow = false;
+            ReferenceTool.playerHolding.looking = false;
+            ReferenceTool.playerMovement.enabled = true;
+            ReferenceTool.playerLeftHand.bypassThrow = false;
 
             currentFocus = null;
             focused = false;
@@ -224,7 +205,6 @@ public class DataHolder : MonoBehaviour
             if (currentHints.Count == 0 || !currentHints.Contains(hint))
             {
                 GameObject instantiatedPanel = Instantiate(hintPanel, canvas);
-                //instantiatedPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(25, 200 - currentHints.Count * 200, 0);
                 List<Image> imgs = new List<Image>();
                 List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
                 string[] parsed = hint.Split("\n");
@@ -240,21 +220,11 @@ public class DataHolder : MonoBehaviour
                     instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
                     texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
                 }
-                //instantiatedPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = hint;
-                //instantiatedPanel.SetActive(true);
                 hintPanels.Add(instantiatedPanel);
                 currentHints.Add(hint);
                 instantiated = true;
             }
         }
-        //string[] parsed = hints.throwHint.Split("\n");
-        //foreach (string s in parsed)
-        //{
-        //    int buttonInt = s.IndexOf(" ");
-        //    string button = s.Substring(0, buttonInt);
-        //    string usage = s.Replace(button, "");
-        //}
-
     }
     
     public static void HideHint(string hintToHide)
@@ -273,11 +243,6 @@ public class DataHolder : MonoBehaviour
                 }
             }
         }
-        //if (hintToHide == currentHint)
-        //{
-        //    hintPanel.SetActive(false);
-        //    hintTMP.text = null;
-        //}
     }
     #endregion
 }

@@ -7,8 +7,6 @@ public class ChopsticksHolder : LivableObject
 {
     Vector3 chopHoldingPos;
     Quaternion chopHoldingRot;
-    PlayerLeftHand playerLeftHand;
-    PlayerHolding playerHolding;
     public Chopsticks myChops;
     public bool hasChop;
     bool chopMoving;
@@ -19,8 +17,6 @@ public class ChopsticksHolder : LivableObject
         base.Start();
         chopHoldingPos = myChops.transform.parent.localPosition;
         chopHoldingRot = myChops.transform.parent.localRotation;
-        playerLeftHand = player.GetComponent<PlayerLeftHand>();
-        playerHolding = player.GetComponent<PlayerHolding>();
     }
 
     protected override void Update()

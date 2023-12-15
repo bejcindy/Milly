@@ -44,9 +44,9 @@ public class FirstPersonOcclusion : MonoBehaviour
 
         AudioDes = RuntimeManager.GetEventDescription(SelectAudio);
         AudioDes.getMinMaxDistance(out MinDistance, out MaxDistance);
- 
 
-        Listener = FindObjectOfType<StudioListener>();
+
+        Listener = Camera.main.GetComponent<StudioListener>();
     }
 
     public void Update()

@@ -22,7 +22,7 @@ public class CigaretteContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player").transform;
+        player = ReferenceTool.player;
         playerHolding = player.GetComponent<PlayerHolding>();
     }
      

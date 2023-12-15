@@ -8,13 +8,14 @@ public class CollisionObject : LivableObject
 {
     public string tagName;
     public List<string> tagList;
-
     public bool stairParent;
     public bool brokenAC;
     public string eventName;
-
     public bool assistant;
     public EventReference collisionSound;
+
+    Rigidbody rb;
+
     protected override void Start()
     {
         base.Start();
@@ -30,6 +31,7 @@ public class CollisionObject : LivableObject
         {
             tagList.Add(tagName);
         }
+        rb = GetComponent<Rigidbody>();
     }
 
 
@@ -54,12 +56,12 @@ public class CollisionObject : LivableObject
 
                 if (gameObject.CompareTag("Ladder"))
                 {
-                    GetComponent<Rigidbody>().isKinematic = false;
+                    rb.isKinematic = false;
                 }
 
                 if (brokenAC)
                 {
-                    GetComponent<Rigidbody>().isKinematic = false;
+                    rb.isKinematic = false;
                     if (GetComponent<DialogueSystemTrigger>())
                         GetComponent<DialogueSystemTrigger>().enabled = true;
                 }

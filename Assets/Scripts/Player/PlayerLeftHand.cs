@@ -66,9 +66,6 @@ public class PlayerLeftHand : MonoBehaviour
     {
         noThrow = true;
         playerHolding = GetComponent<PlayerHolding>();
-
-        pizzaBox = GameObject.Find("PizzaHolder").GetComponent<PizzaBox>();
-        //aimHint.SetActive(false);
     }
 
     // Update is called once per frame

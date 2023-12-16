@@ -55,6 +55,7 @@ public class LivableObject : MonoBehaviour
     protected bool hasGroupControl;
     protected GroupMaster groupControl;
     protected Vector3 pointOnScreen;
+    [SerializeField] private bool izaProp;
 
     protected virtual void Start()
     {
@@ -137,7 +138,7 @@ public class LivableObject : MonoBehaviour
                 }
 
                 //change layer related code
-                if (!StartSequence.noControl || overrideStartSequence)
+                if ((!StartSequence.noControl || overrideStartSequence) && !izaProp)
                 {
                     if (gameObject.layer != 17 && gameObject.layer != 18)
                     {

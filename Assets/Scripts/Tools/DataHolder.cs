@@ -59,7 +59,7 @@ public class DataHolder : MonoBehaviour
     public static bool canMakeSound;
     float beginningAudioCoolDownTimer;
 
-    void Awake()
+    void Start()
     {
         //reset public static variables
         focusing = false;

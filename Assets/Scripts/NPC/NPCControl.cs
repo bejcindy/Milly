@@ -206,7 +206,7 @@ public class NPCControl : MonoBehaviour
 
     bool CheckInteractable()
     {
-        if ((transform.position - player.position).sqrMagnitude <= minDist)
+        if (Vector3.Distance(transform.position, player.position) <= minDist)
         {
             if (isVisible)
                 return true;    

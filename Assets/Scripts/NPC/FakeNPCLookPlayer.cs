@@ -19,7 +19,7 @@ public class FakeNPCLookPlayer : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         player = ReferenceTool.player;
         foreach (Transform child in GetComponentsInChildren<Transform>())

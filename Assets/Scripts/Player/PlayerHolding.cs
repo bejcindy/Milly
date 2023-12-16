@@ -33,11 +33,6 @@ public class PlayerHolding : MonoBehaviour
     public Transform holdingObject;
     PlayerLeftHand leftHand;
 
-    public GameObject leftHandUI;
-    public GameObject rightHandUI;
-    public GameObject duoHandUI;
-    public GameObject focusedHint;
-
     public ContainerObject currentContainer;
     public bool tableControl;
 
@@ -71,7 +66,6 @@ public class PlayerHolding : MonoBehaviour
         pm = GetComponent<PlayerMovement>();
         pickUpObjects = new List<GameObject>();
         lookingObjects = new List<GameObject>();
-        focusedHint = GameObject.Find("QTEPanel").transform.GetChild(3).gameObject;
         containers = GameObject.FindGameObjectsWithTag("Container");
         objectUIRect = objectUI.GetComponent<RectTransform>();
         trackedObjs = new List<GameObject>();
@@ -122,7 +116,6 @@ public class PlayerHolding : MonoBehaviour
                 if (!displayedFocusHint)
                 {
                     //Debug.Log("trying");
-                    //focusedHint.SetActive(true);
                     DataHolder.ShowHint(DataHolder.hints.lookHint);
                     //displayedFocusHint = true;
                     hintHiden = false;

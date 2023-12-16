@@ -9,9 +9,6 @@ public class RotateHandle : LivableObject
     public bool holdingHandle;
     public bool frontBackRot;
     public CinemachineVirtualCamera playerCinemachine;
-    
-    PlayerHolding playerHolding;
-
 
     protected override void Update()
     {

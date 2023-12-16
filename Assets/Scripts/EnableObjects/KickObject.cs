@@ -26,7 +26,7 @@ public class KickObject : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        player = GameObject.Find("Player").transform;
+        player = ReferenceTool.player;
         coll = GetComponent<Collider>();
         //coll.enabled = false;
         rb.isKinematic = true;
@@ -56,12 +56,10 @@ public class KickObject : MonoBehaviour
         {
             if (instantiatedHint == null)
             {
-                //instantiatedHint = Instantiate(kickHint, hintPosition, Quaternion.identity);
-                //instantiatedHint.transform.SetParent(GameObject.Find("Canvas").transform);
                 if (!hinted)
                 {
                     DataHolder.ShowHint(DataHolder.hints.kickHint);
-                    player.GetComponent<PlayerHolding>().kickableObj = gameObject;
+                    ReferenceTool.playerHolding.kickableObj = gameObject;
                     hinted = true;
                 }
             }
@@ -80,7 +78,7 @@ public class KickObject : MonoBehaviour
                 if (hinted)
                 {
                     DataHolder.HideHint(DataHolder.hints.kickHint);
-                    player.GetComponent<PlayerHolding>().kickableObj = null;
+                    ReferenceTool.playerHolding.kickableObj = null;
                     hinted = false;
                 }
                 if (!kickedSound.IsNull)
@@ -93,7 +91,7 @@ public class KickObject : MonoBehaviour
             if (hinted)
             {
                 DataHolder.HideHint(DataHolder.hints.kickHint);
-                player.GetComponent<PlayerHolding>().kickableObj = null;
+                ReferenceTool.playerHolding.kickableObj = null;
                 hinted = false;
             }
         }
@@ -107,14 +105,6 @@ public class KickObject : MonoBehaviour
         }
 
     }
-
-    //public void DeactivateEnabler()
-    //{
-    //    activateTrigger.enabled = false;
-    //}
-
-
-
 
     void DetectInteractable()
     {

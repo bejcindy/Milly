@@ -330,7 +330,6 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (other.name == "StartConvo" && !smokingHinted)
         {
-            Debug.Log("should hint smoke");
             canSmoke = true;
         }
     }
@@ -349,7 +348,6 @@ public class PlayerLeftHand : MonoBehaviour
         }
         if (Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !inhaling)
         {
-            Debug.Log("Returning cig");
             holdingObj.GetComponent<Cigarette>().PlayExhaleSound();
             if (!smokeVFX.gameObject.activeSelf)
             {
@@ -440,7 +438,7 @@ public class PlayerLeftHand : MonoBehaviour
                             if (Physics.Raycast(transform.position,Camera.main.transform.forward, out hit, Mathf.Infinity,~0, QueryTriggerInteraction.Ignore))
                             {
                                 holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                                Debug.Log("hit " + hit.transform.gameObject.name);
+                                //Debug.Log("hit " + hit.transform.gameObject.name);
                             }
                             else
                             {
@@ -568,7 +566,4 @@ public class PlayerLeftHand : MonoBehaviour
         }
         holdingObj.localRotation = endValue;
     }
-
-
-
 }

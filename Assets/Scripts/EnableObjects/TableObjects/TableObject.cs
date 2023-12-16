@@ -9,13 +9,11 @@ public class TableObject : LivableObject
     public bool inHand;
     public bool thrown;
     public bool selected;
-    PlayerHolding playerHolding;
     Vector3 startingPos;
 
     protected override void Start()
     {
         base.Start();
-        playerHolding = GetComponent<PlayerHolding>();
         startingPos = transform.position;
     }
 

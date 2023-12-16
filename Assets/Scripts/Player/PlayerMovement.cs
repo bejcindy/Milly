@@ -197,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
             clampedHorizontalInput = horizontalInput;
 
         Vector3 xSpeed = moveSpeed * clampedHorizontalInput * -ladderTrigger.transform.right;
-        Debug.Log("left: " + tooLeft + "right: " + tooRight + "clamped: " + clampedHorizontalInput);
+        //Debug.Log("left: " + tooLeft + "right: " + tooRight + "clamped: " + clampedHorizontalInput);
         //Vector3 xSpeedZeroY = new Vector3(xSpeed.x, 0, xSpeed.z);
         //rb.velocity = new Vector3(rb.velocity.x, ySpeed, rb.velocity.z);
         rb.velocity = new Vector3(xSpeed.x, ySpeed, xSpeed.z);
@@ -346,10 +346,10 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        if (horizontalInput == 0 && verticalInput == 0)
-            GetComponent<terraintry>().startPainting = false;
-        else
-            GetComponent<terraintry>().startPainting = true;
+        //if (horizontalInput == 0 && verticalInput == 0)
+        //    GetComponent<terraintry>().startPainting = false;
+        //else
+        //    GetComponent<terraintry>().startPainting = true;
 
         if (horizontalInput == 0 && verticalInput == 0 && grounded || playerHolding.inDialogue)
         {
@@ -434,11 +434,9 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hitLower;
         if (Physics.Raycast(lowerRay.transform.position, movement.normalized, out hitLower, 0.3f, flatGround))
         {
-            Debug.Log("hit lower");
             RaycastHit hitUpper;
             if (!Physics.Raycast(upperRay.transform.position, movement.normalized, out hitUpper, 0.3f, flatGround))
             {
-                Debug.Log("stairing");
                 rb.position -= new Vector3(0f, -0.5f, 0f);
                 rb.position += transform.forward * Time.deltaTime;
             }
@@ -481,12 +479,10 @@ public class PlayerMovement : MonoBehaviour
                 if (ladderColls[0].isTrigger)
                 {
                     ladderTrigger = ladderColls[0];
-                    Debug.Log("trigger1");
                 }
                 else
                 {
                     ladderTrigger = ladderColls[1];
-                    Debug.Log("trigger2");
                 }
                 other.gameObject.layer = 6;
                 //ladderTrigger = other.GetComponent<Collider>();

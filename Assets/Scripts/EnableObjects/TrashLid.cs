@@ -8,23 +8,16 @@ public class TrashLid : LivableObject
     public float rotateSpeed;
     public bool interacting;
     public bool fixedPos;
-    public PlayerHolding playerHolding;
 
-    //public GameObject leftHandUI;
-    //public GameObject rightHandUI;
     GameObject iconPos;
     bool iconHidden;
-    PlayerLeftHand playerLeftHand;
-
     public EventReference openSound, closeSound;
     bool openPlayed, closePlayed;
     FMOD.Studio.EventInstance openEvent, closeEvent;
     protected override void Start()
     {
         base.Start();
-        playerHolding = player.GetComponent<PlayerHolding>();
         iconPos = transform.GetChild(0).gameObject;
-        playerLeftHand = player.GetComponent<PlayerLeftHand>();
         openEvent = FMODUnity.RuntimeManager.CreateInstance(openSound);
         closeEvent= FMODUnity.RuntimeManager.CreateInstance(closeSound);
     }
@@ -40,11 +33,8 @@ public class TrashLid : LivableObject
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * 75;
             if (playerHolding.GetLeftHand())
             {
-                //leftHandUI.SetActive(true);
-                
                 if (Input.GetMouseButton(0))
                 {
-                    //leftHandUI.SetActive(false);
                     activated = true;
                     interacting = true;
                     if (verticalInput < 0)
@@ -71,7 +61,6 @@ public class TrashLid : LivableObject
                         }
                     }
                     playerHolding.dragAnimDirection = "UpDown";
-                    Debug.Log(playerHolding.dragAnimDirection);
                 }
                 else
                 {
@@ -85,7 +74,6 @@ public class TrashLid : LivableObject
             {
                 if (Input.GetMouseButton(0))
                 {
-                    //leftHandUI.SetActive(false);
                     activated = true;
                     interacting = true;
                     if (!playerLeftHand.aiming)
@@ -171,8 +159,5 @@ public class TrashLid : LivableObject
     {
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,
             Mathf.LerpAngle(transform.eulerAngles.z, zTargetAngle, Time.deltaTime * rotateSpeed));
-
     }
-
-
 }

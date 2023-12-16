@@ -7,7 +7,6 @@ using FMODUnity;
 
 public class LookingObject : LivableObject
 {
-    PlayerHolding playerHolding;
     PlayerMovement pm;
     public bool designatedSpot;
     public bool inSpot;
@@ -23,8 +22,7 @@ public class LookingObject : LivableObject
     protected override void Start()
     {
         base.Start();
-        playerHolding = player.GetComponent<PlayerHolding>();
-        pm = player.GetComponent<PlayerMovement>(); 
+        pm = ReferenceTool.playerMovement;
         if (TryGetComponent<DialogueSystemTrigger>(out DialogueSystemTrigger dia))
         {
             dialogue = dia;

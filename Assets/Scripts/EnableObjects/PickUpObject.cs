@@ -21,7 +21,6 @@ public class PickUpObject : LivableObject
 {
     public HandObjectType objType;
     public Vector3 targetRot;
-    protected PlayerHolding playerHolding;
     protected Rigidbody rb;
     public bool inHand;
     public bool selected;
@@ -45,7 +44,6 @@ public class PickUpObject : LivableObject
     {
         base.Start();
         pickType = true;
-        playerHolding = player.GetComponent<PlayerHolding>();
         rb = GetComponent<Rigidbody>();
         throwCD = 1f;
         dialogue = GetComponent<DialogueSystemTrigger>();

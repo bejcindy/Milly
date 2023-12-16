@@ -30,26 +30,20 @@ public class IdleState : State
     
     protected override void OnUpdate()
     {
-
         if (machine.CheckNotIdling())
         {
             if (!machine.CheckPathFinished())
             {
                 machine.StopRotation();
                 machine.SetMainTalkTrue();
-
-
-
                 machine.ChangeState(machine.moveState);
             }
-
         }
         else
         {
             machine.InvokeIdleFunction();
             if (machine.CheckInConversation() && !machine.GetMainTalkTrue())
             {
-
                 machine.ChangeState(machine.talkState);
             }
 

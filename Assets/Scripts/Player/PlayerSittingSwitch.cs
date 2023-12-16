@@ -5,7 +5,6 @@ using Cinemachine;
 
 public class PlayerSittingSwitch : MonoBehaviour
 {
-
     public CinemachineVirtualCamera playerMainCam;
     public CinemachineVirtualCamera playerSitCam;
 

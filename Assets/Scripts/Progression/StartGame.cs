@@ -36,10 +36,9 @@ public class StartGame : MonoBehaviour
         //izakayaAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Izakaya_Noise");
         outsideAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
         bathroomMonologue = GetComponent<DialogueSystemTrigger>();
-        GameObject player = GameObject.Find("Player");
-        playerMovement = player.GetComponent<PlayerMovement>();
-        playerHolding = player.GetComponent<PlayerHolding>();
-        playerCam = player.GetComponent<PlayerCam>();
+        playerMovement = ReferenceTool.playerMovement;
+        playerHolding = ReferenceTool.playerHolding;
+        playerCam = ReferenceTool.player.GetComponent<PlayerCam>();
 
         if (startSequence)
         {

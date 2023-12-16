@@ -16,7 +16,6 @@ public class Lid : LivableObject
 
     public LivableObject controlledContainer;
     public EventReference lidSound;
-    PlayerHolding playerHolding;
     bool iconHidden;
     // Start is called before the first frame update
     protected override void Start()
@@ -27,13 +26,11 @@ public class Lid : LivableObject
             openRotation = transform.localRotation;
             closeRotation = Quaternion.Euler(targetRot);
         }
-
         else
         {
             openRotation = Quaternion.Euler(targetRot);
             closeRotation = transform.localRotation;
         }
-        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
     }
 
     // Update is called once per frame
@@ -69,8 +66,6 @@ public class Lid : LivableObject
                 controlledContainer.enabled = true;
             }
         }
-
-
     }
 
     void LidControl()

@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TalkState : State {
-
-
+public class TalkState : State
+{
     protected override void OnEnter()
-    {
-        
+    {        
         if(!machine.CheckNoLookInTalk())
             machine.TurnOnCam();
 
@@ -19,15 +17,9 @@ public class TalkState : State {
                 {
                     machine.StopNavigation();
                     machine.SetAnimatorTrigger("Stop");
-
                 }
-
             }
         }
-
-
-
-
     }
     protected override void OnUpdate()
     {
@@ -47,12 +39,7 @@ public class TalkState : State {
             {
                 machine.ChangeState(machine.idleState);
             }
-
-
-
-
         }
-
     }
 
     public void ChangeToMove()
@@ -65,7 +52,6 @@ public class TalkState : State {
         machine.TurnOffCam();
         machine.ResetCam();
         //machine.ResetAnimTrigger("Stop");
-
     }
 
 }

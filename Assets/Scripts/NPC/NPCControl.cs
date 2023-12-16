@@ -9,8 +9,6 @@ using UnityEngine.Events;
 
 public class NPCControl : MonoBehaviour
 {
-    
-
     protected float matColorVal;
     [SerializeField] protected float minDist;
     [SerializeField] protected bool isVisible;
@@ -22,7 +20,6 @@ public class NPCControl : MonoBehaviour
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
-
 
     [Header("[Activate Check]")]
     public bool mainNPC;
@@ -36,13 +33,9 @@ public class NPCControl : MonoBehaviour
     public bool overrideNoControl;
     protected float fadeInterval;
 
-
-
-
     [Header("References")]
     public Transform npcMesh;
     public RiggedVisibleDetector visibleDetector;
-
 
     [Header("Trigger Types")]
     public bool onHoldChar;
@@ -52,7 +45,6 @@ public class NPCControl : MonoBehaviour
     public Transform otherNPC;
     public bool questTriggered;
     public bool questAccepted;
-
 
     [Header("[Route Control]")]
     public Transform[] destinations;
@@ -73,13 +65,10 @@ public class NPCControl : MonoBehaviour
     public bool noTalkInWalk;
     public bool noMoveAfterTalk;
 
-
-
     [Header("[Idle State]")]
     protected string idleAction;
     public bool idling;
     public bool stopIdleAfterConvo;
-
 
     protected Coroutine lookCoroutine;
     bool lookCoroutineRuning;
@@ -94,9 +83,6 @@ public class NPCControl : MonoBehaviour
 
     public UnityEvent OnActivateEvent;
 
-
-
-    // Start is called before the first frame update
     protected virtual void Start()
     {
         //Setting up basic components
@@ -108,18 +94,14 @@ public class NPCControl : MonoBehaviour
         dialogueHolder = transform.GetChild(2);
         currentDialogue = dialogueHolder.GetChild(0);
 
-
-
-        playerHolding = player.GetComponent<PlayerHolding>();
+        playerHolding = ReferenceTool.playerHolding;
 
         bone = transform.GetChild(3).gameObject;
-
         foreach(Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name.Contains("Head") && !child.name.Contains("HeadTop"))
                 head = child;
         }
-
         fadeInterval = 5;
     }
 
@@ -166,17 +148,13 @@ public class NPCControl : MonoBehaviour
         else if(hasFakeActivate && !fakeActivated && !npcActivated && !initialActivated)
         {
             DeactivateAll(npcMesh);
-
         }
-
-
         if (interactable)
         {
             if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk && !playerHolding.inDialogue)
             {
                 CheckTriggerConversation();
             }
-
         }
         else if(!inConversation)
         {
@@ -198,10 +176,6 @@ public class NPCControl : MonoBehaviour
         //            ChangeLayer(0);
         //    }
         //}
-
-
-
-
     }
 
     public void PlayFootstepSF()
@@ -478,7 +452,6 @@ public class NPCControl : MonoBehaviour
         }
         //else if (inConversation)
         //    ChangeLayer(17);
-        
     }
 
     protected void StartTalking()

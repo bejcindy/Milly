@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Kelvin : NPCControl
 {
-
-
     protected override void Start()
     {
         base.Start();
@@ -28,6 +26,4 @@ public class Kelvin : NPCControl
         noTalkStage = true;
         gameObject.SetActive(false);
     }
-
-
 }

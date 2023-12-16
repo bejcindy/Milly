@@ -44,7 +44,7 @@ public class ScriptController : MonoBehaviour
     {
         foreach(LivableObject obj in allLivable)
         {
-            obj.enabled = true;
+            obj.scriptOff = false;
         }
     }
 
@@ -52,7 +52,7 @@ public class ScriptController : MonoBehaviour
     {
         foreach(LivableObject obj in allLivable)
         {
-            obj.enabled = false;
+            obj.scriptOff = true;
         }
     }
 }

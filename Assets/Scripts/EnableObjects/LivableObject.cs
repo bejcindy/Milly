@@ -56,6 +56,8 @@ public class LivableObject : MonoBehaviour
     protected GroupMaster groupControl;
     protected Vector3 pointOnScreen;
     [SerializeField] private bool izaProp;
+    [SerializeField] private ScriptController myZone;
+    public bool scriptOff;
 
     protected virtual void Start()
     {
@@ -89,7 +91,15 @@ public class LivableObject : MonoBehaviour
             gameObject.layer = 17;
         }
 
-        if (!StartSequence.noControl || overrideStartSequence)
+        if (myZone != null)
+        {
+            if (myZone.inZone)
+                scriptOff = false;
+            else
+                scriptOff = true;
+        }
+
+        if ((!StartSequence.noControl || overrideStartSequence) && !scriptOff)
         {
             if (!doorType && rend)
             {
@@ -367,5 +377,7 @@ public class LivableObject : MonoBehaviour
     {
         return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), col.bounds);
     }
+
+
 
 }

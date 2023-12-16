@@ -14,7 +14,6 @@ public class PizzaLid : FixedCameraObject
     Quaternion openRotation;
     Quaternion closeRotation;
 
-    PlayerLeftHand playerLeftHand;
     string openEventName = "event:/Sound Effects/ObjectInteraction/PizzaBox_Open";
     string closeEventName = "event:/Sound Effects/ObjectInteraction/PizzaBox_Close";
     public EventReference openSound, closeSound;
@@ -29,7 +28,6 @@ public class PizzaLid : FixedCameraObject
         openRotation = Quaternion.Euler(targetRot);
         closeRotation = transform.localRotation;
         dialogue = GetComponent<DialogueSystemTrigger>();
-        playerLeftHand = player.GetComponent<PlayerLeftHand>();
         openEvent = RuntimeManager.CreateInstance(openSound);
         closeEvent = RuntimeManager.CreateInstance(closeSound);
     }
@@ -127,10 +125,6 @@ public class PizzaLid : FixedCameraObject
                 StartCoroutine(LerpRotation(closeRotation, 1f));
             }
         }
-
-
-            
-
     }
 
     protected override void QuitAction()
@@ -144,9 +138,6 @@ public class PizzaLid : FixedCameraObject
             closePlayed = true;
         }
     }
-
-
-
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)
     {
@@ -162,8 +153,5 @@ public class PizzaLid : FixedCameraObject
         }
         transform.localRotation = endValue;
         lidMoving = false;
-
-
     }
-
 }

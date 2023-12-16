@@ -18,7 +18,7 @@ public class TableController : MonoBehaviour
     void Start()
     {
         objects = GetComponentsInChildren<PickUpObject>();
-        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
+        playerHolding = ReferenceTool.playerHolding;
 
         tableControlOn = false;
     }

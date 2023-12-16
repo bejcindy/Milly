@@ -15,13 +15,11 @@ public class Window : LivableObject
     string openSound = "event:/Sound Effects/ObjectInteraction/Window/WindowOpen";
     string closeSound = "event:/Sound Effects/ObjectInteraction/Window/WindowClose";
     bool soundPlayed;
-    PlayerHolding playerHolding;
     bool iconHidden;
 
     protected override void Start()
     {
         base.Start();
-        playerHolding = player.GetComponent<PlayerHolding>();
     }
 
     protected override void Update()

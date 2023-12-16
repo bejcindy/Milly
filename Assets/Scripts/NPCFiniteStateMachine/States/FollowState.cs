@@ -16,10 +16,8 @@ public class FollowState : State
         {
             if (machine.CheckPlayerMove())
             {
-                Debug.Log("Player moved again");
                 machine.ChangeState(machine.moveState);
             }
-
         }
         else if (!machine.CheckFollowPlayer())
         {
@@ -34,12 +32,8 @@ public class FollowState : State
 
     }
 
-
-
     protected override void OnExit()
     {
         //machine.ResetAnimTrigger("Idle");
     }
-
-
 }

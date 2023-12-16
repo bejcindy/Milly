@@ -17,7 +17,7 @@ public class PlayerCam : MonoBehaviour
     void Start()
     {
         CinemachineCore.GetInputAxis = GetAxisCustom;
-        cameraBrain = Camera.main.GetComponent<CinemachineBrain>();
+        cameraBrain = ReferenceTool.playerBrain;
     }   
 
     // Update is called once per frame

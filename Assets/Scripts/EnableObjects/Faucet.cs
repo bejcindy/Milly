@@ -17,7 +17,6 @@ public class Faucet : LivableObject
     FMOD.Studio.EventInstance waterEvent;
     string faucetUseEvent = "event:/Sound Effects/FaucetHandle";
     string waterDrainEvent = "event:/Sound Effects/ObjectInteraction/Sink_Drain";
-    PlayerHolding playerHolding;
     bool setNull;
 
     protected override void Start()
@@ -27,7 +26,6 @@ public class Faucet : LivableObject
         waterEvent = FMODUnity.RuntimeManager.CreateInstance(waterRunning);
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(waterEvent, faucetWater.transform);
         waterEvent.start();
-        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
     }
     protected override void Update()
     {
@@ -51,7 +49,6 @@ public class Faucet : LivableObject
 
     void FaucetControl()
     {
-
         if (!controlCD)
         {
             gameObject.layer = 9;
@@ -69,9 +66,7 @@ public class Faucet : LivableObject
                     faucetHandleAnim.SetTrigger("Off");
                     waterOn = false;
                     waterEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-
                 }
-
                 else
                 {
                     faucetWater.SetTrigger("On");
@@ -79,7 +74,6 @@ public class Faucet : LivableObject
                     faucetHandleAnim.SetTrigger("On");
                     waterOn = true;
                     waterEvent.start();
-
                 }
             }
         }
@@ -99,6 +93,5 @@ public class Faucet : LivableObject
                 controlCD = false;
             }
         }
-
     }
 }

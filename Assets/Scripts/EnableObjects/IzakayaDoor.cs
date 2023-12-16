@@ -14,21 +14,18 @@ public class IzakayaDoor : LivableObject
     public Vector3 doorOpenPos;
 
     DialogueSystemTrigger dialogue;
-    PlayerHolding playerHolding;
     Vector3 doorStartPos;
 
     protected override void Start()
     {
         base.Start();
-        playerHolding = player.GetComponent<PlayerHolding>();
         doorStartPos = transform.parent.transform.localPosition;
-        //dialogue = GetComponent<DialogueSystemTrigger>();
     }
+
     protected override void Update()
     {
         base.Update();
         DoorControl();
-
     }
 
     void DoorControl()

@@ -52,16 +52,12 @@ public class InitialActivation : MonoBehaviour
                     if (childMat.GetFloat("_WhiteDegree") >= 0)
                         TurnOnColor(childMat);
                 }
-
             }
             else
             {
                 ActivateAll(child);
             }
-
-
         }
-
     }
 
     void DeactivateAll(Transform obj)
@@ -75,9 +71,7 @@ public class InitialActivation : MonoBehaviour
                 if (mat.GetFloat("_WhiteDegree") < 1)
                     TurnOffColor(mat);
             }
-
         }
-
         foreach (Transform child in obj)
         {
             if (child.childCount <= 0 && child.GetComponent<Renderer>() != null)
@@ -89,22 +83,17 @@ public class InitialActivation : MonoBehaviour
                     if (childMat.GetFloat("_WhiteDegree") < 1)
                         TurnOffColor(childMat);
                 }
-
             }
             else
             {
                 DeactivateAll(child);
             }
-
-
         }
-
     }
 
     void TurnOnColor(Material material)
     {
         material.SetFloat("_WhiteDegree", 0);
-
     }
 
     void TurnOffColor(Material material)

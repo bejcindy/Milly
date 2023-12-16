@@ -17,7 +17,7 @@ public class Xixi : NPCControl
     {
         base.Start();
         talkable = true;
-        playerLeftHand = player.GetComponent<PlayerLeftHand>();
+        playerLeftHand = ReferenceTool.playerLeftHand;
     }
 
     public void XixiAction1()

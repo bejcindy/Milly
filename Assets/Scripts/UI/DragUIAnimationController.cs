@@ -12,7 +12,7 @@ public class DragUIAnimationController : MonoBehaviour
     void Start()
     {
         dragAnim = GetComponent<Animator>();
-        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
+        playerHolding = ReferenceTool.playerHolding;
         if (transform.parent.GetComponent<Image>())
             GetComponent<Image>().sprite = transform.parent.GetComponent<Image>().sprite;
     }

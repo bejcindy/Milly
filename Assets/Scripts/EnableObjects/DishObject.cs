@@ -5,12 +5,10 @@ using UnityEngine;
 public class DishObject : LivableObject
 {
     public bool inHand;
-    PlayerHolding playerHolding;
 
     protected override void Start()
     {
         base.Start();
-        playerHolding = player.GetComponent<PlayerHolding>();
     }
 
     protected override void Update()

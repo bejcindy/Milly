@@ -16,14 +16,13 @@ public class PauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player");
-        playerHolding = player.GetComponent<PlayerHolding>();
+        player = ReferenceTool.player.gameObject;
+        playerHolding = ReferenceTool.playerHolding;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
             if (panel.continueButton != null) panel.continueButton.interactable = !isPaused;
@@ -72,7 +71,6 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-
     public void PauseGame()
     {
         if (isPaused)
@@ -84,10 +82,8 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            
             isPaused = true;
             Time.timeScale = 0.0f;
-
         }
     }
 
@@ -95,7 +91,6 @@ public class PauseMenu : MonoBehaviour
     {
         Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLSdGedzEMk6VjuD2LUdROEXt9NoZFA0d4cO-gDnwiGO8Hh1qgA/viewform?usp=sf_link");
         Application.Quit(); 
-
     }
 
     public void RestartGame()

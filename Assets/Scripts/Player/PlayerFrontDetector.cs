@@ -21,7 +21,7 @@ public class PlayerFrontDetector : MonoBehaviour
     {
         if(!other.isTrigger)
         {
-            Debug.Log(other.name);
+            //Debug.Log(other.name);
             objectInFront = true;
         }
     }

@@ -11,7 +11,6 @@ public class TouchObject : LivableObject
     public Animator toiletAnim;
     public EventReference flushSound;
     FMOD.Studio.EventInstance flushEvent;
-    PlayerHolding playerHolding;
     bool setNull;
 
     protected override void Start()
@@ -19,7 +18,6 @@ public class TouchObject : LivableObject
         base.Start();
         flushEvent = FMODUnity.RuntimeManager.CreateInstance(flushSound);
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(flushEvent, toiletAnim.transform);
-        playerHolding = GameObject.Find("Player").GetComponent<PlayerHolding>();
     }
     protected override void Update()
     {

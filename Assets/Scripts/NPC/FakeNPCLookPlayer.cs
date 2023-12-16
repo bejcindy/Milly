@@ -21,7 +21,7 @@ public class FakeNPCLookPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = ReferenceTool.player;
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name.Contains("Head") && !child.name.Contains("HeadTop"))

@@ -14,7 +14,7 @@ public class FoodPickObject : MonoBehaviour
 
     void Start()
     {
-        leftHand = GameObject.Find("Player").GetComponent<PlayerLeftHand>();
+        leftHand = ReferenceTool.playerLeftHand;
     }
 
     void Update()

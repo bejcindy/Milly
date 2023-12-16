@@ -9,7 +9,6 @@ public class FrozenState : State
     {
         if (machine.CheckNPCActivation())
         {
-
             machine.ChangeState(machine.talkState);
         }
         else

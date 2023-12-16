@@ -45,9 +45,7 @@ namespace NPCFSM
 
         private void Awake()
         {
-
             _cachedComponents = new Dictionary<Type, Component>();
-
         }
 
         private void Start()
@@ -58,8 +56,8 @@ namespace NPCFSM
             agent = GetComponent<NavMeshAgent>();
             npcControl = GetComponent<NPCControl>();
             dialogue = GetComponent<DialogueSystemTrigger>();
-            player = GameObject.Find("Player").transform;
-            camBrain = Camera.main.GetComponent<CinemachineBrain>();
+            player = ReferenceTool.player;
+            camBrain = ReferenceTool.playerBrain;
             ChangeState(initialState);
             camXAxis = charCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value;
             camYAxis = charCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value;
@@ -71,8 +69,6 @@ namespace NPCFSM
                 Debug.Log(currentState);
             if (currentState != null)
                 currentState.OnStateUpdate();
-
-
         }
 
         public void ChangeState(State newState)
@@ -90,7 +86,6 @@ namespace NPCFSM
         {
             previousState = newState;
         }
-
 
         public State GetPreviousState()
         {
@@ -155,7 +150,6 @@ namespace NPCFSM
         }
         #endregion
 
-
         #region NPCStateCheckRegion
         public void ActivateNPC()
         {
@@ -166,7 +160,6 @@ namespace NPCFSM
         {
             return npcControl.npcActivated;
         }
-
 
         public bool CheckIfQuestTrigger()
         {
@@ -195,8 +188,6 @@ namespace NPCFSM
         #endregion
 
         #region Idle Region
-
-
         public void BeginIdling()
         {
             npcControl.idling = true;
@@ -219,7 +210,6 @@ namespace NPCFSM
         }
         public void InvokeIdleFunction()
         {
-
             npcControl.InvokeIdleFunction();
         }
 
@@ -238,7 +228,6 @@ namespace NPCFSM
             npcControl.StopLookRotation();
         }
 
-
         public void SetSpecialIdleAnim()
         {
             SetAnimatorTrigger("Special" + npcControl._counter);
@@ -251,7 +240,6 @@ namespace NPCFSM
         #endregion
 
         #region NavMeshControlRegion
-
         public bool CheckNavOn()
         {
             return agent.isActiveAndEnabled;
@@ -273,7 +261,6 @@ namespace NPCFSM
                 agent.SetDestination(npcControl.GetNext().position);
                 npcControl._counter++;
             }
-
         }
 
         public void IncreaseCounter()
@@ -326,7 +313,6 @@ namespace NPCFSM
         {
             return npcControl.GetCurrentDestination();
         }
-
         #endregion
 
         #region AnimationControlRegion
@@ -343,8 +329,6 @@ namespace NPCFSM
         #endregion
 
         #region DialogueSystemRegion
-
-
         public bool CheckInConversation()
         {
             return npcControl.inConversation;
@@ -388,7 +372,7 @@ namespace NPCFSM
         public void TurnOnCam()
         {
             charCam.m_Priority = 11;
-            player.GetComponent<PlayerMovement>().enabled = false;
+            ReferenceTool.playerMovement.enabled = false;
         }
 
         public void TurnOffCam()
@@ -417,7 +401,6 @@ namespace NPCFSM
                 moveWait = 2f;
             }
         }
-
         #endregion
     }
 }

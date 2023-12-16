@@ -31,7 +31,6 @@ public class FixedCameraObject : LivableObject
     protected DialogueSystemTrigger dialogue;
     PlayerCam camController;
     PlayerMovement playerMovement;
-    protected PlayerHolding playerHolding;
     public Renderer playerBody;
 
     protected bool iconHidden;
@@ -47,12 +46,11 @@ public class FixedCameraObject : LivableObject
     protected override void Start()
     {
         base.Start();
-        playerMovement = player.GetComponent<PlayerMovement>();
+        playerMovement = ReferenceTool.playerMovement;
         camController = player.GetComponent<PlayerCam>();
         playerBody = player.GetChild(0).GetComponent<Renderer>();
-        playerCamera = GameObject.Find("PlayerCinemachine").GetComponent<CinemachineVirtualCamera>();
-        playerHolding = player.GetComponent<PlayerHolding>();
-        camBrain = Camera.main.GetComponent<CinemachineBrain>();
+        playerCamera = ReferenceTool.playerCinemachine;
+        camBrain = ReferenceTool.playerBrain;
         if (transform.parent != null)
         {
             if (transform.parent.name.Contains("pizza"))
@@ -197,7 +195,7 @@ public class FixedCameraObject : LivableObject
 
         if (isPizzaBox)
         {
-            player.GetComponent<PlayerLeftHand>().inPizzaBox = true;
+            playerLeftHand.inPizzaBox = true;
         }
 
     }
@@ -208,8 +206,8 @@ public class FixedCameraObject : LivableObject
         if (!moveCam)
             playerMovement.enabled = false;
         playerBody.enabled = false;
-        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+        ReferenceTool.playerPOV.m_VerticalAxis.m_MaxSpeed = 0;
+        ReferenceTool.playerPOV.m_HorizontalAxis.m_MaxSpeed = 0;
         if (doubleSided)
         {
             if (onLeft)
@@ -255,8 +253,8 @@ public class FixedCameraObject : LivableObject
         else
             fixedCamera.m_Priority = 9;
 
-        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
-        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
+        ReferenceTool.playerPOV.m_VerticalAxis.m_MaxSpeed = 200;
+        ReferenceTool.playerPOV.m_HorizontalAxis.m_MaxSpeed = 200;
         yield return new WaitForSeconds(2f);
 
         if (moveCam)

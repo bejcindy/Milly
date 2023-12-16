@@ -23,7 +23,7 @@ public class ReferenceTool : MonoBehaviour
         playerHolding = player.GetComponent<PlayerHolding>();
         playerLeftHand = player.GetComponent<PlayerLeftHand>();
         playerMovement = player.GetComponent<PlayerMovement>();
-        playerBrain = player.GetComponent<CinemachineBrain>();
+        playerBrain = Camera.main.GetComponent<CinemachineBrain>();
         playerPOV = playerCinemachine.GetCinemachineComponent<CinemachinePOV>();
     }
 }

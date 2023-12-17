@@ -40,7 +40,8 @@ public class CollisionObject : LivableObject
         //stop the annoying collision sound from lanterns bumping into the roof
         if (gameObject.name.Contains("lantern") && collision.gameObject.name.Contains("roof"))
             return;
-
+        if (GetComponent<PickUpObject>())
+            return;
         if(!StartSequence.noControl || overrideStartSequence)
         {
             if (tagList.Contains(collision.gameObject.tag) || (collision.gameObject.GetComponent<PickUpObject>() && collision.gameObject.GetComponent<PickUpObject>().thrownByPlayer))

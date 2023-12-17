@@ -138,7 +138,6 @@ public class PannelController : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("here");
                                 foreach (Image img in childImgs)
                                 {
                                     if (img.GetComponent<TattooConnection>())
@@ -249,9 +248,10 @@ public class PannelController : MonoBehaviour
                     if (!playerHolding.inDialogue)
                         activated = true;
                 }
-
             }
         }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    DemoCatActivation();
     }
 
     public void PausePlayer()
@@ -372,16 +372,15 @@ public class PannelController : MonoBehaviour
     IEnumerator LerpPosition(Vector2 targetPosition, float duration)
     {
         float time = 0;
-        Vector3 startPosition = transform.localPosition;
+        Vector3 startPosition = GetComponent<RectTransform>().anchoredPosition;
         while (time < duration)
         {
             lerping = true;
-            transform.localPosition = Vector2.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
+            GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(startPosition, targetPosition,Mathf.SmoothStep(0,1, time / duration));
             yield return null;
         }
         GetComponent<RectTransform>().anchoredPosition = targetPosition;
         lerping = false;
-
     }
 }

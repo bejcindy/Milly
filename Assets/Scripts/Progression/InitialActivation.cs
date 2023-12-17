@@ -6,6 +6,8 @@ public class InitialActivation : MonoBehaviour
 {
     public List<Transform> iniLightObj;
     public List<Transform> iniOffObj;
+
+    public Transform izaOutside;
     bool initialOn;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,33 @@ public class InitialActivation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    public void ChangeIzaOutsideLayer()
+    {
+        LivableObject[] izaOutsideObjs = izaOutside.GetComponentsInChildren<LivableObject>();
+        foreach (LivableObject obj in izaOutsideObjs)
+            obj.transformed = true;
+
+        ChangeIzaLayer(izaOutside);
+    }
+
+    private void ChangeIzaLayer(Transform item)
+    {
+        foreach (Transform obj in item)
+        {
+            if (obj.gameObject.layer == 6)
+                obj.gameObject.layer = 18;
+            else
+                obj.gameObject.layer = 17;
+
+            if (obj.childCount > 0)
+            {
+                ChangeIzaLayer(obj);
+            }
+
+        }
     }
 
     void ActivateAll(Transform obj)

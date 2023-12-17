@@ -33,7 +33,11 @@ public class MainQuestState: MonoBehaviour
 
         if (gloriaArrivesIza && izakayaHighChair.isInteracting)
         {
-            DialogueManager.StartConversation("MainQuest/BackToMiyoshiya");
+            bool izaTalked = DialogueLua.GetVariable("MainQuest/BackToIzaTalked").asBool;
+            if (!izaTalked)
+            {
+                DialogueManager.StartConversation("MainQuest/BackToMiyoshiya");
+            }
             backToIzaAlt.gameObject.SetActive(false);
             gloriaArrivesIza = false;
         }

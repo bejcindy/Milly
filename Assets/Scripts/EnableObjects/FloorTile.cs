@@ -46,7 +46,7 @@ public class FloorTile : MonoBehaviour
     {
         if (!layerChanged)
         {
-            gameObject.layer = 18;
+            //gameObject.layer = 18;
             layerChanged = true;
         }
 

@@ -28,8 +28,6 @@ public class KickObject : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         player = ReferenceTool.player;
         coll = GetComponent<Collider>();
-        //coll.enabled = false;
-        rb.isKinematic = true;
         foreach (Transform child in transform)
         {
             if (child.gameObject.GetComponent<GroupMaster>())

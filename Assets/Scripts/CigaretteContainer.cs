@@ -58,7 +58,7 @@ public class CigaretteContainer : MonoBehaviour
                     }
 
                 }
-                if(MainQuestState.firstGloriaTalk && !MainQuestState.parentsCalled)
+                else if(MainQuestState.firstGloriaTalk)
                 {
                     if (!afterGloriaThought)
                     {
@@ -67,15 +67,15 @@ public class CigaretteContainer : MonoBehaviour
                     }
 
                 }
-                if(MainQuestState.firstGloriaTalk && MainQuestState.parentsCalled)
-                {
-                    if (!afterParentsThought)
-                    {
-                        DialogueManager.StartConversation("Cigarette/AfterCallingParents");
-                        afterParentsThought = true;
-                    }
+                //if(MainQuestState.firstGloriaTalk && MainQuestState.parentsCalled)
+                //{
+                //    if (!afterParentsThought)
+                //    {
+                //        DialogueManager.StartConversation("Cigarette/AfterCallingParents");
+                //        afterParentsThought = true;
+                //    }
 
-                }
+                //}
 
 
             }

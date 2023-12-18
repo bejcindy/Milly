@@ -8,7 +8,7 @@ public class MainQuestState: MonoBehaviour
 
     [Header("First Gloria Talk")]
     public static bool firstGloriaTalk;
-
+    bool afterGloThought;
     public static bool readyAkiConfrontation;
     public static bool gloriaArrivesIza;
     public static bool akiConfronted;
@@ -41,6 +41,14 @@ public class MainQuestState: MonoBehaviour
             backToIzaAlt.gameObject.SetActive(false);
             gloriaArrivesIza = false;
         }
+
+        if(firstGloriaTalk && !ReferenceTool.playerHolding.inDialogue && !afterGloThought)
+        {
+            afterGloThought = true;
+            Invoke(nameof(StartGloAfterThought), 1f);
+        }
+
+        Debug.Log(firstGloriaTalk + " is firstglo");
     }
 
     public void SetFirstGloriaTalked()
@@ -80,5 +88,10 @@ public class MainQuestState: MonoBehaviour
         firstGloriaTalk = false;
         akiConfronted = false;
         parentsCalled = false;
+    }
+
+    void StartGloAfterThought()
+    {
+        DialogueManager.StartConversation("Thoughts/AfterGloria");
     }
 }

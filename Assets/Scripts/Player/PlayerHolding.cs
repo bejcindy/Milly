@@ -700,6 +700,4 @@ public class PlayerHolding : MonoBehaviour
         }
         obj.localRotation = endValue;
     }
-
-
 }

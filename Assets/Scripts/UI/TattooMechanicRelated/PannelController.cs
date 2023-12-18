@@ -9,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 using System.Reflection;
 using UnityEngine.Rendering;
 using UnityEditor;
+using TMPro;
 //using UnityEditor.VersionControl;
 
 public class PannelController : MonoBehaviour
@@ -43,14 +44,18 @@ public class PannelController : MonoBehaviour
     bool clearedCurrent;
     bool fadingColor;
     [SerializeField] Material blurMaterial;
+    TextMeshProUGUI[] childTexts;
 
     private void Awake()
     {
         childImgs = GetComponentsInChildren<Image>();
         foreach (Image img in childImgs)
-        {
             img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
-        }
+        
+        childTexts = GetComponentsInChildren<TextMeshProUGUI>();
+        foreach(TextMeshProUGUI tmp in childTexts)
+            tmp.color= new Color(tmp.color.r, tmp.color.g, tmp.color.b, 0);
+
         blackLine.color = new Color(blackLine.color.r, blackLine.color.g, blackLine.color.b, 0);
         greyLine.color = new Color(greyLine.color.r, greyLine.color.g, greyLine.color.b, 0);
         BGAlpha = pannelBG.color.a;
@@ -65,7 +70,6 @@ public class PannelController : MonoBehaviour
         if (activated)
         {
             PausePlayer();
-
             //PixelCrushers.UIPanel.monitorSelection = false; // Don't allow dialogue UI to steal back input focus.
             //PixelCrushers.DialogueSystem.DialogueManager.Pause(); // Stop DS timers (e.g., sequencer commands).
 
@@ -88,9 +92,8 @@ public class PannelController : MonoBehaviour
                 }
                 else
                 {
-                    GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                    GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 }
-
                 currentTattoo.GetComponent<TattooConnection>().activated = true;
                 foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)
                     relate.GetComponent<TattooConnection>().related = true;
@@ -103,11 +106,21 @@ public class PannelController : MonoBehaviour
             }
             else if (!targetObj || gotPos)
             {
+                noDrag = true;
                 if (currentTattoo)
                 {
                     if (targetObj != previousObj || currentTattoo != previousTattoo)
                         gotPos = false;
                     currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+                    if (currentTattoo.GetComponentInChildren<TextMeshProUGUI>())
+                    {
+                        currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color = FadeOutColor(currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color);
+                    }
+                    else
+                    {
+                        currentTattoo.GetChild(0).GetComponent<Image>().color = FadeOutColor(currentTattoo.GetChild(0).GetComponent<Image>().color);
+                    }
+
                     if (currentTattoo.GetComponent<Image>().color.a < 1)
                         fadingColor = true;
                     if (currentTattoo.GetComponent<Image>().color.a == 1)
@@ -143,7 +156,18 @@ public class PannelController : MonoBehaviour
                                     if (img.GetComponent<TattooConnection>())
                                     {
                                         if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
-                                            img.color = FadeInColor(img.color, .5f);
+                                        {
+                                            if (!img.GetComponentInChildren<TextMeshProUGUI>())
+                                            {
+                                                Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                                                imgChild.color = FadeInColor(imgChild.color, 1f);
+                                            }
+                                            else
+                                            {
+                                                TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                                                tmp.color = FadeInColor(tmp.color, 1f);
+                                            }
+                                        }
                                     }
                                 }
                                 greyLine.color = FadeInColor(greyLine.color, .5f);
@@ -156,7 +180,18 @@ public class PannelController : MonoBehaviour
                                 if (img.GetComponent<TattooConnection>())
                                 {
                                     if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
-                                        img.color = FadeInColor(img.color, .5f);
+                                    {
+                                        if (!img.GetComponentInChildren<TextMeshProUGUI>())
+                                        {
+                                            Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                                            imgChild.color = FadeInColor(imgChild.color, 1f);
+                                        }
+                                        else
+                                        {
+                                            TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                                            tmp.color = FadeInColor(tmp.color, 1f);
+                                        }
+                                    }
                                 }
                             }
                             greyLine.color = FadeInColor(greyLine.color, .5f);
@@ -173,7 +208,18 @@ public class PannelController : MonoBehaviour
                             if (img.GetComponent<TattooConnection>().activated)
                                 img.color = FadeInColor(img.color, 1);
                             else if (img.GetComponent<TattooConnection>().related)
-                                img.color = FadeInColor(img.color, .5f);
+                            {
+                                if (!img.GetComponentInChildren<TextMeshProUGUI>())
+                                {
+                                    Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                                    imgChild.color = FadeInColor(imgChild.color, 1f);
+                                }
+                                else
+                                {
+                                    TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                                    tmp.color = FadeInColor(tmp.color, 1f);
+                                }
+                            }
                         }
                     }
 
@@ -206,6 +252,10 @@ public class PannelController : MonoBehaviour
             foreach (Image img in childImgs)
             {
                 img.color = FadeOutColor(img.color);
+            }
+            foreach(TextMeshProUGUI tmp in childTexts)
+            {
+                tmp.color = FadeOutColor(tmp.color);
             }
             blackLine.color = FadeOutColor(blackLine.color);
             greyLine.color = FadeOutColor(greyLine.color);

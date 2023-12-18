@@ -28,7 +28,7 @@ public class PlayerLeftHand : MonoBehaviour
     public bool drinking;
     public ParticleSystem smokeVFX;
     Vector2 minThrowForce = new Vector2(100f, 50f);
-    Vector2 maxThrowForce = new Vector2(900f, 250f);
+    Vector2 maxThrowForce = new Vector2(800f, 300f);
     float holdTime = 2f;
 
     Chopsticks currentChop;

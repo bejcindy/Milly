@@ -4,20 +4,26 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using FMOD;
 using FMODUnity;
+using VInspector;
 
 public class LookingObject : LivableObject
 {
     PlayerMovement pm;
-    public bool designatedSpot;
-    public bool inSpot;
-    public bool selected;
-    public bool posterLinkAct;
-    public DialogueSystemTrigger dialogue;
-    public bool focusingThis;
-
-    public GameObject[] sameTypePosters;
+    private bool posterLinkAct;
+    private DialogueSystemTrigger dialogue;
+    private GameObject[] sameTypePosters;
     bool playedSF;
     string lookSound = "event:/Sound Effects/Poster_Look";
+
+    [Foldout("Looking")]
+    public bool selected;
+    public bool focusingThis;
+
+
+
+    [Foldout("Special Looking")]
+    public bool designatedSpot;
+    public bool inSpot;
 
     protected override void Start()
     {

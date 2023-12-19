@@ -4,9 +4,11 @@ using UnityEngine;
 using Cinemachine;
 using PixelCrushers.DialogueSystem;
 using FMODUnity;
+using VInspector;
 
 public class FixedCameraObject : LivableObject
 {
+    [Foldout("Fixed Camera")]
     public bool dialogueBound;
     [SerializeField] KeyCode interactKey;
     [SerializeField] public KeyCode quitKey;

@@ -258,6 +258,7 @@ namespace NPCFSM
         {
             if (!npcControl.FinalStop())
             {
+                Debug.Log("Setting new destination");
                 agent.SetDestination(npcControl.GetNext().position);
                 npcControl._counter++;
             }

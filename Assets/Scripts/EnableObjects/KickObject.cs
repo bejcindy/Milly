@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using VInspector;
 
 public class KickObject : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Foldout("Kicking")]
     public float kickForce;
     Rigidbody rb;
     Transform player;

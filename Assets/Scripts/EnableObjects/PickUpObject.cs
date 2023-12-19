@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMOD;
 using FMODUnity;
+using VInspector;
 
 public enum HandObjectType
 {
@@ -19,20 +20,18 @@ public enum HandObjectType
 }
 public class PickUpObject : LivableObject
 {
+    protected Rigidbody rb;
+
+    [Foldout("Pickup")]
     public HandObjectType objType;
     public Vector3 targetRot;
-    protected Rigidbody rb;
     public bool inHand;
     public bool selected;
     public bool thrown;
-    public bool cigarette;
     public bool freezeRotation;
     public float throwCD;
     public bool thrownByPlayer;
 
-    [Header("Type")]
-    public bool npcBound;
-    public bool foodObj;
 
     DialogueSystemTrigger dialogue;
     public string pickUpEventName;

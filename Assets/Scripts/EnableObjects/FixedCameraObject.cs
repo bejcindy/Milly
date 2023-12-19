@@ -29,9 +29,8 @@ public class FixedCameraObject : LivableObject
     [SerializeField] public GameObject uiHint;
 
     protected DialogueSystemTrigger dialogue;
-    PlayerCam camController;
+
     PlayerMovement playerMovement;
-    public Renderer playerBody;
 
     protected bool iconHidden;
     protected bool isPizzaBox;
@@ -47,14 +46,17 @@ public class FixedCameraObject : LivableObject
     {
         base.Start();
         playerMovement = ReferenceTool.playerMovement;
-        camController = player.GetComponent<PlayerCam>();
-        playerBody = player.GetChild(0).GetComponent<Renderer>();
         playerCamera = ReferenceTool.playerCinemachine;
         camBrain = ReferenceTool.playerBrain;
         if (transform.parent != null)
         {
             if (transform.parent.name.Contains("pizza"))
                 isPizzaBox = true;
+        }
+
+        if(interactKey == KeyCode.F)
+        {
+            quitKey = KeyCode.F;
         }
     }
 
@@ -103,6 +105,12 @@ public class FixedCameraObject : LivableObject
                     DataHolder.HideHint("<b>F</b> Check");
                     iconHidden = true;
                 }
+                else
+                {
+                    playerHolding.sitObj = null;
+                    DataHolder.HideHint(DataHolder.hints.sitHint);
+                    iconHidden = true;
+                }
             }
         }
         else
@@ -134,9 +142,9 @@ public class FixedCameraObject : LivableObject
             }
         }
 
-        if ((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox)
+        if ((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed )
             QuitInteraction();
-        else if (isPizzaBox)
+        else if (isPizzaBox && positionFixed)
         {
             if (!GetComponent<PizzaLid>().myBox.movingPizza)
             {
@@ -149,13 +157,27 @@ public class FixedCameraObject : LivableObject
     {
         if (positionFixed && !camBrain.IsBlending)
         {
-            if (Input.GetKeyDown(quitKey) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+            if(interactKey == KeyCode.F)
             {
-                QuitAction();
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                StartCoroutine(UnfixPlayer());
+                if (Input.GetKeyDown(quitKey))
+                {
+                    QuitAction();
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    StartCoroutine(UnfixPlayer());
+                }
             }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+                {
+                    QuitAction();
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    StartCoroutine(UnfixPlayer());
+                }
+            }
+
         }
     }
 
@@ -166,48 +188,36 @@ public class FixedCameraObject : LivableObject
             if (mouseActivate)
             {
                 if (Input.GetMouseButtonDown(0))
+                {
                     TurnOnCamera();
+                }
+
             }
             else
             {
                 if (Input.GetKeyDown(interactKey))
+                {
                     TurnOnCamera();
+                }
+
             }
         }
     }
 
     public void TurnOnCamera()
     {
-        if(!gameObject.name.Contains("apt_call"))
+        isInteracting = true;
+        if (!gameObject.name.Contains("apt_call"))
             RuntimeManager.PlayOneShot(sitSound, player.transform.position);
-        playerBody.enabled = false;
-        uiHint.SetActive(false);
-        activated = true;
-        positionFixed = true;
-        if (showMouse)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            playerHolding.positionFixedWithMouse = true;
-        }
 
-        PositionPlayer();
-
-        if (isPizzaBox)
-        {
-            playerLeftHand.inPizzaBox = true;
-        }
-
-    }
-
-
-    protected void PositionPlayer()
-    {
-        if (!moveCam)
-            playerMovement.enabled = false;
-        playerBody.enabled = false;
         ReferenceTool.playerPOV.m_VerticalAxis.m_MaxSpeed = 0;
         ReferenceTool.playerPOV.m_HorizontalAxis.m_MaxSpeed = 0;
+        playerMovement.enabled = false;
+        uiHint.SetActive(false);
+        activated = true;
+
+
+
         if (doubleSided)
         {
             if (onLeft)
@@ -228,21 +238,38 @@ public class FixedCameraObject : LivableObject
             fixedCamera.m_Priority = 10;
         }
         playerCamera.m_Priority = 9;
-        isInteracting = true;
+        
+
+
+        if (showMouse)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            playerHolding.positionFixedWithMouse = true;
+        }
+
+
+
+        if (isPizzaBox)
+        {
+            playerLeftHand.inPizzaBox = true;
+        }
+
+        Invoke(nameof(SetInteracting), 1f);
+
     }
+
+    void SetInteracting()
+    {
+        positionFixed = true;
+    }
+
 
 
     protected IEnumerator UnfixPlayer()
     {
         playerCamera.m_Priority = 10;
-        isInteracting = false;
-        //if (transform.parent != null)
-        //{
-        //    if (transform.parent.name.Contains("pizza"))
-        //    {
-        //        player.GetComponent<PlayerLeftHand>().inPizzaBox = false;
-        //    }
-        //}
+
         if (doubleSided)
         {
             if (onLeft)
@@ -263,9 +290,10 @@ public class FixedCameraObject : LivableObject
             fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
         }
 
-        camController.enabled = true;
+
         playerMovement.enabled = true;
         positionFixed = false;
+        isInteracting = false;
         playerHolding.positionFixedWithMouse = false;
 
     }

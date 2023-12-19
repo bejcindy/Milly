@@ -103,7 +103,6 @@ public class Door : LivableObject
 
         if (Input.GetMouseButton(0))
         {
-            activated = true;
             isInteracting = true;
         }
         playerHolding.doorHandle = doorHandleCollider.gameObject;
@@ -235,6 +234,10 @@ public class Door : LivableObject
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
+        if (!activated)
+        {
+            activated = true;
+        }
         if (!doorMoving)
             RuntimeManager.PlayOneShot(doorMoveEvent, doorHandleCollider.transform.position);
         doorMoving = true;
@@ -252,6 +255,10 @@ public class Door : LivableObject
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)
     {
+        if (!activated)
+        {
+            activated = true;
+        }
         if (!doorMoving)
         {
             if (endValue == Quaternion.Euler(openPos))

@@ -8,7 +8,6 @@ public class Akihito : NPCControl
 
     public void ActivateAki()
     {
-        onHoldChar = true;
         ChangeLayer(17);
     }
 

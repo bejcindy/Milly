@@ -2,9 +2,11 @@ using System.Collections;
 using UnityEngine;
 using FMODUnity;
 using PixelCrushers.DialogueSystem;
+using VInspector;
 
 public class Door : LivableObject
 {
+    [Foldout("Door")]
     public Transform door;
     public bool doorOpen;
     public bool doorMoving;
@@ -209,8 +211,14 @@ public class Door : LivableObject
 
     public void NPCOpenDoor()
     {
-        if (!doorOpen && !doorMoving)        
-            StartCoroutine(LerpPosition(openPos, 1f));        
+        if (!doorOpen && !doorMoving)
+        {
+            if(slidingDoor)
+                StartCoroutine(LerpPosition(openPos, 1f));
+            else
+                StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+        }        
+   
     }
 
     public void CloseDoor()

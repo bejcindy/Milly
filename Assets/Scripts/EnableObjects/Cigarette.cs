@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using VInspector;
 
 public class Cigarette : PickUpObject
 {
+    [Foldout("Cigarette")]
     public int cigStage;
     public bool activateAll;
     public Transform activeCigObj;
@@ -88,6 +90,5 @@ public class Cigarette : PickUpObject
         cigStage = Random.Range(4, 7);
         activeCigObj.tag = "CigButt";
         gameObject.tag = "CigButt";
-        cigarette = false;
     }
 }

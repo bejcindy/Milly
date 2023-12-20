@@ -7,55 +7,74 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Cinemachine;
 using static Cinemachine.CinemachineOrbitalTransposer;
+using VInspector;
 
 public class LivableObject : MonoBehaviour
 {
+
     protected Transform player;
     protected PlayerHolding playerHolding;
     protected PlayerLeftHand playerLeftHand;
-    [SerializeField] public bool interactable;
-    [SerializeField] protected bool isVisible;
-    [SerializeField] protected bool checkVisible;
-    [SerializeField] protected bool tableObj;
-    [SerializeField] protected float minDist;
-
-
     protected Material mat;
-    [SerializeField] protected Renderer rend;
-    [SerializeField] public bool activated;
-    [SerializeField] public bool transformed;
-    [SerializeField] public bool firstActivated;
-    [SerializeField] protected float matColorVal;
-    [SerializeField] protected float fadeInterval;
-
-    [Header("Effects")]
-    [SerializeField] protected GameObject specialEffect;
-    [SerializeField] protected GameObject postProcessingVolume;
     protected CinemachineVirtualCamera playerCam;
 
-    [Header("Rigged")]
-    [SerializeField] protected bool rigged;
-    [SerializeField] protected RiggedVisibleDetector visibleDetector;
 
-    public bool centerFocused;
-    public bool noRend;
-    public bool overrideStartSequence;
-
-    [Header("Only Used For LookingObject")]
-    public bool onlyFront = true;
-    static float allowedAngle = .2f;
-
-    [Header("On Activate")]
-    public UnityEvent OnActivateEvent;
-    bool[] checkBoundVisible;
-
+    protected bool checkVisible;
     protected bool lookingType;
     protected bool doorType;
     protected bool pickType;
     protected bool hasGroupControl;
     protected GroupMaster groupControl;
     protected Vector3 pointOnScreen;
+    protected bool tableObj;
+
+    [Foldout("State")]
+
+    public bool activated;
+    public bool transformed;
+    private bool firstActivated;
+
+    [SerializeField] public bool interactable;
+    [SerializeField] protected bool isVisible;
+
+
+    [Foldout("Basic")]
+    [SerializeField] protected float minDist;
+    [SerializeField] protected Renderer rend;
+
+    [SerializeField] protected float matColorVal;
+    [SerializeField] protected float fadeInterval;
+
+    [Foldout("Effects")]
+    [SerializeField] protected GameObject specialEffect;
+    [SerializeField] protected GameObject postProcessingVolume;
+
+
+    [Foldout("Rigged")]
+    [SerializeField] protected bool rigged;
+    [SerializeField] protected RiggedVisibleDetector visibleDetector;
+
+
+    [Foldout("View Detection")]
+    public bool centerFocused;
+    public bool noRend;
+    public bool onlyFront = true;
+    static float allowedAngle = .2f;
+
+    [Foldout("Special")]
+    public bool overrideStartSequence;
     [SerializeField] private bool izaProp;
+
+
+
+
+    [Foldout("Activate Event")]
+    public UnityEvent OnActivateEvent;
+
+    bool[] checkBoundVisible;
+
+
+
     [SerializeField] private ScriptController myZone;
     public bool scriptOff;
 

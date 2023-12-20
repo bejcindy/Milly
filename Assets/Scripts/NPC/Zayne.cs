@@ -8,7 +8,12 @@ public class Zayne : NPCControl
     {
         base.Start();
         talkable = true;
-        noMoveAfterTalk = true;
+    }
+
+    public void ZayneAction1()
+    {
+//        noMoveAfterTalk =true;
+        noLookInConvo = true;
     }
 
 

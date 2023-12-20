@@ -10,7 +10,6 @@ public class Loyi : NPCControl
     protected override void Start()
     {
         base.Start();
-        mainNPC = true;
         overrideNoControl = true;
         if (overrideLoyi)
         {
@@ -43,6 +42,5 @@ public class Loyi : NPCControl
 
     public void ExitCutscene()
     {
-        inCutscene = false;
     }
 }

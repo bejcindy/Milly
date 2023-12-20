@@ -6,82 +6,96 @@ using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
 using UnityEngine.Events;
+using VInspector;
 
 public class NPCControl : MonoBehaviour
 {
-    protected float matColorVal;
-    [SerializeField] protected float minDist;
-    [SerializeField] protected bool isVisible;
-    [SerializeField] protected bool interactable;
-    [SerializeField] public bool followingPlayer;
-    [SerializeField] public float npcVincinity;
     protected Transform player;
     protected Transform currentDialogue;
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
 
-    [Header("[Activate Check]")]
-    public bool mainNPC;
-    public bool inCutscene;
-    public bool initialActivated;
+    PlayerHolding playerHolding;
+
+    [Foldout("Default")]
+
+    [SerializeField]protected float matColorVal;
+    [SerializeField] protected float fadeInterval;
+    [SerializeField] protected float minDist;
+    [SerializeField] protected bool isVisible;
+    [SerializeField] protected bool interactable;
+    [SerializeField] public float npcVincinity;
+    [SerializeField] public bool followingPlayer;
+
+    protected bool initialActivated;
+
+    [Foldout("Activate")]
+
     public bool npcActivated;
     public bool transformed;
 
     public bool hasFakeActivate;
     public bool fakeActivated;
     public bool overrideNoControl;
-    protected float fadeInterval;
 
-    [Header("References")]
+
+    [Foldout("CharRefs")]
     public Transform npcMesh;
     public RiggedVisibleDetector visibleDetector;
 
-    [Header("Trigger Types")]
-    public bool onHoldChar;
-    public bool objectTriggered;
-    public LivableObject triggerObject;
-    public bool peopleTriggered;
-    public Transform otherNPC;
+    //public bool objectTriggered;
+    //public LivableObject triggerObject;
+    //public bool peopleTriggered;
+    //public Transform otherNPC;
+
+    [Foldout("Quests")]
     public bool questTriggered;
     public bool questAccepted;
 
-    [Header("[Route Control]")]
+    [Foldout("Destinations")]
+    public int _counter = 0;
     public Transform[] destinations;
     public Component[] destObjects;
     public bool[] destSpecialAnim;
+
+
     protected Transform dialogueHolder;
+    private bool inCD;
+    private float talkCD = 1.5f;
 
-    public int _counter = 0;
-    public bool finalStop;
-    Transform currentStop;
-
-    [Header("[Conversation]")]
+    [Foldout("Dialogue")]
     public bool talkable;
     public bool firstTalked;
     public bool inConversation;
-    private bool inCD;
-    private float talkCD = 1.5f;
     public bool noTalkInWalk;
     public bool noMoveAfterTalk;
+    public bool noLookInConvo;
+    protected bool noTalkStage;
 
-    [Header("[Idle State]")]
     protected string idleAction;
+    [Foldout("Idle")]
     public bool idling;
     public bool stopIdleAfterConvo;
 
-    protected Coroutine lookCoroutine;
-    bool lookCoroutineRuning;
-    public bool noLookInConvo;
-    protected bool noTalkStage;
-    PlayerHolding playerHolding;
 
+
+    bool lookCoroutineRuning;
+    protected Coroutine lookCoroutine;
     GameObject bone;
 
-    [Header("Sound")]
+    [Foldout("Sound")]
     public EventReference footStepSF;
 
+    [Foldout("OnActivate")]
     public UnityEvent OnActivateEvent;
+
+
+    [Foldout("Door Checking")]
+    public bool inDoorRange;
+    public float atDoorTime;
+    public bool waitForDoor;
+    public Door currentDoor;
 
     protected virtual void Start()
     {
@@ -115,9 +129,29 @@ public class NPCControl : MonoBehaviour
         {
             LookAtPlayer();
         }
-        CheckNPCActivation();
+        //CheckNPCActivation();
         CheckTalkCD();
         //CheckIdle();
+
+
+        #region Door Region
+
+        if (inDoorRange && !waitForDoor && !currentDoor.doorOpen)
+        {
+            atDoorTime += Time.deltaTime;
+            if(atDoorTime > 0.5f)
+            {
+                waitForDoor = true;
+                atDoorTime = 0;
+            }
+        }
+
+        if (waitForDoor)
+        {
+            NPCOpenDoor(currentDoor);
+        }
+
+        #endregion
 
 
         if (npcActivated)
@@ -186,23 +220,23 @@ public class NPCControl : MonoBehaviour
 
 
     #region ActivateFunctionality
-    void CheckNPCActivation()
-    {
-        if (objectTriggered)
-        {
-            if (triggerObject != null && triggerObject.activated)
-                npcActivated = true;
-        }
+    //void CheckNPCActivation()
+    //{
+    //    if (objectTriggered)
+    //    {
+    //        if (triggerObject != null && triggerObject.activated)
+    //            npcActivated = true;
+    //    }
 
-        if (peopleTriggered)
-        {
-            float playerDist = Vector3.Distance(player.position, transform.position);
-            float otherNPCDist = Vector3.Distance(otherNPC.position, transform.position);
+    //    if (peopleTriggered)
+    //    {
+    //        float playerDist = Vector3.Distance(player.position, transform.position);
+    //        float otherNPCDist = Vector3.Distance(otherNPC.position, transform.position);
 
-            if (playerDist < npcVincinity && otherNPCDist < npcVincinity)
-                npcActivated = true;
-        }
-    }
+    //        if (playerDist < npcVincinity && otherNPCDist < npcVincinity)
+    //            npcActivated = true;
+    //    }
+    //}
 
     bool CheckInteractable()
     {
@@ -540,10 +574,11 @@ public class NPCControl : MonoBehaviour
     #endregion
 
     #region Look At Player
-    [Header("Look At Player")]
     bool inDistance, inAngle;
     float lookWeight;
     Transform head;
+
+    [Foldout("PlayerLook")]
     public bool allowLookPlayer;
     public float lookPlayerDist = 20;
     public float lookPlayerAngle = 45;
@@ -693,7 +728,50 @@ public class NPCControl : MonoBehaviour
             return destSpecialAnim[_counter];
     }
 
+    public void NPCOpenDoor(Door door)
+    {
+        if (!HasReached(agent))
+        {
+            agent.isStopped = true;
+            if (!door.doorOpen)
+                door.NPCOpenDoor();
+            else
+            {
+                inDoorRange = false;
+                currentDoor = null;
+                agent.isStopped = false;
+                waitForDoor = false;
+            }
+
+        }
+    }
 
     #endregion
 
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(("DoorDetector")))
+        {
+            Door newDoor = other.transform.parent.GetComponent<Door>();
+            if (!newDoor.doorOpen)
+            {
+                inDoorRange = true;
+                currentDoor = other.transform.parent.GetComponent<Door>();
+            }
+
+
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("DoorDetector"))
+        {
+            inDoorRange = false;
+            if(!waitForDoor)
+                currentDoor = null;
+            atDoorTime = 0;
+        }
+    }
 }

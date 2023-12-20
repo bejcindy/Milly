@@ -28,7 +28,7 @@ public class GroceryBoxGame : MonoBehaviour
         if (gameStarted)
         {
             boxScore = FindHighest();
-            score.text = "Box: "+boxScore;
+            score.text = "Box: "+boxScore +"/"+boxes.Count;
 
         }
     }

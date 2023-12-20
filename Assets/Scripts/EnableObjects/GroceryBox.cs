@@ -47,7 +47,7 @@ public class GroceryBox : PickUpObject
             groundBox = Physics.Raycast(transform.position, Vector3.down, upDetectDist, flatGround);
             
             if(game.gameStarted) 
-                stackCount = CalculateBoxChain(0, this);
+                stackCount = CalculateBoxChain(1, this);
         }
         else
         {

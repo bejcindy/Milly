@@ -82,13 +82,12 @@ public class PlayerHolding : MonoBehaviour
             GetFullHand();
             if (!leftHand.inPizzaBox)
                 ChooseInteractable();
-            else
-            {
+
                 if (selectedObj)
                     DisplayUI(selectedObj, pickUpSprite);
                 else
                     HideUI(pickUpSprite);
-            }
+
 
             if (!inDialogue)
                 ChooseLookable();

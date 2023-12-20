@@ -24,7 +24,7 @@ public class Felix : NPCControl
     }
     public void FelixAction1()
     {
-
+        noMoveAfterTalk = true;
     }
 
     public void FelixAction2()

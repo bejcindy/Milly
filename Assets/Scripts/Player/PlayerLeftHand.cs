@@ -292,6 +292,8 @@ public class PlayerLeftHand : MonoBehaviour
 
     public void DestroyFood()
     {
+        if (!playerHolding.inDialogue)
+            currentFood.GetComponent<FoodPickObject>().CheckFirstAte();
         Destroy(currentFood.gameObject);
         currentChop.chopMoving = false;
         currentChop.PlayEatSound();
@@ -505,8 +507,8 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 isHolding = false;
                 holdingObj.SetParent(null);
-                Vector3 placeRot = new Vector3(0, holdingObj.transform.localRotation.y, 0);
-                holdingObj.transform.rotation = Quaternion.Euler(placeRot);
+                //Vector3 placeRot = new Vector3(0, holdingObj.transform.localRotation.y, 0);
+                //holdingObj.transform.rotation = Quaternion.Euler(placeRot);
                 holdingObj.GetComponent<Rigidbody>().isKinematic = false;
                 holdingObj.GetComponent<PickUpObject>().inHand = false;
                 holdingObj.GetComponent<PickUpObject>().thrown = true;

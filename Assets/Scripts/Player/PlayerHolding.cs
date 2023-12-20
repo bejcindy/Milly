@@ -575,7 +575,6 @@ public class PlayerHolding : MonoBehaviour
 
     public void OccupyLeft(Transform obj)
     {
-        Debug.Log("Are we calling this over and over");
         RemoveInteractable(obj.gameObject);
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;
@@ -590,7 +589,7 @@ public class PlayerHolding : MonoBehaviour
             case HandObjectType.DOUBLE:
                 obj.SetParent(doubleHandContainer);
                 StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
-                Quaternion objRot = Quaternion.Euler(new Vector3(0, obj.localRotation.y, 0));
+                Quaternion objRot = Quaternion.Euler(new Vector3(0, -90, 0));
                 StartCoroutine(LerpRotation(obj, objRot, 1f));
                 break;
             case HandObjectType.CIGARETTE:

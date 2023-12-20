@@ -28,41 +28,46 @@ public class Gloria : NPCControl
 
     public void GloriaAction3()
     {
+        //noTalkStage = true;
+        //noLookInConvo = false;
+
+        //Door izaDoor = destObjects[_counter - 1].GetComponent<Door>();
+        //if (!izaDoor.doorOpen)
+        //{
+
+        //    if (!gloriaOpenDoor)
+        //    {
+        //        anim.SetTrigger("Special3");
+        //        gloriaOpenDoor = true;
+
+        //    }
+        //    waitTime -= Time.deltaTime;
+        //    if (waitTime < 0)
+        //    {
+
+        //        StopIdle();
+        //        waitTime = 3f;
+        //        destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
+
+        //    }
+        //}
+        //else
+        //{
+        //    StopIdle();
+        //}
+
         noTalkStage = true;
-        noLookInConvo = false;
-
-        Door izaDoor = destObjects[_counter - 1].GetComponent<Door>();
-        if (!izaDoor.doorOpen)
-        {
-
-            if (!gloriaOpenDoor)
-            {
-                anim.SetTrigger("Special3");
-                gloriaOpenDoor = true;
-
-            }
-            waitTime -= Time.deltaTime;
-            if (waitTime < 0)
-            {
-
-                StopIdle();
-                waitTime = 3f;
-                destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
-
-            }
-        }
-        else
-        {
-            StopIdle();
-        }
+        currentDialogue.gameObject.SetActive(true);
+        noLookInConvo = true;
 
     }
 
     public void GloriaAction4()
     {
-        noTalkStage = true;
-        currentDialogue.gameObject.SetActive(true);
-        noLookInConvo = true;
+        transform.SetParent(chair);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0.4f, -0.6f, 0.2f), 1f);
+        Vector3 sitRotation = new Vector3(0, 180, 0);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(sitRotation), 1f);
     }
 
     public void GloriaAction5()

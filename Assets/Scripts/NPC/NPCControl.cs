@@ -96,6 +96,7 @@ public class NPCControl : MonoBehaviour
     public float atDoorTime;
     public bool waitForDoor;
     public Door currentDoor;
+    bool doorAnimSet;
 
     protected virtual void Start()
     {
@@ -734,13 +735,24 @@ public class NPCControl : MonoBehaviour
         {
             agent.isStopped = true;
             if (!door.doorOpen)
+            {
+                if (!doorAnimSet)
+                {
+                    anim.SetTrigger("OpenDoor");
+                    doorAnimSet = true;
+                }
+
                 door.NPCOpenDoor();
+            }
+
             else
             {
                 inDoorRange = false;
                 currentDoor = null;
                 agent.isStopped = false;
                 waitForDoor = false;
+                doorAnimSet = false;
+                anim.SetTrigger("Move");
             }
 
         }

@@ -12,7 +12,7 @@ public class Zayne : NPCControl
 
     public void ZayneAction1()
     {
-//        noMoveAfterTalk =true;
+        noMoveAfterTalk =true;
         noLookInConvo = true;
     }
 

@@ -179,9 +179,13 @@ public class LivableObject : MonoBehaviour
                             gameObject.layer = 18;
                         }
                         else
+                        {
                             gameObject.layer = 17;
+                        }
+
                     }
                 }
+
 
 
             }

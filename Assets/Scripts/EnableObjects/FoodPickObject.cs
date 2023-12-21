@@ -72,7 +72,7 @@ public class FoodPickObject : MonoBehaviour
             gameObject.layer = 7;
             if(leftHand.selectedFood == this.transform)
             {
-                if(!playerHolding.inDialogue)
+                if(!playerHolding.inDialogue && (PlayerLeftHand.foodAte < 3 || PlayerLeftHand.foodAte >3))
                     CheckFirstPicked();
                 RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Chopsticks_PickFood", transform.position);
                 leftHand.selectedFood = null;

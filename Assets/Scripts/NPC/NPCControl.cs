@@ -219,6 +219,11 @@ public class NPCControl : MonoBehaviour
             RuntimeManager.PlayOneShot(footStepSF, transform.position);
     }
 
+    public void TransformNPC()
+    {
+        transformed = true;
+    }
+
 
     #region ActivateFunctionality
     //void CheckNPCActivation()

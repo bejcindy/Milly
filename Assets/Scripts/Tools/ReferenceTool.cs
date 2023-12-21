@@ -13,8 +13,10 @@ public class ReferenceTool : MonoBehaviour
     public static CinemachineBrain playerBrain;
     public static CinemachinePOV playerPOV;
 
+
     public Transform playerRef;
     public CinemachineVirtualCamera playerCamRef;
+
 
     public void Awake()
     {

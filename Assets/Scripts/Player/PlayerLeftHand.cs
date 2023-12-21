@@ -36,7 +36,7 @@ public class PlayerLeftHand : MonoBehaviour
     float chopHoldTimeMax = 1f;
     public float chopHoldVal = 0;
     public bool chopAiming;
-    public int foodAte;
+    public static int foodAte;
     bool foodEatingDialogueDone;
 
     public Transform selectedFood;
@@ -52,6 +52,8 @@ public class PlayerLeftHand : MonoBehaviour
     public Transform groundDetector;
     public Transform surfaceDetector;
     public LayerMask groundLayer;
+
+    public GameObject eatingDialogue;
 
 
     #region UI variables
@@ -96,7 +98,7 @@ public class PlayerLeftHand : MonoBehaviour
 
         if(foodAte >= 3 && !foodEatingDialogueDone)
         {
-            DialogueManager.StartConversation("MainQuest/Eating");
+            eatingDialogue.SetActive(true);
             foodEatingDialogueDone = true;
         }
 
@@ -292,7 +294,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     public void DestroyFood()
     {
-        if (!playerHolding.inDialogue)
+        if (!playerHolding.inDialogue && (foodAte <3 || foodAte >3))
             currentFood.GetComponent<FoodPickObject>().CheckFirstAte();
         Destroy(currentFood.gameObject);
         currentChop.chopMoving = false;

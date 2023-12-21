@@ -294,7 +294,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     public void DestroyFood()
     {
-        if (!playerHolding.inDialogue && (foodAte <3 || foodAte >3))
+        if (!playerHolding.inDialogue && (foodAte != 2))
             currentFood.GetComponent<FoodPickObject>().CheckFirstAte();
         Destroy(currentFood.gameObject);
         currentChop.chopMoving = false;

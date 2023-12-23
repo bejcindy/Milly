@@ -493,7 +493,8 @@ public class PlayerLeftHand : MonoBehaviour
         else if(bypassThrow)
         {
             readyToThrow = false;
-            holdingObj.localPosition = Vector3.zero;
+            if(holdingObj.GetComponent<PickUpObject>().objType != HandObjectType.CIGARETTE)
+                holdingObj.localPosition = Vector3.zero;
             holdTimer = 0;
             throwForce = Vector2.zero;
             aimUI.SetActive(false);

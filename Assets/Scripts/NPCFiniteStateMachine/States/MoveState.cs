@@ -7,6 +7,7 @@ public class MoveState : State
     bool isFollowing;
     protected override void OnEnter()
     {
+        Debug.Log("Entered move state");
         if (!machine.CheckFollowPlayer())
         {
             if (!machine.CheckReachDestination())

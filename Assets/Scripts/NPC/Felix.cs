@@ -47,9 +47,19 @@ public class Felix : NPCControl
     {
         firstTalked = false;
         currentDialogue = dialogueHolder.GetChild(1);
-        machine.SetMainTalkFalse();
+        SetMainTalkFalse();
         string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
         DialogueLua.SetVariable(reTriggerName, false);
+    }
+
+    public void ChangeFelixCompleteDialogue()
+    {
+        firstTalked = false;
+        currentDialogue = dialogueHolder.GetChild(3);
+        SetMainTalkFalse();
+        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
+        DialogueLua.SetVariable(reTriggerName, false);
+        noMoveAfterTalk = false;
     }
 
     public void CanActivate()

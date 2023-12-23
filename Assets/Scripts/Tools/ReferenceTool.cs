@@ -14,8 +14,10 @@ public class ReferenceTool : MonoBehaviour
     public static CinemachinePOV playerPOV;
     public static PauseMenu pauseMenu;
 
+
     public Transform playerRef;
     public CinemachineVirtualCamera playerCamRef;
+
 
     public void Awake()
     {

@@ -25,7 +25,8 @@ public class GroceryBox : PickUpObject
 
     protected override void Update()
     {
-        base.Update();
+        if(game.questAccepted)
+            base.Update();
         if (inHand)
         {
             groBoxCollider.enabled = false;
@@ -41,7 +42,7 @@ public class GroceryBox : PickUpObject
 
     public void FixedUpdate()
     {
-        if (game.inGameZone)
+        if (game.inGameZone && !rb.isKinematic)
         {
             BoxCollisionDetection();
             groundBox = Physics.Raycast(transform.position, Vector3.down, upDetectDist, flatGround);
@@ -65,7 +66,6 @@ public class GroceryBox : PickUpObject
         {
             if (hit.collider.gameObject.CompareTag("GroceryBox"))
             {
-                game.gameStarted = true;
                 boxAbove = true;
                 upperBox = hit.collider.gameObject.GetComponent<GroceryBox>();
             }
@@ -88,6 +88,8 @@ public class GroceryBox : PickUpObject
         {
             if (hit.collider.gameObject.CompareTag("GroceryBox"))
             {
+                if (!boxAbove && !boxBelow && !groundBox)
+                    game.gameStarted = true;
                 boxBelow = true;
                 lowerBox = hit.collider.gameObject.GetComponent<GroceryBox>();
             }

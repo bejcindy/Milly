@@ -11,6 +11,7 @@ public class ChopsticksHolder : LivableObject
     public bool hasChop;
     bool chopMoving;
     public EventReference chopPutSound;
+    public GameObject eatingDialogue;
 
     protected override void Start()
     {
@@ -61,6 +62,10 @@ public class ChopsticksHolder : LivableObject
 
     public void PutChops()
     {
+        if(PlayerLeftHand.foodAte > 1)
+        {
+            eatingDialogue.SetActive(true);
+        }
         Chopsticks targetChops = playerLeftHand.GetCurrentChops();
         myChops = targetChops;
         targetChops.inHand = false;

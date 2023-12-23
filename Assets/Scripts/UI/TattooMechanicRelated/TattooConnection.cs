@@ -7,7 +7,7 @@ public class TattooConnection : MonoBehaviour
     public List<RectTransform> relatedTattoos;
     public LivableObject actualObject;
     public NPCControl npcObject;
-    public bool activated, related, objTransformed;
+    public bool activated, related, hidden, objTransformed;
 
 
     private void Update()

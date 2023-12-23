@@ -12,12 +12,14 @@ public class PauseMenu : MonoBehaviour
     float pauseCD = 2f;
     public GameObject pauseMenu;
     public GameObject player;
+    public bool inTattoo;
     PlayerHolding playerHolding;
     // Start is called before the first frame update
     void Start()
     {
         player = ReferenceTool.player.gameObject;
         playerHolding = ReferenceTool.playerHolding;
+        ReferenceTool.pauseMenu = this;
     }
 
     // Update is called once per frame
@@ -50,7 +52,7 @@ public class PauseMenu : MonoBehaviour
             PixelCrushers.UIButtonKeyTrigger.monitorInput = true; // Re-enable hotkeys.
             PixelCrushers.DialogueSystem.DialogueManager.Unpause(); // Resume DS timers (e.g., sequencer commands).
 
-            if (!playerHolding.positionFixedWithMouse)
+            if (!playerHolding.positionFixedWithMouse &&!inTattoo)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;

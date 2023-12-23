@@ -39,6 +39,10 @@ public class NPCControl : MonoBehaviour
     public bool fakeActivated;
     public bool overrideNoControl;
 
+    [Foldout("Tattoo")]
+    [SerializeField] protected bool tatOn;
+    [SerializeField] protected TattooConnection myTat;
+
 
     [Foldout("CharRefs")]
     public Transform npcMesh;
@@ -571,6 +575,14 @@ public class NPCControl : MonoBehaviour
 
         if (stopIdleAfterConvo)
             StopIdle();
+
+        if (transformed)
+        {
+            if (myTat && !myTat.activated)
+            {
+                myTat.activated = true;
+            }
+        }
     }
 
     public void EndConversation()

@@ -45,6 +45,9 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected float matColorVal;
     [SerializeField] protected float fadeInterval;
 
+    [Foldout("Tattoo")]
+    [SerializeField] protected TattooConnection myTat;
+
     [Foldout("Effects")]
     [SerializeField] protected GameObject specialEffect;
     [SerializeField] protected GameObject postProcessingVolume;
@@ -238,9 +241,16 @@ public class LivableObject : MonoBehaviour
             //fadeOut = true;
             matColorVal = 0;
             firstActivated = true;
+            if (myTat)
+                Invoke(nameof(TurnOnTat), 1f);
             if (specialEffect != null)
                 specialEffect.SetActive(true);
         }
+    }
+
+    void TurnOnTat()
+    {
+        myTat.activated = true;
     }
 
     public void Activate()

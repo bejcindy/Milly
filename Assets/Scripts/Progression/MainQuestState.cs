@@ -48,7 +48,6 @@ public class MainQuestState: MonoBehaviour
             Invoke(nameof(StartGloAfterThought), 1f);
         }
 
-        Debug.Log(firstGloriaTalk + " is firstglo");
     }
 
     public void SetFirstGloriaTalked()

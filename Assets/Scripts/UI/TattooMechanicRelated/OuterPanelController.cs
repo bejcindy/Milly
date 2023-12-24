@@ -23,6 +23,7 @@ public class OuterPanelController : MonoBehaviour
         foreach (Image img in childImgs)
             img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
         mechanicActivated = false;
+        GetComponentInParent<GraphicRaycaster>().enabled = false;
     }
 
     // Update is called once per frame
@@ -48,6 +49,7 @@ public class OuterPanelController : MonoBehaviour
             ReferenceTool.pauseMenu.inTattoo = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            GetComponentInParent<GraphicRaycaster>().enabled = true;
             if (currentPanel.transform.localScale.x == .2f)
             {
                 currentPanel.enabled = false;
@@ -67,6 +69,7 @@ public class OuterPanelController : MonoBehaviour
                 currentPanel.noDrag = true;
                 resetChild = true;
                 ReferenceTool.pauseMenu.inTattoo = false;
+                GetComponentInParent<GraphicRaycaster>().enabled = false;
             }
             //foreach (Image img in childImgs)
             //    img.color = AlphaBasedOnScale(img.color, currentPanel.transform, 1);
@@ -97,6 +100,7 @@ public class OuterPanelController : MonoBehaviour
                     img.GetComponent<OuterPanelButton>().enabled = false;
             }
             ReferenceTool.pauseMenu.inTattoo = false;
+            GetComponentInParent<GraphicRaycaster>().enabled = false;
         }
     }
 

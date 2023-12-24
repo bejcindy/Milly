@@ -20,24 +20,24 @@ public class PannelController : MonoBehaviour
     public RectTransform CanvasRect;
     public Image pannelBG;
     float BGAlpha = .25f;
-    public Renderer targetObj;
+    //public Renderer targetObj;
     public RectTransform currentTattoo;
     public float mouseDragSpeed, scrollSizeSpeed;
 
     Image[] childImgs;
     public UILineRendererList blackLine, greyLine;
     public bool noDrag;
-    bool gotPos,firstActivated;
+    bool gotPos, firstActivated;
     bool lerping;
     float timer;
     bool playerUnpaused;
-    Renderer previousObj;
+    //Renderer previousObj;
     RectTransform previousTattoo;
+    public Image centerTattoo;
 
-    [SerializeField] PlayerHolding playerHolding;
-    [SerializeField] PlayerMovement playerMovement;
-    [SerializeField] CinemachineVirtualCamera playerCamera;
-    [SerializeField] CinemachineVirtualCamera catCamera;
+
+    //[SerializeField] CinemachineVirtualCamera playerCamera;
+    //[SerializeField] CinemachineVirtualCamera catCamera;
     bool catActivated;
 
 
@@ -52,10 +52,10 @@ public class PannelController : MonoBehaviour
         childImgs = GetComponentsInChildren<Image>();
         foreach (Image img in childImgs)
             img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
-        
+
         childTexts = GetComponentsInChildren<TextMeshProUGUI>();
-        foreach(TextMeshProUGUI tmp in childTexts)
-            tmp.color= new Color(tmp.color.r, tmp.color.g, tmp.color.b, 0);
+        foreach (TextMeshProUGUI tmp in childTexts)
+            tmp.color = new Color(tmp.color.r, tmp.color.g, tmp.color.b, 0);
 
         blackLine.color = new Color(blackLine.color.r, blackLine.color.g, blackLine.color.b, 0);
         greyLine.color = new Color(greyLine.color.r, greyLine.color.g, greyLine.color.b, 0);
@@ -80,23 +80,18 @@ public class PannelController : MonoBehaviour
                 activatedOnce = true;
             if (!parentControl.takeOver)
             {
-                if (targetObj && currentTattoo && !gotPos)
+                if (currentTattoo && !gotPos)
                 {
-                    Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(targetObj.bounds.center);
-                    Vector2 WorldObject_ScreenPosition = new Vector2(
-                    ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-                    ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-                    if (targetObj.isVisible)
-                    {
-                        if (pannelBG.color.a == 0)
-                            GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition - currentTattoo.anchoredPosition;
-                        else
-                            StartCoroutine(LerpPosition(WorldObject_ScreenPosition - currentTattoo.anchoredPosition, 1f));
-                    }
+                    //Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(targetObj.bounds.center);
+                    //Vector2 WorldObject_ScreenPosition = new Vector2(
+                    //((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+                    //((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+
+                    if (pannelBG.color.a == 0)
+                        GetComponent<RectTransform>().anchoredPosition = -currentTattoo.anchoredPosition;
                     else
-                    {
-                        GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-                    }
+                        StartCoroutine(LerpPosition(-currentTattoo.anchoredPosition, 1f));
+
                     currentTattoo.GetComponent<TattooConnection>().activated = true;
                     foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)
                     {
@@ -106,19 +101,47 @@ public class PannelController : MonoBehaviour
 
                     GetComponent<ConnectionManager>().ActivateLines(currentTattoo.GetComponent<TattooConnection>());
                     transform.localScale = new Vector2(1, 1);
-                    previousObj = targetObj;
+                    //previousObj = targetObj;
                     previousTattoo = currentTattoo;
                     gotPos = true;
                     noDrag = true;
                 }
-                else if (!targetObj || gotPos)
+                else
                 {
                     noDrag = true;
                     if (currentTattoo)
                     {
-                        if (targetObj != previousObj || currentTattoo != previousTattoo)
+                        if (currentTattoo != previousTattoo)
                             gotPos = false;
-                        currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+
+                        if (currentTattoo != centerTattoo)
+                        {
+                            currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+                            if (!centerTattoo.GetComponent<TattooConnection>().activated)
+                            {
+                                centerTattoo.transform.GetChild(0). GetComponent<Image>().color = FadeInColor(centerTattoo.transform.GetChild(0).GetComponent<Image>().color, 1);
+                                Debug.Log("1");
+                            }
+                            else
+                            {
+                                centerTattoo.GetComponent<Image>().color = FadeInColor(centerTattoo.GetComponent<Image>().color, 1);
+                                Debug.Log("2");
+                            }
+                        }
+                        else
+                        {
+                            if (!currentTattoo.GetComponent<TattooConnection>().activated)
+                            {
+                                currentTattoo.transform.GetChild(0).GetComponent<Image>().color = FadeInColor(currentTattoo.transform.GetChild(0).GetComponent<Image>().color, 1);
+                                Debug.Log("3");
+                            }
+                            else
+                            {
+                                centerTattoo.GetComponent<Image>().color = FadeInColor(centerTattoo.GetComponent<Image>().color, 1);
+                                Debug.Log("4");
+                            }
+                        }
+
                         if (currentTattoo.GetComponentInChildren<TextMeshProUGUI>())
                         {
                             currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color = FadeOutColor(currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color);
@@ -155,8 +178,17 @@ public class PannelController : MonoBehaviour
                                     {
                                         if (img.GetComponent<TattooConnection>())
                                         {
-                                            if (img.GetComponent<TattooConnection>().activated)
+                                            if (centerTattoo.GetComponent<Image>() == img)
+                                            {
+                                                if (img.GetComponent<TattooConnection>().activated)
+                                                    img.color = FadeInColor(img.color, 1);
+                                                else
+                                                    centerTattoo.GetComponentInChildren<Image>().color = FadeInColor(centerTattoo.GetComponentInChildren<Image>().color, 1);
+                                            }
+                                            else if (img.GetComponent<TattooConnection>().activated)
+                                            {
                                                 img.color = FadeInColor(img.color, 1);
+                                            }
                                         }
                                     }
                                     blackLine.color = FadeInColor(blackLine.color, 1);
@@ -178,6 +210,7 @@ public class PannelController : MonoBehaviour
                                                 {
                                                     TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
                                                     tmp.color = FadeInColor(tmp.color, 1f);
+
                                                 }
                                             }
                                         }
@@ -278,7 +311,7 @@ public class PannelController : MonoBehaviour
                 {
                     noDrag = false;
                     currentTattoo = null;
-                    targetObj = null;
+                    //targetObj = null;
                     firstActivated = true;
                     fadingColor = false;
                 }
@@ -313,7 +346,7 @@ public class PannelController : MonoBehaviour
         }
         else
         {
-            if(!playerUnpaused)
+            if (!playerUnpaused)
                 UnpausePlayer();
             gotPos = false;
             noDrag = true;
@@ -323,7 +356,7 @@ public class PannelController : MonoBehaviour
             {
                 img.color = FadeOutColor(img.color);
             }
-            foreach(TextMeshProUGUI tmp in childTexts)
+            foreach (TextMeshProUGUI tmp in childTexts)
             {
                 tmp.color = FadeOutColor(tmp.color);
             }
@@ -341,7 +374,7 @@ public class PannelController : MonoBehaviour
             if (!clearedCurrent)
             {
                 currentTattoo = null;
-                targetObj = null;
+                //targetObj = null;
                 parentControl.currentPanel = null;
                 clearedCurrent = true;
             }
@@ -375,7 +408,7 @@ public class PannelController : MonoBehaviour
                     activated = false;
                 else
                 {
-                    if (!playerHolding.inDialogue)
+                    if (!ReferenceTool.playerHolding.inDialogue)
                         activated = true;
                 }
             }
@@ -391,49 +424,32 @@ public class PannelController : MonoBehaviour
         {
             if (panel.continueButton != null) panel.continueButton.interactable = false;
         }
-        playerMovement.enabled = false;
+        ReferenceTool.playerMovement.enabled = false;
+        CinemachineVirtualCamera currentCam = ReferenceTool.playerBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
         if (Input.GetMouseButton(0))
         {
-            playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
-            playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
-
-            if (catActivated)
-            {
-                catCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
-                catCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
-            }
+            currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+            currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
         }
         else
         {
-            playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-            playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
-
-            if (catActivated)
-            {
-                catCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-                catCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
-            }
+            currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+            currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
         }
     }
 
     public void UnpausePlayer()
     {
         playerUnpaused = true;
-        if (catActivated)
-        {
-            catActivated = false;
-            catCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
-            catCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
-        }
-
+        CinemachineVirtualCamera currentCam = ReferenceTool.playerBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
 
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
             if (panel.continueButton != null) panel.continueButton.interactable = true;
         }
-        playerMovement.enabled = true;
-        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
-        playerCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
+        ReferenceTool.playerMovement.enabled = true;
+        currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
+        currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
 
     }
 
@@ -472,7 +488,7 @@ public class PannelController : MonoBehaviour
     Color AlphaBasedOnScale(Color c, float maxA)
     {
         float alpha = Mathf.Lerp(maxA, 0, Mathf.InverseLerp(.5f, .2f, transform.localScale.x));
-        c= new Color(c.r, c.g, c.b, alpha);
+        c = new Color(c.r, c.g, c.b, alpha);
         return c;
     }
 
@@ -514,7 +530,7 @@ public class PannelController : MonoBehaviour
         {
             lerping = true;
             time += Time.deltaTime;
-            GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(startPosition, targetPosition,Mathf.SmoothStep(0,1, time / duration));
+            GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, time / duration));
             yield return null;
         }
         GetComponent<RectTransform>().anchoredPosition = targetPosition;

@@ -12,6 +12,8 @@ public class BuildingGroupController : MonoBehaviour
     public BuildingGroupController bgc;
     public BuildingGroupController targetBgc;
 
+    public TattooConnection myTat;
+
     void Start()
     {
         groupColorVal = 1;
@@ -26,6 +28,10 @@ public class BuildingGroupController : MonoBehaviour
                 groupColorVal -= 0.1f * fadeInterval * Time.deltaTime;
             else
             {
+                if (myTat)
+                {
+                    myTat.activated = true;
+                }
                 groupColorVal = 0;
                 activateAll = false;
                 enabled = false;

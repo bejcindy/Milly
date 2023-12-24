@@ -14,20 +14,20 @@ using TMPro;
 
 public class PannelController : MonoBehaviour
 {
-    public static bool mechanicActivated;
+    public bool activatedOnce;
     public bool activated;
     public float fadeSpeed;
     public RectTransform CanvasRect;
     public Image pannelBG;
-    float BGAlpha;
+    float BGAlpha = .25f;
     public Renderer targetObj;
     public RectTransform currentTattoo;
     public float mouseDragSpeed, scrollSizeSpeed;
 
     Image[] childImgs;
     public UILineRendererList blackLine, greyLine;
-
-    bool gotPos, noDrag, firstActivated;
+    public bool noDrag;
+    bool gotPos,firstActivated;
     bool lerping;
     float timer;
     bool playerUnpaused;
@@ -45,6 +45,7 @@ public class PannelController : MonoBehaviour
     bool fadingColor;
     [SerializeField] Material blurMaterial;
     TextMeshProUGUI[] childTexts;
+    public OuterPanelController parentControl;
 
     private void Awake()
     {
@@ -58,9 +59,7 @@ public class PannelController : MonoBehaviour
 
         blackLine.color = new Color(blackLine.color.r, blackLine.color.g, blackLine.color.b, 0);
         greyLine.color = new Color(greyLine.color.r, greyLine.color.g, greyLine.color.b, 0);
-        BGAlpha = pannelBG.color.a;
         pannelBG.color = new Color(pannelBG.color.r, pannelBG.color.g, pannelBG.color.b, 0);
-        mechanicActivated = false;
         clearedCurrent = true;
         blurMaterial.SetFloat("_Alpha", 0);
     }
@@ -72,84 +71,121 @@ public class PannelController : MonoBehaviour
             PausePlayer();
             //PixelCrushers.UIPanel.monitorSelection = false; // Don't allow dialogue UI to steal back input focus.
             //PixelCrushers.DialogueSystem.DialogueManager.Pause(); // Stop DS timers (e.g., sequencer commands).
-
+            parentControl.currentPanel = this;
             clearedCurrent = false;
             DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
-            if (!mechanicActivated)
-                mechanicActivated = true;
-            if (targetObj && currentTattoo && !gotPos)
+            if (!OuterPanelController.mechanicActivated)
+                OuterPanelController.mechanicActivated = true;
+            if (!activatedOnce)
+                activatedOnce = true;
+            if (!parentControl.takeOver)
             {
-                Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(targetObj.bounds.center);
-                Vector2 WorldObject_ScreenPosition = new Vector2(
-                ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-                ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-                if (targetObj.isVisible)
+                if (targetObj && currentTattoo && !gotPos)
                 {
-                    if (pannelBG.color.a == 0)
-                        GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition - currentTattoo.anchoredPosition;
-                    else
-                        StartCoroutine(LerpPosition(WorldObject_ScreenPosition - currentTattoo.anchoredPosition, 1f));
-                }
-                else
-                {
-                    GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-                }
-                currentTattoo.GetComponent<TattooConnection>().activated = true;
-                foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)
-                    relate.GetComponent<TattooConnection>().related = true;
-                GetComponent<ConnectionManager>().ActivateLines(currentTattoo.GetComponent<TattooConnection>());
-                transform.localScale = new Vector2(1, 1);
-                previousObj = targetObj;
-                previousTattoo = currentTattoo;
-                gotPos = true;
-                noDrag = true;
-            }
-            else if (!targetObj || gotPos)
-            {
-                noDrag = true;
-                if (currentTattoo)
-                {
-                    if (targetObj != previousObj || currentTattoo != previousTattoo)
-                        gotPos = false;
-                    currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
-                    if (currentTattoo.GetComponentInChildren<TextMeshProUGUI>())
+                    Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(targetObj.bounds.center);
+                    Vector2 WorldObject_ScreenPosition = new Vector2(
+                    ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+                    ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+                    if (targetObj.isVisible)
                     {
-                        currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color = FadeOutColor(currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color);
+                        if (pannelBG.color.a == 0)
+                            GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition - currentTattoo.anchoredPosition;
+                        else
+                            StartCoroutine(LerpPosition(WorldObject_ScreenPosition - currentTattoo.anchoredPosition, 1f));
                     }
                     else
                     {
-                        currentTattoo.GetChild(0).GetComponent<Image>().color = FadeOutColor(currentTattoo.GetChild(0).GetComponent<Image>().color);
+                        GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                    }
+                    currentTattoo.GetComponent<TattooConnection>().activated = true;
+                    foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)
+                    {
+                        if (!relate.GetComponent<TattooConnection>().hidden)
+                            relate.GetComponent<TattooConnection>().related = true;
                     }
 
-                    if (currentTattoo.GetComponent<Image>().color.a < 1)
-                        fadingColor = true;
-                    if (currentTattoo.GetComponent<Image>().color.a == 1)
+                    GetComponent<ConnectionManager>().ActivateLines(currentTattoo.GetComponent<TattooConnection>());
+                    transform.localScale = new Vector2(1, 1);
+                    previousObj = targetObj;
+                    previousTattoo = currentTattoo;
+                    gotPos = true;
+                    noDrag = true;
+                }
+                else if (!targetObj || gotPos)
+                {
+                    noDrag = true;
+                    if (currentTattoo)
                     {
-                        if (greyLine.color.a != .5f)
-                            timer += Time.deltaTime;
-                        else
-                            fadingColor = false;
-                        //Debug.Log(timer);
-                        if (timer > .5f && timer < 2f)
+                        if (targetObj != previousObj || currentTattoo != previousTattoo)
+                            gotPos = false;
+                        currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+                        if (currentTattoo.GetComponentInChildren<TextMeshProUGUI>())
                         {
-                            pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
-                            FadeInBlur();
+                            currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color = FadeOutColor(currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color);
                         }
-                        if (timer > 2f && timer < 3.5f)
+                        else
                         {
-                            if (firstActivated)
-                            {
-                                foreach (Image img in childImgs)
-                                {
-                                    if (img.GetComponent<TattooConnection>())
-                                    {
-                                        if (img.GetComponent<TattooConnection>().activated)
-                                            img.color = FadeInColor(img.color, 1);
-                                    }
-                                }
-                                blackLine.color = FadeInColor(blackLine.color, 1);
-                            }
+                            currentTattoo.GetChild(0).GetComponent<Image>().color = FadeOutColor(currentTattoo.GetChild(0).GetComponent<Image>().color);
+                        }
+
+                        if (currentTattoo.GetComponent<Image>().color.a < 1)
+                            fadingColor = true;
+                        if (currentTattoo.GetComponent<Image>().color.a == 1)
+                        {
+                            if (greyLine.color.a != .5f)
+                                timer += Time.deltaTime;
                             else
+                                fadingColor = false;
+                            //Debug.Log(timer);
+                            if (timer > .5f && timer < 2f)
+                            {
+                                if (parentControl.takeOver)
+                                    timer = 2f;
+                                else
+                                {
+                                    pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
+                                    FadeInBlur();
+                                }
+                            }
+                            if (timer > 2f && timer < 3.5f)
+                            {
+                                if (firstActivated)
+                                {
+                                    foreach (Image img in childImgs)
+                                    {
+                                        if (img.GetComponent<TattooConnection>())
+                                        {
+                                            if (img.GetComponent<TattooConnection>().activated)
+                                                img.color = FadeInColor(img.color, 1);
+                                        }
+                                    }
+                                    blackLine.color = FadeInColor(blackLine.color, 1);
+                                }
+                                else
+                                {
+                                    foreach (Image img in childImgs)
+                                    {
+                                        if (img.GetComponent<TattooConnection>())
+                                        {
+                                            if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
+                                            {
+                                                if (!img.GetComponentInChildren<TextMeshProUGUI>())
+                                                {
+                                                    Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                                                    imgChild.color = FadeInColor(imgChild.color, 1f);
+                                                }
+                                                else
+                                                {
+                                                    TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                                                    tmp.color = FadeInColor(tmp.color, 1f);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    greyLine.color = FadeInColor(greyLine.color, .5f);
+                                }
+                            }
+                            if (firstActivated && timer > 3.5f)
                             {
                                 foreach (Image img in childImgs)
                                 {
@@ -172,72 +208,106 @@ public class PannelController : MonoBehaviour
                                 }
                                 greyLine.color = FadeInColor(greyLine.color, .5f);
                             }
+
                         }
-                        if (firstActivated && timer > 3.5f)
+                    }
+                    if (!currentTattoo)
+                    {
+
+                        foreach (Image img in childImgs)
                         {
-                            foreach (Image img in childImgs)
+                            if (img.GetComponent<TattooConnection>())
                             {
-                                if (img.GetComponent<TattooConnection>())
+                                if (img.GetComponent<TattooConnection>().activated)
+                                    img.color = FadeInColor(img.color, 1);
+                                else if (img.GetComponent<TattooConnection>().related)
                                 {
-                                    if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
+                                    if (!img.GetComponentInChildren<TextMeshProUGUI>())
                                     {
-                                        if (!img.GetComponentInChildren<TextMeshProUGUI>())
-                                        {
-                                            Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
-                                            imgChild.color = FadeInColor(imgChild.color, 1f);
-                                        }
-                                        else
-                                        {
-                                            TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
-                                            tmp.color = FadeInColor(tmp.color, 1f);
-                                        }
+                                        Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                                        imgChild.color = FadeInColor(imgChild.color, 1f);
+                                    }
+                                    else
+                                    {
+                                        TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                                        tmp.color = FadeInColor(tmp.color, 1f);
                                     }
                                 }
                             }
-                            greyLine.color = FadeInColor(greyLine.color, .5f);
                         }
 
+                        blackLine.color = FadeInColor(blackLine.color, 1);
+                        greyLine.color = FadeInColor(greyLine.color, .5f);
+                        pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
+                        FadeInBlur();
+
+                        if (greyLine.color.a < .5f)
+                            fadingColor = true;
+                        else
+                            fadingColor = false;
+
+                        //else
+                        //{
+                        //    foreach (Image img in childImgs)
+                        //    {
+                        //        if (img.GetComponent<TattooConnection>())
+                        //        {
+                        //            if (img.GetComponent<TattooConnection>().activated)
+                        //                img.color = AlphaBasedOnScale(img.color, 1);
+                        //            else if (img.GetComponent<TattooConnection>().related)
+                        //            {
+                        //                if (!img.GetComponentInChildren<TextMeshProUGUI>())
+                        //                {
+                        //                    Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                        //                    imgChild.color = AlphaBasedOnScale(imgChild.color, 1f);
+                        //                }
+                        //                else
+                        //                {
+                        //                    TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                        //                    tmp.color = AlphaBasedOnScale(tmp.color, 1f);
+                        //                }
+                        //            }
+                        //        }
+                        //    }
+                        //    blackLine.color = AlphaBasedOnScale(blackLine.color, 1);
+                        //    greyLine.color = AlphaBasedOnScale(greyLine.color, .5f);                       
+                        //}
                     }
                 }
-                if (!currentTattoo)
+                if (greyLine.color.a == .5f && !lerping)
                 {
-                    foreach (Image img in childImgs)
+                    noDrag = false;
+                    currentTattoo = null;
+                    targetObj = null;
+                    firstActivated = true;
+                    fadingColor = false;
+                }
+            }
+            else
+            {
+                foreach (Image img in childImgs)
+                {
+                    if (img.GetComponent<TattooConnection>())
                     {
-                        if (img.GetComponent<TattooConnection>())
+                        if (img.GetComponent<TattooConnection>().activated)
+                            img.color = AlphaBasedOnScale(img.color, 1);
+                        else if (img.GetComponent<TattooConnection>().related)
                         {
-                            if (img.GetComponent<TattooConnection>().activated)
-                                img.color = FadeInColor(img.color, 1);
-                            else if (img.GetComponent<TattooConnection>().related)
+                            if (!img.GetComponentInChildren<TextMeshProUGUI>())
                             {
-                                if (!img.GetComponentInChildren<TextMeshProUGUI>())
-                                {
-                                    Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
-                                    imgChild.color = FadeInColor(imgChild.color, 1f);
-                                }
-                                else
-                                {
-                                    TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
-                                    tmp.color = FadeInColor(tmp.color, 1f);
-                                }
+                                Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                                imgChild.color = AlphaBasedOnScale(imgChild.color, 1f);
+                            }
+                            else
+                            {
+                                TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                                tmp.color = AlphaBasedOnScale(tmp.color, 1f);
                             }
                         }
                     }
-
-                    blackLine.color = FadeInColor(blackLine.color, 1);
-                    greyLine.color = FadeInColor(greyLine.color, .5f);
-                    pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
-                    FadeInBlur();
-                    if (greyLine.color.a < .5f)
-                        fadingColor = true;
-                    else
-                        fadingColor = false;
                 }
-            }
-            if (greyLine.color.a == .5f && !lerping)
-            {
-                noDrag = false;
-                firstActivated = true;
-                fadingColor = false;
+                blackLine.color = AlphaBasedOnScale(blackLine.color, 1);
+                greyLine.color = AlphaBasedOnScale(greyLine.color, .5f);
             }
 
         }
@@ -259,8 +329,11 @@ public class PannelController : MonoBehaviour
             }
             blackLine.color = FadeOutColor(blackLine.color);
             greyLine.color = FadeOutColor(greyLine.color);
-            pannelBG.color = FadeOutColor(pannelBG.color);
-            FadeOutBlur();
+            if (!parentControl.takeOver)
+            {
+                pannelBG.color = FadeOutColor(pannelBG.color);
+                FadeOutBlur();
+            }
             if (greyLine.color.a > 0)
                 fadingColor = true;
             else
@@ -269,6 +342,7 @@ public class PannelController : MonoBehaviour
             {
                 currentTattoo = null;
                 targetObj = null;
+                parentControl.currentPanel = null;
                 clearedCurrent = true;
             }
         }
@@ -283,11 +357,17 @@ public class PannelController : MonoBehaviour
             if (Input.mouseScrollDelta.y != 0)
             {
                 float scrollAmount = Input.mouseScrollDelta.y;
-                transform.localScale = new Vector2(Mathf.Clamp(transform.localScale.x + scrollAmount * scrollSizeSpeed, .5f, 2f), Mathf.Clamp(transform.localScale.y + scrollAmount * scrollSizeSpeed, .5f, 2f));
+                //1 to 0.5: resize
+                //0.5 to 0.2: fade to outer menu
+                transform.localScale = new Vector2(Mathf.Clamp(transform.localScale.x + scrollAmount * scrollSizeSpeed, .2f, 2f), Mathf.Clamp(transform.localScale.y + scrollAmount * scrollSizeSpeed, .2f, 2f));
+                if (transform.localScale.x < .5f)
+                    parentControl.takeOver = true;
+                else
+                    parentControl.takeOver = false;
             }
         }
 
-        if (mechanicActivated)
+        if (OuterPanelController.mechanicActivated)
         {
             if (Input.GetKeyDown(KeyCode.Tab) && !fadingColor)
             {
@@ -386,6 +466,13 @@ public class PannelController : MonoBehaviour
             c -= new Color(0, 0, 0, fadeSpeed) * Time.deltaTime;
         else
             c = new Color(c.r, c.g, c.b, 0);
+        return c;
+    }
+
+    Color AlphaBasedOnScale(Color c, float maxA)
+    {
+        float alpha = Mathf.Lerp(maxA, 0, Mathf.InverseLerp(.5f, .2f, transform.localScale.x));
+        c= new Color(c.r, c.g, c.b, alpha);
         return c;
     }
 

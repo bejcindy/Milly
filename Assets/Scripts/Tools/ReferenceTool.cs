@@ -12,6 +12,7 @@ public class ReferenceTool : MonoBehaviour
     public static CinemachineVirtualCamera playerCinemachine;
     public static CinemachineBrain playerBrain;
     public static CinemachinePOV playerPOV;
+    public static PauseMenu pauseMenu;
 
 
     public Transform playerRef;
@@ -28,4 +29,5 @@ public class ReferenceTool : MonoBehaviour
         playerBrain = Camera.main.GetComponent<CinemachineBrain>();
         playerPOV = playerCamRef.GetCinemachineComponent<CinemachinePOV>();
     }
+
 }

@@ -510,13 +510,18 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 isHolding = false;
                 holdingObj.SetParent(null);
-                //Vector3 placeRot = new Vector3(0, holdingObj.transform.localRotation.y, 0);
-                //holdingObj.transform.rotation = Quaternion.Euler(placeRot);
                 holdingObj.GetComponent<Rigidbody>().isKinematic = false;
                 holdingObj.GetComponent<PickUpObject>().inHand = false;
                 holdingObj.GetComponent<PickUpObject>().thrown = true;
                 holdingObj.GetComponent<PickUpObject>().thrownByPlayer = true;
+
+                GroceryBox box = holdingObj.GetComponent<GroceryBox>();
+                if (box!=null)
+                {
+                    box.CheckPlaceBox();
+                }
                 playerHolding.UnoccupyLeft();
+
             }
         }
     }

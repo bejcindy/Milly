@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using VInspector;
 
 public class GroceryBox : PickUpObject
@@ -48,30 +49,7 @@ public class GroceryBox : PickUpObject
         }
         else
         {
-            if(!boxForceMove)
-                groBoxCollider.enabled = true;
-
-            if(baseCandidate && !boxMoving)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    playerHolding.RemoveInteractable(gameObject);
-                    selected = false;
-                    GroceryBox moveBox = playerLeftHand.holdingObj.GetComponent<GroceryBox>();
-                    moveBox.transform.SetParent(null);
-                    Vector3 topPos = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
-                    StartCoroutine(LerpPosition(moveBox.transform, topPos, 1f));
-                    StartCoroutine(LerpRotation(moveBox.transform, Quaternion.Euler(Vector3.zero), 0.5f));
-
-                    playerLeftHand.isHolding = false;
-                    moveBox.transform.GetComponent<PickUpObject>().inHand = false;
-                    moveBox.transform.GetComponent<PickUpObject>().thrown = true;
-                    moveBox.transform.GetComponent<PickUpObject>().thrownByPlayer = true;
-                    playerHolding.UnoccupyLeft();
-
-
-                }
-            }
+            groBoxCollider.enabled = true;
         }
     }
 
@@ -93,14 +71,6 @@ public class GroceryBox : PickUpObject
         }
     }
 
-    bool CheckPlayerHoldingBox()
-    {
-        if(!playerHolding.GetLeftHand() && playerLeftHand.holdingObj.GetComponent<GroceryBox>())
-        {
-            return true;
-        }
-        return false;
-    }
 
 
     void BoxCollisionDetection()
@@ -151,6 +121,17 @@ public class GroceryBox : PickUpObject
         }
     }
 
+    public void CheckPlaceBox()
+    {
+        if (game.placeableBox != null)
+        {
+            Vector3 topPos = new Vector3(game.placeableBox.transform.position.x, game.placeableBox.transform.position.y + 1f, game.placeableBox.transform.position.z);
+            rb.isKinematic = false;
+            transform.position = topPos;
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+    }
+
     public int CalculateBoxChain(int count, GroceryBox box)
     {
         if (!box.boxAbove)
@@ -164,35 +145,4 @@ public class GroceryBox : PickUpObject
     }
 
 
-    IEnumerator LerpPosition(Transform box, Vector3 targetPosition, float duration)
-    {
-        box.GetComponent<GroceryBox>().boxForceMove = true;
-        boxMoving = true;
-        float time = 0;
-        Vector3 startPosition = box.position;
-        while (time < duration)
-        {
-            box.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        box.position = targetPosition;
-        boxMoving = false;
-        box.GetComponent<GroceryBox>().boxForceMove = false;
-        box.GetComponent<Rigidbody>().isKinematic = false;
-
-    }
-
-    IEnumerator LerpRotation(Transform box, Quaternion endValue, float duration)
-    {
-        float time = 0;
-        Quaternion startValue = box.rotation;
-        while (time < duration)
-        {
-            box.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        box.rotation = endValue;
-    }
 }

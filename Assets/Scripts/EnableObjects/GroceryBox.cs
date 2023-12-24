@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using VInspector;
 
 public class GroceryBox : PickUpObject
@@ -8,14 +9,17 @@ public class GroceryBox : PickUpObject
     Collider groBoxCollider;
 
     [Foldout("GroceryBox")]
+    public bool baseCandidate;
     public int stackCount;
     public float upDetectDist;
     public bool boxAbove;
     public bool boxBelow;
     public bool groundBox;
+    public bool boxForceMove;
     public LayerMask flatGround;
     [SerializeField] GroceryBoxGame game;
-    [SerializeField] GroceryBox upperBox, lowerBox;
+    GroceryBox upperBox, lowerBox;
+    bool boxMoving;
     protected override void Start()
     {
         base.Start();
@@ -25,8 +29,17 @@ public class GroceryBox : PickUpObject
 
     protected override void Update()
     {
-        if(game.questAccepted)
+        if(game.questAccepted && !baseCandidate && !boxMoving)
             base.Update();
+        else if (baseCandidate)
+        {
+            gameObject.layer = 9;
+        }
+        else
+        {
+            gameObject.layer = 17;
+        }
+
         if (inHand)
         {
             groBoxCollider.enabled = false;
@@ -57,6 +70,7 @@ public class GroceryBox : PickUpObject
             groundBox = false;
         }
     }
+
 
 
     void BoxCollisionDetection()
@@ -107,6 +121,17 @@ public class GroceryBox : PickUpObject
         }
     }
 
+    public void CheckPlaceBox()
+    {
+        if (game.placeableBox != null)
+        {
+            Vector3 topPos = new Vector3(game.placeableBox.transform.position.x, game.placeableBox.transform.position.y + 1f, game.placeableBox.transform.position.z);
+            rb.isKinematic = false;
+            transform.position = topPos;
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+    }
+
     public int CalculateBoxChain(int count, GroceryBox box)
     {
         if (!box.boxAbove)
@@ -118,4 +143,6 @@ public class GroceryBox : PickUpObject
             return (CalculateBoxChain(1+count, box.upperBox));
         }
     }
+
+
 }

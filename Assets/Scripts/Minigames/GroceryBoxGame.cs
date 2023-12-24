@@ -14,11 +14,13 @@ public class GroceryBoxGame : MonoBehaviour
     public bool questAccepted;
     public bool gameSucceeded;
     public int boxScore;
+    public GroceryBox placeableBox;
     public GameObject scorePanel;
     public TextMeshProUGUI score;
 
     public List<GroceryBox> boxes;
     public BuildingGroupController groceryStore;
+    PlayerLeftHand leftHand;
     public Felix felix;
     public int maxStack;
 
@@ -30,6 +32,7 @@ public class GroceryBoxGame : MonoBehaviour
         maxStack = 0;
         successTimer = 0;
         questAccepted = false;
+        leftHand = ReferenceTool.playerLeftHand;
     }
 
     public void Update()
@@ -53,6 +56,19 @@ public class GroceryBoxGame : MonoBehaviour
             Debug.Log(DialogueLua.GetVariable(reTriggerName).asBool);
             GetComponent<BoxCollider>().enabled = false;
             this.enabled = false;
+        }
+
+        if(leftHand.isHolding && leftHand.holdingObj.GetComponent<GroceryBox>())
+        {
+            ChooseInteractable();
+        }
+        else
+        {
+            if (placeableBox)
+            {
+                placeableBox.baseCandidate = false;
+                placeableBox = null;
+            }
         }
     }
 
@@ -106,4 +122,39 @@ public class GroceryBoxGame : MonoBehaviour
             scorePanel.SetActive(false);
         }
     }
+
+    public void ChooseInteractable()
+    {
+
+        Vector3 toScreen = Camera.main.transform.InverseTransformPoint(boxes[0].transform.position).normalized;
+        float minDist = Vector3.Dot(toScreen, Vector3.forward);
+
+
+        foreach (GroceryBox box in boxes)
+        {
+            if (!box.inHand)
+            {
+                Vector3 objToScreen = Camera.main.transform.InverseTransformPoint(box.transform.position).normalized;
+                float distance = Vector3.Dot(objToScreen, Vector3.forward);
+                if (distance > minDist)
+                {
+                    if (placeableBox != null)
+                    {
+                        placeableBox.baseCandidate = false;
+                    }
+                    minDist = distance;
+                    placeableBox = box;
+                }
+            }
+
+            if (placeableBox)
+            {
+                placeableBox.baseCandidate = true;
+            }
+
+        }
+
+
+    }
+    
 }

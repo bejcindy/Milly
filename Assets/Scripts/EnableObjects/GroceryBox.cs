@@ -28,13 +28,16 @@ public class GroceryBox : PickUpObject
 
     protected override void Update()
     {
-        if(game.questAccepted && !boxMoving)
+        if(game.questAccepted && !baseCandidate && !boxMoving)
             base.Update();
-        else if (boxMoving)
+        else if (baseCandidate)
         {
-            selected = false;
+            gameObject.layer = 9;
         }
-
+        else
+        {
+            gameObject.layer = 17;
+        }
 
         if (inHand)
         {
@@ -45,23 +48,10 @@ public class GroceryBox : PickUpObject
         }
         else
         {
-            //if box is out of hand and lerping or when box is just not in hand, then collider is activate
             if(!boxForceMove)
                 groBoxCollider.enabled = true;
 
-            //if a box on the floor is interactable and player is holding a box, then this one is detectable by playerholding
-            if(CheckPlayerHoldingBox() && interactable)
-            {
-                baseCandidate = true;
-                playerHolding.AddInteractable(gameObject);
-            }
-            else
-            {
-                baseCandidate = false;
-            }
-
-            //if this box on the floor is selected and no box is lerping
-            if(baseCandidate && selected && !boxMoving)
+            if(baseCandidate && !boxMoving)
             {
                 if (Input.GetMouseButtonDown(0))
                 {

@@ -7,6 +7,7 @@ using VInspector;
 public class GroceryBox : PickUpObject
 {
     Collider groBoxCollider;
+    public static bool boxActivated;
 
     [Foldout("GroceryBox")]
     public bool baseCandidate;
@@ -43,8 +44,16 @@ public class GroceryBox : PickUpObject
         {
             gameObject.layer = 0;
         }
-        
 
+        if (activated && !GroceryBox.boxActivated)
+        {
+            GroceryBox.boxActivated = true;
+        }
+
+        if (GroceryBox.boxActivated && !activated)
+        {
+            activated = true;
+        }
 
         if (inHand)
         {

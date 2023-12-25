@@ -535,6 +535,11 @@ public class NPCControl : MonoBehaviour
         return noMoveAfterTalk;
     }
 
+    public void MoveAfterTalk()
+    {
+        noMoveAfterTalk = false;
+    }
+     
     protected virtual void QuestAcceptChange()
     {
 

@@ -184,10 +184,10 @@ public class NPCControl : MonoBehaviour
                     currentDialogue.gameObject.SetActive(true);
             }
         }
-        else if(hasFakeActivate && !fakeActivated && !npcActivated && !initialActivated)
-        {
-            DeactivateAll(npcMesh);
-        }
+        //else if (hasFakeActivate && !fakeActivated && !npcActivated && !initialActivated)
+        //{
+        //    DeactivateAll(npcMesh);
+        //}
         if (interactable)
         {
             if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk && !playerHolding.inDialogue)
@@ -569,7 +569,7 @@ public class NPCControl : MonoBehaviour
         inCD = true;
         currentDialogue.gameObject.SetActive(false);
 
-        fakeActivated = false;
+//        fakeActivated = false;
         talkable = true;
         firstTalked = true;
 

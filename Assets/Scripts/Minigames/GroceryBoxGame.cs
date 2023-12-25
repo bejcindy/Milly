@@ -37,6 +37,7 @@ public class GroceryBoxGame : MonoBehaviour
 
     public void Update()
     {
+
         if(boxScore == boxes.Count)
         {
             successTimer += Time.deltaTime;
@@ -58,7 +59,7 @@ public class GroceryBoxGame : MonoBehaviour
             this.enabled = false;
         }
 
-        if(leftHand.isHolding && leftHand.holdingObj.GetComponent<GroceryBox>())
+        if(leftHand.isHolding && leftHand.holdingObj.GetComponent<GroceryBox>() && inGameZone)
         {
             ChooseInteractable();
         }
@@ -132,7 +133,7 @@ public class GroceryBoxGame : MonoBehaviour
 
         foreach (GroceryBox box in boxes)
         {
-            if (!box.inHand)
+            if (!box.inHand && box.interactable)
             {
                 Vector3 objToScreen = Camera.main.transform.InverseTransformPoint(box.transform.position).normalized;
                 float distance = Vector3.Dot(objToScreen, Vector3.forward);

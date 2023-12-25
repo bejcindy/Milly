@@ -35,10 +35,16 @@ public class GroceryBox : PickUpObject
         {
             gameObject.layer = 9;
         }
-        else
+        else if(activated)
         {
             gameObject.layer = 17;
         }
+        else
+        {
+            gameObject.layer = 0;
+        }
+        
+
 
         if (inHand)
         {
@@ -126,9 +132,10 @@ public class GroceryBox : PickUpObject
         if (game.placeableBox != null)
         {
             Vector3 topPos = new Vector3(game.placeableBox.transform.position.x, game.placeableBox.transform.position.y + 1f, game.placeableBox.transform.position.z);
+            Quaternion topRot = Quaternion.Euler(new Vector3(0, transform.rotation.y, 0));
             rb.isKinematic = false;
             transform.position = topPos;
-            transform.rotation = Quaternion.Euler(Vector3.zero);
+            transform.rotation = topRot;
         }
     }
 

@@ -116,29 +116,38 @@ public class PannelController : MonoBehaviour
 
                         if (currentTattoo != centerTattoo)
                         {
-                            currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+                            pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
+                            FadeInBlur();
+                            if (pannelBG.color.a == BGAlpha)
+                                currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
                             if (!centerTattoo.GetComponent<TattooConnection>().activated)
                             {
                                 centerTattoo.transform.GetChild(0). GetComponent<Image>().color = FadeInColor(centerTattoo.transform.GetChild(0).GetComponent<Image>().color, 1);
-                                Debug.Log("1");
+                                //Debug.Log("1");
                             }
                             else
                             {
                                 centerTattoo.GetComponent<Image>().color = FadeInColor(centerTattoo.GetComponent<Image>().color, 1);
-                                Debug.Log("2");
+                                //Debug.Log("2");
                             }
                         }
                         else
                         {
-                            if (!currentTattoo.GetComponent<TattooConnection>().activated)
+                            pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
+                            FadeInBlur();
+                            if (pannelBG.color.a == BGAlpha)
                             {
-                                currentTattoo.transform.GetChild(0).GetComponent<Image>().color = FadeInColor(currentTattoo.transform.GetChild(0).GetComponent<Image>().color, 1);
-                                Debug.Log("3");
-                            }
-                            else
-                            {
-                                centerTattoo.GetComponent<Image>().color = FadeInColor(centerTattoo.GetComponent<Image>().color, 1);
-                                Debug.Log("4");
+                                if (!currentTattoo.GetComponent<TattooConnection>().activated)
+                                {
+                                    currentTattoo.transform.GetChild(0).GetComponent<Image>().color = FadeInColor(currentTattoo.transform.GetChild(0).GetComponent<Image>().color, 1);
+                                    currentTattoo.GetComponent<TattooConnection>().related = true;
+                                    //Debug.Log("3");
+                                }
+                                else
+                                {
+                                    centerTattoo.GetComponent<Image>().color = FadeInColor(centerTattoo.GetComponent<Image>().color, 1);
+                                    //Debug.Log("4");
+                                }
                             }
                         }
 
@@ -160,17 +169,17 @@ public class PannelController : MonoBehaviour
                             else
                                 fadingColor = false;
                             //Debug.Log(timer);
+                            //if (timer > .5f && timer < 2f)
+                            //{
+                            //    if (parentControl.takeOver)
+                            //        timer = 2f;
+                            //    else
+                            //    {
+                            //        //pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
+                            //        //FadeInBlur();
+                            //    }
+                            //}
                             if (timer > .5f && timer < 2f)
-                            {
-                                if (parentControl.takeOver)
-                                    timer = 2f;
-                                else
-                                {
-                                    pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
-                                    FadeInBlur();
-                                }
-                            }
-                            if (timer > 2f && timer < 3.5f)
                             {
                                 if (firstActivated)
                                 {
@@ -218,7 +227,7 @@ public class PannelController : MonoBehaviour
                                     greyLine.color = FadeInColor(greyLine.color, .5f);
                                 }
                             }
-                            if (firstActivated && timer > 3.5f)
+                            if (firstActivated && timer > 2f)
                             {
                                 foreach (Image img in childImgs)
                                 {
@@ -330,6 +339,7 @@ public class PannelController : MonoBehaviour
                             {
                                 Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
                                 imgChild.color = AlphaBasedOnScale(imgChild.color, 1f);
+                                Debug.Log(img.name);
                             }
                             else
                             {
@@ -426,16 +436,20 @@ public class PannelController : MonoBehaviour
         }
         ReferenceTool.playerMovement.enabled = false;
         CinemachineVirtualCamera currentCam = ReferenceTool.playerBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
-        if (Input.GetMouseButton(0))
+        if (currentCam.GetCinemachineComponent<CinemachinePOV>())
         {
-            currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
-            currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+            if (Input.GetMouseButton(0))
+            {
+                currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+                currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = mouseDragSpeed * .1f;
+            }
+            else
+            {
+                currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
+                currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
+            }
         }
-        else
-        {
-            currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0;
-            currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
-        }
+        GetComponentInParent<GraphicRaycaster>().enabled = true;
     }
 
     public void UnpausePlayer()
@@ -448,9 +462,12 @@ public class PannelController : MonoBehaviour
             if (panel.continueButton != null) panel.continueButton.interactable = true;
         }
         ReferenceTool.playerMovement.enabled = true;
-        currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
-        currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
-
+        if (currentCam.GetCinemachineComponent<CinemachinePOV>())
+        {
+            currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
+            currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
+        }
+        GetComponentInParent<GraphicRaycaster>().enabled = false;
     }
 
     public void DemoCatActivation()

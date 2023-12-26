@@ -80,7 +80,7 @@ public class ConnectionManager : MonoBehaviour
         Vector2 currentPos = tattooConnection.GetComponent<RectTransform>().anchoredPosition;
         referenceList = new List<Vector2>();
         greyRefList = new List<Vector2>();
-        for(int i = 0; i < connectionList.Count; i++)
+        for (int i = 0; i < connectionList.Count; i++)
         {
             if (connectionList[i].GetComponent<TattooConnection>().activated)
                 conditionStorage[i] = true;
@@ -95,7 +95,7 @@ public class ConnectionManager : MonoBehaviour
                 referenceList.Add(positions[i + 1] - direction * avoidRadius);
             }
             //if one is true, grey line
-            else if ((conditionStorage[i] && !conditionStorage[i + 1]) || (!conditionStorage[i] && conditionStorage[i + 1]))
+            else if ((conditionStorage[i] && !conditionStorage[i + 1] && !connectionList[i + 1].GetComponent<TattooConnection>().hidden) || (!conditionStorage[i] && conditionStorage[i + 1] && !connectionList[i].GetComponent<TattooConnection>().hidden))
             {
                 Vector2 direction = (positions[i + 1] - positions[i]).normalized;
                 greyRefList.Add(positions[i] + direction * avoidRadius);
@@ -135,7 +135,7 @@ public class ConnectionManager : MonoBehaviour
                         connectionList.Add(connections[i][j]);
 
                         Vector2 direction = (connections[i][j].anchoredPosition - tattoos[i].anchoredPosition).normalized;
-                        
+
                         positions.Add(tattoos[i].anchoredPosition + direction * avoidRadius);
                         positions.Add(connections[i][j].anchoredPosition - direction * avoidRadius);
                     }

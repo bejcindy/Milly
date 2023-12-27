@@ -42,6 +42,7 @@ public class Xixi : NPCControl
 
     public void XixiAction3()
     {
+        remainInAnim = true;
         noMoveAfterTalk = true;
         noTalkInWalk = false;
         noLookInConvo = false;

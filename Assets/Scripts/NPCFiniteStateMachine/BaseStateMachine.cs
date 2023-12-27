@@ -218,6 +218,11 @@ namespace NPCFSM
             return npcControl.GetSpecialIdleAnim();
         }
 
+        public bool CheckRemainInAnim()
+        {
+            return npcControl.remainInAnim;
+        }
+
         public void SetIdleRotation()
         {
             npcControl.IdleRotate();

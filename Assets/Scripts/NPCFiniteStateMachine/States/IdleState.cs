@@ -11,9 +11,9 @@ public class IdleState : State
         //    machine.ActivateNPC();
         machine.SetIdleRotation();
         machine.ResetAnimTrigger("Move");
-        if(!machine.CheckSpecialIdleAnim())
+        if(!machine.CheckSpecialIdleAnim() && !machine.CheckRemainInAnim())
             machine.SetAnimatorTrigger("Stop");
-        else
+        else if(machine.CheckSpecialIdleAnim() && !machine.CheckRemainInAnim())
         {
             machine.SetSpecialIdleAnim();
         }

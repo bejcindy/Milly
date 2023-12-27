@@ -76,6 +76,7 @@ public class NPCControl : MonoBehaviour
     public bool noMoveAfterTalk;
     public bool noLookInConvo;
     protected bool noTalkStage;
+    public bool remainInAnim;
 
     protected string idleAction;
     [Foldout("Idle")]

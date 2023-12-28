@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
             //    collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, downRay.normal).normalized;
             collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, collision.contacts[0].normal).normalized;
         }
-        if (collision.gameObject.name.Contains("walk_side"))
+        if (collision.gameObject.name.Contains("road_sidebrisk"))
         {
             Maluyazi(collision.contacts[0].normal);
         }

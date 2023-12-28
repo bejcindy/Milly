@@ -20,7 +20,6 @@ public class PannelController : MonoBehaviour
     public RectTransform CanvasRect;
     public Image pannelBG;
     float BGAlpha = .25f;
-    //public Renderer targetObj;
     public RectTransform currentTattoo;
     public float mouseDragSpeed, scrollSizeSpeed;
 
@@ -31,21 +30,20 @@ public class PannelController : MonoBehaviour
     bool lerping;
     float timer;
     bool playerUnpaused;
-    //Renderer previousObj;
     RectTransform previousTattoo;
     public Image centerTattoo;
-
-
+    Image simpleCenterTattoo;
     //[SerializeField] CinemachineVirtualCamera playerCamera;
     //[SerializeField] CinemachineVirtualCamera catCamera;
     bool catActivated;
-
 
     bool clearedCurrent;
     bool fadingColor;
     [SerializeField] Material blurMaterial;
     TextMeshProUGUI[] childTexts;
     public OuterPanelController parentControl;
+    [SerializeField] string transitionStage;
+    Color referenceColor;
 
     private void Awake()
     {
@@ -62,6 +60,10 @@ public class PannelController : MonoBehaviour
         pannelBG.color = new Color(pannelBG.color.r, pannelBG.color.g, pannelBG.color.b, 0);
         clearedCurrent = true;
         blurMaterial.SetFloat("_Alpha", 0);
+        referenceColor = new Color(0, 0, 0, 0);
+        transitionStage = "SetCenterImgPos";
+        //    Debug.Log(centerTattoo.transform.GetChild(0).GetComponent<Image>().color);
+        simpleCenterTattoo = centerTattoo.transform.GetChild(0).GetComponent<Image>();
     }
 
     void Update()
@@ -80,249 +82,165 @@ public class PannelController : MonoBehaviour
                 activatedOnce = true;
             if (!parentControl.takeOver)
             {
-                if (currentTattoo && !gotPos)
+                if (currentTattoo)
                 {
-                    //Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(targetObj.bounds.center);
-                    //Vector2 WorldObject_ScreenPosition = new Vector2(
-                    //((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-                    //((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-
-                    if (pannelBG.color.a == 0)
-                        GetComponent<RectTransform>().anchoredPosition = -currentTattoo.anchoredPosition;
-                    else
-                        StartCoroutine(LerpPosition(-currentTattoo.anchoredPosition, 1f));
-
-                    currentTattoo.GetComponent<TattooConnection>().activated = true;
-                    foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)
+                    switch (transitionStage)
                     {
-                        if (!relate.GetComponent<TattooConnection>().hidden)
-                            relate.GetComponent<TattooConnection>().related = true;
-                    }
+                        case "SetCenterImgPos":
+                            GetComponent<RectTransform>().anchoredPosition = -centerTattoo.GetComponent<RectTransform>().anchoredPosition;
+                            currentTattoo.GetComponent<TattooConnection>().activated = true;
+                            foreach (RectTransform relate in currentTattoo.GetComponent<TattooConnection>().relatedTattoos)
+                            {
+                                if (!relate.GetComponent<TattooConnection>().hidden)
+                                    relate.GetComponent<TattooConnection>().related = true;
+                            }
+                            foreach (RectTransform relate in centerTattoo.GetComponent<TattooConnection>().relatedTattoos)
+                            {
+                                if (!relate.GetComponent<TattooConnection>().hidden)
+                                    relate.GetComponent<TattooConnection>().related = true;
+                            }
+                            //Calculate CenterImg Lines
+                            GetComponent<ConnectionManager>().ActivateLines(centerTattoo.GetComponent<TattooConnection>());
+                            GetComponent<ConnectionManager>().ActivateLines(currentTattoo.GetComponent<TattooConnection>());
+                            transform.localScale = new Vector2(1, 1);
+                            previousTattoo = currentTattoo;
+                            gotPos = true;
+                            noDrag = true;
 
-                    GetComponent<ConnectionManager>().ActivateLines(currentTattoo.GetComponent<TattooConnection>());
-                    transform.localScale = new Vector2(1, 1);
-                    //previousObj = targetObj;
-                    previousTattoo = currentTattoo;
-                    gotPos = true;
-                    noDrag = true;
-                }
-                else
-                {
-                    noDrag = true;
-                    if (currentTattoo)
-                    {
-                        if (currentTattoo != previousTattoo)
-                            gotPos = false;
+                            transitionStage = "FadeInBG";
+                            break;
 
-                        if (currentTattoo != centerTattoo)
-                        {
+                        case "FadeInBG":
                             pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
                             FadeInBlur();
-                            if (pannelBG.color.a == BGAlpha)
-                                currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+                            if (pannelBG.color.a == BGAlpha && blurMaterial.GetFloat("_Alpha") == 1)
+                                transitionStage = "FadeInCenterImg";
+                            break;
+
+                        case "FadeInCenterImg":
+                            //考虑给tattooconnection上单写一个function管centertattoo
                             if (!centerTattoo.GetComponent<TattooConnection>().activated)
                             {
-                                centerTattoo.transform.GetChild(0). GetComponent<Image>().color = FadeInColor(centerTattoo.transform.GetChild(0).GetComponent<Image>().color, 1);
-                                //Debug.Log("1");
+                                simpleCenterTattoo.color = FadeInColor(simpleCenterTattoo.color, 1);
+                                centerTattoo.GetComponent<TattooConnection>().related = true;
+
+                                if (simpleCenterTattoo.color.a == 1)
+                                    transitionStage = "ShowBlackLines";
                             }
                             else
                             {
                                 centerTattoo.GetComponent<Image>().color = FadeInColor(centerTattoo.GetComponent<Image>().color, 1);
-                                //Debug.Log("2");
+
+                                if (centerTattoo.GetComponent<Image>().color.a == 1)
+                                    transitionStage = "ShowBlackLines";
                             }
-                        }
-                        else
-                        {
-                            pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
-                            FadeInBlur();
-                            if (pannelBG.color.a == BGAlpha)
+                            break;
+
+                        case "ShowBlackLines":
+                            blackLine.color = FadeInColor(blackLine.color, 1);
+
+                            if (blackLine.color.a == 1)
                             {
-                                if (!currentTattoo.GetComponent<TattooConnection>().activated)
-                                {
-                                    currentTattoo.transform.GetChild(0).GetComponent<Image>().color = FadeInColor(currentTattoo.transform.GetChild(0).GetComponent<Image>().color, 1);
-                                    currentTattoo.GetComponent<TattooConnection>().related = true;
-                                    //Debug.Log("3");
-                                }
+                                if (currentTattoo.transform != centerTattoo.transform)
+                                    transitionStage = "LerpToCurrentImgPos";
                                 else
-                                {
-                                    centerTattoo.GetComponent<Image>().color = FadeInColor(centerTattoo.GetComponent<Image>().color, 1);
-                                    //Debug.Log("4");
-                                }
+                                    transitionStage = "ShowGreyLines";
                             }
-                        }
+                            break;
 
-                        if (currentTattoo.GetComponentInChildren<TextMeshProUGUI>())
-                        {
-                            currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color = FadeOutColor(currentTattoo.GetComponentInChildren<TextMeshProUGUI>().color);
-                        }
-                        else
-                        {
-                            currentTattoo.GetChild(0).GetComponent<Image>().color = FadeOutColor(currentTattoo.GetChild(0).GetComponent<Image>().color);
-                        }
-
-                        if (currentTattoo.GetComponent<Image>().color.a < 1)
-                            fadingColor = true;
-                        if (currentTattoo.GetComponent<Image>().color.a == 1)
-                        {
-                            if (greyLine.color.a != .5f)
-                                timer += Time.deltaTime;
-                            else
-                                fadingColor = false;
-                            //Debug.Log(timer);
-                            //if (timer > .5f && timer < 2f)
-                            //{
-                            //    if (parentControl.takeOver)
-                            //        timer = 2f;
-                            //    else
-                            //    {
-                            //        //pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
-                            //        //FadeInBlur();
-                            //    }
-                            //}
-                            if (timer > .5f && timer < 2f)
+                        case "LerpToCurrentImgPos":
+                            if (!lerping)
                             {
-                                if (firstActivated)
-                                {
-                                    foreach (Image img in childImgs)
-                                    {
-                                        if (img.GetComponent<TattooConnection>())
-                                        {
-                                            if (centerTattoo.GetComponent<Image>() == img)
-                                            {
-                                                if (img.GetComponent<TattooConnection>().activated)
-                                                    img.color = FadeInColor(img.color, 1);
-                                                else
-                                                    centerTattoo.GetComponentInChildren<Image>().color = FadeInColor(centerTattoo.GetComponentInChildren<Image>().color, 1);
-                                            }
-                                            else if (img.GetComponent<TattooConnection>().activated)
-                                            {
-                                                img.color = FadeInColor(img.color, 1);
-                                            }
-                                        }
-                                    }
-                                    blackLine.color = FadeInColor(blackLine.color, 1);
-                                }
+                                if (GetComponent<RectTransform>().anchoredPosition != -currentTattoo.anchoredPosition)
+                                    StartCoroutine(LerpPosition(-currentTattoo.anchoredPosition, 1f));
                                 else
-                                {
-                                    foreach (Image img in childImgs)
-                                    {
-                                        if (img.GetComponent<TattooConnection>())
-                                        {
-                                            if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
-                                            {
-                                                if (!img.GetComponentInChildren<TextMeshProUGUI>())
-                                                {
-                                                    Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
-                                                    imgChild.color = FadeInColor(imgChild.color, 1f);
-                                                }
-                                                else
-                                                {
-                                                    TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
-                                                    tmp.color = FadeInColor(tmp.color, 1f);
-
-                                                }
-                                            }
-                                        }
-                                    }
-                                    greyLine.color = FadeInColor(greyLine.color, .5f);
-                                }
+                                    transitionStage = "FadeInCurrentImg";
                             }
-                            if (firstActivated && timer > 2f)
+                            break;
+
+                        case "FadeInCurrentImg":
+                            currentTattoo.GetComponent<Image>().color = FadeInColor(currentTattoo.GetComponent<Image>().color, 1);
+                            if (currentTattoo.GetComponent<Image>().color.a == 1)
+                                transitionStage = "ShowGreyLines";
+                            break;
+
+                        case "ShowGreyLines":
+                            greyLine.color = FadeInColor(greyLine.color, .5f);
+                            if (greyLine.color.a == .5f)
                             {
-                                foreach (Image img in childImgs)
+                                transitionStage = "ShowRelatedImgs";
+                            }
+                            break;
+
+                        case "ShowRelatedImgs":
+                            foreach (Image img in childImgs)
+                            {
+                                if (img.GetComponent<TattooConnection>())
                                 {
-                                    if (img.GetComponent<TattooConnection>())
+                                    if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
                                     {
-                                        if (!img.GetComponent<TattooConnection>().activated && img.GetComponent<TattooConnection>().related)
+                                        if (!img.GetComponentInChildren<TextMeshProUGUI>())
                                         {
-                                            if (!img.GetComponentInChildren<TextMeshProUGUI>())
-                                            {
-                                                Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
-                                                imgChild.color = FadeInColor(imgChild.color, 1f);
-                                            }
-                                            else
-                                            {
-                                                TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
-                                                tmp.color = FadeInColor(tmp.color, 1f);
-                                            }
+                                            Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                                            imgChild.color = FadeInColor(imgChild.color, 1f);
+                                        }
+                                        else
+                                        {
+                                            TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                                            tmp.color = FadeInColor(tmp.color, 1f);
                                         }
                                     }
                                 }
-                                greyLine.color = FadeInColor(greyLine.color, .5f);
                             }
+                            referenceColor = FadeInColor(referenceColor, 1f);
+                            if (referenceColor.a == 1)
+                                transitionStage = "ResetValues";
+                            break;
 
-                        }
-                    }
-                    if (!currentTattoo)
-                    {
-
-                        foreach (Image img in childImgs)
-                        {
-                            if (img.GetComponent<TattooConnection>())
-                            {
-                                if (img.GetComponent<TattooConnection>().activated)
-                                    img.color = FadeInColor(img.color, 1);
-                                else if (img.GetComponent<TattooConnection>().related)
-                                {
-                                    if (!img.GetComponentInChildren<TextMeshProUGUI>())
-                                    {
-                                        Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
-                                        imgChild.color = FadeInColor(imgChild.color, 1f);
-                                    }
-                                    else
-                                    {
-                                        TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
-                                        tmp.color = FadeInColor(tmp.color, 1f);
-                                    }
-                                }
-                            }
-                        }
-
-                        blackLine.color = FadeInColor(blackLine.color, 1);
-                        greyLine.color = FadeInColor(greyLine.color, .5f);
-                        pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
-                        FadeInBlur();
-
-                        if (greyLine.color.a < .5f)
-                            fadingColor = true;
-                        else
+                        case "ResetValues":
+                            noDrag = false;
+                            currentTattoo = null;
+                            referenceColor = new Color(0, 0, 0, 0);
+                            //targetObj = null;
+                            firstActivated = true;
                             fadingColor = false;
-
-                        //else
-                        //{
-                        //    foreach (Image img in childImgs)
-                        //    {
-                        //        if (img.GetComponent<TattooConnection>())
-                        //        {
-                        //            if (img.GetComponent<TattooConnection>().activated)
-                        //                img.color = AlphaBasedOnScale(img.color, 1);
-                        //            else if (img.GetComponent<TattooConnection>().related)
-                        //            {
-                        //                if (!img.GetComponentInChildren<TextMeshProUGUI>())
-                        //                {
-                        //                    Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
-                        //                    imgChild.color = AlphaBasedOnScale(imgChild.color, 1f);
-                        //                }
-                        //                else
-                        //                {
-                        //                    TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
-                        //                    tmp.color = AlphaBasedOnScale(tmp.color, 1f);
-                        //                }
-                        //            }
-                        //        }
-                        //    }
-                        //    blackLine.color = AlphaBasedOnScale(blackLine.color, 1);
-                        //    greyLine.color = AlphaBasedOnScale(greyLine.color, .5f);                       
-                        //}
+                            break;
                     }
                 }
-                if (greyLine.color.a == .5f && !lerping)
+                else
                 {
-                    noDrag = false;
-                    currentTattoo = null;
-                    //targetObj = null;
-                    firstActivated = true;
-                    fadingColor = false;
+                    foreach (Image img in childImgs)
+                    {
+                        if (img.GetComponent<TattooConnection>())
+                        {
+                            if (img.GetComponent<TattooConnection>().activated)
+                                img.color = FadeInColor(img.color, 1);
+                            else if (img.GetComponent<TattooConnection>().related)
+                            {
+                                if (!img.GetComponentInChildren<TextMeshProUGUI>())
+                                {
+                                    Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
+                                    imgChild.color = FadeInColor(imgChild.color, 1f);
+                                }
+                                else
+                                {
+                                    TextMeshProUGUI tmp = img.GetComponentInChildren<TextMeshProUGUI>();
+                                    tmp.color = FadeInColor(tmp.color, 1f);
+                                }
+                            }
+                        }
+                    }
+
+                    blackLine.color = FadeInColor(blackLine.color, 1);
+                    greyLine.color = FadeInColor(greyLine.color, .5f);
+                    pannelBG.color = FadeInColor(pannelBG.color, BGAlpha);
+                    FadeInBlur();
+
+                    if (greyLine.color.a < .5f)
+                        fadingColor = true;
+                    else
+                        fadingColor = false;
+
                 }
             }
             else
@@ -339,7 +257,7 @@ public class PannelController : MonoBehaviour
                             {
                                 Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
                                 imgChild.color = AlphaBasedOnScale(imgChild.color, 1f);
-                                Debug.Log(img.name);
+                                //Debug.Log(img.name);
                             }
                             else
                             {
@@ -352,7 +270,6 @@ public class PannelController : MonoBehaviour
                 blackLine.color = AlphaBasedOnScale(blackLine.color, 1);
                 greyLine.color = AlphaBasedOnScale(greyLine.color, .5f);
             }
-
         }
         else
         {
@@ -360,6 +277,7 @@ public class PannelController : MonoBehaviour
                 UnpausePlayer();
             gotPos = false;
             noDrag = true;
+            transitionStage = "SetCenterImgPos";
             timer = 0;
             DataHolder.HideHint(DataHolder.hints.tattooViewHint);
             foreach (Image img in childImgs)
@@ -389,7 +307,6 @@ public class PannelController : MonoBehaviour
                 clearedCurrent = true;
             }
         }
-
         if (!noDrag)
         {
             if (Input.GetMouseButton(0))
@@ -409,7 +326,6 @@ public class PannelController : MonoBehaviour
                     parentControl.takeOver = false;
             }
         }
-
         if (OuterPanelController.mechanicActivated)
         {
             if (Input.GetKeyDown(KeyCode.Tab) && !fadingColor)

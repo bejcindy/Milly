@@ -12,9 +12,11 @@ public class ConnectionManager : MonoBehaviour
     public List<Vector2> positions;
     public LineRendererManager LRM;
     bool[] conditionStorage;
+    RectTransform centerTattoo;
 
     private void Awake()
     {
+        centerTattoo = GetComponent<PannelController>().centerTattoo.GetComponent<RectTransform>();
         tattoos = new List<RectTransform>();
         connections = new List<List<RectTransform>>();
         foreach (RectTransform child in transform)
@@ -101,7 +103,13 @@ public class ConnectionManager : MonoBehaviour
                 greyRefList.Add(positions[i] + direction * avoidRadius);
                 greyRefList.Add(positions[i + 1] - direction * avoidRadius);
             }
-
+            //if one is not-activated center tattoo, grey line
+            else if (connectionList[i] == centerTattoo || connectionList[i + 1] == centerTattoo)
+            {
+                Vector2 direction = (positions[i + 1] - positions[i]).normalized;
+                greyRefList.Add(positions[i] + direction * avoidRadius);
+                greyRefList.Add(positions[i + 1] - direction * avoidRadius);
+            }
         }
         LRM.pts = referenceList;
         LRM.greyPts = greyRefList;

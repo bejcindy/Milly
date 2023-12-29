@@ -41,7 +41,7 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("Tattoo")]
     [SerializeField] protected bool tatOn;
-    [SerializeField] protected TattooConnection myTat;
+    [SerializeField] protected CenterTattoo myTat;
 
 
     [Foldout("CharRefs")]
@@ -582,11 +582,19 @@ public class NPCControl : MonoBehaviour
         if (stopIdleAfterConvo)
             StopIdle();
 
-        if (transformed)
+        if (npcActivated)
         {
-            if (myTat && !myTat.activated)
+            if(myTat && !myTat.activated)
             {
                 myTat.activated = true;
+            }
+        }
+
+        if (transformed)
+        {
+            if (myTat && !myTat.transformed)
+            {
+                myTat.transformed = true;
             }
         }
     }

@@ -59,6 +59,9 @@ public class DataHolder : MonoBehaviour
     public static bool canMakeSound;
     float beginningAudioCoolDownTimer;
 
+    bool tatPanelOn;
+    public Animator tatCanvasAnim;
+
     void Start()
     {
         //reset public static variables
@@ -116,6 +119,14 @@ public class DataHolder : MonoBehaviour
                 hintPanels[i].SetActive(true);
             }
         }
+
+        //if (Input.GetKeyDown(KeyCode.Tab))
+        //{
+        //    if (!tatPanelOn)
+        //        TurnOnTattooPanel();
+        //    else
+        //        TurnOffTattooPanel();
+        //}
     }
 
     #region Focusing and Unfocusing
@@ -244,5 +255,17 @@ public class DataHolder : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Tattoo Panel
+    //public void TurnOnTattooPanel()
+    //{
+    //    tatCanvasAnim.Play("")
+    //}
+
+    //public void TurnOffTattooPanel()
+    //{
+
+    //}
     #endregion
 }

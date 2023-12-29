@@ -46,7 +46,7 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected float fadeInterval;
 
     [Foldout("Tattoo")]
-    [SerializeField] protected TattooConnection myTat;
+    [SerializeField] protected Tattoo myTat;
 
     [Foldout("Effects")]
     [SerializeField] protected GameObject specialEffect;

@@ -12,7 +12,7 @@ public class BuildingGroupController : MonoBehaviour
     public BuildingGroupController bgc;
     public BuildingGroupController targetBgc;
 
-    public TattooConnection myTat;
+    public Tattoo myTat;
 
     void Start()
     {

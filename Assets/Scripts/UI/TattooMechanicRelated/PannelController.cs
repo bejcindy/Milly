@@ -73,7 +73,7 @@ public class PannelController : MonoBehaviour
             PausePlayer();
             //PixelCrushers.UIPanel.monitorSelection = false; // Don't allow dialogue UI to steal back input focus.
             //PixelCrushers.DialogueSystem.DialogueManager.Pause(); // Stop DS timers (e.g., sequencer commands).
-            parentControl.currentPanel = this;
+            //parentControl.currentPanel = this;
             clearedCurrent = false;
             DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
             if (!OuterPanelController.mechanicActivated)

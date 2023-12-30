@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OuterPanelButton : MonoBehaviour
 {
-    public PannelController correspondingPanel;
+    public TattooPanel correspondingPanel;
 
     OuterPanelController parentControl;
 
@@ -18,5 +18,13 @@ public class OuterPanelButton : MonoBehaviour
     {
         parentControl.zoomIn = true;
         parentControl.currentPanel = correspondingPanel;
+    }
+    public void NoDragPanel()
+    {
+        parentControl.noDrag = true;
+    }
+    public void CanDragPanel()
+    {
+        parentControl.noDrag = false;
     }
 }

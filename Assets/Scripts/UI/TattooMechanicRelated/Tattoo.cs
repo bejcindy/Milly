@@ -49,7 +49,7 @@ public class Tattoo : MonoBehaviour
         if (activated && !firstActivated)
         {
             myPanel.panelOn = true;
-
+            myPanel.enabled = true;
         }
     }
 
@@ -58,7 +58,12 @@ public class Tattoo : MonoBehaviour
         if(isHinted && !isShown)
         {
             if (hintedVersion.color.a < 1)
+            {
                 hintedVersion.color = FadeInColor(hintedVersion.color, 1);
+                myPanel.noDrag = true;
+            }
+            else
+                myPanel.noDrag = false;
         }
         else if(isShown)
         {

@@ -75,10 +75,15 @@ public class CenterTattoo : MonoBehaviour
             else
             {
                 if (fullImage.color.a < 1)
+                {
                     fullImage.color = Tattoo.FadeInColor(fullImage.color, 1);
-
+                    myPanel.noDrag = true;
+                }
                 else
+                {
+                    myPanel.noDrag = false;
                     this.enabled = false;
+                }
             }
         }
     }

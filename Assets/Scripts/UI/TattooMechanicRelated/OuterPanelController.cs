@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 using UnityEngine.UI;
 
 public class OuterPanelController : MonoBehaviour
@@ -10,255 +11,133 @@ public class OuterPanelController : MonoBehaviour
     public static bool mechanicActivated;
     public bool takeOver;
     public bool zoomIn;
-    public PannelController currentPanel;
+    public TattooPanel currentPanel;
     [Header("Corresponding")]
-    public PannelController[] panels;
+    //public PannelController[] panels;
+    public TattooPanel[] panels;
     public RectTransform[] imgRects;
-    public Image panelBG;
-    [SerializeField] Material blurMaterial;
-    Image[] childImgs;
-    bool resetChild;
-    public bool exitPanel,enterPanel;
-    bool fadingColor;
+
+    public bool exitPanel, enterPanel;
+
     bool playerUnpaused;
     float mouseDragSpeed = 70f;
-    float fadeSpeed = 1;
-    float BGAlpha = .25f;
-    bool tookOver;
+
+    CanvasGroup canvasGroup;
+    Animator fade;
+    public GameObject blurCanvas;
+    public bool noDrag;
+
     // Start is called before the first frame update
     void Awake()
     {
-        foreach (PannelController panel in panels)
-            panel.parentControl = this;
-        childImgs = GetComponentsInChildren<Image>();
-        foreach (Image img in childImgs)
-            img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
+        foreach (TattooPanel panel in panels)
+            panel.outerPanel = this;
+
         mechanicActivated = false;
         GetComponentInParent<GraphicRaycaster>().enabled = false;
+        canvasGroup = GetComponent<CanvasGroup>();
         //exitPanel = true;
+        fade = GetComponentInParent<Animator>();
+        canvasGroup.alpha = 0;
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentPanel)
+        if (!exitPanel)
         {
-            foreach(PannelController pc in panels)
-            {
-                if (pc != currentPanel && pc.enabled)
-                    pc.enabled = false;
-            }
-        }
-        if (takeOver && currentPanel && !zoomIn)
-        {
-            //tookOver = true;
             playerUnpaused = false;
-            //when zoom out child panel & fade in this panel
-            //foreach (Image img in childImgs)
-            //    img.color = AlphaBasedOnScale(img.color, currentPanel.transform, 1);
-            for (int i = 0; i < panels.Length; i++)
-            {
-                if (panels[i].activatedOnce)
-                {
-                    imgRects[i].GetComponent<Image>().color = AlphaBasedOnScale(imgRects[i].GetComponent<Image>().color, currentPanel.transform, 1);
-                    imgRects[i].GetComponent<OuterPanelButton>().enabled = true;
-                }
-                else
-                    imgRects[i].GetComponent<OuterPanelButton>().enabled = false;
-            }
-            RectTransform matchingImg = imgRects[System.Array.IndexOf(panels, currentPanel)];
-            if (currentPanel.enabled)
-                GetComponent<RectTransform>().anchoredPosition = currentPanel.GetComponent<RectTransform>().anchoredPosition - matchingImg.anchoredPosition;
+
             ReferenceTool.pauseMenu.inTattoo = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             GetComponentInParent<GraphicRaycaster>().enabled = true;
-            if (currentPanel.transform.localScale.x == .2f)
+            if (!zoomIn)
             {
-                currentPanel.enabled = false;
-                currentPanel.activated = false;
-                currentPanel = null;
-                exitPanel = false;
-            }
-            resetChild = false;
-        }
-        else if (takeOver && currentPanel && zoomIn)
-        {
-            tookOver = true;
-            playerUnpaused = false;
-            if (!resetChild)
-            {
-                RectTransform matchingImg = imgRects[System.Array.IndexOf(panels, currentPanel)];
-                currentPanel.transform.localScale = new Vector2(.2f, .2f);
-                currentPanel.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition + matchingImg.anchoredPosition;
-                currentPanel.enabled = true;
-                currentPanel.activated = true;
-                currentPanel.noDrag = true;
-                resetChild = true;
-                ReferenceTool.pauseMenu.inTattoo = false;
-                GetComponentInParent<GraphicRaycaster>().enabled = false;
-            }
-            //foreach (Image img in childImgs)
-            //    img.color = AlphaBasedOnScale(img.color, currentPanel.transform, 1);
-            for (int i = 0; i < panels.Length; i++)
-            {
-                if (panels[i].activatedOnce)
+                //when zoom out child panel & fade in this panel
+                canvasGroup.alpha = AlphaBasedOnScale(currentPanel.transform, 1);
+                //Debug.Log(AlphaBasedOnScale(currentPanel.transform, 1));
+                for (int i = 0; i < panels.Length; i++)
                 {
-                    imgRects[i].GetComponent<Image>().color = AlphaBasedOnScale(imgRects[i].GetComponent<Image>().color, currentPanel.transform, 1);
-                    imgRects[i].GetComponent<OuterPanelButton>().enabled = true;
+                    if (panels[i].activatedOnce)
+                        imgRects[i].gameObject.SetActive(true);
+                    else
+                        imgRects[i].gameObject.SetActive(false);
                 }
-                else
-                    imgRects[i].GetComponent<OuterPanelButton>().enabled = false;
+                RectTransform matchingImg = imgRects[System.Array.IndexOf(panels, currentPanel)];
+                if (currentPanel.enabled)
+                    GetComponent<RectTransform>().anchoredPosition = currentPanel.GetComponent<RectTransform>().anchoredPosition - matchingImg.anchoredPosition;
+                if (currentPanel.transform.localScale.x == .2f)
+                {
+                    currentPanel.enabled = false;
+                    currentPanel.GetComponent<CanvasGroup>().alpha = 0;
+                }
+                else if (currentPanel.transform.localScale.x > .5f)
+                {
+                    exitPanel = true;
+                }
             }
-            currentPanel.transform.localScale = new Vector2(Mathf.Clamp(transform.localScale.x + .1f * Time.deltaTime, .2f, 1f), Mathf.Clamp(transform.localScale.y + .1f * Time.deltaTime, .2f, 1f));
-            if (currentPanel.transform.localScale.x == 1f)
+            else
             {
-                currentPanel.noDrag = false;
-                zoomIn = false;
-                takeOver = false;
-                exitPanel = false;
-            }
-        }
-        else if (exitPanel)
-        {
-            if (!playerUnpaused)
-                UnpausePlayer();
-            foreach (Image img in childImgs)
-            {
-                img.color = FadeOutColor(img.color);
-                if (img.GetComponent<OuterPanelButton>())
-                    img.GetComponent<OuterPanelButton>().enabled = false;
-            }
-            panelBG.color = FadeOutColor(panelBG.color);
-            FadeOutBlur();
-            ReferenceTool.pauseMenu.inTattoo = false;
-            GetComponentInParent<GraphicRaycaster>().enabled = false;
-            DataHolder.HideHint(DataHolder.hints.tattooViewHint);
-            if (AllImgFadedOut())
-                exitPanel = false;
-        }
-        else if(!takeOver)
-        {
-            foreach (Image img in childImgs)
-            {
-                img.color = FadeOutColor(img.color);
-                if (img.GetComponent<OuterPanelButton>())
-                    img.GetComponent<OuterPanelButton>().enabled = false;
-            }
-            ReferenceTool.pauseMenu.inTattoo = false;
-            //GetComponentInParent<GraphicRaycaster>().enabled = false;
-        }
-
-        
-        //else
-        //{
-        //    foreach (Image img in childImgs)
-        //    {
-        //        img.color = FadeOutColor(img.color);
-        //        if (img.GetComponent<OuterPanelButton>())
-        //            img.GetComponent<OuterPanelButton>().enabled = false;
-        //    }
-        //    ReferenceTool.pauseMenu.inTattoo = false;
-        //    //GetComponentInParent<GraphicRaycaster>().enabled = false;
-        //}
-        if (takeOver)
-        {
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                if(!exitPanel)
+                //clicked on outer panel icon
+                canvasGroup.alpha = FadeOut(canvasGroup.alpha);
+                currentPanel.FocusOnTattoo(currentPanel.centerTat.GetComponent<RectTransform>());
+                currentPanel.enabled = true;
+                currentPanel.panelOn = true;
+                if (canvasGroup.alpha == 0)
                     exitPanel = true;
             }
-            
-            if (Input.GetMouseButton(0))
-            {
-                Vector2 dragAmount = new Vector2(Input.GetAxis("Mouse X") * 70f, Input.GetAxis("Mouse Y") * 70f);
-                GetComponent<RectTransform>().anchoredPosition += dragAmount;
-            }
-
         }
-        //if (mechanicActivated)
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Tab))
-        //    {
-        //        if (!exitPanel)
-        //        {
-        //            exitPanel = true;
-        //            enterPanel = false;
-        //        }
-        //        else if (!ReferenceTool.playerHolding.inDialogue)
-        //        {
-        //            enterPanel = true;
-        //            exitPanel = false;
-        //        }
-        //    }
-        //}
-    }
-    bool AllImgFadedOut()
-    {
-        foreach(Image img in childImgs)
+        else
         {
-            if (img.color.a != 0)
-                return false;
+            ReferenceTool.pauseMenu.inTattoo = false;
+            GetComponentInParent<GraphicRaycaster>().enabled = false;
+            zoomIn = false;
+            
+            exitPanel = false;
+            gameObject.SetActive(false);
         }
-        return true;
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            exitPanel = true;
+            currentPanel.panelOn = false;
+            currentPanel.enabled = true;
+            fade.Play("TattooPanelClose");
+            if (!playerUnpaused)
+                UnpausePlayer();
+        }
+
+        if (Input.GetMouseButton(0) && !noDrag)
+        {
+            Vector2 dragAmount = new Vector2(Input.GetAxis("Mouse X") * 70f, Input.GetAxis("Mouse Y") * 70f);
+            GetComponent<RectTransform>().anchoredPosition += dragAmount;
+        }
+
     }
 
-    Color AlphaBasedOnScale(Color c, Transform t, float maxA)
+    float AlphaBasedOnScale(Transform t, float maxA)
     {
         float alpha = Mathf.Lerp(0, maxA, Mathf.InverseLerp(.5f, .2f, t.localScale.x));
-        c = new Color(c.r, c.g, c.b, alpha);
-        return c;
+        return alpha;
     }
-    Color FadeInColor(Color c, float targetAlpha)
-    {
 
-        if (c.a < targetAlpha)
-            c += new Color(0, 0, 0, fadeSpeed) * Time.deltaTime;
+
+    float FadeOut(float x)
+    {
+        if (x > 0)
+            x -= 1f * Time.deltaTime;
         else
-            c = new Color(c.r, c.g, c.b, targetAlpha);
-        return c;
+            x = 0;
+        return x;
     }
 
-    Color FadeOutColor(Color c)
-    {
-
-        if (c.a > 0)
-            c -= new Color(0, 0, 0, 1f) * Time.deltaTime;
-        else
-            c = new Color(c.r, c.g, c.b, 0);
-        return c;
-    }
-    void FadeOutBlur()
-    {
-        if (blurMaterial.GetFloat("_Alpha") != 0)
-        {
-            float timeElapsed = 0;
-            while (timeElapsed < 2f)
-            {
-                float a = Mathf.Lerp(1, 0, timeElapsed / 1.5f);
-                blurMaterial.SetFloat("_Alpha", a);
-                timeElapsed += Time.deltaTime;
-            }
-        }
-        blurMaterial.SetFloat("_Alpha", 0);
-    }
-    void FadeInBlur()
-    {
-        if (blurMaterial.GetFloat("_Alpha") != 1)
-        {
-            float timeElapsed = 0;
-            while (timeElapsed < 2f)
-            {
-                float a = Mathf.Lerp(0, 1, timeElapsed / 1.5f);
-                blurMaterial.SetFloat("_Alpha", a);
-                timeElapsed += Time.deltaTime;
-            }
-        }
-        blurMaterial.SetFloat("_Alpha", 1);
-    }
     public void PausePlayer()
     {
         playerUnpaused = false;
+        DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
+        ReferenceTool.playerLeftHand.bypassThrow = true;
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
             if (panel.continueButton != null) panel.continueButton.interactable = false;
@@ -284,6 +163,8 @@ public class OuterPanelController : MonoBehaviour
     public void UnpausePlayer()
     {
         playerUnpaused = true;
+        DataHolder.HideHint(DataHolder.hints.tattooViewHint);
+        ReferenceTool.playerLeftHand.bypassThrow = false;
         CinemachineVirtualCamera currentCam = ReferenceTool.playerBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
 
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)

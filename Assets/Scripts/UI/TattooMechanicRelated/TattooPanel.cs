@@ -43,6 +43,7 @@ public class TattooPanel : MonoBehaviour
     {
         if (panelOn)
         {
+            OuterPanelController.mechanicActivated = true;
             PausePlayer();
             activatedOnce = true;
             if (outerPanel.currentPanel != this)
@@ -92,7 +93,7 @@ public class TattooPanel : MonoBehaviour
                 }
             }
         }
-        else
+        else if(OuterPanelController.mechanicActivated)
         {
             if (!playerUnpaused)
                 UnpausePlayer();

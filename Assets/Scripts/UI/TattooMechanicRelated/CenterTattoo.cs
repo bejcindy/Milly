@@ -5,7 +5,7 @@ using VInspector;
 using UnityEngine.UI;
 public class CenterTattoo : MonoBehaviour
 {
-    TattooPanel myPanel;
+    public TattooPanel myPanel;
     Image lineImage;
     Image fullImage;
     bool firstActivated;

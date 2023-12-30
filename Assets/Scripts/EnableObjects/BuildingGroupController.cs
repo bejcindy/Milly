@@ -30,6 +30,8 @@ public class BuildingGroupController : MonoBehaviour
             {
                 if (myTat)
                 {
+                    myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
+                    myTat.myPanel.mainTattooMenu.showPanel = true;
                     myTat.activated = true;
                 }
                 groupColorVal = 0;

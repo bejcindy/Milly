@@ -250,6 +250,8 @@ public class LivableObject : MonoBehaviour
 
     void TurnOnTat()
     {
+        myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
+        myTat.myPanel.mainTattooMenu.showPanel = true;
         myTat.activated = true;
     }
 

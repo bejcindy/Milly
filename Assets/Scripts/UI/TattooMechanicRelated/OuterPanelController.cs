@@ -30,8 +30,8 @@ public class OuterPanelController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        foreach (TattooPanel panel in panels)
-            panel.outerPanel = this;
+        //foreach (TattooPanel panel in panels)
+        //    panel.characterPanel = this;
 
         mechanicActivated = false;
         GetComponentInParent<GraphicRaycaster>().enabled = false;

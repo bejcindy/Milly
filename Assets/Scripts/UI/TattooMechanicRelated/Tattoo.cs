@@ -20,7 +20,8 @@ public class Tattoo : MonoBehaviour
     public RectTransform tatTransform;
     public static float fadeSpeed;
 
-    TattooPanel myPanel;
+    public TattooPanel myPanel;
+    MainTattooMenu tatMenu;
     CenterTattoo centerTat;
     TextMeshProUGUI hintedVersion;
     Image tatImage;
@@ -40,6 +41,7 @@ public class Tattoo : MonoBehaviour
         centerTat = myPanel.centerTat;
         tatImage.color = new Color(0, 0, 0, 0);
         hintedVersion.color = new Color(0, 0, 0, 0);
+        tatMenu = myPanel.mainTattooMenu;
     }
 
     // Update is called once per frame
@@ -49,7 +51,7 @@ public class Tattoo : MonoBehaviour
         if (activated && !firstActivated)
         {
             myPanel.panelOn = true;
-            myPanel.enabled = true;
+
         }
     }
 

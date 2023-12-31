@@ -52,7 +52,7 @@ public class CenterTattoo : MonoBehaviour
             }
         }
 
-        if (activated)
+        if (activated && !transformed)
         {
             if (!firstActivated)
             {
@@ -70,6 +70,8 @@ public class CenterTattoo : MonoBehaviour
 
         if (transformed)
         {
+            forceActivate = false;
+            activated = false;
             if (lineImage.color.a > 0)
                 lineImage.color = Tattoo.FadeOutColor(lineImage.color);
             else

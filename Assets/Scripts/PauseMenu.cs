@@ -52,7 +52,7 @@ public class PauseMenu : MonoBehaviour
             PixelCrushers.UIButtonKeyTrigger.monitorInput = true; // Re-enable hotkeys.
             PixelCrushers.DialogueSystem.DialogueManager.Unpause(); // Resume DS timers (e.g., sequencer commands).
 
-            if (!playerHolding.positionFixedWithMouse &&!inTattoo)
+            if (!playerHolding.positionFixedWithMouse &&!MainTattooMenu.tatMenuOn)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;

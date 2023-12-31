@@ -191,7 +191,7 @@ public class NPCControl : MonoBehaviour
         //}
         if (interactable)
         {
-            if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk && !playerHolding.inDialogue)
+            if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk && !playerHolding.inDialogue && !MainTattooMenu.tatMenuOn)
             {
                 CheckTriggerConversation();
             }
@@ -582,20 +582,28 @@ public class NPCControl : MonoBehaviour
         if (stopIdleAfterConvo)
             StopIdle();
 
-        if (npcActivated)
+        if (myTat && !myTat.activated)
         {
-            if(myTat && !myTat.activated)
-            {
-                myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
-                myTat.myPanel.mainTattooMenu.showPanel = true;
-                myTat.activated = true;
-            }
+            myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
+            myTat.myPanel.mainTattooMenu.showPanel = true;
+            myTat.activated = true;
         }
+        //if (npcActivated)
+        //{
+        //    if(myTat && !myTat.activated)
+        //    {
+        //        myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
+        //        myTat.myPanel.mainTattooMenu.showPanel = true;
+        //        myTat.activated = true;
+        //    }
+        //}
 
         if (transformed)
         {
             if (myTat && !myTat.transformed)
             {
+                myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
+                myTat.myPanel.mainTattooMenu.showPanel = true;
                 myTat.transformed = true;
             }
         }

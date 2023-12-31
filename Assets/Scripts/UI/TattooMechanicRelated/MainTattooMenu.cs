@@ -18,6 +18,11 @@ public class MainTattooMenu : MonoBehaviour
 
     bool playAnim;
     bool firstActivated;
+
+    FMOD.Studio.EventInstance snapshot;
+    float I = 0;
+    float fadeInterval = 10f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +34,7 @@ public class MainTattooMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (showPanel)
         {
             firstActivated = true;
@@ -36,6 +42,9 @@ public class MainTattooMenu : MonoBehaviour
             {
                 menuFade.SetTrigger("FadeIn");
                 RuntimeManager.PlayOneShot(panelOpenSound);
+                snapshot = RuntimeManager.CreateInstance("snapshot:/EnableObject");                
+                snapshot.start();                
+                StartCoroutine(FadeInFilter());                
                 playAnim = false;
             }
             PausePlayer();
@@ -50,6 +59,7 @@ public class MainTattooMenu : MonoBehaviour
                 menuFade.SetTrigger("FadeOut");
                 UnpausePlayer();
                 showPanel = false;
+                StartCoroutine(FadeOutFilter());                
                 playAnim = true;
             }
             else
@@ -134,5 +144,33 @@ public class MainTattooMenu : MonoBehaviour
             currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
         }
         GetComponentInParent<GraphicRaycaster>().enabled = false;
+    }
+
+    IEnumerator FadeOutFilter()
+    {
+        while(I > 0)
+        {
+            I -= 0.1f * fadeInterval * Time.deltaTime;
+            snapshot.setParameterByName("EnableFilterIntensity", I);
+            yield return null;
+        }
+
+        I = 0;
+        snapshot.setParameterByName("EnableFilterIntensity", I);
+        snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        snapshot.release();
+        yield break;        
+    }
+
+    IEnumerator FadeInFilter()
+    {
+        while (I <1)
+        {
+            I += 0.1f * fadeInterval * Time.deltaTime;
+            snapshot.setParameterByName("EnableFilterIntensity", I);
+            yield return null;
+        }
+        I = 1;
+        yield break;        
     }
 }

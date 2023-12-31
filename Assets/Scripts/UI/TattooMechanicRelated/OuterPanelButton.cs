@@ -19,10 +19,10 @@ public class OuterPanelButton : MonoBehaviour
     }
     public void NoDragPanel()
     {
-        //parentControl.noDrag = true;
+        parentControl.noDrag = true;
     }
     public void CanDragPanel()
     {
-        //parentControl.noDrag = false;
+        parentControl.noDrag = false;
     }
 }

@@ -56,7 +56,7 @@ public class LookingObject : LivableObject
             }
             if (!designatedSpot)
             {
-                if (interactable)
+                if (interactable && !MainTattooMenu.tatMenuOn)
                 {
                     playerHolding.AddLookable(gameObject);
                     if (selected)

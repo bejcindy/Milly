@@ -62,7 +62,7 @@ public class Door : LivableObject
             {
                 playerLeftHand.enabled = false;
             }
-            if (!playerHolding.atTable)
+            if (!playerHolding.atTable && !MainTattooMenu.tatMenuOn)
             {
                 DoorControl();
             }

@@ -8,7 +8,10 @@ public class CharacterPanel : TattooPanel
     GraphicRaycaster graphRay;
     public Transform currentPanel;
 
+
     bool replacePanel;
+    bool changingPanel;
+    TattooPanel changeToPanel;
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -24,7 +27,8 @@ public class CharacterPanel : TattooPanel
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         GetComponentInParent<GraphicRaycaster>().enabled = true;
-        canvasGroup.alpha = AlphaBasedOnScale(1);
+        if(!changingPanel)
+            canvasGroup.alpha = AlphaBasedOnScale(1);
 
         if(canvasGroup.alpha == 1)
         {
@@ -41,6 +45,11 @@ public class CharacterPanel : TattooPanel
         {
             DragPanel();
         }
+
+        if (changingPanel)
+        {
+            PanelTransition();  
+        }
     }
 
     public void ResetLocalVar()
@@ -48,7 +57,27 @@ public class CharacterPanel : TattooPanel
         replacePanel = false;
     }
 
+    public void ChoosePanel(TattooPanel panel)
+    {
+        changingPanel = true;
+        changeToPanel = panel;
+    }
 
+    void PanelTransition()
+    {
+        if(canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha = FadeOut(canvasGroup.alpha);
+            mainTattooMenu.activePanel = changeToPanel;
+        }
+        else
+        {
+            changingPanel = false;
+            mainTattooMenu.TurnOnActivePanel();
+            gameObject.SetActive(false);
+        }
+
+    }
 
     float AlphaBasedOnScale(float maxA)
     {
@@ -65,5 +94,19 @@ public class CharacterPanel : TattooPanel
         }
     }
 
+
+    float FadeOut(float x)
+    {
+        if (x > 0)
+            x -= 1f * Time.deltaTime;
+        else
+        {
+            x = 0;
+            mainTattooMenu.TurnOnActivePanel();
+            gameObject.SetActive(false);
+        }
+
+        return x;
+    }
 
 }

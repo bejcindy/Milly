@@ -26,6 +26,7 @@ public class TattooPanel : MonoBehaviour
     public bool noDrag;
 
     CharacterPanel characterPanel;
+    public Vector2 startPos;
 
     public bool activatedOnce;
 
@@ -41,6 +42,7 @@ public class TattooPanel : MonoBehaviour
     protected virtual void Start()
     {
         characterPanel = mainTattooMenu.characterPanel;
+        startPos = panelTransform.anchoredPosition;
     }
 
 
@@ -49,6 +51,10 @@ public class TattooPanel : MonoBehaviour
     {
         if (panelOn)
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            GetComponentInParent<GraphicRaycaster>().enabled = false;
+
             charPanelIcon.SetActive(true);
             characterPanel.currentPanel = transform;
             mainTattooMenu.activePanel = this;
@@ -89,6 +95,11 @@ public class TattooPanel : MonoBehaviour
     void MakePanelInvisible()
     {
         canvasGroup.alpha = 0;
+    }
+
+    public void ResetPosition()
+    {
+        panelTransform.anchoredPosition = startPos;
     }
 
     protected virtual void DragPanel()

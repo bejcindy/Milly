@@ -15,6 +15,7 @@ public class MainTattooMenu : MonoBehaviour
 
 
     bool playAnim;
+    bool firstActivated;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class MainTattooMenu : MonoBehaviour
     {
         if (showPanel)
         {
+            firstActivated = true;
             if (playAnim)
             {
                 menuFade.SetTrigger("FadeIn");
@@ -37,7 +39,7 @@ public class MainTattooMenu : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && firstActivated)
         {
             if (showPanel)
             {
@@ -65,6 +67,7 @@ public class MainTattooMenu : MonoBehaviour
         activePanel.panelOn = true;
         activePanel.transform.localScale = new Vector2(1, 1);
         activePanel.gameObject.SetActive(true);
+        activePanel.ResetPosition();
         activePanel.MakePanelVisible();
     }
 
@@ -73,6 +76,11 @@ public class MainTattooMenu : MonoBehaviour
         activePanel.panelOn = false;
         activePanel.gameObject.SetActive(false);
         activePanel = characterPanel;
+    }
+
+    public void ChoosePanel(TattooPanel panel)
+    {
+
     }
 
     public void PausePlayer()

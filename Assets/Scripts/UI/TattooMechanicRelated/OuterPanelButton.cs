@@ -6,25 +6,23 @@ using UnityEngine;
 public class OuterPanelButton : MonoBehaviour
 {
     public TattooPanel correspondingPanel;
-
-    OuterPanelController parentControl;
+    public CharacterPanel parentControl;
 
     private void Awake()
     {
-        parentControl = GetComponentInParent<OuterPanelController>();
+
     }
 
     public void OpenPanel()
     {
-        parentControl.zoomIn = true;
-        parentControl.currentPanel = correspondingPanel;
+        parentControl.ChoosePanel(correspondingPanel);
     }
     public void NoDragPanel()
     {
-        parentControl.noDrag = true;
+        //parentControl.noDrag = true;
     }
     public void CanDragPanel()
     {
-        parentControl.noDrag = false;
+        //parentControl.noDrag = false;
     }
 }

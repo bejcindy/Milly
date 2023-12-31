@@ -118,6 +118,7 @@ public class TattooPanel : MonoBehaviour
 
             if (transform.localScale.x < .5f)
             {
+                mainTattooMenu.lerping = true;
                 mainTattooMenu.characterPanel.gameObject.SetActive(true);
                 mainTattooMenu.characterPanel.ResetLocalVar();
                 canvasGroup.alpha = AlphaBasedOnScale(1);

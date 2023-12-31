@@ -43,7 +43,7 @@ public class ClickableObject : LivableObject
         base.Update();
         if (interactable)
         {
-            if (bellBinding && bindedObject.isInteracting && !playerHolding.inDialogue)
+            if (bellBinding && bindedObject.positionFixed && !playerHolding.inDialogue)
             {
                 dialogueUsable.enabled = true;
                 if (Input.GetMouseButton(0))

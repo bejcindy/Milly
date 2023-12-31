@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
+using FMODUnity;
 public class MainTattooMenu : MonoBehaviour
 {
     public TattooPanel activePanel;
@@ -13,7 +14,8 @@ public class MainTattooMenu : MonoBehaviour
     public static bool tatMenuOn;
     Animator menuFade;
     float mouseDragSpeed = 70;
-
+    public EventReference panelOpenSound;
+    public GameObject blurCanvas;
 
     bool playAnim;
     bool firstActivated;
@@ -22,6 +24,7 @@ public class MainTattooMenu : MonoBehaviour
     {
         menuFade = GetComponent<Animator>();
         playAnim = true;
+        blurCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,6 +37,7 @@ public class MainTattooMenu : MonoBehaviour
             if (playAnim)
             {
                 menuFade.SetTrigger("FadeIn");
+                RuntimeManager.PlayOneShot(panelOpenSound);
                 playAnim = false;
             }
             PausePlayer();
@@ -63,15 +67,17 @@ public class MainTattooMenu : MonoBehaviour
     {
         activePanel.panelOn = false;
         activePanel.gameObject.SetActive(false);
+        blurCanvas.SetActive(false);
     }
 
     public void TurnOnActivePanel()
     {
-        activePanel.panelOn = true;
+        activePanel.panelOn = true;        
         activePanel.transform.localScale = new Vector2(1, 1);
         activePanel.gameObject.SetActive(true);
         activePanel.ResetPosition();
         activePanel.MakePanelVisible();
+        blurCanvas.SetActive(true);
     }
 
     public void ChangePanel()

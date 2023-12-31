@@ -10,6 +10,7 @@ public class MainTattooMenu : MonoBehaviour
     public CharacterPanel characterPanel;
     public bool showPanel;
     public bool playerUnpaused;
+    public static bool tatMenuOn;
     Animator menuFade;
     float mouseDragSpeed = 70;
 
@@ -28,6 +29,7 @@ public class MainTattooMenu : MonoBehaviour
     {
         if (showPanel)
         {
+            tatMenuOn = true;
             firstActivated = true;
             if (playAnim)
             {
@@ -43,6 +45,7 @@ public class MainTattooMenu : MonoBehaviour
         {
             if (showPanel)
             {
+                tatMenuOn = false;
                 menuFade.SetTrigger("FadeOut");
                 UnpausePlayer();
                 showPanel = false;

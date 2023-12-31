@@ -124,7 +124,7 @@ public class LivableObject : MonoBehaviour
                 scriptOff = true;
         }
 
-        if ((!StartSequence.noControl || overrideStartSequence) && !scriptOff)
+        if ((!StartSequence.noControl || overrideStartSequence) && !scriptOff && !MainTattooMenu.tatMenuOn)
         {
             if (!doorType && rend)
             {

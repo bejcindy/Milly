@@ -23,7 +23,7 @@ public class WalkAroundDetecter : LivableObject
             wact.childIndex = i;
         }
         if (poleLight)
-            lightBulb = transform.GetChild(5).gameObject;
+            lightBulb = transform.GetChild(4).gameObject;
     }
 
     // Update is called once per frame

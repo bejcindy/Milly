@@ -47,6 +47,7 @@ public class LivableObject : MonoBehaviour
 
     [Foldout("Tattoo")]
     [SerializeField] protected Tattoo myTat;
+    [SerializeField] protected bool delayTat;
 
     [Foldout("Effects")]
     [SerializeField] protected GameObject specialEffect;
@@ -241,7 +242,7 @@ public class LivableObject : MonoBehaviour
             //fadeOut = true;
             matColorVal = 0;
             firstActivated = true;
-            if (myTat)
+            if (myTat && !delayTat)
                 Invoke(nameof(TurnOnTat), 1f);
             if (specialEffect != null)
                 specialEffect.SetActive(true);

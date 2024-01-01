@@ -34,6 +34,7 @@ public class CharacterPanel : TattooPanel
         {
             if (!replacePanel)
             {
+                mainTattooMenu.lerping = false;
                 mainTattooMenu.ChangePanel();
                 replacePanel = true;
             }
@@ -59,6 +60,7 @@ public class CharacterPanel : TattooPanel
 
     public void ChoosePanel(TattooPanel panel)
     {
+        mainTattooMenu.lerping = true;
         changingPanel = true;
         changeToPanel = panel;
     }
@@ -74,6 +76,7 @@ public class CharacterPanel : TattooPanel
         {
             changingPanel = false;
             mainTattooMenu.TurnOnActivePanel();
+            mainTattooMenu.lerping = false;
             gameObject.SetActive(false);
         }
 

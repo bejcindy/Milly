@@ -54,6 +54,7 @@ public class CatFood : PickUpObject
 
             if (opened)
             {
+
                 if (!openCan.gameObject.activeSelf)
                 {
                     cat.EatCan();
@@ -90,6 +91,14 @@ public class CatFood : PickUpObject
         StartCoroutine(LerpRotation(Quaternion.Euler(cat.catFoodRot), 1f));
     }
 
+
+    public void TurnOnTattoo()
+    {
+        delayTat = false;
+        myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
+        myTat.myPanel.mainTattooMenu.showPanel = true;
+        myTat.activated = true;
+    }
     public void FinishEating()
     {
         transform.SetParent(null);

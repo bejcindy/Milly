@@ -16,6 +16,7 @@ public class MainTattooMenu : MonoBehaviour
     float mouseDragSpeed = 70;
     public EventReference panelOpenSound;
     public GameObject blurCanvas;
+    public bool lerping;
 
     bool playAnim;
     bool firstActivated;
@@ -56,7 +57,7 @@ public class MainTattooMenu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab) && firstActivated)
         {
-            if (showPanel)
+            if (showPanel && !lerping)
             {
                 tatMenuOn = false;
                 menuFade.SetTrigger("FadeOut");
@@ -97,10 +98,6 @@ public class MainTattooMenu : MonoBehaviour
         activePanel = characterPanel;
     }
 
-    public void ChoosePanel(TattooPanel panel)
-    {
-
-    }
 
     public void PausePlayer()
     {

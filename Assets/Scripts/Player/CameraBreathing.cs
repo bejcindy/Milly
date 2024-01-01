@@ -7,7 +7,7 @@ public class CameraBreathing : MonoBehaviour
 
     public AnimationCurve verticalCurve, horizontalCurve;
     public float amplitude, timeElapsed, frequency, rotationalAmplitude, phaseShift, horizontalAmplitude, motionSpeed;
-    public float multiplier;
+    public float multiplier; 
     // Start is called before the first frame update
     void Start()
     {

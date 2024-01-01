@@ -27,12 +27,20 @@ public class StartSequence : MonoBehaviour
 
     LivableObject[] livObjects;
     bool tabHintOn;
+
+    CinemachinePOV loyiCamPOV;
+    CinemachinePOV akiCamPOV;
+    
+
     // Start is called before the first frame update
     void Start()
     {
         groupColorVal = 0;
         livObjects = FindObjectsOfType<LivableObject>();
         noControl = false;
+
+        loyiCamPOV = loyiCam.GetCinemachineComponent<CinemachinePOV>();
+        akiCamPOV = tableCam.GetCinemachineComponent<CinemachinePOV>();
     }
 
     // Update is called once per frame
@@ -173,6 +181,18 @@ public class StartSequence : MonoBehaviour
     {
         loyiCam.m_Priority = 10;
         tableCam.m_Priority = 9;
+    }
+
+    public void ResetLoyiCam()
+    {
+        loyiCamPOV.m_HorizontalAxis.Value = 180;
+        loyiCamPOV.m_VerticalAxis.Value = 0;
+    }
+
+    public void ResetAkiCam()
+    {
+        akiCamPOV.m_VerticalAxis.Value = 0;
+        akiCamPOV.m_HorizontalAxis.Value = 270;
     }
 
     public void AkiCam()

@@ -201,7 +201,17 @@ public class NPCControl : MonoBehaviour
             if (!transformed)
                 ChangeLayer(0);
             else
-                ChangeLayer(17);
+            {
+
+                if(!noLookInConvo)
+                    ChangeLayer(17);
+                else
+                {
+                    ChangeLayer(0);
+                }
+
+            }
+
         }
         //else
         //{
@@ -474,7 +484,10 @@ public class NPCControl : MonoBehaviour
             if (!DialogueLua.GetVariable(reTriggerName).asBool)
             {
                 //move player to interactable layer
-                ChangeLayer(9);
+                if (transformed)
+                    ChangeLayer(9);
+                else
+                    ChangeLayer(21);
 
                 //check player interaction command
                 if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
@@ -521,6 +534,10 @@ public class NPCControl : MonoBehaviour
         return talkable;
     }
 
+    public void SetTalkable()
+    {
+        talkable = true;
+    }
     public bool CheckFirstTalked()
     {
         return firstTalked;
@@ -548,11 +565,10 @@ public class NPCControl : MonoBehaviour
     protected virtual void OnConversationStart(Transform other)
     {
         inConversation = true;
-        ChangeLayer(17);
-        //if (transformed)
-        //    ChangeLayer(17);
-        //else
-        //    ChangeLayer(0);
+        if (transformed)
+            ChangeLayer(17);
+        else
+            ChangeLayer(0);
 
         if (agent.isActiveAndEnabled)
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class Akihito : NPCControl 
 {
@@ -48,6 +49,17 @@ public class Akihito : NPCControl
         allowLookPlayer = true;
     }
 
+
+    public void SetAkiActive()
+    {
+        talkable = true;
+        firstTalked = false;
+        noLookInConvo = true;
+        currentDialogue = dialogueHolder.GetChild(1);
+        SetMainTalkFalse();
+        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
+        DialogueLua.SetVariable(reTriggerName, false);
+    }
 
 
 }

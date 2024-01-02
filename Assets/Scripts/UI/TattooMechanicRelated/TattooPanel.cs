@@ -68,7 +68,7 @@ public class TattooPanel : MonoBehaviour
                 DragPanel();
             }
 
-
+            
         }
 
     }

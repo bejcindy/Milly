@@ -108,8 +108,9 @@ public class FixedCameraObject : LivableObject
                     DataHolder.HideHint("<b>F</b> Check");
                     iconHidden = true;
                 }
-                else
+                else if((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed)
                 {
+                    if(dialogueBound)
                     playerHolding.sitObj = null;
                     DataHolder.HideHint(DataHolder.hints.sitHint);
                     DataHolder.ShowHint(DataHolder.hints.standHint);

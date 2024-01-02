@@ -91,6 +91,8 @@ public class Lid : LivableObject
                 }
                 playerHolding.dragAnimDirection = "Up";
             }
+
+            playerHolding.dragAnimDirection = "UpDown";
         }
         else
         {
@@ -103,6 +105,7 @@ public class Lid : LivableObject
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)
     {
+        activated = true;
         if (!lidMoving)
         {
             useCount++;

@@ -63,10 +63,7 @@ public class Xixi : NPCControl
             RuntimeManager.PlayOneShot(catMeowSF, transform.position);
     }
 
-    protected override void OnConversationStart(Transform other)
-    {
-        base.OnConversationStart(other);
-    }
+
     protected override void OnConversationEnd(Transform other)
     {
         inConversation = false;

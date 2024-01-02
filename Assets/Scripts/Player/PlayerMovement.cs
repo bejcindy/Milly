@@ -73,8 +73,10 @@ public class PlayerMovement : MonoBehaviour
     PlayerHolding playerHolding;
     float movementAmount;
 
-    
+    bool stopMoving;
     CinemachineVirtualCamera playerCam;
+    CinemachineBrain camBrain;
+    CinemachineBasicMultiChannelPerlin camNoise;
     public NoiseSettings breathingNoise;
     public NoiseSettings walkingNoise;
     void Start()
@@ -85,6 +87,11 @@ public class PlayerMovement : MonoBehaviour
         playerMove = FMODUnity.RuntimeManager.CreateInstance("event:/Sound Effects/FootStep");
         playerHolding = ReferenceTool.playerHolding;
         playerCam = ReferenceTool.playerCinemachine;
+        camBrain = ReferenceTool.playerBrain;
+        playerCam.AddCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        camNoise = playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        camNoise.m_AmplitudeGain = 0.5f;
+        camNoise.m_FrequencyGain = 0.5f;
     }
 
     void Update()
@@ -97,8 +104,8 @@ public class PlayerMovement : MonoBehaviour
         else
             rb.drag = 0;
 
-
-        PlayerInput();
+        if(!stopMoving)
+            PlayerInput();
     }
 
     void FixedUpdate()
@@ -206,13 +213,13 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
 
 
-        if(moveDirection != Vector3.zero)
+        if(moveDirection != Vector3.zero && !camBrain.IsBlending)
         {
-            playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = walkingNoise;
+            camNoise.m_NoiseProfile = walkingNoise;
         }
         else
         {
-            playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = breathingNoise;
+            camNoise.m_NoiseProfile = breathingNoise;
         }
 
         if (OnSlope()||slopeCollide)
@@ -264,7 +271,16 @@ public class PlayerMovement : MonoBehaviour
         return (moveDirection.x > 2f || moveDirection.z > 2f);
     }
 
+    public void ToBreathingNoise()
+    {
+        stopMoving = true;
+        camNoise.m_NoiseProfile = breathingNoise;
+    }
 
+    private void OnConversationEnd(Transform other)
+    {
+        stopMoving = false;
+    }
 
     void PlayerInput()
     {

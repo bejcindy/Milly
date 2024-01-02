@@ -96,7 +96,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
 
 
-        if(foodAte >= 3 && !foodEatingDialogueDone)
+        if (foodAte >= 3 && !foodEatingDialogueDone)
         {
             eatingDialogue.SetActive(true);
             foodEatingDialogueDone = true;
@@ -113,6 +113,11 @@ public class PlayerLeftHand : MonoBehaviour
         else if (isHolding && holdingObj.GetComponent<Pizza>() && inPizzaBox)
         {
             DataHolder.ShowHint(DataHolder.hints.pizzaHint);
+        }
+        else if (isHolding && holdingObj.GetComponent<GroceryBox>() && GroceryBoxGame.hasPlaceableBox)
+        {
+            DataHolder.ShowHint(DataHolder.hints.pizzaHint);
+            DataHolder.HideHint(DataHolder.hints.throwHint);
         }
         else if (currentChop && !currentChop.hasFood && !chopAiming)
         {
@@ -436,7 +441,7 @@ public class PlayerLeftHand : MonoBehaviour
                         else
                         {
                             RaycastHit hit;
-                            if (Physics.Raycast(transform.position,Camera.main.transform.forward, out hit, Mathf.Infinity,~0, QueryTriggerInteraction.Ignore))
+                            if (Physics.Raycast(transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
                             {
                                 holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
                                 //Debug.Log("hit " + hit.transform.gameObject.name);
@@ -490,10 +495,10 @@ public class PlayerLeftHand : MonoBehaviour
                 aimUI.transform.localScale = new Vector3(1, 1, 1);
             }
         }
-        else if(bypassThrow)
+        else if (bypassThrow)
         {
             readyToThrow = false;
-            if(holdingObj.GetComponent<PickUpObject>().objType != HandObjectType.CIGARETTE)
+            if (holdingObj.GetComponent<PickUpObject>().objType != HandObjectType.CIGARETTE)
                 holdingObj.localPosition = Vector3.zero;
             holdTimer = 0;
             throwForce = Vector2.zero;
@@ -516,7 +521,7 @@ public class PlayerLeftHand : MonoBehaviour
                 holdingObj.GetComponent<PickUpObject>().thrownByPlayer = true;
 
                 GroceryBox box = holdingObj.GetComponent<GroceryBox>();
-                if (box!=null)
+                if (box != null)
                 {
                     box.CheckPlaceBox();
                 }

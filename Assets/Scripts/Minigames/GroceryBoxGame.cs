@@ -15,6 +15,7 @@ public class GroceryBoxGame : MonoBehaviour
     public bool gameSucceeded;
     public int boxScore;
     public GroceryBox placeableBox;
+    public static bool hasPlaceableBox;
     public GameObject scorePanel;
     public TextMeshProUGUI score;
 
@@ -33,6 +34,7 @@ public class GroceryBoxGame : MonoBehaviour
         successTimer = 0;
         questAccepted = false;
         leftHand = ReferenceTool.playerLeftHand;
+        hasPlaceableBox = false;
     }
 
     public void Update()
@@ -71,6 +73,10 @@ public class GroceryBoxGame : MonoBehaviour
                 placeableBox = null;
             }
         }
+        if (placeableBox)
+            hasPlaceableBox = true;
+        else
+            hasPlaceableBox = false;
     }
 
     // Update is called once per frame

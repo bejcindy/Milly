@@ -103,6 +103,7 @@ public class MainTattooMenu : MonoBehaviour
     {
         playerUnpaused = false;
         DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
+        DataHolder.HideHintExceptThis(DataHolder.hints.tattooViewHint);
         ReferenceTool.playerLeftHand.bypassThrow = true;
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {

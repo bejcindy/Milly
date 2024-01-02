@@ -89,6 +89,7 @@ public class FixedCameraObject : LivableObject
                 {
                     playerHolding.sitObj = uiHint;
                     DataHolder.ShowHint(DataHolder.hints.sitHint);
+                    DataHolder.HideHint(DataHolder.hints.standHint);
                     iconHidden = false;
                 }
 
@@ -111,6 +112,7 @@ public class FixedCameraObject : LivableObject
                 {
                     playerHolding.sitObj = null;
                     DataHolder.HideHint(DataHolder.hints.sitHint);
+                    DataHolder.ShowHint(DataHolder.hints.standHint);
                     iconHidden = true;
                 }
             }
@@ -139,6 +141,7 @@ public class FixedCameraObject : LivableObject
                 {
                     playerHolding.sitObj = null;
                     DataHolder.HideHint(DataHolder.hints.sitHint);
+                    DataHolder.HideHint(DataHolder.hints.standHint);
                     iconHidden = true;
                 }
             }

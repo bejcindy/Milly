@@ -30,10 +30,6 @@ public class Tattoo : MonoBehaviour
     private void Awake()
     {
         Tattoo.fadeSpeed = 1;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
         hintedVersion = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         myPanel = transform.parent.GetComponent<TattooPanel>();
         tatTransform = GetComponent<RectTransform>();
@@ -42,6 +38,11 @@ public class Tattoo : MonoBehaviour
         tatImage.color = new Color(0, 0, 0, 0);
         hintedVersion.color = new Color(0, 0, 0, 0);
         tatMenu = myPanel.mainTattooMenu;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame

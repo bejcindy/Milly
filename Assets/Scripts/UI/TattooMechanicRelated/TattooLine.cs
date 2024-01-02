@@ -76,6 +76,7 @@ public class TattooLine : MonoBehaviour
 
         if (lineImage.color.a != halfOnColor)
         {
+            myPanel.mainTattooMenu.lerping = true;
             lineImage.color = Tattoo.FadeInColor(lineImage.color, halfOnColor);
         }
         else
@@ -96,6 +97,7 @@ public class TattooLine : MonoBehaviour
     {
         if (lineImage.color.a != 1)
         {
+            myPanel.mainTattooMenu.lerping = true;
             lineImage.color = Tattoo.FadeInColor(lineImage.color, 1);
         }
         else

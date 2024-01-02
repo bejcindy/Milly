@@ -33,6 +33,7 @@ public class MainTattooMenu : MonoBehaviour
         menuFade = GetComponent<Animator>();
         playAnim = true;
         blurCanvas.SetActive(false);
+        mainQuestBegun = false;
     }
 
     // Update is called once per frame
@@ -68,7 +69,7 @@ public class MainTattooMenu : MonoBehaviour
                 StartCoroutine(FadeOutFilter());
                 playAnim = true;
             }
-            else if (mainQuestBegun) ;
+            else if(mainQuestBegun)
             {
                 showPanel = true;
 

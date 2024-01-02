@@ -26,6 +26,7 @@ public class Tattoo : MonoBehaviour
     TextMeshProUGUI hintedVersion;
     Image tatImage;
     bool firstActivated;
+    bool freezeControl;
 
     private void Awake()
     {
@@ -66,23 +67,46 @@ public class Tattoo : MonoBehaviour
                 myPanel.noDrag = true;
             }
             else
+            {
                 myPanel.noDrag = false;
+                if (!freezeControl)
+                {
+                    myPanel.mainTattooMenu.lerping = false;
+                    freezeControl = true;
+                }
+
+            }
+
         }
         else if(isShown)
         {
             if (!firstActivated)
             {
+                freezeControl = false;
                 if (!myPanel.lerping)
                     StartCoroutine(myPanel.LerpPosition(-tatTransform.anchoredPosition, 1f));
                 firstActivated = true;
             }
 
-            if (hintedVersion.color.a >0)
+            if (hintedVersion.color.a > 0)
+            {
                 hintedVersion.color = FadeOutColor(hintedVersion.color);
+            }
+
             else
             {
                 if (tatImage.color.a != 1)
                     tatImage.color = FadeInColor(tatImage.color, 1);
+                else
+                {
+                    if (!freezeControl)
+                    {
+                        myPanel.mainTattooMenu.lerping = false;
+                        freezeControl = true;
+                    }
+
+                }
+
             }
 
         }

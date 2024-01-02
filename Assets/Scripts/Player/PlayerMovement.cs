@@ -4,6 +4,8 @@ using System.Net.NetworkInformation;
 using Cinemachine.Utility;
 using UnityEngine;
 using FMODUnity;
+using Cinemachine;
+using VInspector;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -36,12 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected float walkSpeed;
     [SerializeField] protected float groundDrag;
 
-    [Header("Jumping")]
-    [SerializeField] protected float jumpForce;
-    [SerializeField] protected float jumpCooldown;
-    [SerializeField] protected float airMultiplier;
-    [SerializeField] protected bool readyToJump;
-    [SerializeField] protected KeyCode jumpKey = KeyCode.Space;
+
 
 
 
@@ -75,23 +72,25 @@ public class PlayerMovement : MonoBehaviour
     bool tooLeft, tooRight;
     PlayerHolding playerHolding;
     float movementAmount;
+
+    
+    CinemachineVirtualCamera playerCam;
+    public NoiseSettings breathingNoise;
+    public NoiseSettings walkingNoise;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
         lowerRay.transform.localPosition= new Vector3(0, -1f, 0);
         upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y+stepHeight, upperRay.transform.position.z);
         playerMove = FMODUnity.RuntimeManager.CreateInstance("event:/Sound Effects/FootStep");
-        playerHolding = GetComponent<PlayerHolding>();
+        playerHolding = ReferenceTool.playerHolding;
+        playerCam = ReferenceTool.playerCinemachine;
     }
 
     void Update()
     {
         
         grounded = Physics.Raycast(transform.position, -transform.up, playerHeight, flatGround);
-
-        //upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y + stepHeight, upperRay.transform.position.z);
         if (grounded)
             rb.drag = groundDrag;
 
@@ -100,10 +99,6 @@ public class PlayerMovement : MonoBehaviour
 
 
         PlayerInput();
-        //Debug.DrawRay(lowerRay.transform.position, transform.forward * lowerDetect, Color.red);
-        //Debug.DrawRay(upperRay.transform.position, transform.forward * upperDetect, Color.blue);
-        ////if (horizontalInput != 0 && verticalInput != 0)
-        //    walkStair();
     }
 
     void FixedUpdate()
@@ -115,14 +110,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (!initialCutsceneMove)
-            {
-                MovePlayer();
-            }
-            else
-            {
-                InitialCutsceneMovement(currentTarget);
-            }
+            MovePlayer();
 
             SpeedControl();
         }
@@ -146,9 +134,6 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("slope"))
         {
             slopeCollide = true;
-            //RaycastHit downRay;
-            //if (Physics.Raycast(transform.position, -transform.up, out downRay, -10f, flatGround))
-            //    collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, downRay.normal).normalized;
             collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, collision.contacts[0].normal).normalized;
         }
         if (collision.gameObject.name.Contains("road_sidebrisk"))
@@ -167,8 +152,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Maluyazi(Vector3 hitNormal)
     {
-        //Debug.Log(Vector3.Dot(hitNormal, Vector3.up));
-        //Debug.Log(rb.velocity);
         if (Mathf.Abs(Vector3.Dot(hitNormal, Vector3.up)) < .4f)
         {
             if (Vector3.Dot(moveDirection, -hitNormal) > 0 && rb.velocity.y < 0.5f)
@@ -184,10 +167,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (rb.useGravity)
             rb.useGravity = false;
-        //rb.AddForce(Vector3.up * moveSpeed * verticalInput);
         float ySpeed = moveSpeed * verticalInput;
-        //Vector3 horizontalDir = Vector3.ProjectOnPlane(transform.position - ladderTrigger.transform.position, ladderTrigger.transform.forward);
-        //Vector3 horizontalDir=Vector3.Project(transform.position - ladderTrigger.transform.position, ladderTrigger.transform.right);
         float clampedHorizontalInput;
         if (tooLeft)
             clampedHorizontalInput = Mathf.Clamp(horizontalInput, 0, 1);
@@ -197,9 +177,6 @@ public class PlayerMovement : MonoBehaviour
             clampedHorizontalInput = horizontalInput;
 
         Vector3 xSpeed = moveSpeed * clampedHorizontalInput * -ladderTrigger.transform.right;
-        //Debug.Log("left: " + tooLeft + "right: " + tooRight + "clamped: " + clampedHorizontalInput);
-        //Vector3 xSpeedZeroY = new Vector3(xSpeed.x, 0, xSpeed.z);
-        //rb.velocity = new Vector3(rb.velocity.x, ySpeed, rb.velocity.z);
         rb.velocity = new Vector3(xSpeed.x, ySpeed, xSpeed.z);
         
     }
@@ -228,6 +205,15 @@ public class PlayerMovement : MonoBehaviour
 
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
 
+
+        if(moveDirection != Vector3.zero)
+        {
+            playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = walkingNoise;
+        }
+        else
+        {
+            playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = breathingNoise;
+        }
 
         if (OnSlope()||slopeCollide)
         {
@@ -261,15 +247,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 movementVector = Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up);
             rb.AddForce(movementVector, ForceMode.Force);
-            //CheckForStep(ref movementVector);
-
             walkStair(ref movementVector);
 
-        }
-        //in air
-        else if (!grounded)
-        {
-            rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f * airMultiplier, orientation.up), ForceMode.Force);
         }
 
         if (OnSlope() || slopeCollide)
@@ -277,62 +256,7 @@ public class PlayerMovement : MonoBehaviour
         else if (!OnSlope() && !slopeCollide)
             rb.useGravity = true;
                 
-        //rb.useGravity = !OnSlope();
         
-    }
-
-    public void InitialCutsceneMovement(Transform target)
-    {
-        float clampedVert = Mathf.Clamp(verticalInput, 0, 1);
-        moveDirection = Vector3.Normalize((target.position - transform.position) * clampedVert);
-
-        if (OnSlope() || slopeCollide)
-        {
-            if (verticalInput == 0 && horizontalInput == 0)
-                rb.velocity = Vector3.zero;
-            else
-            {
-                if (OnSlope())
-                {
-                    rb.AddForce(GetSlopeMoveDir() * moveSpeed * 20f, ForceMode.Force);
-
-                }
-                else if (slopeCollide)
-                {
-                    rb.AddForce(collisionSlopeDir * moveSpeed * 20f, ForceMode.Force);
-
-                }
-
-                //if (rb.velocity.y > 0)
-                //    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-                if (rb.velocity.y > 0)
-                    rb.AddForce(Vector3.down * 10f, ForceMode.Force);
-                else if (rb.velocity.y < 0)
-                {
-                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-                }
-            }
-        }
-
-        if (grounded)
-        {
-            Vector3 movementVector = Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f, orientation.up);
-            rb.AddForce(movementVector, ForceMode.Force);
-            //CheckForStep(ref movementVector);
-
-            walkStair(ref movementVector);
-
-        }
-        //in air
-        else if (!grounded)
-        {
-            rb.AddForce(Vector3.ProjectOnPlane(moveDirection * moveSpeed * 10f * airMultiplier, orientation.up), ForceMode.Force);
-        }
-
-        if (OnSlope() || slopeCollide)
-            rb.useGravity = false;
-        else if (!OnSlope() && !slopeCollide)
-            rb.useGravity = true;
     }
 
     public bool CheckMoveAmount()
@@ -442,17 +366,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-    }
-    protected virtual void Jump()
-    {
-        Vector3 verticalV = Vector3.ProjectOnPlane(rb.velocity, transform.right);
-        Vector3 horizontalV = Vector3.ProjectOnPlane(rb.velocity, transform.up);
-        rb.velocity = horizontalV + transform.up * jumpForce;
-    }
-
-    protected virtual void ResetJump()
-    {
-        readyToJump = true;
     }
 
 

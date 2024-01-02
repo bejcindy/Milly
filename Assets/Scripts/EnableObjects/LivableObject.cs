@@ -96,6 +96,7 @@ public class LivableObject : MonoBehaviour
         {
             mat = rend.material;
             mat.EnableKeyword("_WhiteDegree");
+            mat.SetFloat("_WhiteDegree", matColorVal);
         }
 
         if(GetComponent<GroupMaster>() != null)

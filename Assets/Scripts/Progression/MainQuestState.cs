@@ -19,6 +19,7 @@ public class MainQuestState: MonoBehaviour
     public Chair izakayaHighChair;
     public Transform backToIzaAlt;
 
+
     private void Start()
     {
         firstGloriaTalk = false;
@@ -28,8 +29,12 @@ public class MainQuestState: MonoBehaviour
 
     public void Update()
     {
-        if (readyAkiConfrontation && izakayaHighChair.isInteracting && !AkiConfrontation.activeSelf)
+        if (readyAkiConfrontation && izakayaHighChair.isInteracting && !AkiConfrontation.activeSelf && !akiConfronted)
+        {
+            akiConfronted = true;
             AkiConfrontation.SetActive(true);
+        }
+
 
         if (gloriaArrivesIza && izakayaHighChair.isInteracting)
         {

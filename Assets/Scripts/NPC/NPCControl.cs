@@ -20,7 +20,7 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("Default")]
 
-    [SerializeField]protected float matColorVal;
+    [SerializeField] protected float matColorVal;
     [SerializeField] protected float fadeInterval;
     [SerializeField] protected float minDist;
     [SerializeField] protected bool isVisible;
@@ -107,7 +107,7 @@ public class NPCControl : MonoBehaviour
     {
         //Setting up basic components
         player = ReferenceTool.player;
-        
+
         machine = GetComponent<BaseStateMachine>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -117,7 +117,7 @@ public class NPCControl : MonoBehaviour
         playerHolding = ReferenceTool.playerHolding;
 
         bone = transform.GetChild(3).gameObject;
-        foreach(Transform child in GetComponentsInChildren<Transform>())
+        foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name.Contains("Head") && !child.name.Contains("HeadTop"))
                 head = child;
@@ -145,7 +145,7 @@ public class NPCControl : MonoBehaviour
         if (inDoorRange && !waitForDoor && !currentDoor.doorOpen)
         {
             atDoorTime += Time.deltaTime;
-            if(atDoorTime > 0.5f)
+            if (atDoorTime > 0.5f)
             {
                 waitForDoor = true;
                 atDoorTime = 0;
@@ -196,14 +196,14 @@ public class NPCControl : MonoBehaviour
                 CheckTriggerConversation();
             }
         }
-        else if(!inConversation)
+        else if (!inConversation)
         {
             if (!transformed)
                 ChangeLayer(0);
             else
             {
 
-                if(!noLookInConvo)
+                if (!noLookInConvo)
                     ChangeLayer(17);
                 else
                 {
@@ -264,7 +264,7 @@ public class NPCControl : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) <= minDist)
         {
             if (isVisible)
-                return true;    
+                return true;
             else
                 return false;
         }
@@ -431,7 +431,7 @@ public class NPCControl : MonoBehaviour
     bool iconHidden;
     public void ChangeLayer(int layerNumber)
     {
-        if (layerNumber == 9)
+        if (layerNumber == 9 || layerNumber == 21)
         {
             playerHolding.talkingTo = bone;
             iconHidden = false;
@@ -557,7 +557,7 @@ public class NPCControl : MonoBehaviour
     {
         noMoveAfterTalk = false;
     }
-     
+
     protected virtual void QuestAcceptChange()
     {
 
@@ -591,7 +591,7 @@ public class NPCControl : MonoBehaviour
         inCD = true;
         currentDialogue.gameObject.SetActive(false);
 
-//        fakeActivated = false;
+        //        fakeActivated = false;
         talkable = true;
         firstTalked = true;
 
@@ -687,8 +687,8 @@ public class NPCControl : MonoBehaviour
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
 
-        if(destinations.Length > 0)
-            lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter-1].transform.GetChild(0).transform));
+        if (destinations.Length > 0)
+            lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter - 1].transform.GetChild(0).transform));
     }
 
     public void StopLookRotation()
@@ -745,13 +745,13 @@ public class NPCControl : MonoBehaviour
 
     public void SetWaitAction()
     {
-        idleAction =  gameObject.name+"Action"+_counter;
+        idleAction = gameObject.name + "Action" + _counter;
     }
 
     public void SetDialogue()
     {
         int diaIndex = currentDialogue.GetSiblingIndex();
-        if(diaIndex != dialogueHolder.childCount - 1)
+        if (diaIndex != dialogueHolder.childCount - 1)
         {
             currentDialogue = dialogueHolder.GetChild(diaIndex + 1);
             string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
@@ -767,7 +767,8 @@ public class NPCControl : MonoBehaviour
         DialogueLua.SetVariable(seTalkName, true);
     }
 
-    public void SetMainTalkFalse() {
+    public void SetMainTalkFalse()
+    {
         string seTalkName = "NPC/" + gameObject.name + "/Main_Talked";
         DialogueLua.SetVariable(seTalkName, false);
     }
@@ -838,7 +839,7 @@ public class NPCControl : MonoBehaviour
         if (other.CompareTag("DoorDetector"))
         {
             inDoorRange = false;
-            if(!waitForDoor)
+            if (!waitForDoor)
                 currentDoor = null;
             atDoorTime = 0;
         }

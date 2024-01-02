@@ -61,7 +61,7 @@ public class LookingObject : LivableObject
                     playerHolding.AddLookable(gameObject);
                     if (selected)
                     {
-                        if (Input.GetKeyDown(KeyCode.Space))
+                        if (Input.GetKeyDown(KeyCode.Space) && !focusingThis)
                         {
                             if(gameObject.tag.Contains("Poster"))
                                 RuntimeManager.PlayOneShot(lookSound, transform.position);

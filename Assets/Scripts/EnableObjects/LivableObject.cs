@@ -243,7 +243,7 @@ public class LivableObject : MonoBehaviour
             //fadeOut = true;
             matColorVal = 0;
             firstActivated = true;
-            if (myTat && !delayTat)
+            if (myTat && !delayTat && !myTat.activated)
                 Invoke(nameof(TurnOnTat), 1f);
             if (specialEffect != null)
                 specialEffect.SetActive(true);

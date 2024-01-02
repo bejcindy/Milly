@@ -203,12 +203,7 @@ public class NPCControl : MonoBehaviour
             else
             {
 
-                if(!noLookInConvo)
-                    ChangeLayer(17);
-                else
-                {
-                    ChangeLayer(0);
-                }
+                ChangeLayer(17);
 
             }
 

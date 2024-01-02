@@ -17,6 +17,8 @@ public class MainTattooMenu : MonoBehaviour
     public EventReference panelOpenSound;
     public GameObject blurCanvas;
     public bool lerping;
+    public bool mainQuestBegun;
+
 
     bool playAnim;
     bool firstActivated;
@@ -63,15 +65,20 @@ public class MainTattooMenu : MonoBehaviour
                 menuFade.SetTrigger("FadeOut");
                 UnpausePlayer();
                 showPanel = false;
-                StartCoroutine(FadeOutFilter());                
+                StartCoroutine(FadeOutFilter());
                 playAnim = true;
             }
-            else
+            else if (mainQuestBegun) ;
             {
                 showPanel = true;
 
             }
         }
+    }
+
+    public void StartMainTattooQuest()
+    {
+        mainQuestBegun = true;
     }
 
     public void TurnOffActivePanel()

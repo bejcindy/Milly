@@ -54,7 +54,16 @@ public class MainTattooMenu : MonoBehaviour
                 playAnim = false;
             }
             PausePlayer();
-
+            if (activePanel == characterPanel)
+            {
+                DataHolder.ShowHint(DataHolder.hints.outerPanelHint);
+                DataHolder.HideHintExceptThis(DataHolder.hints.outerPanelHint);
+            }
+            else
+            {
+                DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
+                DataHolder.HideHintExceptThis(DataHolder.hints.tattooViewHint);
+            }
         }
 
 
@@ -110,8 +119,7 @@ public class MainTattooMenu : MonoBehaviour
     public void PausePlayer()
     {
         playerUnpaused = false;
-        DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
-        DataHolder.HideHintExceptThis(DataHolder.hints.tattooViewHint);
+        
         ReferenceTool.playerLeftHand.bypassThrow = true;
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {

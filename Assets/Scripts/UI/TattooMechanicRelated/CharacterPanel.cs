@@ -38,8 +38,7 @@ public class CharacterPanel : TattooPanel
                 mainTattooMenu.ChangePanel();
                 replacePanel = true;
             }
-
-
+            
         }
 
         if (!noDrag)

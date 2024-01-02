@@ -13,7 +13,7 @@ using Unity.VisualScripting;
 public class HintTexts
 {
     [TextArea]
-    public string throwHint, smokeHint, lookHint, drinkHint, kickHint, scrollHint, sitHint, cigHint, chopHint, pickFoodHint, eatHint,powderHint,tabHint,tableDrinkHint, drinkAndThrowHint, tattooViewHint, pizzaHint;
+    public string throwHint, smokeHint, lookHint, drinkHint, kickHint, scrollHint, sitHint, standHint, cigHint, chopHint, pickFoodHint, eatHint, powderHint, tabHint, tableDrinkHint, drinkAndThrowHint, tattooViewHint, pizzaHint;
 }
 
 public class DataHolder : MonoBehaviour
@@ -250,6 +250,24 @@ public class DataHolder : MonoBehaviour
                     Destroy(hintPanels[i]);
                     currentHints.Remove(hintToHide);
                     hintPanels.Remove(hintPanels[i]);
+                    hidden = true;
+                }
+            }
+        }
+    }
+
+    public static void HideHintExceptThis(string hintToExclude)
+    {
+        bool hidden = false;
+        if (hintPanels.Count != 0 && !hidden)
+        {
+            for (int i = 0; i < hintPanels.Count; i++)
+            {
+                if (currentHints[i] != hintToExclude)
+                {
+                    Destroy(hintPanels[i]);
+                    hintPanels.Remove(hintPanels[i]);
+                    currentHints.Remove(currentHints[i]);
                     hidden = true;
                 }
             }

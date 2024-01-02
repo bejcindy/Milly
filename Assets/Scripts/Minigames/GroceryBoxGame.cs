@@ -34,7 +34,7 @@ public class GroceryBoxGame : MonoBehaviour
         successTimer = 0;
         questAccepted = false;
         leftHand = ReferenceTool.playerLeftHand;
-        placeableBox = null;
+        hasPlaceableBox = false;
     }
 
     public void Update()

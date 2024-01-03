@@ -13,10 +13,12 @@ public class ReferenceTool : MonoBehaviour
     public static CinemachineBrain playerBrain;
     public static CinemachinePOV playerPOV;
     public static PauseMenu pauseMenu;
+    public static RecordPlayer recordPlayer;
 
 
     public Transform playerRef;
     public CinemachineVirtualCamera playerCamRef;
+    public RecordPlayer recordPlayerRef;
 
 
     public void Awake()
@@ -28,6 +30,7 @@ public class ReferenceTool : MonoBehaviour
         playerMovement = playerRef.GetComponent<PlayerMovement>();
         playerBrain = Camera.main.GetComponent<CinemachineBrain>();
         playerPOV = playerCamRef.GetCinemachineComponent<CinemachinePOV>();
+        recordPlayer = recordPlayerRef;
     }
 
 }

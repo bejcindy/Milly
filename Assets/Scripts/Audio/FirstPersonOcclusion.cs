@@ -117,7 +117,7 @@ public class FirstPersonOcclusion : MonoBehaviour
             colour = Color.green;
         }
 
-        SetParameter();
+        //SetParameter();
     }
 
     private Vector3 CalculatePoint(Vector3 a, Vector3 b, float m, bool posOrneg)

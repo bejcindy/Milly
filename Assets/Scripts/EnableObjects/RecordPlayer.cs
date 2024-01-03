@@ -9,7 +9,7 @@ public class RecordPlayer : LivableObject
     public bool hasRecord;
     public Vinyl currentRecord;
 
-    public Transform recordPos;
+    public Vector3 recordPos;
 
 
     public Quaternion playingRot;
@@ -24,6 +24,7 @@ public class RecordPlayer : LivableObject
         hasRecord = true;
         playingRot = transform.localRotation;
         stopRot = Quaternion.Euler(0f, 0f, 0f);
+        recordPos = currentRecord.transform.position;
     }
 
     protected override void Update()

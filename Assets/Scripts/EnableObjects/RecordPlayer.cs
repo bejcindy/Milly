@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VInspector;
+using FMODUnity;
 
 public class RecordPlayer : LivableObject
 {
@@ -11,7 +12,7 @@ public class RecordPlayer : LivableObject
 
     public Transform recordPos;
 
-
+    public EventReference needleSound;
     public Quaternion playingRot;
     public Quaternion stopRot;
     public bool isPlaying;
@@ -79,6 +80,7 @@ public class RecordPlayer : LivableObject
             yield return null;
         }
         transform.localRotation = targetRot;
+        RuntimeManager.PlayOneShot(needleSound, transform.position);
         moving = false;
 
         if(targetRot == playingRot)

@@ -57,7 +57,7 @@ public class RecordPlayer : LivableObject
         {
             if (hasRecord)
             {
-                if (!CurrentRecordSelected() && !moving)
+                if (!CurrentRecordSelected() && !moving && !MainTattooMenu.tatMenuOn)
                 {
                     gameObject.layer = 9;
                     if (Input.GetMouseButtonDown(0))
@@ -83,8 +83,10 @@ public class RecordPlayer : LivableObject
         }
     }
 
+
     void TriggerPlay()
     {
+        activated = true;
         if (isPlaying)
         {
             isPlaying = false;
@@ -108,7 +110,7 @@ public class RecordPlayer : LivableObject
 
     bool CurrentRecordSelected()
     {
-        return currentRecord.selected;
+        return currentRecord.selected || currentRecord.inHand;
     }
 
 

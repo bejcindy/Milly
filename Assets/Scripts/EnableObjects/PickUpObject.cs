@@ -50,7 +50,11 @@ public class PickUpObject : LivableObject
     protected override void Update()
     {
         base.Update();
-        DetectEnable();
+        if (!MainTattooMenu.tatMenuOn)
+        {
+            DetectEnable();
+        }
+
     }
     private void DetectEnable()
     {

@@ -10,6 +10,7 @@ public class CenterTattoo : MonoBehaviour
     Image fullImage;
     bool firstActivated;
     [Foldout("Activation")]
+    public bool noCharTat;
     public bool activated;
     public bool forceActivate;
     public bool transformed;
@@ -50,6 +51,9 @@ public class CenterTattoo : MonoBehaviour
             {
                 colorOn = true;
             }
+
+            if (noCharTat)
+                activated = true;
         }
 
         if (activated && !transformed)

@@ -533,6 +533,12 @@ public class PlayerLeftHand : MonoBehaviour
                 {
                     box.CheckPlaceBox();
                 }
+
+                Vinyl vinyl = holdingObj.GetComponent<Vinyl>();
+                if(vinyl != null)
+                {
+                    vinyl.CheckPlaceVinyl();
+                }
                 playerHolding.UnoccupyLeft();
 
             }

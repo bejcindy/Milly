@@ -8,8 +8,9 @@ public class RecordPlayer : LivableObject
 {
     [Foldout("RecordPlayer")]
     public bool hasRecord;
+    public bool readyPlacing;
     public Vinyl currentRecord;
-
+    public GameObject recordPlacer;
     public Vector3 recordPos;
 
     public EventReference needleSound;
@@ -17,7 +18,7 @@ public class RecordPlayer : LivableObject
     public Quaternion stopRot;
     public bool isPlaying;
 
-    bool moving;
+    public bool moving;
     protected override void Start()
     {
         base.Start();
@@ -32,25 +33,53 @@ public class RecordPlayer : LivableObject
     {
         base.Update();
 
-        if (interactable)
+        if (currentRecord)
         {
-            if (!moving)
-            {
-                rend.gameObject.layer = 9;
-                if (Input.GetMouseButtonDown(0))
-                {
-                    TriggerPlay();
-                }
-            }
-            else
-            {
-                rend.gameObject.layer = 0;
-            }
-
+            hasRecord = true;
+            readyPlacing = false;
         }
         else
         {
-            rend.gameObject.layer = 0;
+            hasRecord = false;
+            gameObject.layer = 0;
+        }
+
+        if (readyPlacing)
+        {
+            recordPlacer.gameObject.layer = 9;
+        }
+        else
+        {
+            recordPlacer.gameObject.layer = 0;
+        }
+
+        if (interactable)
+        {
+            if (hasRecord)
+            {
+                if (!CurrentRecordSelected() && !moving)
+                {
+                    gameObject.layer = 9;
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        TriggerPlay();
+                    }
+                }
+                else
+                {
+                    gameObject.layer = 0;
+                }
+
+            }
+            else
+            {
+                CheckReadyPlaceRecord();
+            }
+        }
+        else
+        {
+            readyPlacing = false;
+            gameObject.layer = 0;
         }
     }
 
@@ -68,6 +97,41 @@ public class RecordPlayer : LivableObject
         }
     }
 
+    public void PlaceRecord(Vinyl vinyl)
+    {
+        vinyl.transform.SetParent(recordPlacer.transform);
+        vinyl.transform.localPosition = Vector3.zero;
+        vinyl.transform.localRotation = Quaternion.identity;
+        currentRecord = vinyl;
+    }
+
+
+    bool CurrentRecordSelected()
+    {
+        return currentRecord.selected;
+    }
+
+
+    void CheckReadyPlaceRecord()
+    {
+        if (playerLeftHand.isHolding)
+        {
+            if (playerLeftHand.holdingObj.GetComponent<Vinyl>())
+            {
+                readyPlacing = true;
+            }
+            else
+            {
+                readyPlacing = false;
+            }
+        }
+        else
+        {
+            readyPlacing = false;
+        }
+
+
+    }
 
     IEnumerator LerpRotation(Quaternion targetRot, float duration)
     {

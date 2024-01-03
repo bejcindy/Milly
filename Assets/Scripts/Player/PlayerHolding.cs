@@ -253,17 +253,8 @@ public class PlayerHolding : MonoBehaviour
             {
                 if (usedSprites.Count == 0 || !usedSprites.Contains(interactionSprite))
                 {
-                    PizzaLid pizzaLid = trackingObject.GetComponent<PizzaLid>();
                     Vector2 ViewportPosition;
-                    if (pizzaLid == null)
-                    {
-                        ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
-                    }
-                    else
-                    {
-                        ViewportPosition = Camera.main.WorldToViewportPoint(pizzaLid.uiHint.transform.position);
-                    }
-
+                    ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
                     Vector2 WorldObject_ScreenPosition = new Vector2(
                     ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
                     ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
@@ -354,17 +345,32 @@ public class PlayerHolding : MonoBehaviour
         {
             if (obj == lidObj)
             {
-                if (Input.GetMouseButton(0))
+                if (obj.GetComponent<PizzaLid>())
                 {
-                    DisplayUI(obj, grabingSprite);
-                    HideUI(dragSprite);
+                    if (Input.GetMouseButton(0))
+                    {
+                        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, grabingSprite);
+                        HideUI(dragSprite);
+                    }
+                    else
+                    {
+                        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, dragSprite);
+                        HideUI(grabingSprite);
+                    }
                 }
                 else
                 {
-                    DisplayUI(obj, dragSprite);
-                    HideUI(grabingSprite);
+                    if (Input.GetMouseButton(0))
+                    {
+                        DisplayUI(obj, grabingSprite);
+                        HideUI(dragSprite);
+                    }
+                    else
+                    {
+                        DisplayUI(obj, dragSprite);
+                        HideUI(grabingSprite);
+                    }
                 }
-                
             }
             else
                 DisplayUI(obj, sprite);

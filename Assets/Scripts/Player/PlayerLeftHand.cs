@@ -79,10 +79,18 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 HoldingAction();
             }
-
-            else
+            else if (inPizzaBox && holdingObj.GetComponent<Pizza>())
             {
                 DetectPizzaHolding();
+            }
+            else if (inPizzaBox && !holdingObj.GetComponent<Pizza>())
+            {
+                readyToThrow = false;
+                holdingObj.localPosition = Vector3.zero;
+                holdTimer = 0;
+                throwForce = Vector2.zero;
+                aimUI.SetActive(false);
+                aimUI.transform.localScale = new Vector3(1, 1, 1);
             }
 
 
@@ -538,6 +546,11 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void DetectPizzaHolding()
     {
+        readyToThrow = false;
+        holdTimer = 0;
+        throwForce = Vector2.zero;
+        aimUI.SetActive(false);
+        aimUI.transform.localScale = new Vector3(1, 1, 1);
         if (Input.GetMouseButtonUp(0))
         {
             if (!noThrow)

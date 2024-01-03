@@ -147,6 +147,7 @@ public class MainTattooMenu : MonoBehaviour
     {
         playerUnpaused = true;
         DataHolder.HideHint(DataHolder.hints.tattooViewHint);
+        DataHolder.HideHintExceptThis(DataHolder.hints.outerPanelHint);
         ReferenceTool.playerLeftHand.bypassThrow = false;
         CinemachineVirtualCamera currentCam = ReferenceTool.playerBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
 

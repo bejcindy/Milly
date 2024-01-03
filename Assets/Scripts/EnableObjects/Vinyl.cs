@@ -13,6 +13,7 @@ public class Vinyl : PickUpObject
         base.Start();
         objType = HandObjectType.DOUBLE; 
         recordPlayer = ReferenceTool.recordPlayer;
+        mySong = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -20,10 +21,22 @@ public class Vinyl : PickUpObject
     {
         if (inHand)
         {
+            if (recordPlayer.currentRecord == this)
+                recordPlayer.currentRecord = null;
             activated = true;
             onRecordPlayer = false;
-            if(recordPlayer.currentRecord == this)
-                recordPlayer.currentRecord = null;
+            if(transform.localScale.x < 2)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(2, 2, 2), 0.5f);
+            }
+
+        }
+        else
+        {
+            if (transform.localScale.x >1)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, 0.5f);
+            }
         }
 
         if (onRecordPlayer)
@@ -34,7 +47,12 @@ public class Vinyl : PickUpObject
                 if (playerHolding.CheckInteractable(gameObject))
                     playerHolding.RemoveInteractable(gameObject);
                 selected = false;
-                gameObject.layer = 0;
+
+                if(activated)
+                    gameObject.layer = 17;
+                else
+                    gameObject.layer = 0;  
+
                 if (!mySong.activeSelf)
                     mySong.SetActive(true);
                 transform.Rotate(Vector3.up * 50 * Time.deltaTime, Space.Self);

@@ -64,10 +64,14 @@ public class Window : LivableObject
             isInteracting = false;
             foreach (Transform child in transform)
             {
-                if (activated)
-                    child.gameObject.layer = 17;
-                else
-                    child.gameObject.layer = 0;
+                if (!child.gameObject.name.Contains("glass"))
+                {
+                    if (activated)
+                        child.gameObject.layer = 17;
+                    else
+                        child.gameObject.layer = 0;
+                }
+
             }
         }
         if (!interactable)

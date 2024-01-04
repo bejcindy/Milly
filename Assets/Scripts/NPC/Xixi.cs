@@ -57,6 +57,11 @@ public class Xixi : NPCControl
         }
 
     }
+    
+    public void XixiAction4()
+    {
+        noTalkStage = true;
+    }
     public void Meow()
     {
         if (!catMeowSF.IsNull)
@@ -88,6 +93,14 @@ public class Xixi : NPCControl
     public void EatCan()
     {
         anim.SetTrigger("Eat");
+    }
+
+    public void MoveCatIntoBox()
+    {
+        StopIdle();
+        remainInAnim = false;
+        noTalkInWalk = true;
+        noMoveAfterTalk = false;
     }
 
     private void OnTriggerEnter(Collider other)

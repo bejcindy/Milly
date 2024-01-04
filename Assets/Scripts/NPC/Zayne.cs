@@ -30,7 +30,6 @@ public class Zayne : NPCControl
             StopCoroutine(lookCoroutine);
         currentDialogue.gameObject.SetActive(false);
         noTalkInWalk = true;
-        GetComponent<BoxCollider>().enabled = false;
     }
 
 }

@@ -19,6 +19,7 @@ public class RecordPlayer : LivableObject
     public bool isPlaying;
 
     public bool moving;
+    string recorPlaceEvent = "event:/Sound Effects/ObjectInteraction/Vinyls/Vinyl_Place";
     protected override void Start()
     {
         base.Start();
@@ -101,6 +102,7 @@ public class RecordPlayer : LivableObject
 
     public void PlaceRecord(Vinyl vinyl)
     {
+        RuntimeManager.PlayOneShot(recorPlaceEvent, transform.position);
         vinyl.transform.SetParent(recordPlacer.transform);
         vinyl.transform.localPosition = Vector3.zero;
         vinyl.transform.localRotation = Quaternion.identity;
@@ -147,11 +149,11 @@ public class RecordPlayer : LivableObject
             yield return null;
         }
         transform.localRotation = targetRot;
-        RuntimeManager.PlayOneShot(needleSound, transform.position);
         moving = false;
 
         if(targetRot == playingRot)
         {
+            RuntimeManager.PlayOneShot(needleSound, transform.position);
             isPlaying = true;
         }
     }

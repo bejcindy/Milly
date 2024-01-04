@@ -25,6 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394436533754232693}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.41802505, z: -0, w: 0.9084355}
   m_LocalPosition: {x: -29.654, y: 10.22, z: -12.695}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,7 +35,6 @@ Transform:
   - {fileID: 8746608153852097028}
   - {fileID: 7775100380129972741}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -49.42, z: 0}
 --- !u!54 &976943407570594857
 Rigidbody:
@@ -75,39 +75,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd68f7ce0497674591eec2bcae65b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 0
-  isVisible: 0
-  checkVisible: 0
-  tableObj: 0
-  minDist: 3
-  rend: {fileID: 2847838539515127067}
   activated: 0
   transformed: 0
-  firstActivated: 0
+  interactable: 0
+  isVisible: 0
+  minDist: 3
+  rend: {fileID: 2847838539515127067}
   matColorVal: 1
   fadeInterval: 10
+  myTat: {fileID: 0}
+  delayTat: 0
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   rigged: 0
   visibleDetector: {fileID: 0}
   centerFocused: 0
   noRend: 0
-  overrideStartSequence: 0
   onlyFront: 1
+  overrideStartSequence: 0
+  izaProp: 0
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
+  myZone: {fileID: 0}
+  scriptOff: 0
   objType: 1
   targetRot: {x: 0, y: 0, z: 0}
   inHand: 0
   selected: 0
   thrown: 0
-  cigarette: 0
   freezeRotation: 0
   throwCD: 0
   thrownByPlayer: 0
-  npcBound: 0
-  foodObj: 0
   pickUpEventName: 
   throwEventName: 
   pickUpSound:
@@ -126,6 +125,8 @@ MonoBehaviour:
     Path: 
   cat: {fileID: 0}
   opened: 0
+  finishedEating: 0
+  finishDiaDone: 0
 --- !u!1001 &3477935263552240031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,8 +401,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.21171257, y: 0.23030259, z: 0.25756088}
-  m_Center: {x: 0, y: 0.11599048, z: -0.024532348}
+  m_Size: {x: 0.21171257, y: 0.095843524, z: 0.20849618}
+  m_Center: {x: 0, y: 0.047921762, z: 0}
 --- !u!4 &8746608153852097028 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4b6578b861883c54b96993175190e4b4, type: 3}

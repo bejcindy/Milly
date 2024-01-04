@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using Cinemachine;
+using FMOD;
 
 public class Xixi : NPCControl
 {
@@ -11,6 +12,7 @@ public class Xixi : NPCControl
     public Vector3 catFoodPos;
     public Vector3 catFoodRot;
     PlayerLeftHand playerLeftHand;
+    string catEatEvent = "event:/NPC/CatEat";
 
     float waitTime = 3f;
     protected override void Start()
@@ -92,6 +94,7 @@ public class Xixi : NPCControl
 
     public void EatCan()
     {
+        FMODUnity.RuntimeManager.PlayOneShot(catEatEvent, transform.position);
         anim.SetTrigger("Eat");
     }
 

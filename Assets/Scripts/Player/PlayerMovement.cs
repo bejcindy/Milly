@@ -10,57 +10,59 @@ using VInspector;
 public class PlayerMovement : MonoBehaviour
 {
     protected float gravityMultiplier;
-    public bool onLadder;
+    protected float horizontalInput;
+    protected float verticalInput;
 
-    [Header("SlopeCheck")]
+    [Foldout("Basic Movement")]
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float walkSpeed;
+    [SerializeField] protected float groundDrag;
+    [SerializeField] protected float playerHeight;
+
+    [Foldout("Ground Check")]
+    [SerializeField] protected bool grounded;
+    [SerializeField] protected LayerMask flatGround;
+    [SerializeField] protected LayerMask stairs;
+    [SerializeField] protected float stairForce;
+
+    [Foldout("SlopeCheck")]
     [SerializeField] bool onSlope;
     public RaycastHit slopeHit;
     public float maxSlopeAngle;
     [SerializeField] bool slopeCollide;
     Vector3 collisionSlopeDir;
 
-    [Header("Stair Related")]
+    [Foldout("Stair Related")]
     [SerializeField] GameObject upperRay;
     [SerializeField] GameObject lowerRay;
     [SerializeField] float stepHeight = 0.5f;
     [SerializeField] float stepSmooth = 15f;
     [SerializeField] float upperDetect = .7f;
     [SerializeField] float lowerDetect = .7f;
-
-    
+    public bool onLadder;
     public float step_LookAheadRange = 0.1f;
     public float step_MaxStepHeight = 0.3f;
     public float playerRadius;
     public float slopeLimit;
 
-    [Header("Movement")]
-    [SerializeField] protected float moveSpeed;
-    [SerializeField] protected float walkSpeed;
-    [SerializeField] protected float groundDrag;
+
+    [Foldout("Sound")]
+    public bool atInterior;
+    public float fadeSpeed;
+    public float currentVolume;
+    private FMOD.Studio.EventInstance playerMove;
+    private FMOD.Studio.EventInstance outsideAmbience;
 
 
 
 
-
-    [Header("Sound")]
-    protected FMOD.Studio.EventInstance playerMove;
-
-    protected float horizontalInput;
-    protected float verticalInput;
-
-
-    [Header("References")]
+    [Foldout("References")]
     [SerializeField] protected Transform orientation;
     protected Vector3 moveDirection;
     protected Rigidbody rb;
 
 
-    [Header("Ground Check")]
-    [SerializeField] protected float playerHeight;
-    [SerializeField] protected bool grounded;
-    [SerializeField] protected LayerMask flatGround;
-    [SerializeField] protected LayerMask stairs;
-    [SerializeField] protected float stairForce;
+
 
 
 
@@ -84,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         lowerRay.transform.localPosition= new Vector3(0, -1f, 0);
         upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y+stepHeight, upperRay.transform.position.z);
-        playerMove = FMODUnity.RuntimeManager.CreateInstance("event:/Sound Effects/FootStep");
+
         playerHolding = ReferenceTool.playerHolding;
         playerCam = ReferenceTool.playerCinemachine;
         camBrain = ReferenceTool.playerBrain;
@@ -92,6 +94,11 @@ public class PlayerMovement : MonoBehaviour
         camNoise = playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         camNoise.m_AmplitudeGain = 0.5f;
         camNoise.m_FrequencyGain = 0.5f;
+
+        playerMove = FMODUnity.RuntimeManager.CreateInstance("event:/Sound Effects/FootStep");
+        outsideAmbience = RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
+        outsideAmbience.start();
+        outsideAmbience.setVolume(0);
     }
 
     void Update()
@@ -106,6 +113,17 @@ public class PlayerMovement : MonoBehaviour
 
         if(!stopMoving)
             PlayerInput();
+
+        if(atInterior && currentVolume > 0)
+        {
+            FadeOutOutside();
+        }
+
+        if(!atInterior && currentVolume < 1)
+        {
+            FadeInOutside();
+        }
+
     }
 
     void FixedUpdate()
@@ -282,6 +300,11 @@ public class PlayerMovement : MonoBehaviour
         stopMoving = false;
     }
 
+    public void OnDisable()
+    {
+        playerMove.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+    }
+
     void PlayerInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -291,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
         //else
         //    GetComponent<terraintry>().startPainting = true;
 
-        if (horizontalInput == 0 && verticalInput == 0 && grounded || playerHolding.inDialogue)
+        if (horizontalInput == 0 && verticalInput == 0 && grounded)
         {
             playerMove.setPaused(true);
         }
@@ -423,6 +446,10 @@ public class PlayerMovement : MonoBehaviour
         if (other.name == "TooRight")
             tooRight = true;
 
+        if (other.CompareTag("Interior"))
+        {
+            atInterior = true;
+        }
 
 
         
@@ -459,9 +486,38 @@ public class PlayerMovement : MonoBehaviour
             tooRight = false;
 
 
-
+        if (other.CompareTag("Interior"))
+        {
+            atInterior = false;
+        }
     }
 
+    
+    void FadeInOutside()
+    {
+        if(currentVolume < 1)
+        {
+            currentVolume += Time.deltaTime * fadeSpeed;
+        }
+        else
+        {
+            currentVolume = 1;
+        }
+        outsideAmbience.setVolume(currentVolume);
+    }
+
+    void FadeOutOutside()
+    {
+        if(currentVolume > 0)
+        {
+            currentVolume -= Time.deltaTime * fadeSpeed;
+        }
+        else
+        {
+            currentVolume = 0;
+        }
+        outsideAmbience.setVolume(currentVolume);
+    }
 
     public void OpenSurvey()
     {

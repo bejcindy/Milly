@@ -216,7 +216,7 @@ public class Door : LivableObject
             if(slidingDoor)
                 StartCoroutine(LerpPosition(openPos, 1f));
             else
-                StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
+                StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 3f));
         }        
    
     }

@@ -787,18 +787,19 @@ public class NPCControl : MonoBehaviour
         if (!HasReached(agent))
         {
             agent.isStopped = true;
-            if (!door.doorOpen)
+            if (!door.doorOpen && !door.doorMoving)
             {
                 if (!doorAnimSet)
                 {
+                    Invoke(nameof(SetDoorOpen), 1f);
                     anim.SetTrigger("OpenDoor");
                     doorAnimSet = true;
                 }
 
-                door.NPCOpenDoor();
+
             }
 
-            else
+            if(door.doorMoving)
             {
                 inDoorRange = false;
                 currentDoor = null;
@@ -810,6 +811,12 @@ public class NPCControl : MonoBehaviour
 
         }
     }
+
+    void SetDoorOpen()
+    {
+        currentDoor.NPCOpenDoor();
+    }
+
 
     #endregion
 

@@ -12,9 +12,25 @@ public class Zayne : NPCControl
 
     public void ZayneAction1()
     {
-        noMoveAfterTalk =true;
+        noTalkInWalk = false;
         noLookInConvo = true;
     }
 
+    public void ZayneAction2()
+    {
+        noTalkInWalk = false;
+        noTalkStage = true;
+    }
+
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        inConversation = false;
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
+        currentDialogue.gameObject.SetActive(false);
+        noTalkInWalk = true;
+        GetComponent<BoxCollider>().enabled = false;
+    }
 
 }

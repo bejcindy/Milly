@@ -76,6 +76,13 @@ public class PlayerHolding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (MainTattooMenu.tatMenuOn)
+        {
+            pickUpObjects.Clear();
+            lookingObjects.Clear();
+            selectedObj = null;
+            focusedObj = null;
+        }
         holdingObject = leftHand.holdingObj;
         if (!looking)
         {

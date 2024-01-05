@@ -33,6 +33,7 @@ public class LivableObject : MonoBehaviour
     public bool activated;
     public bool transformed;
     private bool firstActivated;
+    public bool noChangeLayer;
 
     [SerializeField] public bool interactable;
     [SerializeField] protected bool isVisible;
@@ -175,7 +176,7 @@ public class LivableObject : MonoBehaviour
                 }
 
                 //change layer related code
-                if ((!StartSequence.noControl || overrideStartSequence) && !izaProp)
+                if ((!StartSequence.noControl || overrideStartSequence) && !izaProp && !noChangeLayer) 
                 {
                     if (gameObject.layer != 17 && gameObject.layer != 18)
                     {

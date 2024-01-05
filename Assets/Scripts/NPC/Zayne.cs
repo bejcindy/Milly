@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class Zayne : NPCControl
 {
@@ -31,5 +32,18 @@ public class Zayne : NPCControl
         currentDialogue.gameObject.SetActive(false);
         noTalkInWalk = true;
     }
+
+    public void ChangePizzaDialogue()
+    {
+        StopIdle();
+        noTalkStage = false;
+        firstTalked = false;
+        currentDialogue = dialogueHolder.GetChild(2);
+        SetMainTalkFalse();
+        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
+        DialogueLua.SetVariable(reTriggerName, false);
+        noMoveAfterTalk = true;
+    }
+
 
 }

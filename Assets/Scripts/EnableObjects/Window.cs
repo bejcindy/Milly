@@ -132,6 +132,7 @@ public class Window : LivableObject
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
         windowMoving = true;
+        overrideStartSequence = false;
         float time = 0;
         Vector3 startPosition = transform.localPosition;
         while (time < duration)

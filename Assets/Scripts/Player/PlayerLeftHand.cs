@@ -394,6 +394,11 @@ public class PlayerLeftHand : MonoBehaviour
         {
             drinking = true;
             handAnim.Play("HandDrink");
+            BeerCup beer = holdingObj.GetComponent<BeerCup>();
+            if (beer)
+            {
+                beer.ReduceLiquid();
+            }
             //drinkHinted = true;
             if (!drinkHintDone)
             {

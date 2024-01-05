@@ -5,7 +5,9 @@ using FMODUnity;
 
 public class BeerCup : PickUpObject
 {    
-    Transform liquid;    
+    Transform liquid;
+    float liquidLevel;
+    Material liquidMat;
     Vector3 startingPos;
     Quaternion startRotation;
 
@@ -20,10 +22,13 @@ public class BeerCup : PickUpObject
         startingPos = transform.position;
         liquid = transform.GetChild(0);
         startRotation = transform.rotation;
+        liquidMat = liquid.GetComponent<Renderer>().material;
+        liquidLevel = liquidMat.GetFloat("_FillAmount");
     }
 
     protected override void Update()
     {
+        Debug.Log("Beer fill amount is" + liquidLevel);
         if (!moving && myTable.tableControlOn)
         {
             base.Update();
@@ -80,6 +85,15 @@ public class BeerCup : PickUpObject
         StartCoroutine(LerpPosition(startingPos, 1f));
         StartCoroutine(LerpRotation(startRotation, 1f));
         transform.SetParent(null);
+    }
+
+    public void ReduceLiquid()
+    {
+        if(liquidLevel < 0.6f)
+        {
+            liquidLevel += 0.02f;
+            liquidMat.SetFloat("_FillAmount", liquidLevel);
+        }
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)

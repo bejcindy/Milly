@@ -7,10 +7,14 @@ public class Vinyl : PickUpObject
     public RecordPlayer recordPlayer;
     public bool onRecordPlayer;
     public GameObject mySong;
+
+    bool notInCD;
+    float placedCDVal = 2f;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        notInCD = true;
         objType = HandObjectType.DOUBLE; 
         recordPlayer = ReferenceTool.recordPlayer;
         mySong = transform.GetChild(0).gameObject;
@@ -41,6 +45,23 @@ public class Vinyl : PickUpObject
 
         if (onRecordPlayer)
         {
+            if (activated)
+                gameObject.layer = 17;
+            else
+                gameObject.layer = 0;
+
+            if (notInCD)
+            {
+                if(placedCDVal > 0)
+                {
+                    placedCDVal -= Time.deltaTime;
+                }
+                else
+                {
+                    notInCD = false;
+                    placedCDVal = 2f;
+                }
+            }
 
             if (recordPlayer.isPlaying)
             {
@@ -48,10 +69,6 @@ public class Vinyl : PickUpObject
                     playerHolding.RemoveInteractable(gameObject);
                 selected = false;
 
-                if(activated)
-                    gameObject.layer = 17;
-                else
-                    gameObject.layer = 0;  
 
                 if (!mySong.activeSelf)
                     mySong.SetActive(true);
@@ -59,7 +76,7 @@ public class Vinyl : PickUpObject
             }
             else
             {
-                if(!recordPlayer.moving)
+                if(!recordPlayer.moving && !notInCD)
                     base.Update();
                 if (mySong.activeSelf)
                 {
@@ -69,6 +86,7 @@ public class Vinyl : PickUpObject
         }
         else
         {
+            notInCD = true;
             base.Update();
             if (mySong.activeSelf)
             {

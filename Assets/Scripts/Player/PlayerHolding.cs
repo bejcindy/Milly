@@ -80,6 +80,12 @@ public class PlayerHolding : MonoBehaviour
         {
             pickUpObjects.Clear();
             lookingObjects.Clear();
+            doorHandle = null;
+            kickableObj = null;
+            talkingTo = null; lidObj = null;
+            sitObj = null;
+            clickableObj = null;
+            catboxObj = null;
             selectedObj = null;
             focusedObj = null;
         }

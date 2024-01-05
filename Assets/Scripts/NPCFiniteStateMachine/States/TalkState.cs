@@ -15,6 +15,7 @@ public class TalkState : State
             {
                 if (machine.CheckTalkable() && !machine.CheckSpecialIdleAnim() && machine.CheckFirstTalked())
                 {
+                    Debug.Log("Should Talk");
                     machine.StopNavigation();
                     machine.SetAnimatorTrigger("Talk");
                 }

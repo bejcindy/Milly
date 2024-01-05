@@ -27,6 +27,7 @@ public class Zayne : NPCControl
     protected override void OnConversationEnd(Transform other)
     {
         inConversation = false;
+        firstTalked = true;
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
         currentDialogue.gameObject.SetActive(false);

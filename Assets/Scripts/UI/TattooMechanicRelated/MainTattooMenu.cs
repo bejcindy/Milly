@@ -137,7 +137,6 @@ public class MainTattooMenu : MonoBehaviour
         {
             if (panel.continueButton != null) panel.continueButton.interactable = false;
         }
-        ReferenceTool.playerMovement.enabled = false;
         CinemachineVirtualCamera currentCam = ReferenceTool.playerBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
         if (currentCam.GetCinemachineComponent<CinemachinePOV>())
         {
@@ -167,7 +166,7 @@ public class MainTattooMenu : MonoBehaviour
         {
             if (panel.continueButton != null) panel.continueButton.interactable = true;
         }
-        ReferenceTool.playerMovement.enabled = true;
+
         if (currentCam.GetCinemachineComponent<CinemachinePOV>())
         {
             currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;

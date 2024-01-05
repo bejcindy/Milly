@@ -342,9 +342,10 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "StartConvo" && !smokingHinted)
+        if (other.name == "CigHint" && !smokingHinted)
         {
             canSmoke = true;
+            other.gameObject.SetActive(false);
         }
     }
 

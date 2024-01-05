@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected float walkSpeed;
     [SerializeField] protected float groundDrag;
     [SerializeField] protected float playerHeight;
+    public bool cameraLocked;
 
     [Foldout("Ground Check")]
     [SerializeField] protected bool grounded;
@@ -111,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
         else
             rb.drag = 0;
 
-        if(!stopMoving)
+        if(!stopMoving && !cameraLocked && !MainTattooMenu.tatMenuOn)
             PlayerInput();
 
         if(atInterior && currentVolume > 0)
@@ -446,7 +447,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.name == "TooRight")
             tooRight = true;
 
-        if (other.CompareTag("Interior"))
+        if (other.CompareTag("AmbienceOcclude"))
         {
             atInterior = true;
         }
@@ -486,7 +487,7 @@ public class PlayerMovement : MonoBehaviour
             tooRight = false;
 
 
-        if (other.CompareTag("Interior"))
+        if (other.CompareTag("AmbienceOcclude"))
         {
             atInterior = false;
         }

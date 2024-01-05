@@ -218,7 +218,7 @@ public class FixedCameraObject : LivableObject
 
         ReferenceTool.playerPOV.m_VerticalAxis.m_MaxSpeed = 0;
         ReferenceTool.playerPOV.m_HorizontalAxis.m_MaxSpeed = 0;
-        playerMovement.enabled = false;
+//        playerMovement.enabled = false;
         uiHint.SetActive(false);
         activated = true;
 
@@ -268,6 +268,7 @@ public class FixedCameraObject : LivableObject
     void SetInteracting()
     {
         positionFixed = true;
+        playerMovement.cameraLocked = true;
     }
 
 
@@ -297,7 +298,7 @@ public class FixedCameraObject : LivableObject
         }
 
 
-        playerMovement.enabled = true;
+        playerMovement.cameraLocked = false;
         positionFixed = false;
         isInteracting = false;
         playerHolding.positionFixedWithMouse = false;
@@ -316,7 +317,7 @@ public class FixedCameraObject : LivableObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && (!StartSequence.noControl || overrideStartSequence))
             nearPlayer = true;
     }
 

@@ -93,11 +93,16 @@ public class PizzaLid : FixedCameraObject
                 }
             }
 
-            if (openLid)
-            {
-                playerHolding.lidObj = null;
-                iconHidden = true;
-            }
+            //if (openLid)
+            //{
+            //    playerHolding.lidObj = null;
+            //    DataHolder.ShowHint("<b>F/Move</b> Leave");
+            //    iconHidden = true;
+            //}
+            //else
+            //{
+            //    DataHolder.HideHint("<b>F/Move</b> Leave");
+            //}
         }
         else
         {
@@ -105,11 +110,12 @@ public class PizzaLid : FixedCameraObject
                 gameObject.layer = 17;
             else
                 gameObject.layer = 0;
-            if (!iconHidden)
-            {
-                playerHolding.lidObj = null;
-                iconHidden = true;
-            }
+            //if (!iconHidden)
+            //{
+            //    playerHolding.lidObj = null;
+            //    DataHolder.HideHint("<b>F/Move</b> Leave");
+            //    iconHidden = true;
+            //}
         }
 
         if (isInteracting && openLid)

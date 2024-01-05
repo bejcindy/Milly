@@ -1519,6 +1519,20 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 60
+    fields:
+    - title: Name
+      value: NPC/Akihito/Other_Interacted
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
@@ -29861,7 +29875,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: And I think that's all that a place needs.
+        value: And isn't that all that a place needs?
         type: 0
         typeString: 
       - title: Sequence
@@ -30268,7 +30282,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 263.48413, y: 69.97787}
+    canvasScrollPosition: {x: 166.89877, y: 795.83154}
     canvasZoom: 0.8200002
   - id: 40
     fields:
@@ -31713,7 +31727,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 947.9448}
+    canvasScrollPosition: {x: 5.479431, y: 53.698395}
     canvasZoom: 0.73000026
   - id: 41
     fields:
@@ -49597,7 +49611,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 533.30005
+        x: 534.3127
         y: 164.05354
         width: 160
         height: 30
@@ -49653,7 +49667,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 274.69174
+        x: 272.6664
         y: 251.22165
         width: 160
         height: 30
@@ -49933,8 +49947,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 534.0733
-        y: 543.0127
+        x: 533.06067
+        y: 542.00006
         width: 160
         height: 30
     - id: 8
@@ -49988,7 +50002,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 267.4811
+        x: 265.45578
         y: 350.9928
         width: 160
         height: 30
@@ -50015,8 +50029,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: <b><i>I</i></b> was the reason why <b><i>my son</i></b> chose to drive
-          away that night.
+        value: I was the reason why <b>my son</b> chose to <b>drive away</b> that
+          night.
         type: 0
         typeString: 
       - title: Sequence
@@ -50044,7 +50058,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 533.0977
+        x: 532.085
         y: 614.5362
         width: 160
         height: 30
@@ -51379,7 +51393,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 15.992142, y: 830.6447}
+    canvasScrollPosition: {x: 59.746765, y: 220.75937}
     canvasZoom: 0.7900005
   - id: 70
     fields:
@@ -51928,8 +51942,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 394.39633
-        y: 639.60834
+        x: 390.81424
+        y: 638.41437
         width: 160
         height: 30
     - id: 12
@@ -52065,8 +52079,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: C'mon Aki. <b><i>I'd</i></b> be the first to know if that were the
-          case.
+        value: C'mon Aki. I gotta be the <b>first</b> to know if that were the case.
         type: 0
         typeString: 
       - title: Sequence
@@ -52600,7 +52613,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 534.92487}
+    canvasScrollPosition: {x: 0, y: 556.4174}
     canvasZoom: 0.67000055
   - id: 71
     fields:
@@ -53277,7 +53290,7 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Akihito_Other_Interacted"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -53840,7 +53853,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1759.8462
+        x: 1757.5604
         y: 797.2939
         width: 160
         height: 30
@@ -53896,7 +53909,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2431.7874
-        y: 690.7811
+        y: 689.6383
         width: 160
         height: 30
     - id: 39
@@ -53922,8 +53935,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: God what did Kinsley even do to you huh? Getting you to defend her
-          bullshit like this?
+        value: What did Kinsley even do to you huh? Getting you to defend her bullshit
+          like this?
         type: 0
         typeString: 
       - title: Sequence
@@ -54667,13 +54680,13 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Akihito_Other_Interacted"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2224.979
+        x: 2222.693
         y: 1968.2938
         width: 160
         height: 30
@@ -55113,7 +55126,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1761.6044
+        x: 1759.3187
         y: 858.66046
         width: 160
         height: 30
@@ -55283,8 +55296,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1493.5642, y: 0}
-    canvasZoom: 0.73000026
+    canvasScrollPosition: {x: 1246.7063, y: 1359.9994}
+    canvasZoom: 0.6100003
   - id: 74
     fields:
     - title: Title
@@ -57152,7 +57165,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Grabbing a can for Willow. She's looking for food.
+        value: <b>Grabbing a can</b> for Willow. She's looking for food.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -57207,7 +57220,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Right there--I left them next to the couch.
+        value: Right there--I left them <b>next to the couch</b>,
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -58291,7 +58304,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 54.567688}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 0.6400003
   - id: 76
     fields:
@@ -59677,7 +59690,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: '[Ask for who told him]'
+        value: '[Ask who told him]'
         type: 0
         typeString: 
       - title: Dialogue Text
@@ -60035,7 +60048,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1322.3768
-        y: 488.65433
+        y: 487.55844
         width: 160
         height: 30
     - id: 30
@@ -60061,7 +60074,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Said she left Miyoshiya because you were having a fight with Aki.
+        value: Said she left Miyoshiya so that you and Aki could talk.
         type: 0
         typeString: 
       - title: Sequence
@@ -60089,7 +60102,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1323.3201
+        x: 1322.2242
         y: 555.63544
         width: 160
         height: 30
@@ -60254,7 +60267,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1322.3767
+        x: 1321.2808
         y: 745.88983
         width: 160
         height: 30

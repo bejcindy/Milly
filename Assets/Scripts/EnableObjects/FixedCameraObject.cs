@@ -41,6 +41,8 @@ public class FixedCameraObject : LivableObject
     protected bool movingCam;
     public float camXAxisSpeed;
     public float camYAxisSpeed;
+    float initialX;
+    float initialY;
 
     string sitSound = "event:/Player/Player_Sit";
 
@@ -60,6 +62,9 @@ public class FixedCameraObject : LivableObject
         {
             quitKey = KeyCode.F;
         }
+
+        initialX = fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value;
+        initialY = fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value;
     }
 
     protected override void Update()
@@ -77,6 +82,7 @@ public class FixedCameraObject : LivableObject
                 else if (isPizzaBox)
                 {
                     playerHolding.lidObj = gameObject;
+                    DataHolder.HideHint("<b>F/Move</b> Leave");
                     iconHidden = false;
                 }
                 else if (gameObject.name.Contains("catbox"))
@@ -106,6 +112,13 @@ public class FixedCameraObject : LivableObject
                 {
                     playerHolding.catboxObj = null;
                     DataHolder.HideHint("<b>F</b> Check");
+                    DataHolder.ShowHint("<b>F</b> Leave");
+                    iconHidden = true;
+                }
+                else if (isPizzaBox && GetComponent<PizzaLid>().openLid)
+                {
+                    playerHolding.lidObj = null;
+                    DataHolder.ShowHint("<b>F/Move</b> Leave");
                     iconHidden = true;
                 }
                 else if((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed)
@@ -130,12 +143,14 @@ public class FixedCameraObject : LivableObject
                 else if (isPizzaBox)
                 {
                     playerHolding.lidObj = null;
+                    DataHolder.HideHint("<b>F/Move</b> Leave");
                     iconHidden = true;
                 }
                 else if (gameObject.name.Contains("catbox"))
                 {
                     playerHolding.catboxObj = null;
                     DataHolder.HideHint("<b>F</b> Check");
+                    DataHolder.HideHint("<b>F</b> Leave");
                     iconHidden = true;
                 }
                 else
@@ -175,7 +190,7 @@ public class FixedCameraObject : LivableObject
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.F))
                 {
                     QuitAction();
                     Cursor.lockState = CursorLockMode.Locked;
@@ -292,8 +307,8 @@ public class FixedCameraObject : LivableObject
         yield return new WaitForSeconds(2f);
         iconHidden = false;
 
-        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
-        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
+        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = initialX;
+        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = initialY;
 
 
 

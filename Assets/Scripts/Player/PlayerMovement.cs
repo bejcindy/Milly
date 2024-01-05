@@ -234,11 +234,13 @@ public class PlayerMovement : MonoBehaviour
 
         if(moveDirection != Vector3.zero && !camBrain.IsBlending)
         {
-            camNoise.m_NoiseProfile = walkingNoise;
+            if(camNoise.m_NoiseProfile != walkingNoise)
+                camNoise.m_NoiseProfile = walkingNoise;
         }
         else
         {
-            camNoise.m_NoiseProfile = breathingNoise;
+            if(camNoise.m_NoiseProfile != breathingNoise)
+                camNoise.m_NoiseProfile = breathingNoise;
         }
 
         if (OnSlope()||slopeCollide)

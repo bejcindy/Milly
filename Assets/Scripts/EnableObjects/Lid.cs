@@ -43,7 +43,10 @@ public class Lid : LivableObject
         }
         else
         {
-            gameObject.layer = 0;
+            if (activated)
+                gameObject.layer = 17;
+            else
+                gameObject.layer = 0;
             if (!iconHidden)
             {
                 playerHolding.lidObj = null;

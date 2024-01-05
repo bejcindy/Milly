@@ -114,6 +114,7 @@ public class Door : LivableObject
         {
             float horizontalInput = Input.GetAxis("Mouse X") * Time.deltaTime ;
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime ;
+            Debug.Log(verticalInput);
             if (!doorMoving)
             {
                 if (!doorOpen)
@@ -122,13 +123,13 @@ public class Door : LivableObject
                     {
                         if (playerInFront)
                         {
-                            if (horizontalInput < 0)
+                            if (horizontalInput < -0.01f)
                                 StartCoroutine(LerpPosition(openPos, 1.5f));
                             playerHolding.dragAnimDirection = "Left";
                         }
                         else
                         {
-                            if (horizontalInput > 0)
+                            if (horizontalInput > 0.01f)
                                 StartCoroutine(LerpPosition(openPos, 1.5f));
                             playerHolding.dragAnimDirection = "Right";
                         }
@@ -139,13 +140,13 @@ public class Door : LivableObject
                         {
                             if (!invertControl)
                             {
-                                if (verticalInput > 0)
+                                if (verticalInput > 0.01f)
                                     StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
                                 playerHolding.dragAnimDirection = "Up";
                             }
                             else
                             {
-                                if (verticalInput < 0)
+                                if (verticalInput < -0.01f)
                                     StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
                                 playerHolding.dragAnimDirection = "Down";
                             }
@@ -155,13 +156,13 @@ public class Door : LivableObject
                         {
                             if (!invertControl)
                             {
-                                if (verticalInput < 0)
+                                if (verticalInput < -0.01f)
                                     StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
                                 playerHolding.dragAnimDirection = "Down";
                             }
                             else
                             {
-                                if (verticalInput > 0)
+                                if (verticalInput > 0.01f)
                                     StartCoroutine(LerpRotation(Quaternion.Euler(openPos), 2f));
                                 playerHolding.dragAnimDirection = "Up";
                             }
@@ -175,13 +176,13 @@ public class Door : LivableObject
                     {
                         if (playerInFront)
                         {
-                            if (horizontalInput > 0)
+                            if (horizontalInput > 0.01f)
                                 StartCoroutine(LerpPosition(closedPos, 1.5f));
                             playerHolding.dragAnimDirection = "Right";
                         }
                         else
                         {
-                            if (horizontalInput < 0)
+                            if (horizontalInput < -0.01f)
                                 StartCoroutine(LerpPosition(closedPos, 1.5f));
                             playerHolding.dragAnimDirection = "Left";
                         }
@@ -190,13 +191,13 @@ public class Door : LivableObject
                     {
                         if (playerInFront)
                         {
-                            if (verticalInput < 0)
+                            if (verticalInput < -0.01f)
                                 StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
                             playerHolding.dragAnimDirection = "Down";
                         }
                         else
                         {
-                            if (verticalInput > 0)
+                            if (verticalInput > 0.01f)
                                 StartCoroutine(LerpRotation(Quaternion.Euler(closedPos), 2f));
                             playerHolding.dragAnimDirection = "Up";
                         }

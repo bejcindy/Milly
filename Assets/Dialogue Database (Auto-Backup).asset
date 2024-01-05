@@ -1519,6 +1519,20 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 60
+    fields:
+    - title: Name
+      value: NPC/Aki/Other_Interacted
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
@@ -22596,7 +22610,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: (Housekeeping company...)
+        value: (This is...)
         type: 0
         typeString: 
       - title: Sequence
@@ -22651,7 +22665,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: (Isn't this...the one that Gloria Kinsley owned before what happened...?)
+        value: (The housekeeping agency that Kinsley owned before.)
         type: 0
         typeString: 
       - title: Sequence
@@ -22674,7 +22688,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 420
-        y: 198
+        y: 197.20001
         width: 160
         height: 30
     entryGroups: []
@@ -22922,7 +22936,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: (The Blindfolded...)
+        value: (Even us has come to an end...)
         type: 0
         typeString: 
       - title: Sequence
@@ -22936,13 +22950,7 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 22
-        originDialogueID: 3
-        destinationConversationID: 22
-        destinationDialogueID: 5
-        isConnector: 0
-        priority: 2
+      outgoingLinks: []
       conditionsString: 
       userScript: 
       onExecute:
@@ -23001,56 +23009,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 595
-        y: 146
-        width: 160
-        height: 30
-    - id: 5
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: (Mhmm, Aki's right--even us have come to our end.)
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 22
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 340.19998
-        y: 201
+        y: 145.2
         width: 160
         height: 30
     entryGroups: []
@@ -29916,7 +29875,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: And I think that's all that a place needs.
+        value: And isn't that all that a place needs?
         type: 0
         typeString: 
       - title: Sequence
@@ -30323,7 +30282,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 263.48413, y: 69.97787}
+    canvasScrollPosition: {x: 166.89877, y: 795.83154}
     canvasZoom: 0.8200002
   - id: 40
     fields:
@@ -31768,7 +31727,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 947.9448}
+    canvasScrollPosition: {x: 5.479431, y: 53.698395}
     canvasZoom: 0.73000026
   - id: 41
     fields:
@@ -35042,7 +35001,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 444.74728, y: 460.57077}
+    canvasScrollPosition: {x: 485.8901, y: 499.42792}
     canvasZoom: 0.70000094
   - id: 43
     fields:
@@ -49652,7 +49611,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 533.30005
+        x: 534.3127
         y: 164.05354
         width: 160
         height: 30
@@ -49708,7 +49667,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 274.69174
+        x: 272.6664
         y: 251.22165
         width: 160
         height: 30
@@ -49988,8 +49947,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 534.0733
-        y: 543.0127
+        x: 533.06067
+        y: 542.00006
         width: 160
         height: 30
     - id: 8
@@ -50043,7 +50002,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 267.4811
+        x: 265.45578
         y: 350.9928
         width: 160
         height: 30
@@ -50070,8 +50029,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: <b><i>I</i></b> was the reason why <b><i>my son</i></b> chose to drive
-          away that night.
+        value: I was the reason why <b>my son</b> chose to <b>drive away</b> that
+          night.
         type: 0
         typeString: 
       - title: Sequence
@@ -50099,7 +50058,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 533.0977
+        x: 532.085
         y: 614.5362
         width: 160
         height: 30
@@ -51434,7 +51393,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 15.992142, y: 830.6447}
+    canvasScrollPosition: {x: 59.746765, y: 220.75937}
     canvasZoom: 0.7900005
   - id: 70
     fields:
@@ -51983,8 +51942,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 394.39633
-        y: 639.60834
+        x: 390.81424
+        y: 638.41437
         width: 160
         height: 30
     - id: 12
@@ -52120,8 +52079,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: C'mon Aki. <b><i>I'd</i></b> be the first to know if that were the
-          case.
+        value: C'mon Aki. I gotta be the <b>first</b> to know if that were the case.
         type: 0
         typeString: 
       - title: Sequence
@@ -52655,7 +52613,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 534.92487}
+    canvasScrollPosition: {x: 0, y: 556.4174}
     canvasZoom: 0.67000055
   - id: 71
     fields:
@@ -53314,6 +53272,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 569c99b0-6c00-47b1-ad59-3247f7080c54
+        type: 0
+        typeString: 
       conversationID: 73
       isRoot: 0
       isGroup: 0
@@ -53328,7 +53290,7 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Aki_Other_Interacted"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -53561,8 +53523,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1507.3845
-        y: 450.69037
+        x: 1764.6815
+        y: 539.33887
         width: 160
         height: 30
     - id: 7
@@ -53716,7 +53678,7 @@ MonoBehaviour:
       - originConversationID: 73
         originDialogueID: 11
         destinationConversationID: 73
-        destinationDialogueID: 37
+        destinationDialogueID: 38
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -53781,8 +53743,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1507.3845
-        y: 518.45435
+        x: 1764.6815
+        y: 607.10284
         width: 160
         height: 30
     - id: 35
@@ -53836,8 +53798,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1507.5452
-        y: 585.339
+        x: 1764.8422
+        y: 673.9875
         width: 160
         height: 30
     - id: 36
@@ -53863,8 +53825,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: And THAT should justify her pushing Molly all the way until she's
-          <b><i>first</i></b>
+        value: And THAT should justify what she did to Molly??
         type: 0
         typeString: 
       - title: Sequence
@@ -53882,7 +53843,7 @@ MonoBehaviour:
       - originConversationID: 73
         originDialogueID: 36
         destinationConversationID: 73
-        destinationDialogueID: 65
+        destinationDialogueID: 69
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -53892,64 +53853,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1503.4283
-        y: 711.59766
-        width: 160
-        height: 30
-    - id: 37
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 7
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: I won't say I didn't tell you for your sake, we all know that is straight
-          up lying to both ourselves.
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 73
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 73
-        originDialogueID: 37
-        destinationConversationID: 73
-        destinationDialogueID: 38
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1907.0825
-        y: 927.09064
+        x: 1757.5604
+        y: 797.2939
         width: 160
         height: 30
     - id: 38
@@ -53975,7 +53880,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: So why?
+        value: And <b><i>no one</i></b> told me? Not her, not my parents, not <b><i>ANYONE</i></b>?!
         type: 0
         typeString: 
       - title: Sequence
@@ -54003,8 +53908,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1911.7883
-        y: 985.3259
+        x: 2431.7874
+        y: 689.6383
         width: 160
         height: 30
     - id: 39
@@ -54030,7 +53935,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Out of everyone...shouldn't you? At least you?
+        value: What did Kinsley even do to you huh? Getting you to defend her bullshit
+          like this?
         type: 0
         typeString: 
       - title: Sequence
@@ -54058,8 +53964,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1911.7883
-        y: 1051.7532
+        x: 2431.7874
+        y: 757.2084
         width: 160
         height: 30
     - id: 40
@@ -54085,7 +53991,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Because this is the only way she'll get better.
+        value: It's not what she did to me. It's what <b><i>Molly did to her</i></b>.
         type: 0
         typeString: 
       - title: Sequence
@@ -54113,8 +54019,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1911.7883
-        y: 1113.7292
+        x: 2431.7874
+        y: 819.18445
         width: 160
         height: 30
     - id: 41
@@ -54140,7 +54046,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Get better?! And how is keeping her away from me gonna do that?!
+        value: What?
         type: 0
         typeString: 
       - title: Sequence
@@ -54168,8 +54074,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1913.0079
-        y: 1182.9473
+        x: 2433.0068
+        y: 888.40247
         width: 160
         height: 30
     - id: 42
@@ -54195,7 +54101,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Milly, I know I'm in no place to say anything but...
+        value: Kinsley has been visiting Molly all these years.
         type: 0
         typeString: 
       - title: Sequence
@@ -54223,8 +54129,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1913.0078
-        y: 1246.3157
+        x: 2433.0066
+        y: 951.7709
         width: 160
         height: 30
     - id: 43
@@ -54238,11 +54144,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 7
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 1
+        value: 7
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -54250,8 +54156,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: The things we do for our closest ones, maybe sometimes they never
-          wanted any of them.
+        value: What...? But I thought Molly she...refused all visitors...?
         type: 0
         typeString: 
       - title: Sequence
@@ -54272,12 +54177,6 @@ MonoBehaviour:
         destinationDialogueID: 45
         isConnector: 0
         priority: 2
-      - originConversationID: 73
-        originDialogueID: 43
-        destinationConversationID: 73
-        destinationDialogueID: 46
-        isConnector: 0
-        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -54285,8 +54184,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1913.0656
-        y: 1308.7773
+        x: 2433.0645
+        y: 1014.23254
         width: 160
         height: 30
     - id: 45
@@ -54300,20 +54199,19 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
         value: 7
         type: 5
         typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: '[Ask what you should do.]'
+        value: 
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: What do I do then? Just not give a fuck about my sister after all
-          the shit that happened?!
+        value: I'm sorry Milly but...you were the only one she refused to see.
         type: 0
         typeString: 
       - title: Sequence
@@ -54341,63 +54239,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1692.5513
-        y: 1313.4275
-        width: 160
-        height: 30
-    - id: 46
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 7
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: '[Go home and see Molly.]'
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: I need to go see her.
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 73
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 73
-        originDialogueID: 46
-        destinationConversationID: 73
-        destinationDialogueID: 50
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 2094.5674
-        y: 1311.5958
+        x: 2212.55
+        y: 1018.8827
         width: 160
         height: 30
     - id: 47
@@ -54423,8 +54266,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: You did what anyone would've done for their sibling. But that's not
-          what we're talking about here.
+        value: We just had to tell you differently so that it wouldn't be too hard
+          for you.
         type: 0
         typeString: 
       - title: Sequence
@@ -54452,8 +54295,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1694.5677
-        y: 1380.5961
+        x: 2213.591
+        y: 1087.027
         width: 160
         height: 30
     - id: 48
@@ -54467,11 +54310,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 7
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 1
+        value: 7
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -54479,7 +54322,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Molly said...you never really understood why everything happened.
+        value: I'm the...but...I don't...
         type: 0
         typeString: 
       - title: Sequence
@@ -54507,8 +54350,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1692.5793
-        y: 1453.9348
+        x: 2211.6028
+        y: 1159.39
         width: 160
         height: 30
     - id: 49
@@ -54534,7 +54377,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Wha...what is that supposed to mean?
+        value: ......
         type: 0
         typeString: 
       - title: Sequence
@@ -54556,7 +54399,7 @@ MonoBehaviour:
       - originConversationID: 73
         originDialogueID: 49
         destinationConversationID: 73
-        destinationDialogueID: 53
+        destinationDialogueID: 71
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -54566,64 +54409,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1695.7655
-        y: 1518.6713
-        width: 160
-        height: 30
-    - id: 50
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 7
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: There must be some other reason...some other reason why she didn't
-          tell me.
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 73
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 73
-        originDialogueID: 50
-        destinationConversationID: 73
-        destinationDialogueID: 48
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 2095.6665
-        y: 1380.2772
+        x: 2215.7644
+        y: 1224.1265
         width: 160
         height: 30
     - id: 53
@@ -54649,8 +54436,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: I know that everything has been different for you since the day she
-          got sent off.
+        value: No Milly. She loves you as much as you love her.
         type: 0
         typeString: 
       - title: Sequence
@@ -54682,8 +54468,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1688.6813
-        y: 1594.5288
+        x: 2216.6802
+        y: 1357.1267
         width: 160
         height: 30
     - id: 56
@@ -54709,8 +54495,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: But...some things will never be comprehensible to us, unless we withdraw
-          from them for a little bit.
+        value: But she said that--this is the only way she'll get better.
         type: 0
         typeString: 
       - title: Sequence
@@ -54738,8 +54523,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1693.9445
-        y: 1658.3873
+        x: 2218.515
+        y: 1416.414
         width: 160
         height: 30
     - id: 57
@@ -54753,11 +54538,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 7
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 1
+        value: 7
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -54765,8 +54550,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: But there was never a day when you stopped thinking about happened,
-          or stopped blaming the Kinsleys, right?
+        value: Why everything happened...what's that supposed to mean?
         type: 0
         typeString: 
       - title: Sequence
@@ -54794,8 +54578,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1691.8208
-        y: 1799.2852
+        x: 2218.6768
+        y: 1553.8829
         width: 160
         height: 30
     - id: 58
@@ -54809,11 +54593,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
+        value: 7
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 7
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -54821,8 +54605,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Aki, it's been five years since I last saw her. And tell me that's
-          not long enough to be "A LITTLE BIT"?!
+        value: And the only way for you to really understand why everything happened.
         type: 0
         typeString: 
       - title: Sequence
@@ -54850,8 +54633,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1691.1332
-        y: 1728.7474
+        x: 2221.4175
+        y: 1485.6311
         width: 160
         height: 30
     - id: 59
@@ -54897,14 +54680,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Aki_Other_Interacted"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1695.8373
-        y: 2126.8386
+        x: 2222.693
+        y: 1968.2938
         width: 160
         height: 30
     - id: 60
@@ -54930,7 +54713,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Milly, you don't wanna become someone like me.
+        value: I'm not quite sure what she intended either but--
         type: 0
         typeString: 
       - title: Sequence
@@ -54948,7 +54731,7 @@ MonoBehaviour:
       - originConversationID: 73
         originDialogueID: 60
         destinationConversationID: 73
-        destinationDialogueID: 61
+        destinationDialogueID: 72
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -54958,8 +54741,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1691.8208
-        y: 1860.7139
+        x: 2213.291
+        y: 1625.4565
         width: 160
         height: 30
     - id: 61
@@ -54985,8 +54768,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Cuz in the end you just lose everything and everyone you've ever cared
-          about.
+        value: Cuz in the end, you can't keep anything that you ever cared about.
         type: 0
         typeString: 
       - title: Sequence
@@ -55014,8 +54796,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1693.8722
-        y: 1925.8928
+        x: 2223.014
+        y: 1767.3479
         width: 160
         height: 30
     - id: 62
@@ -55069,8 +54851,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1695.3005
-        y: 1993.0359
+        x: 2224.4424
+        y: 1834.491
         width: 160
         height: 30
     - id: 63
@@ -55124,8 +54906,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1695.3007
-        y: 2060.179
+        x: 2224.4424
+        y: 1901.634
         width: 160
         height: 30
     - id: 64
@@ -55179,63 +54961,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1505.727
-        y: 643.5208
-        width: 160
-        height: 30
-    - id: 65
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 7
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: God Milly. Why do you always gotta see things like that??
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 73
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 73
-        originDialogueID: 65
-        destinationConversationID: 73
-        destinationDialogueID: 66
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1502.2855
-        y: 781.81744
+        x: 1760.4011
+        y: 730.9753
         width: 160
         height: 30
     - id: 66
@@ -55261,7 +54988,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: THIS, this is the reason why I didn't tell you about Molly.
+        value: So you do think Molly was crazy.
         type: 0
         typeString: 
       - title: Sequence
@@ -55289,8 +55016,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1502.5492
-        y: 851.15814
+        x: 1750.3103
+        y: 997.06323
         width: 160
         height: 30
     - id: 67
@@ -55334,7 +55061,7 @@ MonoBehaviour:
       - originConversationID: 73
         originDialogueID: 67
         destinationConversationID: 73
-        destinationDialogueID: 68
+        destinationDialogueID: 7
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -55344,11 +55071,11 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1505.9778
-        y: 917.15814
+        x: 1757.9443
+        y: 1071.2957
         width: 160
         height: 30
-    - id: 68
+    - id: 69
       fields:
       - title: Title
         value: 
@@ -55371,7 +55098,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: So <b><i>that</i></b> is true then.
+        value: Pushing her and harrasing her until she went <b><i>CRAZY</i></b>?!
         type: 0
         typeString: 
       - title: Sequence
@@ -55387,9 +55114,9 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks:
       - originConversationID: 73
-        originDialogueID: 68
+        originDialogueID: 69
         destinationConversationID: 73
-        destinationDialogueID: 37
+        destinationDialogueID: 70
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -55399,13 +55126,178 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1501.4064
-        y: 983.15814
+        x: 1759.3187
+        y: 858.66046
+        width: 160
+        height: 30
+    - id: 70
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 7
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: ......
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 73
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 73
+        originDialogueID: 70
+        destinationConversationID: 73
+        destinationDialogueID: 66
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1761.6044
+        y: 908.66046
+        width: 160
+        height: 30
+    - id: 71
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 7
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Does my own sister...actually hate me?
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 73
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 73
+        originDialogueID: 71
+        destinationConversationID: 73
+        destinationDialogueID: 53
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2215.7644
+        y: 1287.8407
+        width: 160
+        height: 30
+    - id: 72
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 7
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: What I know for sure is--don't end up like me.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 73
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 73
+        originDialogueID: 72
+        destinationConversationID: 73
+        destinationDialogueID: 61
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2217.6746
+        y: 1689.7031
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1093.4612, y: 416.15262}
-    canvasZoom: 0.70000017
+    canvasScrollPosition: {x: 1054.898, y: 0}
+    canvasZoom: 0.4000004
   - id: 74
     fields:
     - title: Title
@@ -57273,7 +57165,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Grabbing a can for Willow. She's looking for food.
+        value: <b>Grabbing a can</b> for Willow. She's looking for food.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -57328,7 +57220,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Right there--I left them next to the couch.
+        value: Right there--I left them <b>next to the couch</b>,
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -58412,7 +58304,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 54.567688}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 0.6400003
   - id: 76
     fields:
@@ -59798,7 +59690,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: '[Ask for who told him]'
+        value: '[Ask who told him]'
         type: 0
         typeString: 
       - title: Dialogue Text
@@ -60156,7 +60048,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1322.3768
-        y: 488.65433
+        y: 487.55844
         width: 160
         height: 30
     - id: 30
@@ -60182,7 +60074,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Said she left Miyoshiya because you were having a fight with Aki.
+        value: Said she left Miyoshiya so that you and Aki could talk.
         type: 0
         typeString: 
       - title: Sequence
@@ -60210,7 +60102,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1323.3201
+        x: 1322.2242
         y: 555.63544
         width: 160
         height: 30
@@ -60375,7 +60267,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1322.3767
+        x: 1321.2808
         y: 745.88983
         width: 160
         height: 30
@@ -61895,7 +61787,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: (Three months passed and they still keep putting these shit up??)
+        value: (......)
         type: 0
         typeString: 
       - title: Sequence
@@ -61944,7 +61836,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: (Earned ourselves the headline for the end of us--how ironic.)
+        value: (......)
         type: 0
         typeString: 
       - title: Sequence

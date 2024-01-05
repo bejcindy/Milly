@@ -104,7 +104,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{0cf47203-8274-469a-8d5f-7c03bf1f3823}">
 		<property name="volume">
-			<value>-15</value>
+			<value>-20</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -148,6 +148,13 @@
 	</object>
 	<object class="MixerBusPanner" id="{35eefc0c-6db2-4cb7-bd36-0a2f1612646a}" />
 	<object class="MixerBusFader" id="{976b4775-efe3-4358-984a-2a54053f72f5}" />
-	<object class="SpatialiserEffect" id="{aaf8d8b1-c7a0-4e30-a597-4ce15463b2d9}" />
+	<object class="SpatialiserEffect" id="{aaf8d8b1-c7a0-4e30-a597-4ce15463b2d9}">
+		<property name="maximumDistance">
+			<value>10</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{754e1c8b-08fc-4495-8b76-d33d1cab3ebb}" />
 </objects>

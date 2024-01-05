@@ -36,7 +36,7 @@ public class Akihito : NPCControl
     protected override void OnConversationEnd(Transform other)
     {
         base.OnConversationEnd(other);
-        anim.SetTrigger("Stop");
+//        anim.SetTrigger("Stop");
     }
 
     public void AkiStopLooking()

@@ -398,12 +398,17 @@ public class PlayerLeftHand : MonoBehaviour
             if (!drinkHintDone)
             {
                 DataHolder.HideHint(DataHolder.hints.drinkHint);
-                RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Swallow", transform.position);
+                Invoke(nameof(DrinkSound), 1f);
                 drinkHintDone = true;
             }
         }
         if (handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "HandDrink")
             drinking = false;
+    }
+
+    void DrinkSound()
+    {
+        RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Swallow", transform.position);
     }
 
     public bool bypassThrow;

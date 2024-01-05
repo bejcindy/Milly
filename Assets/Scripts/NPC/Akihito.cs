@@ -53,6 +53,7 @@ public class Akihito : NPCControl
     public void SetAkiActive()
     {
         talkable = true;
+        overrideNoControl = true;
         firstTalked = false;
         noLookInConvo = true;
         currentDialogue = dialogueHolder.GetChild(1);

@@ -38,6 +38,7 @@ public class Gloria : NPCControl
     public void GloriaAction4()
     {
         noLookInConvo = true;
+        remainInAnim = true;
         //transform.SetParent(chair);
         //transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0.4f, -0.6f, 0.2f), 1f);
         //Vector3 sitRotation = new Vector3(0, 180, 0);

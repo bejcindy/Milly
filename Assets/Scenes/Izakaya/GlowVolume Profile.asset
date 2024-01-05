@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Value: 1.5
   contrast:
     m_OverrideState: 1
-    m_Value: 15
+    m_Value: 0
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 0.9009434, g: 0.92811483, b: 1, a: 1}
@@ -86,10 +86,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
   m_Name: Tonemapping
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
   neutralHDRRangeReductionMode:
     m_OverrideState: 0
     m_Value: 2
@@ -129,10 +129,10 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.93782306, y: 0.9508861, z: 1, w: -0.09608784}
+    m_Value: {x: 0.93782306, y: 0.9508861, z: 1, w: 0.02307799}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.9876229, z: 0.9510424, w: 0}
+    m_Value: {x: 1, y: 0.9876229, z: 0.9510424, w: -0.019860974}
   highlights:
     m_OverrideState: 1
     m_Value: {x: 1, y: 0.98147225, z: 0.87855244, w: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   - {fileID: -6704331189960105417}
   - {fileID: 5912752482370590724}
   - {fileID: -3989256854400660850}
+  - {fileID: 5657776488477196977}
 --- !u!114 &4430645280064187819
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -213,6 +214,34 @@ MonoBehaviour:
     dimension: 1
   dirtIntensity:
     m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &5657776488477196977
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
+  m_Name: Vignette
+  m_EditorClassIdentifier: 
+  active: 1
+  color:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.285
+  smoothness:
+    m_OverrideState: 1
+    m_Value: 1
+  rounded:
+    m_OverrideState: 0
     m_Value: 0
 --- !u!114 &5912752482370590724
 MonoBehaviour:

@@ -19,7 +19,8 @@ public class OuterPanelButton : MonoBehaviour
     }
     public void NoDragPanel()
     {
-        parentControl.noDrag = true;
+        if(!parentControl.draging)
+            parentControl.noDrag = true;
     }
     public void CanDragPanel()
     {

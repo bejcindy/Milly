@@ -7,7 +7,7 @@ public class CharacterPanel : TattooPanel
 {
     GraphicRaycaster graphRay;
     public Transform currentPanel;
-
+    public bool draging;
 
     bool replacePanel;
     bool changingPanel;
@@ -38,13 +38,14 @@ public class CharacterPanel : TattooPanel
                 mainTattooMenu.ChangePanel();
                 replacePanel = true;
             }
-            
+            if (!noDrag)
+            {
+                DragPanel();
+            }
+
         }
 
-        if (!noDrag)
-        {
-            DragPanel();
-        }
+
 
         if (changingPanel)
         {
@@ -91,8 +92,14 @@ public class CharacterPanel : TattooPanel
     {
         if (Input.GetMouseButton(0))
         {
+            draging = true;
             Vector2 dragAmount = new Vector2(Input.GetAxis("Mouse X") * mouseDragSpeed, Input.GetAxis("Mouse Y") * mouseDragSpeed);
             panelTransform.anchoredPosition += dragAmount;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            draging = false;
         }
     }
 

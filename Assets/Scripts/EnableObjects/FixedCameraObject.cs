@@ -34,7 +34,7 @@ public class FixedCameraObject : LivableObject
 
     PlayerMovement playerMovement;
 
-    protected bool iconHidden;
+    public bool iconHidden;
     protected bool isPizzaBox;
     public bool nearPlayer;
 
@@ -110,7 +110,7 @@ public class FixedCameraObject : LivableObject
                 }
                 else if((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed)
                 {
-                    if(dialogueBound)
+
                     playerHolding.sitObj = null;
                     DataHolder.HideHint(DataHolder.hints.sitHint);
                     DataHolder.ShowHint(DataHolder.hints.standHint);
@@ -148,7 +148,7 @@ public class FixedCameraObject : LivableObject
             }
         }
 
-        if ((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed )
+        if ((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed)
             QuitInteraction();
         else if (isPizzaBox && positionFixed)
         {
@@ -290,12 +290,11 @@ public class FixedCameraObject : LivableObject
         ReferenceTool.playerPOV.m_VerticalAxis.m_MaxSpeed = 200;
         ReferenceTool.playerPOV.m_HorizontalAxis.m_MaxSpeed = 200;
         yield return new WaitForSeconds(2f);
+        iconHidden = false;
 
-        if (moveCam)
-        {
-            fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
-            fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
-        }
+        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
+        fixedCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
+
 
 
         playerMovement.cameraLocked = false;

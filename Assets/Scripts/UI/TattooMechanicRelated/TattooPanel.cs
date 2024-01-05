@@ -30,7 +30,6 @@ public class TattooPanel : MonoBehaviour
 
     public bool activatedOnce;
 
-
     protected virtual void Awake()
     {
         panelTransform = GetComponent<RectTransform>();
@@ -44,7 +43,6 @@ public class TattooPanel : MonoBehaviour
         characterPanel = mainTattooMenu.characterPanel;
         startPos = panelTransform.anchoredPosition;
     }
-
 
     // Update is called once per frame
     protected virtual void Update()
@@ -67,14 +65,8 @@ public class TattooPanel : MonoBehaviour
             {
                 DragPanel();
             }
-
-            
         }
-
     }
-
-
-
 
     float AlphaBasedOnScale(float maxA)
     {

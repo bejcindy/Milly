@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
+using TMPro;
 using FMODUnity;
 public class MainTattooMenu : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class MainTattooMenu : MonoBehaviour
     public bool lerping;
     public bool mainQuestBegun;
 
+    public TextMeshProUGUI[] incompleteTexts;
+    bool incompleteShowed;
 
     bool playAnim;
     bool firstActivated;
@@ -34,6 +37,8 @@ public class MainTattooMenu : MonoBehaviour
         playAnim = true;
         blurCanvas.SetActive(false);
         mainQuestBegun = false;
+        foreach (TextMeshProUGUI tmp in incompleteTexts)
+            tmp.color = new Color(tmp.color.r, tmp.color.g, tmp.color.b, 0);
     }
 
     // Update is called once per frame
@@ -83,6 +88,13 @@ public class MainTattooMenu : MonoBehaviour
                 showPanel = true;
 
             }
+        }
+
+        if (mainQuestBegun && !incompleteShowed)
+        {
+            foreach (TextMeshProUGUI tmp in incompleteTexts)
+                tmp.color = new Color(tmp.color.r, tmp.color.g, tmp.color.b, 1);
+            incompleteShowed = true;
         }
     }
 
@@ -147,7 +159,7 @@ public class MainTattooMenu : MonoBehaviour
     {
         playerUnpaused = true;
         DataHolder.HideHint(DataHolder.hints.tattooViewHint);
-        DataHolder.HideHintExceptThis(DataHolder.hints.outerPanelHint);
+        DataHolder.HideHint(DataHolder.hints.outerPanelHint);
         ReferenceTool.playerLeftHand.bypassThrow = false;
         CinemachineVirtualCamera currentCam = ReferenceTool.playerBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
 

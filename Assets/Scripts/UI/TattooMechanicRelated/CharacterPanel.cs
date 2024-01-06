@@ -24,8 +24,7 @@ public class CharacterPanel : TattooPanel
 
     protected override void Update()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        
         GetComponentInParent<GraphicRaycaster>().enabled = true;
         if(!changingPanel)
             canvasGroup.alpha = AlphaBasedOnScale(1);

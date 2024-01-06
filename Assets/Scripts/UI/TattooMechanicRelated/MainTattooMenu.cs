@@ -30,6 +30,9 @@ public class MainTattooMenu : MonoBehaviour
     float I = 0;
     float fadeInterval = 10f;
 
+    CursorLockMode modeBeforePanel;
+    bool cursorVisibility;
+    bool gotCursor;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,30 +50,45 @@ public class MainTattooMenu : MonoBehaviour
 
         if (showPanel)
         {
-            tatMenuOn = true;
-            firstActivated = true;
-            if (playAnim)
+            if (!gotCursor)
             {
-                menuFade.SetTrigger("FadeIn");
-                RuntimeManager.PlayOneShot(panelOpenSound);
-                snapshot = RuntimeManager.CreateInstance("snapshot:/EnableObject");                
-                snapshot.start();                
-                StartCoroutine(FadeInFilter());                
-                playAnim = false;
-            }
-            PausePlayer();
-            if (activePanel == characterPanel)
-            {
-                DataHolder.ShowHint(DataHolder.hints.outerPanelHint);
-                DataHolder.HideHintExceptThis(DataHolder.hints.outerPanelHint);
+                modeBeforePanel = Cursor.lockState;
+                cursorVisibility = Cursor.visible;
+                gotCursor = true;
             }
             else
             {
-                DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
-                DataHolder.HideHintExceptThis(DataHolder.hints.tattooViewHint);
+                tatMenuOn = true;
+                firstActivated = true;
+
+                if (playAnim)
+                {
+                    menuFade.SetTrigger("FadeIn");
+                    RuntimeManager.PlayOneShot(panelOpenSound);
+                    snapshot = RuntimeManager.CreateInstance("snapshot:/EnableObject");
+                    snapshot.start();
+                    StartCoroutine(FadeInFilter());
+                    playAnim = false;
+                }
+                PausePlayer();
+                if (activePanel == characterPanel)
+                {
+                    DataHolder.ShowHint(DataHolder.hints.outerPanelHint);
+                    DataHolder.HideHintExceptThis(DataHolder.hints.outerPanelHint);
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
+                else
+                {
+                    DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
+                    DataHolder.HideHintExceptThis(DataHolder.hints.tattooViewHint);
+                    //Cursor.lockState = CursorLockMode.Locked;
+                    //Cursor.visible = false;
+                    Debug.Log("here3");
+                }
             }
         }
-
+        Debug.Log(Cursor.lockState + "; " + Cursor.visible);
 
         if (Input.GetKeyDown(KeyCode.Tab) && firstActivated)
         {
@@ -82,6 +100,14 @@ public class MainTattooMenu : MonoBehaviour
                 showPanel = false;
                 StartCoroutine(FadeOutFilter());
                 playAnim = true;
+                if (gotCursor)
+                {
+                    Cursor.lockState = modeBeforePanel;
+                    Cursor.visible = cursorVisibility;
+                    Debug.Log(Cursor.lockState);
+                    Debug.Log(Cursor.visible);
+                    gotCursor = false;
+                }
             }
             else if(mainQuestBegun)
             {

@@ -38,6 +38,8 @@ public class ContainerObject : CollisionObject
         obj.localPosition = containedPos;
         obj.GetComponent<PickUpObject>().inHand = false;
         obj.GetComponent<Rigidbody>().isKinematic = false;
+        if (obj.GetComponent<Cigarette>())
+            obj.GetComponent<Cigarette>().enabled = false;
         activated = true;
     }
 }

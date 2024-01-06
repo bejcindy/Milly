@@ -49,8 +49,7 @@ public class TattooPanel : MonoBehaviour
     {
         if (panelOn)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            
             GetComponentInParent<GraphicRaycaster>().enabled = false;
 
             charPanelIcon.SetActive(true);

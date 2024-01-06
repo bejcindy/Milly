@@ -48,10 +48,22 @@ public class Door : LivableObject
             (pointOnScreen.y > Screen.height * 0.2f) || (pointOnScreen.y < Screen.height * 0.8f))
                 isVisible = true;
             else
+            {
                 isVisible = false;
+                if (playerHolding.doorHandle == doorHandleCollider.gameObject)
+                {
+                    playerHolding.doorHandle = null;
+                }
+            }
         }
         else
+        {
             isVisible = false;
+            if (playerHolding.doorHandle == doorHandleCollider.gameObject)
+            {
+                playerHolding.doorHandle = null;
+            }
+        }
 
 
         playerInFront = CheckPlayerForward();

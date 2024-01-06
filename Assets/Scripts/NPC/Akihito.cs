@@ -36,6 +36,7 @@ public class Akihito : NPCControl
     protected override void OnConversationEnd(Transform other)
     {
         base.OnConversationEnd(other);
+        talkable = false;
 //        anim.SetTrigger("Stop");
     }
 

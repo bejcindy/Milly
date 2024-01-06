@@ -317,6 +317,21 @@ public class PlayerMovement : MonoBehaviour
         //else
         //    GetComponent<terraintry>().startPainting = true;
 
+        if(horizontalInput == 0 && verticalInput == 0)
+        {
+            if (camNoise.m_AmplitudeGain > 0)
+                camNoise.m_AmplitudeGain -= Time.deltaTime * 0.1f;
+            else
+                camNoise.m_AmplitudeGain = 0;
+        }
+        else
+        {
+            if (camNoise.m_AmplitudeGain < 0.5f)
+                camNoise.m_AmplitudeGain += Time.deltaTime * 0.1f;
+            else
+                camNoise.m_AmplitudeGain = 0.5f;
+        }
+
         if (horizontalInput == 0 && verticalInput == 0 && grounded)
         {
             playerMove.setPaused(true);

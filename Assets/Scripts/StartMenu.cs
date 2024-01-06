@@ -3,19 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using FMODUnity;
+using FMOD.Studio;
+using FMOD;
 
 public class StartMenu : MonoBehaviour
 {
     public bool startAllowed;
+    public bool fadeSound;
     public Animator cinemachineAnim;
     public Animator startButtonAnim;
     public Animator quitButtonAnim;
     public EventSystem eventSystem;
     Animator canvasAnim;
+    float fadeVal;
+
+    [SerializeField] private EventReference SelectAudio;
+    private EventInstance Audio;
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        fadeVal = 0f;
         canvasAnim = GetComponent<Animator>();
+        Audio = RuntimeManager.CreateInstance(SelectAudio);
+        RuntimeManager.AttachInstanceToGameObject(Audio, GetComponent<Transform>(), GetComponent<Rigidbody>());
+        Audio.start();
+        Audio.release();
+
     }
 
     // Update is called once per frame
@@ -29,30 +45,33 @@ public class StartMenu : MonoBehaviour
             }
         }
 
-        if (Input.anyKeyDown)
+        if (startAllowed && Input.anyKeyDown)
         {
+            fadeSound = true;
+            RuntimeManager.PlayOneShot("event:/Sound Effects/UI/StartGame");
             StartGame();
         }
+
+        if (fadeSound)
+        {
+            if(fadeVal < 1)
+                fadeVal += Time.deltaTime * 0.1f;
+            else
+            {
+                Audio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            }
+
+            Audio.setParameterByName("FadeOut", fadeVal);
+        }
+
+
     }
 
-    public void EnableStart()
+    public void AllowStartGame()
     {
         startAllowed = true;
     }
 
-    public void EnableButtonAnim()
-    {
-        startButtonAnim.enabled = true;
-        quitButtonAnim.enabled = true;
-    }
-
-
-    public void DisableButtonAnim()
-    {
-        eventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
-        //startButtonAnim.enabled = false;
-        //quitButtonAnim.enabled = false;
-    }
     public void LoadIzakayaScene()
     {
         SceneManager.LoadScene(1);
@@ -60,6 +79,7 @@ public class StartMenu : MonoBehaviour
 
     public void StartGame()
     {
+
         canvasAnim.SetTrigger("Start");
     }
 

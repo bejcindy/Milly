@@ -82,13 +82,13 @@ public class MainTattooMenu : MonoBehaviour
                 {
                     DataHolder.ShowHint(DataHolder.hints.tattooViewHint);
                     DataHolder.HideHintExceptThis(DataHolder.hints.tattooViewHint);
-                    //Cursor.lockState = CursorLockMode.Locked;
-                    //Cursor.visible = false;
-                    Debug.Log("here3");
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    //Debug.Log("here3");
                 }
             }
         }
-        Debug.Log(Cursor.lockState + "; " + Cursor.visible);
+        //Debug.Log(Cursor.lockState + "; " + Cursor.visible);
 
         if (Input.GetKeyDown(KeyCode.Tab) && firstActivated)
         {

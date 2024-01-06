@@ -127,10 +127,10 @@
 	</object>
 	<object class="LoopRegion" id="{e269f455-5595-425d-992e-8680af6c8ae7}">
 		<property name="position">
-			<value>0</value>
+			<value>0.029999999999999999</value>
 		</property>
 		<property name="length">
-			<value>0.65000000000000002</value>
+			<value>0.62</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{4c3a69c5-cd91-4303-a1a6-6e15624dd4d2}</destination>
@@ -142,6 +142,8 @@
 	<object class="MixerBusEffectChain" id="{cdcd70ea-5e7d-44ae-bb13-01405c41bd01}">
 		<relationship name="effects">
 			<destination>{856f1106-55d7-43f3-9fd9-25ff1174a0f4}</destination>
+			<destination>{b74679d9-3fc4-4cd0-a771-1b6a59bf40af}</destination>
+			<destination>{1b4887a2-7264-441d-840d-8e9e9e385ea5}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{99a17799-69ba-4008-8d2d-07ffeaa3c4c3}">
@@ -192,5 +194,24 @@
 	</object>
 	<object class="MixerBusPanner" id="{54c6a68f-fcd3-44e0-ac7b-a5f8758293df}" />
 	<object class="MixerBusFader" id="{856f1106-55d7-43f3-9fd9-25ff1174a0f4}" />
+	<object class="MultibandEqEffect" id="{b74679d9-3fc4-4cd0-a771-1b6a59bf40af}">
+		<property name="filterTypeA">
+			<value>6</value>
+		</property>
+		<property name="frequencyA">
+			<value>94.6008911</value>
+		</property>
+		<property name="qualityA">
+			<value>0.100000001</value>
+		</property>
+	</object>
+	<object class="SFXReverbEffect" id="{1b4887a2-7264-441d-840d-8e9e9e385ea5}">
+		<property name="earlyLateMix">
+			<value>51</value>
+		</property>
+		<property name="wetLevel">
+			<value>-25.5</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{80389d87-23cd-4e3e-8bb1-c9b901452172}" />
 </objects>

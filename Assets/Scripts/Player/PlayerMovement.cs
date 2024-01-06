@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [Foldout("Basic Movement")]
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float walkSpeed;
+    [SerializeField] protected float maxWalkSpeed;
     [SerializeField] protected float groundDrag;
     [SerializeField] protected float playerHeight;
     public bool cameraLocked;
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     public bool atInterior;
     public float fadeSpeed;
     public float currentVolume;
-    private FMOD.Studio.EventInstance playerMove;
+    private FMOD.Studio.EventInstance walkSFX;
     private FMOD.Studio.EventInstance outsideAmbience;
 
 
@@ -80,11 +81,17 @@ public class PlayerMovement : MonoBehaviour
     CinemachineVirtualCamera playerCam;
     CinemachineBrain camBrain;
     CinemachineBasicMultiChannelPerlin camNoise;
+    [SerializeField] float breathingAmp;
+    [SerializeField] float breathingFreq;
+    [SerializeField] float walkingAmp;
+    [SerializeField] float walkingFreq;
     public NoiseSettings breathingNoise;
-    public NoiseSettings walkingNoise;
+    bool walking;
+    public bool easingNoise = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        moveSpeed = walkSpeed;
         lowerRay.transform.localPosition= new Vector3(0, -1f, 0);
         upperRay.transform.position = new Vector3(upperRay.transform.position.x, lowerRay.transform.position.y+stepHeight, upperRay.transform.position.z);
 
@@ -93,10 +100,11 @@ public class PlayerMovement : MonoBehaviour
         camBrain = ReferenceTool.playerBrain;
         playerCam.AddCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         camNoise = playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-        camNoise.m_AmplitudeGain = 0.5f;
-        camNoise.m_FrequencyGain = 0.5f;
+        camNoise.m_NoiseProfile = breathingNoise;
+        camNoise.m_AmplitudeGain = breathingAmp;
+        camNoise.m_FrequencyGain = breathingFreq;
 
-        playerMove = FMODUnity.RuntimeManager.CreateInstance("event:/Sound Effects/FootStep");
+        walkSFX = FMODUnity.RuntimeManager.CreateInstance("event:/Sound Effects/FootStep");
         outsideAmbience = RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
         outsideAmbience.start();
         outsideAmbience.setVolume(0);
@@ -104,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        
+
         grounded = Physics.Raycast(transform.position, -transform.up, playerHeight, flatGround);
         if (grounded)
             rb.drag = groundDrag;
@@ -124,6 +132,8 @@ public class PlayerMovement : MonoBehaviour
         {
             FadeInOutside();
         }
+
+        EaseInMovement();
 
     }
 
@@ -231,17 +241,17 @@ public class PlayerMovement : MonoBehaviour
 
         moveDirection = Vector3.Normalize(orientation.forward * verticalInput + orientation.right * horizontalInput);
 
-
-        if(moveDirection != Vector3.zero && !camBrain.IsBlending)
+        if (moveDirection != Vector3.zero && !camBrain.IsBlending && rb.velocity.magnitude > 0.05f) 
         {
-            if(camNoise.m_NoiseProfile != walkingNoise)
-                camNoise.m_NoiseProfile = walkingNoise;
+            walking = true;
+
         }
         else
         {
-            if(camNoise.m_NoiseProfile != breathingNoise)
-                camNoise.m_NoiseProfile = breathingNoise;
+            walking = false;
+
         }
+
 
         if (OnSlope()||slopeCollide)
         {
@@ -305,55 +315,108 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnDisable()
     {
-        playerMove.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        walkSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+    }
+
+    void EaseInMovement()
+    {
+        if (walking)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                walkSFX.setPitch(1.125f);
+                walkSpeed = 3.5f;
+                maxWalkSpeed = 4.5f;
+            }
+            else
+            {
+                walkSFX.setPitch(1);
+                walkSpeed = 3;
+                maxWalkSpeed = 4;
+            }
+            if (!atInterior)
+            {
+
+                if (moveSpeed < maxWalkSpeed)
+                {
+                    moveSpeed += Time.deltaTime*1.5f;
+                }
+                else
+                {
+                    moveSpeed = maxWalkSpeed;
+                }
+            }
+            else
+            {
+                if (moveSpeed < walkSpeed)
+                {
+                    moveSpeed += Time.deltaTime * 1.5f;
+                }
+                else
+                {
+                    moveSpeed = walkSpeed;
+                }
+            }
+
+
+            if (camNoise.m_AmplitudeGain < walkingAmp)
+                camNoise.m_AmplitudeGain += Time.deltaTime;
+            else
+                camNoise.m_AmplitudeGain = walkingAmp;
+
+            if(camNoise.m_FrequencyGain < walkingFreq)
+                camNoise.m_FrequencyGain += Time.deltaTime * 2f;
+            else
+                camNoise.m_FrequencyGain = walkingFreq;
+        }
+        else
+        {
+            moveSpeed = walkSpeed / 2;
+            if (camNoise.m_AmplitudeGain > breathingAmp)
+                camNoise.m_AmplitudeGain -= Time.deltaTime;
+            else
+                camNoise.m_AmplitudeGain = breathingAmp;
+
+            if (camNoise.m_FrequencyGain > breathingFreq)
+                camNoise.m_FrequencyGain -= Time.deltaTime * 2f;
+            else
+                camNoise.m_FrequencyGain = breathingFreq;
+        }
+
     }
 
     void PlayerInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        //if (horizontalInput == 0 && verticalInput == 0)
-        //    GetComponent<terraintry>().startPainting = false;
-        //else
-        //    GetComponent<terraintry>().startPainting = true;
 
-        if(horizontalInput == 0 && verticalInput == 0)
-        {
-            if (camNoise.m_AmplitudeGain > 0)
-                camNoise.m_AmplitudeGain -= Time.deltaTime * 0.1f;
-            else
-                camNoise.m_AmplitudeGain = 0;
-        }
-        else
-        {
-            if (camNoise.m_AmplitudeGain < 0.5f)
-                camNoise.m_AmplitudeGain += Time.deltaTime * 0.1f;
-            else
-                camNoise.m_AmplitudeGain = 0.5f;
-        }
 
-        if (horizontalInput == 0 && verticalInput == 0 && grounded)
+
+
+
+
+        if (!walking && grounded)
         {
-            playerMove.setPaused(true);
+            walkSFX.setPaused(true);
         }
         else if (grounded)
         {
             FMOD.Studio.PLAYBACK_STATE state;
-            playerMove.getPlaybackState(out state);
+            walkSFX.getPlaybackState(out state);
             bool isPaused;
-            playerMove.getPaused(out isPaused);
+            walkSFX.getPaused(out isPaused);
             if (isPaused)
             {
-                playerMove.setPaused(false);
+                walkSFX.setPaused(false);
             }
             else if (state == FMOD.Studio.PLAYBACK_STATE.STOPPED)
             {
-                playerMove.start();
+                walkSFX.start();
             }
         }
         else if (!grounded)
         {
-            playerMove.setPaused(true);
+            walkSFX.setPaused(true);
         }
 
 

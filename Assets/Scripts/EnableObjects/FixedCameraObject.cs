@@ -70,6 +70,9 @@ public class FixedCameraObject : LivableObject
     protected override void Update()
     {
         base.Update();
+
+
+
         if (nearPlayer && checkVisible)
         {
             if (!isInteracting)
@@ -101,35 +104,6 @@ public class FixedCameraObject : LivableObject
 
                 TriggerInteraction();
             }
-            else
-            {
-                if (gameObject.name.Contains("apt_call"))
-                {
-                    playerHolding.clickableObj = null;
-                    iconHidden = true;
-                }
-                else if (gameObject.name.Contains("catbox"))
-                {
-                    playerHolding.catboxObj = null;
-                    DataHolder.HideHint("<b>F</b> Check");
-                    DataHolder.ShowHint("<b>F</b> Leave");
-                    iconHidden = true;
-                }
-                else if (isPizzaBox && GetComponent<PizzaLid>().openLid)
-                {
-                    playerHolding.lidObj = null;
-                    DataHolder.ShowHint("<b>F/Move</b> Leave");
-                    iconHidden = true;
-                }
-                else if((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed)
-                {
-
-                    playerHolding.sitObj = null;
-                    DataHolder.HideHint(DataHolder.hints.sitHint);
-                    DataHolder.ShowHint(DataHolder.hints.standHint);
-                    iconHidden = true;
-                }
-            }
         }
         else
         {
@@ -160,6 +134,36 @@ public class FixedCameraObject : LivableObject
                     DataHolder.HideHint(DataHolder.hints.standHint);
                     iconHidden = true;
                 }
+            }
+        }
+
+        if (isInteracting)
+        {
+            if (gameObject.name.Contains("apt_call"))
+            {
+                playerHolding.clickableObj = null;
+                iconHidden = true;
+            }
+            else if (gameObject.name.Contains("catbox"))
+            {
+                playerHolding.catboxObj = null;
+                DataHolder.HideHint("<b>F</b> Check");
+                DataHolder.ShowHint("<b>F</b> Leave");
+                iconHidden = true;
+            }
+            else if (isPizzaBox && GetComponent<PizzaLid>().openLid)
+            {
+                playerHolding.lidObj = null;
+                DataHolder.ShowHint("<b>F/Move</b> Leave");
+                iconHidden = true;
+            }
+            else if ((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed)
+            {
+
+                playerHolding.sitObj = null;
+                DataHolder.HideHint(DataHolder.hints.sitHint);
+                DataHolder.ShowHint(DataHolder.hints.standHint);
+                iconHidden = true;
             }
         }
 

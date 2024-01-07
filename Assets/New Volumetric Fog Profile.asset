@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612e70f49e5124da0a95111a57250300, type: 3}
   m_Name: New Volumetric Fog Profile
   m_EditorClassIdentifier: 
-  raymarchQuality: 6
+  raymarchQuality: 3
   raymarchMinStep: 0.1
   jittering: 0.5
-  dithering: 1
+  dithering: 0
   renderQueue: 3100
   sortingLayerID: 0
   sortingOrder: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
   detailScale: 0.35
   detailStrength: 0.5
   detailOffset: -0.5
-  density: 1
+  density: 0.8
   shape: 0
   border: 0.05
   customHeight: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   terrainFogHeight: 25
   terrainFogMinAltitude: 0
   terrainFogMaxAltitude: 150
-  albedo: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
+  albedo: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
   enableDepthGradient: 0
   depthGradient:
     serializedVersion: 2
@@ -112,28 +112,28 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  brightness: 10
-  deepObscurance: 0.509
+  brightness: 5
+  deepObscurance: 0
   specularColor: {r: 1, g: 1, b: 1, a: 1}
   specularThreshold: 0.637
   specularIntensity: 0.366
-  turbulence: 0.73
+  turbulence: 0
   windDirection: {x: 0.02, y: 0, z: 0}
   useCustomDetailNoiseWindDirection: 0
   detailNoiseWindDirection: {x: 0.02, y: 0, z: 0}
   dayNightCycle: 1
   sunDirection: {x: 0, y: 1, z: 0}
-  sunColor: {r: 0, g: 0.9568, b: 0.8392, a: 1}
+  sunColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
   sunIntensity: 1
   ambientLightMultiplier: 0
   lightDiffusionPower: 9
-  lightDiffusionIntensity: 0.524
+  lightDiffusionIntensity: 0.363
   receiveShadows: 0
   shadowIntensity: 0.5
   shadowCancellation: 0
   shadowMaxDistance: 250
   cookie: 0
-  distantFog: 1
+  distantFog: 0
   distantFogStartDistance: 50
   distantFogDistanceDensity: 0.5
   distantFogMaxHeight: 4000

@@ -459,9 +459,6 @@ public class PlayerLeftHand : MonoBehaviour
                     objPickUp.thrownByPlayer = true;
                     holdingObj.SetParent(null);
 
-
-
-
                     if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
                     {
                         isHolding = false;
@@ -475,7 +472,7 @@ public class PlayerLeftHand : MonoBehaviour
                         {
                             forceDirection = (hit.point - holdingObj.localPosition).normalized;
                         }
-
+                         
                         Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwForceUp;
                         holdingObj.GetComponent<Rigidbody>().AddForce(forceToAdd, ForceMode.Impulse);
                         FMODUnity.RuntimeManager.PlayOneShot(objPickUp.throwEventName, transform.position);

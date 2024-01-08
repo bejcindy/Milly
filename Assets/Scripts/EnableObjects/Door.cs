@@ -126,7 +126,6 @@ public class Door : LivableObject
         {
             float horizontalInput = Input.GetAxis("Mouse X") * Time.deltaTime ;
             float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime ;
-            Debug.Log(verticalInput);
             if (!doorMoving)
             {
                 if (!doorOpen)

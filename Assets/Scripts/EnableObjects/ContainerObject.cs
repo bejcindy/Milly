@@ -40,6 +40,8 @@ public class ContainerObject : CollisionObject
         obj.GetComponent<Rigidbody>().isKinematic = false;
         if (obj.GetComponent<Cigarette>())
             obj.GetComponent<Cigarette>().enabled = false;
-        activated = true;
+
+        if(!StartSequence.noControl || overrideStartSequence)
+            activated = true;
     }
 }

@@ -28,7 +28,6 @@ public class BeerCup : PickUpObject
 
     protected override void Update()
     {
-        Debug.Log("Beer fill amount is" + liquidLevel);
         if (!moving && myTable.tableControlOn)
         {
             base.Update();
@@ -80,7 +79,7 @@ public class BeerCup : PickUpObject
 
     public void PutDownCup()
     {
-        playerHolding.UnoccupyLeft();
+        playerLeftHand.RemoveHandObj();
         inHand = false;
         StartCoroutine(LerpPosition(startingPos, 1f));
         StartCoroutine(LerpRotation(startRotation, 1f));

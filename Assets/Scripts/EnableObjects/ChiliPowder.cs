@@ -74,7 +74,7 @@ public class ChiliPowder : PickUpObject
 
     public void PutDownPowder()
     {
-        playerHolding.UnoccupyLeft();
+        playerLeftHand.RemoveHandObj();
         inHand = false;
         StartCoroutine(LerpPosition(startingPos, 1f));
         transform.SetParent(null);

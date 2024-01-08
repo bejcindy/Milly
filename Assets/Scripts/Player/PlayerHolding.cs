@@ -597,6 +597,7 @@ public class PlayerHolding : MonoBehaviour
         leftHand.isHolding = true;
         leftHand.holdingObj = obj;
         PickUpObject pickUp = obj.GetComponent<PickUpObject>();
+        leftHand.AssignRefs(pickUp);
         switch (pickUp.objType)
         {
             case HandObjectType.CHOPSTICKS:
@@ -702,7 +703,7 @@ public class PlayerHolding : MonoBehaviour
 
         if (leftHand.holdingObj.GetComponent<Chopsticks>())
             leftHand.holdingObj.GetComponent<Chopsticks>().chopMoving = false;
-        Invoke(nameof(EnableThrowLeft), 0.2f);
+        Invoke(nameof(EnableThrowLeft), 0.1f);
     }
 
     IEnumerator LerpRotation(Transform obj, Quaternion endValue, float duration)

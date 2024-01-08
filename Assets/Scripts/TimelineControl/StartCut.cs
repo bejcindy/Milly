@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +13,14 @@ public class StartCut : MonoBehaviour
     public bool turnOnLights;
     public Light[] lights;
     public GameObject logo;
+    public CinemachineVirtualCamera playerCam;
+    public CinemachineVirtualCamera windowCam;
     public float[] intensities;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerCam.m_Priority = 10;
+        windowCam.m_Priority = 0;
     }
 
     // Update is called once per frame

@@ -27,8 +27,8 @@ public class PlayerLeftHand : MonoBehaviour
     public Animator handAnim;
     public bool drinking;
     public ParticleSystem smokeVFX;
-    Vector2 minThrowForce = new Vector2(100f, 50f);
-    Vector2 maxThrowForce = new Vector2(800f, 200f);
+    Vector2 minThrowForce = new Vector2(10f, 5f);
+    Vector2 maxThrowForce = new Vector2(80f, 20f);
     float holdTime = 2f;
 
     Chopsticks currentChop;
@@ -46,6 +46,10 @@ public class PlayerLeftHand : MonoBehaviour
 
     Vector2 throwForce;
 
+    public float newThrowForce;
+    public float throwForceUp;
+    public float newmaxThrowForce;
+
     public bool readyToThrow;
     bool notHoldingAnyThing;
 
@@ -54,6 +58,9 @@ public class PlayerLeftHand : MonoBehaviour
     public LayerMask groundLayer;
 
     public GameObject eatingDialogue;
+
+    PickUpObject objPickUp;
+    Rigidbody objRb;
 
 
     #region UI variables
@@ -199,10 +206,24 @@ public class PlayerLeftHand : MonoBehaviour
         #endregion
     }
 
+    public void AssignRefs(PickUpObject obj)
+    {
+        objPickUp = obj;
+        objRb = obj.GetComponent<Rigidbody>();
+    }
+
+    public void RemoveHandObj()
+    {
+        isHolding = false;
+        holdingObj = null;
+        noThrow = true;
+        objPickUp = null;
+        objRb = null;
+    }
+
     public void HoldingAction()
     {
-        PickUpObject pickUp = holdingObj.GetComponent<PickUpObject>();
-        switch (pickUp.objType)
+        switch (objPickUp.objType)
         {
             case HandObjectType.DRINK:
                 Drink();
@@ -433,6 +454,7 @@ public class PlayerLeftHand : MonoBehaviour
                     aimUI.SetActive(false);
                     aimUI.transform.localScale = new Vector3(1, 1, 1);
                     holdTimer = 0;
+
                     if (!noThrow)
                     {
                         if (smoking)
@@ -446,10 +468,10 @@ public class PlayerLeftHand : MonoBehaviour
                         }
                         isHolding = false;
                         smoking = false;
-                        holdingObj.GetComponent<Rigidbody>().isKinematic = false;
-                        holdingObj.GetComponent<PickUpObject>().inHand = false;
-                        holdingObj.GetComponent<PickUpObject>().thrown = true;
-                        holdingObj.GetComponent<PickUpObject>().thrownByPlayer = true;
+                        objRb.isKinematic = false;
+                        objPickUp.inHand = false;
+                        objPickUp.thrown = true;
+                        objPickUp.thrownByPlayer = true;
                         holdingObj.SetParent(null);
 
                         if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
@@ -460,20 +482,34 @@ public class PlayerLeftHand : MonoBehaviour
                         else
                         {
                             RaycastHit hit;
-                            if (Physics.Raycast(transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
+                            
+
+                            Vector3 forceDirection = Camera.main.transform.forward;
+
+
+                            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
                             {
-                                holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                                //Debug.Log("hit " + hit.transform.gameObject.name);
+                                forceDirection = (hit.point - holdingObj.transform.position).normalized;
                             }
-                            else
-                            {
-                                holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + Camera.main.transform.forward * 300f - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                            }
-                            FMODUnity.RuntimeManager.PlayOneShot(holdingObj.GetComponent<PickUpObject>().throwEventName, transform.position);
+
+                            Vector3 forceToAdd = forceDirection * newThrowForce + transform.up * throwForceUp;
+                            holdingObj.GetComponent<Rigidbody>().AddForce(forceToAdd, ForceMode.Impulse);
+                            //if (Physics.Raycast(transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
+                            //{
+                            //    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                            //    //Debug.Log("hit " + hit.transform.gameObject.name);
+                            //}
+                            //else
+                            //{
+                            //    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + Camera.main.transform.forward * 300f - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
+                            //}
+                            FMODUnity.RuntimeManager.PlayOneShot(objPickUp.throwEventName, transform.position);
                         }
 
                         noThrow = true;
-                        playerHolding.UnoccupyLeft();
+                        newThrowForce = 0;
+                        RemoveHandObj();
+
                         if (!aimHintDone)
                         {
                             DataHolder.HideHint(DataHolder.hints.throwHint);
@@ -485,21 +521,28 @@ public class PlayerLeftHand : MonoBehaviour
             }
             if (Input.GetMouseButton(0))
             {
-                if (readyToThrow)
+                if (readyToThrow && !noThrow)
                 {
-                    if (holdTimer < holdTime)
+                    if (newThrowForce < newmaxThrowForce)
                     {
+
+                        newThrowForce += Time.deltaTime * 10f;
+
                         holdTimer += Time.deltaTime;
-                        holdingObj.position -= Camera.main.transform.forward * Time.deltaTime * .1f;
-                        if (holdTimer > 0.2f)
+
+                        holdingObj.position += Camera.main.transform.up * Time.deltaTime * .05f;
+
+                        if (newThrowForce > 5f)
                             aimUI.SetActive(true);
+                        //if (holdTimer > 0.2f)
+                        //    aimUI.SetActive(true);
                     }
                     aiming = true;
-                    float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
-                    float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
+                    //float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
+                    //float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
 
-                    throwForce = new Vector2(throwForceX, throwForceY);
-                    float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, holdTime, holdTimer));
+                    //throwForce = new Vector2(throwForceX, throwForceY);
+                    float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, newmaxThrowForce, newThrowForce));
                     aimUI.transform.localScale = new Vector3(uiScaleFactor, uiScaleFactor, uiScaleFactor);
                 }
 
@@ -517,7 +560,7 @@ public class PlayerLeftHand : MonoBehaviour
         else if (bypassThrow)
         {
             readyToThrow = false;
-            if (holdingObj.GetComponent<PickUpObject>().objType != HandObjectType.CIGARETTE)
+            if (objPickUp.objType != HandObjectType.CIGARETTE)
                 holdingObj.localPosition = Vector3.zero;
             holdTimer = 0;
             throwForce = Vector2.zero;
@@ -535,9 +578,9 @@ public class PlayerLeftHand : MonoBehaviour
                 isHolding = false;
                 holdingObj.SetParent(null);
                 holdingObj.GetComponent<Rigidbody>().isKinematic = false;
-                holdingObj.GetComponent<PickUpObject>().inHand = false;
-                holdingObj.GetComponent<PickUpObject>().thrown = true;
-                holdingObj.GetComponent<PickUpObject>().thrownByPlayer = true;
+                objPickUp.inHand = false;
+                objPickUp.thrown = true;
+                objPickUp.thrownByPlayer = true;
 
                 GroceryBox box = holdingObj.GetComponent<GroceryBox>();
                 if (box != null)
@@ -550,7 +593,7 @@ public class PlayerLeftHand : MonoBehaviour
                 {
                     vinyl.CheckPlaceVinyl();
                 }
-                playerHolding.UnoccupyLeft();
+                RemoveHandObj();    
 
             }
         }
@@ -574,8 +617,8 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 isHolding = false;
                 pizzaBox.AddPizza(holdingObj);
-                holdingObj.GetComponent<PickUpObject>().inHand = false;
-                playerHolding.UnoccupyLeft();
+                objPickUp.inHand = false;
+                RemoveHandObj();
             }
         }
     }

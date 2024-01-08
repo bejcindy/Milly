@@ -64,7 +64,8 @@ public class PlayerMovement : MonoBehaviour
     protected Rigidbody rb;
 
 
-
+    [Foldout("Glasses")]
+    public GameObject[] glasses;
 
 
 
@@ -532,8 +533,25 @@ public class PlayerMovement : MonoBehaviour
             atInterior = true;
         }
 
+        if (other.CompareTag("Fog"))
+        {
+            Debug.Log("Entered fog");
+            foreach(GameObject glass in glasses)
+            {
+                gameObject.layer = 0;
+            }
+        }
+
 
         
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Fog"))
+        {
+            Debug.Log("In fog");
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -570,6 +588,15 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("AmbienceOcclude"))
         {
             atInterior = false;
+        }
+
+        if (other.CompareTag("Fog"))
+        {
+            Debug.Log("Exited Fog");
+            foreach (GameObject glass in glasses)
+            {
+                gameObject.layer = 17;
+            }
         }
     }
 

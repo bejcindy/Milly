@@ -37,7 +37,7 @@ public class CatFood : PickUpObject
                 {
                     transform.SetParent(cat.transform);
                     objType = HandObjectType.CATFOOD;
-                    playerHolding.UnoccupyLeft();
+                    playerLeftHand.RemoveHandObj();
                     PlaceCan();
                 }
 

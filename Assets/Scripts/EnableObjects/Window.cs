@@ -146,8 +146,6 @@ public class Window : LivableObject
 
     public void FinishCutScene()
     {
-        zayne.StopIdle();
-        minDist = 3;
         windowCam.m_Priority = 0;
         cutsceneWindow = false;
     }
@@ -172,6 +170,7 @@ public class Window : LivableObject
             windowOpen = true;
             if (cutsceneWindow)
             {
+                ReferenceTool.playerMovement.enabled = false;
                 zayne.ChangeMainQuestDialogue();
                 windowCam.m_Priority = 11;
                 minDist = 0;

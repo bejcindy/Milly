@@ -2,25 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
-using VolumetricFogAndMist2;
 using VInspector;
 
 public class Zayne : NPCControl
 {
 
     [Foldout("Cutscene")]
-    public bool playingSong = false;
-    public bool fadingFog = false;
-    public bool turningOnLights = false;
-    public Light[] lights;
-    public GameObject logo;
-    public float[] intensities;
-    public float timeSongPlayed = 0;
 
-    public VolumetricFogProfile fog;
     protected override void Start()
     {
-        fog.albedo.a = 1;
         base.Start();
         talkable = true;
     }
@@ -29,29 +19,6 @@ public class Zayne : NPCControl
     {
         base.Update();
 
-        if (playingSong)
-        {
-            timeSongPlayed += Time.deltaTime;
-        }
-
-
-
-        if (fadingFog)
-        {
-            if(fog.albedo.a > 0)
-                fog.albedo.a -= Time.deltaTime * 0.2f;
-            else
-            {
-                fog.albedo.a = 0;
-                fadingFog = false;
-            }
-
-        }
-
-        if (turningOnLights)
-        {
-            TurnOnLights();
-        }
     }
     public void ZayneAction1()
     {
@@ -78,20 +45,6 @@ public class Zayne : NPCControl
         noTalkInWalk = true;
     }
 
-    public void TurnOnLights()
-    {
-        for(int i = 0;  i < lights.Length; i++)
-        {
-            if (lights[i].intensity < intensities[i])
-            {
-                lights[i].intensity += Time.deltaTime;
-            }
-            else
-            {
-                lights[i].intensity = intensities[i];
-            }
-        }
-    }
 
 
     public void ChangeMainQuestDialogue()
@@ -119,15 +72,6 @@ public class Zayne : NPCControl
         noMoveAfterTalk = true;
     }
 
-    public void FadeOutFog()
-    {
-        fadingFog = true;
-    }
-
-    public void TurnOnLight()
-    {
-        turningOnLights = true;
-    }
 
     public void MoveZayneAfterWindow()
     {
@@ -135,11 +79,6 @@ public class Zayne : NPCControl
         StopIdle();
     }
 
-    public void StartThemeSong()
-    {
-        playingSong = true;
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Static/ThemeSong");
-    }
 
 
 }

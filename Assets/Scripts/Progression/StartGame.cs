@@ -6,6 +6,7 @@ using UnityEngine.Animations;
 using Unity.IO;
 using FMODUnity;
 using PixelCrushers.DialogueSystem;
+using VolumetricFogAndMist2;
 
 public class StartGame : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class StartGame : MonoBehaviour
     public FixedCameraObject izaChair;
     public GameObject prologue1;
     public GameObject prologue2;
+    public VolumetricFogProfile fogProfile;
 
     float startDelay = 5f;
     bool startCountDown;
@@ -34,6 +36,7 @@ public class StartGame : MonoBehaviour
     void Start()
     {
         //izakayaAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Izakaya_Noise");
+        fogProfile.albedo.a = 1;
         outsideAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
         bathroomMonologue = GetComponent<DialogueSystemTrigger>();
         playerMovement = ReferenceTool.playerMovement;

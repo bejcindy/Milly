@@ -72,7 +72,7 @@ public class ChopsticksHolder : LivableObject
         targetChops.transform.parent.SetParent(transform);
         StartCoroutine(LerpPosition(targetChops.transform.parent, 1f));
         StartCoroutine(LerpRotation(targetChops.transform.parent, 1f));
-        playerHolding.UnoccupyLeft();
+        playerLeftHand.RemoveHandObj();
         playerLeftHand.RemoveCurrentChops();
         hasChop = true;
     }

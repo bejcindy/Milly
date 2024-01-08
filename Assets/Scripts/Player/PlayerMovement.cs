@@ -372,7 +372,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            moveSpeed = walkSpeed / 2;
+            moveSpeed = 2;
             if (camNoise.m_AmplitudeGain > breathingAmp)
                 camNoise.m_AmplitudeGain -= Time.deltaTime;
             else
@@ -390,10 +390,6 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-
-
-
-
 
 
         if (!walking && grounded)

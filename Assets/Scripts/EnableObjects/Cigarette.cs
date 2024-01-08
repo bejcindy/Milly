@@ -9,11 +9,14 @@ public class Cigarette : PickUpObject
     [Foldout("Cigarette")]
     public int cigStage;
     public bool activateAll;
+    public bool inhaling;
     public Transform activeCigObj;
     public EventReference inhaleEvent;
     public EventReference exhaleEvent;
 
+    string coughSound;
 
+    float inhalingTime = 0;
 
     protected override void Start()
     {
@@ -28,6 +31,11 @@ public class Cigarette : PickUpObject
         if(cigStage > 3)
             objType = HandObjectType.TRASH;
 
+        if (!inHand)
+        {
+            inhaling = false;
+        }
+
 
         if (selected && !thrown)
             activeCigObj.gameObject.layer = 9;
@@ -38,6 +46,21 @@ public class Cigarette : PickUpObject
 
         if (activated && !activateAll)
             ActivateAllCig();
+
+        if (inhaling)
+        {
+            if(inhalingTime < 30f)
+            {
+                inhalingTime += Time.deltaTime;
+            }
+            else
+            {
+                inhalingTime = 0;
+                inhaling = false;
+                playerLeftHand.ExhaleCig();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Cough");
+            }
+        }
     }
 
 
@@ -69,14 +92,16 @@ public class Cigarette : PickUpObject
     public void PlayInhaleSound()
     {
         RuntimeManager.PlayOneShot(inhaleEvent, transform.position);
+        inhaling = true;
     }
 
     public void PlayExhaleSound()
     {
         RuntimeManager.PlayOneShot(exhaleEvent, transform.position);
+        inhaling = false;
     }
 
-    public void Inhale()
+    public void ChangeCigModel()
     {
         if (cigStage < 3)
             cigStage++;

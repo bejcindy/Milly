@@ -8,6 +8,7 @@ public class ChopsticksHolder : LivableObject
     Vector3 chopHoldingPos;
     Quaternion chopHoldingRot;
     public Chopsticks myChops;
+    public GameObject chopAimingUI;
     public bool hasChop;
     bool chopMoving;
     public EventReference chopPutSound;
@@ -27,8 +28,8 @@ public class ChopsticksHolder : LivableObject
         if (transform.childCount < 1)
             hasChop = false;
 
-        if (interactable && !hasChop && playerLeftHand.GetCurrentChops() != null && !chopMoving &&
-            !playerLeftHand.chopAiming && !playerLeftHand.GetCurrentChops().hasFood && !playerLeftHand.GetCurrentChops().chopMoving)
+        if (!hasChop && playerLeftHand.GetCurrentChops() != null && !chopMoving &&
+            !playerLeftHand.GetCurrentChops().hasFood && !playerLeftHand.GetCurrentChops().chopMoving)
         {
             if (Input.GetMouseButtonDown(1))
                 PutChops();
@@ -62,6 +63,8 @@ public class ChopsticksHolder : LivableObject
 
     public void PutChops()
     {
+        playerLeftHand.chopAiming = false;
+        chopAimingUI.SetActive(false);
         if(PlayerLeftHand.foodAte > 1)
         {
             eatingDialogue.SetActive(true);

@@ -598,6 +598,12 @@ public class PlayerHolding : MonoBehaviour
         leftHand.holdingObj = obj;
         PickUpObject pickUp = obj.GetComponent<PickUpObject>();
         leftHand.AssignRefs(pickUp);
+
+        if(selectedObj != null)
+        {
+            selectedObj.GetComponent<PickUpObject>().selected = false;
+            selectedObj = null;
+        }
         switch (pickUp.objType)
         {
             case HandObjectType.CHOPSTICKS:

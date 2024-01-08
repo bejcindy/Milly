@@ -3,64 +3,62 @@ using System.Collections.Generic;
 using FMODUnity;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using VInspector;
 
 public class PlayerLeftHand : MonoBehaviour
 {
     float xOffset = -50;
-    public bool isHolding;
-    public bool noThrow;
-    public bool inPizzaBox;
+    PlayerHolding playerHolding;
+    LayerMask playerLayer;
 
+    [Foldout("Hand State")]
+    public bool isHolding;
+    public bool inPizzaBox;
     public bool smoking;
     public bool inhaling;
+    public bool drinking;
 
-    public float pullForce;
-    public PizzaBox pizzaBox;
-    public Transform holdingObj;
+    [Foldout("Throwing")]
+    public bool bypassThrow;
+    public bool noThrow;
+    public bool readyToThrow;
+    public float throwForce;
+    public float throwForceUp;
+    public float maxThrowForce;
+
+    [Foldout("Holding Pos")]
     public Vector3 holdingPosition;
     public Vector3 smokingPosition;
-    public PlayerHolding playerHolding;
+
+    [Foldout("Holding Object")]
+    public Transform holdingObj;
+
+
+    [Foldout("References")]
     public GameObject aimUI;
     public GameObject chopAimUI;
     public GameObject aimHint;
-
     public Animator handAnim;
-    public bool drinking;
     public ParticleSystem smokeVFX;
-    Vector2 minThrowForce = new Vector2(10f, 5f);
-    Vector2 maxThrowForce = new Vector2(80f, 20f);
-    float holdTime = 2f;
+    public PizzaBox pizzaBox;
+    public GameObject eatingDialogue;
 
-    Chopsticks currentChop;
-    bool chopOut;
-    float chopHoldTimeMax = 1f;
+    [Foldout("Chopsticks")]
     public float chopHoldVal = 0;
     public bool chopAiming;
     public static int foodAte;
-    bool foodEatingDialogueDone;
-
     public Transform selectedFood;
+    Chopsticks currentChop;
+    bool chopOut;
+    float chopHoldTimeMax = 1f;
+    bool foodEatingDialogueDone;
     Transform currentFood;
-    [SerializeField]
-    float holdTimer;
 
-    Vector2 throwForce;
 
-    public float newThrowForce;
-    public float throwForceUp;
-    public float newmaxThrowForce;
-
-    public bool readyToThrow;
-    bool notHoldingAnyThing;
-
-    public Transform groundDetector;
-    public Transform surfaceDetector;
-    public LayerMask groundLayer;
-
-    public GameObject eatingDialogue;
 
     PickUpObject objPickUp;
     Rigidbody objRb;
+    bool notHoldingAnyThing;
 
 
     #region UI variables
@@ -73,6 +71,7 @@ public class PlayerLeftHand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerLayer = 8;
         noThrow = true;
         playerHolding = GetComponent<PlayerHolding>();
     }
@@ -80,24 +79,25 @@ public class PlayerLeftHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isHolding && !MainTattooMenu.tatMenuOn)
+        if (isHolding)
         {
-            if (!inPizzaBox)
+            if (!MainTattooMenu.tatMenuOn)
             {
-                HoldingAction();
-            }
-            else if (inPizzaBox && holdingObj.GetComponent<Pizza>())
-            {
-                DetectPizzaHolding();
-            }
-            else if (inPizzaBox && !holdingObj.GetComponent<Pizza>())
-            {
-                readyToThrow = false;
-                holdingObj.localPosition = Vector3.zero;
-                holdTimer = 0;
-                throwForce = Vector2.zero;
-                aimUI.SetActive(false);
-                aimUI.transform.localScale = new Vector3(1, 1, 1);
+                if (!inPizzaBox)
+                {
+                    HoldingAction();
+                }
+                else if (inPizzaBox && holdingObj.GetComponent<Pizza>())
+                {
+                    DetectPizzaHolding();
+                }
+                else if (inPizzaBox && !holdingObj.GetComponent<Pizza>())
+                {
+                    readyToThrow = false;
+                    holdingObj.localPosition = Vector3.zero;
+                    aimUI.SetActive(false);
+                    aimUI.transform.localScale = new Vector3(1, 1, 1);
+                }
             }
 
 
@@ -134,19 +134,19 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.ShowHint(DataHolder.hints.pizzaHint);
             DataHolder.HideHint(DataHolder.hints.throwHint);
         }
-        else if (currentChop && !currentChop.hasFood && !chopAiming)
+        else if (currentChop && !chopAiming)
         {
-            DataHolder.HideHint(DataHolder.hints.pickFoodHint);
-            DataHolder.HideHint(DataHolder.hints.eatHint);
-            DataHolder.ShowHint(DataHolder.hints.chopHint);
+            //DataHolder.HideHint(DataHolder.hints.pickFoodHint);
+            DataHolder.ShowHint(DataHolder.hints.eatHint);
+            DataHolder.HideHint(DataHolder.hints.chopHint);
             chophinted = true;
         }
-        else if (currentChop && !currentChop.hasFood && chopAiming)
+        else if (currentChop && chopAiming)
         {
             //关其他的
-            DataHolder.HideHint(DataHolder.hints.chopHint);
+            DataHolder.ShowHint(DataHolder.hints.chopHint);
             DataHolder.HideHint(DataHolder.hints.eatHint);
-            DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
+            //DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
             chophinted = true;
         }
         else if (currentChop && currentChop.hasFood)
@@ -228,7 +228,7 @@ public class PlayerLeftHand : MonoBehaviour
             case HandObjectType.DRINK:
                 Drink();
                 if (!drinking && !playerHolding.atInterior)
-                    DetectHolding();
+                    BasicThrow();
                 break;
             case HandObjectType.CHOPSTICKS:
                 currentChop = holdingObj.GetComponent<Chopsticks>();
@@ -238,7 +238,7 @@ public class PlayerLeftHand : MonoBehaviour
             case HandObjectType.CIGARETTE:
                 Smoke();
                 if (!playerHolding.atInterior)
-                    DetectHolding();
+                    BasicThrow();
                 if (!smokingHinted)
                 {
                     DataHolder.HideHint(DataHolder.hints.cigHint);
@@ -251,7 +251,7 @@ public class PlayerLeftHand : MonoBehaviour
 
             default:
                 if (!drinking && !playerHolding.atInterior)
-                    DetectHolding();
+                    BasicThrow();
                 break;
         }
     }
@@ -260,46 +260,30 @@ public class PlayerLeftHand : MonoBehaviour
     #region Chopsticks Region
     private void UsingChopsticks()
     {
-        if (Input.GetMouseButton(0) && !holdingObj.GetComponent<Chopsticks>().hasFood)
+        if (!currentChop.hasFood && !currentChop.chopMoving)
         {
-            chopOut = false;
-            if (chopHoldVal < chopHoldTimeMax)
-            {
-                chopHoldVal += Time.deltaTime;
-                if (chopHoldVal > 0.2f)
-                    chopAiming = true;
-                currentChop.transform.parent.localPosition += Camera.main.transform.forward * Time.deltaTime * 0.1f;
-            }
-
+            chopAiming = true;
         }
-
-        if (Input.GetMouseButtonUp(0))
+        else
         {
-            chopOut = true;
-            chopHoldVal = 0;
-
-            if (chopAiming && selectedFood)
-            {
-                if (!currentChop.hasFood)
-                {
-                    FoodPickObject food = selectedFood.GetComponent<FoodPickObject>();
-                    selectedFood.SetParent(holdingObj.parent.transform);
-                    food.picked = true;
-                    selectedFood.localPosition = currentChop.foodPickedPos;
-                    selectedFood.localRotation = Quaternion.Euler(food.inChopRot);
-                    currentFood = selectedFood;
-                    selectedFood.GetComponent<FoodPickObject>().selected = false;
-                    currentChop.hasFood = true;
-                }
-
-            }
             chopAiming = false;
         }
 
-        if (chopOut)
-            DrawBackChop(currentChop);
-
-        if (currentChop.hasFood)
+        if (Input.GetMouseButtonDown(0) && chopAiming)
+        {
+            if (selectedFood)
+            {
+                FoodPickObject food = selectedFood.GetComponent<FoodPickObject>();
+                selectedFood.SetParent(holdingObj.parent.transform);
+                food.picked = true;
+                selectedFood.localPosition = currentChop.foodPickedPos;
+                selectedFood.localRotation = Quaternion.Euler(food.inChopRot);
+                currentFood = selectedFood;
+                selectedFood.GetComponent<FoodPickObject>().selected = false;
+                currentChop.hasFood = true;
+            }
+        }
+        if (currentChop.hasFood && !currentChop.chopMoving)
         {
             if (Input.mouseScrollDelta.y < 0)
             {
@@ -314,8 +298,8 @@ public class PlayerLeftHand : MonoBehaviour
     {
         currentChop.chopMoving = true;
         currentChop.SetEatAnim();
-        currentChop.hasFood = false;
         Invoke(nameof(DestroyFood), 1f);
+        Invoke(nameof(ResetChopsticks), 2f);
     }
 
     private void ChopUIDetect()
@@ -326,25 +310,27 @@ public class PlayerLeftHand : MonoBehaviour
             chopAimUI.SetActive(false);
     }
 
+    void ResetChopsticks()
+    {
+        currentChop.chopMoving = false;
+        currentChop.hasFood = false;
+    }
+
     public void DestroyFood()
     {
         if (!playerHolding.inDialogue && (foodAte != 2))
             currentFood.GetComponent<FoodPickObject>().CheckFirstAte();
-        Destroy(currentFood.gameObject);
-        currentChop.chopMoving = false;
+        Transform toEat;
+        toEat = currentFood;
+        currentFood = null;
+        Destroy(toEat.gameObject);
+        toEat = null;
+
         currentChop.PlayEatSound();
         foodAte++;
+
     }
 
-    private void DrawBackChop(Chopsticks chop)
-    {
-        if (chop.transform.parent.localPosition != Vector3.zero)
-        {
-            chop.transform.parent.localPosition = Vector3.Lerp(chop.transform.parent.localPosition, Vector3.zero, 0.5f);
-        }
-        else
-            chopOut = false;
-    }
 
     public Chopsticks GetCurrentChops()
     {
@@ -437,8 +423,8 @@ public class PlayerLeftHand : MonoBehaviour
         RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Swallow", transform.position);
     }
 
-    public bool bypassThrow;
-    private void DetectHolding()
+    float rotateVal;
+    private void BasicThrow()
     {
         if (!bypassThrow && !playerHolding.inDialogue)
         {
@@ -446,113 +432,95 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 readyToThrow = true;
             }
-            if (Input.GetMouseButtonUp(0))
+
+            if(readyToThrow && !noThrow)
             {
-                if (readyToThrow)
+                if (Input.GetMouseButtonUp(0))
                 {
                     aiming = false;
                     aimUI.SetActive(false);
                     aimUI.transform.localScale = new Vector3(1, 1, 1);
-                    holdTimer = 0;
 
-                    if (!noThrow)
+                    if (smoking)
                     {
-                        if (smoking)
+                        holdingObj.GetComponent<Cigarette>().FinishSmoking();
+                        if (!smokingHintDone)
                         {
-                            holdingObj.GetComponent<Cigarette>().FinishSmoking();
-                            if (!smokingHintDone)
-                            {
-                                DataHolder.HideHint(DataHolder.hints.smokeHint);
-                                smokingHintDone = true;
-                            }
+                            DataHolder.HideHint(DataHolder.hints.smokeHint);
+                            smokingHintDone = true;
                         }
+                    }
+
+                    isHolding = false;
+                    smoking = false;
+                    objRb.isKinematic = false;
+                    objPickUp.inHand = false;
+                    objPickUp.thrown = true;
+                    objPickUp.thrownByPlayer = true;
+                    holdingObj.SetParent(null);
+
+
+
+
+                    if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+                    {
                         isHolding = false;
-                        smoking = false;
-                        objRb.isKinematic = false;
-                        objPickUp.inHand = false;
-                        objPickUp.thrown = true;
-                        objPickUp.thrownByPlayer = true;
-                        holdingObj.SetParent(null);
-
-                        if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
-                        {
-                            isHolding = false;
-                            StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
-                        }
-                        else
-                        {
-                            RaycastHit hit;
-                            
-
-                            Vector3 forceDirection = Camera.main.transform.forward;
-
-
-                            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
-                            {
-                                forceDirection = (hit.point - holdingObj.transform.position).normalized;
-                            }
-
-                            Vector3 forceToAdd = forceDirection * newThrowForce + transform.up * throwForceUp;
-                            holdingObj.GetComponent<Rigidbody>().AddForce(forceToAdd, ForceMode.Impulse);
-                            //if (Physics.Raycast(transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
-                            //{
-                            //    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (hit.point - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                            //    //Debug.Log("hit " + hit.transform.gameObject.name);
-                            //}
-                            //else
-                            //{
-                            //    holdingObj.GetComponent<Rigidbody>().AddForce(throwForce.x * (Camera.main.transform.position + Camera.main.transform.forward * 300f - holdingObj.transform.position).normalized + new Vector3(0, throwForce.y, 0));
-                            //}
-                            FMODUnity.RuntimeManager.PlayOneShot(objPickUp.throwEventName, transform.position);
-                        }
-
-                        noThrow = true;
-                        newThrowForce = 0;
-                        RemoveHandObj();
-
-                        if (!aimHintDone)
-                        {
-                            DataHolder.HideHint(DataHolder.hints.throwHint);
-                            aimHintDone = true;
-                        }
-                        readyToThrow = false;
+                        StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
                     }
-                }
-            }
-            if (Input.GetMouseButton(0))
-            {
-                if (readyToThrow && !noThrow)
-                {
-                    if (newThrowForce < newmaxThrowForce)
+                    else
                     {
+                        RaycastHit hit;
+                        Vector3 forceDirection = Camera.main.transform.forward;
+                        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f, playerLayer, QueryTriggerInteraction.Ignore))
+                        {
+                            forceDirection = (hit.point - holdingObj.localPosition).normalized;
+                        }
 
-                        newThrowForce += Time.deltaTime * 10f;
-
-                        holdTimer += Time.deltaTime;
-
-                        holdingObj.position += Camera.main.transform.up * Time.deltaTime * .05f;
-
-                        if (newThrowForce > 5f)
-                            aimUI.SetActive(true);
-                        //if (holdTimer > 0.2f)
-                        //    aimUI.SetActive(true);
+                        Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwForceUp;
+                        holdingObj.GetComponent<Rigidbody>().AddForce(forceToAdd, ForceMode.Impulse);
+                        FMODUnity.RuntimeManager.PlayOneShot(objPickUp.throwEventName, transform.position);
                     }
-                    aiming = true;
-                    //float throwForceX = Mathf.Lerp(minThrowForce.x, maxThrowForce.x, Mathf.InverseLerp(0, holdTime, holdTimer));
-                    //float throwForceY = Mathf.Lerp(minThrowForce.y, maxThrowForce.y, Mathf.InverseLerp(0, holdTime, holdTimer));
 
-                    //throwForce = new Vector2(throwForceX, throwForceY);
-                    float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, newmaxThrowForce, newThrowForce));
-                    aimUI.transform.localScale = new Vector3(uiScaleFactor, uiScaleFactor, uiScaleFactor);
+                    noThrow = true;
+                    readyToThrow = false;
+                    throwForce = 0.5f;
+                    rotateVal = 0;
+                    RemoveHandObj();
+
+                    if (!aimHintDone)
+                    {
+                        DataHolder.HideHint(DataHolder.hints.throwHint);
+                        aimHintDone = true;
+                    }
+                    
                 }
+                if (Input.GetMouseButton(0))
+                {
+                    if (readyToThrow && !noThrow)
+                    {
+                        if (throwForce < maxThrowForce)
+                        {
 
+                            throwForce += Time.deltaTime * 10f;
+                            rotateVal -= Time.deltaTime;
+                            holdingObj.position += Camera.main.transform.up * Time.deltaTime * .05f;
+                            holdingObj.rotation *= Quaternion.Euler(rotateVal, 0, 0);
+
+                            if (throwForce > 5f)
+                                aimUI.SetActive(true);
+                        }
+                        aiming = true;
+                        float uiScaleFactor = Mathf.Lerp(1, .3f, Mathf.InverseLerp(0, maxThrowForce, throwForce));
+                        aimUI.transform.localScale = new Vector3(uiScaleFactor, uiScaleFactor, uiScaleFactor);
+                    }
+
+                }
             }
+            
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 readyToThrow = false;
                 holdingObj.localPosition = Vector3.zero;
-                holdTimer = 0;
-                throwForce = Vector2.zero;
                 aimUI.SetActive(false);
                 aimUI.transform.localScale = new Vector3(1, 1, 1);
             }
@@ -562,8 +530,6 @@ public class PlayerLeftHand : MonoBehaviour
             readyToThrow = false;
             if (objPickUp.objType != HandObjectType.CIGARETTE)
                 holdingObj.localPosition = Vector3.zero;
-            holdTimer = 0;
-            throwForce = Vector2.zero;
             aimUI.SetActive(false);
             aimUI.transform.localScale = new Vector3(1, 1, 1);
         }
@@ -607,8 +573,6 @@ public class PlayerLeftHand : MonoBehaviour
     private void DetectPizzaHolding()
     {
         readyToThrow = false;
-        holdTimer = 0;
-        throwForce = Vector2.zero;
         aimUI.SetActive(false);
         aimUI.transform.localScale = new Vector3(1, 1, 1);
         if (Input.GetMouseButtonUp(0))

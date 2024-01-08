@@ -13,7 +13,7 @@ using Unity.VisualScripting;
 public class HintTexts
 {
     [TextArea]
-    public string throwHint, smokeHint, lookHint, drinkHint, kickHint, scrollHint, sitHint, standHint, cigHint, chopHint, pickFoodHint, eatHint, powderHint, tabHint, tableDrinkHint, drinkAndThrowHint, tattooViewHint,outerPanelHint, pizzaHint;
+    public string throwHint, inhaleHint, exhaleHint, lookHint, drinkHint, kickHint, scrollHint, sitHint, standHint, cigHint, chopHint, pickFoodHint, eatHint, powderHint, tabHint, tableDrinkHint, drinkAndThrowHint, tattooViewHint,outerPanelHint, pizzaHint;
 }
 
 public class DataHolder : MonoBehaviour

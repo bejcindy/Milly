@@ -15,7 +15,7 @@ public class PlayerLeftHand : MonoBehaviour
     public bool isHolding;
     public bool inPizzaBox;
     public bool smoking;
-    public bool inhaling;
+    public bool movingCig;
     public bool drinking;
 
     [Foldout("Throwing")]
@@ -99,12 +99,10 @@ public class PlayerLeftHand : MonoBehaviour
                     aimUI.transform.localScale = new Vector3(1, 1, 1);
                 }
             }
-
-
         }
         else
         {
-            inhaling = false;
+            movingCig = false;
             drinking = false;
             smoking = false;
             currentChop = null;
@@ -120,9 +118,20 @@ public class PlayerLeftHand : MonoBehaviour
 
 
         #region Hint Region
-        if (smoking)
+        if (smoking && !holdingObj.GetComponent<Cigarette>().inhaling)
         {
-            DataHolder.ShowHint(DataHolder.hints.smokeHint);
+            if (holdingObj.GetComponent<Cigarette>().cigStage < 4)
+                DataHolder.ShowHint(DataHolder.hints.inhaleHint);
+            else
+                DataHolder.ShowHint(DataHolder.hints.throwHint);
+            DataHolder.HideHint(DataHolder.hints.exhaleHint);
+            smokingHintDone = false;
+        }
+        else if(smoking && holdingObj.GetComponent<Cigarette>().inhaling)
+        {
+            DataHolder.ShowHint(DataHolder.hints.exhaleHint);
+            DataHolder.HideHint(DataHolder.hints.throwHint);
+            DataHolder.HideHint(DataHolder.hints.inhaleHint);
             smokingHintDone = false;
         }
         else if (isHolding && holdingObj.GetComponent<Pizza>() && inPizzaBox)
@@ -197,7 +206,7 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.powderHint);
             DataHolder.HideHint(DataHolder.hints.drinkHint);
             DataHolder.HideHint(DataHolder.hints.throwHint);
-            DataHolder.HideHint(DataHolder.hints.smokeHint);
+            DataHolder.HideHint(DataHolder.hints.inhaleHint);
             DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
             DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
             DataHolder.HideHint(DataHolder.hints.pizzaHint);
@@ -237,7 +246,7 @@ public class PlayerLeftHand : MonoBehaviour
                 break;
             case HandObjectType.CIGARETTE:
                 Smoke();
-                if (!playerHolding.atInterior)
+                if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
                     BasicThrow();
                 if (!smokingHinted)
                 {
@@ -360,30 +369,37 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void Smoke()
     {
-        if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > -0.1f && !inhaling)
+        Cigarette cig = holdingObj.GetComponent<Cigarette>();
+        if (Input.mouseScrollDelta.y < 0 && holdingObj.localPosition.z > -0.1f && !movingCig)
         {
-            holdingObj.GetComponent<Cigarette>().PlayInhaleSound();
+            cig.PlayInhaleSound();
             Vector3 smokingPos = new Vector3(0.5f, 0f, -0.3f);
             Vector3 smokingRot = new Vector3(0, 180, 0);
             StartCoroutine(LerpPosition(smokingPos, 1f));
             StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
         }
-        if (Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !inhaling)
+        if (Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !movingCig)
         {
-            holdingObj.GetComponent<Cigarette>().PlayExhaleSound();
-            if (!smokeVFX.gameObject.activeSelf)
-            {
-                smokeVFX.gameObject.SetActive(true);
-            }
-            else
-            {
-                smokeVFX.Play();
-            }
-            Vector3 smokingRot = new Vector3(0, 160, 0);
-            StartCoroutine(LerpPosition(Vector3.zero, 1f));
-            StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
-            holdingObj.GetComponent<Cigarette>().Inhale();
+            cig.PlayExhaleSound();
+            ExhaleCig();
         }
+    }
+
+
+    public void ExhaleCig()
+    {
+        if (!smokeVFX.gameObject.activeSelf)
+        {
+            smokeVFX.gameObject.SetActive(true);
+        }
+        else
+        {
+            smokeVFX.Play();
+        }
+        Vector3 smokingRot = new Vector3(0, 160, 0);
+        StartCoroutine(LerpPosition(Vector3.zero, 1f));
+        StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
+        holdingObj.GetComponent<Cigarette>().ChangeCigModel();
     }
 
     private void Drink()
@@ -446,7 +462,7 @@ public class PlayerLeftHand : MonoBehaviour
                         holdingObj.GetComponent<Cigarette>().FinishSmoking();
                         if (!smokingHintDone)
                         {
-                            DataHolder.HideHint(DataHolder.hints.smokeHint);
+                            DataHolder.HideHint(DataHolder.hints.inhaleHint);
                             smokingHintDone = true;
                         }
                     }
@@ -586,7 +602,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
-        inhaling = true;
+        movingCig = true;
         float time = 0;
         Vector3 startPosition = holdingObj.localPosition;
         while (time < duration)
@@ -596,7 +612,7 @@ public class PlayerLeftHand : MonoBehaviour
             yield return null;
         }
         holdingObj.localPosition = targetPosition;
-        inhaling = false;
+        movingCig = false;
 
     }
 

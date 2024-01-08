@@ -567,7 +567,7 @@ public class NPCControl : MonoBehaviour
 
         if (agent.isActiveAndEnabled)
         {
-            if (HasReached(agent) && !noLookInConvo)
+            if (HasReached(agent) && !noLookInConvo && gameObject.name!="Zayne")
             {
                 if (lookCoroutine != null)
                     StopCoroutine(lookCoroutine);

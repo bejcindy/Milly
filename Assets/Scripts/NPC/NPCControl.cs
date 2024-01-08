@@ -89,8 +89,8 @@ public class NPCControl : MonoBehaviour
     protected Coroutine lookCoroutine;
     GameObject bone;
 
-    [Foldout("Sound")]
-    public EventReference footStepSF;
+    //[Foldout("Sound")]
+    //public EventReference footStepSF;
 
     [Foldout("OnActivate")]
     public UnityEvent OnActivateEvent;
@@ -223,11 +223,11 @@ public class NPCControl : MonoBehaviour
         //}
     }
 
-    public void PlayFootstepSF()
-    {
-        if (!footStepSF.IsNull)
-            RuntimeManager.PlayOneShot(footStepSF, transform.position);
-    }
+    //public void PlayFootstepSF()
+    //{
+    //    if (!footStepSF.IsNull)
+    //        RuntimeManager.PlayOneShot(footStepSF, transform.position);
+    //}
 
     public void TransformNPC()
     {

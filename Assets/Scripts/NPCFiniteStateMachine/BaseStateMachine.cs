@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
+using FMODUnity;
 
 namespace NPCFSM
 {
@@ -42,6 +43,8 @@ namespace NPCFSM
         Vector3 previousPlayerPos = Vector3.zero;
 
         public float moveWait = 2f;
+
+        public EventReference footStepSF;
 
         private void Awake()
         {

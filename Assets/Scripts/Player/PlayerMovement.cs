@@ -325,8 +325,8 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 walkSFX.setPitch(1.125f);
-                walkSpeed = 3.5f;
-                maxWalkSpeed = 4.5f;
+                walkSpeed = 4f;
+                maxWalkSpeed = 5f;
             }
             else
             {

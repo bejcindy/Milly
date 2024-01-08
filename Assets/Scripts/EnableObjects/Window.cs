@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using Cinemachine;
+using PixelCrushers.DialogueSystem;
 
 public class Window : LivableObject
 {
@@ -10,6 +12,9 @@ public class Window : LivableObject
 
     public bool windowOpen;
     public bool windowMoving;
+    public bool cutsceneWindow;
+    public CinemachineVirtualCamera windowCam;
+    public Zayne zayne;
     public Vector3 openPos;
     public Vector3 closePos;
     string openSound = "event:/Sound Effects/ObjectInteraction/Window/WindowOpen";
@@ -129,10 +134,29 @@ public class Window : LivableObject
         playerHolding.dragAnimDirection = "UpDown";
     }
 
+    public void SetWindowUsable()
+    {
+        overrideStartSequence = true;
+    }
+
+    public void SetWindowUnusable()
+    {
+        overrideStartSequence = false;
+    }
+
+    public void FinishCutScene()
+    {
+        zayne.StopIdle();
+        minDist = 3;
+        windowCam.m_Priority = 0;
+        cutsceneWindow = false;
+    }
+
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
         windowMoving = true;
-        overrideStartSequence = false;
+
+
         float time = 0;
         Vector3 startPosition = transform.localPosition;
         while (time < duration)
@@ -144,7 +168,16 @@ public class Window : LivableObject
         transform.localPosition = targetPosition;
 
         if (targetPosition == openPos)
+        {
             windowOpen = true;
+            if (cutsceneWindow)
+            {
+                zayne.ChangeMainQuestDialogue();
+                windowCam.m_Priority = 11;
+                minDist = 0;
+            }
+        }
+
         else
             windowOpen = false;
 

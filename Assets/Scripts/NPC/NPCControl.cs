@@ -485,7 +485,7 @@ public class NPCControl : MonoBehaviour
                     ChangeLayer(21);
 
                 //check player interaction command
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetMouseButtonDown(0))
                 {
                     //ChangeLayer(17);
                     if (!questTriggered)

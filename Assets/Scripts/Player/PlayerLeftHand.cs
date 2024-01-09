@@ -17,6 +17,7 @@ public class PlayerLeftHand : MonoBehaviour
     public bool smoking;
     public bool movingCig;
     public bool drinking;
+    public bool gettingCig;
 
     [Foldout("Throwing")]
     public bool bypassThrow;
@@ -417,11 +418,24 @@ public class PlayerLeftHand : MonoBehaviour
         if (Input.mouseScrollDelta.y < 0 && !drinking)
         {
             drinking = true;
-            handAnim.Play("HandDrink");
+
             BeerCup beer = holdingObj.GetComponent<BeerCup>();
             if (beer)
             {
                 beer.ReduceLiquid();
+                if (!beer.finished)
+                {
+                    handAnim.Play("HandDrink");
+                }
+                else
+                {
+                    DataHolder.HideHint(DataHolder.hints.drinkHint);
+                }
+            }
+            else
+            {
+                handAnim.Play("HandDrink");
+
             }
             //drinkHinted = true;
             if (!drinkHintDone)

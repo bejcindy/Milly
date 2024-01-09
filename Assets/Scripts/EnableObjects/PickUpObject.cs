@@ -98,6 +98,10 @@ public class PickUpObject : LivableObject
 
 
             }
+            else
+            {
+                selected = false;
+            }
         }
         else if (!interactable || inHand)
         {

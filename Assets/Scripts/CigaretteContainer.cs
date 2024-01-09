@@ -6,10 +6,19 @@ using FMODUnity;
 
 public class CigaretteContainer : MonoBehaviour
 {
+    public bool takingOutCig;
+    public float cigWait = 0.5f;
     public int cigCounts;
     public Transform player;
     public Transform handContainer;
+    public Transform cigContainer;
+    public Cigarette selectedCig;
+    public List<Cigarette> cigs;
+    public GameObject cigBox;
+
     PlayerHolding playerHolding;
+    PlayerLeftHand leftHand;
+
     string cigLightSound = "event:/Sound Effects/ObjectInteraction/Cigarette/Cigarette_Light";
 
 
@@ -24,30 +33,59 @@ public class CigaretteContainer : MonoBehaviour
     {
         player = ReferenceTool.player;
         playerHolding = player.GetComponent<PlayerHolding>();
+        leftHand = ReferenceTool.playerLeftHand;
+        cigs.AddRange(cigContainer.GetComponentsInChildren<Cigarette>());
     }
      
     // Update is called once per frame
     void Update()
     {
         GetCig();
+
+        if (takingOutCig)
+        {
+            if (cigWait > 0)
+            {
+                cigWait -= Time.deltaTime;
+                selectedCig.transform.position += 0.5f * Time.deltaTime * cigContainer.up;
+            }
+            else
+            {
+                cigWait = 0.5f;
+                takingOutCig = false;
+                RuntimeManager.PlayOneShot(cigLightSound, transform.position);
+                playerHolding.OccupyLeft(selectedCig.transform);
+                RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Cigarette/CigBox_Close");
+                leftHand.gettingCig = false;
+                Invoke(nameof(TurnOffBox), 0.5f);
+            }
+
+        }
+
+        if(cigs.Count<=0 && cigBox.activeSelf)
+        {
+            if (cigBox.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+            {
+                cigBox.SetActive(false);
+                leftHand.gettingCig = false;
+                this.enabled = false;
+            }
+            else
+            {
+                leftHand.gettingCig = true;
+            }
+        }
+
     }
 
     public void GetCig()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            if(cigCounts > 0 && !playerHolding.smoking && !playerHolding.fullHand && !playerHolding.atInterior)
+
+            if(cigs.Count>0 && !leftHand.isHolding && !playerHolding.atInterior && !takingOutCig)
             {
-                RuntimeManager.PlayOneShot(cigLightSound, transform.position);
-                cigCounts--;
-                GameObject newCig = GameObject.Instantiate(fullCig, handContainer.position, handContainer.rotation, handContainer);
-                newCig.GetComponent<LivableObject>().activated = true;
-                newCig.GetComponent<Rigidbody>().isKinematic = true;
-                newCig.GetComponent<Cigarette>().inHand = true;
-                if (playerHolding.GetLeftHandSmoking())
-                {
-                    playerHolding.OccupyLeft(newCig.transform);
-                }
+                TakeOutBox();
 
                 if (!MainQuestState.firstGloriaTalk)
                 {
@@ -67,18 +105,42 @@ public class CigaretteContainer : MonoBehaviour
                     }
 
                 }
-                //if(MainQuestState.firstGloriaTalk && MainQuestState.parentsCalled)
-                //{
-                //    if (!afterParentsThought)
-                //    {
-                //        DialogueManager.StartConversation("Cigarette/AfterCallingParents");
-                //        afterParentsThought = true;
-                //    }
-
-                //}
 
 
             }
+            else if (cigs.Count <= 0) {
+                DialogueManager.StartConversation("Cigarette/Empty");
+                cigBox.SetActive(true);
+            }
         }
+    }
+
+    void TakeOutBox()
+    {
+        RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Cigarette/CigBox_Open");
+        leftHand.gettingCig = true;
+        cigBox.SetActive(true);
+        int index = Random.Range(0, cigs.Count-1);
+        selectedCig = cigs[index];
+      
+        Invoke(nameof(DelayTakeCig), 0.5f);
+
+    }
+
+    void DelayTakeCig()
+    {
+        takingOutCig = true;
+        selectedCig.transform.SetParent(handContainer);
+        cigs.Remove(selectedCig);
+        selectedCig.activated = true;
+        selectedCig.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+
+    void TurnOffBox()
+    {
+        cigBox.gameObject.SetActive(false);
+        selectedCig.inBox = false;
+        selectedCig.inHand = true;
     }
 }

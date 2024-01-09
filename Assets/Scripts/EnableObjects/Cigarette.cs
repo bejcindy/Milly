@@ -9,6 +9,7 @@ public class Cigarette : PickUpObject
     [Foldout("Cigarette")]
     public int cigStage;
     public bool activateAll;
+    public bool inBox;
     public bool inhaling;
     public Transform activeCigObj;
     public EventReference inhaleEvent;
@@ -25,7 +26,8 @@ public class Cigarette : PickUpObject
     }
     protected override void Update()
     {
-        base.Update();
+        if(!inBox)
+            base.Update();
         SwitchCig();
 
         if(cigStage > 3)
@@ -37,7 +39,7 @@ public class Cigarette : PickUpObject
         }
 
 
-        if (selected && !thrown)
+        if (selected && !thrown && !inBox)
             activeCigObj.gameObject.layer = 9;
         else if (inHand)
             activeCigObj.gameObject.layer = 7;

@@ -93,13 +93,21 @@ public class PlayerHolding : MonoBehaviour
         if (!looking)
         {
             GetFullHand();
-            if (!leftHand.inPizzaBox)
+            if (!leftHand.inPizzaBox && !leftHand.gettingCig)
                 ChooseInteractable();
-
+            else if (leftHand.gettingCig)
+            {
                 if (selectedObj)
-                    DisplayUI(selectedObj, pickUpSprite);
-                else
-                    HideUI(pickUpSprite);
+                    selectedObj.GetComponent<PickUpObject>().selected = false;
+                selectedObj = null;
+                pickUpObjects.Clear();
+            }
+
+
+            if (selectedObj)
+                DisplayUI(selectedObj, pickUpSprite);
+            else
+                HideUI(pickUpSprite);
 
 
             if (!inDialogue)
@@ -619,7 +627,8 @@ public class PlayerHolding : MonoBehaviour
                 break;
             case HandObjectType.CIGARETTE:
                 obj.SetParent(handContainer);
-                obj.localEulerAngles = new Vector3(0, 160, 0);
+                StartCoroutine(LerpRotation(obj, Quaternion.Euler(new Vector3(0, 160, 0)), 1f));
+                //obj.localEulerAngles = new Vector3(0, 160, 0);
                 StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
                 leftHand.smoking = true;
                 break;

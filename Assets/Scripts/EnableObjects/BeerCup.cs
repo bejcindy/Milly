@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using PixelCrushers.DialogueSystem;
 
 public class BeerCup : PickUpObject
 {    
@@ -11,6 +12,7 @@ public class BeerCup : PickUpObject
     Vector3 startingPos;
     Quaternion startRotation;
 
+    public bool finished;
     public bool moving;
     public TableController myTable;
     public EventReference powderSound;
@@ -88,10 +90,15 @@ public class BeerCup : PickUpObject
 
     public void ReduceLiquid()
     {
-        if(liquidLevel < 0.6f)
+        if(liquidLevel < 0.55f)
         {
-            liquidLevel += 0.02f;
+            liquidLevel += 0.01f;
             liquidMat.SetFloat("_FillAmount", liquidLevel);
+        }
+        else
+        {
+            finished = true;
+            DialogueManager.StartConversation("Food/Beer/EmptyBeer");
         }
     }
 

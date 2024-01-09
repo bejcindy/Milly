@@ -20,6 +20,8 @@ public class PauseMenu : MonoBehaviour
         player = ReferenceTool.player.gameObject;
         playerHolding = ReferenceTool.playerHolding;
         ReferenceTool.pauseMenu = this;
+        isPaused = false;
+        pauseAfterCD = false;
     }
 
     // Update is called once per frame

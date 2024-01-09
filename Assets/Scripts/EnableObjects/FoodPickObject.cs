@@ -43,6 +43,16 @@ public class FoodPickObject : MonoBehaviour
     {
         leftHand = ReferenceTool.playerLeftHand;
         playerHolding = ReferenceTool.playerHolding;
+        takosanPicked = false;
+        roastedGarlicPicked = false;
+        cucumberTofuPicked = false;
+        ocraTofuPicked = false;
+        tomatoTofuPicked = false;
+        takosanAte = false;
+        roastedGarlicAte = false;
+        cucumberTofuAte = false;
+        ocraTofuAte = false;
+        tomatoTofuAte = false;
     }
 
     void Update()

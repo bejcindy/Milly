@@ -26,6 +26,7 @@ public class GroceryBox : PickUpObject
         base.Start();
         objType = HandObjectType.DOUBLE;
         groBoxCollider = GetComponent<Collider>();
+        boxActivated = false;
     }
 
     protected override void Update()

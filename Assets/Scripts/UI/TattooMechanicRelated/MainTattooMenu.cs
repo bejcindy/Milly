@@ -36,6 +36,7 @@ public class MainTattooMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        tatMenuOn = false;
         menuFade = GetComponent<Animator>();
         playAnim = true;
         blurCanvas.SetActive(false);

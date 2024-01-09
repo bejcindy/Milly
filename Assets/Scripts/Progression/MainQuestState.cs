@@ -23,8 +23,11 @@ public class MainQuestState: MonoBehaviour
     private void Start()
     {
         firstGloriaTalk = false;
+        readyAkiConfrontation = false;
+        gloriaArrivesIza = false;
         akiConfronted = false;
         parentsCalled = false;
+        mainQuestStarted = false;
     }
 
     public void Update()

@@ -74,6 +74,7 @@ public class PlayerLeftHand : MonoBehaviour
         playerLayer = 8;
         noThrow = true;
         playerHolding = GetComponent<PlayerHolding>();
+        foodAte = 0;
     }
 
     // Update is called once per frame

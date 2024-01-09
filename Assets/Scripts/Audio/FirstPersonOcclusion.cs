@@ -79,6 +79,11 @@ public class FirstPersonOcclusion : MonoBehaviour
         ConfrontAudio.release();
     }
 
+    public void OnDestroy()
+    {
+        Audio.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+    }
+
     private void OccludeBetween(Vector3 sound, Vector3 listener)
     {
         Vector3 SoundLeft = CalculatePoint(sound, listener, SoundOcclusionWidening, true);

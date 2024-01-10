@@ -178,7 +178,7 @@ public class MainTattooMenu : MonoBehaviour
                 currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
             }
         }
-        GetComponentInParent<GraphicRaycaster>().enabled = true;
+        GetComponent<GraphicRaycaster>().enabled = true;
     }
 
     public void UnpausePlayer()
@@ -199,7 +199,7 @@ public class MainTattooMenu : MonoBehaviour
             currentCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 200;
             currentCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
         }
-        GetComponentInParent<GraphicRaycaster>().enabled = false;
+        GetComponent<GraphicRaycaster>().enabled = false;
     }
 
     IEnumerator FadeOutFilter()

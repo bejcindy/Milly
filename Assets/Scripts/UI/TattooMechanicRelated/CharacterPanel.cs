@@ -22,6 +22,16 @@ public class CharacterPanel : TattooPanel
     {
     }
 
+    public void OnEnable()
+    {
+        GetComponentInParent<GraphicRaycaster>().enabled = true;
+    }
+
+    public void OnDisable()
+    {
+        GetComponentInParent<GraphicRaycaster>().enabled = false;
+    }
+
     protected override void Update()
     {
         

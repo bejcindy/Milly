@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
         else
             rb.drag = 0;
 
-        if(!stopMoving && !cameraLocked && !MainTattooMenu.tatMenuOn)
+        if(!stopMoving && !cameraLocked)
             PlayerInput();
 
         if(atInterior && currentVolume > 0)
@@ -147,7 +147,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            MovePlayer();
+            if (!MainTattooMenu.tatMenuOn)
+                MovePlayer();
+            else
+                walking = false;
 
             SpeedControl();
         }

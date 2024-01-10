@@ -7,6 +7,7 @@ public class Loyi : NPCControl
     public bool overrideLoyi;
 
     public bool turnChar;
+    public GameObject phone;
     protected override void Start()
     {
         base.Start();
@@ -32,12 +33,16 @@ public class Loyi : NPCControl
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 1f);
             turnChar = true;
         }
-        
+
+        noLookInConvo = true;
     }
 
     public void LoyiAction2()
     {
+        phone.SetActive(true);
         allowLookPlayer = false;
+        remainInAnim = true;
+        noMoveAfterTalk = true;
     }
 
     public void ExitCutscene()

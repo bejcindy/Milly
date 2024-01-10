@@ -53,7 +53,9 @@ public class Zayne : NPCControl
         noLookInConvo = true;
         noTalkStage = false;
         firstTalked = false;
+        currentDialogue.gameObject.SetActive(false);
         currentDialogue = dialogueHolder.GetChild(2);
+        currentDialogue.gameObject.SetActive(true);
         SetMainTalkFalse();
         string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
         DialogueLua.SetVariable(reTriggerName, false);

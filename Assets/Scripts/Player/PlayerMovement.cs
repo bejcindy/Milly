@@ -322,6 +322,10 @@ public class PlayerMovement : MonoBehaviour
         walkSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
+
+    public void PhoneRings() {
+        RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Phone/Phone_Ring");
+    }
     void EaseInMovement()
     {
         if (walking)

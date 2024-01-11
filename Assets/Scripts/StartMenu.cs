@@ -45,7 +45,7 @@ public class StartMenu : MonoBehaviour
             }
         }
 
-        if (startAllowed && Input.anyKeyDown)
+        if (startAllowed && Input.anyKeyDown && !Input.GetKeyDown(KeyCode.LeftControl) && !Input.GetKeyDown(KeyCode.LeftAlt) && !Input.GetKeyDown(KeyCode.RightAlt) && !Input.GetKeyDown(KeyCode.RightControl))
         {
             fadeSound = true;
             RuntimeManager.PlayOneShot("event:/Sound Effects/UI/StartGame");

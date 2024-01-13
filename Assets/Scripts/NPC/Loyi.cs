@@ -5,7 +5,7 @@ using UnityEngine;
 public class Loyi : NPCControl
 {
     public bool overrideLoyi;
-
+    public bool mainStarted;
     public bool turnChar;
     public GameObject phone;
     protected override void Start()
@@ -17,7 +17,19 @@ public class Loyi : NPCControl
             ExitIzaCutsceneStage();
         }
     }
-     
+
+    protected override void Update()
+    {
+        base.Update();
+        if (mainStarted)
+        {
+            StopIdle();
+            remainInAnim = false;
+            noMoveAfterTalk = false;
+            phone.SetActive(false);
+        }
+    }
+
     public void ExitIzaCutsceneStage()
     {
         talkable = true;
@@ -43,6 +55,11 @@ public class Loyi : NPCControl
         allowLookPlayer = false;
         remainInAnim = true;
         noMoveAfterTalk = true;
+    }
+
+    public void LoyiAction3()
+    {
+
     }
 
     public void ExitCutscene()

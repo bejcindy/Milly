@@ -241,7 +241,6 @@ public class LivableObject : MonoBehaviour
         }
         else
         {
-            //fadeOut = true;
             matColorVal = 0;
             firstActivated = true;
             if (myTat && !delayTat && !myTat.activated)

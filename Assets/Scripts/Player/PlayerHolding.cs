@@ -37,22 +37,22 @@ public class PlayerHolding : MonoBehaviour
     public bool tableControl;
 
     PlayerMovement pm;
-
+    float kickForce = 6f;
     #region For Object Tracking UI
     public Image objectUI;
     public GameObject dragUIAnimation;
     public String dragAnimDirection;
     public Sprite pickUpSprite, dragSprite, grabingSprite, lookingSprite, talkSprite, kickSprite, sitSprite, clickSprite, catSprite;
-    RectTransform objectUIRect,objectUIRect2;
+    RectTransform objectUIRect, objectUIRect2;
     public RectTransform CanvasRect;
 
     //[HideInInspector]
-    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj,catboxObj;
+    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj, catboxObj;
     bool noControlReset;
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
-    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden,catHidden,doorHidden;
+    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden, catHidden, doorHidden;
     List<GameObject> trackedObjs;
     List<GameObject> UIs;
     List<Sprite> usedSprites;
@@ -113,6 +113,8 @@ public class PlayerHolding : MonoBehaviour
             if (!inDialogue)
                 ChooseLookable();
 
+            if ((pickUpObjects.Count == 1 && pickUpObjects[0].GetComponent<PickUpObject>().inHand == false) || pickUpObjects.Count > 1)
+                DetectKick();
 
             #region UI and Hints
             if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo && !kickableObj && !lidObj && !sitObj && !catboxObj)
@@ -191,7 +193,7 @@ public class PlayerHolding : MonoBehaviour
             UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
             #endregion
 
-            
+
 
             if (leftHand.smoking)
                 smoking = true;
@@ -206,9 +208,6 @@ public class PlayerHolding : MonoBehaviour
         {
             inDialogue = false;
         }
-
-
-
     }
 
     #region Interact & Look Related
@@ -228,7 +227,7 @@ public class PlayerHolding : MonoBehaviour
             obj.GetComponent<PickUpObject>().selected = false;
             pickUpObjects.Remove(obj);
             if (selectedObj == obj)
-                selectedObj = null; 
+                selectedObj = null;
         }
     }
 
@@ -264,7 +263,7 @@ public class PlayerHolding : MonoBehaviour
     #endregion
 
     #region Object-Tracking UI
-    void DisplayUI(GameObject trackingObject,Sprite interactionSprite)
+    void DisplayUI(GameObject trackingObject, Sprite interactionSprite)
     {
         //check if current object is tracked already
         bool instantiated = false;
@@ -360,7 +359,7 @@ public class PlayerHolding : MonoBehaviour
             img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
         }
     }
-    void UITriggerdByOtherObj(GameObject obj,Sprite sprite,bool hidden)
+    void UITriggerdByOtherObj(GameObject obj, Sprite sprite, bool hidden)
     {
         if (obj)
         {
@@ -491,7 +490,7 @@ public class PlayerHolding : MonoBehaviour
     {
         if (focusedObj == null)
             HideUI(lookingSprite);
-        if(lookingObjects.Count <= 0)
+        if (lookingObjects.Count <= 0)
         {
             focusedObj = null;
             HideUI(lookingSprite);
@@ -543,7 +542,7 @@ public class PlayerHolding : MonoBehaviour
                 }
                 else
                 {
-                        HideUI(lookingSprite);
+                    HideUI(lookingSprite);
                 }
             }
         }
@@ -557,7 +556,7 @@ public class PlayerHolding : MonoBehaviour
 
     bool CheckContainer()
     {
-        foreach(GameObject obj in containers)
+        foreach (GameObject obj in containers)
         {
             if (obj.GetComponent<ContainerObject>().interactable)
             {
@@ -607,7 +606,7 @@ public class PlayerHolding : MonoBehaviour
         PickUpObject pickUp = obj.GetComponent<PickUpObject>();
         leftHand.AssignRefs(pickUp);
 
-        if(selectedObj != null)
+        if (selectedObj != null)
         {
             selectedObj.GetComponent<PickUpObject>().selected = false;
             selectedObj = null;
@@ -668,6 +667,23 @@ public class PlayerHolding : MonoBehaviour
 
     #endregion
 
+    void DetectKick()
+    {
+        //DataHolder.ShowHint(DataHolder.hints.kickHint);
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            foreach (GameObject obj in pickUpObjects)
+            {
+                if (obj.GetComponent<Rigidbody>())
+                {
+                    Rigidbody rigid = obj.GetComponent<Rigidbody>();
+                    Vector3 kickDir = Vector3.ProjectOnPlane(obj.transform.position - transform.position, Vector3.up);
+                    rigid.AddForce(kickDir * kickForce, ForceMode.Impulse);
+                }
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interior"))
@@ -678,7 +694,7 @@ public class PlayerHolding : MonoBehaviour
             if (leftHand.isHolding)
                 leftHand.enabled = false;
         }
-        
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -689,7 +705,7 @@ public class PlayerHolding : MonoBehaviour
         if (other.CompareTag("DoorDetector"))
             leftHand.enabled = true;
     }
-    
+
     public void ClearPickUp()
     {
         pickUpObjects.Clear();

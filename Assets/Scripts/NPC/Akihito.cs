@@ -6,10 +6,27 @@ using PixelCrushers.DialogueSystem;
 public class Akihito : NPCControl 
 {
     public Transform akiLantern;
+    public bool akiToPizza;
+
+    protected override void Update()
+    {
+        base.Update();
+        if (akiToPizza)
+            MoveAkiToPizza();
+    }
+
 
     public void ActivateAki()
     {
         ChangeLayer(17);
+    }
+
+    public void MoveAkiToPizza()
+    {
+        StopIdle();
+        remainInAnim = false;
+        noMoveAfterTalk = false;
+        noTalkInWalk = false;
     }
 
     public void AkihitoAction1()
@@ -22,6 +39,8 @@ public class Akihito : NPCControl
     {
         noMoveAfterTalk = true;
         noTalkInWalk = false;
+        noLookInConvo = true;
+        remainInAnim = true;
     }
 
     public void LanternFall()

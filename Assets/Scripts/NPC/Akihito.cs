@@ -18,6 +18,12 @@ public class Akihito : NPCControl
         noTalkInWalk = true;
     }
 
+    public void AkihitoAction2()
+    {
+        noMoveAfterTalk = true;
+        noTalkInWalk = false;
+    }
+
     public void LanternFall()
     {
         akiLantern.GetComponent<HingeJoint>().breakForce = 0;

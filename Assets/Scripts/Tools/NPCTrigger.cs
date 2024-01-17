@@ -6,6 +6,7 @@ public class NPCTrigger : MonoBehaviour
 {
     public NPCControl myNPC;
     public GameObject myObj;
+    public LivableObject myLiv;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,7 @@ public class NPCTrigger : MonoBehaviour
             myNPC.gameObject.SetActive(true);
             gameObject.SetActive(false);
             myObj.SetActive(true);
+            myLiv.enabled = true;   
         }
     }
 }

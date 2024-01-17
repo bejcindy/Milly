@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using VInspector;
 
 public class Felix : NPCControl
 {
      
     public BuildingGroupController hintOne;
+
+    [Foldout("Special Dialogues")]
+    public Transform questAcceptDia;
+    public Transform questCompleteDia;
 
     protected override void Start()
     {
@@ -46,19 +51,15 @@ public class Felix : NPCControl
     public void ChangeFelixQuestDialogue()
     {
         firstTalked = false;
-        currentDialogue = dialogueHolder.GetChild(1);
+        currentDialogue = questAcceptDia;
         SetMainTalkFalse();
-        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
-        DialogueLua.SetVariable(reTriggerName, false);
     }
 
     public void ChangeFelixCompleteDialogue()
     {
         firstTalked = false;
-        currentDialogue = dialogueHolder.GetChild(3);
+        currentDialogue = questCompleteDia;
         SetMainTalkFalse();
-        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
-        DialogueLua.SetVariable(reTriggerName, false);
         noMoveAfterTalk = false;
     }
 

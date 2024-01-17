@@ -17,7 +17,8 @@ public class TalkState : State
                 {
                     Debug.Log("Should Talk");
                     machine.StopNavigation();
-                    machine.SetAnimatorTrigger("Talk");
+                    if(!!machine.CheckRemainInAnim())
+                        machine.SetAnimatorTrigger("Talk");
                 }
             }
         }

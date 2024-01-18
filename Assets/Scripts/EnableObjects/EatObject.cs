@@ -6,19 +6,18 @@ using VInspector;
 public class EatObject : PickUpObject
 {
     [Foldout("Eat Object")]
-    public Transform[] foodMeshes;
+
     public Transform currentMesh;
     public bool doneEating;
-
     public GameObject pizzaEatingDialogue;
     public Transform plate;
-
-    bool foodMoving = false;
+    public int foodStage = 1;
+    public bool foodMoving = false;
     protected override void Start()
     {
         base.Start();
         objType = HandObjectType.FOOD;
-        currentMesh = foodMeshes[0];
+        currentMesh = transform.GetChild(1);
     }
 
     protected override void Update()
@@ -52,11 +51,12 @@ public class EatObject : PickUpObject
     public void ChangeFoodMesh()
     {
         pizzaEatingDialogue.SetActive(true);
-        if(currentMesh.GetSiblingIndex() < transform.childCount-1)
+        if(foodStage < 3)
         {
             currentMesh.gameObject.SetActive(false);
-            currentMesh = transform.GetChild(currentMesh.GetSiblingIndex() + 1);
-            currentMesh.gameObject.SetActive(true);
+            foodStage++;
+            currentMesh = transform.GetChild(foodStage);
+            currentMesh.gameObject.SetActive(true );
             rend = currentMesh.GetComponent<Renderer>();
             rigged = false;
         }
@@ -66,7 +66,7 @@ public class EatObject : PickUpObject
             playerHolding.UnoccupyLeft();
             Destroy(gameObject);
         }
-
+        playerLeftHand.eating = false;
     }
 
     IEnumerator LerpPosition(float duration)

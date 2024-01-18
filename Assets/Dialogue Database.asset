@@ -1649,6 +1649,34 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: 
+  - id: 65
+    fields:
+    - title: Name
+      value: NPC/Hugo/Main_Talked
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 66
+    fields:
+    - title: Name
+      value: NPC/Hugo/Other_Interacted
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
@@ -77145,7 +77173,7 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Hugo_Main_Talked"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -77470,7 +77498,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: 'Variable["NPC_Hugo_Main_Talked"] = true;
+
+        Variable["NPC_Hugo_Other_Interacted"]
+        = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -77481,8 +77512,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 162.63733}
-    canvasZoom: 0.91
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.5200004
   syncInfo:
     syncActors: 0
     syncItems: 0

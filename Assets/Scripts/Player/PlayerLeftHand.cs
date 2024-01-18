@@ -471,15 +471,36 @@ public class PlayerLeftHand : MonoBehaviour
             }
         }
 
+        EatObject food = holdingObj.GetComponent<EatObject>();
         if (Input.mouseScrollDelta.y < 0 && !eating)
         {
             eating = true;
-
-            handAnim.Play("HandEat");
-            Invoke(nameof(ChangeEatingMesh), 1f);
+            Vector3 smokingPos = new Vector3(0.5f, 0f, -0.3f);
+            Vector3 smokingRot = new Vector3(0, 0, 0);
+            StartCoroutine(LerpPosition(smokingPos, 1f));
+            StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
         }
-        if (handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "HandEat")
-            eating = false;
+
+        if (!food.doneEating)
+        {
+            if (food.transform.localPosition == new Vector3(0.5f, 0f, -0.3f))
+            {
+                eating = false;
+                Vector3 smokingRot = new Vector3(0, 0, 0);
+                StartCoroutine(LerpPosition(Vector3.zero, 1f));
+                StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
+            }
+        }
+
+
+
+        //if (Input.mouseScrollDelta.y < 0 && !eating)
+        //{
+        //    eating = true;
+
+        //    handAnim.Play("HandEat");
+        //    Invoke(nameof(ChangeEatingMesh), 1f);
+        //}
     }
 
     void ChangeEatingMesh()
@@ -626,10 +647,6 @@ public class PlayerLeftHand : MonoBehaviour
         }
     }
 
-    private void DetectSurface()
-    {
-
-    }
 
     private void DetectPizzaHolding()
     {
@@ -650,7 +667,10 @@ public class PlayerLeftHand : MonoBehaviour
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
-        movingCig = true;
+        if(objPickUp.GetComponent<Cigarette>())
+            movingCig = true;
+
+
         float time = 0;
         Vector3 startPosition = holdingObj.localPosition;
         while (time < duration)
@@ -660,8 +680,12 @@ public class PlayerLeftHand : MonoBehaviour
             yield return null;
         }
         holdingObj.localPosition = targetPosition;
-        movingCig = false;
-
+        if (objPickUp.GetComponent<Cigarette>())
+            movingCig = false;
+        if (eating)
+        {
+            ChangeEatingMesh();
+        }
     }
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)

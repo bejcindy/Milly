@@ -63,7 +63,7 @@ public class Loyi : NPCControl
         phone.SetActive(false);
         remainInAnim = false;
         noMoveAfterTalk = false;
-
+        noLookInConvo = true;
 
     }
 

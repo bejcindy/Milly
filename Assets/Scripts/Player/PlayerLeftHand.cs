@@ -17,6 +17,7 @@ public class PlayerLeftHand : MonoBehaviour
     public bool smoking;
     public bool movingCig;
     public bool drinking;
+    public bool eating;
     public bool gettingCig;
 
     [Foldout("Throwing")]
@@ -260,6 +261,11 @@ public class PlayerLeftHand : MonoBehaviour
                 DetectDoubleHand();
                 break;
 
+            case HandObjectType.FOOD:
+                EatHandFood();
+                if (!drinking && !playerHolding.atInterior)
+                    BasicThrow();
+                break;
             default:
                 if (!drinking && !playerHolding.atInterior)
                     BasicThrow();
@@ -452,6 +458,33 @@ public class PlayerLeftHand : MonoBehaviour
     void DrinkSound()
     {
         RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Swallow", transform.position);
+    }
+
+    public void EatHandFood()
+    {
+        if (Input.GetMouseButtonDown(0) && !noThrow)
+        {
+            if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+            {
+                isHolding = false;
+                StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
+            }
+        }
+
+        if (Input.mouseScrollDelta.y < 0 && !eating)
+        {
+            eating = true;
+
+            handAnim.Play("HandEat");
+            Invoke(nameof(ChangeEatingMesh), 1f);
+        }
+        if (handAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "HandEat")
+            eating = false;
+    }
+
+    void ChangeEatingMesh()
+    {
+        holdingObj.GetComponent<EatObject>().ChangeFoodMesh();
     }
 
     float rotateVal;

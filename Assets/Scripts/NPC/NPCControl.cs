@@ -48,10 +48,6 @@ public class NPCControl : MonoBehaviour
     public Transform npcMesh;
     public RiggedVisibleDetector visibleDetector;
 
-    //public bool objectTriggered;
-    //public LivableObject triggerObject;
-    //public bool peopleTriggered;
-    //public Transform otherNPC;
 
     [Foldout("Quests")]
     public bool questTriggered;
@@ -745,13 +741,15 @@ public class NPCControl : MonoBehaviour
 
     public void SetDialogue()
     {
-        int diaIndex = currentDialogue.GetSiblingIndex();
-        if (diaIndex != dialogueHolder.childCount - 1)
-        {
-            currentDialogue = dialogueHolder.GetChild(diaIndex + 1);
-            string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
-            DialogueLua.SetVariable(reTriggerName, false);
-        }
+        //int diaIndex = currentDialogue.GetSiblingIndex();
+        //if (diaIndex != dialogueHolder.childCount - 1)
+        //{
+        //    currentDialogue = dialogueHolder.GetChild(diaIndex + 1);
+        //    SetMainTalkFalse();
+        //}
+
+        currentDialogue = dialogueHolder.GetChild(_counter);
+        SetMainTalkFalse();
 
 
     }
@@ -766,6 +764,8 @@ public class NPCControl : MonoBehaviour
     {
         string seTalkName = "NPC/" + gameObject.name + "/Main_Talked";
         DialogueLua.SetVariable(seTalkName, false);
+        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
+        DialogueLua.SetVariable(reTriggerName, false);
     }
 
     public bool GetMainTalked()

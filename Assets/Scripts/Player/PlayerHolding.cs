@@ -631,6 +631,7 @@ public class PlayerHolding : MonoBehaviour
                 StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
                 leftHand.smoking = true;
                 break;
+
             default:
                 obj.SetParent(handContainer);
                 StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));

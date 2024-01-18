@@ -38,6 +38,7 @@ public class PlayerHolding : MonoBehaviour
 
     PlayerMovement pm;
     float kickForce = 6f;
+    public GameObject midAirKickable;
     #region For Object Tracking UI
     public Image objectUI;
     public GameObject dragUIAnimation;
@@ -113,8 +114,9 @@ public class PlayerHolding : MonoBehaviour
             if (!inDialogue)
                 ChooseLookable();
 
-            if ((pickUpObjects.Count == 1 && pickUpObjects[0].GetComponent<PickUpObject>().inHand == false) || pickUpObjects.Count > 1)
+            if ((pickUpObjects.Count == 1 && pickUpObjects[0].GetComponent<PickUpObject>().inHand == false) || pickUpObjects.Count > 1 || midAirKickable)
                 DetectKick();
+            
 
             #region UI and Hints
             if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo && !kickableObj && !lidObj && !sitObj && !catboxObj)
@@ -679,7 +681,17 @@ public class PlayerHolding : MonoBehaviour
                 {
                     Rigidbody rigid = obj.GetComponent<Rigidbody>();
                     Vector3 kickDir = Vector3.ProjectOnPlane(obj.transform.position - transform.position, Vector3.up);
-                    rigid.AddForce(kickDir * kickForce, ForceMode.Impulse);
+                    rigid.AddForce(kickDir * kickForce+Vector3.up*2f, ForceMode.Impulse);
+                }
+            }
+            if (midAirKickable)
+            {
+                if (midAirKickable.GetComponent<Rigidbody>())
+                {
+                    Rigidbody rigid = midAirKickable.GetComponent<Rigidbody>();
+                    Vector3 kickDir = Vector3.ProjectOnPlane(midAirKickable.transform.position - transform.position, Vector3.up);
+                    rigid.AddForce(kickDir * kickForce + Vector3.up * 2f, ForceMode.Impulse);
+                    midAirKickable = null;
                 }
             }
         }

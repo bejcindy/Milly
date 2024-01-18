@@ -111,7 +111,10 @@ public class PickUpObject : LivableObject
             selected = false;
         }
 
-
+        if(interactable && !inHand && thrown)
+        {
+            playerHolding.midAirKickable = gameObject;
+        }
 
 
 

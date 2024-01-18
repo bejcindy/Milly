@@ -261,6 +261,11 @@ public class PlayerLeftHand : MonoBehaviour
                 DetectDoubleHand();
                 break;
 
+            case HandObjectType.FOOD:
+                EatHandFood();
+                if (!drinking && !playerHolding.atInterior)
+                    BasicThrow();
+                break;
             default:
                 if (!drinking && !playerHolding.atInterior)
                     BasicThrow();
@@ -479,6 +484,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     void ChangeEatingMesh()
     {
+        holdingObj.GetComponent<EatObject>().ChangeFoodMesh();
     }
 
     float rotateVal;

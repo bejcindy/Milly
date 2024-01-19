@@ -25,6 +25,7 @@ public class Loyi : NPCControl
 
     public void MoveLoyiToVinyl()
     {
+        _counter = 2;
         StopIdle();
         remainInAnim = false;
         noMoveAfterTalk = false;

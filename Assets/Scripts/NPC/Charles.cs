@@ -14,7 +14,6 @@ public class Charles : NPCControl
     protected override void Start()
     {
         base.Start();
-        talkable = true;
 
     }
     protected override void Update()
@@ -24,8 +23,8 @@ public class Charles : NPCControl
 
     public void CharlesAction1()
     {
-        
-        
+
+        talkable = true;
 
     }
 

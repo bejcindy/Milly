@@ -698,6 +698,7 @@ public class PlayerLeftHand : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
-        holdingObj.localRotation = endValue;
+        if(!holdingObj)
+            holdingObj.localRotation = endValue;
     }
 }

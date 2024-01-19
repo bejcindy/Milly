@@ -50,6 +50,7 @@ public class EatObject : PickUpObject
 
     public void ChangeFoodMesh()
     {
+        activated = true;
         pizzaEatingDialogue.SetActive(true);
         if(foodStage < 3)
         {

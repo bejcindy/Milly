@@ -38,6 +38,7 @@ public class EatObject : PickUpObject
         base.Update();
         LayerDetection();
 
+        
 
         //if (inHand)
         //{
@@ -52,6 +53,11 @@ public class EatObject : PickUpObject
         //        }
         //    }
         //}
+    }
+
+    private void OnDestroy()
+    {
+        StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToDefaultColor());
     }
 
     void LayerDetection()

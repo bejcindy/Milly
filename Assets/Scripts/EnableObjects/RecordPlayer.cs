@@ -26,8 +26,8 @@ public class RecordPlayer : LivableObject
         isPlaying = true;
         hasRecord = true;
         playingRot = transform.localRotation;
-        stopRot = Quaternion.Euler(0f, 0f, 0f);
-        recordPos = currentRecord.transform.position;
+        stopRot = Quaternion.Euler(0f, -20f, 0f);
+        recordPos = currentRecord.transform.localPosition;
     }
 
     protected override void Update()
@@ -51,7 +51,10 @@ public class RecordPlayer : LivableObject
         }
         else
         {
-            recordPlacer.gameObject.layer = 0;
+            if(!activated)
+                recordPlacer.gameObject.layer = 0;
+            else
+                recordPlacer.gameObject.layer = 17;
         }
 
         if (interactable)
@@ -104,7 +107,7 @@ public class RecordPlayer : LivableObject
     {
         RuntimeManager.PlayOneShot(recorPlaceEvent, transform.position);
         vinyl.transform.SetParent(recordPlacer.transform);
-        vinyl.transform.localPosition = Vector3.zero;
+        vinyl.transform.localPosition = recordPos;
         vinyl.transform.localRotation = Quaternion.identity;
         currentRecord = vinyl;
     }

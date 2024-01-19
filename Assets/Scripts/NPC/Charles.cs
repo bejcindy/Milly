@@ -46,7 +46,6 @@ public class Charles : NPCControl
     public void CharlesAction3()
     {
         noTalkStage = false;
-        gameObject.SetActive(false);
     }
 
     public void FinishSmoking()

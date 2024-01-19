@@ -171,17 +171,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("slope"))
-        {
-            slopeCollide = true;
-            collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, collision.contacts[0].normal).normalized;
-        }
+        
         if (collision.gameObject.name.Contains("road_sidebrisk"))
         {
             Maluyazi(collision.contacts[0].normal);
         }
     }
-
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("slope"))
+        {
+            slopeCollide = true;
+            collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, collision.contacts[0].normal).normalized;
+        }
+    }
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("slope"))

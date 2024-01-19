@@ -79,9 +79,9 @@ public class SMHAdjustTest : MonoBehaviour
         shadowMidHigh.highlights.value = targetHighlight;
         vignette.intensity.value = targetVignette;
 
-        yield return new WaitForSeconds(30f);
+        //yield return new WaitForSeconds(30f);
 
-        StartCoroutine(LerpToDefaultColor());
+        //StartCoroutine(LerpToDefaultColor());
 
         yield break;
     }

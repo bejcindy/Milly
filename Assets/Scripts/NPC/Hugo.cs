@@ -11,4 +11,11 @@ public class Hugo : NPCControl
         noMoveAfterTalk = true;
         noLookInConvo = true;
     }
+
+    public void HugoAction1()
+    {
+        talkable = true;
+        noMoveAfterTalk = true;
+
+    }
 }

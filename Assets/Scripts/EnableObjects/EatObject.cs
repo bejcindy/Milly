@@ -103,6 +103,7 @@ public class EatObject : PickUpObject
     public void FoodMeshChange()
     {
         activated = true;
+        pizzaEatingDialogue.SetActive(true);
         if (!ran)
         {
             StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToPizzaColor(shadow, midtone, highlight, vignette));

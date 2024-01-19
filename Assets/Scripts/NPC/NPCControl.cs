@@ -616,10 +616,6 @@ public class NPCControl : MonoBehaviour
         }
     }
 
-    public void EndConversation()
-    {
-        inConversation = false;
-    }
     #endregion
 
     #region Look At Player
@@ -689,10 +685,6 @@ public class NPCControl : MonoBehaviour
     }
 
     #region AI Region
-    public Transform GetCurrentDestination()
-    {
-        return destinations[_counter - 1];
-    }
 
     public bool FinalStop()
     {

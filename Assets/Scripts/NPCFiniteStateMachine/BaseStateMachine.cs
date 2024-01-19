@@ -9,7 +9,7 @@ using FMODUnity;
 
 namespace NPCFSM
 {
-    public class BaseStateMachine: MonoBehaviour
+    public class BaseStateMachine : MonoBehaviour
     {
 
         State currentState;
@@ -17,11 +17,11 @@ namespace NPCFSM
         Transform player;
         State initialState;
         public char initialStateChar;
-        public FrozenState frozenState= new FrozenState();
-        public MoveState moveState= new MoveState();
+        public FrozenState frozenState = new FrozenState();
+        public MoveState moveState = new MoveState();
         public IdleState idleState = new IdleState();
         public TalkState talkState = new TalkState();
-        public FollowState followState= new FollowState();
+        public FollowState followState = new FollowState();
         public FinalState finalState = new FinalState();
 
         [SerializeField] private float toPlayerDistance;
@@ -76,7 +76,7 @@ namespace NPCFSM
 
         public void ChangeState(State newState)
         {
-            if(currentState != null)
+            if (currentState != null)
             {
                 currentState.OnStateExit();
             }
@@ -133,7 +133,7 @@ namespace NPCFSM
         {
             if (lookCoroutine != null)
                 StopCoroutine(lookCoroutine);
-            StartCoroutine(RotateTowards(target));  
+            StartCoroutine(RotateTowards(target));
         }
 
 
@@ -318,10 +318,6 @@ namespace NPCFSM
             return npcControl.FinalStop();
         }
 
-        public Transform GetCurrentDestination()
-        {
-            return npcControl.GetCurrentDestination();
-        }
         #endregion
 
         #region AnimationControlRegion
@@ -409,6 +405,11 @@ namespace NPCFSM
                 ChangeState(moveState);
                 moveWait = 2f;
             }
+        }
+
+        public void MoveNPC()
+        {
+            ChangeState(moveState);
         }
         #endregion
     }

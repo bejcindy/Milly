@@ -13,6 +13,13 @@ public class EatObject : PickUpObject
     public Transform plate;
     public int foodStage = 1;
     public bool foodMoving = false;
+
+    [Foldout("Post Processing Values")]
+    public Vector4 shadow;
+    public Vector4 midtone;
+    public Vector4 highlight;
+    public float vignette;
+
     protected override void Start()
     {
         base.Start();
@@ -47,11 +54,16 @@ public class EatObject : PickUpObject
             }
         }
     }
-
+    bool ran;
     public void ChangeFoodMesh()
     {
         activated = true;
         pizzaEatingDialogue.SetActive(true);
+        if (!ran)
+        {
+            StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToPizzaColor(shadow, midtone, highlight, vignette));
+            ran = true;
+        }
         if(foodStage < 3)
         {
             currentMesh.gameObject.SetActive(false);

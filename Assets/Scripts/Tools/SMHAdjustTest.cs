@@ -51,7 +51,7 @@ public class SMHAdjustTest : MonoBehaviour
         }
         if (profile.TryGet<Vignette>(out vignette))
         {
-            vignette.intensity.value = currentVignette;
+            currentVignette = vignette.intensity.value;
         }
     }
 
@@ -78,6 +78,11 @@ public class SMHAdjustTest : MonoBehaviour
         shadowMidHigh.midtones.value = targetMidtone;
         shadowMidHigh.highlights.value = targetHighlight;
         vignette.intensity.value = targetVignette;
+
+        yield return new WaitForSeconds(30f);
+
+        StartCoroutine(LerpToDefaultColor());
+
         yield break;
     }
 
@@ -111,15 +116,8 @@ public class SMHAdjustTest : MonoBehaviour
         yield break;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnDisable()
     {
-        //StartCoroutine(LerpToPizzaColor(currentShadow, currentMidtone, currentHighlight));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ResetToDefault();
     }
 }

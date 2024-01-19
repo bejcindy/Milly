@@ -24,9 +24,5 @@ public class FrozenState : State
         }
     }
 
-    protected override void OnExit()
-    {
-        machine.SetAnimatorTrigger("Start");
-        machine.ActivateNPC();
-    }
+
 }

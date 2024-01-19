@@ -73,12 +73,14 @@ public class Xixi : NPCControl
 
     protected override void OnConversationEnd(Transform other)
     {
-        inConversation = false;
-        if (lookCoroutine != null)
-            StopCoroutine(lookCoroutine);
-        currentDialogue.gameObject.SetActive(false);
+        base.OnConversationEnd(other);
         noTalkInWalk = true;
-        GetComponent<BoxCollider>().enabled = false;
+        //inConversation = false;
+        //if (lookCoroutine != null)
+        //    StopCoroutine(lookCoroutine);
+        //currentDialogue.gameObject.SetActive(false);
+        //noTalkInWalk = true;
+        //GetComponent<BoxCollider>().enabled = false;
     }
 
     public void ChangeIntialActivate()
@@ -114,6 +116,7 @@ public class Xixi : NPCControl
                 npcActivated = true;
             ChangeLayer(17);
             StartTalking();
+            GetComponent<BoxCollider>().enabled = false;
         }
     }
 

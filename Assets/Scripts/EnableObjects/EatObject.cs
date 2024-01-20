@@ -13,6 +13,7 @@ public class EatObject : PickUpObject
 
     public GameObject pizzaEatingDialogue;
     public Transform plate;
+    public PizzaScreen pizzaLid;
     public int foodStage = 1;
     public bool foodMoving = false;
 
@@ -38,7 +39,6 @@ public class EatObject : PickUpObject
         base.Update();
         LayerDetection();
 
-        
 
         //if (inHand)
         //{
@@ -55,10 +55,7 @@ public class EatObject : PickUpObject
         //}
     }
 
-    private void OnDestroy()
-    {
-        StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToDefaultColor());
-    }
+
 
     void LayerDetection()
     {
@@ -108,8 +105,10 @@ public class EatObject : PickUpObject
 
     public void FoodMeshChange()
     {
-        activated = true;
+        //activated = true;
         pizzaEatingDialogue.SetActive(true);
+        pizzaLid.enabled = true;
+        pizzaLid.showing = true;
         if (!ran)
         {
             StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToPizzaColor(shadow, midtone, highlight, vignette));
@@ -126,9 +125,16 @@ public class EatObject : PickUpObject
         }
         else
         {
+            doneEating = true;
             playerHolding.UnoccupyLeft();
-            Destroy(gameObject);
+            Invoke(nameof(DestroyPizza), 1f);
+
         }
+    }
+
+    void DestroyPizza()
+    {
+        Destroy(gameObject);
     }
     bool ran;
     //public void ChangeFoodMesh()

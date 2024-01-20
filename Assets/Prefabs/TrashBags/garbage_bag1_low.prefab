@@ -28,13 +28,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2615819906130394686}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -13.21, y: -0.10922157, z: 5.729}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2404466430513000590
 MeshFilter:
@@ -98,39 +98,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2638f8321f93f784f970537cb6a00dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 0
-  isVisible: 0
-  checkVisible: 0
-  tableObj: 0
-  minDist: 3
-  rend: {fileID: 0}
   activated: 0
   transformed: 0
-  firstActivated: 0
+  noChangeLayer: 0
+  interactable: 0
+  isVisible: 0
+  minDist: 3
+  rend: {fileID: 0}
   matColorVal: 1
   fadeInterval: 10
+  myTat: {fileID: 0}
+  delayTat: 0
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   rigged: 0
   visibleDetector: {fileID: 0}
   centerFocused: 0
   noRend: 0
-  overrideStartSequence: 0
   onlyFront: 1
+  overrideStartSequence: 0
+  izaProp: 0
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
-  objType: 2
+  myZone: {fileID: 0}
+  scriptOff: 0
+  objType: 1
   targetRot: {x: 0, y: 0, z: 0}
   inHand: 0
   selected: 0
   thrown: 0
-  cigarette: 0
   freezeRotation: 0
   throwCD: 0
   thrownByPlayer: 0
-  npcBound: 0
-  foodObj: 0
   pickUpEventName: 
   throwEventName: 
   pickUpSound:
@@ -155,7 +155,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2615819906130394686}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -170,10 +170,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &4099798639216419001
 CapsuleCollider:
   m_ObjectHideFlags: 0

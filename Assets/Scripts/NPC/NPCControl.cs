@@ -793,12 +793,7 @@ public class NPCControl : MonoBehaviour
 
             if(door.doorMoving)
             {
-                inDoorRange = false;
-                currentDoor = null;
-                agent.isStopped = false;
-                waitForDoor = false;
-                doorAnimSet = false;
-                anim.SetTrigger("Move");
+                Invoke(nameof(DoorOpenMove), 1f);
             }
 
         }
@@ -807,6 +802,16 @@ public class NPCControl : MonoBehaviour
     void SetDoorOpen()
     {
         currentDoor.NPCOpenDoor();
+    }
+
+    void DoorOpenMove()
+    {
+        inDoorRange = false;
+        currentDoor = null;
+        agent.isStopped = false;
+        waitForDoor = false;
+        doorAnimSet = false;
+        anim.SetTrigger("Move");
     }
 
 

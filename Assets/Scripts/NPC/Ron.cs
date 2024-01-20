@@ -17,7 +17,12 @@ public class Ron : NPCControl
         talkable = true;
         noLookInConvo = false;
         remainInAnim = false;
-        noMoveAfterTalk = true;
         noTalkInWalk = false;
+    }
+
+    public void RonAction2()
+    {
+        noLookInConvo = true;
+        noTalkStage = true;
     }
 }

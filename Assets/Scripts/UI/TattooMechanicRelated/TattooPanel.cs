@@ -29,7 +29,7 @@ public class TattooPanel : MonoBehaviour
     public Vector2 startPos;
 
     public bool activatedOnce;
-
+    public RectTransform VFXCanvas;
     protected virtual void Awake()
     {
         panelTransform = GetComponent<RectTransform>();
@@ -91,6 +91,7 @@ public class TattooPanel : MonoBehaviour
     public void ResetPosition()
     {
         panelTransform.anchoredPosition = startPos;
+        VFXCanvas.anchoredPosition = Vector2.zero;
     }
 
     protected virtual void DragPanel()
@@ -128,6 +129,7 @@ public class TattooPanel : MonoBehaviour
         {
             time += Time.deltaTime;
             GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, time / duration));
+            VFXCanvas.anchoredPosition= Vector2.Lerp(startPosition, targetPosition, Mathf.SmoothStep(0, 1, time / duration));
             yield return null;
         }
         GetComponent<RectTransform>().anchoredPosition = targetPosition;

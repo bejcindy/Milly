@@ -5,9 +5,12 @@ using UnityEngine;
 public class Gloria : NPCControl
 {
     float waitTime = 3f;
-    public Transform chair;
+    public FixedCameraObject chair;
+
+    public Transform gloriaHugoDia;
 
     bool gloriaOpenDoor;
+    bool gloriaIzaConfront;
     protected override void Start()
     {
         base.Start();
@@ -17,12 +20,11 @@ public class Gloria : NPCControl
 
     public void GloriaAction1()
     {
-        stopIdleAfterConvo = true;
+
     }
      
     public void GloriaAction2()
     {
-        stopIdleAfterConvo = true;
         noLookInConvo = true;
     }
 
@@ -37,19 +39,43 @@ public class Gloria : NPCControl
 
     public void GloriaAction4()
     {
-        noLookInConvo = true;
         noMoveAfterTalk = true;
         remainInAnim = true;
+        if (chair.positionFixed && !gloriaIzaConfront)
+        {
+            gloriaIzaConfront = true;
+            currentDialogue.gameObject.SetActive((true));
+        }
 
     }
 
     public void GloriaAction5()
     {
-        transform.SetParent(chair);
-        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0.4f, -0.6f, 0.2f), 1f);
-        Vector3 sitRotation = new Vector3(0, 180, 0);
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(sitRotation), 1f);
-
+        remainInAnim = false;
+        talkable = false;
     }
+
+    public void GloriaAction6()
+    {
+        gloriaHugoDia.gameObject.SetActive(true);
+        noMoveAfterTalk = true;
+    }
+
+
+    public void GloriaBathroomMove()
+    {
+        StopIdle();
+        remainInAnim = false;
+        noMoveAfterTalk = false;
+    }
+
+
+    public void GloriaFifthConversationActive()
+    {
+        talkable = true;
+        noLookInConvo = false;
+        noTalkStage = false;
+    }
+
 
 }

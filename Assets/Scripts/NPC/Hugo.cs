@@ -14,8 +14,8 @@ public class Hugo : NPCControl
 
     public void HugoAction1()
     {
-        talkable = true;
         noMoveAfterTalk = true;
+        currentDialogue.gameObject.SetActive((true));
 
     }
 }

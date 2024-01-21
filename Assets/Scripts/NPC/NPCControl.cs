@@ -507,6 +507,11 @@ public class NPCControl : MonoBehaviour
     {
         currentDialogue.gameObject.SetActive(true);
     }
+
+    public void StopRemainAnimation()
+    {
+        remainInAnim = false;
+    }
     void CheckTalkCD()
     {
         if (inCD && talkCD > 0)

@@ -18,4 +18,15 @@ public class Hugo : NPCControl
         currentDialogue.gameObject.SetActive((true));
 
     }
+
+    public void HugoAction2()
+    {
+
+    }
+
+    public void HugoAction3()
+    {
+        talkable = true;
+        noLookInConvo = false;
+    }
 }

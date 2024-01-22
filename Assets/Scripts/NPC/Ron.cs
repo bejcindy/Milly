@@ -9,7 +9,7 @@ public class Ron : NPCControl
         base.Start();
 
         noLookInConvo = true;
-        noTalkInWalk = true;
+
     }
 
     public void RonAction1()
@@ -17,7 +17,6 @@ public class Ron : NPCControl
         talkable = true;
         noLookInConvo = false;
         remainInAnim = false;
-        noTalkInWalk = false;
     }
 
     public void RonAction2()

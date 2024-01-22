@@ -14,7 +14,6 @@ public class MainTattooMenu : MonoBehaviour
     public bool playerUnpaused;
     public static bool tatMenuOn;
     Animator menuFade;
-    public Animator vfxMenuFade;
     float mouseDragSpeed = 70;
     public EventReference panelOpenSound;
     public GameObject blurCanvas;
@@ -66,7 +65,6 @@ public class MainTattooMenu : MonoBehaviour
                 if (playAnim)
                 {
                     menuFade.SetTrigger("FadeIn");
-                    vfxMenuFade.SetTrigger("FadeIn");
                     RuntimeManager.PlayOneShot(panelOpenSound);
                     snapshot = RuntimeManager.CreateInstance("snapshot:/EnableObject");
                     snapshot.start();
@@ -99,7 +97,6 @@ public class MainTattooMenu : MonoBehaviour
             {
                 tatMenuOn = false;
                 menuFade.SetTrigger("FadeOut");
-                vfxMenuFade.SetTrigger("FadeOut");
                 UnpausePlayer();
                 showPanel = false;
                 StartCoroutine(FadeOutFilter());

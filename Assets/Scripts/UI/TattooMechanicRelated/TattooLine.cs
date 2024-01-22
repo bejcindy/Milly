@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.VFX;
 
 public class TattooLine : MonoBehaviour
 {
@@ -12,12 +11,10 @@ public class TattooLine : MonoBehaviour
     public bool centerLine;
     public bool halfActivated;
     public bool activated;
+
     [SerializeField] float halfOnColor;
-    public VisualEffect vfx;
-    bool playedBlackVFX, playedGreyVFX,VFXPlaying;
     Image lineImage;
     CenterTattoo centerTat;
-    float timer;
     void Start()
     {
         myPanel=transform.parent.GetComponent<TattooPanel>();
@@ -80,38 +77,12 @@ public class TattooLine : MonoBehaviour
         if (lineImage.color.a != halfOnColor)
         {
             myPanel.mainTattooMenu.lerping = true;
-
-            if (timer < .5f)
-            {
-                if (!playedGreyVFX)
-                {
-                    vfx.SetVector4("MainColor", new Color(50, 50, 50, 0));
-                    vfx.Play();
-                    VFXPlaying = true;
-                    playedGreyVFX = true;
-                }
-                timer += Time.deltaTime;
-            }
-            else if (timer < 1f)
-            {
-                if (VFXPlaying)
-                {
-                    vfx.Stop();
-                    VFXPlaying = false;
-                }
-                timer += Time.deltaTime;
-            }
-            else
-            {
-                lineImage.color = Tattoo.FadeInColor(lineImage.color, halfOnColor);
-                
-            }
+            lineImage.color = Tattoo.FadeInColor(lineImage.color, halfOnColor);
         }
         else
         {
             halfActivated = true;
-            timer = 0;
-            if (centerLine)
+            if(centerLine)
                 endTat.isHinted = true;
             else
             {
@@ -127,36 +98,12 @@ public class TattooLine : MonoBehaviour
         if (lineImage.color.a != 1)
         {
             myPanel.mainTattooMenu.lerping = true;
-            if (timer < .5f)
-            {
-                if (!playedBlackVFX)
-                {
-                    vfx.SetVector4("MainColor", Color.black);
-                    vfx.Play();
-                    VFXPlaying = true;
-                    playedBlackVFX = true;
-                }
-                timer += Time.deltaTime;
-            }
-            else if (timer < 1f)
-            {
-                if (VFXPlaying)
-                {
-                    vfx.Stop();
-                    VFXPlaying = false;
-                }
-                timer += Time.deltaTime;
-            }
-            else
-            {
-                lineImage.color = Tattoo.FadeInColor(lineImage.color, 1);
-            }
+            lineImage.color = Tattoo.FadeInColor(lineImage.color, 1);
         }
         else
         {
             activated = true;
-            timer = 0;
-            if (centerLine)
+            if(centerLine)
                 endTat.isShown = true;
             else
             {

@@ -13,7 +13,7 @@ public class TalkState : State
         {
             if (machine.CheckReachDestination())
             {
-                if (machine.CheckTalkable() && !machine.CheckSpecialIdleAnim() && machine.CheckFirstTalked())
+                if (machine.CheckTalkable() && !machine.CheckSpecialIdleAnim())
                 {
                     Debug.Log("Should Talk");
                     machine.StopNavigation();

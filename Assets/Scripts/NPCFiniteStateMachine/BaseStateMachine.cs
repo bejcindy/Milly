@@ -344,10 +344,7 @@ namespace NPCFSM
             return npcControl.CheckTalkable();
         }
 
-        public bool CheckFirstTalked()
-        {
-            return npcControl.CheckFirstTalked();
-        }
+
 
         public void SetMainTalkTrue()
         {

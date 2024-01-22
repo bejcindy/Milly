@@ -86,7 +86,7 @@ public class TattooLine : MonoBehaviour
             {
                 if (!playedGreyVFX)
                 {
-                    vfx.SetVector4("MainColor", new Color(50, 50, 50, 0));
+                    vfx.SetVector4("MainColor", new Color(150,150, 150, 0));
                     vfx.Play();
                     VFXPlaying = true;
                     playedGreyVFX = true;

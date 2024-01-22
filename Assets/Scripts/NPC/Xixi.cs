@@ -25,7 +25,7 @@ public class Xixi : NPCControl
     public void XixiAction1()
     {
         noTalkStage = true;
-        noTalkInWalk = false;
+
         waitTime -= Time.deltaTime;
         if (waitTime < 0)
         {
@@ -46,7 +46,6 @@ public class Xixi : NPCControl
     {
         remainInAnim = true;
         noMoveAfterTalk = true;
-        noTalkInWalk = false;
         noLookInConvo = false;
 
         if(playerLeftHand.isHolding && playerLeftHand.holdingObj.name.Contains("Cat_can"))
@@ -71,17 +70,6 @@ public class Xixi : NPCControl
     }
 
 
-    protected override void OnConversationEnd(Transform other)
-    {
-        base.OnConversationEnd(other);
-        noTalkInWalk = true;
-        //inConversation = false;
-        //if (lookCoroutine != null)
-        //    StopCoroutine(lookCoroutine);
-        //currentDialogue.gameObject.SetActive(false);
-        //noTalkInWalk = true;
-        //GetComponent<BoxCollider>().enabled = false;
-    }
 
     public void ChangeIntialActivate()
     {
@@ -104,7 +92,6 @@ public class Xixi : NPCControl
     {
         StopIdle();
         remainInAnim = false;
-        noTalkInWalk = true;
         noMoveAfterTalk = false;
     }
 

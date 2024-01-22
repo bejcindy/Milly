@@ -22,7 +22,6 @@ public class Zayne : NPCControl
     }
     public void ZayneAction1()
     {
-        noTalkInWalk = false;
         noTalkStage = true;
         currentDialogue.gameObject.SetActive(true);
         noMoveAfterTalk = true;
@@ -30,7 +29,6 @@ public class Zayne : NPCControl
 
     public void ZayneAction2()
     {
-        noTalkInWalk = false;
         noTalkStage = true;
     }
 
@@ -38,11 +36,10 @@ public class Zayne : NPCControl
     protected override void OnConversationEnd(Transform other)
     {
         inConversation = false;
-        firstTalked = true;
+
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
         currentDialogue.gameObject.SetActive(false);
-        noTalkInWalk = true;
     }
 
 
@@ -52,7 +49,6 @@ public class Zayne : NPCControl
         //StopIdle();
         noLookInConvo = true;
         noTalkStage = false;
-        firstTalked = false;
         currentDialogue.gameObject.SetActive(false);
         currentDialogue = dialogueHolder.GetChild(2);
         currentDialogue.gameObject.SetActive(true);
@@ -66,7 +62,6 @@ public class Zayne : NPCControl
     {
         StopIdle();
         noTalkStage = false;
-        firstTalked = false;
         currentDialogue = dialogueHolder.GetChild(3);
         SetMainTalkFalse();
         string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";

@@ -14,6 +14,7 @@ public class MainTattooMenu : MonoBehaviour
     public bool playerUnpaused;
     public static bool tatMenuOn;
     Animator menuFade;
+    public Animator vfxMenuFade;
     float mouseDragSpeed = 70;
     public EventReference panelOpenSound;
     public GameObject blurCanvas;
@@ -65,6 +66,7 @@ public class MainTattooMenu : MonoBehaviour
                 if (playAnim)
                 {
                     menuFade.SetTrigger("FadeIn");
+                    vfxMenuFade.SetTrigger("FadeIn");
                     RuntimeManager.PlayOneShot(panelOpenSound);
                     snapshot = RuntimeManager.CreateInstance("snapshot:/EnableObject");
                     snapshot.start();
@@ -97,6 +99,7 @@ public class MainTattooMenu : MonoBehaviour
             {
                 tatMenuOn = false;
                 menuFade.SetTrigger("FadeOut");
+                vfxMenuFade.SetTrigger("FadeOut");
                 UnpausePlayer();
                 showPanel = false;
                 StartCoroutine(FadeOutFilter());
@@ -110,7 +113,7 @@ public class MainTattooMenu : MonoBehaviour
                     gotCursor = false;
                 }
             }
-            else if(mainQuestBegun)
+            else if (mainQuestBegun)
             {
                 showPanel = true;
 
@@ -139,7 +142,7 @@ public class MainTattooMenu : MonoBehaviour
 
     public void TurnOnActivePanel()
     {
-        activePanel.panelOn = true;        
+        activePanel.panelOn = true;
         activePanel.transform.localScale = new Vector2(1, 1);
         activePanel.gameObject.SetActive(true);
         activePanel.ResetPosition();
@@ -158,7 +161,7 @@ public class MainTattooMenu : MonoBehaviour
     public void PausePlayer()
     {
         playerUnpaused = false;
-        
+
         ReferenceTool.playerLeftHand.bypassThrow = true;
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
@@ -204,7 +207,7 @@ public class MainTattooMenu : MonoBehaviour
 
     IEnumerator FadeOutFilter()
     {
-        while(I > 0)
+        while (I > 0)
         {
             I -= 0.1f * fadeInterval * Time.deltaTime;
             snapshot.setParameterByName("EnableFilterIntensity", I);
@@ -215,18 +218,18 @@ public class MainTattooMenu : MonoBehaviour
         snapshot.setParameterByName("EnableFilterIntensity", I);
         snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         snapshot.release();
-        yield break;        
+        yield break;
     }
 
     IEnumerator FadeInFilter()
     {
-        while (I <1)
+        while (I < 1)
         {
             I += 0.1f * fadeInterval * Time.deltaTime;
             snapshot.setParameterByName("EnableFilterIntensity", I);
             yield return null;
         }
         I = 1;
-        yield break;        
+        yield break;
     }
 }

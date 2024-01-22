@@ -7,11 +7,12 @@ using UnityEngine.AI;
 using FMODUnity;
 using UnityEngine.Events;
 using VInspector;
+using System.Linq;
 
 public class NPCControl : MonoBehaviour
 {
     protected Transform player;
-    protected Transform currentDialogue;
+
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
@@ -55,8 +56,10 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("Destinations")]
     public int _counter = 0;
+    public Transform destReference;
+    public Transform diaReference;
     public Transform[] destinations;
-    public Component[] destObjects;
+    public Transform[] dialogues;
     public bool[] destSpecialAnim;
 
 
@@ -65,19 +68,17 @@ public class NPCControl : MonoBehaviour
     private float talkCD = 1.5f;
 
     [Foldout("Dialogue")]
+    public Transform currentDialogue;
     public bool talkable;
-    public bool firstTalked;
     public bool inConversation;
-    public bool noTalkInWalk;
     public bool noMoveAfterTalk;
     public bool noLookInConvo;
     public bool noTalkStage;
     public bool remainInAnim;
-
     protected string idleAction;
+
     [Foldout("Idle")]
     public bool idling;
-    public bool stopIdleAfterConvo;
 
 
 
@@ -85,8 +86,6 @@ public class NPCControl : MonoBehaviour
     protected Coroutine lookCoroutine;
     GameObject bone;
 
-    //[Foldout("Sound")]
-    //public EventReference footStepSF;
 
     [Foldout("OnActivate")]
     public UnityEvent OnActivateEvent;
@@ -107,7 +106,10 @@ public class NPCControl : MonoBehaviour
         machine = GetComponent<BaseStateMachine>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
+
         dialogueHolder = transform.GetChild(2);
+
         currentDialogue = dialogueHolder.GetChild(0);
 
         playerHolding = ReferenceTool.playerHolding;
@@ -187,7 +189,7 @@ public class NPCControl : MonoBehaviour
         //}
         if (interactable)
         {
-            if ((!StartSequence.noControl || overrideNoControl) && !noTalkInWalk && !playerHolding.inDialogue && !MainTattooMenu.tatMenuOn)
+            if ((!StartSequence.noControl || overrideNoControl) && !playerHolding.inDialogue && !MainTattooMenu.tatMenuOn)
             {
                 CheckTriggerConversation();
             }
@@ -204,26 +206,9 @@ public class NPCControl : MonoBehaviour
             }
 
         }
-        //else
-        //{
-        //    if (npcActivated || initialActivated || onHoldChar)
-        //    {
-        //        if(npcMesh.gameObject.layer != 17)
-        //            ChangeLayer(17);
-        //    }
-        //    else
-        //    {
-        //        if (npcMesh.gameObject.layer != 0)
-        //            ChangeLayer(0);
-        //    }
-        //}
+
     }
 
-    //public void PlayFootstepSF()
-    //{
-    //    if (!footStepSF.IsNull)
-    //        RuntimeManager.PlayOneShot(footStepSF, transform.position);
-    //}
 
     public void TransformNPC()
     {
@@ -231,24 +216,7 @@ public class NPCControl : MonoBehaviour
     }
 
 
-    #region ActivateFunctionality
-    //void CheckNPCActivation()
-    //{
-    //    if (objectTriggered)
-    //    {
-    //        if (triggerObject != null && triggerObject.activated)
-    //            npcActivated = true;
-    //    }
 
-    //    if (peopleTriggered)
-    //    {
-    //        float playerDist = Vector3.Distance(player.position, transform.position);
-    //        float otherNPCDist = Vector3.Distance(otherNPC.position, transform.position);
-
-    //        if (playerDist < npcVincinity && otherNPCDist < npcVincinity)
-    //            npcActivated = true;
-    //    }
-    //}
 
     bool CheckInteractable()
     {
@@ -358,20 +326,6 @@ public class NPCControl : MonoBehaviour
         }
     }
 
-    public void ActivateDesignatedObject()
-    {
-        if ((transform.position - player.position).sqrMagnitude < npcVincinity)
-        {
-            if (destObjects[_counter - 1] != null)
-            {
-                if (destObjects[_counter - 1].transform.GetComponent<LivableObject>())
-                    destObjects[_counter - 1].transform.GetComponent<LivableObject>().activated = true;
-                if (destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>())
-                    destObjects[_counter - 1].transform.GetComponent<BuildingGroupController>().activateAll = true;
-            }
-
-        }
-    }
 
     public void ActivateNPC()
     {
@@ -383,7 +337,6 @@ public class NPCControl : MonoBehaviour
         fakeActivated = true;
     }
 
-    #endregion
 
     #region Idle Region
 
@@ -534,10 +487,7 @@ public class NPCControl : MonoBehaviour
     {
         talkable = true;
     }
-    public bool CheckFirstTalked()
-    {
-        return firstTalked;
-    }
+
 
     public void QuestAccept()
     {
@@ -589,10 +539,6 @@ public class NPCControl : MonoBehaviour
 
         //        fakeActivated = false;
         talkable = true;
-        firstTalked = true;
-
-        if (stopIdleAfterConvo)
-            StopIdle();
 
         if (myTat && !myTat.activated)
         {
@@ -738,12 +684,7 @@ public class NPCControl : MonoBehaviour
 
     public void SetDialogue()
     {
-        //int diaIndex = currentDialogue.GetSiblingIndex();
-        //if (diaIndex != dialogueHolder.childCount - 1)
-        //{
-        //    currentDialogue = dialogueHolder.GetChild(diaIndex + 1);
-        //    SetMainTalkFalse();
-        //}
+
 
         currentDialogue = dialogueHolder.GetChild(_counter);
         SetMainTalkFalse();

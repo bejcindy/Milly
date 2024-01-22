@@ -50,14 +50,12 @@ public class Felix : NPCControl
 
     public void ChangeFelixQuestDialogue()
     {
-        firstTalked = false;
         currentDialogue = questAcceptDia;
         SetMainTalkFalse();
     }
 
     public void ChangeFelixCompleteDialogue()
     {
-        firstTalked = false;
         currentDialogue = questCompleteDia;
         SetMainTalkFalse();
         noMoveAfterTalk = false;

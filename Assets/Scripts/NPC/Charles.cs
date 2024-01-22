@@ -31,8 +31,6 @@ public class Charles : NPCControl
     public void CharlesAction2()
     {
         noTalkStage = true;
-        if(charlesOpenDoor)
-            destObjects[_counter - 1].GetComponent<Door>().NPCOpenDoor();
 
         waitTime -= Time.deltaTime;
         if (waitTime < 0)

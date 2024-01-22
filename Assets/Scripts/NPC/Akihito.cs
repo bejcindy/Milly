@@ -25,14 +25,12 @@ public class Akihito : NPCControl
     public void AkihitoAction1()
     {
         noMoveAfterTalk = true;
-        noTalkInWalk = true;
     }
 
     public void AkihitoAction2()
     {
         talkable = true;
         noMoveAfterTalk = true;
-        noTalkInWalk = false;
         noLookInConvo = true;
         remainInAnim = true;
     }
@@ -42,7 +40,7 @@ public class Akihito : NPCControl
         StopIdle();
         remainInAnim = false;
         noMoveAfterTalk = false;
-        noTalkInWalk = false;
+
     }
 
 

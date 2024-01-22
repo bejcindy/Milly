@@ -63,6 +63,11 @@ public class Xixi : NPCControl
     {
         noTalkStage = true;
     }
+
+    public void XixiAction5()
+    {
+        noTalkStage = true;
+    }
     public void Meow()
     {
         if (!catMeowSF.IsNull)

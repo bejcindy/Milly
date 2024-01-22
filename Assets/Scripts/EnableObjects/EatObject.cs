@@ -106,7 +106,8 @@ public class EatObject : PickUpObject
     public void FoodMeshChange()
     {
         //activated = true;
-        pizzaEatingDialogue.SetActive(true);
+        if(pizzaEatingDialogue)
+            pizzaEatingDialogue.SetActive(true);
         pizzaLid.enabled = true;
         pizzaLid.showing = true;
         if (!ran)

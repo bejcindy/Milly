@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Hugo : NPCControl 
 {
+    public GameObject broom;
+    public Transform broomPlacePos;
     protected override void Start()
     {
         base.Start();
@@ -26,7 +28,18 @@ public class Hugo : NPCControl
 
     public void HugoAction3()
     {
-        talkable = true;
-        noLookInConvo = false;
+        broom.transform.SetParent(null);
+        broom.transform.position = broomPlacePos.position + new Vector3(0, 1, 0);
+        broom.GetComponent<Rigidbody>().isKinematic = false;
+        broom.transform.rotation = Quaternion.identity;
+        Invoke(nameof(StopIdle), 1f);
     }
+
+    public void HugoAction4()
+    {
+        broom.SetActive(false);
+        talkable = true;
+    }
+
+
 }

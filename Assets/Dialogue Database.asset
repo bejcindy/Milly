@@ -37771,7 +37771,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Did you just get off?
+        value: You're done drinking already?
         type: 0
         typeString: 
       - title: Sequence
@@ -37828,11 +37828,11 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: '[Tell him you are just walking around.]'
+        value: '[Taking a walk]'
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Just taking a walk.
+        value: Not yet, just taking a walk.
         type: 0
         typeString: 
       - title: Sequence
@@ -37860,7 +37860,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 438.01218
+        x: 436.81815
         y: 370.56097
         width: 160
         height: 30
@@ -37883,7 +37883,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: '[Tell him about what Z told you.]'
+        value: '[Doing what Z told you.]'
         type: 0
         typeString: 
       - title: Dialogue Text
@@ -37916,7 +37916,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1112.772
-        y: 386.00317
+        y: 384.80917
         width: 160
         height: 30
     - id: 7
@@ -39633,7 +39633,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 48.955017, y: 506.26645}
+    canvasScrollPosition: {x: 211.3424, y: 8.358154}
     canvasZoom: 0.6700028
   - id: 45
     fields:
@@ -43168,7 +43168,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: 'Variable["NPC_Xixi_Main_Talked"] = true;
+
+        Variable["NPC_Xixi_Other_Interacted"]
+        = true'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -43226,7 +43229,7 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["NPC_Xixi_Main_Talked"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -43238,7 +43241,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 43.181854, y: 0}
+    canvasScrollPosition: {x: 2.727295, y: 0}
     canvasZoom: 0.8800001
   - id: 50
     fields:
@@ -47085,7 +47088,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 194.39636, y: 90.62816}
+    canvasScrollPosition: {x: 168.11618, y: 314.01013}
     canvasZoom: 1.0349989
   - id: 60
     fields:
@@ -47238,7 +47241,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 112.00003, y: 53.600006}
     canvasZoom: 1
   - id: 61
     fields:
@@ -76755,6 +76758,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: cdcb5c74-d2f2-40cf-9d79-2c157f47261b
+        type: 0
+        typeString: 
       conversationID: 119
       isRoot: 0
       isGroup: 0
@@ -76775,7 +76782,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 101.5249, y: 305.48474}
+    canvasScrollPosition: {x: 424.43347, y: 1441.4829}
     canvasZoom: 0.55000097
   - id: 120
     fields:
@@ -77846,7 +77853,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 113.17059, y: 5.8536377}
+    canvasScrollPosition: {x: 163.90222, y: 293.65848}
     canvasZoom: 0.8200002
   - id: 124
     fields:
@@ -78924,8 +78931,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
-      userScript: 
+      conditionsString: Variable["NPC_Hugo_Main_Talked"] == false
+      userScript: Variable["NPC_Hugo_Main_Talked"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -79013,7 +79020,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'I''d be surprised if she didn''t. '
+        value: I know. Still feels like it was yesterday when you found her by that
+          dumpster.
         type: 0
         typeString: 
       - title: Sequence
@@ -79068,7 +79076,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Thank you for taking good care of her.
+        value: Thank you--for taking good care of her.
         type: 0
         typeString: 
       - title: Sequence
@@ -79736,7 +79744,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: I noticed you haven't been playing our soccer game much lately.
+        value: Have you not been playing our soccer game much lately?
         type: 0
         typeString: 
       - title: Sequence
@@ -79791,7 +79799,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Your score is still the same since when I got transferred.
+        value: Your score is still the same since I got transferred.
         type: 0
         typeString: 
       - title: Sequence
@@ -79846,7 +79854,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Yeah well Hugo, it's only been 2 months since you left.
+        value: Yeah well Hugo, it's only been 2 months.
         type: 0
         typeString: 
       - title: Sequence
@@ -79901,7 +79909,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: No Milly, it's been half a year already.
+        value: '*Laughs* It''s been almost half a year already.'
         type: 0
         typeString: 
       - title: Sequence
@@ -80149,7 +80157,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1043.9177
+        x: 1041.5297
         y: 1371.0734
         width: 160
         height: 30
@@ -80231,7 +80239,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: You're damn right abou that.
+        value: Damn right abou that.
         type: 0
         typeString: 
       - title: Sequence
@@ -80286,7 +80294,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: But sorry for keeping you. I'll just stay here a while with Willow.
+        value: But sorry for keeping you. I'm just gonna hang out here with Willow
+          for a while.
         type: 0
         typeString: 
       - title: Sequence
@@ -80363,7 +80372,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Hugo_Other_Interacted"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -80467,7 +80476,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["NPC_Hugo_Other_Interacted"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -80478,8 +80487,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 524.31366, y: 1224.9977}
-    canvasZoom: 0.94000083
+    canvasScrollPosition: {x: 595.7534, y: 407.1642}
+    canvasZoom: 0.66999984
   syncInfo:
     syncActors: 0
     syncItems: 0

@@ -12,7 +12,7 @@ using System.Linq;
 public class NPCControl : MonoBehaviour
 {
     protected Transform player;
-    protected Transform currentDialogue;
+
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
@@ -68,6 +68,7 @@ public class NPCControl : MonoBehaviour
     private float talkCD = 1.5f;
 
     [Foldout("Dialogue")]
+    public Transform currentDialogue;
     public bool talkable;
     public bool inConversation;
     public bool noMoveAfterTalk;

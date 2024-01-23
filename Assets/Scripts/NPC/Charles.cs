@@ -9,6 +9,8 @@ public class Charles : NPCControl
     public bool charlesSmoking;
     public bool charlesOpenDoor;
 
+    public GameObject charlesPizza;
+
     float waitTime = 3f;
 
     protected override void Start()
@@ -30,15 +32,7 @@ public class Charles : NPCControl
 
     public void CharlesAction2()
     {
-        noTalkStage = true;
-
-        waitTime -= Time.deltaTime;
-        if (waitTime < 0)
-        {
-            StopIdle();
-            waitTime = 3f;
-        }
-
+        charlesPizza.SetActive(true);
     }
 
     public void CharlesAction3()

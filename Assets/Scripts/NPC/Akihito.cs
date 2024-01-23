@@ -7,7 +7,9 @@ using VInspector;
 public class Akihito : NPCControl 
 {
     public Transform akiLantern;
+    public Door bathroomDoor;
     public bool akiToPizza;
+    public bool akiPizzaAte;
 
     [Foldout("Special Dialogues")]
     public Transform akiConfrontation;
@@ -17,6 +19,15 @@ public class Akihito : NPCControl
         base.Update();
         if (akiToPizza)
             MoveAkiToPizza();
+
+        if(akiPizzaAte && !interactable)
+        {
+            akiPizzaAte = false;
+            remainInAnim = false;
+            talkable = false;
+            StopIdle();
+
+        }
     }
 
 
@@ -32,7 +43,11 @@ public class Akihito : NPCControl
         talkable = true;
         noMoveAfterTalk = true;
         noLookInConvo = true;
-        remainInAnim = true;
+    }
+
+    public void AkihitoAction3() {
+
+        currentDialogue.gameObject.SetActive(true);
     }
 
     public void MoveAkiToPizza()
@@ -65,6 +80,11 @@ public class Akihito : NPCControl
     public void AkiStartLooking()
     {
         allowLookPlayer = true;
+    }
+
+    public void SetAkiPizzaAte()
+    {
+        akiPizzaAte = true;
     }
 
 

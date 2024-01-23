@@ -37,7 +37,6 @@ public class Hugo : NPCControl
 
     public void HugoAction4()
     {
-        broom.SetActive(false);
         talkable = true;
     }
 

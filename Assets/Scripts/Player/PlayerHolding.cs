@@ -27,6 +27,7 @@ public class PlayerHolding : MonoBehaviour
 
     public List<GameObject> pickUpObjects;
     public List<GameObject> lookingObjects;
+    List<GameObject> kickObjects;
     public GameObject[] containers;
     public GameObject selectedObj;
     public GameObject focusedObj;
@@ -648,7 +649,7 @@ public class PlayerHolding : MonoBehaviour
             obj.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        pickUpObjects.Clear();
+        //pickUpObjects.Clear();
     }
 
 

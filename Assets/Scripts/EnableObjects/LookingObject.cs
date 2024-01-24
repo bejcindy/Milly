@@ -63,6 +63,7 @@ public class LookingObject : LivableObject
                     {
                         if (Input.GetKeyDown(KeyCode.Space) && !focusingThis)
                         {
+                            gameObject.layer = 13;
                             if(gameObject.tag.Contains("Poster"))
                                 RuntimeManager.PlayOneShot(lookSound, transform.position);
 
@@ -83,7 +84,6 @@ public class LookingObject : LivableObject
         }
         else
         {
-            focusingThis = false;
             if (activated)
             {
                 if (specialEffect != null)
@@ -119,6 +119,9 @@ public class LookingObject : LivableObject
                 gameObject.layer = 0;
             }
         }
+        else if (focusingThis){
+            gameObject.layer = 13;
+        }
 
     }
 
@@ -131,7 +134,7 @@ public class LookingObject : LivableObject
         DataHolder.pov.m_VerticalAxis.m_MaxSpeed = 0f;
 
         DataHolder.focusCinemachine.m_Priority = playerCam.m_Priority + 1;
-        gameObject.layer = 12;
+        gameObject.layer = 13;
         playerHolding.looking = true;
         pm.enabled = false;
         playerHolding.HideLookingHint();

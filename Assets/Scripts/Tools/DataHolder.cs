@@ -180,13 +180,13 @@ public class DataHolder : MonoBehaviour
             pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
             pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
             focusDist = .75f;
-            currentFocus.layer = 17;
+            //currentFocus.layer = 17;
             camBlended = false;
             camBlendDone = false;
             ReferenceTool.playerHolding.looking = false;
             ReferenceTool.playerMovement.enabled = true;
             ReferenceTool.playerLeftHand.bypassThrow = false;
-
+            currentFocus.GetComponent<LookingObject>().focusingThis = false;
             currentFocus = null;
             focused = false;
         }

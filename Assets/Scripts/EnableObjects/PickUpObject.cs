@@ -29,6 +29,7 @@ public class PickUpObject : LivableObject
     public bool inHand;
     public bool selected;
     public bool thrown;
+    public bool dumped;
     public bool freezeRotation;
     public float throwCD;
     public bool thrownByPlayer;
@@ -68,6 +69,27 @@ public class PickUpObject : LivableObject
             gameObject.layer = 17;
         else
             gameObject.layer = 0;
+
+
+        if (dumped)
+        {
+            minDist = 0;
+            selected = false;
+            rb.mass = 10;
+            if(playerHolding.selectedObj == this)
+            {
+                playerHolding.selectedObj = null;
+            }
+            if (activated)
+            {
+                gameObject.layer = 17;
+            }
+            else
+            {
+                gameObject.layer = 0;
+            }
+            this.enabled = false;
+        }
 
     }
     private void DetectEnable()

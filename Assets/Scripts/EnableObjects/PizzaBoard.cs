@@ -46,6 +46,7 @@ public class PizzaBoard : LookingObject
         }
         else
         {
+            text.gameObject.layer = 17;
             firstTransformed = true;
         }
     }

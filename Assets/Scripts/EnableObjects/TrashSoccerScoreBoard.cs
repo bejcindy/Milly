@@ -79,6 +79,7 @@ public class TrashSoccerScoreBoard : LookingObject
         }
         else
         {
+            text.gameObject.layer = 17;
             firstTransformed = true;
         }
     }

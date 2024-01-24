@@ -10,9 +10,14 @@ public class GarbageScore : MonoBehaviour
     [SerializeField]
     public int score;
     public Material dumpsterMat;
+    public GameObject dumpsterBody;
+    public PhysicMaterial highFriction;
+
     float matColorVal = 1f;
     float fadeInterval = 10f;
     bool firstActivated,firstTrashIn;
+
+    public List<PickUpObject> trashList = new List<PickUpObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +30,11 @@ public class GarbageScore : MonoBehaviour
         if (score > 0)
             firstTrashIn = true;
         if (!firstActivated && firstTrashIn)
+        {
+            dumpsterBody.gameObject.layer = 17;
             TurnOnColor(dumpsterMat);
+        }
+
 
 
     }
@@ -33,17 +42,20 @@ public class GarbageScore : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<PickUpObject>())
+        PickUpObject pickUp = other.GetComponent<PickUpObject>();
+        if (pickUp)
         {
             score++;
+            pickUp.dumped = true;
+            pickUp.GetComponent<Collider>().material = highFriction;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<PickUpObject>())
-        {
-            score--;
-        }
+        //if (other.GetComponent<PickUpObject>())
+        //{
+        //    score--;
+        //}
 
     }
     void TurnOnColor(Material material)

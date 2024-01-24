@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: izaIn_stair_area
-  m_Shader: {fileID: -6465566751694194690, guid: 87edf9082863b3f4fa3d1bb88366e6e1, type: 3}
+  m_Name: iza_BurnTest
+  m_Shader: {fileID: -6465566751694194690, guid: c3b3d8fd5a3d494498dfcfecb323ed02, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -72,23 +72,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: dcb47f06535e6b94bbec859505094a2d, type: 3}
+        m_Texture: {fileID: 2800000, guid: b31f24426199740448f82fe08dbc22c1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _emission:
-        m_Texture: {fileID: 2800000, guid: 0d1225d26631b074a8b5e0e1a1b97ed5, type: 3}
+        m_Texture: {fileID: 2800000, guid: a7ad1d454cd97ae439cb1daf3e6be096, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _metalic:
-        m_Texture: {fileID: 2800000, guid: 7a170cdb7cc88024cb628cfcdbb6705c, type: 3}
+        m_Texture: {fileID: 2800000, guid: dccb99048bf19774d90f58528c38a93b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _normal:
-        m_Texture: {fileID: 2800000, guid: 18cbb1f47df1fa34298f4457419d9198, type: 3}
+        m_Texture: {fileID: 2800000, guid: f7c5fb2ccc7a54a4eae3061e40a4f232, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _roughness:
-        m_Texture: {fileID: 2800000, guid: 7a170cdb7cc88024cb628cfcdbb6705c, type: 3}
+        m_Texture: {fileID: 2800000, guid: dccb99048bf19774d90f58528c38a93b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -107,9 +107,11 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
+    - _BlackDegree: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _BurnAmount: -0.12
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -122,6 +124,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _LineWidth: 0.08
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -134,20 +137,23 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WhiteDegree: 1
+    - _WhiteDegree: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _opacity: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseMap_ST: {r: 1, g: 1, b: 0, a: 0}
+    - _BurnInnerColor: {r: 1, g: 0, b: 0, a: 0}
+    - _BurnOuterColor: {r: 1, g: 0.60031897, b: 0, a: 0}
+    - _ChooseColor: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorPicker: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Emission_Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
+    - _Emission_Color: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &5691870389425117498
+--- !u!114 &6929101756602726054
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

@@ -165,6 +165,13 @@ public class FixedCameraObject : LivableObject
                 DataHolder.ShowHint(DataHolder.hints.standHint);
                 iconHidden = true;
             }
+            else
+            {
+                playerHolding.sitObj = null;
+                DataHolder.HideHint(DataHolder.hints.sitHint);
+                DataHolder.HideHint(DataHolder.hints.standHint);
+                iconHidden = true;
+            }
         }
 
         if ((!dialogueBound || (dialogueBound && !playerHolding.inDialogue)) && !isPizzaBox && positionFixed)

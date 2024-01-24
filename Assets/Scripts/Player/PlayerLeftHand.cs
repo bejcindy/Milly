@@ -130,7 +130,7 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.exhaleHint);
             smokingHintDone = false;
         }
-        else if(smoking && holdingObj.GetComponent<Cigarette>().inhaling)
+        else if (smoking && holdingObj.GetComponent<Cigarette>().inhaling)
         {
             DataHolder.ShowHint(DataHolder.hints.exhaleHint);
             DataHolder.HideHint(DataHolder.hints.throwHint);
@@ -189,7 +189,7 @@ public class PlayerLeftHand : MonoBehaviour
             }
             drinkHintDone = false;
         }
-        else if (isHolding)
+        else if (isHolding && !playerHolding.atInterior)
         {
             DataHolder.ShowHint(DataHolder.hints.throwHint);
             DataHolder.HideHint(DataHolder.hints.pizzaHint);
@@ -204,7 +204,7 @@ public class PlayerLeftHand : MonoBehaviour
                 smokingHinted = true;
             }
         }
-        else if (!holdingObj)
+        else if (!holdingObj || (isHolding && playerHolding.atInterior))
         {
             DataHolder.HideHint(DataHolder.hints.powderHint);
             DataHolder.HideHint(DataHolder.hints.drinkHint);
@@ -251,6 +251,8 @@ public class PlayerLeftHand : MonoBehaviour
                 Smoke();
                 if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
                     BasicThrow();
+                else if (playerHolding.atInterior)
+                    ResetThrow();
                 if (!smokingHinted)
                 {
                     DataHolder.HideHint(DataHolder.hints.cigHint);
@@ -265,10 +267,14 @@ public class PlayerLeftHand : MonoBehaviour
                 EatHandFood();
                 if (!drinking && !playerHolding.atInterior)
                     BasicThrow();
+                else if (playerHolding.atInterior)
+                    ResetThrow();
                 break;
             default:
                 if (!drinking && !playerHolding.atInterior)
                     BasicThrow();
+                else if (playerHolding.atInterior)
+                    ResetThrow();
                 break;
         }
     }
@@ -611,6 +617,14 @@ public class PlayerLeftHand : MonoBehaviour
             aimUI.SetActive(false);
             aimUI.transform.localScale = new Vector3(1, 1, 1);
         }
+    }
+
+    void ResetThrow()
+    {
+        readyToThrow = false;
+        holdingObj.localPosition = Vector3.zero;
+        aimUI.SetActive(false);
+        aimUI.transform.localScale = new Vector3(1, 1, 1);
     }
 
     private void DetectDoubleHand()

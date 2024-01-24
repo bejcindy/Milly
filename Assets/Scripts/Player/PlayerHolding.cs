@@ -649,7 +649,7 @@ public class PlayerHolding : MonoBehaviour
             obj.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        //pickUpObjects.Clear();
+        pickUpObjects.Clear();
     }
 
 

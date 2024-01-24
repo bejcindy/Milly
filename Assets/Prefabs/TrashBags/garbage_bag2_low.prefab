@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4462848922704348979}
   - component: {fileID: 8830333123334321974}
   - component: {fileID: 7582618765204381995}
-  - component: {fileID: 3082144184458695668}
   - component: {fileID: 139759029523551147}
   - component: {fileID: 598057523715741451}
+  - component: {fileID: 6147401984044027235}
   m_Layer: 0
   m_Name: garbage_bag2_low
   m_TagString: Throwable
@@ -86,29 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3082144184458695668
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 425995335924364270}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.29264504
-  m_Height: 0.75477445
-  m_Direction: 1
-  m_Center: {x: 0.000003799796, y: 0.000000014901161, z: 0.00000093877316}
 --- !u!114 &139759029523551147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +128,7 @@ MonoBehaviour:
   inHand: 0
   selected: 0
   thrown: 0
+  dumped: 0
   freezeRotation: 0
   throwCD: 0
   thrownByPlayer: 0
@@ -197,3 +175,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &6147401984044027235
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425995335924364270}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5852901, y: 0.75477445, z: 0.5696882}
+  m_Center: {x: -0.000000014901161, y: 0.000000014901161, z: -0.000000014901161}

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1487674670341425995}
   - component: {fileID: 8422591218890596297}
   - component: {fileID: 4701117166213682401}
-  - component: {fileID: 7738035321533337590}
   - component: {fileID: 5393341417311554106}
   - component: {fileID: 7577772145940883614}
+  - component: {fileID: -887851459133385097}
   m_Layer: 0
   m_Name: garbage_bag3_low
   m_TagString: Throwable
@@ -86,29 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7738035321533337590
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3834056139323284470}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2980911
-  m_Height: 0.6890093
-  m_Direction: 1
-  m_Center: {x: -0.000000014901161, y: -0.000000014901161, z: 0}
 --- !u!114 &5393341417311554106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +128,7 @@ MonoBehaviour:
   inHand: 0
   selected: 0
   thrown: 0
+  dumped: 0
   freezeRotation: 0
   throwCD: 0
   thrownByPlayer: 0
@@ -197,3 +175,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &-887851459133385097
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3834056139323284470}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5961822, y: 0.6890093, z: 0.5706337}
+  m_Center: {x: -0.000000014901161, y: -0.000000014901161, z: 0}

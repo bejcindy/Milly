@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6763710994490054275}
   - component: {fileID: 2912300557169240089}
   - component: {fileID: 837044080195896745}
-  - component: {fileID: 4099798639216419001}
+  - component: {fileID: -5401621537295665477}
   m_Layer: 0
   m_Name: garbage_bag1_low
   m_TagString: Throwable
@@ -128,6 +128,7 @@ MonoBehaviour:
   inHand: 0
   selected: 0
   thrown: 0
+  dumped: 0
   freezeRotation: 0
   throwCD: 0
   thrownByPlayer: 0
@@ -174,8 +175,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!136 &4099798639216419001
-CapsuleCollider:
+--- !u!65 &-5401621537295665477
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -192,8 +193,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.29069656
-  m_Height: 0.80930233
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5813931, y: 0.80930233, z: 0.57120126}
   m_Center: {x: 0.000000014901161, y: 0, z: 0}

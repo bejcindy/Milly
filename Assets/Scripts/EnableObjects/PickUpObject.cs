@@ -76,10 +76,8 @@ public class PickUpObject : LivableObject
             minDist = 0;
             selected = false;
             rb.mass = 10;
-            if(playerHolding.selectedObj == this)
-            {
-                playerHolding.selectedObj = null;
-            }
+            rb.velocity = Vector3.zero;
+            playerHolding.RemoveInteractable(gameObject);
             if (activated)
             {
                 gameObject.layer = 17;

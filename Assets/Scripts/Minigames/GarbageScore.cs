@@ -7,11 +7,8 @@ using Unity.VisualScripting;
 
 public class GarbageScore : MonoBehaviour
 {
-    public bool inGameZone;
-    public GameObject scorePanel;
-    public TextMeshProUGUI scoreText;
     [SerializeField]
-    int score;
+    public int score;
     public Material dumpsterMat;
     float matColorVal = 1f;
     float fadeInterval = 10f;
@@ -30,33 +27,15 @@ public class GarbageScore : MonoBehaviour
         if (!firstActivated && firstTrashIn)
             TurnOnColor(dumpsterMat);
 
-        if (inGameZone)
-        {
-            scorePanel.SetActive(true);
-        }
-        else
-        {
-            scorePanel.SetActive(false);
-        }
 
     }
 
-    public void LateUpdate()
-    {
-        if (inGameZone)
-        {
-            scoreText.text = "Score: " + score;
-        }
-    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<PickUpObject>())
         {
             score++;
-        }
-        if (other.CompareTag("Player"))
-        {
-            inGameZone = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -65,10 +44,7 @@ public class GarbageScore : MonoBehaviour
         {
             score--;
         }
-        if (other.CompareTag("Player"))
-        {
-            inGameZone = false;
-        }
+
     }
     void TurnOnColor(Material material)
     {

@@ -32,7 +32,7 @@ public class LivableObject : MonoBehaviour
 
     public bool activated;
     public bool transformed;
-    private bool firstActivated;
+    protected bool firstActivated;
     public bool noChangeLayer;
 
     [SerializeField] public bool interactable;

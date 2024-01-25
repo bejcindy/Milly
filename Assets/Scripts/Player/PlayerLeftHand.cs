@@ -121,7 +121,7 @@ public class PlayerLeftHand : MonoBehaviour
 
 
         #region Hint Region
-        if (smoking && !holdingObj.GetComponent<Cigarette>().inhaling)
+        if (smoking && !holdingObj.GetComponent<Cigarette>().inhaling &&!playerHolding.atInterior)
         {
             if (holdingObj.GetComponent<Cigarette>().cigStage < 4)
                 DataHolder.ShowHint(DataHolder.hints.inhaleHint);
@@ -130,12 +130,16 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.exhaleHint);
             smokingHintDone = false;
         }
-        else if (smoking && holdingObj.GetComponent<Cigarette>().inhaling)
+        else if (smoking && holdingObj.GetComponent<Cigarette>().inhaling && !playerHolding.atInterior)
         {
             DataHolder.ShowHint(DataHolder.hints.exhaleHint);
             DataHolder.HideHint(DataHolder.hints.throwHint);
             DataHolder.HideHint(DataHolder.hints.inhaleHint);
             smokingHintDone = false;
+        }
+        else if (isHolding && holdingObj.GetComponent<EatObject>())
+        {
+            DataHolder.ShowHint(DataHolder.hints.eatHint);
         }
         else if (isHolding && holdingObj.GetComponent<Pizza>() && inPizzaBox)
         {
@@ -213,6 +217,8 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
             DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
             DataHolder.HideHint(DataHolder.hints.pizzaHint);
+            DataHolder.HideHint(DataHolder.hints.inhaleHint);
+            DataHolder.HideHint(DataHolder.hints.eatHint);
             drinkHintDone = true;
         }
         #endregion

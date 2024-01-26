@@ -219,6 +219,7 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.pizzaHint);
             DataHolder.HideHint(DataHolder.hints.inhaleHint);
             DataHolder.HideHint(DataHolder.hints.eatHint);
+            DataHolder.HideHint(DataHolder.hints.exhaleHint);
             drinkHintDone = true;
         }
         #endregion

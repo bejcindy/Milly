@@ -27,6 +27,7 @@ public class TrashSoccerScoreBoard : LookingObject
         if (inGameZone)
         {
             scorePanel.SetActive(true);
+            
         }
         else
         {
@@ -41,6 +42,8 @@ public class TrashSoccerScoreBoard : LookingObject
                 ChangeTextColor(childText);
             }
         }
+        //milly score trigger mechanic
+
     }
     public void LateUpdate()
     {
@@ -48,6 +51,7 @@ public class TrashSoccerScoreBoard : LookingObject
         if (inGameZone)
         {
             scoreText.text = "Goals: " + score;
+            boardScoreText.text = "Goals: " + new string('X', score);
         }
 
     }

@@ -85,6 +85,7 @@ public class LivableObject : MonoBehaviour
 
     protected virtual void Start()
     {
+        fadeInterval = 5;
         player = ReferenceTool.player;
         playerHolding = ReferenceTool.playerHolding;
         playerLeftHand = ReferenceTool.playerLeftHand;

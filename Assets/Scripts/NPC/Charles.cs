@@ -27,12 +27,13 @@ public class Charles : NPCControl
     {
 
         talkable = true;
-
+        noMoveAfterTalk = true;
     }
 
     public void CharlesAction2()
     {
         charlesPizza.SetActive(true);
+        
     }
 
     public void CharlesAction3()

@@ -90,7 +90,7 @@ public class PickUpObject : LivableObject
         }
 
     }
-    private void DetectEnable()
+    protected void DetectEnable()
     {
         if (interactable && !inHand && !thrown)
         {

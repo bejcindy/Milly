@@ -61,13 +61,30 @@ public class VinylStand : LivableObject
                 {
                     if(!inScrollCD)
                         PlayerChooseVinyl();
-                    selectedVinyl.standSelect = true;
-                    selectedVinyl.selected = true;
+                    selectedVinyl.gameObject.layer = 9;
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        selectedVinyl.GetComponent<Rigidbody>().isKinematic = true;
+                        selectedVinyl.inHand = true;
+                        playerHolding.OccupyLeft(selectedVinyl.transform);
+                        selectedVinyl = null;
+                    }
                 }
             }
         }
         else
         {
+            if (selectedVinyl)
+            {
+                if (selectedVinyl.activated)
+                {
+                    selectedVinyl.gameObject.layer = 17;
+                }
+                else
+                {
+                    selectedVinyl.gameObject.layer = 0;
+                }
+            }
             selectedVinyl = null;
             holdingVinyl = null;
             availableSpot = null;
@@ -114,8 +131,14 @@ public class VinylStand : LivableObject
             {
                 if (holdingPositions[selectIndex++].childCount > 0)
                 {
-                    selectedVinyl.selected = false;
-                    selectedVinyl.standSelect = false;
+                    if (selectedVinyl.activated)
+                    {
+                        selectedVinyl.gameObject.layer = 17;
+                    }
+                    else
+                    {
+                        selectedVinyl.gameObject.layer = 0;
+                    }
                     selectedVinyl = holdingPositions[selectIndex++].GetChild(0).GetComponent<Vinyl>();
                 }
             }
@@ -123,8 +146,14 @@ public class VinylStand : LivableObject
             {
                 if (holdingPositions[0].childCount > 0)
                 {
-                    selectedVinyl.selected = false;
-                    selectedVinyl.standSelect = false;
+                    if (selectedVinyl.activated)
+                    {
+                        selectedVinyl.gameObject.layer = 17;
+                    }
+                    else
+                    {
+                        selectedVinyl.gameObject.layer = 0;
+                    }
                     selectedVinyl = holdingPositions[0].GetChild(0).GetComponent<Vinyl>();
                 }
             }
@@ -138,8 +167,14 @@ public class VinylStand : LivableObject
             {
                 if (holdingPositions[selectIndex--].childCount > 0)
                 {
-                    selectedVinyl.selected = false;
-                    selectedVinyl.standSelect = false;
+                    if (selectedVinyl.activated)
+                    {
+                        selectedVinyl.gameObject.layer = 17;
+                    }
+                    else
+                    {
+                        selectedVinyl.gameObject.layer = 0;
+                    }
                     selectedVinyl = holdingPositions[selectIndex--].GetChild(0).GetComponent<Vinyl>();
                 }
             }
@@ -147,8 +182,14 @@ public class VinylStand : LivableObject
             {
                 if (holdingPositions[3].childCount > 0)
                 {
-                    selectedVinyl.selected = false;
-                    selectedVinyl.standSelect = false;
+                    if (selectedVinyl.activated)
+                    {
+                        selectedVinyl.gameObject.layer = 17;
+                    }
+                    else
+                    {
+                        selectedVinyl.gameObject.layer = 0;
+                    }
                     selectedVinyl = holdingPositions[3].GetChild(0).GetComponent<Vinyl>();
                 }
             }
@@ -160,6 +201,7 @@ public class VinylStand : LivableObject
         gameObject.layer = 9;
         if (Input.GetMouseButtonDown(0))
         {
+            holdingVinyl.gameObject.layer = 17;
             holdingVinyl.inHand = false;
             holdingVinyl.onStand = true;
             holdingVinyl.selected = false;

@@ -6,6 +6,8 @@ public class Vinyl : PickUpObject
 {
     public RecordPlayer recordPlayer;
     public bool onRecordPlayer;
+    public bool onStand;
+    public bool standSelect;
     public GameObject mySong;
 
     bool notInCD;
@@ -25,6 +27,8 @@ public class Vinyl : PickUpObject
     {
         if (inHand)
         {
+            onStand = false;
+            standSelect = false;
             if (recordPlayer.currentRecord == this)
                 recordPlayer.currentRecord = null;
             activated = true;
@@ -67,6 +71,8 @@ public class Vinyl : PickUpObject
             {
                 if (playerHolding.CheckInteractable(gameObject))
                     playerHolding.RemoveInteractable(gameObject);
+                if (playerHolding.selectedObj == this)
+                    playerHolding.selectedObj = null;
                 selected = false;
 
 
@@ -84,7 +90,7 @@ public class Vinyl : PickUpObject
                 }
             }
         }
-        else
+        else if (!onStand)
         {
             notInCD = true;
             base.Update();
@@ -92,6 +98,22 @@ public class Vinyl : PickUpObject
             {
                 mySong.SetActive(false);
             }
+        }
+
+        if (onStand && standSelect)
+        {
+            base.Update();
+        }
+        else if(onStand && !standSelect)
+        {
+            playerHolding.RemoveInteractable(gameObject);
+            selected = false;
+            if (playerHolding.selectedObj == this)
+                playerHolding.selectedObj = null;
+            if (activated)
+                gameObject.layer = 17;
+            else
+                gameObject.layer = 0;
         }
 
     }

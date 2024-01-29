@@ -89,6 +89,7 @@ public class DataHolder : MonoBehaviour
         pov = ReferenceTool.playerPOV;
         originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
         originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
+        BeautifySettings.settings.blurIntensity.Override(0f);
     }
 
     void Update()
@@ -131,6 +132,11 @@ public class DataHolder : MonoBehaviour
         //}
     }
 
+    private void OnDisable()
+    {
+        BeautifySettings.settings.blurIntensity.Override(0f);
+    }
+
     #region Focusing and Unfocusing
     public static void FocusOnThis(float matColorVal)
     {
@@ -147,13 +153,11 @@ public class DataHolder : MonoBehaviour
             {
                 float speed = Mathf.Lerp(0f, 2f, Mathf.InverseLerp(1, 0, matColorVal));
                 focusDist = speed;
-                Debug.Log("here");
             }
             else
             {
                 focusDist = 2f;
                 focused = true;
-                Debug.Log("no here");
             }
 
             BeautifySettings.settings.blurIntensity.Override(focusDist);

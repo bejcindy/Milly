@@ -15,6 +15,7 @@ public class TrashSoccerScoreBoard : LookingObject
 
 
     bool firstTransformed;
+    bool showedMillyScore;
     protected override void Start()
     {
         base.Start();
@@ -27,7 +28,7 @@ public class TrashSoccerScoreBoard : LookingObject
         if (inGameZone)
         {
             scorePanel.SetActive(true);
-            
+
         }
         else
         {
@@ -43,6 +44,12 @@ public class TrashSoccerScoreBoard : LookingObject
             }
         }
         //milly score trigger mechanic
+        if (!showedMillyScore && garBageScore.score > 0)
+        {
+            ChangeTextColor(boardScoreText);
+            if (boardScoreText.gameObject.layer == 17)
+                showedMillyScore = true;
+        }
 
     }
     public void LateUpdate()
@@ -62,7 +69,7 @@ public class TrashSoccerScoreBoard : LookingObject
         {
             inGameZone = true;
         }
-        
+
     }
 
     public void OnTriggerExit(Collider other)

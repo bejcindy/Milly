@@ -8,23 +8,10 @@ using Beautify.Universal;
 
 public class SMHAdjustTest : MonoBehaviour
 {
-    public VolumeProfile profile;
+    public VolumeProfile monoProfile;
     public float lerpDuration;
 
-    [Foldout("Default Values (Don't Touch)")]
-    public Vector4 defaultShadow;
-    public Vector4 defaultMidtone;
-    public Vector4 defaultHighlight;
-    public float defaultVignette;
-
-    [Foldout("Current Values")]
-    public Vector4 currentShadow;
-    public Vector4 currentMidtone;
-    public Vector4 currentHighlight;
-    public float currentVignette;
-
-    ShadowsMidtonesHighlights shadowMidHigh;
-    Vignette vignette;
+    ColorAdjustments colorAdjust;
 
     [Button]
     void ResetToDefault()
@@ -32,23 +19,12 @@ public class SMHAdjustTest : MonoBehaviour
         BeautifySettings.settings.lutIntensity.Override(0);
         BeautifySettings.settings.lut.Override(false);
         BeautifySettings.settings.lutTexture.Override(null);
-    }
-
-    [Button]
-    void CurrentValues()
-    {
-        if (profile.TryGet<ShadowsMidtonesHighlights>(out shadowMidHigh))
+        if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
         {
-            currentShadow = shadowMidHigh.shadows.value;
-            currentMidtone = shadowMidHigh.midtones.value;
-            currentHighlight = shadowMidHigh.highlights.value;
-        }
-        if (profile.TryGet<Vignette>(out vignette))
-        {
-            currentVignette = vignette.intensity.value;
+            colorAdjust.saturation.value = -100;
         }
     }
-
+    
 
     public IEnumerator LerpToPizzaColor(Texture2D pizzaLUT)
     {
@@ -61,11 +37,20 @@ public class SMHAdjustTest : MonoBehaviour
             float intensity = Mathf.Lerp(0, 1, t / lerpDuration);
             
             BeautifySettings.settings.lutIntensity.Override(intensity);
-            
+            if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
+            {
+                colorAdjust.saturation.value = Mathf.Lerp(-100, 0, t / lerpDuration);
+            }
+
             t += Time.deltaTime;
             yield return null;
         }
+
         BeautifySettings.settings.lutIntensity.Override(1);
+        if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
+        {
+            colorAdjust.saturation.value = 0f;
+        }
 
         yield break;
     }
@@ -80,12 +65,21 @@ public class SMHAdjustTest : MonoBehaviour
 
             BeautifySettings.settings.lutIntensity.Override(intensity);
 
+            if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
+            {
+                colorAdjust.saturation.value = Mathf.Lerp(0, -100, t / lerpDuration);
+            }
+
             t += Time.deltaTime;
             yield return null;
         }
         BeautifySettings.settings.lutIntensity.Override(0);
         BeautifySettings.settings.lut.Override(false);
         BeautifySettings.settings.lutTexture.Override(null);
+        if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
+        {
+            colorAdjust.saturation.value = -100f;
+        }
         yield break;
     }
 

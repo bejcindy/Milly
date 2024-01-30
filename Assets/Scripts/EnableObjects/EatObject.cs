@@ -18,11 +18,7 @@ public class EatObject : PickUpObject
     public bool foodMoving = false;
 
 
-    [Foldout("Post Processing Values")]
-    public Vector4 shadow;
-    public Vector4 midtone;
-    public Vector4 highlight;
-    public float vignette;
+    public Texture2D lutTexture;
 
     Animator foodAnim;
     Transform currentMesh;
@@ -112,7 +108,7 @@ public class EatObject : PickUpObject
         pizzaLid.showing = true;
         if (!ran)
         {
-            StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToPizzaColor(shadow, midtone, highlight, vignette));
+            StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToPizzaColor(lutTexture));
             ran = true;
         }
         if (foodStage < 3)

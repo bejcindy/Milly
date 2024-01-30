@@ -6,6 +6,7 @@ public class Hugo : NPCControl
 {
     public GameObject broom;
     public Transform broomPlacePos;
+    public TrashSoccerScoreBoard scoreBoard;
     protected override void Start()
     {
         base.Start();
@@ -28,11 +29,12 @@ public class Hugo : NPCControl
 
     public void HugoAction3()
     {
+        scoreBoard.enabled = true;
         broom.transform.SetParent(null);
         broom.transform.position = broomPlacePos.position + new Vector3(0, 1, 0);
         broom.GetComponent<Rigidbody>().isKinematic = false;
         broom.transform.rotation = Quaternion.identity;
-        Invoke(nameof(StopIdle), 1f);
+        noMoveAfterTalk = false;
     }
 
     public void HugoAction4()

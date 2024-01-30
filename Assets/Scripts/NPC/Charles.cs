@@ -33,7 +33,7 @@ public class Charles : NPCControl
     public void CharlesAction2()
     {
         charlesPizza.SetActive(true);
-        
+        currentDialogue.gameObject.SetActive(true);
     }
 
     public void CharlesAction3()

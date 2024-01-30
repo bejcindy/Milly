@@ -100,21 +100,21 @@ public class Vinyl : PickUpObject
             }
         }
 
-        if (onStand && standSelect)
-        {
-            base.Update();
-        }
-        else if(onStand && !standSelect)
-        {
-            playerHolding.RemoveInteractable(gameObject);
-            selected = false;
-            if (playerHolding.selectedObj == this)
-                playerHolding.selectedObj = null;
-            if (activated)
-                gameObject.layer = 17;
-            else
-                gameObject.layer = 0;
-        }
+        //if (onStand && standSelect)
+        //{
+        //    base.Update();
+        //}
+        //else if(onStand && !standSelect)
+        //{
+        //    playerHolding.RemoveInteractable(gameObject);
+        //    selected = false;
+        //    if (playerHolding.selectedObj == this)
+        //        playerHolding.selectedObj = null;
+        //    if (activated)
+        //        gameObject.layer = 17;
+        //    else
+        //        gameObject.layer = 0;
+        //}
 
     }
 

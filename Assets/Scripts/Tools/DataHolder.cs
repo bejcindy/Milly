@@ -8,6 +8,8 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using VInspector;
+using Beautify.Universal;
 
 [Serializable]
 public class HintTexts
@@ -87,6 +89,7 @@ public class DataHolder : MonoBehaviour
         pov = ReferenceTool.playerPOV;
         originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
         originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
+        BeautifySettings.settings.blurIntensity.Override(0f);
     }
 
     void Update()
@@ -119,7 +122,7 @@ public class DataHolder : MonoBehaviour
                 hintPanels[i].SetActive(true);
             }
         }
-
+        
         //if (Input.GetKeyDown(KeyCode.Tab))
         //{
         //    if (!tatPanelOn)
@@ -127,6 +130,11 @@ public class DataHolder : MonoBehaviour
         //    else
         //        TurnOffTattooPanel();
         //}
+    }
+
+    private void OnDisable()
+    {
+        BeautifySettings.settings.blurIntensity.Override(0f);
     }
 
     #region Focusing and Unfocusing
@@ -141,25 +149,18 @@ public class DataHolder : MonoBehaviour
 
         if (camBlendDone)
         {
-            if (focusDist > .1f)
+            if (focusDist < 1.8f)
             {
-                float speed = Mathf.Lerp(0.75f, 0.001f, Mathf.InverseLerp(1, 0, matColorVal));
+                float speed = Mathf.Lerp(0f, 2f, Mathf.InverseLerp(1, 0, matColorVal));
                 focusDist = speed;
             }
             else
             {
-                focusDist = .001f;
+                focusDist = 2f;
                 focused = true;
             }
 
-            if (v.profile.TryGet<DepthOfField>(out dof))
-            {
-                dof.focusDistance.value = focusDist;
-            }
-            if (cv.profile.TryGet<DepthOfField>(out colorDof))
-            {
-                colorDof.focusDistance.value = focusDist;
-            }
+            BeautifySettings.settings.blurIntensity.Override(focusDist);
         }       
     }
 
@@ -170,16 +171,16 @@ public class DataHolder : MonoBehaviour
         focusCinemachine.LookAt = null;
         playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
 
-        if (focusDist < .75f)
+        if (focusDist >0f)
         {
             //currentFocus.layer = 13;
-            focusDist += .5f * Time.deltaTime;
+            focusDist -= .5f * Time.deltaTime;
         }
         else
         {
             pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
             pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
-            focusDist = .75f;
+            focusDist = 0f;
             //currentFocus.layer = 17;
             camBlended = false;
             camBlendDone = false;
@@ -191,14 +192,7 @@ public class DataHolder : MonoBehaviour
             focused = false;
         }
 
-        if (v.profile.TryGet<DepthOfField>(out dof))
-        {
-            dof.focusDistance.value = focusDist;
-        }
-        if (cv.profile.TryGet<DepthOfField>(out colorDof))
-        {
-            colorDof.focusDistance.value = focusDist;
-        }
+        BeautifySettings.settings.blurIntensity.Override(focusDist);
 
     }
     #endregion

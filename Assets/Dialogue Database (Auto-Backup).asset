@@ -80737,7 +80737,7 @@ MonoBehaviour:
       isGroup: 0
       nodeColor: 
       delaySimStatus: 0
-      falseConditionAction: 
+      falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks:
       - originConversationID: 126
@@ -80768,11 +80768,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
+        value: 19
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 19
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -80780,7 +80780,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Hugo.
+        value: Haven't played much, have you?
         type: 0
         typeString: 
       - title: Sequence
@@ -80801,6 +80801,12 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
+      - originConversationID: 126
+        originDialogueID: 1
+        destinationConversationID: 126
+        destinationDialogueID: 3
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -80808,8 +80814,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 475.99997
-        y: 118.399994
+        x: 474.4
+        y: 105.6
         width: 160
         height: 30
     - id: 2
@@ -80823,19 +80829,19 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 19
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
         value: 1
         type: 5
         typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 19
+        type: 5
+        typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: 
+        value: '[Ask what he is talking about.]'
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Your name is not on here.
+        value: Play what?
         type: 0
         typeString: 
       - title: Sequence
@@ -80853,7 +80859,7 @@ MonoBehaviour:
       - originConversationID: 126
         originDialogueID: 2
         destinationConversationID: 126
-        destinationDialogueID: 3
+        destinationDialogueID: 4
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -80863,8 +80869,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 476.79996
-        y: 185.2
+        x: 303.10587
+        y: 184.77646
         width: 160
         height: 30
     - id: 3
@@ -80886,11 +80892,11 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: 
+        value: '[Say no.]'
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: On what?
+        value: I'm sorry but...no one has lately, Hugo.
         type: 0
         typeString: 
       - title: Sequence
@@ -80908,7 +80914,7 @@ MonoBehaviour:
       - originConversationID: 126
         originDialogueID: 3
         destinationConversationID: 126
-        destinationDialogueID: 4
+        destinationDialogueID: 5
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -80918,8 +80924,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 476.79996
-        y: 244.00002
+        x: 640.047
+        y: 231.83527
         width: 160
         height: 30
     - id: 4
@@ -80945,7 +80951,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: The leaderboard--did someone erase your score?
+        value: This--the soccer game.
         type: 0
         typeString: 
       - title: Sequence
@@ -80963,7 +80969,7 @@ MonoBehaviour:
       - originConversationID: 126
         originDialogueID: 4
         destinationConversationID: 126
-        destinationDialogueID: 5
+        destinationDialogueID: 3
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -80973,8 +80979,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 478.39993
-        y: 315.6
+        x: 303.10587
+        y: 234.77646
         width: 160
         height: 30
     - id: 5
@@ -80988,11 +80994,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
+        value: 19
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 19
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -81000,7 +81006,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: No I mean--the rule is that the scores reset every month right?
+        value: Haha, don't be sorry.
         type: 0
         typeString: 
       - title: Sequence
@@ -81028,8 +81034,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 478.39987
-        y: 380
+        x: 646.6352
+        y: 301.59995
         width: 160
         height: 30
     - id: 6
@@ -81043,11 +81049,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
+        value: 19
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 19
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -81055,7 +81061,172 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: I just didn't play any this month.
+        value: It's never anyone's duty to participate in this.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 126
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 126
+        originDialogueID: 6
+        destinationConversationID: 126
+        destinationDialogueID: 7
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 649.4587
+        y: 370.4235
+        width: 160
+        height: 30
+    - id: 7
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 19
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: I mean--it all started simply as a way to make my life easier.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 126
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 126
+        originDialogueID: 7
+        destinationConversationID: 126
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 652.43695
+        y: 431.71756
+        width: 160
+        height: 30
+    - id: 8
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 19
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: But to think what it actually became--
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 126
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 126
+        originDialogueID: 8
+        destinationConversationID: 126
+        destinationDialogueID: 9
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 652.43695
+        y: 491.58054
+        width: 160
+        height: 30
+    - id: 9
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 19
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: That's what makes this place so much more special to me.
         type: 0
         typeString: 
       - title: Sequence
@@ -81077,13 +81248,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 475.99985
-        y: 444.40002
+        x: 646.95746
+        y: 558.0189
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 80}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 92.38576, y: 219.20825}
+    canvasZoom: 0.73000026
   - id: 127
     fields:
     - title: Title
@@ -81338,7 +81509,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 127
+        originDialogueID: 3
+        destinationConversationID: 127
+        destinationDialogueID: 5
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -81373,7 +81550,62 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: What fun is that?
+        value: What fun would that be?
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 127
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 127
+        originDialogueID: 4
+        destinationConversationID: 127
+        destinationDialogueID: 5
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 480.00003
+        y: 259.99994
+        width: 160
+        height: 30
+    - id: 5
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 5
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: I should've known you were like this.
         type: 0
         typeString: 
       - title: Sequence
@@ -81395,12 +81627,12 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 480.80002
-        y: 259.99994
+        x: 331.19998
+        y: 373.19992
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 83.20001, y: 0}
+    canvasScrollPosition: {x: 29.600037, y: 136.00006}
     canvasZoom: 1
   syncInfo:
     syncActors: 0

@@ -4,84 +4,53 @@ using UnityEngine;
 using VInspector;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Beautify.Universal;
 
 public class SMHAdjustTest : MonoBehaviour
 {
-    public VolumeProfile profile;
+    public VolumeProfile monoProfile;
     public float lerpDuration;
 
-    [Foldout("Default Values (Don't Touch)")]
-    public Vector4 defaultShadow;
-    public Vector4 defaultMidtone;
-    public Vector4 defaultHighlight;
-    public float defaultVignette;
-
-    [Foldout("Current Values")]
-    public Vector4 currentShadow;
-    public Vector4 currentMidtone;
-    public Vector4 currentHighlight;
-    public float currentVignette;
-
-    ShadowsMidtonesHighlights shadowMidHigh;
-    Vignette vignette;
+    ColorAdjustments colorAdjust;
 
     [Button]
     void ResetToDefault()
     {
-        if (profile.TryGet<ShadowsMidtonesHighlights>(out shadowMidHigh))
+        BeautifySettings.settings.lutIntensity.Override(0);
+        BeautifySettings.settings.lut.Override(false);
+        BeautifySettings.settings.lutTexture.Override(null);
+        if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
         {
-            shadowMidHigh.shadows.value = defaultShadow;
-            shadowMidHigh.midtones.value = defaultMidtone;
-            shadowMidHigh.highlights.value = defaultHighlight;
-        }
-        if(profile.TryGet<Vignette>(out vignette))
-        {
-            vignette.intensity.value = defaultVignette;
+            colorAdjust.saturation.value = -100;
         }
     }
+    
 
-    [Button]
-    void CurrentValues()
-    {
-        if (profile.TryGet<ShadowsMidtonesHighlights>(out shadowMidHigh))
-        {
-            currentShadow = shadowMidHigh.shadows.value;
-            currentMidtone = shadowMidHigh.midtones.value;
-            currentHighlight = shadowMidHigh.highlights.value;
-        }
-        if (profile.TryGet<Vignette>(out vignette))
-        {
-            currentVignette = vignette.intensity.value;
-        }
-    }
-
-
-    public IEnumerator LerpToPizzaColor(Vector4 targetShadow,Vector4 targetMidtone,Vector4 targetHighlight,float targetVignette)
+    public IEnumerator LerpToPizzaColor(Texture2D pizzaLUT)
     {
         float t = 0;
+        BeautifySettings.settings.lut.Override(true);
+        BeautifySettings.settings.lutTexture.Override(pizzaLUT);
         while (t < lerpDuration)
         {
-            if (profile.TryGet<ShadowsMidtonesHighlights>(out shadowMidHigh))
+            
+            float intensity = Mathf.Lerp(0, 1, t / lerpDuration);
+            
+            BeautifySettings.settings.lutIntensity.Override(intensity);
+            if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
             {
-                shadowMidHigh.shadows.value = Vector4.Lerp(defaultShadow, targetShadow, t / lerpDuration);
-                shadowMidHigh.midtones.value = Vector4.Lerp(defaultMidtone, targetMidtone, t / lerpDuration);
-                shadowMidHigh.highlights.value = Vector4.Lerp(defaultHighlight, targetHighlight, t / lerpDuration);
+                colorAdjust.saturation.value = Mathf.Lerp(-100, 0, t / lerpDuration);
             }
-            if (profile.TryGet<Vignette>(out vignette))
-            {
-                vignette.intensity.value = Mathf.Lerp(defaultVignette, targetVignette, t / lerpDuration);
-            }
+
             t += Time.deltaTime;
             yield return null;
         }
-        shadowMidHigh.shadows.value = targetShadow;
-        shadowMidHigh.midtones.value = targetMidtone;
-        shadowMidHigh.highlights.value = targetHighlight;
-        vignette.intensity.value = targetVignette;
 
-        //yield return new WaitForSeconds(30f);
-
-        //StartCoroutine(LerpToDefaultColor());
+        BeautifySettings.settings.lutIntensity.Override(1);
+        if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
+        {
+            colorAdjust.saturation.value = 0f;
+        }
 
         yield break;
     }
@@ -89,30 +58,28 @@ public class SMHAdjustTest : MonoBehaviour
     public IEnumerator LerpToDefaultColor()
     {
         float t = 0;
-        Vector4 shadow = shadowMidHigh.shadows.value;
-        Vector4 midtone = shadowMidHigh.midtones.value;
-        Vector4 highlight = shadowMidHigh.highlights.value;
-        float intensity = vignette.intensity.value;
 
         while (t < lerpDuration)
         {
-            if (profile.TryGet<ShadowsMidtonesHighlights>(out shadowMidHigh))
+            float intensity = Mathf.Lerp(1, 0, t / lerpDuration);
+
+            BeautifySettings.settings.lutIntensity.Override(intensity);
+
+            if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
             {
-                shadowMidHigh.shadows.value = Vector4.Lerp(shadow, defaultShadow, t / lerpDuration);
-                shadowMidHigh.midtones.value = Vector4.Lerp(midtone, defaultMidtone, t / lerpDuration);
-                shadowMidHigh.highlights.value = Vector4.Lerp(highlight, defaultHighlight, t / lerpDuration);
+                colorAdjust.saturation.value = Mathf.Lerp(0, -100, t / lerpDuration);
             }
-            if (profile.TryGet<Vignette>(out vignette))
-            {
-                vignette.intensity.value = Mathf.Lerp(intensity, defaultVignette, t / lerpDuration);
-            }
+
             t += Time.deltaTime;
             yield return null;
         }
-        shadowMidHigh.shadows.value = defaultShadow;
-        shadowMidHigh.midtones.value = defaultMidtone;
-        shadowMidHigh.highlights.value = defaultHighlight;
-        vignette.intensity.value = defaultVignette;
+        BeautifySettings.settings.lutIntensity.Override(0);
+        BeautifySettings.settings.lut.Override(false);
+        BeautifySettings.settings.lutTexture.Override(null);
+        if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
+        {
+            colorAdjust.saturation.value = -100f;
+        }
         yield break;
     }
 

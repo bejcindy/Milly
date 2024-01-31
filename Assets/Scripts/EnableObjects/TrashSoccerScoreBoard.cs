@@ -47,7 +47,7 @@ public class TrashSoccerScoreBoard : LookingObject
         if (!showedMillyScore && garBageScore.score > 0)
         {
             ChangeTextColor(boardScoreText);
-            if (boardScoreText.gameObject.layer == 17)
+            if (boardScoreText.color.a == 1)
                 showedMillyScore = true;
         }
 

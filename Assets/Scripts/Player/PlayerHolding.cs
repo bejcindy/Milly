@@ -49,12 +49,12 @@ public class PlayerHolding : MonoBehaviour
     public RectTransform CanvasRect;
 
     //[HideInInspector]
-    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj, catboxObj;
+    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj, catboxObj,vinylObj;
     bool noControlReset;
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
-    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden, catHidden, doorHidden;
+    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden, catHidden, doorHidden,vinylHidden;
     List<GameObject> trackedObjs;
     List<GameObject> UIs;
     List<Sprite> usedSprites;
@@ -194,6 +194,7 @@ public class PlayerHolding : MonoBehaviour
             UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
             //if(catboxObj)
             UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
+            UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
             #endregion
 
 

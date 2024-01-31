@@ -73,7 +73,7 @@ public class VinylStand : LivableObject
                         SelectInitialVinyl();
                     else
                     {
-                        if(!inScrollCD)
+                        if (!inScrollCD)
                             PlayerChooseVinyl();
                         selectedVinyl.gameObject.layer = 9;
                         playerHolding.vinylObj = selectedVinyl.gameObject;
@@ -87,6 +87,7 @@ public class VinylStand : LivableObject
                             playerHolding.vinylObj = null;
                             DataHolder.HideHint(DataHolder.hints.vinylStandHint);
                         }
+                    }
                 }
 
             }

@@ -29,10 +29,10 @@ public class Vinyl : PickUpObject
         {
             onStand = false;
             standSelect = false;
+            onRecordPlayer = false;
             if (recordPlayer.currentRecord == this)
                 recordPlayer.currentRecord = null;
             activated = true;
-            onRecordPlayer = false;
             if(transform.localScale.x < 2)
             {
                 transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(2, 2, 2), 0.5f);

@@ -35,6 +35,30 @@ public class TrashSoccerScoreBoard : LookingObject
             scorePanel.SetActive(false);
         }
 
+        if (focusingThis)
+        {
+            scoreText.gameObject.layer = 13;
+            foreach(Transform t in otherScores)
+            {
+                t.gameObject.layer = 13;
+            }
+        }
+        else
+        {
+            if (activated)
+            {
+                if(scoreText.gameObject.layer != 17)
+                {
+                    scoreText.gameObject.layer = 17;
+                    foreach (Transform t in otherScores)
+                    {
+                        t.gameObject.layer = 17;
+                    }
+                }
+
+            }
+        }
+
         if (firstActivated && !firstTransformed)
         {
             foreach (Transform child in otherScores)

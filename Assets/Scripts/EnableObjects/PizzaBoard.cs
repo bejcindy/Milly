@@ -34,6 +34,29 @@ public class PizzaBoard : LookingObject
             }
         }
 
+        if (focusingThis)
+        {
+            titleText.gameObject.layer = 13;
+            foreach (Transform child in currentPizzaText)
+            {
+                child.gameObject.layer = 13;
+            }
+        }
+        else
+        {
+            if (activated)
+            {
+                if(titleText.gameObject.layer != 17)
+                {
+                    titleText.gameObject.layer = 17;
+                    foreach (Transform child in currentPizzaText)
+                    {
+                        child.gameObject.layer = 17;
+                    }
+                }
+            }
+        }
+
     }
 
     void ChangeTextColor(TextMeshPro text)

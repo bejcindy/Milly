@@ -31,13 +31,24 @@ public class VinylStand : LivableObject
             {
                 if (!availableSpot)
                     CheckAvailableSpot();
+                if (selectedVinyl)
+                {
+                    if (selectedVinyl.activated)
+                    {
+                        selectedVinyl.gameObject.layer = 17;
+                    }
+                    else
+                    {
+                        selectedVinyl.gameObject.layer = 0;
+                    }
+                }
                 selectedVinyl = null;
 
                 if (playerLeftHand.holdingObj.GetComponent<Vinyl>())
                 {
 
                     holdingVinyl = playerLeftHand.holdingObj.GetComponent<Vinyl>();
-                    if(availableSpot)
+                    if(availableSpot && !playerLeftHand.noThrow)
                         DetectVinylPlacement();
                 }
                 else
@@ -55,25 +66,29 @@ public class VinylStand : LivableObject
                 else
                     gameObject.layer = 0;
 
-                if (!selectedVinyl)
-                    SelectInitialVinyl();
-                else
+
+                if((playerHolding.selectedObj == null || playerHolding.selectedObj.GetComponent<PickUpObject>().selected))
                 {
-                    if(!inScrollCD)
-                        PlayerChooseVinyl();
-                    selectedVinyl.gameObject.layer = 9;
-                    playerHolding.vinylObj = selectedVinyl.gameObject;
-                    DataHolder.ShowHint(DataHolder.hints.vinylStandHint);
-                    if (Input.GetMouseButtonDown(0))
+                    if (!selectedVinyl)
+                        SelectInitialVinyl();
+                    else
                     {
-                        selectedVinyl.GetComponent<Rigidbody>().isKinematic = true;
-                        selectedVinyl.inHand = true;
-                        playerHolding.OccupyLeft(selectedVinyl.transform);
-                        selectedVinyl = null;
-                        playerHolding.vinylObj = null;
-                        DataHolder.HideHint(DataHolder.hints.vinylStandHint);
-                    }
+                        if(!inScrollCD)
+                            PlayerChooseVinyl();
+                        selectedVinyl.gameObject.layer = 9;
+                        playerHolding.vinylObj = selectedVinyl.gameObject;
+                        DataHolder.ShowHint(DataHolder.hints.vinylStandHint);
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            selectedVinyl.GetComponent<Rigidbody>().isKinematic = true;
+                            selectedVinyl.inHand = true;
+                            playerHolding.OccupyLeft(selectedVinyl.transform);
+                            selectedVinyl = null;
+                            playerHolding.vinylObj = null;
+                            DataHolder.HideHint(DataHolder.hints.vinylStandHint);
+                        }
                 }
+
             }
         }
         else
@@ -208,6 +223,7 @@ public class VinylStand : LivableObject
         if (Input.GetMouseButtonDown(0))
         {
             holdingVinyl.gameObject.layer = 17;
+            holdingVinyl.onRecordPlayer = false;
             holdingVinyl.inHand = false;
             holdingVinyl.onStand = true;
             holdingVinyl.selected = false;

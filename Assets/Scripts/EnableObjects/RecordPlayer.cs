@@ -66,6 +66,7 @@ public class RecordPlayer : LivableObject
                     gameObject.layer = 9;
                     if (Input.GetMouseButtonDown(0))
                     {
+                        activated = true;
                         TriggerPlay();
                     }
                 }

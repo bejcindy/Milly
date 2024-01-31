@@ -174,7 +174,7 @@ public class DataHolder : MonoBehaviour
         if (focusDist >0f)
         {
             //currentFocus.layer = 13;
-            focusDist -= .5f * Time.deltaTime;
+            focusDist -= .5f * Time.deltaTime * 5f;
         }
         else
         {

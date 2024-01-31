@@ -25,15 +25,17 @@ public class Vinyl : PickUpObject
     // Update is called once per frame
     protected override void Update()
     {
+
         if (inHand)
         {
+            base.Update();
             onStand = false;
             standSelect = false;
             onRecordPlayer = false;
             if (recordPlayer.currentRecord == this)
                 recordPlayer.currentRecord = null;
             activated = true;
-            if(transform.localScale.x < 2)
+            if (transform.localScale.x < 2)
             {
                 transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(2, 2, 2), 0.5f);
             }
@@ -41,14 +43,16 @@ public class Vinyl : PickUpObject
         }
         else
         {
-            if (transform.localScale.x >1)
+            if (transform.localScale.x > 1)
             {
                 transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, 0.5f);
             }
         }
 
+
         if (onRecordPlayer)
         {
+            onStand = false;
             if (activated)
                 gameObject.layer = 17;
             else
@@ -90,7 +94,7 @@ public class Vinyl : PickUpObject
                 }
             }
         }
-        else if (!onStand)
+        else if(!onStand)
         {
             notInCD = true;
             base.Update();
@@ -98,23 +102,19 @@ public class Vinyl : PickUpObject
             {
                 mySong.SetActive(false);
             }
+
+        }
+        else if(onStand)
+        {
+            notInCD = true;
+            if (mySong.activeSelf)
+            {
+                mySong.SetActive(false);
+            }
         }
 
-        //if (onStand && standSelect)
-        //{
-        //    base.Update();
-        //}
-        //else if(onStand && !standSelect)
-        //{
-        //    playerHolding.RemoveInteractable(gameObject);
-        //    selected = false;
-        //    if (playerHolding.selectedObj == this)
-        //        playerHolding.selectedObj = null;
-        //    if (activated)
-        //        gameObject.layer = 17;
-        //    else
-        //        gameObject.layer = 0;
-        //}
+
+
 
     }
 

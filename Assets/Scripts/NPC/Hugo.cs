@@ -24,11 +24,15 @@ public class Hugo : NPCControl
 
     public void HugoAction2()
     {
-
+        talkable = false;
     }
 
     public void HugoAction3()
     {
+        if (inConversation)
+        {
+            npcActivated = true;
+        }
         scoreBoard.enabled = true;
         broom.transform.SetParent(null);
         broom.transform.position = broomPlacePos.position + new Vector3(0, 1, 0);

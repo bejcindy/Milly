@@ -184,6 +184,7 @@ public class PlayerMovement : MonoBehaviour
             slopeCollide = true;
             collisionSlopeDir = Vector3.ProjectOnPlane(moveDirection, collision.contacts[0].normal).normalized;
         }
+        Debug.Log("Player touching " + collision.gameObject.name);
     }
     private void OnCollisionExit(Collision collision)
     {

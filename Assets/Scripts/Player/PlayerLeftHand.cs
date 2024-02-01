@@ -286,6 +286,12 @@ public class PlayerLeftHand : MonoBehaviour
         }
     }
 
+    public void ShowSmokeHint()
+    {
+        canSmoke = true;
+        smokingHinted = false;
+    }
+
 
     #region Chopsticks Region
     private void UsingChopsticks()

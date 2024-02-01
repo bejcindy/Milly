@@ -100,7 +100,7 @@ public class CigaretteContainer : MonoBehaviour
                 {
                     if (!afterGloriaThought)
                     {
-                        DialogueManager.StartConversation("Cigarette/AfterGloria");
+                        //DialogueManager.StartConversation("Cigarette/AfterGloria");
                         afterGloriaThought = true;
                     }
 

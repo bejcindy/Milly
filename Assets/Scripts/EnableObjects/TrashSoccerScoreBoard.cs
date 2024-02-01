@@ -82,7 +82,7 @@ public class TrashSoccerScoreBoard : LookingObject
         if (inGameZone)
         {
             scoreText.text = "Goals: " + score;
-            boardScoreText.text = "Goals: " + new string('X', score);
+            boardScoreText.text = "Milly: " + new string('X', score);
         }
 
     }

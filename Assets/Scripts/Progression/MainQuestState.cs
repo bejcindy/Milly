@@ -101,4 +101,13 @@ public class MainQuestState: MonoBehaviour
     {
         DialogueManager.StartConversation("Thoughts/AfterGloria");
     }
+
+    public void ShowConversationHint()
+    {
+        DataHolder.ShowHint(DataHolder.hints.convoHint);
+    }
+    public void HideConversationHint()
+    {
+        DataHolder.HideHint(DataHolder.hints.convoHint);
+    }
 }

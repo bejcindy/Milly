@@ -58,7 +58,6 @@ public class Gloria : NPCControl
     public void GloriaAction6()
     {
         gloriaHugoDia.gameObject.SetActive(true);
-        noMoveAfterTalk = true;
     }
 
 

@@ -19,6 +19,13 @@ public class MainQuestState: MonoBehaviour
     public Chair izakayaHighChair;
     public Transform backToIzaAlt;
 
+    public Loyi loyi;
+    public Ron ron;
+    public Hugo hugo;
+    public Gloria gloria;
+    public Charles charles;
+    public Felix felix;
+
 
     private void Start()
     {
@@ -56,6 +63,18 @@ public class MainQuestState: MonoBehaviour
             Invoke(nameof(StartGloAfterThought), 1f);
         }
 
+    }
+
+    public void CheckParentCallTrigger()
+    {
+        if(felix._counter == 2 && loyi._counter == 4 && ron._counter == 2 && hugo._counter == 4 && gloria._counter == 7 && charles._counter == 2)
+        {
+            if (!parentsCalled)
+            {
+                parentsCalled = true;
+                DialogueManager.StartConversation("MainQuest/CallingParents");
+            }
+        }
     }
 
     public void SetFirstGloriaTalked()

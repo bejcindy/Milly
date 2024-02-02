@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VInspector;
+using FMODUnity;
 
 public class EatObject : PickUpObject
 {
@@ -16,7 +17,7 @@ public class EatObject : PickUpObject
     public PizzaScreen pizzaLid;
     public int foodStage = 1;
     public bool foodMoving = false;
-
+    public EventReference eatSound;
 
     public Texture2D lutTexture;
 
@@ -96,7 +97,13 @@ public class EatObject : PickUpObject
             foodAnim.Rebind();
             foodAnim.Update(0f);
             foodAnim.Play("Eat");
+            Invoke("DelayedSoundEffect", 1.5f);
         }
+    }
+
+    void DelayedSoundEffect()
+    {
+        RuntimeManager.PlayOneShot(eatSound, transform.position);
     }
 
     public void FoodMeshChange()

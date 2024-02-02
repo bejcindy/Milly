@@ -406,6 +406,7 @@ namespace NPCFSM
 
         public void MoveNPC()
         {
+            npcControl.idling = false;
             ChangeState(moveState);
         }
         #endregion

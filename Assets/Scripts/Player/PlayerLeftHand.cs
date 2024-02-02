@@ -67,7 +67,7 @@ public class PlayerLeftHand : MonoBehaviour
     bool aimHinted, smokingHinted, drinkHinted;
     public bool aimHintDone, smokingHintDone, drinkHintDone;
     bool chophinted;
-    bool canSmoke;
+    public bool canSmoke;
     public bool aiming;
     #endregion
     // Start is called before the first frame update
@@ -290,6 +290,7 @@ public class PlayerLeftHand : MonoBehaviour
     {
         canSmoke = true;
         smokingHinted = false;
+        DataHolder.ShowHint(DataHolder.hints.cigHint);
     }
 
 

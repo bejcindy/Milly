@@ -78,6 +78,11 @@ public class CigaretteContainer : MonoBehaviour
 
     }
 
+    public void ShowCigHint()
+    {
+        DataHolder.ShowHint(DataHolder.hints.cigHint);
+    }
+
     public void GetCig()
     {
         if (Input.GetKeyDown(KeyCode.C))
@@ -117,6 +122,7 @@ public class CigaretteContainer : MonoBehaviour
 
     void TakeOutBox()
     {
+        DataHolder.HideHint(DataHolder.hints.cigHint);
         RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Cigarette/CigBox_Open");
         leftHand.gettingCig = true;
         cigBox.SetActive(true);

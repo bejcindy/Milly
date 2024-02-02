@@ -770,12 +770,14 @@ public class NPCControl : MonoBehaviour
         if (other.CompareTag(("DoorDetector")))
         {
             Door newDoor = other.transform.parent.GetComponent<Door>();
-            if (!newDoor.doorOpen)
+            if (newDoor.enabled)
             {
-                inDoorRange = true;
-                currentDoor = other.transform.parent.GetComponent<Door>();
+                if (!newDoor.doorOpen)
+                {
+                    inDoorRange = true;
+                    currentDoor = other.transform.parent.GetComponent<Door>();
+                }
             }
-
 
         }
     }

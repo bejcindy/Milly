@@ -7,6 +7,8 @@ public class Hugo : NPCControl
     public GameObject broom;
     public Transform broomPlacePos;
     public TrashSoccerScoreBoard scoreBoard;
+
+    public GameObject cigButtConvo;
     protected override void Start()
     {
         base.Start();
@@ -38,6 +40,18 @@ public class Hugo : NPCControl
     public void HugoAction3()
     {
         talkable = true;
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        if (other.CompareTag("CigButt"))
+        {
+            if(!cigButtConvo.activeSelf)
+            {
+                cigButtConvo.SetActive(true);
+            }
+        }
     }
 
 

@@ -770,7 +770,7 @@ public class NPCControl : MonoBehaviour
     #endregion
 
 
-    public void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(("DoorDetector")))
         {

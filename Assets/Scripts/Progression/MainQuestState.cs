@@ -39,6 +39,7 @@ public class MainQuestState: MonoBehaviour
 
     public void Update()
     {
+        CheckParentCallTrigger();
         if (readyAkiConfrontation && izakayaHighChair.isInteracting && !AkiConfrontation.activeSelf && !akiConfronted)
         {
             akiConfronted = true;
@@ -67,14 +68,19 @@ public class MainQuestState: MonoBehaviour
 
     public void CheckParentCallTrigger()
     {
-        if(felix._counter == 2 && loyi._counter == 4 && ron._counter == 2 && hugo._counter == 4 && gloria._counter == 7 && charles._counter == 2)
+        if(felix.finalStop && loyi.finalStop && ron.finalStop && hugo.finalStop && gloria.finalStop && charles.finalStop)
         {
             if (!parentsCalled)
             {
                 parentsCalled = true;
-                DialogueManager.StartConversation("MainQuest/CallingParents");
+                Invoke(nameof(StartParentsCallingConvo), 10f);
             }
         }
+    }
+
+    void StartParentsCallingConvo()
+    {
+        DialogueManager.StartConversation("MainQuest/CallingParents");
     }
 
     public void SetFirstGloriaTalked()

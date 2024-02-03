@@ -28,6 +28,7 @@ public class NPCControl : MonoBehaviour
     [SerializeField] protected bool interactable;
     [SerializeField] public float npcVincinity;
     [SerializeField] public bool followingPlayer;
+    public bool finalStop;
 
     protected bool initialActivated;
 
@@ -126,6 +127,10 @@ public class NPCControl : MonoBehaviour
 
     protected virtual void Update()
     {
+        if(_counter == destinations.Length)
+        {
+            finalStop = true;
+        }
         //Basic visible and interactable detection
         isVisible = visibleDetector.isVisible;
         interactable = CheckInteractable();

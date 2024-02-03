@@ -39886,9 +39886,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: <i>What the hell?? What do you mean you don't know?! What if she's
-          having another episode again? FUCK! She's just got out and you don't even
-          make sure to keep an eye on her all the time?!!</i>
+        value: <i>What do you mean you don't know?! What if she's having another
+          episode again?! She's just got out and you don't even make sure to keep
+          an eye on her all the time?!!</i>
         type: 0
         typeString: 
       - title: Sequence
@@ -40329,7 +40329,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: <i>Call me when she's there.</i>
+        value: <i>Call me when you've met her.</i>
         type: 0
         typeString: 
       - title: Sequence
@@ -40406,12 +40406,12 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1372.8464
+        x: 1371.4672
         y: 1905.2916
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 685.6729, y: 0}
+    canvasScrollPosition: {x: 780.8451, y: 1062.0671}
     canvasZoom: 0.5800009
   - id: 48
     fields:
@@ -55176,8 +55176,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1753.3278
-        y: 1417.2308
+        x: 1821.7487
+        y: 1410.915
         width: 160
         height: 30
     - id: 15
@@ -55203,7 +55203,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I guess I'm a disappointment to you now.
+        value: Guess that makes me a disappointment to you now.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -55724,7 +55724,7 @@ MonoBehaviour:
       - originConversationID: 75
         originDialogueID: 25
         destinationConversationID: 75
-        destinationDialogueID: 14
+        destinationDialogueID: 15
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -55735,7 +55735,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1544.3015
-        y: 1297.1786
+        y: 1296.1259
         width: 160
         height: 30
     - id: 26
@@ -55791,7 +55791,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1956.4634
-        y: 1278.4896
+        y: 1296.3844
         width: 160
         height: 30
     - id: 27
@@ -55903,7 +55903,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1146.2778, y: 1498.3385}
+    canvasScrollPosition: {x: 1191.5411, y: 1112.0228}
     canvasZoom: 0.7600003
   - id: 76
     fields:
@@ -73196,6 +73196,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: aac4297f-6723-4051-b457-a4483d0e431c
+        type: 0
+        typeString: 
       conversationID: 119
       isRoot: 0
       isGroup: 0
@@ -74660,7 +74664,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 424.43347, y: 1441.4829}
+    canvasScrollPosition: {x: 379.34265, y: 1319.2703}
     canvasZoom: 0.55000097
   - id: 120
     fields:
@@ -82944,8 +82948,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 226.4
-        y: 178.00002
+        x: 233.70126
+        y: 179.01268
         width: 160
         height: 30
     - id: 3
@@ -83041,6 +83045,12 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
+      - originConversationID: 130
+        originDialogueID: 4
+        destinationConversationID: 130
+        destinationDialogueID: 9
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -83048,7 +83058,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 229.59998
+        x: 232.63794
         y: 236.8
         width: 160
         height: 30
@@ -83071,7 +83081,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
-        value: 
+        value: '[Ask why she didn''t tell you.]'
         type: 0
         typeString: 
       - title: Dialogue Text
@@ -83103,8 +83113,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 230.4
-        y: 300.39996
+        x: 62.298767
+        y: 304.45056
         width: 160
         height: 30
     - id: 6
@@ -83266,9 +83276,64 @@ MonoBehaviour:
         y: 511.19995
         width: 160
         height: 30
+    - id: 9
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 21
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: '[Ask where she is.]'
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Molly? God--please just tell me where you are so I can come and...
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 130
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 130
+        originDialogueID: 9
+        destinationConversationID: 130
+        destinationDialogueID: 6
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 439.22018
+        y: 312.11646
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 4.0000153}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.79000014
   syncInfo:
     syncActors: 0
     syncItems: 0

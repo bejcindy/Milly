@@ -10,7 +10,7 @@ public class TattooMesh : MonoBehaviour
     public bool dissolving;
     public bool dissolved;
     public float dissolveVal;
-
+    bool draggable;
     void Start()
     {
         dissolveVal = 0;
@@ -36,6 +36,7 @@ public class TattooMesh : MonoBehaviour
             mat.EnableKeyword("_WhiteDegree");
             mat.SetFloat("_WhiteDegree", 0);
         }
+        draggable = true;
     }
 
     public void Dissolve()
@@ -62,6 +63,7 @@ public class TattooMesh : MonoBehaviour
         if (other.CompareTag("CharTatMesh"))
         {
             dissolving = true;
+            GetComponent<BoxCollider>().enabled = false;
         }
     }
 }

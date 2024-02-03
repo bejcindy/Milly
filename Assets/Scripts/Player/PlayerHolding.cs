@@ -194,7 +194,8 @@ public class PlayerHolding : MonoBehaviour
             UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
             //if(catboxObj)
             UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
-            UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
+            if(vinylObj)
+                UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
             #endregion
 
 

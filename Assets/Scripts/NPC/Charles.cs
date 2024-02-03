@@ -10,8 +10,11 @@ public class Charles : NPCControl
     public bool charlesOpenDoor;
 
     public GameObject charlesPizza;
+    public GameObject charlesFollowDia;
+    public Ron ron;
 
-    float waitTime = 3f;
+    bool readyfirstMove;
+    float firstWaitTime = 15f;
 
     protected override void Start()
     {
@@ -27,7 +30,30 @@ public class Charles : NPCControl
     {
 
         talkable = true;
+        remainInAnim = true;
         noMoveAfterTalk = true;
+
+        if (inConversation)
+        {
+            readyfirstMove = true;
+        }
+        if (readyfirstMove)
+        {
+            if (!inConversation)
+            {
+                if(ron._counter == 2)
+                {
+                    if (firstWaitTime > 0)
+                        firstWaitTime -= Time.deltaTime;
+                    else
+                    {
+                        StopIdle();
+                        charlesFollowDia.SetActive(true);
+                    }
+
+                }
+            }
+        }
     }
 
     public void CharlesAction2()
@@ -39,6 +65,16 @@ public class Charles : NPCControl
     public void CharlesAction3()
     {
         noTalkStage = false;
+    }
+
+    public void MoveCharlesUpstairs()
+    {
+        string seTalkName = "NPC/" + gameObject.name + "/Main_Talked";
+        if (DialogueLua.GetVariable(seTalkName).asBool)
+        {
+            StopIdle();
+            charlesFollowDia.SetActive(true);
+        }
     }
 
     public void FinishSmoking()

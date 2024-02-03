@@ -26,6 +26,7 @@ public class MoveState : State
             isFollowing = true;
         }
 
+        machine.StopRemainInAnim();
         machine.BeginNavigation();
         machine.SetAnimatorTrigger("Move");
     }

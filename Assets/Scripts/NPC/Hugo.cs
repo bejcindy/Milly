@@ -20,10 +20,12 @@ public class Hugo : NPCControl
     public void HugoAction1()
     {
 
-
+        currentDialogue.gameObject.SetActive(true);
     }
 
-    public void HugoAction2()
+    public void HugoAction2() { }
+
+    public void HugoAction3()
     {
         if (inConversation)
         {
@@ -37,7 +39,7 @@ public class Hugo : NPCControl
         noMoveAfterTalk = false;
     }
 
-    public void HugoAction3()
+    public void HugoAction4()
     {
         talkable = true;
     }

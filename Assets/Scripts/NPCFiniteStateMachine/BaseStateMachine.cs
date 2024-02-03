@@ -318,6 +318,11 @@ namespace NPCFSM
             return npcControl.FinalStop();
         }
 
+        public void StopRemainInAnim()
+        {
+            npcControl.remainInAnim = false;
+        }
+
         #endregion
 
         #region AnimationControlRegion

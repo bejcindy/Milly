@@ -6,6 +6,8 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
 using TMPro;
 using FMODUnity;
+using Beautify.Universal;
+
 public class MainTattooMenu : MonoBehaviour
 {
     public TattooPanel activePanel;
@@ -22,6 +24,9 @@ public class MainTattooMenu : MonoBehaviour
     public bool mainQuestBegun;
 
     public TextMeshProUGUI[] incompleteTexts;
+
+    float blinkDuration = 1f;
+
     bool incompleteShowed;
 
     bool playAnim;
@@ -49,7 +54,8 @@ public class MainTattooMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //if (Input.GetKeyDown(KeyCode.L))
+        //    StartCoroutine(Blink());
         if (showPanel)
         {
             if (!gotCursor)
@@ -126,6 +132,25 @@ public class MainTattooMenu : MonoBehaviour
                 tmp.color = new Color(tmp.color.r, tmp.color.g, tmp.color.b, 1);
             incompleteShowed = true;
         }
+    }
+
+    IEnumerator Blink()
+    {
+        float t = 0;
+        while (t < blinkDuration)
+        {
+            BeautifySettings.settings.vignettingBlink.value = Mathf.Lerp(0, 1, t / blinkDuration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        while (t >= blinkDuration && t < blinkDuration * 2)
+        {
+            BeautifySettings.settings.vignettingBlink.value = Mathf.Lerp(1, 0, (t-blinkDuration) / blinkDuration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        BeautifySettings.settings.vignettingBlink.value = 0;
+        yield break;
     }
 
     public void StartMainTattooQuest()

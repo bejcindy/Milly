@@ -19,6 +19,7 @@ public class SMHAdjustTest : MonoBehaviour
         BeautifySettings.settings.lutIntensity.Override(0);
         BeautifySettings.settings.lut.Override(false);
         BeautifySettings.settings.lutTexture.Override(null);
+        BeautifySettings.settings.vignettingBlink.value = 0;
         if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
         {
             colorAdjust.saturation.value = -100;

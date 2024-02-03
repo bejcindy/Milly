@@ -55,6 +55,7 @@ public class TattooMesh : MonoBehaviour
         {
             dissolving = false;
             dissolved = true;
+            myTat.dragged = true;
         }
     }
 

@@ -9,6 +9,7 @@ public class PlayerLeftHand : MonoBehaviour
 {
     float xOffset = -50;
     PlayerHolding playerHolding;
+    PlayerMovement playerMovement;
     LayerMask playerLayer;
 
     [Foldout("Hand State")]
@@ -76,6 +77,7 @@ public class PlayerLeftHand : MonoBehaviour
         playerLayer = 8;
         noThrow = true;
         playerHolding = GetComponent<PlayerHolding>();
+        playerMovement = GetComponent<PlayerMovement>();
         foodAte = 0;
     }
 
@@ -185,10 +187,14 @@ public class PlayerLeftHand : MonoBehaviour
         }
         else if (holdingObj && holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
         {
-            if (playerHolding.atTable)
+            if (playerHolding.atTable || playerHolding.atInterior)
+            {
+                DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
                 DataHolder.ShowHint(DataHolder.hints.tableDrinkHint);
+            }
             else
             {
+                DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
                 DataHolder.ShowHint(DataHolder.hints.drinkAndThrowHint);
             }
             drinkHintDone = false;
@@ -257,9 +263,9 @@ public class PlayerLeftHand : MonoBehaviour
             case HandObjectType.CIGARETTE:
                 Smoke();
                 if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
+                {
                     BasicThrow();
-                else if (playerHolding.atInterior)
-                    ResetThrow();
+                }
                 if (!smokingHinted)
                 {
                     DataHolder.HideHint(DataHolder.hints.cigHint);
@@ -495,39 +501,15 @@ public class PlayerLeftHand : MonoBehaviour
         if (Input.mouseScrollDelta.y < 0 && !food.chewing)
         {
             food.Eat();
-            //Vector3 smokingPos = new Vector3(0.5f, 0f, -0.3f);
-            //Vector3 smokingRot = new Vector3(0, 0, 0);
-            //StartCoroutine(LerpPosition(smokingPos, 1f));
-            //StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
         }
 
-        //if (!food.doneEating)
-        //{
-        //    if (food.transform.localPosition == new Vector3(0.5f, 0f, -0.3f))
-        //    {
-        //        eating = false;
-        //        Vector3 smokingRot = new Vector3(0, 0, 0);
-        //        StartCoroutine(LerpPosition(Vector3.zero, 1f));
-        //        StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
-        //    }
-        //}
-
-
-
-        //if (Input.mouseScrollDelta.y < 0 && !eating)
-        //{
-        //    eating = true;
-
-        //    handAnim.Play("HandEat");
-        //    Invoke(nameof(ChangeEatingMesh), 1f);
-        //}
     }
 
 
     float rotateVal;
     private void BasicThrow()
     {
-        if (!bypassThrow && !playerHolding.inDialogue)
+        if (!bypassThrow)
         {
             if (Input.GetMouseButtonDown(0) && holdingObj && !PauseMenu.isPaused)
             {
@@ -563,7 +545,7 @@ public class PlayerLeftHand : MonoBehaviour
                     if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
                     {
                         isHolding = false;
-                        StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
+                        StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 0.5f));
                     }
                     else
                     {

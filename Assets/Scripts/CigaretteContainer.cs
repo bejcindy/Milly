@@ -42,6 +42,11 @@ public class CigaretteContainer : MonoBehaviour
     {
         GetCig();
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            DataHolder.HideHint(DataHolder.hints.cigHint);
+        }
+
         if (takingOutCig)
         {
             if (cigWait > 0)

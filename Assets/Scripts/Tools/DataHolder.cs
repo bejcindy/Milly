@@ -122,14 +122,7 @@ public class DataHolder : MonoBehaviour
                 hintPanels[i].SetActive(true);
             }
         }
-        
-        //if (Input.GetKeyDown(KeyCode.Tab))
-        //{
-        //    if (!tatPanelOn)
-        //        TurnOnTattooPanel();
-        //    else
-        //        TurnOffTattooPanel();
-        //}
+
     }
 
     private void OnDisable()

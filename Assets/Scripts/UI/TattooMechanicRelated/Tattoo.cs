@@ -7,6 +7,7 @@ using TMPro;
 
 public class Tattoo : MonoBehaviour
 {
+
     [Foldout("Activation")]
     public bool isCenter;
     public bool isHinted;

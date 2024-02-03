@@ -1,9 +1,10 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using VInspector;
 
 public class TattooPanel : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class TattooPanel : MonoBehaviour
 
     public bool activatedOnce;
     public RectTransform VFXCanvas;
+
+    [Foldout("NewTat")]
+    public CinemachineVirtualCamera panelCam;
     protected virtual void Awake()
     {
         panelTransform = GetComponent<RectTransform>();
@@ -47,6 +51,7 @@ public class TattooPanel : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+
         if (panelOn)
         {
 

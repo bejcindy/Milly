@@ -11,6 +11,9 @@ public class TattooMesh : MonoBehaviour
     public bool dissolved;
     public float dissolveVal;
     bool draggable;
+    Vector3 screenPoint;
+    Vector3 offset;
+
     void Start()
     {
         dissolveVal = 0;
@@ -24,6 +27,27 @@ public class TattooMesh : MonoBehaviour
         if (dissolving)
         {
             Dissolve();
+        }
+    }
+
+    void OnMouseDown()
+    {
+        if (draggable)
+        {
+            screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+
+            offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+        }
+    }
+
+    void OnMouseDrag()
+    {
+        if (draggable)
+        {
+            Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+
+            Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+            transform.position = curPosition;
         }
     }
 

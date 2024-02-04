@@ -10,15 +10,26 @@ public class TattooMesh : MonoBehaviour
     public bool dissolving;
     public bool dissolved;
     public float dissolveVal;
-    bool draggable;
+    public bool draggable;
+
     Vector3 screenPoint;
     Vector3 offset;
+    Vector3 originalPos;
+    bool reachedNPC;
+    float lerpBackDuration = .5f;
+
+    public GameObject NPCMesh;
+    Renderer[] npcMeshChildren;
+    
 
     void Start()
     {
         dissolveVal = 0;
         myTat = transform.parent.GetComponent<CharacterTattoo>();
         tatCharMesh = myTat.myChar;
+        originalPos = transform.position;
+        NPCMesh = GetComponentInParent<CharacterTattoo>().myChar.gameObject;
+        npcMeshChildren = NPCMesh.GetComponentsInChildren<Renderer>();
     }
 
 
@@ -30,6 +41,7 @@ public class TattooMesh : MonoBehaviour
         }
     }
 
+    #region Drag Related
     void OnMouseDown()
     {
         if (draggable)
@@ -37,6 +49,12 @@ public class TattooMesh : MonoBehaviour
             screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 
             offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+            gameObject.layer = 17;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = 17;
+            }
+            StopCoroutine(LerpBack());
         }
     }
 
@@ -48,24 +66,88 @@ public class TattooMesh : MonoBehaviour
 
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
             transform.position = curPosition;
+            if (!reachedNPC)
+            {
+                foreach (Renderer child in npcMeshChildren)
+                {
+                    child.gameObject.layer = 9;
+                }
+            }
         }
     }
 
+    private void OnMouseUp()
+    {
+        if (draggable && !reachedNPC)
+        {
+            foreach (Renderer child in npcMeshChildren)
+            {
+                child.gameObject.layer = 0;
+            }
+            StartCoroutine(LerpBack());
+        }
+    }
+    private void OnMouseEnter()
+    {
+        if (draggable)
+        {
+            gameObject.layer = 9;
+            foreach(Transform child in transform)
+            {
+                child.gameObject.layer = 9;
+            }
+        }
+    }
+    private void OnMouseExit()
+    {
+        if (draggable)
+        {
+            gameObject.layer = 17;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = 17;
+            }
+        }
+    }
+    private void OnMouseOver()
+    {
+        Debug.Log(gameObject.name);
+    }
+
+    IEnumerator LerpBack()
+    {
+        float t = 0;
+        Vector3 currentPos = transform.position;
+        while (t < lerpBackDuration)
+        {
+            transform.position = Vector3.Lerp(currentPos, originalPos, t / lerpBackDuration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = originalPos;
+        yield break;
+    }
+    #endregion
+
     public void ColorTattooMesh()
     {
-        foreach(Transform child in transform)
+        if (!draggable)
         {
-            child.gameObject.layer = 17;
-            Material mat = child.GetComponent<Renderer>().material;
-            mat.EnableKeyword("_WhiteDegree");
-            mat.SetFloat("_WhiteDegree", 0);
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = 17;
+                Material mat = child.GetComponent<Renderer>().material;
+                mat.EnableKeyword("_WhiteDegree");
+                mat.SetFloat("_WhiteDegree", 0);
+            }
+            draggable = true;
         }
-        draggable = true;
     }
 
     public void Dissolve()
     {
-        if(dissolveVal < 1)
+        
+        if (dissolveVal < 1)
         {
             dissolveVal += Time.deltaTime;
             foreach (Transform child in transform)
@@ -89,6 +171,11 @@ public class TattooMesh : MonoBehaviour
         {
             dissolving = true;
             GetComponent<BoxCollider>().enabled = false;
+            foreach (Renderer child in npcMeshChildren)
+            {
+                child.gameObject.layer = 17;
+            }
+            reachedNPC = true;
         }
     }
 }

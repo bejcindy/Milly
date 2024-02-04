@@ -34,6 +34,7 @@ public class CharacterTattoo : MonoBehaviour
     void Start()
     {
         tatAlpha = 1;
+        //GetComponentInChildren<TattooMesh>().NPCMesh = myChar.gameObject;
     }
 
 

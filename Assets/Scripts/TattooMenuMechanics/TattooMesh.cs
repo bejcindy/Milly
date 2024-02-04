@@ -20,7 +20,7 @@ public class TattooMesh : MonoBehaviour
 
     public GameObject NPCMesh;
     Renderer[] npcMeshChildren;
-    
+    CharacterTattooMesh characterTatMesh;
 
     void Start()
     {
@@ -30,6 +30,7 @@ public class TattooMesh : MonoBehaviour
         originalPos = transform.position;
         NPCMesh = GetComponentInParent<CharacterTattoo>().myChar.gameObject;
         npcMeshChildren = NPCMesh.GetComponentsInChildren<Renderer>();
+        characterTatMesh = NPCMesh.GetComponent<CharacterTattooMesh>();
     }
 
 
@@ -62,6 +63,7 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable)
         {
+            characterTatMesh.draggingTattoo = true;
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
 
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
@@ -73,6 +75,7 @@ public class TattooMesh : MonoBehaviour
                     child.gameObject.layer = 9;
                 }
             }
+            
         }
     }
 
@@ -80,6 +83,7 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable && !reachedNPC)
         {
+            
             foreach (Renderer child in npcMeshChildren)
             {
                 child.gameObject.layer = 0;
@@ -91,10 +95,14 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable)
         {
-            gameObject.layer = 9;
-            foreach(Transform child in transform)
+            if (!characterTatMesh.rotatingNPC)
             {
-                child.gameObject.layer = 9;
+                characterTatMesh.draggingTattoo = true;
+                gameObject.layer = 9;
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.layer = 9;
+                }
             }
         }
     }
@@ -102,6 +110,7 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable)
         {
+            characterTatMesh.draggingTattoo = false;
             gameObject.layer = 17;
             foreach (Transform child in transform)
             {
@@ -109,10 +118,7 @@ public class TattooMesh : MonoBehaviour
             }
         }
     }
-    private void OnMouseOver()
-    {
-        Debug.Log(gameObject.name);
-    }
+    
 
     IEnumerator LerpBack()
     {

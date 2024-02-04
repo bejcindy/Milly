@@ -7,6 +7,7 @@ public class MindPalace : MonoBehaviour
     public static bool tatMenuOn;
     [TextArea]
     public string hint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +20,6 @@ public class MindPalace : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         DataHolder.ShowHint(hint);
+        
     }
 }

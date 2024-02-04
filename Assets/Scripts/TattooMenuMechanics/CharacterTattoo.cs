@@ -18,7 +18,7 @@ public class CharacterTattoo : MonoBehaviour
     public bool triggered;
     public bool dragged;
     public bool activated;
-
+    public bool draggingTattoo;
     bool textFaded;
 
 
@@ -29,6 +29,7 @@ public class CharacterTattoo : MonoBehaviour
     [Foldout("Values")]
     public float tatAlpha;
     float tatAlphaTarget = 0.2f;
+    
 
 
     void Start()
@@ -54,7 +55,7 @@ public class CharacterTattoo : MonoBehaviour
         {
             FadeInTatSprite();
         }
-
+        
     }
 
     void ActivateTatMesh()

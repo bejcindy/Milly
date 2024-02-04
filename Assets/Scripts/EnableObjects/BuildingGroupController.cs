@@ -12,7 +12,7 @@ public class BuildingGroupController : MonoBehaviour
     public BuildingGroupController bgc;
     public BuildingGroupController targetBgc;
 
-    public Tattoo myTat;
+    public CharacterTattoo myTat;
 
     void Start()
     {
@@ -30,9 +30,7 @@ public class BuildingGroupController : MonoBehaviour
             {
                 if (myTat)
                 {
-                    myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
-                    myTat.myPanel.mainTattooMenu.showPanel = true;
-                    myTat.activated = true;
+                    myTat.triggered = true;
                 }
                 groupColorVal = 0;
                 activateAll = false;

@@ -61,6 +61,7 @@ public class CharacterTattoo : MonoBehaviour
     void ActivateTatMesh()
     {
         tatMesh.ColorTattooMesh();
+        myMenu.TurnOnMenu();
     }
 
 

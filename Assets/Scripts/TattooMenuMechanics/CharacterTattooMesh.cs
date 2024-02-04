@@ -102,6 +102,7 @@ public class CharacterTattooMesh : MonoBehaviour
             matChanged = false;
             currentTat.dragged = true;
             currentTat = null;
+            
         }
     }
 

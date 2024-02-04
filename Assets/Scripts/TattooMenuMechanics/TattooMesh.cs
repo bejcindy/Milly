@@ -93,6 +93,10 @@ public class TattooMesh : MonoBehaviour
         }
         else if(draggable && reachedNPC)
         {
+            if (myMenu.draggedTat != null && myMenu.draggedTat == this)
+            {
+                myMenu.draggedTat = null;
+            }
             myTat.fadeText = true;
             dissolving = true;
             characterTatMesh.ReadyCharacterChange(myTat);

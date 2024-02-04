@@ -18,6 +18,7 @@ public class CharacterTattooMenu : MonoBehaviour
     {
         tatOnPos = Vector3.zero;
         tatOffPos = new Vector3(0, 10, 0);
+        menuOn = false;
     }
 
     // Update is called once per frame
@@ -32,31 +33,43 @@ public class CharacterTattooMenu : MonoBehaviour
             draggingTat=false;
         }
 
-        if (menuOn)
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            TurnOnMenu();
+            if (menuOn)
+            {
+                TurnOffMenu();
+            }
+            else
+            {
+                TurnOnMenu();
+            }
         }
+
     }
 
     public void TurnOnMenu()
     {
         myCam.m_Priority = 20;
-        myTatttoos.gameObject.SetActive(true);
+        StartCoroutine(LerpPosition(tatOnPos, 0.5f));
     }
 
-    public void ShowTattoos()
+    public void TurnOffMenu()
     {
 
+        StartCoroutine(LerpPosition(tatOffPos, 0.5f));
     }
 
-    public void HideTattoos()
-    {
-
-    }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
-
+        if(targetPosition == tatOnPos)
+        {
+            myTatttoos.gameObject.SetActive (true);
+        }
+        if(targetPosition == tatOffPos)
+        {
+            menuOn = false;
+        }
         float time = 0;
         Vector3 startPosition = myTatttoos.localPosition;
         while (time < duration)
@@ -66,5 +79,14 @@ public class CharacterTattooMenu : MonoBehaviour
             yield return null;
         }
         myTatttoos.localPosition = targetPosition;
+        if(targetPosition == tatOnPos)
+        {
+            menuOn = true;
+        }
+        if(targetPosition == tatOffPos)
+        {
+            myCam.m_Priority = 0;
+            myTatttoos.gameObject.SetActive(false);
+        }
     }
 }

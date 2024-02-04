@@ -517,7 +517,7 @@ public class NPCControl : MonoBehaviour
 
     protected virtual void ActivateTattooMenu()
     {
-
+        myTatMenu.TurnOnMenu();
     }
     protected virtual void OnConversationStart(Transform other)
     {

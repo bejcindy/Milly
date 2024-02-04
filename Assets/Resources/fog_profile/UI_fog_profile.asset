@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612e70f49e5124da0a95111a57250300, type: 3}
   m_Name: UI_fog_profile
   m_EditorClassIdentifier: 
-  raymarchQuality: 7
+  raymarchQuality: 6
   raymarchMinStep: 0.1
-  jittering: 0.5
+  jittering: 15
   dithering: 2
   renderQueue: 2501
   sortingLayerID: 0
@@ -27,8 +27,8 @@ MonoBehaviour:
   noiseFinalMultiplier: 1
   useDetailNoise: 1
   detailTexture: {fileID: 11700000, guid: 950add8d241c6479bbab1f10e1035d60, type: 2}
-  detailScale: 0.02
-  detailStrength: 0.312
+  detailScale: 0.01
+  detailStrength: 1
   detailOffset: -0.5
   density: 100
   shape: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
   terrainFogHeight: 25
   terrainFogMinAltitude: 0
   terrainFogMaxAltitude: 150
-  albedo: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
+  albedo: {r: 0.3490566, g: 0.33012193, b: 0.31118727, a: 1}
   enableDepthGradient: 0
   depthGradient:
     serializedVersion: 2
@@ -112,7 +112,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  brightness: 0.96
+  brightness: 1
   deepObscurance: 0
   specularColor: {r: 1, g: 1, b: 1, a: 1}
   specularThreshold: 0.764
@@ -129,7 +129,7 @@ MonoBehaviour:
   lightDiffusionPower: 32
   lightDiffusionIntensity: 0.4
   receiveShadows: 0
-  shadowIntensity: 0.006
+  shadowIntensity: 1
   shadowCancellation: 0
   shadowMaxDistance: 250
   cookie: 0

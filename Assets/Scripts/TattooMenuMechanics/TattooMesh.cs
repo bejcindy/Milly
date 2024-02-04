@@ -6,31 +6,27 @@ using UnityEngine;
 public class TattooMesh : MonoBehaviour
 {
     CharacterTattoo myTat;
-    CharacterTattooMesh tatCharMesh;
+    CharacterTattooMenu myMenu;
     public bool dissolving;
     public bool dissolved;
     public float dissolveVal;
     public bool draggable;
+    bool dragging;
 
     Vector3 screenPoint;
     Vector3 offset;
     Vector3 originalPos;
     bool reachedNPC;
     float lerpBackDuration = .5f;
-
-    public GameObject NPCMesh;
-    Renderer[] npcMeshChildren;
     CharacterTattooMesh characterTatMesh;
 
     void Start()
     {
         dissolveVal = 0;
         myTat = transform.parent.GetComponent<CharacterTattoo>();
-        tatCharMesh = myTat.myChar;
+        characterTatMesh = myTat.myChar;
+        myMenu = transform.parent.parent.parent.GetComponent<CharacterTattooMenu>();
         originalPos = transform.position;
-        NPCMesh = GetComponentInParent<CharacterTattoo>().myChar.gameObject;
-        npcMeshChildren = NPCMesh.GetComponentsInChildren<Renderer>();
-        characterTatMesh = NPCMesh.GetComponent<CharacterTattooMesh>();
     }
 
 
@@ -40,6 +36,14 @@ public class TattooMesh : MonoBehaviour
         {
             Dissolve();
         }
+
+        if (reachedNPC)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = 16;
+            }
+        }
     }
 
     #region Drag Related
@@ -47,8 +51,9 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable)
         {
+            dragging = true;
+            myMenu.draggedTat = this;
             screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-
             offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
             gameObject.layer = 17;
             foreach (Transform child in transform)
@@ -63,17 +68,12 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable)
         {
-            characterTatMesh.draggingTattoo = true;
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
             transform.position = curPosition;
             if (!reachedNPC)
             {
-                foreach (Renderer child in npcMeshChildren)
-                {
-                    child.gameObject.layer = 9;
-                }
+                characterTatMesh.ChangeLayer(9);
             }
             
         }
@@ -81,23 +81,31 @@ public class TattooMesh : MonoBehaviour
 
     private void OnMouseUp()
     {
+        dragging = false;
         if (draggable && !reachedNPC)
         {
-            
-            foreach (Renderer child in npcMeshChildren)
+            if(myMenu.draggedTat!=null && myMenu.draggedTat == this)
             {
-                child.gameObject.layer = 0;
+                myMenu.draggedTat = null;
             }
+            characterTatMesh.ChangeLayer(0);
             StartCoroutine(LerpBack());
+        }
+        else if(draggable && reachedNPC)
+        {
+            myTat.fadeText = true;
+            dissolving = true;
+            characterTatMesh.ReadyCharacterChange(myTat);
+            GetComponent<BoxCollider>().enabled = false;
         }
     }
     private void OnMouseEnter()
     {
         if (draggable)
         {
-            if (!characterTatMesh.rotatingNPC)
+            if (!characterTatMesh.rotatingNPC && !dragging)
             {
-                characterTatMesh.draggingTattoo = true;
+                //characterTatMesh.draggingTattoo = true;
                 gameObject.layer = 9;
                 foreach (Transform child in transform)
                 {
@@ -110,12 +118,15 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable)
         {
-            characterTatMesh.draggingTattoo = false;
-            gameObject.layer = 17;
-            foreach (Transform child in transform)
+            if (!dragging)
             {
-                child.gameObject.layer = 17;
+                gameObject.layer = 17;
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.layer = 17;
+                }
             }
+
         }
     }
     
@@ -146,6 +157,7 @@ public class TattooMesh : MonoBehaviour
                 mat.EnableKeyword("_WhiteDegree");
                 mat.SetFloat("_WhiteDegree", 0);
             }
+            myTat.triggered = false;
             draggable = true;
         }
     }
@@ -155,7 +167,7 @@ public class TattooMesh : MonoBehaviour
         
         if (dissolveVal < 1)
         {
-            dissolveVal += Time.deltaTime;
+            dissolveVal += 0.5f * Time.deltaTime;
             foreach (Transform child in transform)
             {
                 Material mat = child.GetComponent<Renderer>().material;
@@ -165,9 +177,10 @@ public class TattooMesh : MonoBehaviour
         }
         else
         {
+            characterTatMesh.draggingTattoo = false;
             dissolving = false;
             dissolved = true;
-            myTat.dragged = true;
+            characterTatMesh.stage++;
         }
     }
 
@@ -175,13 +188,25 @@ public class TattooMesh : MonoBehaviour
     {
         if (other.CompareTag("CharTatMesh"))
         {
-            dissolving = true;
-            GetComponent<BoxCollider>().enabled = false;
-            foreach (Renderer child in npcMeshChildren)
+            characterTatMesh.ChangeLayer(17);
+            foreach(Transform child in transform)
+            {
+                child.gameObject.layer = 16;
+            }
+            reachedNPC = true;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("CharTatMesh"))
+        {
+            characterTatMesh.ChangeLayer(9);
+            foreach (Transform child in transform)
             {
                 child.gameObject.layer = 17;
             }
-            reachedNPC = true;
+            reachedNPC = false;
         }
     }
 }

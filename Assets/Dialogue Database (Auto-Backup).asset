@@ -29470,6 +29470,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 91028319-8fb4-4307-8785-163476c05c23
+        type: 0
+        typeString: 
       conversationID: 44
       isRoot: 0
       isGroup: 0
@@ -29491,7 +29495,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1111.7032
-        y: 926.5008
+        y: 925.04626
         width: 160
         height: 30
     - id: 51
@@ -30436,7 +30440,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 171.93152}
+    canvasScrollPosition: {x: 72.72687, y: 0}
     canvasZoom: 0.55000305
   - id: 45
     fields:
@@ -73592,7 +73596,7 @@ MonoBehaviour:
       - originConversationID: 127
         originDialogueID: 29
         destinationConversationID: 127
-        destinationDialogueID: 31
+        destinationDialogueID: 32
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -73604,61 +73608,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 788.45245
         y: 1196.7102
-        width: 160
-        height: 30
-    - id: 31
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 5
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: The wrong ones.
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 127
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 127
-        originDialogueID: 31
-        destinationConversationID: 127
-        destinationDialogueID: 32
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 792.5763
-        y: 1251.6965
         width: 160
         height: 30
     - id: 32
@@ -73713,8 +73662,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 792.4899
-        y: 1318.5388
+        x: 790.2258
+        y: 1253.633
         width: 160
         height: 30
     - id: 33
@@ -73768,8 +73717,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 792.4899
-        y: 1368.5388
+        x: 790.2258
+        y: 1303.633
         width: 160
         height: 30
     - id: 34
@@ -73795,7 +73744,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Go on now, Milly. I'll meet you guys inside the izakaya later.
+        value: I gotta get to some stuff now. Maybe I'll go down to Miyoshiya later
+          for a drink.
         type: 0
         typeString: 
       - title: Sequence
@@ -73809,7 +73759,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 127
+        originDialogueID: 34
+        destinationConversationID: 127
+        destinationDialogueID: 41
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 'Variable["NPC_Charles_Main_Talked"] = true;
 
@@ -73820,8 +73776,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 790.2042
-        y: 1436.8245
+        x: 787.9401
+        y: 1371.9187
         width: 160
         height: 30
     - id: 35
@@ -74155,9 +74111,58 @@ MonoBehaviour:
         y: 743.5164
         width: 160
         height: 30
+    - id: 41
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 5
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Sounds good, Charles.
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 127
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 789.4496
+        y: 1433.9941
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 293.37207, y: 1106.5891}
-    canvasZoom: 1.12
+    canvasScrollPosition: {x: 100.44626, y: 357.07306}
+    canvasZoom: 0.8200003
   - id: 128
     fields:
     - title: Title

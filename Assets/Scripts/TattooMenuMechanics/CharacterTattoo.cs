@@ -19,7 +19,7 @@ public class CharacterTattoo : MonoBehaviour
     public bool dragged;
     public bool activated;
     public bool draggingTattoo;
-    bool textFaded;
+    public bool fadeText;
 
 
     [Foldout("References")]
@@ -35,7 +35,7 @@ public class CharacterTattoo : MonoBehaviour
     void Start()
     {
         tatAlpha = 1;
-        //GetComponentInChildren<TattooMesh>().NPCMesh = myChar.gameObject;
+        myMenu = transform.parent.parent.GetComponent<CharacterTattooMenu>();
     }
 
 
@@ -48,12 +48,12 @@ public class CharacterTattoo : MonoBehaviour
 
         if (dragged)
         {
-            FadeOutTatText();
+            FadeInTatSprite();
         }
 
-        if (textFaded)
+        if (fadeText)
         {
-            FadeInTatSprite();
+            FadeOutTatText();
         }
         
     }
@@ -69,12 +69,12 @@ public class CharacterTattoo : MonoBehaviour
         if (tatText.color.a > 0)
         {
             Color temp = tatText.color;
-            temp.a -= 0.5f * Time.deltaTime;
+            temp.a -= 1 * Time.deltaTime;
             tatText.color = temp;
         }
         else
         {
-            textFaded = true;
+            fadeText = false;
         }
         
     }
@@ -90,6 +90,7 @@ public class CharacterTattoo : MonoBehaviour
         }
         else
         {
+            dragged = false;
             activated = true;
         }
     }

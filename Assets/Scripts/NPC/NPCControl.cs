@@ -44,6 +44,7 @@ public class NPCControl : MonoBehaviour
     [Foldout("Tattoo")]
     [SerializeField] protected bool tatOn;
     [SerializeField] protected CenterTattoo myTat;
+    public CharacterTattooMenu myTatMenu;
 
 
     [Foldout("CharRefs")]
@@ -513,6 +514,11 @@ public class NPCControl : MonoBehaviour
     {
 
     }
+
+    protected virtual void ActivateTattooMenu()
+    {
+
+    }
     protected virtual void OnConversationStart(Transform other)
     {
         inConversation = true;
@@ -532,6 +538,8 @@ public class NPCControl : MonoBehaviour
         }
 
     }
+
+
 
     protected virtual void OnConversationEnd(Transform other)
     {

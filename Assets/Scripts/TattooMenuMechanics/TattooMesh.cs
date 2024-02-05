@@ -26,7 +26,7 @@ public class TattooMesh : MonoBehaviour
         myTat = transform.parent.GetComponent<CharacterTattoo>();
         characterTatMesh = myTat.myChar;
         myMenu = transform.parent.parent.parent.GetComponent<CharacterTattooMenu>();
-        originalPos = transform.position;
+        originalPos = transform.localPosition;
     }
 
 
@@ -51,6 +51,7 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable)
         {
+            myMenu.mindPalace.noControl = true;
             dragging = true;
             myMenu.draggedTat = this;
             screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
@@ -82,6 +83,7 @@ public class TattooMesh : MonoBehaviour
     private void OnMouseUp()
     {
         dragging = false;
+
         if (draggable && !reachedNPC)
         {
             if(myMenu.draggedTat!=null && myMenu.draggedTat == this)
@@ -90,6 +92,7 @@ public class TattooMesh : MonoBehaviour
             }
             characterTatMesh.ChangeLayer(0);
             StartCoroutine(LerpBack());
+            myMenu.mindPalace.noControl = false;
         }
         else if(draggable && reachedNPC)
         {
@@ -97,10 +100,11 @@ public class TattooMesh : MonoBehaviour
             {
                 myMenu.draggedTat = null;
             }
-            myTat.fadeText = true;
+            myTat.fadeOutText = true;
             dissolving = true;
             characterTatMesh.ReadyCharacterChange(myTat);
             GetComponent<BoxCollider>().enabled = false;
+            myMenu.mindPalace.noControl = false;
         }
     }
     private void OnMouseEnter()
@@ -138,14 +142,14 @@ public class TattooMesh : MonoBehaviour
     IEnumerator LerpBack()
     {
         float t = 0;
-        Vector3 currentPos = transform.position;
+        Vector3 currentPos = transform.localPosition;
         while (t < lerpBackDuration)
         {
-            transform.position = Vector3.Lerp(currentPos, originalPos, t / lerpBackDuration);
+            transform.localPosition = Vector3.Lerp(currentPos, originalPos, t / lerpBackDuration);
             t += Time.deltaTime;
             yield return null;
         }
-        transform.position = originalPos;
+        transform.localPosition = originalPos;
         yield break;
     }
     #endregion
@@ -171,6 +175,7 @@ public class TattooMesh : MonoBehaviour
         
         if (dissolveVal < 1)
         {
+            myMenu.mindPalace.noControl = true;
             dissolveVal += 0.5f * Time.deltaTime;
             foreach (Transform child in transform)
             {
@@ -181,6 +186,7 @@ public class TattooMesh : MonoBehaviour
         }
         else
         {
+            myMenu.mindPalace.noControl = false;
             characterTatMesh.draggingTattoo = false;
             dissolving = false;
             dissolved = true;

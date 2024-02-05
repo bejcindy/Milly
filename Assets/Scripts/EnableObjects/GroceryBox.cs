@@ -141,6 +141,7 @@ public class GroceryBox : PickUpObject
     {
         if (game.placeableBox != null)
         {
+            TurnOnTat();
             Vector3 topPos = new Vector3(game.placeableBox.transform.position.x, game.placeableBox.transform.position.y + 1f, game.placeableBox.transform.position.z);
             Quaternion topRot = Quaternion.Euler(new Vector3(0, transform.rotation.y, 0));
             rb.isKinematic = false;

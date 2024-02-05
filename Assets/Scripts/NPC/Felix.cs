@@ -72,4 +72,14 @@ public class Felix : NPCControl
             fakeActivated = true;
         }
     }
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        base.OnConversationEnd(other);
+        if (!menuFirstTriggered)
+        {
+            menuFirstTriggered = true;
+            myTatMenu.TurnOnMenu();
+        }
+    }
 }

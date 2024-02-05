@@ -49,6 +49,7 @@ public class LivableObject : MonoBehaviour
     [Foldout("Tattoo")]
     [SerializeField] protected Tattoo myTat;
     [SerializeField] protected bool delayTat;
+    public CharacterTattoo myTattoo;
 
     [Foldout("Effects")]
     [SerializeField] protected GameObject specialEffect;
@@ -244,18 +245,19 @@ public class LivableObject : MonoBehaviour
         {
             matColorVal = 0;
             firstActivated = true;
-            if (myTat && !delayTat && !myTat.activated)
-                Invoke(nameof(TurnOnTat), 1f);
+            //if (myTattoo && !delayTat && !myTattoo.triggered)
+            //    Invoke(nameof(TurnOnTat), 1f);
             if (specialEffect != null)
                 specialEffect.SetActive(true);
         }
     }
 
-    void TurnOnTat()
+    public void TurnOnTat()
     {
-        myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
-        myTat.myPanel.mainTattooMenu.showPanel = true;
-        myTat.activated = true;
+        myTattoo.triggered = true;
+        //myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
+        //myTat.myPanel.mainTattooMenu.showPanel = true;
+        //myTat.activated = true;
     }
 
     public void Activate()

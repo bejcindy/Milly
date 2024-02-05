@@ -32,7 +32,7 @@ public class PauseMenu : MonoBehaviour
             if (panel.continueButton != null) panel.continueButton.interactable = !isPaused;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !MindPalace.tatMenuOn)
         {
                 isPaused = !isPaused;
         }

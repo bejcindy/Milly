@@ -6,8 +6,11 @@ using UnityEngine;
 public class MindPalace : MonoBehaviour
 {
     public static bool tatMenuOn;
-    public bool menuMoving;
+    public bool noControl;
+    public bool mainMenuOn;
     public CharacterTattooMenu currentMenu;
+    public CharacterTattooMenu mainTatMenu;
+    public CharacterTattooMenu selectedMenu;
 
 
     Camera frontCam;
@@ -29,8 +32,17 @@ public class MindPalace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(currentMenu && currentMenu == mainTatMenu)
+        {
+            mainMenuOn = true;
+        }
+        else
+        {
+            mainMenuOn = false;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && !menuMoving)
+
+        if (Input.GetKeyDown(KeyCode.Tab) && !noControl)
         {
             tatMenuOn = !tatMenuOn;
 
@@ -48,6 +60,27 @@ public class MindPalace : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SwitchMainMenuOn()
+    {
+        mainTatMenu.myCam.m_Priority = 20;
+        currentMenu = mainTatMenu;
+        mainTatMenu.menuOn = true;
+    }
+
+    public void SwitchMainMenuOff()
+    {
+        mainTatMenu.menuOn = false;
+        mainTatMenu.myCam.m_Priority = 0;
+    }
+
+    public void SelectMenu(CharacterTattooMenu menu)
+    {
+        currentMenu = menu;
+        SwitchMainMenuOff();
+        currentMenu.myChar.ChangeLayer(17);
+        
     }
 
     public void MenuMouseHintOn()

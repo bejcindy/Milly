@@ -21,7 +21,7 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("Default")]
 
-    [SerializeField] protected float matColorVal;
+    public float matColorVal;
     [SerializeField] protected float fadeInterval;
     [SerializeField] protected float minDist;
     [SerializeField] protected bool isVisible;
@@ -33,7 +33,7 @@ public class NPCControl : MonoBehaviour
     protected bool initialActivated;
 
     [Foldout("Activate")]
-
+    public bool colored;
     public bool npcActivated;
     public bool transformed;
 
@@ -45,6 +45,8 @@ public class NPCControl : MonoBehaviour
     [SerializeField] protected bool tatOn;
     [SerializeField] protected CenterTattoo myTat;
     public CharacterTattooMenu myTatMenu;
+    public bool stageColored;
+    public bool menuFirstTriggered;
 
 
     [Foldout("CharRefs")]
@@ -163,17 +165,19 @@ public class NPCControl : MonoBehaviour
 
         #endregion
 
+        if (stageColored)
+        {
+            ActivateAll(npcMesh);
+        }
 
         if (npcActivated)
         {
-            //ChangeLayer(17);
             if (matColorVal > 0f)
             {
                 if (OnActivateEvent != null)
                 {
                     OnActivateEvent.Invoke();
                 }
-                ActivateAll(npcMesh);
                 if (!currentDialogue.gameObject.activeSelf)
                     currentDialogue.gameObject.SetActive(true);
             }
@@ -184,15 +188,10 @@ public class NPCControl : MonoBehaviour
         {
             if (matColorVal > 0f)
             {
-                ActivateAll(npcMesh);
                 if (!currentDialogue.gameObject.activeSelf)
                     currentDialogue.gameObject.SetActive(true);
             }
         }
-        //else if (hasFakeActivate && !fakeActivated && !npcActivated && !initialActivated)
-        //{
-        //    DeactivateAll(npcMesh);
-        //}
         if (interactable)
         {
             if ((!StartSequence.noControl || overrideNoControl) && !playerHolding.inDialogue && !MainTattooMenu.tatMenuOn)
@@ -202,14 +201,10 @@ public class NPCControl : MonoBehaviour
         }
         else if (!inConversation)
         {
-            if (!transformed)
+            if (!colored)
                 ChangeLayer(0);
             else
-            {
-
                 ChangeLayer(17);
-
-            }
 
         }
 
@@ -310,7 +305,7 @@ public class NPCControl : MonoBehaviour
     {
         if (matColorVal > 0)
         {
-            matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
+            matColorVal -= 0.2f * Time.deltaTime;
             material.SetFloat("_WhiteDegree", matColorVal);
         }
         else
@@ -355,7 +350,6 @@ public class NPCControl : MonoBehaviour
     public void InvokeIdleFunction()
     {
         Invoke(idleAction, 0);
-        //ActivateDesignatedObject();
     }
 
     #endregion
@@ -434,7 +428,7 @@ public class NPCControl : MonoBehaviour
             if (!DialogueLua.GetVariable(reTriggerName).asBool)
             {
                 //move player to interactable layer
-                if (transformed)
+                if (colored)
                     ChangeLayer(9);
                 else
                     ChangeLayer(21);
@@ -442,7 +436,6 @@ public class NPCControl : MonoBehaviour
                 //check player interaction command
                 if (Input.GetMouseButtonDown(0))
                 {
-                    //ChangeLayer(17);
                     if (!questTriggered)
                     {
                         if (!npcActivated)
@@ -458,8 +451,6 @@ public class NPCControl : MonoBehaviour
                 }
             }
         }
-        //else if (inConversation)
-        //    ChangeLayer(17);
     }
 
     protected void StartTalking()
@@ -515,18 +506,18 @@ public class NPCControl : MonoBehaviour
 
     }
 
-    protected virtual void ActivateTattooMenu()
-    {
-        myTatMenu.TurnOnMenu();
-    }
+
     protected virtual void OnConversationStart(Transform other)
     {
         inConversation = true;
-        if (transformed)
+        if (colored)
+        {
             ChangeLayer(17);
+        }
         else
+        {
             ChangeLayer(0);
-
+        }
         if (agent.isActiveAndEnabled)
         {
             if (HasReached(agent) && !noLookInConvo && gameObject.name!="Zayne")
@@ -550,35 +541,43 @@ public class NPCControl : MonoBehaviour
         inCD = true;
         currentDialogue.gameObject.SetActive(false);
 
-        //        fakeActivated = false;
         talkable = true;
 
-        if (myTat && !myTat.activated)
-        {
-            myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
-            myTat.myPanel.mainTattooMenu.showPanel = true;
-            myTat.activated = true;
-        }
-        //if (npcActivated)
+        //if (myTat && !myTat.activated)
         //{
-        //    if(myTat && !myTat.activated)
-        //    {
-        //        myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
-        //        myTat.myPanel.mainTattooMenu.showPanel = true;
-        //        myTat.activated = true;
-        //    }
+        //    myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
+        //    myTat.myPanel.mainTattooMenu.showPanel = true;
+        //    myTat.activated = true;
         //}
 
         if (transformed)
         {
-            if (myTat && !myTat.transformed)
-            {
-                myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
-                myTat.myPanel.mainTattooMenu.showPanel = true;
-                myTat.transformed = true;
-            }
+            if(myTatMenu)
+                myTatMenu.StartFinalTattoo();
+
         }
     }
+
+    #endregion
+
+    #region Tattoo Region
+    protected virtual void ActivateTattooMenu()
+    {
+        myTatMenu.TurnOnMenu();
+    }
+    protected virtual void ActivateFinalTattoo()
+    {
+
+    }
+    public void ChangeCharMeshMat(Material mat)
+    {
+        foreach (Transform child in npcMesh)
+        {
+            child.GetComponent<Renderer>().material = mat;
+            Material childMat = child.GetComponent<Renderer>().material;
+        }
+    }
+
 
     #endregion
 

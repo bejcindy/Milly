@@ -3,29 +3,40 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VInspector;
 
 public class CharacterTattooMenu : MonoBehaviour
 {
+    [Foldout("State")]
     public bool menuOn;
+    public bool fadeOutAllTats;
+    public bool fadeInFinalTat;
+    public bool finalTransition;
+    public bool finished;
+
+    [Foldout("References")]
     public Transform myTattoos;
+    public CharacterTattoo finalTattoo;
     public TattooMesh draggedTat;
     public CharacterTattooMesh myChar;
     public CinemachineVirtualCamera myCam;
+
+    [Foldout("Values")]
     public float blinkDuration = 1f;
-    MindPalace mindPalace;
+    public MindPalace mindPalace;
     public bool draggingTat;
 
-    Camera frontCam;
-    Camera colorCam;
-    Camera focusCam;
+    protected Camera frontCam;
+    protected Camera colorCam;
+    protected Camera focusCam;
 
-    Vector3 tatOnPos;
-    Vector3 tatOffPos;
+    protected Vector3 tatOnPos;
+    protected Vector3 tatOffPos;
 
-    void Start()
+    protected virtual void Start()
     {
         tatOnPos = Vector3.zero;
-        tatOffPos = new Vector3(0, 10, 0);
+        tatOffPos = new Vector3(0, 0, -100);
         mindPalace = transform.parent.GetComponent<MindPalace>();
         menuOn = false;
         frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
@@ -47,17 +58,49 @@ public class CharacterTattooMenu : MonoBehaviour
 
         if (menuOn)
         {
+            myChar.myNPC.colored = true;
             MindPalace.tatMenuOn = true;
             mindPalace.MenuMouseHintOn();
-            mindPalace.currentMenu = this;
+
+
+            if (fadeOutAllTats)
+            {
+                fadeOutAllTats = false;
+                foreach(Transform t in myTattoos)
+                {
+                    CharacterTattoo childTat = t.GetComponent<CharacterTattoo>();
+                    if(!childTat.isFinalTat)
+                        childTat.finalFaded = true;
+                }
+
+            }
+
+            if (fadeInFinalTat)
+            {
+                fadeInFinalTat = false;
+                finalTattoo.gameObject.SetActive(true);
+                finalTattoo.dragged = true;
+                myChar.CharacterFinalChange();
+            }
+
+            if (finalTransition)
+            {
+                finished = true;
+                finalTransition = false;
+                myChar.CharacterFinalTransition();
+                finalTattoo.FinalTattooFinalTransition();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape) && !mindPalace.noControl)
+            {
+                SwitchMainTatMenuOn();
+            }
         }
-
-
-
     }
 
     public void TurnOnMenu()
     {
+        mindPalace.currentMenu = this;
         StartCoroutine(MenuOnBlink());
     }
 
@@ -66,21 +109,54 @@ public class CharacterTattooMenu : MonoBehaviour
         StartCoroutine(MenuOffBlink());
     }
 
-
-    IEnumerator MenuOnBlink()
+    public void SwitchMainTatMenuOn()
     {
-        mindPalace.menuMoving = true;
+        mindPalace.SwitchMainMenuOn();
+        myChar.AfterFinalCharFrontRotate();
+        finalTattoo.FinalTatFrontRotate();
+        StartCoroutine(LerpPosition(tatOffPos, 1f));
+        myCam.m_Priority = 0;
+    }
+
+    public void SelectMyMenu()
+    {
+        myCam.m_Priority = 20;
+        if (finished)
+        {
+            myChar.AfterFinalCharFinishedRotate();
+            finalTattoo.FinalTatInMenuRotate();
+        }
+
+        StartCoroutine(LerpPosition(tatOnPos, 1f));
+        mindPalace.SelectMenu(this);
+
+    }
+
+    public void StartFinalTattoo()
+    {
+        TurnOnMenu();
+        fadeOutAllTats = true;
+
+    }
+
+
+    protected virtual IEnumerator MenuOnBlink()
+    {
+        mindPalace.noControl = true;
         float t = 0;
         while (t < blinkDuration)
         {
-            Debug.Log("t val is " + t);
             BeautifySettings.settings.vignettingBlink.value = Mathf.Lerp(0, 1, t / blinkDuration);
             t += Time.deltaTime;
             yield return null;
         }
         if (t >= blinkDuration)
         {
-            myChar.transform.localRotation = Quaternion.identity;
+            StartCoroutine(LerpPosition(tatOnPos, 1f));
+            if (!finished)
+                myChar.transform.localRotation = Quaternion.identity;
+            else
+                myChar.transform.localRotation = Quaternion.Euler(myChar.finalCharRot);
             myCam.m_Priority = 20;
             frontCam.fieldOfView = 35;
             colorCam.fieldOfView = 35;
@@ -95,14 +171,14 @@ public class CharacterTattooMenu : MonoBehaviour
             yield return null;
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
-        StartCoroutine(LerpPosition(tatOnPos, 0.5f));
+
         yield break;
     }
 
-    IEnumerator MenuOffBlink()
+    protected virtual IEnumerator MenuOffBlink()
     {
-        mindPalace.menuMoving = true;
-        StartCoroutine(LerpPosition(tatOffPos, 0.5f));
+        mindPalace.noControl = true;
+        StartCoroutine(LerpPosition(tatOffPos, 1f));
         float t = 0;
         while (t < blinkDuration)
         {
@@ -126,18 +202,27 @@ public class CharacterTattooMenu : MonoBehaviour
             yield return null;
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
-        mindPalace.menuMoving = false;
+        mindPalace.noControl = false;
         yield break;
     }
 
 
 
-    IEnumerator LerpPosition(Vector3 targetPosition, float duration)
+    protected virtual IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
         if(targetPosition == tatOffPos)
         {
             menuOn = false;
+            foreach(Transform t in myTattoos)
+            {
+                CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
+                if (!tat.isFinalTat)
+                {
+                    tat.MenuFadeOutText();
+                }
+            }
         }
+
         float time = 0;
         Vector3 startPosition = myTattoos.localPosition;
         while (time < duration)
@@ -151,7 +236,16 @@ public class CharacterTattooMenu : MonoBehaviour
         if(targetPosition == tatOnPos)
         {
             menuOn = true;
-            mindPalace.menuMoving = false;
+            foreach (Transform t in myTattoos)
+            {
+                CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
+                if (!tat.isFinalTat)
+                {
+                    tat.MenuFadeInText();
+                }
+            }
+            
+            mindPalace.noControl = false;
         }
     }
 

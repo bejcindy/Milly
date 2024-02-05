@@ -25,7 +25,7 @@ public class MainTattooMenu : MonoBehaviour
 
     public TextMeshProUGUI[] incompleteTexts;
 
-    float blinkDuration = 1f;
+    float blinkDuration = 2f;
 
     bool incompleteShowed;
 

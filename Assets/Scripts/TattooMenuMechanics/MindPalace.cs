@@ -60,6 +60,14 @@ public class MindPalace : MonoBehaviour
                 }
             }
         }
+        if (tatMenuOn)
+        {
+            DataHolder.MoveHintToBottom();
+        }
+        else
+        {
+            DataHolder.MoveHintToTop();
+        }
     }
 
     public void SwitchMainMenuOn()

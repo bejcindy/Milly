@@ -260,6 +260,23 @@ public class DataHolder : MonoBehaviour
             }
         }
     }
+
+    public static void MoveHintToBottom()
+    {
+        canvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+        canvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+        canvas.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
+        canvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 30f);
+    }
+
+    public static void MoveHintToTop()
+    {
+        canvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
+        canvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
+        canvas.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
+        canvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+    }
+
     #endregion
 
     #region Tattoo Panel

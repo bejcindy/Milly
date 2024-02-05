@@ -36,7 +36,7 @@ public class CharacterTattooMesh : MonoBehaviour
 
     void Update()
     {
-        if (!myMenu.draggingTat && Input.GetMouseButton(0))
+        if (!myMenu.draggingTat && myMenu.menuOn && Input.GetMouseButton(0))
         {
             float rotX = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
             transform.Rotate(Vector3.up, -rotX);

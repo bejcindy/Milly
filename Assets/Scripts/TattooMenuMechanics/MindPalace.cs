@@ -1,6 +1,7 @@
 using Beautify.Universal;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class MindPalace : MonoBehaviour
@@ -18,7 +19,11 @@ public class MindPalace : MonoBehaviour
     Camera focusCam;
 
     [TextArea]
-    public string hint;
+    public string regularHint;
+    [TextArea]
+    public string dragHint;
+    [TextArea]
+    public string mainMenuHint;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +65,36 @@ public class MindPalace : MonoBehaviour
                 }
             }
         }
-        
+
+        if (tatMenuOn)
+        {
+            DataHolder.MoveHintToBottom();         
+            if (mainMenuOn)
+            {
+                DataHolder.ShowHint(mainMenuHint);
+                DataHolder.HideHint(regularHint);
+                DataHolder.HideHint(dragHint);
+            }
+            else if (noControl)
+            {
+                DataHolder.ShowHint(dragHint);
+                DataHolder.HideHint(regularHint);
+                DataHolder.HideHint(mainMenuHint);
+            }
+            else
+            {
+                DataHolder.ShowHint(regularHint);
+                DataHolder.HideHint(dragHint);
+                DataHolder.HideHint(mainMenuHint);
+            }
+        }
+        else
+        {
+            DataHolder.MoveHintToTop();
+            DataHolder.HideHint(regularHint);
+            DataHolder.HideHint(dragHint);
+            DataHolder.HideHint(mainMenuHint);
+        }
     }
 
     public void SwitchMainMenuOn()
@@ -88,8 +122,8 @@ public class MindPalace : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        DataHolder.MoveHintToBottom();
-        DataHolder.ShowHint(hint);
+        //DataHolder.MoveHintToBottom();
+        //DataHolder.ShowHint(hint);
 
     }
 
@@ -97,8 +131,8 @@ public class MindPalace : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        DataHolder.MoveHintToTop();
-        DataHolder.HideHint(hint);
+        //DataHolder.MoveHintToTop();
+        //DataHolder.HideHint(hint);
 
     }
 

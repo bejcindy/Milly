@@ -60,14 +60,7 @@ public class MindPalace : MonoBehaviour
                 }
             }
         }
-        if (tatMenuOn)
-        {
-            DataHolder.MoveHintToBottom();
-        }
-        else
-        {
-            DataHolder.MoveHintToTop();
-        }
+        
     }
 
     public void SwitchMainMenuOn()
@@ -95,6 +88,7 @@ public class MindPalace : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        DataHolder.MoveHintToBottom();
         DataHolder.ShowHint(hint);
 
     }
@@ -103,6 +97,7 @@ public class MindPalace : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        DataHolder.MoveHintToTop();
         DataHolder.HideHint(hint);
 
     }

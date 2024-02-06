@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class TattooMesh : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class TattooMesh : MonoBehaviour
     bool reachedNPC;
     float lerpBackDuration = .5f;
     CharacterTattooMesh characterTatMesh;
+    string dissolveSF = "event:/Sound Effects/Focus";
 
     void Start()
     {
@@ -190,6 +192,7 @@ public class TattooMesh : MonoBehaviour
             characterTatMesh.draggingTattoo = false;
             dissolving = false;
             dissolved = true;
+            RuntimeManager.PlayOneShot(dissolveSF, transform.position);
             characterTatMesh.stage++;
         }
     }

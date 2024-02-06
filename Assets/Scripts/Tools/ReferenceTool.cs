@@ -15,11 +15,13 @@ public class ReferenceTool : MonoBehaviour
     public static PauseMenu pauseMenu;
     public static RecordPlayer recordPlayer;
     public static SMHAdjustTest postProcessingAdjust;
+    public static GameObject coloredCamera;
 
     public Transform playerRef;
     public CinemachineVirtualCamera playerCamRef;
     public RecordPlayer recordPlayerRef;
     public SMHAdjustTest smhAdjust;
+    public GameObject coloredCamRef;
 
     public void Awake()
     {
@@ -30,6 +32,7 @@ public class ReferenceTool : MonoBehaviour
         playerMovement = playerRef.GetComponent<PlayerMovement>();
         playerBrain = Camera.main.GetComponent<CinemachineBrain>();
         playerPOV = playerCamRef.GetCinemachineComponent<CinemachinePOV>();
+        coloredCamera = coloredCamRef;
         recordPlayer = recordPlayerRef;
         postProcessingAdjust = smhAdjust;
     }

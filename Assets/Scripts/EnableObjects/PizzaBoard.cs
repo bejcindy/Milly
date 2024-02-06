@@ -32,7 +32,7 @@ public class PizzaBoard : LookingObject
         if(activated && !firstTransformed)
         {
             ChangeTextColor(titleText);
-            currentPizzaText.TurnOnTextColor();
+            currentPizzaText.TriggerTextOn();
         }
 
         if (focusingThis)
@@ -49,7 +49,7 @@ public class PizzaBoard : LookingObject
                     titleText.gameObject.layer = 17;
                     currentPizzaText.ChangeTextLayer(17);
                 }
-                currentPizzaText.TurnOnTextColor();
+                currentPizzaText.TriggerTextOn();
             }
         }
 
@@ -59,7 +59,12 @@ public class PizzaBoard : LookingObject
 
     public void QueuePizza(PizzaBoardText pizzaText)
     {
+        if (currentPizzaText && currentPizzaText!= pizzaText)
+        {
+            currentPizzaText.gameObject.SetActive(false);
+        }
         currentPizzaText = pizzaText;
+        currentPizzaText.TriggerTextOn();
     }
 
     void ChangeTextColor(TextMeshPro text)

@@ -37,19 +37,6 @@ public class EatObject : PickUpObject
         LayerDetection();
 
 
-        //if (inHand)
-        //{
-        //    if (!playerLeftHand.eating && !foodMoving)
-        //    {
-        //        if(Input.GetMouseButtonDown(1)) {
-        //            transform.SetParent(null);
-        //            playerLeftHand.RemoveHandObj();
-        //            inHand = false;
-        //            StartCoroutine(LerpPosition(0.5f));
-        //            StartCoroutine(LerpRotation(0.5f));
-        //        }
-        //    }
-        //}
     }
 
 
@@ -141,32 +128,7 @@ public class EatObject : PickUpObject
         Destroy(gameObject);
     }
     bool ran;
-    //public void ChangeFoodMesh()
-    //{
-    //    activated = true;
-    //    pizzaEatingDialogue.SetActive(true);
-    //    if (!ran)
-    //    {
-    //        StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToPizzaColor(shadow, midtone, highlight, vignette));
-    //        ran = true;
-    //    }
-    //    if(foodStage < 3)
-    //    {
-    //        currentMesh.gameObject.SetActive(false);
-    //        foodStage++;
-    //        currentMesh = transform.GetChild(foodStage);
-    //        currentMesh.gameObject.SetActive(true );
-    //        rend = currentMesh.GetComponent<Renderer>();
-    //        rigged = false;
-    //    }
-    //    else
-    //    {
-    //        doneEating = true;
-    //        playerHolding.UnoccupyLeft();
-    //        Destroy(gameObject);
-    //    }
-    //    playerLeftHand.eating = false;
-    //}
+
 
     IEnumerator LerpPosition(float duration)
     {

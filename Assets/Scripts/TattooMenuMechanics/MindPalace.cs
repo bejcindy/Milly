@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using FMODUnity;
 
 public class MindPalace : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class MindPalace : MonoBehaviour
     public string dragHint;
     [TextArea]
     public string mainMenuHint;
+
+    string changeMenuSF= "event:/Sound Effects/Tattoo/ChangeMenu";
 
     // Start is called before the first frame update
     void Start()
@@ -102,12 +105,14 @@ public class MindPalace : MonoBehaviour
         mainTatMenu.myCam.m_Priority = 20;
         currentMenu = mainTatMenu;
         mainTatMenu.menuOn = true;
+        RuntimeManager.PlayOneShot(changeMenuSF, transform.position);
     }
 
     public void SwitchMainMenuOff()
     {
         mainTatMenu.menuOn = false;
         mainTatMenu.myCam.m_Priority = 0;
+        RuntimeManager.PlayOneShot(changeMenuSF, transform.position);
     }
 
     public void SelectMenu(CharacterTattooMenu menu)

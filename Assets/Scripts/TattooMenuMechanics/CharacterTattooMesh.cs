@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.ProBuilder;
 using UnityEngine.XR;
 using VInspector;
+using FMODUnity;
 
 public class CharacterTattooMesh : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class CharacterTattooMesh : MonoBehaviour
     public Vector3 finalCharPos;
     public Vector3 finalCharRot;
     bool matChanged;
+
+    string hoverSF = "event:/Sound Effects/Tattoo/HoverObject";
 
     void Start()
     {
@@ -75,6 +78,7 @@ public class CharacterTattooMesh : MonoBehaviour
         if (selectable)
         {
             ChangeLayer(9);
+            RuntimeManager.PlayOneShot(hoverSF, transform.position);
         }
     }
 

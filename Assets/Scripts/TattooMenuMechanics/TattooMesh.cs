@@ -20,7 +20,8 @@ public class TattooMesh : MonoBehaviour
     bool reachedNPC;
     float lerpBackDuration = .5f;
     CharacterTattooMesh characterTatMesh;
-    string dissolveSF = "event:/Sound Effects/Focus";
+    string dissolveSF = "event:/Sound Effects/Tattoo/Dissolve";
+    string hoverSF= "event:/Sound Effects/Tattoo/HoverObject";
 
     void Start()
     {
@@ -121,6 +122,7 @@ public class TattooMesh : MonoBehaviour
                 {
                     child.gameObject.layer = 9;
                 }
+                RuntimeManager.PlayOneShot(hoverSF, transform.position);
             }
         }
     }

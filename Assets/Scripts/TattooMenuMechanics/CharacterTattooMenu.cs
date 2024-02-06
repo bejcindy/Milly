@@ -113,7 +113,8 @@ public class CharacterTattooMenu : MonoBehaviour
     {
         mindPalace.SwitchMainMenuOn();
         myChar.AfterFinalCharFrontRotate();
-        finalTattoo.FinalTatFrontRotate();
+        if(finished)
+            finalTattoo.FinalTatFrontRotate();
         StartCoroutine(LerpPosition(tatOffPos, 1f));
         myCam.m_Priority = 0;
     }

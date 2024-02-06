@@ -11,7 +11,6 @@ public class PizzaBoard : LookingObject
 
     public List<PizzaBoardText> pizzaTexts = new List<PizzaBoardText>();
     public PizzaBoardText currentPizzaText;
-    public Transform frankPizzaText;
 
     bool firstTransformed;
     protected override void Start()

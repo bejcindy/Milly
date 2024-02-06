@@ -84,7 +84,6 @@ public class LookingObject : LivableObject
         }
         else
         {
-            focusingThis = false;
             if (activated)
             {
                 if (specialEffect != null)

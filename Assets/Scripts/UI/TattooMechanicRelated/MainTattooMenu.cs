@@ -143,7 +143,6 @@ public class MainTattooMenu : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-        yield return new WaitForSeconds(1f);
         while (t >= blinkDuration && t < blinkDuration * 2)
         {
             BeautifySettings.settings.vignettingBlink.value = Mathf.Lerp(1, 0, (t-blinkDuration) / blinkDuration);

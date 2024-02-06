@@ -163,18 +163,16 @@ public class DataHolder : MonoBehaviour
         focusCinemachine.Priority = 1;
         focusCinemachine.LookAt = null;
         playerCinemachine.ForceCameraPosition(playerCinemachine.transform.position, focusCinemachine.transform.rotation);
-
+        pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
+        pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
         if (focusDist >0f)
         {
-            //currentFocus.layer = 13;
             focusDist -= .5f * Time.deltaTime * 5f;
         }
         else
         {
-            pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
-            pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
+
             focusDist = 0f;
-            //currentFocus.layer = 17;
             camBlended = false;
             camBlendDone = false;
             ReferenceTool.playerHolding.looking = false;

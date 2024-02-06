@@ -6,6 +6,7 @@ using TMPro;
 public class PizzaBoardText : MonoBehaviour
 {
     public float textTargetVal;
+    public bool changingColor;
     public bool myPizzaQueued;
     public bool myPizzaOn;
     public EatObject myPizza;
@@ -20,19 +21,26 @@ public class PizzaBoardText : MonoBehaviour
 
     void Update()
     {
-        if (myPizza.enabled)
+        if (!myPizzaQueued)
         {
-            QueueMyPizza();
+            if (myPizza.enabled)
+            {
+                myPizzaQueued = true;
+                QueueMyPizza();
+            }
         }
+
+        if (changingColor)
+        {
+            TurnOnTextColor();
+        }
+
     }
 
     void QueueMyPizza()
     {
-        if (!myPizzaQueued) {
 
-            myPizzaQueued = true;
-            pizzaBoard.QueuePizza(this);
-        }
+        pizzaBoard.QueuePizza(this);
     }
 
     public void ChangeTextLayer(int i)
@@ -41,6 +49,11 @@ public class PizzaBoardText : MonoBehaviour
         {
             t.gameObject.layer = i;
         }
+    }
+
+    public void TriggerTextOn()
+    {
+        changingColor = true;
     }
 
     public void TurnOnTextColor()
@@ -69,6 +82,7 @@ public class PizzaBoardText : MonoBehaviour
         {
             textTargetVal = 0;
             text.gameObject.layer = 17;
+            changingColor = false;
         }
     }
 }

@@ -47,6 +47,14 @@ public class TattooMesh : MonoBehaviour
                 child.gameObject.layer = 16;
             }
         }
+
+        if (!myMenu.menuOn)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = 0;
+            }
+        }
     }
 
     #region Drag Related
@@ -196,6 +204,7 @@ public class TattooMesh : MonoBehaviour
             dissolved = true;
             RuntimeManager.PlayOneShot(dissolveSF, transform.position);
             characterTatMesh.stage++;
+            this.enabled = false;
         }
     }
 

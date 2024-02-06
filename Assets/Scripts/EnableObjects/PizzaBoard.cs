@@ -7,40 +7,39 @@ public class PizzaBoard : LookingObject
 {
     public TextMeshPro titleText;
     public float titleTextTargetVal;
-
     public bool currentPizzaTextOn;
-    public Transform currentPizzaText;
+
+    public List<PizzaBoardText> pizzaTexts = new List<PizzaBoardText>();
+    public PizzaBoardText currentPizzaText;
     public Transform frankPizzaText;
 
     bool firstTransformed;
     protected override void Start()
     {
         base.Start();
-
-        currentPizzaText = frankPizzaText;
+        
+        foreach(Transform child in transform)
+        {
+            if (child.GetComponent<PizzaBoardText>())
+            {
+                pizzaTexts.Add(child.GetComponent<PizzaBoardText>());
+            }
+        }
     }
     protected override void Update()
     {
         base.Update();
 
-        if (firstActivated && !firstTransformed)
+        if(activated && !firstTransformed)
         {
             ChangeTextColor(titleText);
-            foreach (Transform child in currentPizzaText)
-            {
-                TextMeshPro childText = child.GetComponent<TextMeshPro>();
-                ChangeTextColor(childText);
-
-            }
+            currentPizzaText.TurnOnTextColor();
         }
 
         if (focusingThis)
         {
             titleText.gameObject.layer = 13;
-            foreach (Transform child in currentPizzaText)
-            {
-                child.gameObject.layer = 13;
-            }
+            currentPizzaText.ChangeTextLayer(13);
         }
         else
         {
@@ -49,14 +48,19 @@ public class PizzaBoard : LookingObject
                 if(titleText.gameObject.layer != 17)
                 {
                     titleText.gameObject.layer = 17;
-                    foreach (Transform child in currentPizzaText)
-                    {
-                        child.gameObject.layer = 17;
-                    }
+                    currentPizzaText.ChangeTextLayer(17);
                 }
+                currentPizzaText.TurnOnTextColor();
             }
         }
 
+
+
+    }
+
+    public void QueuePizza(PizzaBoardText pizzaText)
+    {
+        currentPizzaText = pizzaText;
     }
 
     void ChangeTextColor(TextMeshPro text)

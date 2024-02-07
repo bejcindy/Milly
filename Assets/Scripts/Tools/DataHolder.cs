@@ -215,6 +215,8 @@ public class DataHolder : MonoBehaviour
                     texts.Add(instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
                     instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
                     texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
+                    //instantiatedHintGroup.GetComponent<HorizontalLayoutGroup>().r
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(instantiatedHintGroup.GetComponent<RectTransform>());
                 }
                 hintPanels.Add(instantiatedPanel);
                 currentHints.Add(hint);

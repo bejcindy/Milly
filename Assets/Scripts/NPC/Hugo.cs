@@ -9,6 +9,7 @@ public class Hugo : NPCControl
     public TrashSoccerScoreBoard scoreBoard;
 
     public GameObject cigButtConvo;
+    public CharacterTattoo willowTat;
     protected override void Start()
     {
         base.Start();
@@ -42,6 +43,21 @@ public class Hugo : NPCControl
     public void HugoAction4()
     {
         talkable = true;
+    }
+
+    public void TriggerWillowTattoo()
+    {
+        willowTat.triggered = true;
+    }
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        base.OnConversationEnd(other);
+
+        if(_counter == 4)
+        {
+            TriggerWillowTattoo();
+        }
     }
 
     protected override void OnTriggerEnter(Collider other)

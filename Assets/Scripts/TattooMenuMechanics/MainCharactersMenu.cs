@@ -6,7 +6,7 @@ using Beautify.Universal;
 public class MainCharactersMenu : CharacterTattooMenu
 {
 
-
+    
 
     void Update()
     {

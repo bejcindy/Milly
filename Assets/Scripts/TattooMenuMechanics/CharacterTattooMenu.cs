@@ -13,6 +13,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public bool fadeInFinalTat;
     public bool finalTransition;
     public bool finished;
+    public bool isMainMenu;
 
     [Foldout("References")]
     public Transform myTattoos;
@@ -32,11 +33,19 @@ public class CharacterTattooMenu : MonoBehaviour
 
     protected Vector3 tatOnPos;
     protected Vector3 tatOffPos;
+    Vector3 npcOffPos;
+    Vector3 npcOnPos;
 
     protected virtual void Start()
     {
         tatOnPos = Vector3.zero;
         tatOffPos = new Vector3(0, 0, -100);
+
+        if (!isMainMenu)
+        {
+            npcOffPos = myChar.transform.localPosition + new Vector3(-100, 0, 0);
+            npcOnPos = myChar.transform.localPosition;
+        }
         mindPalace = transform.parent.GetComponent<MindPalace>();
         menuOn = false;
         frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
@@ -248,6 +257,32 @@ public class CharacterTattooMenu : MonoBehaviour
             
             mindPalace.noControl = false;
         }
+    }
+
+    IEnumerator LerpCharPos(Vector3 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = myChar.transform.localPosition;
+        while (time < duration)
+        {
+            myChar.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        myChar.transform.localPosition = targetPosition;
+
+    }
+
+    public void ShowMenuInCenter()
+    {
+        //StartCoroutine(LerpCharPos(npcOnPos, 1f));
+        myChar.gameObject.SetActive(true);
+    }
+
+    public void HideMenuInCenter()
+    {
+        //StartCoroutine(LerpCharPos(npcOffPos, 1f));
+        myChar.gameObject.SetActive(true);
     }
 
 }

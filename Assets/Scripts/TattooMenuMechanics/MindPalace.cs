@@ -14,6 +14,8 @@ public class MindPalace : MonoBehaviour
     public CharacterTattooMenu mainTatMenu;
     public CharacterTattooMenu selectedMenu;
 
+    public List<CharacterTattooMenu> tattooMenuList = new List<CharacterTattooMenu>();
+
 
     Camera frontCam;
     Camera colorCam;
@@ -35,6 +37,8 @@ public class MindPalace : MonoBehaviour
         frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
         colorCam = Camera.main.transform.GetChild(1).GetComponent<Camera>();
         focusCam = Camera.main.transform.GetChild(2).GetComponent<Camera>();
+
+        GetComponentsInChildren<CharacterTattooMenu>(tattooMenuList);
     }
 
     // Update is called once per frame
@@ -103,8 +107,14 @@ public class MindPalace : MonoBehaviour
     public void SwitchMainMenuOn()
     {
         mainTatMenu.myCam.m_Priority = 20;
+        foreach (CharacterTattooMenu charMenu in tattooMenuList)
+        {
+            if (charMenu != mainTatMenu && charMenu != currentMenu)
+                charMenu.myChar.gameObject.SetActive(true);
+        }
         currentMenu = mainTatMenu;
         mainTatMenu.menuOn = true;
+
         RuntimeManager.PlayOneShot(changeMenuSF, transform.position);
     }
 
@@ -118,6 +128,11 @@ public class MindPalace : MonoBehaviour
     public void SelectMenu(CharacterTattooMenu menu)
     {
         currentMenu = menu;
+        foreach (CharacterTattooMenu charMenu in tattooMenuList)
+        {
+            if (charMenu != mainTatMenu && charMenu != currentMenu)
+                charMenu.myChar.gameObject.SetActive(false);
+        }
         SwitchMainMenuOff();
         currentMenu.myChar.ChangeLayer(17);
         

@@ -103,7 +103,7 @@ public class TattooMesh : MonoBehaviour
             }
             characterTatMesh.ChangeLayer(0);
             StartCoroutine(LerpBack());
-            myMenu.mindPalace.noControl = false;
+
         }
         else if(draggable && reachedNPC)
         {
@@ -114,8 +114,7 @@ public class TattooMesh : MonoBehaviour
             myTat.fadeOutText = true;
             dissolving = true;
             characterTatMesh.ReadyCharacterChange(myTat);
-            GetComponent<BoxCollider>().enabled = false;
-            myMenu.mindPalace.noControl = false;
+            GetComponent<Collider>().enabled = false;
         }
     }
     private void OnMouseEnter()
@@ -162,6 +161,7 @@ public class TattooMesh : MonoBehaviour
             yield return null;
         }
         transform.localPosition = originalPos;
+        myMenu.mindPalace.noControl = false;
         yield break;
     }
     #endregion
@@ -173,9 +173,14 @@ public class TattooMesh : MonoBehaviour
             foreach (Transform child in transform)
             {
                 child.gameObject.layer = 17;
-                Material mat = child.GetComponent<Renderer>().material;
-                mat.EnableKeyword("_WhiteDegree");
-                mat.SetFloat("_WhiteDegree", 0);
+
+                if (child.GetComponent<Renderer>())
+                {
+                    Material mat = child.GetComponent<Renderer>().material;
+                    mat.EnableKeyword("_WhiteDegree");
+                    mat.SetFloat("_WhiteDegree", 0);
+                }
+
             }
             myTat.triggered = false;
             draggable = true;
@@ -191,9 +196,13 @@ public class TattooMesh : MonoBehaviour
             dissolveVal += 0.5f * Time.deltaTime;
             foreach (Transform child in transform)
             {
-                Material mat = child.GetComponent<Renderer>().material;
-                mat.EnableKeyword("_BurnAmount");
-                mat.SetFloat("_BurnAmount", dissolveVal);
+                if (child.GetComponent<Renderer>())
+                {
+                    Material mat = child.GetComponent<Renderer>().material;
+                    mat.EnableKeyword("_BurnAmount");
+                    mat.SetFloat("_BurnAmount", dissolveVal);
+                }
+
             }
         }
         else
@@ -204,7 +213,6 @@ public class TattooMesh : MonoBehaviour
             dissolved = true;
             RuntimeManager.PlayOneShot(dissolveSF, transform.position);
             characterTatMesh.stage++;
-            this.enabled = false;
         }
     }
 

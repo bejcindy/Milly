@@ -571,6 +571,10 @@ public class NPCControl : MonoBehaviour
     }
     public void ChangeCharMeshMat(Material mat)
     {
+        if (npcMesh.GetComponent<Renderer>())
+        {
+            npcMesh.GetComponent<Renderer>().material = mat;
+        }
         foreach (Transform child in npcMesh)
         {
             child.GetComponent<Renderer>().material = mat;

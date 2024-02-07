@@ -12,6 +12,7 @@ public class GarbageScore : MonoBehaviour
     public Material dumpsterMat;
     public GameObject dumpsterBody;
     public PhysicMaterial highFriction;
+    public CharacterTattoo myTat;
 
     float matColorVal = 1f;
     float fadeInterval = 10f;
@@ -71,6 +72,7 @@ public class GarbageScore : MonoBehaviour
         {
             matColorVal = 0;
             firstActivated = true;
+            myTat.triggered = true;
         }
     }
 

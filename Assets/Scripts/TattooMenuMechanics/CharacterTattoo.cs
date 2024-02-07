@@ -27,7 +27,7 @@ public class CharacterTattoo : MonoBehaviour
 
 
     [Foldout("References")]
-    public CharacterTattooMenu myMenu;
+
     public CharacterTattooMesh myChar;
 
     [Foldout("Values")]
@@ -37,12 +37,15 @@ public class CharacterTattoo : MonoBehaviour
     public Vector3 finalTatStartPos;
     public Vector3 finalTatStartRot;
     float tatAlphaTarget = 0.2f;
-    
+    CharacterTattooMenu myMenu;
 
 
     void Start()
     {
         tatAlpha = 1;
+        tatMesh = transform.GetChild(0).GetComponent<TattooMesh>();
+        tatText = transform.GetChild(1).GetComponent<TextMeshPro>();
+        tatSprite = transform.GetChild(2);
         myMenu = transform.parent.parent.GetComponent<CharacterTattooMenu>();
 
     }
@@ -53,6 +56,7 @@ public class CharacterTattoo : MonoBehaviour
         if (triggered && !triggeredOnce)
         {
             triggeredOnce = true;
+            myChar.gameObject.SetActive(true);
             tatMesh.gameObject.SetActive(true);
             tatSprite.gameObject.SetActive(true);
             ActivateTatMesh();
@@ -146,6 +150,7 @@ public class CharacterTattoo : MonoBehaviour
             spriteMat.SetFloat("_AlphaClipThreshold", tatAlpha);
             dragged = false;
             activated = true;
+            myMenu.mindPalace.noControl = false;
         }
     }
 

@@ -10,8 +10,9 @@ using FMODUnity;
 
 public class CharacterTattooMesh : MonoBehaviour
 {
+    CharacterTattooMenu myMenu;
+
     [Foldout("References")]
-    public CharacterTattooMenu myMenu;
     public Transform npcMesh;
     public CharacterTattoo currentTat;
     public NPCControl myNPC;
@@ -128,6 +129,21 @@ public class CharacterTattooMesh : MonoBehaviour
             childMat.EnableKeyword("_WhiteDegree");
             if (childMat.GetFloat("_WhiteDegree") >0)
                 TurnOnColor(childMat);
+            else
+            {
+                matColorVal = 0;
+                stageChanging = false;
+                matChanged = false;
+                if (finalChange)
+                {
+                    myMenu.finalTransition = true;
+                }
+                else
+                {
+                    currentTat.dragged = true;
+                    currentTat = null;
+                }
+            }
         }
 
     }
@@ -151,23 +167,7 @@ public class CharacterTattooMesh : MonoBehaviour
             matColorVal -= 0.2f * Time.deltaTime;
             material.SetFloat("_WhiteDegree", matColorVal);
         }
-        else
-        {
-            myMenu.mindPalace.noControl = false;
-            matColorVal = 0;
-            stageChanging = false;
-            matChanged = false;
-            if (finalChange)
-            {
-                myMenu.finalTransition = true;
-            }
-            else
-            {
-                currentTat.dragged = true;
-                currentTat = null;
-            }
 
-        }
     }
 
     public void CharacterFinalChange()

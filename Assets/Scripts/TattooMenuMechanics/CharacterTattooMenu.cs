@@ -38,7 +38,7 @@ public class CharacterTattooMenu : MonoBehaviour
     protected virtual void Start()
     {
         tatOnPos = Vector3.zero;
-        tatOffPos = new Vector3(0, 0, -20);
+        tatOffPos = new Vector3(0, 0, -5);
         mindPalace = transform.parent.GetComponent<MindPalace>();
         menuOn = false;
         frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
@@ -95,6 +95,7 @@ public class CharacterTattooMenu : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape) && !mindPalace.noControl)
             {
+                SwitchTattoosOff();
                 StopCoroutine(LerpPosition(tatOnPos, 1f));
                 SwitchMainTatMenuOn();
             }
@@ -106,12 +107,41 @@ public class CharacterTattooMenu : MonoBehaviour
         discovered = true;
         mindPalace.currentMenu = this;
         mindPalace.SelectMenu(this);
+        SwitchTattoosOn();
         StartCoroutine(MenuOnBlink());
     }
 
     public void TurnOffMenu()
     {
+        SwitchTattoosOff();
         StartCoroutine(MenuOffBlink());
+    }
+
+    void SwitchTattoosOn()
+    {
+        foreach (Transform t in myTattoos)
+        {
+            CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
+            tat.DitherMeshIn();
+            if (!tat.isFinalTat)
+            {
+                tat.MenuFadeInText();
+            }
+        }
+    }
+
+    void SwitchTattoosOff()
+    {
+        foreach (Transform t in myTattoos)
+        {
+            CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
+            tat.DitherMeshOut();
+            if (!tat.isFinalTat)
+            {
+                tat.MenuFadeOutText();
+            }
+        }
+
     }
 
     public void SwitchMainTatMenuOn()
@@ -126,8 +156,10 @@ public class CharacterTattooMenu : MonoBehaviour
 
     public void SelectMyMenu()
     {
+        Debug.Log("selecting this menu");
         mindPalace.noControl = true;
         myCam.m_Priority = 20;
+        SwitchTattoosOn();
         if (finished)
         {
             myChar.AfterFinalCharFinishedRotate();
@@ -221,15 +253,6 @@ public class CharacterTattooMenu : MonoBehaviour
         if (targetPosition == tatOffPos)
         {
             menuOn = false;
-            foreach(Transform t in myTattoos)
-            {
-                CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
-                tat.DitherMeshOut();
-                if (!tat.isFinalTat)
-                {
-                    tat.MenuFadeOutText();
-                }
-            }
         }
 
         float time = 0;
@@ -259,19 +282,6 @@ public class CharacterTattooMenu : MonoBehaviour
         mindPalace.noControl = false;
     }
 
-    IEnumerator LerpCharPos(Vector3 targetPosition, float duration)
-    {
-        float time = 0;
-        Vector3 startPosition = myChar.transform.localPosition;
-        while (time < duration)
-        {
-            myChar.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        myChar.transform.localPosition = targetPosition;
-
-    }
 
 
 }

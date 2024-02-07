@@ -101,12 +101,14 @@ public class CharacterTattoo : MonoBehaviour
 
     public void DitherMeshIn()
     {
-        tatMesh.SetMeshDither(false);
+        if(!tatMesh.dissolved && !tatMesh.ditherIn)
+            tatMesh.SetMeshDither(false);
     }
 
     public void DitherMeshOut()
     {
-        tatMesh.SetMeshDither(true);
+        if(!tatMesh.dissolved && !tatMesh.ditherOut)
+            tatMesh.SetMeshDither(true);
     }
 
 

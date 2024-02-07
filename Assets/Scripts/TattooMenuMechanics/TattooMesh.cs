@@ -37,10 +37,13 @@ public class TattooMesh : MonoBehaviour
     void Start()
     {
         dissolveVal = 0;
+        ditherVal = 1;
         myTat = transform.parent.GetComponent<CharacterTattoo>();
         characterTatMesh = myTat.myChar;
         myMenu = transform.parent.parent.parent.GetComponent<CharacterTattooMenu>();
         originalPos = transform.localPosition;
+        ditherIn = false;
+        ditherOut = false;
     }
 
 
@@ -67,9 +70,14 @@ public class TattooMesh : MonoBehaviour
             }
         }
 
-        if (ditherIn || ditherOut)
+        if (ditherIn)
         {
-            DitherMesh();
+            SetDitherMeshIn();
+        }
+
+        if (ditherOut)
+        {
+            SetDitherMeshOut();
         }
     }
 
@@ -223,6 +231,7 @@ public class TattooMesh : MonoBehaviour
 
     void SwitchBurnMat()
     {
+        Debug.Log("See if we are setting material a lot");
         foreach (Transform child in transform)
         {
             if (child.GetComponent<Renderer>())
@@ -235,42 +244,59 @@ public class TattooMesh : MonoBehaviour
 
     void DitherOut(Material mat)
     {
-        if (ditherVal > 0)
-        {
-            ditherVal -= Time.deltaTime;
-            mat.SetFloat("_DitherThreshold", ditherVal);
-        }
-        else
-        {
-            ditherOut = false;
-            ditherIn = false;
-        }
+        ditherVal -= Time.deltaTime;
+        mat.SetFloat("_DitherThreshold", ditherVal);
     }
 
     void DitherIn(Material mat)
     {
-        if (ditherVal < 1)
-        {
-            ditherVal += Time.deltaTime;
-            mat.SetFloat("_DitherThreshold", ditherVal);
-        }
-        else
-        {
-            ditherOut = false;
-            ditherIn = false;
-        }
+        ditherVal += Time.deltaTime;
+        mat.SetFloat("_DitherThreshold", ditherVal);
     }
 
-    void DitherMesh()
+
+    void SetDitherMeshOut()
     {
         foreach (Transform child in transform)
         {
-            Material childMat = child.GetComponent<Renderer>().material;
-            childMat.EnableKeyword("_DitherThreshold");
-            if (ditherOut)
-                DitherOut(childMat);
-            else
-                DitherIn(childMat);
+            if(child.GetComponent<Renderer>()) {
+
+                Material childMat = child.GetComponent<Renderer>().material;
+                childMat.EnableKeyword("_DitherThreshold");
+                ditherVal = childMat.GetFloat("_DitherThreshold");
+                if (ditherVal > 0)
+                    DitherOut(childMat);
+                else
+                {
+                    ditherVal = 0;
+                    childMat.SetFloat("_DitherThreshold", 0);
+                    ditherOut = false;
+                }
+            }
+
+        }
+    }
+
+    void SetDitherMeshIn()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<Renderer>())
+            {
+
+                Material childMat = child.GetComponent<Renderer>().material;
+                childMat.EnableKeyword("_DitherThreshold");
+                ditherVal = childMat.GetFloat("_DitherThreshold");
+                if (ditherVal < 1)
+                    DitherIn(childMat);
+                else
+                {
+                    ditherVal = 1;
+                    childMat.SetFloat("_DitherThreshold", 1);
+                    ditherOut = false;
+                }
+            }
+
         }
     }
 
@@ -278,10 +304,12 @@ public class TattooMesh : MonoBehaviour
     {
         if (dither)
         {
+            ditherIn = false;
             ditherOut = true;
         }
         else
         {
+            ditherOut = false;
             ditherIn = true;
         }
     }
@@ -298,8 +326,10 @@ public class TattooMesh : MonoBehaviour
                 if (child.GetComponent<Renderer>())
                 {
                     Material mat = child.GetComponent<Renderer>().material;
-                    mat.EnableKeyword("_BurnAmount");
-                    mat.SetFloat("_BurnAmount", dissolveVal);
+                    
+                    Debug.Log(mat.name);
+                    mat.EnableKeyword("_Surface_BurnAmount");
+                    mat.SetFloat("_Surface_BurnAmount", dissolveVal);
                 }
 
             }
@@ -312,6 +342,7 @@ public class TattooMesh : MonoBehaviour
             characterTatMesh.stage++;
         }
     }
+
 
     public void OnTriggerEnter(Collider other)
     {

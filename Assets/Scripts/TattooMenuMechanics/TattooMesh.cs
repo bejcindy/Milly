@@ -104,7 +104,6 @@ public class TattooMesh : MonoBehaviour
             }
             characterTatMesh.ChangeLayer(0);
             StartCoroutine(LerpBack());
-            myMenu.mindPalace.noControl = false;
             myMenu.mindPalace.draggingTat = false;
         }
         else if(draggable && reachedNPC)
@@ -118,7 +117,6 @@ public class TattooMesh : MonoBehaviour
             characterTatMesh.ReadyCharacterChange(myTat);
             RuntimeManager.PlayOneShot(dissolveSF, transform.position);
             GetComponent<BoxCollider>().enabled = false;
-            myMenu.mindPalace.noControl = false;
             myMenu.mindPalace.draggingTat = false;
         }
     }
@@ -212,7 +210,6 @@ public class TattooMesh : MonoBehaviour
         }
         else
         {
-            myMenu.mindPalace.noControl = false;
             characterTatMesh.draggingTattoo = false;
             dissolving = false;
             dissolved = true;

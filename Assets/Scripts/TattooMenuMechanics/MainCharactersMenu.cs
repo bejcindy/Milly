@@ -14,6 +14,11 @@ public class MainCharactersMenu : CharacterTattooMenu
         {
             mindPalace.MenuMouseHintOn();
             mindPalace.currentMenu = this;
+
+            if(!mindPalace.noControl && Input.GetKeyDown(KeyCode.Escape))
+            {
+                mindPalace.SwitchMindPalaceOnOff();
+            }
         }
 
     }

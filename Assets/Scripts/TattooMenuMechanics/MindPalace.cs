@@ -58,21 +58,7 @@ public class MindPalace : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab) && !noControl)
         {
-            tatMenuOn = !tatMenuOn;
-
-            if (!tatMenuOn)
-            {
-                MenuMouseHintOff();
-                if (currentMenu)
-                    currentMenu.TurnOffMenu();
-            }
-            else
-            {
-                if (currentMenu)
-                {
-                    currentMenu.TurnOnMenu();
-                }
-            }
+            SwitchMindPalaceOnOff();
         }
 
         if (tatMenuOn)
@@ -103,6 +89,25 @@ public class MindPalace : MonoBehaviour
             DataHolder.HideHint(regularHint);
             DataHolder.HideHint(dragHint);
             DataHolder.HideHint(mainMenuHint);
+        }
+    }
+
+    public void SwitchMindPalaceOnOff()
+    {
+        tatMenuOn = !tatMenuOn;
+
+        if (!tatMenuOn)
+        {
+            MenuMouseHintOff();
+            if (currentMenu)
+                currentMenu.TurnOffMenu();
+        }
+        else
+        {
+            if (currentMenu)
+            {
+                currentMenu.TurnOnMenu();
+            }
         }
     }
 

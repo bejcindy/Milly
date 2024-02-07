@@ -13,6 +13,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public bool fadeInFinalTat;
     public bool finalTransition;
     public bool finished;
+    public bool discovered;
     public bool isMainMenu;
 
     [Foldout("References")]
@@ -102,6 +103,7 @@ public class CharacterTattooMenu : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape) && !mindPalace.noControl)
             {
+                StopCoroutine(LerpPosition(tatOnPos, 1f));
                 SwitchMainTatMenuOn();
             }
         }
@@ -109,7 +111,9 @@ public class CharacterTattooMenu : MonoBehaviour
 
     public void TurnOnMenu()
     {
+        discovered = true;
         mindPalace.currentMenu = this;
+        mindPalace.SelectMenu(this);
         StartCoroutine(MenuOnBlink());
     }
 
@@ -130,6 +134,7 @@ public class CharacterTattooMenu : MonoBehaviour
 
     public void SelectMyMenu()
     {
+        mindPalace.noControl = true;
         myCam.m_Priority = 20;
         if (finished)
         {
@@ -220,7 +225,8 @@ public class CharacterTattooMenu : MonoBehaviour
 
     protected virtual IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
-        if(targetPosition == tatOffPos)
+        mindPalace.noControl = true;
+        if (targetPosition == tatOffPos)
         {
             menuOn = false;
             foreach(Transform t in myTattoos)
@@ -254,9 +260,9 @@ public class CharacterTattooMenu : MonoBehaviour
                     tat.MenuFadeInText();
                 }
             }
-            
-            mindPalace.noControl = false;
         }
+
+        mindPalace.noControl = false;
     }
 
     IEnumerator LerpCharPos(Vector3 targetPosition, float duration)

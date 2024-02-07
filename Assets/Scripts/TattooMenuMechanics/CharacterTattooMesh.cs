@@ -63,7 +63,7 @@ public class CharacterTattooMesh : MonoBehaviour
             ChangeCharMatColor();
         }
 
-        if (myMenu.mindPalace.mainMenuOn)
+        if (myMenu.mindPalace.mainMenuOn && myMenu.discovered)
         {
             selectable = true;
         }

@@ -34,19 +34,11 @@ public class CharacterTattooMenu : MonoBehaviour
 
     protected Vector3 tatOnPos;
     protected Vector3 tatOffPos;
-    Vector3 npcOffPos;
-    Vector3 npcOnPos;
 
     protected virtual void Start()
     {
         tatOnPos = Vector3.zero;
-        tatOffPos = new Vector3(0, 0, -100);
-
-        if (!isMainMenu)
-        {
-            npcOffPos = myChar.transform.localPosition + new Vector3(-100, 0, 0);
-            npcOnPos = myChar.transform.localPosition;
-        }
+        tatOffPos = new Vector3(0, 0, -20);
         mindPalace = transform.parent.GetComponent<MindPalace>();
         menuOn = false;
         frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
@@ -185,7 +177,7 @@ public class CharacterTattooMenu : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-        BeautifySettings.settings.vignettingBlink.value = 0;
+        BeautifySettings.settings.vignettingBlink.value = 0; 
 
         yield break;
     }
@@ -232,6 +224,7 @@ public class CharacterTattooMenu : MonoBehaviour
             foreach(Transform t in myTattoos)
             {
                 CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
+                tat.DitherMeshOut();
                 if (!tat.isFinalTat)
                 {
                     tat.MenuFadeOutText();
@@ -255,6 +248,7 @@ public class CharacterTattooMenu : MonoBehaviour
             foreach (Transform t in myTattoos)
             {
                 CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
+                tat.DitherMeshIn();
                 if (!tat.isFinalTat)
                 {
                     tat.MenuFadeInText();
@@ -279,16 +273,5 @@ public class CharacterTattooMenu : MonoBehaviour
 
     }
 
-    public void ShowMenuInCenter()
-    {
-        //StartCoroutine(LerpCharPos(npcOnPos, 1f));
-        myChar.gameObject.SetActive(true);
-    }
-
-    public void HideMenuInCenter()
-    {
-        //StartCoroutine(LerpCharPos(npcOffPos, 1f));
-        myChar.gameObject.SetActive(true);
-    }
 
 }

@@ -3,16 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using VInspector;
+using static Beautify.Universal.Beautify;
+using UnityEngine.AI;
 
 public class TattooMesh : MonoBehaviour
 {
     CharacterTattoo myTat;
     CharacterTattooMenu myMenu;
+    [Foldout("State")]
     public bool dissolving;
     public bool dissolved;
     public float dissolveVal;
     public bool draggable;
     bool dragging;
+
+    [Foldout("Materials")]
+    public Material ditherMat;
+    public Material burnMat;
+    public float ditherVal;
+    public bool ditherIn;
+    public bool ditherOut;
 
     Vector3 screenPoint;
     Vector3 offset;
@@ -55,6 +66,11 @@ public class TattooMesh : MonoBehaviour
                 child.gameObject.layer = 0;
             }
         }
+
+        if (ditherIn || ditherOut)
+        {
+            DitherMesh();
+        }
     }
 
     #region Drag Related
@@ -62,6 +78,7 @@ public class TattooMesh : MonoBehaviour
     {
         if (draggable)
         {
+            SwitchBurnMat();
             myMenu.mindPalace.noControl = true;
             myMenu.mindPalace.draggingTat = true;
             dragging = true;
@@ -103,6 +120,7 @@ public class TattooMesh : MonoBehaviour
                 myMenu.draggedTat = null;
             }
             characterTatMesh.ChangeLayer(0);
+            SwitchDitherMat();
             StartCoroutine(LerpBack());
             myMenu.mindPalace.draggingTat = false;
         }
@@ -187,6 +205,84 @@ public class TattooMesh : MonoBehaviour
             }
             myTat.triggered = false;
             draggable = true;
+        }
+    }
+
+    void SwitchDitherMat()
+    {
+        foreach (Transform child in transform)
+        {
+
+            if (child.GetComponent<Renderer>())
+            {
+                child.GetComponent<Renderer>().material = ditherMat;
+            }
+
+        }
+    }
+
+    void SwitchBurnMat()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<Renderer>())
+            {
+                child.GetComponent<Renderer>().material = burnMat;
+            }
+
+        }
+    }
+
+    void DitherOut(Material mat)
+    {
+        if (ditherVal > 0)
+        {
+            ditherVal -= Time.deltaTime;
+            mat.SetFloat("_DitherThreshold", ditherVal);
+        }
+        else
+        {
+            ditherOut = false;
+            ditherIn = false;
+        }
+    }
+
+    void DitherIn(Material mat)
+    {
+        if (ditherVal < 1)
+        {
+            ditherVal += Time.deltaTime;
+            mat.SetFloat("_DitherThreshold", ditherVal);
+        }
+        else
+        {
+            ditherOut = false;
+            ditherIn = false;
+        }
+    }
+
+    void DitherMesh()
+    {
+        foreach (Transform child in transform)
+        {
+            Material childMat = child.GetComponent<Renderer>().material;
+            childMat.EnableKeyword("_DitherThreshold");
+            if (ditherOut)
+                DitherOut(childMat);
+            else
+                DitherIn(childMat);
+        }
+    }
+
+    public void SetMeshDither(bool dither)
+    {
+        if (dither)
+        {
+            ditherOut = true;
+        }
+        else
+        {
+            ditherIn = true;
         }
     }
 

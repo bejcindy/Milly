@@ -99,6 +99,16 @@ public class CharacterTattoo : MonoBehaviour
             fadeInText = true;  
     }
 
+    public void DitherMeshIn()
+    {
+        tatMesh.SetMeshDither(false);
+    }
+
+    public void DitherMeshOut()
+    {
+        tatMesh.SetMeshDither(true);
+    }
+
 
     void FadeOutTatText()
     {

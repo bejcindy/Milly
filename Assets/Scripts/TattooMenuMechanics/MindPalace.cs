@@ -16,6 +16,8 @@ public class MindPalace : MonoBehaviour
 
     public List<CharacterTattooMenu> tattooMenuList = new List<CharacterTattooMenu>();
 
+    [HideInInspector]
+    public bool draggingTat;
 
     Camera frontCam;
     Camera colorCam;

@@ -63,6 +63,7 @@ public class TattooMesh : MonoBehaviour
         if (draggable)
         {
             myMenu.mindPalace.noControl = true;
+            myMenu.mindPalace.draggingTat = true;
             dragging = true;
             myMenu.draggedTat = this;
             screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
@@ -103,7 +104,8 @@ public class TattooMesh : MonoBehaviour
             }
             characterTatMesh.ChangeLayer(0);
             StartCoroutine(LerpBack());
-
+            myMenu.mindPalace.noControl = false;
+            myMenu.mindPalace.draggingTat = false;
         }
         else if(draggable && reachedNPC)
         {
@@ -114,7 +116,10 @@ public class TattooMesh : MonoBehaviour
             myTat.fadeOutText = true;
             dissolving = true;
             characterTatMesh.ReadyCharacterChange(myTat);
-            GetComponent<Collider>().enabled = false;
+            RuntimeManager.PlayOneShot(dissolveSF, transform.position);
+            GetComponent<BoxCollider>().enabled = false;
+            myMenu.mindPalace.noControl = false;
+            myMenu.mindPalace.draggingTat = false;
         }
     }
     private void OnMouseEnter()
@@ -211,7 +216,6 @@ public class TattooMesh : MonoBehaviour
             characterTatMesh.draggingTattoo = false;
             dissolving = false;
             dissolved = true;
-            RuntimeManager.PlayOneShot(dissolveSF, transform.position);
             characterTatMesh.stage++;
         }
     }

@@ -28,9 +28,12 @@ public class CharacterTattooMesh : MonoBehaviour
     public Material[] materials;
     public bool stageChanging;
     public bool finalChange;
+    public bool ditherOut;
+    public bool ditherIn;
 
     [Foldout("Values")]
     public float matColorVal;
+    public float ditherVal;
     public Vector3 finalCharPos;
     public Vector3 finalCharRot;
     bool matChanged;
@@ -42,6 +45,7 @@ public class CharacterTattooMesh : MonoBehaviour
         myMenu = transform.parent.GetComponent<CharacterTattooMenu>();
         stage = 0;
         matColorVal = 1;
+        ditherVal = 1;
     }
 
 
@@ -70,6 +74,11 @@ public class CharacterTattooMesh : MonoBehaviour
         else
         {
             selectable = false;
+        }
+
+        if (ditherOut || ditherIn)
+        {
+            CharacterDither();
         }
 
     }
@@ -170,6 +179,7 @@ public class CharacterTattooMesh : MonoBehaviour
 
     }
 
+
     public void CharacterFinalChange()
     {
         matColorVal = 1;
@@ -206,6 +216,61 @@ public class CharacterTattooMesh : MonoBehaviour
     public void AfterFinalCharFinishedRotate()
     {
         StartCoroutine(LerpRotation(Quaternion.Euler(finalCharRot), 1f));
+    }
+
+    public void SetDither(bool dither)
+    {
+        if (dither)
+        {
+            ditherOut = true;
+        }
+        else
+        {
+            ditherIn = true;
+        }
+    }
+
+    public void CharacterDither()
+    {
+        foreach(Transform child in npcMesh)
+        {
+            Material childMat = child.GetComponent<Renderer>().material;
+            childMat.EnableKeyword("_DitherThreshold");
+            if (ditherOut)
+                DitherOut(childMat);
+            else
+                DitherIn(childMat);
+        }
+    }
+
+
+
+    void DitherOut(Material mat)
+    {
+        if (ditherVal > 0)
+        {
+            ditherVal -= Time.deltaTime;
+            mat.SetFloat("_DitherThreshold", ditherVal);
+        }
+        else
+        {
+            ditherOut = false;
+            ditherIn = false;
+        }
+    }
+
+    void DitherIn(Material mat)
+    {
+        if (ditherVal < 1)
+        {
+            ditherVal += Time.deltaTime;
+            mat.SetFloat("_DitherThreshold", ditherVal);
+        }
+        else
+        {
+            ditherOut = false;
+            ditherIn = false;
+        }
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)

@@ -117,7 +117,7 @@ public class MindPalace : MonoBehaviour
         foreach (CharacterTattooMenu charMenu in tattooMenuList)
         {
             if (charMenu != mainTatMenu && charMenu != currentMenu)
-                charMenu.myChar.gameObject.SetActive(true);
+                charMenu.myChar.SetDither(false);
         }
         currentMenu = mainTatMenu;
         mainTatMenu.menuOn = true;
@@ -138,7 +138,7 @@ public class MindPalace : MonoBehaviour
         foreach (CharacterTattooMenu charMenu in tattooMenuList)
         {
             if (charMenu != mainTatMenu && charMenu != currentMenu)
-                charMenu.myChar.gameObject.SetActive(false);
+                charMenu.myChar.SetDither(true);
         }
         SwitchMainMenuOff();
         currentMenu.myChar.ChangeLayer(17);

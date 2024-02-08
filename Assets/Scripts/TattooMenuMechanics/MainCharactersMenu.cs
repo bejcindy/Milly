@@ -53,12 +53,14 @@ public class MainCharactersMenu : CharacterTattooMenu
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.noControl = false;
+        mindPalace.SwitchTatMenuBlend();
         yield break;
     }
 
     protected override IEnumerator MenuOffBlink()
     {
         menuOn = false;
+        mindPalace.SwitchPlayerCamBlend();
         mindPalace.noControl = true;
         float t = 0;
         while (t < blinkDuration)
@@ -85,6 +87,7 @@ public class MainCharactersMenu : CharacterTattooMenu
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.noControl = false;
+
         yield break;
     }
 

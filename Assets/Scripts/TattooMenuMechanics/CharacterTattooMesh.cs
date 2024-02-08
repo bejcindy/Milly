@@ -46,6 +46,7 @@ public class CharacterTattooMesh : MonoBehaviour
         stage = 0;
         matColorVal = 1;
         ditherVal = 1;
+        rotSpeed = 500;
     }
 
 
@@ -124,8 +125,12 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void ChangeCharMeshMat()
     {
-        myNPC.ChangeCharMeshMat(materials[stage]);
-        myNPC.matColorVal = 1;
+        if (myNPC)
+        {
+            myNPC.ChangeCharMeshMat(materials[stage]);
+            myNPC.matColorVal = 1;
+        }
+
         foreach (Transform child in npcMesh)
         {
             child.GetComponent<Renderer>().material = materials[stage];
@@ -135,7 +140,11 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void ChangeCharMatColor()
     {
-        myNPC.ActivateAll(myNPC.npcMesh);
+        if (myNPC)
+        {
+            myNPC.ActivateAll(myNPC.npcMesh);
+        }
+
         foreach(Transform child in npcMesh)
         {
             Material childMat = child.GetComponent<Renderer>().material;
@@ -188,8 +197,12 @@ public class CharacterTattooMesh : MonoBehaviour
     {
         matColorVal = 1;
         stage = materials.Length - 1;
-        myNPC.ChangeCharMeshMat(materials[stage]);
-        myNPC.matColorVal = 1;
+        if (myNPC)
+        {
+            myNPC.ChangeCharMeshMat(materials[stage]);
+            myNPC.matColorVal = 1;
+        }
+
         foreach (Transform child in npcMesh)
         {
             child.GetComponent<Renderer>().material = materials[stage];
@@ -238,53 +251,49 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void CharacterDitherOut()
     {
-        foreach(Transform child in npcMesh)
+        if(ditherVal > 0)
         {
-            Material childMat = child.GetComponent<Renderer>().material;
-            childMat.EnableKeyword("_DitherThreshold");
-            if (ditherVal>0)
-                DitherOut(childMat);
-            else
+            ditherVal -= Time.deltaTime;
+            foreach (Transform child in npcMesh)
             {
-                ditherVal = 0;
-                childMat.SetFloat("_DitherThreshold", 0);
-                ditherOut = false;
+                Material childMat = child.GetComponent<Renderer>().material;
+                childMat.EnableKeyword("_DitherThreshold");
+                childMat.SetFloat("_DitherThreshold", ditherVal);
             }
         }
+        else
+        {
+            ditherVal = 0;
+            ditherOut = false;
+        }
+
     }
 
     public void CharacterDitherIn()
     {
-        foreach (Transform child in npcMesh)
+        if (ditherVal < 1)
         {
-            Material childMat = child.GetComponent<Renderer>().material;
-            childMat.EnableKeyword("_DitherThreshold");
-            if (ditherVal < 1)
-                DitherIn(childMat);
-            else
+            ditherVal += Time.deltaTime;
+            foreach (Transform child in npcMesh)
             {
-                ditherVal = 1;
-                childMat.SetFloat("_DitherThreshold", 1);
-                ditherIn = false;
+                Material childMat = child.GetComponent<Renderer>().material;
+                childMat.EnableKeyword("_DitherThreshold");
+                childMat.SetFloat("_DitherThreshold", ditherVal);
+
             }
         }
+        else
+        {
+            ditherVal = 1;
+            ditherIn = false;
+        }
+
+
     }
 
 
 
-    void DitherOut(Material mat)
-    {
-        ditherVal -= Time.deltaTime;
-        mat.SetFloat("_DitherThreshold", ditherVal);
 
-    }
-
-    void DitherIn(Material mat)
-    {
-        ditherVal += Time.deltaTime;
-        mat.SetFloat("_DitherThreshold", ditherVal);
-
-    }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {

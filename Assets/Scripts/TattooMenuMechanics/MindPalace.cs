@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using FMODUnity;
+using Cinemachine;
 
 public class MindPalace : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class MindPalace : MonoBehaviour
     [HideInInspector]
     public bool draggingTat;
 
+    public CinemachineBlenderSettings playerBlend;
+    public CinemachineBlenderSettings tatMenuBlend;
+    CinemachineBrain camBrain;
     Camera frontCam;
     Camera colorCam;
     Camera focusCam;
@@ -39,7 +43,7 @@ public class MindPalace : MonoBehaviour
         frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
         colorCam = Camera.main.transform.GetChild(1).GetComponent<Camera>();
         focusCam = Camera.main.transform.GetChild(2).GetComponent<Camera>();
-
+        camBrain = ReferenceTool.playerBrain;
         GetComponentsInChildren<CharacterTattooMenu>(tattooMenuList);
     }
 
@@ -54,6 +58,7 @@ public class MindPalace : MonoBehaviour
         {
             mainMenuOn = false;
         }
+
 
 
         if (Input.GetKeyDown(KeyCode.Tab) && !noControl)
@@ -92,18 +97,30 @@ public class MindPalace : MonoBehaviour
         }
     }
 
+    public void SwitchPlayerCamBlend()
+    {
+        camBrain.m_CustomBlends = playerBlend;
+    }
+
+    public void SwitchTatMenuBlend()
+    {
+        camBrain.m_CustomBlends = tatMenuBlend;
+    }
+
     public void SwitchMindPalaceOnOff()
     {
         tatMenuOn = !tatMenuOn;
 
         if (!tatMenuOn)
         {
+
             MenuMouseHintOff();
             if (currentMenu)
                 currentMenu.TurnOffMenu();
         }
         else
         {
+
             if (currentMenu)
             {
                 currentMenu.TurnOnMenu();

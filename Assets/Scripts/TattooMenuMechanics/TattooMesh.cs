@@ -37,7 +37,7 @@ public class TattooMesh : MonoBehaviour
     void Start()
     {
         dissolveVal = 0;
-        ditherVal = 1;
+        ditherVal = 0;
         myTat = transform.parent.GetComponent<CharacterTattoo>();
         characterTatMesh = myTat.myChar;
         myMenu = transform.parent.parent.parent.GetComponent<CharacterTattooMenu>();
@@ -245,64 +245,62 @@ public class TattooMesh : MonoBehaviour
         }
     }
 
-    void DitherOut(Material mat)
-    {
-        ditherVal -= Time.deltaTime;
-        mat.SetFloat("_DitherThreshold", ditherVal);
-    }
 
-    void DitherIn(Material mat)
-    {
-        ditherVal += Time.deltaTime;
-        mat.SetFloat("_DitherThreshold", ditherVal);
-    }
+
 
 
     void SetDitherMeshOut()
     {
         myCollider.enabled = false;
-        foreach (Transform child in transform)
+        if(ditherVal > 0)
         {
-            if(child.GetComponent<Renderer>()) {
-
-                Material childMat = child.GetComponent<Renderer>().material;
-                childMat.EnableKeyword("_DitherThreshold");
-                ditherVal = childMat.GetFloat("_DitherThreshold");
-                if (ditherVal > 0)
-                    DitherOut(childMat);
-                else
+            ditherVal -= Time.deltaTime;
+            foreach (Transform child in transform)
+            {
+                if (child.GetComponent<Renderer>())
                 {
-                    ditherVal = 0;
-                    childMat.SetFloat("_DitherThreshold", 0);
-                    ditherOut = false;
-                }
-            }
 
+                    Material childMat = child.GetComponent<Renderer>().material;
+                    childMat.EnableKeyword("_DitherThreshold");
+                    childMat.SetFloat("_DitherThreshold", ditherVal);
+                }
+
+            }
         }
+        else
+        {
+            ditherVal = 0;
+            ditherOut = false;
+        }
+
     }
 
     void SetDitherMeshIn()
     {
-        myCollider.enabled = true;
-        foreach (Transform child in transform)
+        if(!dissolved)
+            myCollider.enabled = true;
+        if(ditherVal < 1)
         {
-            if (child.GetComponent<Renderer>())
+            ditherVal += Time.deltaTime;
+            foreach (Transform child in transform)
             {
-
-                Material childMat = child.GetComponent<Renderer>().material;
-                childMat.EnableKeyword("_DitherThreshold");
-                ditherVal = childMat.GetFloat("_DitherThreshold");
-                if (ditherVal < 1)
-                    DitherIn(childMat);
-                else
+                if (child.GetComponent<Renderer>())
                 {
-                    ditherVal = 1;
-                    childMat.SetFloat("_DitherThreshold", 1);
-                    ditherOut = false;
-                }
-            }
 
+                    Material childMat = child.GetComponent<Renderer>().material;
+                    childMat.EnableKeyword("_DitherThreshold");
+                    childMat.SetFloat("_DitherThreshold", ditherVal);
+
+                }
+
+            }
         }
+        else
+        {
+            ditherVal = 1;
+            ditherOut = false;
+        }
+
     }
 
     public void SetMeshDither(bool dither)
@@ -341,6 +339,7 @@ public class TattooMesh : MonoBehaviour
         }
         else
         {
+            myCollider.enabled = false;
             characterTatMesh.draggingTattoo = false;
             dissolving = false;
             dissolved = true;

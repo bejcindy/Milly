@@ -69,7 +69,8 @@ public class CharacterTattooMenu : MonoBehaviour
 
         if (menuOn)
         {
-            myChar.myNPC.colored = true;
+            if(myChar.myNPC)
+                myChar.myNPC.colored = true;
             MindPalace.tatMenuOn = true;
             mindPalace.MenuMouseHintOn();
 
@@ -238,13 +239,14 @@ public class CharacterTattooMenu : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-        BeautifySettings.settings.vignettingBlink.value = 0; 
-
+        BeautifySettings.settings.vignettingBlink.value = 0;
+        mindPalace.SwitchTatMenuBlend();
         yield break;
     }
 
     protected virtual IEnumerator MenuOffBlink()
     {
+        mindPalace.SwitchPlayerCamBlend();
         mindPalace.noControl = true;
         StartCoroutine(LerpPosition(tatOffPos, 1f));
         float t = 0;
@@ -272,6 +274,7 @@ public class CharacterTattooMenu : MonoBehaviour
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.noControl = false;
+
         yield break;
     }
 

@@ -31,6 +31,7 @@ public class TattooMesh : MonoBehaviour
     CharacterTattooMesh characterTatMesh;
     string dissolveSF = "event:/Sound Effects/Tattoo/Dissolve";
     string hoverSF= "event:/Sound Effects/Tattoo/HoverObject";
+    string pressSF = "event:/Sound Effects/Tattoo/PressDown";
 
     void Start()
     {
@@ -96,6 +97,7 @@ public class TattooMesh : MonoBehaviour
             {
                 child.gameObject.layer = 17;
             }
+            RuntimeManager.PlayOneShot(pressSF, transform.position);
             StopCoroutine(LerpBack());
         }
     }

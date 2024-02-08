@@ -39,6 +39,7 @@ public class MainTattooMenu : MonoBehaviour
     CursorLockMode modeBeforePanel;
     bool cursorVisibility;
     bool gotCursor;
+    string blinkSF = "event:/Sound Effects/Tattoo/Blink";
     // Start is called before the first frame update
     void Start()
     {
@@ -143,6 +144,7 @@ public class MainTattooMenu : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
+        RuntimeManager.PlayOneShot(blinkSF);
         while (t >= blinkDuration && t < blinkDuration * 2)
         {
             BeautifySettings.settings.vignettingBlink.value = Mathf.Lerp(1, 0, (t-blinkDuration) / blinkDuration);

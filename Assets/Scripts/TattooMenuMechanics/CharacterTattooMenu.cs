@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VInspector;
+using FMODUnity;
 
 public class CharacterTattooMenu : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class CharacterTattooMenu : MonoBehaviour
 
     protected Vector3 tatOnPos;
     protected Vector3 tatOffPos;
+    protected string blinkSF = "event:/Sound Effects/Tattoo/Blink";
 
     protected virtual void Start()
     {
@@ -224,7 +226,7 @@ public class CharacterTattooMenu : MonoBehaviour
             colorCam.fieldOfView = 35;
             focusCam.fieldOfView = 35;
         }
-
+        RuntimeManager.PlayOneShot(blinkSF);
 
         while (t >= blinkDuration && t < blinkDuration * 2)
         {
@@ -242,6 +244,7 @@ public class CharacterTattooMenu : MonoBehaviour
         mindPalace.noControl = true;
         StartCoroutine(LerpPosition(tatOffPos, 1f));
         float t = 0;
+        RuntimeManager.PlayOneShot(blinkSF);
         while (t < blinkDuration)
         {
             BeautifySettings.settings.vignettingBlink.value = Mathf.Lerp(0, 1, t / blinkDuration);

@@ -33,12 +33,17 @@ public class Broom : PickUpObject
         {
             if (Input.GetMouseButtonDown(0))
             {
-                selectedDirt.SweepDirt();
+                Invoke(nameof(SweepDirt), 0.5f);   
             }
 
         }
 
 
+    }
+
+    void SweepDirt()
+    {
+        selectedDirt.SweepDirt();
     }
 
     void LayerDetection()

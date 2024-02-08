@@ -86,7 +86,7 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (isHolding)
         {
-            if (!MainTattooMenu.tatMenuOn)
+            if (!MindPalace.tatMenuOn)
             {
                 if (!inPizzaBox)
                 {
@@ -673,6 +673,13 @@ public class PlayerLeftHand : MonoBehaviour
                     RemoveHandObj();
 
                 }
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                handAnim.Play("Broom_Sweep");
             }
         }
     }

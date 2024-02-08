@@ -75,15 +75,21 @@ public class MindPalace : MonoBehaviour
                 DataHolder.HideHint(regularHint);
                 DataHolder.HideHint(dragHint);
             }
-            else if (noControl)
+            else if (draggingTat)
             {
                 DataHolder.ShowHint(dragHint);
                 DataHolder.HideHint(regularHint);
                 DataHolder.HideHint(mainMenuHint);
             }
-            else
+            else if(!noControl)
             {
                 DataHolder.ShowHint(regularHint);
+                DataHolder.HideHint(dragHint);
+                DataHolder.HideHint(mainMenuHint);
+            }
+            else
+            {
+                DataHolder.HideHint(regularHint);
                 DataHolder.HideHint(dragHint);
                 DataHolder.HideHint(mainMenuHint);
             }

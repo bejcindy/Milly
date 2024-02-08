@@ -116,14 +116,18 @@ public class CharacterTattooMenu : MonoBehaviour
         discovered = true;
         mindPalace.currentMenu = this;
         mindPalace.SelectMenu(this);
-        myChar.SetDither(false);
-        SwitchTattoosOn();
+        if (!isMainMenu)
+        {
+            myChar.SetDither(false);
+            SwitchTattoosOn();
+        }
         StartCoroutine(MenuOnBlink());
     }
 
     public void TurnOffMenu()
     {
-        SwitchTattoosOff();
+        if(!isMainMenu)
+            SwitchTattoosOff();
         StartCoroutine(MenuOffBlink());
     }
 
@@ -137,7 +141,7 @@ public class CharacterTattooMenu : MonoBehaviour
             {
                 tat.DitherMeshIn();
                 tat.MenuFadeInText();
-                if (tat.activated)
+                if (tat.activated && !finished)
                 {
                     tat.MenuFadeInTatSprite();
                 }

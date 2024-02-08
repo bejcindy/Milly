@@ -135,13 +135,17 @@ public class MindPalace : MonoBehaviour
     public void SelectMenu(CharacterTattooMenu menu)
     {
         currentMenu = menu;
-        foreach (CharacterTattooMenu charMenu in tattooMenuList)
+        if (!menu.isMainMenu)
         {
-            if (charMenu != mainTatMenu && charMenu != currentMenu)
-                charMenu.myChar.SetDither(true);
+            foreach (CharacterTattooMenu charMenu in tattooMenuList)
+            {
+                if (charMenu != mainTatMenu && charMenu != currentMenu)
+                    charMenu.myChar.SetDither(true);
+            }
+            SwitchMainMenuOff();
+            currentMenu.myChar.ChangeLayer(17);
         }
-        SwitchMainMenuOff();
-        currentMenu.myChar.ChangeLayer(17);
+
         
     }
 

@@ -10,6 +10,7 @@ public class RecordPlayer : LivableObject
     public bool hasRecord;
     public bool readyPlacing;
     public Vinyl currentRecord;
+    public Vinyl[] otherVinyls;
     public GameObject recordPlacer;
     public Vector3 recordPos;
 
@@ -21,11 +22,21 @@ public class RecordPlayer : LivableObject
     [Foldout("Tattoo checking")]
     public int totalVinylCount;
     public int vinylListenCount;
+    public CharacterTattoo recordPlayerTat;
     public CharacterTattoo vinylTat;
-    bool tatTriggered;
+    bool vinylTatTriggered;
+    bool recordplayerTatTriggered;
 
     public bool moving;
     string recorPlaceEvent = "event:/Sound Effects/ObjectInteraction/Vinyls/Vinyl_Place";
+
+    private void OnEnable()
+    {
+        foreach(var vinyl in otherVinyls)
+        {
+            vinyl.enabled = true;
+        }
+    }
     protected override void Start()
     {
         base.Start();
@@ -40,9 +51,15 @@ public class RecordPlayer : LivableObject
     {
         base.Update();
 
-        if(vinylListenCount == totalVinylCount && !tatTriggered)
+        if(activated && !recordplayerTatTriggered)
         {
-            tatTriggered = true;
+            recordplayerTatTriggered = true;
+            recordPlayerTat.triggered = true;
+        }
+
+        if(vinylListenCount == totalVinylCount && !vinylTatTriggered)
+        {
+            vinylTatTriggered = true;
             vinylTat.triggered = true;
         }
 
@@ -101,9 +118,9 @@ public class RecordPlayer : LivableObject
     }
 
 
-    void TriggerPlay()
+    public void TriggerPlay()
     {
-        activated = true;
+
         if (isPlaying)
         {
             isPlaying = false;

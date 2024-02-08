@@ -172,7 +172,6 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void ChangeLayer(int layerNumber)
     {
-
         gameObject.layer = layerNumber;
         var children = npcMesh.GetComponentsInChildren<Transform>();
         foreach (var child in children)
@@ -206,10 +205,10 @@ public class CharacterTattooMesh : MonoBehaviour
         foreach (Transform child in npcMesh)
         {
             child.GetComponent<Renderer>().material = materials[stage];
-            Material childMat = child.GetComponent<Renderer>().material;
         }
         finalChange = true;
-        stageChanging = true;
+        if(!stageChanging)
+            stageChanging = true;
     }
 
     public void ReadyCharacterChange(CharacterTattoo tat)
@@ -227,11 +226,13 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void AfterFinalCharFrontRotate()
     {
+        StartCoroutine(LerpPosition(Vector3.zero, 1f));
         StartCoroutine(LerpRotation(Quaternion.identity, 1f));
     }
 
     public void AfterFinalCharFinishedRotate()
     {
+        StartCoroutine(LerpPosition(finalCharPos, 1f));
         StartCoroutine(LerpRotation(Quaternion.Euler(finalCharRot), 1f));
     }
 

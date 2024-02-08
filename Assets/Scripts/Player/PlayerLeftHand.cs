@@ -283,6 +283,9 @@ public class PlayerLeftHand : MonoBehaviour
                 else if (playerHolding.atInterior)
                     ResetThrow();
                 break;
+            case HandObjectType.BROOM:
+                DetectBroomUse();
+                break;
             default:
                 if (!drinking && !playerHolding.atInterior)
                     BasicThrow();
@@ -649,6 +652,27 @@ public class PlayerLeftHand : MonoBehaviour
                 }
                 RemoveHandObj();    
 
+            }
+        }
+    }
+
+    private void DetectBroomUse()
+    {
+        if (!objPickUp.GetComponent<Broom>().selectedDirt)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (!noThrow)
+                {
+                    isHolding = false;
+                    holdingObj.SetParent(null);
+                    holdingObj.GetComponent<Rigidbody>().isKinematic = false;
+                    objPickUp.inHand = false;
+                    objPickUp.thrown = true;
+                    objPickUp.thrownByPlayer = true;
+                    RemoveHandObj();
+
+                }
             }
         }
     }

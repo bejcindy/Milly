@@ -17,7 +17,8 @@ public enum HandObjectType
     DOUBLE,
     PLACEMENT,
     CATFOOD,
-    FOOD
+    FOOD,
+    BROOM
 }
 public class PickUpObject : LivableObject
 {

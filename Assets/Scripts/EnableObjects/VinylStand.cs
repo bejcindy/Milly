@@ -240,6 +240,20 @@ public class VinylStand : LivableObject
         }
     }
 
+    public void PlaceVinyl(Vinyl vinyl)
+    {
+        if (!availableSpot)
+            CheckAvailableSpot();
+        vinyl.onRecordPlayer = false;
+        vinyl.inHand = false;
+        vinyl.onStand = true;
+        vinyl.selected = false;
+        vinyl.transform.SetParent(availableSpot);
+        vinyl.transform.localPosition = Vector3.zero;
+        vinyl.transform.localRotation = Quaternion.identity;
+        availableSpot = null;
+    }
+
     bool CheckAvailableSpot()
     {
         foreach(var obj in holdingPositions)

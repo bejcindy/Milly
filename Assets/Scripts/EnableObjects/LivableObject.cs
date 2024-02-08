@@ -390,7 +390,7 @@ public class LivableObject : MonoBehaviour
         {
             if (GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds))
             {
-                Transform playerT = GameObject.Find("Player").transform;
+                Transform playerT = ReferenceTool.player.transform;
                 LookingObject lo;
                 lo = go.GetComponent<LookingObject>();
                 if ( Vector3.Distance(go.position, playerT.position) <= lo.minDist)

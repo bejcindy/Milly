@@ -37,6 +37,8 @@ public class CharacterTattooMenu : MonoBehaviour
     protected Vector3 tatOnPos;
     protected Vector3 tatOffPos;
     protected string blinkSF = "event:/Sound Effects/Tattoo/Blink";
+    protected string charcterFinalSF = "event:/Sound Effects/Tattoo/CharacterFinalChange";
+    protected string fadeOutTatSF = "event:/Sound Effects/Tattoo/FadeOutTattoo";
 
     protected virtual void Start()
     {
@@ -83,7 +85,7 @@ public class CharacterTattooMenu : MonoBehaviour
                     if(!childTat.isFinalTat)
                         childTat.finalFaded = true;
                 }
-
+                RuntimeManager.PlayOneShot(fadeOutTatSF);
             }
 
             if (fadeInFinalTat)
@@ -92,6 +94,7 @@ public class CharacterTattooMenu : MonoBehaviour
                 finalTattoo.gameObject.SetActive(true);
                 finalTattoo.dragged = true;
                 myChar.CharacterFinalChange();
+                RuntimeManager.PlayOneShot(charcterFinalSF);
             }
 
             if (finalTransition)

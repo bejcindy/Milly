@@ -7,11 +7,14 @@ public class TatMeshMat : MonoBehaviour
 
     public Material burnMat;
     public Material ditherMat;
+    
+    
     Material mat;
 
     public void SwitchDitherMat()
     {
         GetComponent<Renderer>().material = ditherMat;
+        GetComponent<Renderer>().material.SetFloat("_DitherThreshold", 1);
         GetComponent<Renderer>().material.SetFloat("_WhiteDegree", 0);
     }
 

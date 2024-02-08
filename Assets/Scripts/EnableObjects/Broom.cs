@@ -6,18 +6,13 @@ using UnityEngine;
 public class Broom : PickUpObject
 {
     public static bool hasBroom;
-    public bool sweeping;
     public GroundDirt selectedDirt;
-    float originalVerticalSpeed, originalHorizontalSpeed;
 
-    CinemachinePOV pov;
     protected override void Start()
     {
         base.Start();
         objType = HandObjectType.BROOM;
-        pov = ReferenceTool.playerPOV;
-        originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
-        originalVerticalSpeed = pov.m_VerticalAxis.m_MaxSpeed;
+
     }
 
     protected override void Update()
@@ -36,31 +31,14 @@ public class Broom : PickUpObject
 
         if (selectedDirt)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
-                sweeping = true;
+                selectedDirt.SweepDirt();
             }
 
-            if (Input.GetMouseButtonUp(0))
-            {
-                sweeping = false;
-            }
-        }
-        else
-        {
-            sweeping = false;
         }
 
-        if (!sweeping)
-        {
-            pov.m_HorizontalAxis.m_MaxSpeed = originalHorizontalSpeed;
-            pov.m_VerticalAxis.m_MaxSpeed = originalVerticalSpeed;
-        }
-        else{
 
-            pov.m_HorizontalAxis.m_MaxSpeed = 0;
-            pov.m_VerticalAxis.m_MaxSpeed = 0;
-        }
     }
 
     void LayerDetection()

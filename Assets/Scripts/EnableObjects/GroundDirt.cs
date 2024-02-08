@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GroundDirt : MonoBehaviour
 {
+    public int sweepTimes;
+    public int dirtStage;
     public bool sweepable;
     public bool cleaned;
     public bool sweeped;
@@ -12,6 +14,8 @@ public class GroundDirt : MonoBehaviour
     public Broom broom;
 
     float alphaVal;
+    float startAlphaVal;
+    float stageAlphaVal;
     Material dirtMat;
     Renderer rend;
     bool[] checkBoundVisible;
@@ -19,9 +23,12 @@ public class GroundDirt : MonoBehaviour
 
     void Start()
     {
+        sweepTimes = Random.Range(2, 4);
         rend = GetComponent<Renderer>();
         dirtMat = rend.material;
         alphaVal = dirtMat.GetFloat("_AlphaClipThreshold");
+        startAlphaVal = alphaVal;
+        stageAlphaVal = startAlphaVal;
     }
 
 
@@ -48,18 +55,30 @@ public class GroundDirt : MonoBehaviour
         }
     }
 
+    float CalculateTargetAlpha()
+    {
+        return stageAlphaVal + ((1 - startAlphaVal) / sweepTimes);
+    }
+
     void CleanDirtAlpha()
     {
-        if(alphaVal < 1)
+        if(alphaVal < CalculateTargetAlpha())
         {
             alphaVal += 0.5f * Time.deltaTime;
             dirtMat.SetFloat("_AlphaClipThreshold", alphaVal);
         }
         else
         {
-            alphaVal = 1;
-            dirtMat.SetFloat("_AlphaClipThreshold", 1);
-            cleaned = true;
+            if (alphaVal < 1)
+            {
+                stageAlphaVal = alphaVal;
+                sweeped = false;
+            }
+            else
+            {
+                cleaned = true;
+            }
+
         }
     }
 
@@ -69,6 +88,14 @@ public class GroundDirt : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerEntered = true;
+        }
+    }
+
+    void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {

@@ -23,6 +23,8 @@ public class MainCharactersMenu : CharacterTattooMenu
 
     }
 
+
+
     protected override IEnumerator MenuOnBlink()
     {
         mindPalace.noControl = true;

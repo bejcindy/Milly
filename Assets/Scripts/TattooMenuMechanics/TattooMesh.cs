@@ -29,6 +29,7 @@ public class TattooMesh : MonoBehaviour
     bool reachedNPC;
     float lerpBackDuration = .5f;
     CharacterTattooMesh characterTatMesh;
+    Collider myCollider;
     string dissolveSF = "event:/Sound Effects/Tattoo/Dissolve";
     string hoverSF= "event:/Sound Effects/Tattoo/HoverObject";
     string pressSF = "event:/Sound Effects/Tattoo/PressDown";
@@ -40,6 +41,8 @@ public class TattooMesh : MonoBehaviour
         myTat = transform.parent.GetComponent<CharacterTattoo>();
         characterTatMesh = myTat.myChar;
         myMenu = transform.parent.parent.parent.GetComponent<CharacterTattooMenu>();
+        myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
         originalPos = transform.localPosition;
         ditherIn = false;
         ditherOut = false;
@@ -257,6 +260,7 @@ public class TattooMesh : MonoBehaviour
 
     void SetDitherMeshOut()
     {
+        myCollider.enabled = false;
         foreach (Transform child in transform)
         {
             if(child.GetComponent<Renderer>()) {
@@ -279,6 +283,7 @@ public class TattooMesh : MonoBehaviour
 
     void SetDitherMeshIn()
     {
+        myCollider.enabled = true;
         foreach (Transform child in transform)
         {
             if (child.GetComponent<Renderer>())

@@ -129,6 +129,8 @@ public class VinylStand : LivableObject
             }
         }
 
+
+
     }
 
     void SelectInitialVinyl()

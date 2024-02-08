@@ -18,6 +18,12 @@ public class RecordPlayer : LivableObject
     public Quaternion stopRot;
     public bool isPlaying;
 
+    [Foldout("Tattoo checking")]
+    public int totalVinylCount;
+    public int vinylListenCount;
+    public CharacterTattoo vinylTat;
+    bool tatTriggered;
+
     public bool moving;
     string recorPlaceEvent = "event:/Sound Effects/ObjectInteraction/Vinyls/Vinyl_Place";
     protected override void Start()
@@ -33,6 +39,12 @@ public class RecordPlayer : LivableObject
     protected override void Update()
     {
         base.Update();
+
+        if(vinylListenCount == totalVinylCount && !tatTriggered)
+        {
+            tatTriggered = true;
+            vinylTat.triggered = true;
+        }
 
         if (currentRecord)
         {

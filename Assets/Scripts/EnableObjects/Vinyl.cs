@@ -9,6 +9,8 @@ public class Vinyl : PickUpObject
     public bool onStand;
     public bool standSelect;
     public GameObject mySong;
+    public bool listened;
+    bool listneCountAdded;
 
     bool notInCD;
     float placedCDVal = 2f;
@@ -25,7 +27,11 @@ public class Vinyl : PickUpObject
     // Update is called once per frame
     protected override void Update()
     {
-
+        if(listened && !listneCountAdded)
+        {
+            listneCountAdded = true;
+            recordPlayer.vinylListenCount++;
+        }
         if (inHand)
         {
             base.Update();
@@ -81,7 +87,11 @@ public class Vinyl : PickUpObject
 
 
                 if (!mySong.activeSelf)
+                {
+                    listened = true;
                     mySong.SetActive(true);
+                }
+
                 transform.Rotate(Vector3.up * 50 * Time.deltaTime, Space.Self);
             }
             else

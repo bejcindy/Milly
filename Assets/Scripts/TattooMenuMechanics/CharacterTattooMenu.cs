@@ -7,6 +7,7 @@ using VInspector;
 
 public class CharacterTattooMenu : MonoBehaviour
 {
+    public MindPalace mindPalace;
     [Foldout("State")]
     public bool menuOn;
     public bool fadeOutAllTats;
@@ -14,6 +15,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public bool finalTransition;
     public bool finished;
     public bool discovered;
+    public bool draggingTat;
     public bool isMainMenu;
 
     [Foldout("References")]
@@ -25,8 +27,7 @@ public class CharacterTattooMenu : MonoBehaviour
 
     [Foldout("Values")]
     public float blinkDuration = 1f;
-    public MindPalace mindPalace;
-    public bool draggingTat;
+
 
     protected Camera frontCam;
     protected Camera colorCam;
@@ -41,6 +42,12 @@ public class CharacterTattooMenu : MonoBehaviour
         tatOffPos = new Vector3(0, 0, -5);
         mindPalace = transform.parent.GetComponent<MindPalace>();
         menuOn = false;
+        if (!isMainMenu)
+        {
+            myCam = transform.GetChild(0).GetComponent<CinemachineVirtualCamera>();
+            myChar = transform.GetChild(1).GetComponent<CharacterTattooMesh>();
+            myTattoos = transform.GetChild(2);
+        }
         frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
         colorCam = Camera.main.transform.GetChild(1).GetComponent<Camera>();
         focusCam = Camera.main.transform.GetChild(2).GetComponent<Camera>();
@@ -107,6 +114,7 @@ public class CharacterTattooMenu : MonoBehaviour
         discovered = true;
         mindPalace.currentMenu = this;
         mindPalace.SelectMenu(this);
+        myChar.SetDither(false);
         SwitchTattoosOn();
         StartCoroutine(MenuOnBlink());
     }
@@ -122,11 +130,25 @@ public class CharacterTattooMenu : MonoBehaviour
         foreach (Transform t in myTattoos)
         {
             CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
-            tat.DitherMeshIn();
+
             if (!tat.isFinalTat)
             {
+                tat.DitherMeshIn();
                 tat.MenuFadeInText();
+                if (tat.activated)
+                {
+                    tat.MenuFadeInTatSprite();
+                }
             }
+            else
+            {
+                if (finished)
+                {
+                    tat.MenuFadeInTatSprite();
+                }
+            }
+
+
         }
     }
 
@@ -135,11 +157,14 @@ public class CharacterTattooMenu : MonoBehaviour
         foreach (Transform t in myTattoos)
         {
             CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
-            tat.DitherMeshOut();
+
             if (!tat.isFinalTat)
             {
+                tat.DitherMeshOut();
                 tat.MenuFadeOutText();
+
             }
+            tat.MenuFadeOutTatSprite();
         }
 
     }
@@ -148,22 +173,20 @@ public class CharacterTattooMenu : MonoBehaviour
     {
         mindPalace.SwitchMainMenuOn();
         myChar.AfterFinalCharFrontRotate();
-        if(finished)
-            finalTattoo.FinalTatFrontRotate();
+        //if(finished)
+        //    finalTattoo.FinalTatFrontRotate();
         StartCoroutine(LerpPosition(tatOffPos, 1f));
         myCam.m_Priority = 0;
     }
 
     public void SelectMyMenu()
     {
-        Debug.Log("selecting this menu");
         mindPalace.noControl = true;
         myCam.m_Priority = 20;
         SwitchTattoosOn();
         if (finished)
         {
             myChar.AfterFinalCharFinishedRotate();
-            finalTattoo.FinalTatInMenuRotate();
         }
 
         StartCoroutine(LerpPosition(tatOnPos, 1f));
@@ -268,15 +291,7 @@ public class CharacterTattooMenu : MonoBehaviour
         if(targetPosition == tatOnPos)
         {
             menuOn = true;
-            foreach (Transform t in myTattoos)
-            {
-                CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
-                tat.DitherMeshIn();
-                if (!tat.isFinalTat)
-                {
-                    tat.MenuFadeInText();
-                }
-            }
+            SwitchTattoosOn();
         }
 
         mindPalace.noControl = false;

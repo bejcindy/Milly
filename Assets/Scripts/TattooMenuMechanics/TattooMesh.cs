@@ -19,8 +19,6 @@ public class TattooMesh : MonoBehaviour
     bool dragging;
 
     [Foldout("Materials")]
-    public Material ditherMat;
-    public Material burnMat;
     public float ditherVal;
     public bool ditherIn;
     public bool ditherOut;
@@ -220,10 +218,10 @@ public class TattooMesh : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-
-            if (child.GetComponent<Renderer>())
+            TatMeshMat childMat = child.GetComponent<TatMeshMat>();
+            if (childMat)
             {
-                child.GetComponent<Renderer>().material = ditherMat;
+                childMat.SwitchDitherMat();
             }
 
         }
@@ -231,12 +229,12 @@ public class TattooMesh : MonoBehaviour
 
     void SwitchBurnMat()
     {
-        Debug.Log("See if we are setting material a lot");
         foreach (Transform child in transform)
         {
-            if (child.GetComponent<Renderer>())
+            TatMeshMat childMat = child.GetComponent<TatMeshMat>();
+            if (childMat)
             {
-                child.GetComponent<Renderer>().material = burnMat;
+                childMat.SwitchBurnMat();
             }
 
         }
@@ -348,12 +346,16 @@ public class TattooMesh : MonoBehaviour
     {
         if (other.CompareTag("CharTatMesh"))
         {
-            characterTatMesh.ChangeLayer(17);
-            foreach(Transform child in transform)
+            if(other.GetComponent<CharacterTattooMesh>() == myMenu.myChar)
             {
-                child.gameObject.layer = 16;
+                characterTatMesh.ChangeLayer(17);
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.layer = 16;
+                }
+                reachedNPC = true;
             }
-            reachedNPC = true;
+
         }
     }
 
@@ -361,12 +363,16 @@ public class TattooMesh : MonoBehaviour
     {
         if (other.CompareTag("CharTatMesh"))
         {
-            characterTatMesh.ChangeLayer(9);
-            foreach (Transform child in transform)
+            if (other.GetComponent<CharacterTattooMesh>() == myMenu.myChar)
             {
-                child.gameObject.layer = 17;
+                characterTatMesh.ChangeLayer(9);
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.layer = 17;
+                }
+                reachedNPC = false;
             }
-            reachedNPC = false;
+
         }
     }
 }

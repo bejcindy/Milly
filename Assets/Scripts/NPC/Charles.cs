@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using FMODUnity;
+using VInspector;
 
 public class Charles : NPCControl
 {
     public bool charlesSmoking;
     public bool charlesOpenDoor;
 
+    [Foldout("Progression References")]
     public GameObject charlesPizza;
     public GameObject charlesFollowDia;
     public Ron ron;
+    public CharacterTattoo cigTat;
+    public CharacterTattoo pizzaTat;
 
     bool readyfirstMove;
     float firstWaitTime = 15f;
@@ -65,6 +69,22 @@ public class Charles : NPCControl
     public void CharlesAction3()
     {
         noTalkStage = false;
+    }
+
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        base.OnConversationEnd(other);
+
+        if(_counter == 1)
+        {
+            cigTat.triggered = true;
+        }
+
+        if (_counter == 2)
+        {
+            pizzaTat.triggered = true;
+        }
     }
 
     public void MoveCharlesUpstairs()

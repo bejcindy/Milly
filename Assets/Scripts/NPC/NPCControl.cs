@@ -577,8 +577,8 @@ public class NPCControl : MonoBehaviour
         }
         foreach (Transform child in npcMesh)
         {
-            child.GetComponent<Renderer>().material = mat;
-            Material childMat = child.GetComponent<Renderer>().material;
+            if(child.GetComponent<Renderer>())
+                child.GetComponent<Renderer>().material = mat;
         }
     }
 

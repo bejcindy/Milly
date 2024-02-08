@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VInspector;
 using TMPro;
+using static System.Net.Mime.MediaTypeNames;
 
 
 public class CharacterTattoo : MonoBehaviour
@@ -11,7 +12,7 @@ public class CharacterTattoo : MonoBehaviour
     [Foldout("Components")]
     public TattooMesh tatMesh;
     public TextMeshPro tatText;
-    public Transform tatSprite;
+    public SpriteRenderer tatSprite;
 
 
     [Foldout("State")]
@@ -22,6 +23,8 @@ public class CharacterTattoo : MonoBehaviour
     public bool draggingTattoo;
     public bool fadeOutText;
     public bool fadeInText;
+    public bool fadeInSprite;
+    public bool fadeOutSprite;
     public bool isFinalTat;
     bool triggeredOnce;
 
@@ -43,9 +46,13 @@ public class CharacterTattoo : MonoBehaviour
     void Start()
     {
         tatAlpha = 1;
-        tatMesh = transform.GetChild(0).GetComponent<TattooMesh>();
-        tatText = transform.GetChild(1).GetComponent<TextMeshPro>();
-        tatSprite = transform.GetChild(2);
+        if (!isFinalTat)
+        {
+            tatMesh = transform.GetChild(0).GetComponent<TattooMesh>();
+            tatText = transform.GetChild(1).GetComponent<TextMeshPro>();
+            tatSprite = transform.GetChild(2).GetComponent<SpriteRenderer>();
+        }
+
         myMenu = transform.parent.parent.GetComponent<CharacterTattooMenu>();
 
     }
@@ -64,7 +71,7 @@ public class CharacterTattoo : MonoBehaviour
 
         if (dragged)
         {
-            FadeInTatSprite();
+            FirstFadeInSprite();
         }
 
         if (fadeOutText)
@@ -77,9 +84,19 @@ public class CharacterTattoo : MonoBehaviour
             FadeInText();
         }
 
+        if (fadeInSprite)
+        {
+            FadeInSprite();
+        }
+
+        if (fadeOutSprite)
+        {
+            FadeOutSprite();
+        }
+
 
         if (finalFaded)
-            FadeOutTatSprite();
+            FinalFadeOutSprite();
         
     }
 
@@ -149,39 +166,75 @@ public class CharacterTattoo : MonoBehaviour
         }
     }
 
-    void FadeInTatSprite()
+    public void FirstFadeInSprite()
     {
-        Material spriteMat = tatSprite.GetComponent<Renderer>().material;
-        spriteMat.EnableKeyword("_AlphaClipThreshold");
-        if(tatAlpha > tatAlphaTarget)
+        if (tatSprite.color.a < 1)
         {
-            tatAlpha -= 0.2f * Time.deltaTime;
-            spriteMat.SetFloat("_AlphaClipThreshold", tatAlpha);
+            Color temp = tatSprite.color;
+            temp.a += Time.deltaTime;
+            tatSprite.color = temp;
         }
         else
         {
-            tatAlpha = 0.2f;
-            spriteMat.SetFloat("_AlphaClipThreshold", tatAlpha);
             dragged = false;
             activated = true;
             myMenu.mindPalace.noControl = false;
         }
+
     }
 
-    void FadeOutTatSprite()
+    public void FinalFadeOutSprite()
     {
-        Material spriteMat = tatSprite.GetComponent<Renderer>().material;
-        spriteMat.EnableKeyword("_AlphaClipThreshold");
-        if (tatAlpha < 1)
+        if (tatSprite.color.a > 0)
         {
-            tatAlpha += 0.5f * Time.deltaTime;
-            spriteMat.SetFloat("_AlphaClipThreshold", tatAlpha);
+            Color temp = tatSprite.color;
+            temp.a -= 0.5f * Time.deltaTime;
+            tatSprite.color = temp;
         }
         else
         {
+            finalFaded = false;
             if (!myMenu.fadeInFinalTat)
                 myMenu.fadeInFinalTat = true;
-            gameObject.SetActive(false);
+        }
+
+    }
+
+    public void MenuFadeOutTatSprite()
+    {
+        fadeOutSprite = true;
+    }
+
+    public void MenuFadeInTatSprite()
+    {
+        fadeInSprite = true;
+    }
+
+    void FadeOutSprite()
+    {
+        if (tatSprite.color.a > 0)
+        {
+            Color temp = tatSprite.color;
+            temp.a -= Time.deltaTime;
+            tatSprite.color = temp;
+        }
+        else
+        {
+            fadeOutSprite = false;
+        }
+    }
+
+    void FadeInSprite()
+    {
+        if (tatSprite.color.a < 1)
+        {
+            Color temp = tatSprite.color;
+            temp.a += Time.deltaTime;
+            tatSprite.color = temp;
+        }
+        else
+        {
+            fadeInSprite = false;
         }
     }
 
@@ -214,7 +267,7 @@ public class CharacterTattoo : MonoBehaviour
             yield return null;
         }
         transform.localPosition = targetPosition;
-
+        myMenu.mindPalace.noControl = false;
     }
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)

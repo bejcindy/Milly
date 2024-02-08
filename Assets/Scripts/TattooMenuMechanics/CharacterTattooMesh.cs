@@ -76,9 +76,14 @@ public class CharacterTattooMesh : MonoBehaviour
             selectable = false;
         }
 
-        if (ditherOut || ditherIn)
+        if (ditherOut)
         {
-            CharacterDither();
+            CharacterDitherOut();
+        }
+
+        if (ditherIn)
+        {
+            CharacterDitherIn();
         }
 
     }
@@ -124,7 +129,6 @@ public class CharacterTattooMesh : MonoBehaviour
         foreach (Transform child in npcMesh)
         {
             child.GetComponent<Renderer>().material = materials[stage];
-            Material childMat = child.GetComponent<Renderer>().material;
         }
         stageChanging = true;
     }
@@ -222,24 +226,47 @@ public class CharacterTattooMesh : MonoBehaviour
     {
         if (dither)
         {
+            ditherIn = false;
             ditherOut = true;
         }
         else
         {
+            ditherOut = false;
             ditherIn = true;
         }
     }
 
-    public void CharacterDither()
+    public void CharacterDitherOut()
     {
         foreach(Transform child in npcMesh)
         {
             Material childMat = child.GetComponent<Renderer>().material;
             childMat.EnableKeyword("_DitherThreshold");
-            if (ditherOut)
+            if (ditherVal>0)
                 DitherOut(childMat);
             else
+            {
+                ditherVal = 0;
+                childMat.SetFloat("_DitherThreshold", 0);
+                ditherOut = false;
+            }
+        }
+    }
+
+    public void CharacterDitherIn()
+    {
+        foreach (Transform child in npcMesh)
+        {
+            Material childMat = child.GetComponent<Renderer>().material;
+            childMat.EnableKeyword("_DitherThreshold");
+            if (ditherVal < 1)
                 DitherIn(childMat);
+            else
+            {
+                ditherVal = 1;
+                childMat.SetFloat("_DitherThreshold", 1);
+                ditherIn = false;
+            }
         }
     }
 
@@ -247,30 +274,16 @@ public class CharacterTattooMesh : MonoBehaviour
 
     void DitherOut(Material mat)
     {
-        if (ditherVal > 0)
-        {
-            ditherVal -= Time.deltaTime;
-            mat.SetFloat("_DitherThreshold", ditherVal);
-        }
-        else
-        {
-            ditherOut = false;
-            ditherIn = false;
-        }
+        ditherVal -= Time.deltaTime;
+        mat.SetFloat("_DitherThreshold", ditherVal);
+
     }
 
     void DitherIn(Material mat)
     {
-        if (ditherVal < 1)
-        {
-            ditherVal += Time.deltaTime;
-            mat.SetFloat("_DitherThreshold", ditherVal);
-        }
-        else
-        {
-            ditherOut = false;
-            ditherIn = false;
-        }
+        ditherVal += Time.deltaTime;
+        mat.SetFloat("_DitherThreshold", ditherVal);
+
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)

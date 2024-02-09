@@ -233,6 +233,7 @@ public class CharacterTattooMenu : MonoBehaviour
             frontCam.fieldOfView = 35;
             colorCam.fieldOfView = 35;
             focusCam.fieldOfView = 35;
+            mindPalace.HandOff();
         }
         RuntimeManager.PlayOneShot(blinkSF);
 
@@ -266,6 +267,7 @@ public class CharacterTattooMenu : MonoBehaviour
             frontCam.fieldOfView = 60;
             colorCam.fieldOfView = 60;
             focusCam.fieldOfView = 60;
+            mindPalace.HandOn();
         }
 
 

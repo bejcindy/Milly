@@ -59,7 +59,7 @@ public class PlayerHolding : MonoBehaviour
     List<GameObject> UIs;
     List<Sprite> usedSprites;
     #endregion
-
+    public bool objectLerping;
 
     // Start is called before the first frame update
     void Start()
@@ -737,7 +737,7 @@ public class PlayerHolding : MonoBehaviour
     {
         if (leftHand.holdingObj.GetComponent<Chopsticks>())
             leftHand.holdingObj.GetComponent<Chopsticks>().chopMoving = true;
-
+        objectLerping = true;
         float time = 0;
         Vector3 startPosition = obj.localPosition;
         while (time < duration)
@@ -750,6 +750,7 @@ public class PlayerHolding : MonoBehaviour
 
         if (leftHand.holdingObj.GetComponent<Chopsticks>())
             leftHand.holdingObj.GetComponent<Chopsticks>().chopMoving = false;
+        objectLerping = false;
         Invoke(nameof(EnableThrowLeft), 0.1f);
     }
 

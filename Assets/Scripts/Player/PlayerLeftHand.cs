@@ -62,6 +62,7 @@ public class PlayerLeftHand : MonoBehaviour
     PickUpObject objPickUp;
     Rigidbody objRb;
     bool notHoldingAnyThing;
+    bool resetAlready;
     string containerHint = "<b>LeftClick</b> Put In Container";
 
     #region UI variables
@@ -123,7 +124,7 @@ public class PlayerLeftHand : MonoBehaviour
 
 
         #region Hint Region
-        if (smoking && !holdingObj.GetComponent<Cigarette>().inhaling &&!playerHolding.atInterior)
+        if (smoking && !holdingObj.GetComponent<Cigarette>().inhaling && !playerHolding.atInterior)
         {
             if (holdingObj.GetComponent<Cigarette>().cigStage < 4)
                 DataHolder.ShowHint(DataHolder.hints.inhaleHint);
@@ -214,7 +215,7 @@ public class PlayerLeftHand : MonoBehaviour
                 smokingHinted = true;
             }
         }
-        else if(isHolding && playerHolding.atInterior&& playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+        else if (isHolding && playerHolding.atInterior && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
         {
             DataHolder.HideHint(DataHolder.hints.powderHint);
             DataHolder.HideHint(DataHolder.hints.drinkHint);
@@ -244,7 +245,7 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(containerHint);
             drinkHintDone = true;
         }
-        if (!playerHolding.atContainer || !playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+        if (!playerHolding.atContainer )
         {
             DataHolder.HideHint(containerHint);
         }
@@ -274,6 +275,8 @@ public class PlayerLeftHand : MonoBehaviour
                 Drink();
                 if (!drinking && !playerHolding.atInterior)
                     BasicThrow();
+                else if (!drinking && playerHolding.atInterior)
+                    InteriorContainer();
                 break;
             case HandObjectType.CHOPSTICKS:
                 currentChop = holdingObj.GetComponent<Chopsticks>();
@@ -283,9 +286,10 @@ public class PlayerLeftHand : MonoBehaviour
             case HandObjectType.CIGARETTE:
                 Smoke();
                 if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
-                {
                     BasicThrow();
-                }
+                else if (playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
+                    InteriorContainer();
+
                 if (!smokingHinted)
                 {
                     DataHolder.HideHint(DataHolder.hints.cigHint);
@@ -299,18 +303,38 @@ public class PlayerLeftHand : MonoBehaviour
             case HandObjectType.FOOD:
                 EatHandFood();
                 if (!drinking && !playerHolding.atInterior)
+                {
                     BasicThrow();
-                else if (playerHolding.atInterior)
-                    ResetThrow();
+                    resetAlready = false;
+                }
+                else if (!drinking && playerHolding.atInterior)
+                {
+                    if (!resetAlready && !playerHolding.objectLerping)
+                    {
+                        ResetThrow();
+                        resetAlready = true;
+                    }
+                    InteriorContainer();
+                }
                 break;
             case HandObjectType.BROOM:
                 DetectBroomUse();
                 break;
             default:
                 if (!drinking && !playerHolding.atInterior)
+                {
                     BasicThrow();
-                else if (playerHolding.atInterior)
-                    ResetThrow();
+                    resetAlready = false;
+                }
+                else if (!drinking && playerHolding.atInterior)
+                {
+                    if (!resetAlready && !playerHolding.objectLerping)
+                    {
+                        ResetThrow();
+                        resetAlready = true;
+                    }
+                    InteriorContainer();
+                }
                 break;
         }
     }
@@ -539,7 +563,7 @@ public class PlayerLeftHand : MonoBehaviour
                 readyToThrow = true;
             }
 
-            if(readyToThrow && !noThrow)
+            if (readyToThrow && !noThrow)
             {
                 if (Input.GetMouseButtonUp(0))
                 {
@@ -578,7 +602,7 @@ public class PlayerLeftHand : MonoBehaviour
                         {
                             forceDirection = (hit.point - holdingObj.localPosition).normalized;
                         }
-                         
+
                         Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwForceUp;
                         holdingObj.GetComponent<Rigidbody>().AddForce(forceToAdd, ForceMode.Impulse);
                         FMODUnity.RuntimeManager.PlayOneShot(objPickUp.throwEventName, transform.position);
@@ -595,7 +619,7 @@ public class PlayerLeftHand : MonoBehaviour
                         DataHolder.HideHint(DataHolder.hints.throwHint);
                         aimHintDone = true;
                     }
-                    
+
                 }
                 if (Input.GetMouseButton(0))
                 {
@@ -619,7 +643,7 @@ public class PlayerLeftHand : MonoBehaviour
 
                 }
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 readyToThrow = false;
@@ -705,7 +729,7 @@ public class PlayerLeftHand : MonoBehaviour
                     }
 
                 }
-               
+
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -754,11 +778,11 @@ public class PlayerLeftHand : MonoBehaviour
                 }
 
                 Vinyl vinyl = holdingObj.GetComponent<Vinyl>();
-                if(vinyl != null)
+                if (vinyl != null)
                 {
                     vinyl.CheckPlaceVinyl();
                 }
-                RemoveHandObj();    
+                RemoveHandObj();
 
             }
         }
@@ -812,7 +836,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
-        if(objPickUp.GetComponent<Cigarette>())
+        if (objPickUp.GetComponent<Cigarette>())
             movingCig = true;
 
 
@@ -839,7 +863,7 @@ public class PlayerLeftHand : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
-        if(!holdingObj)
+        if (!holdingObj)
             holdingObj.localRotation = endValue;
     }
 }

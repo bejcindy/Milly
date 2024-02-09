@@ -13,7 +13,7 @@ public class FloorTile : MonoBehaviour
     float matColorVal;
     float fadeInterval;
 
-    public GroundDirt[] myDirts;
+    public List<GroundDirt> myDirts;
     public bool overrideStartSequence;
     bool layerChanged;
 
@@ -23,6 +23,7 @@ public class FloorTile : MonoBehaviour
         mat = rend.material;
         matColorVal = 1;
         fadeInterval = 10;
+        GetComponentsInChildren<GroundDirt>(myDirts);
     }
 
     // Update is called once per frame
@@ -30,7 +31,24 @@ public class FloorTile : MonoBehaviour
     {
         if (activated && !firstActivated)
             TurnOnColor(mat);
+
+        if (AllDirtCleaned())
+        {
+            activated = true;
+        }
         
+    }
+
+    bool AllDirtCleaned()
+    {
+        foreach(GroundDirt dirt in myDirts)
+        {
+            if (!dirt.cleaned)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -40,7 +58,8 @@ public class FloorTile : MonoBehaviour
     {
         if (!layerChanged)
         {
-            //gameObject.layer = 18;
+            gameObject.layer = 18;
+            matColorVal = 1;
             layerChanged = true;
         }
 

@@ -215,6 +215,7 @@ public class CharacterTattooMenu : MonoBehaviour
     protected virtual IEnumerator MenuOnBlink()
     {
         mindPalace.noControl = true;
+        MindPalace.hideHint = true;
         float t = 0;
         while (t < blinkDuration)
         {
@@ -245,11 +246,13 @@ public class CharacterTattooMenu : MonoBehaviour
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.SwitchTatMenuBlend();
+        MindPalace.showTatHint = true;
         yield break;
     }
 
     protected virtual IEnumerator MenuOffBlink()
     {
+        MindPalace.showTatHint = false;
         mindPalace.SwitchPlayerCamBlend();
         mindPalace.noControl = true;
         StartCoroutine(LerpPosition(tatOffPos, 1f));
@@ -279,7 +282,7 @@ public class CharacterTattooMenu : MonoBehaviour
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.noControl = false;
-
+        MindPalace.hideHint = false;
         yield break;
     }
 

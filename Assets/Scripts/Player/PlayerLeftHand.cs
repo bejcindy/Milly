@@ -63,7 +63,7 @@ public class PlayerLeftHand : MonoBehaviour
     Rigidbody objRb;
     bool notHoldingAnyThing;
     bool resetAlready;
-    string containerHint = "<b>LeftClick</b> Put In Container";
+    public string containerHint = "<b>LeftClick</b> Put In Container";
 
     #region UI variables
     bool aimHinted, smokingHinted, drinkHinted;
@@ -124,130 +124,133 @@ public class PlayerLeftHand : MonoBehaviour
 
 
         #region Hint Region
-        if (smoking && !holdingObj.GetComponent<Cigarette>().inhaling && !playerHolding.atInterior)
+        if (!MindPalace.hideHint)
         {
-            if (holdingObj.GetComponent<Cigarette>().cigStage < 4)
-                DataHolder.ShowHint(DataHolder.hints.inhaleHint);
-            else
+            if (smoking && !holdingObj.GetComponent<Cigarette>().inhaling && !playerHolding.atInterior)
+            {
+                if (holdingObj.GetComponent<Cigarette>().cigStage < 4)
+                    DataHolder.ShowHint(DataHolder.hints.inhaleHint);
+                else
+                    DataHolder.ShowHint(DataHolder.hints.throwHint);
+                DataHolder.HideHint(DataHolder.hints.exhaleHint);
+                smokingHintDone = false;
+            }
+            else if (smoking && holdingObj.GetComponent<Cigarette>().inhaling && !playerHolding.atInterior)
+            {
+                DataHolder.ShowHint(DataHolder.hints.exhaleHint);
+                DataHolder.HideHint(DataHolder.hints.throwHint);
+                DataHolder.HideHint(DataHolder.hints.inhaleHint);
+                smokingHintDone = false;
+            }
+            else if (isHolding && holdingObj.GetComponent<EatObject>())
+            {
+                DataHolder.ShowHint(DataHolder.hints.eatHint);
+            }
+            else if (isHolding && holdingObj.GetComponent<Pizza>() && inPizzaBox)
+            {
+                DataHolder.ShowHint(DataHolder.hints.pizzaHint);
+            }
+            else if (isHolding && holdingObj.GetComponent<GroceryBox>() && GroceryBoxGame.hasPlaceableBox)
+            {
+                DataHolder.ShowHint(DataHolder.hints.pizzaHint);
+                DataHolder.HideHint(DataHolder.hints.throwHint);
+            }
+            else if (currentChop && !chopAiming)
+            {
+                //DataHolder.HideHint(DataHolder.hints.pickFoodHint);
+                DataHolder.ShowHint(DataHolder.hints.eatHint);
+                DataHolder.HideHint(DataHolder.hints.chopHint);
+                chophinted = true;
+            }
+            else if (currentChop && chopAiming)
+            {
+                //关其他的
+                DataHolder.ShowHint(DataHolder.hints.chopHint);
+                DataHolder.HideHint(DataHolder.hints.eatHint);
+                //DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
+                chophinted = true;
+            }
+            else if (currentChop && currentChop.hasFood)
+            {
+                DataHolder.HideHint(DataHolder.hints.pickFoodHint);
+                DataHolder.HideHint(DataHolder.hints.chopHint);
+                DataHolder.ShowHint(DataHolder.hints.eatHint);
+                chophinted = true;
+            }
+            else if (!currentChop && chophinted)
+            {
+                DataHolder.HideHint(DataHolder.hints.chopHint);
+                DataHolder.HideHint(DataHolder.hints.pickFoodHint);
+                DataHolder.HideHint(DataHolder.hints.eatHint);
+                chophinted = false;
+            }
+            else if (holdingObj && holdingObj.GetComponent<ChiliPowder>())
+            {
+                DataHolder.ShowHint(DataHolder.hints.powderHint);
+            }
+            else if (holdingObj && holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
+            {
+                if (playerHolding.atTable || playerHolding.atInterior)
+                {
+                    DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
+                    DataHolder.ShowHint(DataHolder.hints.tableDrinkHint);
+                }
+                else
+                {
+                    DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
+                    DataHolder.ShowHint(DataHolder.hints.drinkAndThrowHint);
+                }
+                drinkHintDone = false;
+            }
+            else if (isHolding && !playerHolding.atInterior)
+            {
                 DataHolder.ShowHint(DataHolder.hints.throwHint);
-            DataHolder.HideHint(DataHolder.hints.exhaleHint);
-            smokingHintDone = false;
-        }
-        else if (smoking && holdingObj.GetComponent<Cigarette>().inhaling && !playerHolding.atInterior)
-        {
-            DataHolder.ShowHint(DataHolder.hints.exhaleHint);
-            DataHolder.HideHint(DataHolder.hints.throwHint);
-            DataHolder.HideHint(DataHolder.hints.inhaleHint);
-            smokingHintDone = false;
-        }
-        else if (isHolding && holdingObj.GetComponent<EatObject>())
-        {
-            DataHolder.ShowHint(DataHolder.hints.eatHint);
-        }
-        else if (isHolding && holdingObj.GetComponent<Pizza>() && inPizzaBox)
-        {
-            DataHolder.ShowHint(DataHolder.hints.pizzaHint);
-        }
-        else if (isHolding && holdingObj.GetComponent<GroceryBox>() && GroceryBoxGame.hasPlaceableBox)
-        {
-            DataHolder.ShowHint(DataHolder.hints.pizzaHint);
-            DataHolder.HideHint(DataHolder.hints.throwHint);
-        }
-        else if (currentChop && !chopAiming)
-        {
-            //DataHolder.HideHint(DataHolder.hints.pickFoodHint);
-            DataHolder.ShowHint(DataHolder.hints.eatHint);
-            DataHolder.HideHint(DataHolder.hints.chopHint);
-            chophinted = true;
-        }
-        else if (currentChop && chopAiming)
-        {
-            //关其他的
-            DataHolder.ShowHint(DataHolder.hints.chopHint);
-            DataHolder.HideHint(DataHolder.hints.eatHint);
-            //DataHolder.ShowHint(DataHolder.hints.pickFoodHint);
-            chophinted = true;
-        }
-        else if (currentChop && currentChop.hasFood)
-        {
-            DataHolder.HideHint(DataHolder.hints.pickFoodHint);
-            DataHolder.HideHint(DataHolder.hints.chopHint);
-            DataHolder.ShowHint(DataHolder.hints.eatHint);
-            chophinted = true;
-        }
-        else if (!currentChop && chophinted)
-        {
-            DataHolder.HideHint(DataHolder.hints.chopHint);
-            DataHolder.HideHint(DataHolder.hints.pickFoodHint);
-            DataHolder.HideHint(DataHolder.hints.eatHint);
-            chophinted = false;
-        }
-        else if (holdingObj && holdingObj.GetComponent<ChiliPowder>())
-        {
-            DataHolder.ShowHint(DataHolder.hints.powderHint);
-        }
-        else if (holdingObj && holdingObj.GetComponent<PickUpObject>().objType == HandObjectType.DRINK)
-        {
-            if (playerHolding.atTable || playerHolding.atInterior)
-            {
-                DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
-                DataHolder.ShowHint(DataHolder.hints.tableDrinkHint);
+                DataHolder.HideHint(DataHolder.hints.pizzaHint);
+                aimHintDone = false;
             }
-            else
+            else if (canSmoke && !smokingHinted)
             {
+                DataHolder.ShowHint(DataHolder.hints.cigHint);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    DataHolder.HideHint(DataHolder.hints.cigHint);
+                    smokingHinted = true;
+                }
+            }
+            else if (isHolding && playerHolding.atInterior && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+            {
+                DataHolder.HideHint(DataHolder.hints.powderHint);
+                DataHolder.HideHint(DataHolder.hints.drinkHint);
+                DataHolder.HideHint(DataHolder.hints.throwHint);
+                DataHolder.HideHint(DataHolder.hints.inhaleHint);
                 DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
-                DataHolder.ShowHint(DataHolder.hints.drinkAndThrowHint);
+                DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
+                DataHolder.HideHint(DataHolder.hints.pizzaHint);
+                DataHolder.HideHint(DataHolder.hints.inhaleHint);
+                DataHolder.HideHint(DataHolder.hints.eatHint);
+                DataHolder.HideHint(DataHolder.hints.exhaleHint);
+                DataHolder.ShowHint(containerHint);
+                drinkHintDone = true;
             }
-            drinkHintDone = false;
-        }
-        else if (isHolding && !playerHolding.atInterior)
-        {
-            DataHolder.ShowHint(DataHolder.hints.throwHint);
-            DataHolder.HideHint(DataHolder.hints.pizzaHint);
-            aimHintDone = false;
-        }
-        else if (canSmoke && !smokingHinted)
-        {
-            DataHolder.ShowHint(DataHolder.hints.cigHint);
-            if (Input.GetKeyDown(KeyCode.Space))
+            else if (!holdingObj || (isHolding && playerHolding.atInterior))
             {
-                DataHolder.HideHint(DataHolder.hints.cigHint);
-                smokingHinted = true;
+                DataHolder.HideHint(DataHolder.hints.powderHint);
+                DataHolder.HideHint(DataHolder.hints.drinkHint);
+                DataHolder.HideHint(DataHolder.hints.throwHint);
+                DataHolder.HideHint(DataHolder.hints.inhaleHint);
+                DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
+                DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
+                DataHolder.HideHint(DataHolder.hints.pizzaHint);
+                DataHolder.HideHint(DataHolder.hints.inhaleHint);
+                DataHolder.HideHint(DataHolder.hints.eatHint);
+                DataHolder.HideHint(DataHolder.hints.exhaleHint);
+                DataHolder.HideHint(containerHint);
+                drinkHintDone = true;
             }
-        }
-        else if (isHolding && playerHolding.atInterior && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
-        {
-            DataHolder.HideHint(DataHolder.hints.powderHint);
-            DataHolder.HideHint(DataHolder.hints.drinkHint);
-            DataHolder.HideHint(DataHolder.hints.throwHint);
-            DataHolder.HideHint(DataHolder.hints.inhaleHint);
-            DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
-            DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
-            DataHolder.HideHint(DataHolder.hints.pizzaHint);
-            DataHolder.HideHint(DataHolder.hints.inhaleHint);
-            DataHolder.HideHint(DataHolder.hints.eatHint);
-            DataHolder.HideHint(DataHolder.hints.exhaleHint);
-            DataHolder.ShowHint(containerHint);
-            drinkHintDone = true;
-        }
-        else if (!holdingObj || (isHolding && playerHolding.atInterior))
-        {
-            DataHolder.HideHint(DataHolder.hints.powderHint);
-            DataHolder.HideHint(DataHolder.hints.drinkHint);
-            DataHolder.HideHint(DataHolder.hints.throwHint);
-            DataHolder.HideHint(DataHolder.hints.inhaleHint);
-            DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
-            DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
-            DataHolder.HideHint(DataHolder.hints.pizzaHint);
-            DataHolder.HideHint(DataHolder.hints.inhaleHint);
-            DataHolder.HideHint(DataHolder.hints.eatHint);
-            DataHolder.HideHint(DataHolder.hints.exhaleHint);
-            DataHolder.HideHint(containerHint);
-            drinkHintDone = true;
-        }
-        if (!playerHolding.atContainer )
-        {
-            DataHolder.HideHint(containerHint);
+            if (!playerHolding.atContainer)
+            {
+                DataHolder.HideHint(containerHint);
+            }
         }
         #endregion
     }

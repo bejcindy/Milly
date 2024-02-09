@@ -69,7 +69,7 @@ public class MindPalace : MonoBehaviour
 
         if (tatMenuOn)
         {
-            DataHolder.MoveHintToBottom();         
+            DataHolder.MoveHintToBottom();
             if (mainMenuOn)
             {
                 DataHolder.ShowHint(mainMenuHint);
@@ -201,6 +201,17 @@ public class MindPalace : MonoBehaviour
     public void HandOff()
     {
         playerHand.transform.SetParent(null);
+        DataHolder.HideHint(DataHolder.hints.powderHint);
+        DataHolder.HideHint(DataHolder.hints.drinkHint);
+        DataHolder.HideHint(DataHolder.hints.throwHint);
+        DataHolder.HideHint(DataHolder.hints.inhaleHint);
+        DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
+        DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
+        DataHolder.HideHint(DataHolder.hints.pizzaHint);
+        DataHolder.HideHint(DataHolder.hints.inhaleHint);
+        DataHolder.HideHint(DataHolder.hints.eatHint);
+        DataHolder.HideHint(DataHolder.hints.exhaleHint);
+        DataHolder.HideHint(ReferenceTool.playerLeftHand.containerHint);
     }
 
 

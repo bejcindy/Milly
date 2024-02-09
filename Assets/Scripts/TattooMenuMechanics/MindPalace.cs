@@ -9,6 +9,8 @@ using Cinemachine;
 public class MindPalace : MonoBehaviour
 {
     public static bool tatMenuOn;
+    public static bool hideHint;
+    public static bool showTatHint;
     public bool noControl;
     public bool mainMenuOn;
     public CharacterTattooMenu currentMenu;
@@ -35,7 +37,7 @@ public class MindPalace : MonoBehaviour
     [TextArea]
     public string mainMenuHint;
 
-    string changeMenuSF= "event:/Sound Effects/Tattoo/ChangeMenu";
+    string changeMenuSF = "event:/Sound Effects/Tattoo/ChangeMenu";
 
     // Start is called before the first frame update
     void Start()
@@ -60,14 +62,12 @@ public class MindPalace : MonoBehaviour
             mainMenuOn = false;
         }
 
-
-
         if (Input.GetKeyDown(KeyCode.Tab) && !noControl)
         {
             SwitchMindPalaceOnOff();
         }
 
-        if (tatMenuOn)
+        if (showTatHint)
         {
             DataHolder.MoveHintToBottom();         
             if (mainMenuOn)
@@ -120,14 +120,12 @@ public class MindPalace : MonoBehaviour
 
         if (!tatMenuOn)
         {
-
             MenuMouseHintOff();
             if (currentMenu)
                 currentMenu.TurnOffMenu();
         }
         else
         {
-
             if (currentMenu)
             {
                 currentMenu.TurnOnMenu();
@@ -199,7 +197,7 @@ public class MindPalace : MonoBehaviour
     }
 
     public void HandOff()
-    {
+    {        
         playerHand.transform.SetParent(null);
         DataHolder.HideHint(DataHolder.hints.powderHint);
         DataHolder.HideHint(DataHolder.hints.drinkHint);
@@ -213,6 +211,4 @@ public class MindPalace : MonoBehaviour
         DataHolder.HideHint(DataHolder.hints.exhaleHint);
         DataHolder.HideHint(ReferenceTool.playerLeftHand.containerHint);
     }
-
-
 }

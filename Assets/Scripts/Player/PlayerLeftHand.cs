@@ -124,7 +124,7 @@ public class PlayerLeftHand : MonoBehaviour
 
 
         #region Hint Region
-        if (!MindPalace.tatMenuOn)
+        if (!MindPalace.hideHint)
         {
             if (smoking && !holdingObj.GetComponent<Cigarette>().inhaling && !playerHolding.atInterior)
             {

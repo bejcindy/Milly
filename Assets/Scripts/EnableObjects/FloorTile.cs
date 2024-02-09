@@ -7,7 +7,7 @@ public class FloorTile : MonoBehaviour
     Material mat;
     Renderer rend;
 
-    bool activated;
+    public bool activated;
     bool firstActivated;
 
     float matColorVal;
@@ -20,6 +20,7 @@ public class FloorTile : MonoBehaviour
 
     void Start()
     {
+        activated = false;
         rend = GetComponent<Renderer>();
         mat = rend.material;
         matColorVal = 1;
@@ -61,6 +62,16 @@ public class FloorTile : MonoBehaviour
         {
             gameObject.layer = 18;
             matColorVal = 1;
+            material.SetFloat("_WhiteDegree", matColorVal);
+            foreach (Transform tile in myTiles)
+            {
+                tile.gameObject.layer = 18;
+                Renderer tileRend = tile.GetComponent<Renderer>();
+                if (tileRend)
+                {
+                    tileRend.material.SetFloat("_WhiteDegree", matColorVal);
+                }
+            }
             layerChanged = true;
         }
 
@@ -72,7 +83,6 @@ public class FloorTile : MonoBehaviour
 
             foreach(Transform tile in myTiles)
             {
-                tile.gameObject.layer = 18;
                 Renderer tileRend = tile.GetComponent<Renderer>();
                 if (tileRend)
                 {
@@ -85,6 +95,7 @@ public class FloorTile : MonoBehaviour
         {
             matColorVal = 0;
             firstActivated = true;
+            ReferenceTool.broom.TriggerTat();
 
         }
        

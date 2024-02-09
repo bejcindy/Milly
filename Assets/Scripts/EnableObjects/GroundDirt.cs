@@ -30,6 +30,7 @@ public class GroundDirt : MonoBehaviour
         alphaVal = dirtMat.GetFloat("_AlphaClipThreshold");
         startAlphaVal = alphaVal;
         stageAlphaVal = startAlphaVal;
+        broom = ReferenceTool.broom;
     }
 
 

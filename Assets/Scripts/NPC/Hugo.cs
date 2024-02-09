@@ -33,10 +33,6 @@ public class Hugo : NPCControl
             npcActivated = true;
         }
         scoreBoard.enabled = true;
-        broom.transform.SetParent(null);
-        broom.transform.position = broomPlacePos.position + new Vector3(0, 1, 0);
-        broom.GetComponent<Rigidbody>().isKinematic = false;
-        broom.transform.rotation = Quaternion.identity;
         noMoveAfterTalk = false;
     }
 
@@ -50,17 +46,29 @@ public class Hugo : NPCControl
         willowTat.triggered = true;
     }
 
+    public void HugoDropBroom()
+    {
+        broom.transform.SetParent(null);
+        broom.transform.position = broomPlacePos.position + new Vector3(0, 1, 0);
+        broom.GetComponent<Rigidbody>().isKinematic = false;
+        broom.transform.rotation = Quaternion.identity;
+    }
+
     protected override void OnConversationEnd(Transform other)
     {
         base.OnConversationEnd(other);
 
+        if(_counter == 3)
+        {
+            ActivateTattooMenu();
+        }
         if(_counter == 4)
         {
             TriggerWillowTattoo();
         }
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other) 
     {
         base.OnTriggerEnter(other);
         if (other.CompareTag("CigButt"))

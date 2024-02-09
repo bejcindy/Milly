@@ -69,7 +69,7 @@ public class MindPalace : MonoBehaviour
 
         if (tatMenuOn)
         {
-            DataHolder.MoveHintToBottom();
+            DataHolder.MoveHintToBottom();         
             if (mainMenuOn)
             {
                 DataHolder.ShowHint(mainMenuHint);

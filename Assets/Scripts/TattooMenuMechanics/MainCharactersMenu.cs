@@ -55,12 +55,14 @@ public class MainCharactersMenu : CharacterTattooMenu
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.noControl = false;
         mindPalace.SwitchTatMenuBlend();
+        MindPalace.showTatHint = true;
         yield break;
     }
 
     protected override IEnumerator MenuOffBlink()
     {
         menuOn = false;
+        MindPalace.showTatHint = false;
         mindPalace.SwitchPlayerCamBlend();
         mindPalace.noControl = true;
         float t = 0;

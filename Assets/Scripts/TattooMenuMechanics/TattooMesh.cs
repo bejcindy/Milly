@@ -66,10 +66,22 @@ public class TattooMesh : MonoBehaviour
 
         if (!myMenu.menuOn)
         {
-            foreach (Transform child in transform)
+            if (!draggable)
             {
-                child.gameObject.layer = 0;
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.layer = 0;
+                }
+
             }
+            else
+            {
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.layer = 17;
+                }
+            }
+
         }
 
         if (ditherIn)
@@ -322,7 +334,6 @@ public class TattooMesh : MonoBehaviour
         
         if (dissolveVal < 1)
         {
-            myMenu.mindPalace.noControl = true;
             dissolveVal += 0.5f * Time.deltaTime;
             foreach (Transform child in transform)
             {

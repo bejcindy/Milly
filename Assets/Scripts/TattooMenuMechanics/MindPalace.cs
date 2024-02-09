@@ -175,8 +175,7 @@ public class MindPalace : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        //DataHolder.MoveHintToBottom();
-        //DataHolder.ShowHint(hint);
+
 
     }
 
@@ -184,8 +183,7 @@ public class MindPalace : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        //DataHolder.MoveHintToTop();
-        //DataHolder.HideHint(hint);
+
 
     }
 

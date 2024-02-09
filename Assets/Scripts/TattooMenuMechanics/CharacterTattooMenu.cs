@@ -216,6 +216,7 @@ public class CharacterTattooMenu : MonoBehaviour
     {
         mindPalace.noControl = true;
         MindPalace.hideHint = true;
+        ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = false;
         float t = 0;
         while (t < blinkDuration)
         {
@@ -283,6 +284,7 @@ public class CharacterTattooMenu : MonoBehaviour
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.noControl = false;
         MindPalace.hideHint = false;
+        ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = true;
         yield break;
     }
 

@@ -36,7 +36,7 @@ public class CharacterTattooMesh : MonoBehaviour
     public float ditherVal;
     public Vector3 finalCharPos;
     public Vector3 finalCharRot;
-    bool matChanged;
+
 
     string hoverSF = "event:/Sound Effects/Tattoo/HoverObject";
 
@@ -145,28 +145,33 @@ public class CharacterTattooMesh : MonoBehaviour
             myNPC.ActivateAll(myNPC.npcMesh);
         }
 
-        foreach(Transform child in npcMesh)
+        if(matColorVal > 0)
         {
-            Material childMat = child.GetComponent<Renderer>().material;
-            childMat.EnableKeyword("_WhiteDegree");
-            if (childMat.GetFloat("_WhiteDegree") >0)
-                TurnOnColor(childMat);
-            else
+            matColorVal -= 0.5f * Time.deltaTime;
+            foreach (Transform child in npcMesh)
             {
-                matColorVal = 0;
-                stageChanging = false;
-                matChanged = false;
-                if (finalChange)
-                {
-                    myMenu.finalTransition = true;
-                }
-                else
-                {
-                    currentTat.dragged = true;
-                    currentTat = null;
-                }
+                Material childMat = child.GetComponent<Renderer>().material;
+                childMat.EnableKeyword("_WhiteDegree");
+                if (childMat.GetFloat("_WhiteDegree") > 0)
+                    TurnOnColor(childMat);
+
             }
         }
+        else
+        {
+            stageChanging = false;
+            matColorVal = 0;
+            if (finalChange)
+            {
+                myMenu.finalTransition = true;
+            }
+            else
+            {
+                currentTat.dragged = true;
+                currentTat = null;
+            }
+        }
+
 
     }
 
@@ -182,12 +187,9 @@ public class CharacterTattooMesh : MonoBehaviour
 
     void TurnOnColor(Material material)
     {
-        myMenu.mindPalace.noControl = true;
-        if (matColorVal > 0)
-        {
-            matColorVal -= 0.2f * Time.deltaTime;
+
             material.SetFloat("_WhiteDegree", matColorVal);
-        }
+
 
     }
 

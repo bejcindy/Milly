@@ -87,7 +87,7 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (isHolding)
         {
-            if (!MindPalace.tatMenuOn)
+            if (!MindPalace.tatMenuOn && !PauseMenu.isPaused)
             {
                 if (!inPizzaBox)
                 {
@@ -299,6 +299,7 @@ public class PlayerLeftHand : MonoBehaviour
                     smokingHinted = true;
                 }
                 break;
+
             case HandObjectType.DOUBLE:
                 DetectDoubleHand();
                 break;
@@ -320,16 +321,18 @@ public class PlayerLeftHand : MonoBehaviour
                     InteriorContainer();
                 }
                 break;
+
             case HandObjectType.BROOM:
                 DetectBroomUse();
                 break;
+
             default:
-                if (!drinking && !playerHolding.atInterior)
+                if (!playerHolding.atInterior)
                 {
                     BasicThrow();
                     resetAlready = false;
                 }
-                else if (!drinking && playerHolding.atInterior)
+                else
                 {
                     if (!resetAlready && !playerHolding.objectLerping)
                     {
@@ -669,7 +672,7 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (!bypassThrow)
         {
-            if (Input.GetMouseButtonDown(0) && holdingObj && !PauseMenu.isPaused && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+            if (Input.GetMouseButtonDown(0) && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
             {
                 readyToThrow = true;
             }
@@ -678,10 +681,6 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 if (Input.GetMouseButtonUp(0))
                 {
-                    aiming = false;
-                    aimUI.SetActive(false);
-                    aimUI.transform.localScale = new Vector3(1, 1, 1);
-
                     if (smoking)
                     {
                         holdingObj.GetComponent<Cigarette>().FinishSmoking();
@@ -700,56 +699,23 @@ public class PlayerLeftHand : MonoBehaviour
                     objPickUp.thrownByPlayer = true;
                     holdingObj.SetParent(null);
 
-                    if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
-                    {
-                        isHolding = false;
-                        StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 0.5f));
-                    }
-                    else
-                    {
-                        RaycastHit hit;
-                        Vector3 forceDirection = Camera.main.transform.forward;
-                        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f, playerLayer, QueryTriggerInteraction.Ignore))
-                        {
-                            forceDirection = (hit.point - holdingObj.localPosition).normalized;
-                        }
-
-                        Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwForceUp;
-                        holdingObj.GetComponent<Rigidbody>().AddForce(forceToAdd, ForceMode.Impulse);
-                        FMODUnity.RuntimeManager.PlayOneShot(objPickUp.throwEventName, transform.position);
-                    }
+                    isHolding = false;
+                    StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 0.5f));
 
                     noThrow = true;
                     readyToThrow = false;
-                    throwForce = 0.5f;
-                    rotateVal = 0;
                     RemoveHandObj();
-
-                    if (!aimHintDone)
-                    {
-                        DataHolder.HideHint(DataHolder.hints.throwHint);
-                        aimHintDone = true;
-                    }
 
                 }
 
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                readyToThrow = false;
-                holdingObj.localPosition = Vector3.zero;
-                aimUI.SetActive(false);
-                aimUI.transform.localScale = new Vector3(1, 1, 1);
-            }
         }
         else if (bypassThrow)
         {
             readyToThrow = false;
             if (objPickUp.objType != HandObjectType.CIGARETTE)
                 holdingObj.localPosition = Vector3.zero;
-            aimUI.SetActive(false);
-            aimUI.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

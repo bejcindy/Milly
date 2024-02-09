@@ -151,14 +151,12 @@ public class CharacterTattoo : MonoBehaviour
     {
         if (tatText.color.a < 0.7f)
         {
-            myMenu.mindPalace.noControl = true;
             Color temp = tatText.color;
             temp.a += 2 * Time.deltaTime;
             tatText.color = temp;
         }
         else
         {
-            myMenu.mindPalace.noControl = false;
             Color temp = tatText.color;
             temp.a = 0.7f;
             tatText.color = temp;

@@ -62,7 +62,7 @@ public class PlayerLeftHand : MonoBehaviour
     PickUpObject objPickUp;
     Rigidbody objRb;
     bool notHoldingAnyThing;
-
+    string containerHint = "<b>LeftClick</b> Put In Container";
 
     #region UI variables
     bool aimHinted, smokingHinted, drinkHinted;
@@ -214,6 +214,21 @@ public class PlayerLeftHand : MonoBehaviour
                 smokingHinted = true;
             }
         }
+        else if(isHolding && playerHolding.atInterior&& playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+        {
+            DataHolder.HideHint(DataHolder.hints.powderHint);
+            DataHolder.HideHint(DataHolder.hints.drinkHint);
+            DataHolder.HideHint(DataHolder.hints.throwHint);
+            DataHolder.HideHint(DataHolder.hints.inhaleHint);
+            DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
+            DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
+            DataHolder.HideHint(DataHolder.hints.pizzaHint);
+            DataHolder.HideHint(DataHolder.hints.inhaleHint);
+            DataHolder.HideHint(DataHolder.hints.eatHint);
+            DataHolder.HideHint(DataHolder.hints.exhaleHint);
+            DataHolder.ShowHint(containerHint);
+            drinkHintDone = true;
+        }
         else if (!holdingObj || (isHolding && playerHolding.atInterior))
         {
             DataHolder.HideHint(DataHolder.hints.powderHint);
@@ -226,7 +241,12 @@ public class PlayerLeftHand : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.inhaleHint);
             DataHolder.HideHint(DataHolder.hints.eatHint);
             DataHolder.HideHint(DataHolder.hints.exhaleHint);
+            DataHolder.HideHint(containerHint);
             drinkHintDone = true;
+        }
+        if (!playerHolding.atContainer || !playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+        {
+            DataHolder.HideHint(containerHint);
         }
         #endregion
     }
@@ -597,6 +617,94 @@ public class PlayerLeftHand : MonoBehaviour
                 }
             }
             
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                readyToThrow = false;
+                holdingObj.localPosition = Vector3.zero;
+                aimUI.SetActive(false);
+                aimUI.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+        else if (bypassThrow)
+        {
+            readyToThrow = false;
+            if (objPickUp.objType != HandObjectType.CIGARETTE)
+                holdingObj.localPosition = Vector3.zero;
+            aimUI.SetActive(false);
+            aimUI.transform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
+    private void InteriorContainer()
+    {
+        if (!bypassThrow)
+        {
+            if (Input.GetMouseButtonDown(0) && holdingObj && !PauseMenu.isPaused && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+            {
+                readyToThrow = true;
+            }
+
+            if (readyToThrow && !noThrow)
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    aiming = false;
+                    aimUI.SetActive(false);
+                    aimUI.transform.localScale = new Vector3(1, 1, 1);
+
+                    if (smoking)
+                    {
+                        holdingObj.GetComponent<Cigarette>().FinishSmoking();
+                        if (!smokingHintDone)
+                        {
+                            DataHolder.HideHint(DataHolder.hints.inhaleHint);
+                            smokingHintDone = true;
+                        }
+                    }
+
+                    isHolding = false;
+                    smoking = false;
+                    objRb.isKinematic = false;
+                    objPickUp.inHand = false;
+                    objPickUp.thrown = true;
+                    objPickUp.thrownByPlayer = true;
+                    holdingObj.SetParent(null);
+
+                    if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
+                    {
+                        isHolding = false;
+                        StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 0.5f));
+                    }
+                    else
+                    {
+                        RaycastHit hit;
+                        Vector3 forceDirection = Camera.main.transform.forward;
+                        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f, playerLayer, QueryTriggerInteraction.Ignore))
+                        {
+                            forceDirection = (hit.point - holdingObj.localPosition).normalized;
+                        }
+
+                        Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwForceUp;
+                        holdingObj.GetComponent<Rigidbody>().AddForce(forceToAdd, ForceMode.Impulse);
+                        FMODUnity.RuntimeManager.PlayOneShot(objPickUp.throwEventName, transform.position);
+                    }
+
+                    noThrow = true;
+                    readyToThrow = false;
+                    throwForce = 0.5f;
+                    rotateVal = 0;
+                    RemoveHandObj();
+
+                    if (!aimHintDone)
+                    {
+                        DataHolder.HideHint(DataHolder.hints.throwHint);
+                        aimHintDone = true;
+                    }
+
+                }
+               
+            }
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 readyToThrow = false;

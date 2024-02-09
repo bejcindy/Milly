@@ -13,9 +13,10 @@ public class FloorTile : MonoBehaviour
     float matColorVal;
     float fadeInterval;
 
+    public GroundDirt[] myDirts;
     public bool overrideStartSequence;
     bool layerChanged;
-    // Start is called before the first frame update
+
     void Start()
     {
         rend = GetComponent<Renderer>();
@@ -33,14 +34,7 @@ public class FloorTile : MonoBehaviour
     }
 
 
-    public void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if(!activated && !StartSequence.noControl)
-                activated = true;
-        }
-    }
+
 
     private void TurnOnColor(Material material)
     {

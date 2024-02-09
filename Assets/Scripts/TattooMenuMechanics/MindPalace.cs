@@ -14,6 +14,7 @@ public class MindPalace : MonoBehaviour
     public CharacterTattooMenu currentMenu;
     public CharacterTattooMenu mainTatMenu;
     public CharacterTattooMenu selectedMenu;
+    public Transform playerHand;
 
     public List<CharacterTattooMenu> tattooMenuList = new List<CharacterTattooMenu>();
 
@@ -188,6 +189,18 @@ public class MindPalace : MonoBehaviour
         //DataHolder.MoveHintToTop();
         //DataHolder.HideHint(hint);
 
+    }
+
+    public void HandOn()
+    {
+        playerHand.transform.SetParent(Camera.main.transform);
+        playerHand.transform.localPosition = Vector3.zero;
+        playerHand.transform.localRotation = Quaternion.identity;
+    }
+
+    public void HandOff()
+    {
+        playerHand.transform.SetParent(null);
     }
 
 

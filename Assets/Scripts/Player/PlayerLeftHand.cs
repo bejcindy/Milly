@@ -86,7 +86,7 @@ public class PlayerLeftHand : MonoBehaviour
     {
         if (isHolding)
         {
-            if (!MainTattooMenu.tatMenuOn)
+            if (!MindPalace.tatMenuOn)
             {
                 if (!inPizzaBox)
                 {
@@ -302,6 +302,9 @@ public class PlayerLeftHand : MonoBehaviour
                     BasicThrow();
                 else if (playerHolding.atInterior)
                     ResetThrow();
+                break;
+            case HandObjectType.BROOM:
+                DetectBroomUse();
                 break;
             default:
                 if (!drinking && !playerHolding.atInterior)
@@ -757,6 +760,34 @@ public class PlayerLeftHand : MonoBehaviour
                 }
                 RemoveHandObj();    
 
+            }
+        }
+    }
+
+    private void DetectBroomUse()
+    {
+        if (!objPickUp.GetComponent<Broom>().selectedDirt)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (!noThrow)
+                {
+                    isHolding = false;
+                    holdingObj.SetParent(null);
+                    holdingObj.GetComponent<Rigidbody>().isKinematic = false;
+                    objPickUp.inHand = false;
+                    objPickUp.thrown = true;
+                    objPickUp.thrownByPlayer = true;
+                    RemoveHandObj();
+
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                handAnim.Play("Broom_Sweep");
             }
         }
     }

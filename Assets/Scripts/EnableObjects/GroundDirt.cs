@@ -11,6 +11,7 @@ public class GroundDirt : MonoBehaviour
     public bool sweeped;
     public bool centerFocused;
     public bool playerEntered;
+    public bool isVisible;
     public Broom broom;
 
     float alphaVal;
@@ -39,7 +40,7 @@ public class GroundDirt : MonoBehaviour
             CleanDirtAlpha();
         }
 
-        if(playerEntered && IsInView() && Broom.hasBroom)
+        if(playerEntered && isVisible && Broom.hasBroom)
         {
             sweepable = true;
             broom.selectedDirt = this;
@@ -77,6 +78,8 @@ public class GroundDirt : MonoBehaviour
             else
             {
                 cleaned = true;
+                if (broom.selectedDirt == this)
+                    broom.selectedDirt = null; 
             }
 
         }
@@ -192,5 +195,15 @@ public class GroundDirt : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void OnBecameVisible()
+    {
+        isVisible = true;
+    }
+
+    public void OnBecameInvisible()
+    {
+        isVisible = false;
     }
 }

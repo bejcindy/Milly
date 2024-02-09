@@ -305,12 +305,12 @@ public class PlayerLeftHand : MonoBehaviour
 
             case HandObjectType.FOOD:
                 EatHandFood();
-                if (!drinking && !playerHolding.atInterior)
+                if (!playerHolding.atInterior)
                 {
                     BasicThrow();
                     resetAlready = false;
                 }
-                else if (!drinking && playerHolding.atInterior)
+                else
                 {
                     if (!resetAlready && !playerHolding.objectLerping)
                     {

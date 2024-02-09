@@ -7,6 +7,8 @@ public class Broom : PickUpObject
 {
     public static bool hasBroom;
     public GroundDirt selectedDirt;
+    public CharacterTattoo broomTat;
+    bool tatTriggered;
 
     protected override void Start()
     {
@@ -41,9 +43,19 @@ public class Broom : PickUpObject
 
     }
 
+    public void TriggerTat()
+    {
+        if (!tatTriggered)
+        {
+            broomTat.triggered = true;
+            tatTriggered = true;
+        }
+    }
+
     void SweepDirt()
     {
-        selectedDirt.SweepDirt();
+        if(selectedDirt)
+            selectedDirt.SweepDirt();
     }
 
     void LayerDetection()

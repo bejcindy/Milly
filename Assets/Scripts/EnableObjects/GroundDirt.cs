@@ -40,7 +40,7 @@ public class GroundDirt : MonoBehaviour
             CleanDirtAlpha();
         }
 
-        if(playerEntered && isVisible && Broom.hasBroom)
+        if(playerEntered && isVisible && Broom.hasBroom && !cleaned)
         {
             sweepable = true;
             broom.selectedDirt = this;
@@ -79,7 +79,8 @@ public class GroundDirt : MonoBehaviour
             {
                 cleaned = true;
                 if (broom.selectedDirt == this)
-                    broom.selectedDirt = null; 
+                    broom.selectedDirt = null;
+                this.enabled = false;
             }
 
         }

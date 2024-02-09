@@ -14,6 +14,7 @@ public class FloorTile : MonoBehaviour
     float fadeInterval;
 
     public List<GroundDirt> myDirts;
+    public List<Transform> myTiles;
     public bool overrideStartSequence;
     bool layerChanged;
 
@@ -68,6 +69,16 @@ public class FloorTile : MonoBehaviour
             matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
             if (material.HasFloat("_WhiteDegree"))
                 material.SetFloat("_WhiteDegree", matColorVal);
+
+            foreach(Transform tile in myTiles)
+            {
+                tile.gameObject.layer = 18;
+                Renderer tileRend = tile.GetComponent<Renderer>();
+                if (tileRend)
+                {
+                    tileRend.material.SetFloat("_WhiteDegree", matColorVal);
+                }
+            }
 
         }
         else

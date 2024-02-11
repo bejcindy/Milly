@@ -26,6 +26,7 @@ public class CharacterTattoo : MonoBehaviour
     public bool fadeInSprite;
     public bool fadeOutSprite;
     public bool isFinalTat;
+    public bool hiddenTat;
     bool triggeredOnce;
 
 
@@ -103,7 +104,8 @@ public class CharacterTattoo : MonoBehaviour
     void ActivateTatMesh()
     {
         tatMesh.ColorTattooMesh();
-        myMenu.TurnOnMenu();
+        if(!hiddenTat)
+            myMenu.TurnOnMenu();
     }
 
     public void MenuFadeOutText()

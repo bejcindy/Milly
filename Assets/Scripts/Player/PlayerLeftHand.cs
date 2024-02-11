@@ -4,6 +4,7 @@ using FMODUnity;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using VInspector;
+using FMODUnity;
 
 public class PlayerLeftHand : MonoBehaviour
 {
@@ -65,6 +66,8 @@ public class PlayerLeftHand : MonoBehaviour
     bool notHoldingAnyThing;
     bool resetAlready;
     public string containerHint = "<b>LeftClick</b> Put In Container";
+
+    string sweepSF= "event:/Sound Effects/ObjectInteraction/BroomSweep";
 
     #region UI variables
     bool aimHinted, smokingHinted, drinkHinted;
@@ -784,6 +787,7 @@ public class PlayerLeftHand : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 handAnim.Play("Broom_Sweep");
+                RuntimeManager.PlayOneShot(sweepSF);
             }
         }
     }

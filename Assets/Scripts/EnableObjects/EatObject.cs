@@ -10,7 +10,7 @@ public class EatObject : PickUpObject
 
     public bool chewing;
     public bool doneEating;
-
+    public bool ate;
 
     public GameObject pizzaEatingDialogue;
     public Transform plate;
@@ -75,6 +75,7 @@ public class EatObject : PickUpObject
 
     public void Eat()
     {
+        ate = true;
         if (!foodAnim.isActiveAndEnabled)
         {
             foodAnim.enabled = true;
@@ -86,6 +87,8 @@ public class EatObject : PickUpObject
             foodAnim.Play("Eat");
             Invoke("DelayedSoundEffect", 1.5f);
         }
+
+
     }
 
     void DelayedSoundEffect()

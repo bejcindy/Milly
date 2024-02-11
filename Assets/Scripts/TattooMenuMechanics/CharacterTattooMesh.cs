@@ -37,12 +37,16 @@ public class CharacterTattooMesh : MonoBehaviour
     public Vector3 finalCharPos;
     public Vector3 finalCharRot;
 
+    Collider myCollider;
+
 
     string hoverSF = "event:/Sound Effects/Tattoo/HoverObject";
 
     void Start()
     {
         myMenu = transform.parent.GetComponent<CharacterTattooMenu>();
+        myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
         stage = 0;
         matColorVal = 1;
         ditherVal = 1;
@@ -123,6 +127,11 @@ public class CharacterTattooMesh : MonoBehaviour
         }
     }
 
+    public void EnableCollider()
+    {
+        myCollider.enabled = true;
+    }
+
     public void ChangeCharMeshMat()
     {
         if (myNPC)
@@ -136,14 +145,15 @@ public class CharacterTattooMesh : MonoBehaviour
             child.GetComponent<Renderer>().material = materials[stage];
         }
         stageChanging = true;
+        if (myNPC)
+        {
+            myNPC.ColorActualNPC();
+        }
     }
 
     public void ChangeCharMatColor()
     {
-        if (myNPC)
-        {
-            myNPC.ActivateAll(myNPC.npcMesh);
-        }
+
 
         if(matColorVal > 0)
         {
@@ -153,7 +163,7 @@ public class CharacterTattooMesh : MonoBehaviour
                 Material childMat = child.GetComponent<Renderer>().material;
                 childMat.EnableKeyword("_WhiteDegree");
                 if (childMat.GetFloat("_WhiteDegree") > 0)
-                    TurnOnColor(childMat);
+                    SetMatColor(childMat);
 
             }
         }
@@ -185,12 +195,10 @@ public class CharacterTattooMesh : MonoBehaviour
         }
     }
 
-    void TurnOnColor(Material material)
+    void SetMatColor(Material material)
     {
 
-            material.SetFloat("_WhiteDegree", matColorVal);
-
-
+        material.SetFloat("_WhiteDegree", matColorVal);
     }
 
 
@@ -254,6 +262,7 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void CharacterDitherOut()
     {
+        myCollider.enabled = false;
         if(ditherVal > 0)
         {
             ditherVal -= Time.deltaTime;
@@ -274,6 +283,7 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void CharacterDitherIn()
     {
+        myCollider.enabled = true;
         if (ditherVal < 1)
         {
             ditherVal += Time.deltaTime;
@@ -300,6 +310,7 @@ public class CharacterTattooMesh : MonoBehaviour
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
+        Debug.Log("moving character");
         float time = 0;
         Vector3 startPosition = transform.localPosition;
         while (time < duration)

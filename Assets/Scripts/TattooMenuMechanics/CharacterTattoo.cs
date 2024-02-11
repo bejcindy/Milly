@@ -60,7 +60,7 @@ public class CharacterTattoo : MonoBehaviour
 
     void Update()
     {
-        if (triggered && !triggeredOnce)
+        if (triggered && !triggeredOnce && !ReferenceTool.playerHolding.inDialogue)
         {
             triggeredOnce = true;
             myChar.gameObject.SetActive(true);

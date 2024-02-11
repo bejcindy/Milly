@@ -57,16 +57,7 @@ public class Chopsticks : PickUpObject
 
             gameObject.layer = 0;
             otherChopstick.gameObject.layer = 0;
-            //if (activated && MainQuestState.firstGloriaTalk)
-            //{
-            //    gameObject.layer = 17;
-            //    otherChopstick.gameObject.layer = 17;
-            //}
-            //else
-            //{
-            //    gameObject.layer = 0;
-            //    otherChopstick.gameObject.layer = 0;
-            //}
+
         }
     }
 

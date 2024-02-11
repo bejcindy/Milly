@@ -30,12 +30,10 @@ public class TableController : MonoBehaviour
         isHolding = !playerHolding.GetLeftHand();
         if (atTable)
         {
-            if (Input.GetKeyDown(KeyCode.Tab) && !isHolding)
+            if (tableControlOn)
             {
-                tableControlOn = !tableControlOn;
                 if (!firstTableOn)
                     ChooseChopsFirst();
-                //CheckTableControl();
             }
         }
         else
@@ -69,22 +67,9 @@ public class TableController : MonoBehaviour
         atTable = false;
     }
 
-    void CheckTableControl()
+    
+    public void TurnOnTable()
     {
-        if (tableControlOn)
-        {
-            foreach(GameObject plate in plates)
-            {
-                plate.layer = 17;
-            }
-        }
-        else if (!MainQuestState.firstGloriaTalk)
-        {
-            foreach (GameObject plate in plates)
-            {
-                plate.layer = 0;
-            }
-            playerHolding.ClearPickUp();
-        }
+        tableControlOn = true;
     }
 }

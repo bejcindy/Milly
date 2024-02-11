@@ -40,11 +40,11 @@ public class RecordPlayer : LivableObject
     protected override void Start()
     {
         base.Start();
-        isPlaying = true;
-        hasRecord = true;
-        playingRot = transform.localRotation;
+        //isPlaying = true;
+        //hasRecord = true;
+        playingRot = Quaternion.identity;
         stopRot = Quaternion.Euler(0f, -20f, 0f);
-        recordPos = currentRecord.transform.localPosition;
+        recordPos = new Vector3(0.04f, 0.1f, 0.015f) ;
     }
 
     protected override void Update()

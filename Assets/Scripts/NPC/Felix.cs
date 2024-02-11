@@ -50,14 +50,15 @@ public class Felix : NPCControl
 
     public void ChangeFelixQuestDialogue()
     {
-        currentDialogue = questAcceptDia;
         SetMainTalkFalse();
+        currentDialogue = questAcceptDia;
+
     }
 
     public void ChangeFelixCompleteDialogue()
     {
-        currentDialogue = questCompleteDia;
         SetMainTalkFalse();
+        currentDialogue = questCompleteDia;
         noMoveAfterTalk = false;
     }
 
@@ -79,7 +80,7 @@ public class Felix : NPCControl
         if (!menuFirstTriggered)
         {
             menuFirstTriggered = true;
-            myTatMenu.TurnOnMenu();
+            ActivateTattooMenu();
         }
     }
 }

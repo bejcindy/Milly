@@ -5,6 +5,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using FMODUnity;
 using Cinemachine;
+using PixelCrushers.DialogueSystem;
 
 public class MindPalace : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class MindPalace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Mind Palace is " + tatMenuOn);
         if(currentMenu && currentMenu == mainTatMenu)
         {
             mainMenuOn = true;
@@ -120,12 +122,14 @@ public class MindPalace : MonoBehaviour
 
         if (!tatMenuOn)
         {
+            UnpausePlayer();
             MenuMouseHintOff();
             if (currentMenu)
                 currentMenu.TurnOffMenu();
         }
         else
         {
+            PausePlayer();
             if (currentMenu)
             {
                 currentMenu.TurnOnMenu();
@@ -208,5 +212,25 @@ public class MindPalace : MonoBehaviour
         DataHolder.HideHint(DataHolder.hints.eatHint);
         DataHolder.HideHint(DataHolder.hints.exhaleHint);
         DataHolder.HideHint(ReferenceTool.playerLeftHand.containerHint);
+    }
+
+    public void PausePlayer()
+    {
+        ReferenceTool.playerMovement.enabled = false;
+        ReferenceTool.playerLeftHand.bypassThrow = true;
+        foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
+        {
+            if (panel.continueButton != null) panel.continueButton.interactable = false;
+        }
+    }
+
+    public void UnpausePlayer()
+    {
+        ReferenceTool.playerMovement.enabled = true;
+        ReferenceTool.playerLeftHand.bypassThrow = false;
+        foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
+        {
+            if (panel.continueButton != null) panel.continueButton.interactable = true;
+        }
     }
 }

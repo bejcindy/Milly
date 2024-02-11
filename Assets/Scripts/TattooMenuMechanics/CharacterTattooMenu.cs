@@ -11,6 +11,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public MindPalace mindPalace;
     [Foldout("State")]
     public bool menuOn;
+    public bool inFinalStage;
     public bool fadeOutAllTats;
     public bool fadeInFinalTat;
     public bool finalTransition;
@@ -92,7 +93,6 @@ public class CharacterTattooMenu : MonoBehaviour
             if (fadeInFinalTat)
             {
                 fadeInFinalTat = false;
-                finalTattoo.gameObject.SetActive(true);
                 finalTattoo.dragged = true;
                 myChar.CharacterFinalChange();
                 RuntimeManager.PlayOneShot(charcterFinalSF);
@@ -102,6 +102,7 @@ public class CharacterTattooMenu : MonoBehaviour
             {
                 finished = true;
                 finalTransition = false;
+                inFinalStage = false;
                 myChar.CharacterFinalTransition();
                 finalTattoo.FinalTattooFinalTransition();
             }
@@ -117,6 +118,7 @@ public class CharacterTattooMenu : MonoBehaviour
 
     public void TurnOnMenu()
     {
+        mindPalace.PausePlayer();
         discovered = true;
         mindPalace.currentMenu = this;
         mindPalace.SelectMenu(this);
@@ -207,7 +209,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public void StartFinalTattoo()
     {
         TurnOnMenu();
-        fadeOutAllTats = true;
+        inFinalStage = true;
 
     }
 
@@ -315,6 +317,10 @@ public class CharacterTattooMenu : MonoBehaviour
         }
 
         mindPalace.noControl = false;
+        if (inFinalStage)
+        {
+            fadeOutAllTats = true;
+        }
     }
 
 

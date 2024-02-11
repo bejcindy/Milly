@@ -58,7 +58,8 @@ public class PlayerLeftHand : MonoBehaviour
     Transform currentFood;
 
 
-
+    Coroutine posRoutine;
+    Coroutine rotRoutine;
     PickUpObject objPickUp;
     Rigidbody objRb;
     bool notHoldingAnyThing;
@@ -462,8 +463,8 @@ public class PlayerLeftHand : MonoBehaviour
             cig.PlayInhaleSound();
             Vector3 smokingPos = new Vector3(0.5f, 0f, -0.3f);
             Vector3 smokingRot = new Vector3(0, 180, 0);
-            StartCoroutine(LerpPosition(smokingPos, 1f));
-            StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
+            posRoutine = StartCoroutine(LerpPosition(smokingPos, 1f));
+            rotRoutine = StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
         }
         if (Input.mouseScrollDelta.y > 0 && holdingObj.localPosition.z < 0f && !movingCig)
         {
@@ -484,21 +485,14 @@ public class PlayerLeftHand : MonoBehaviour
             smokeVFX.Play();
         }
         Vector3 smokingRot = new Vector3(0, 160, 0);
-        StartCoroutine(LerpPosition(Vector3.zero, 1f));
-        StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
+        posRoutine = StartCoroutine(LerpPosition(Vector3.zero, 1f));
+        rotRoutine = StartCoroutine(LerpRotation(Quaternion.Euler(smokingRot), 1f));
         holdingObj.GetComponent<Cigarette>().ChangeCigModel();
     }
 
     private void Drink()
     {
-        if (Input.GetMouseButtonDown(0) && !noThrow)
-        {
-            if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
-            {
-                isHolding = false;
-                StartCoroutine(playerHolding.currentContainer.MoveAcceptedObject(holdingObj, 1f));
-            }
-        }
+
 
         if (Input.mouseScrollDelta.y < 0 && !drinking)
         {
@@ -573,6 +567,15 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 if (Input.GetMouseButtonUp(0))
                 {
+                    if(posRoutine != null)
+                    {
+                        StopCoroutine(posRoutine);
+                    }
+
+                    if(rotRoutine != null)
+                    {
+                        StopCoroutine(rotRoutine);
+                    }
                     aiming = false;
                     aimUI.SetActive(false);
                     aimUI.transform.localScale = new Vector3(1, 1, 1);

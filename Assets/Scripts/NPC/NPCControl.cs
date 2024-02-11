@@ -45,8 +45,8 @@ public class NPCControl : MonoBehaviour
     [SerializeField] protected bool tatOn;
     [SerializeField] protected CenterTattoo myTat;
     public CharacterTattooMenu myTatMenu;
-    public bool stageColored;
     public bool menuFirstTriggered;
+    public bool stageColoring;
 
 
     [Foldout("CharRefs")]
@@ -165,33 +165,33 @@ public class NPCControl : MonoBehaviour
 
         #endregion
 
-        if (stageColored)
+        if (stageColoring)
         {
             ActivateAll(npcMesh);
         }
 
-        if (npcActivated)
-        {
-            if (matColorVal > 0f)
-            {
-                if (OnActivateEvent != null)
-                {
-                    OnActivateEvent.Invoke();
-                }
-                if (!currentDialogue.gameObject.activeSelf)
-                    currentDialogue.gameObject.SetActive(true);
-            }
+        //if (npcActivated)
+        //{
+        //    if (matColorVal > 0f)
+        //    {
+        //        if (OnActivateEvent != null)
+        //        {
+        //            OnActivateEvent.Invoke();
+        //        }
+        //        if (!currentDialogue.gameObject.activeSelf)
+        //            currentDialogue.gameObject.SetActive(true);
+        //    }
 
-        }
+        //}
 
-        if (fakeActivated)
-        {
-            if (matColorVal > 0f)
-            {
-                if (!currentDialogue.gameObject.activeSelf)
-                    currentDialogue.gameObject.SetActive(true);
-            }
-        }
+        //if (fakeActivated)
+        //{
+        //    if (matColorVal > 0f)
+        //    {
+        //        if (!currentDialogue.gameObject.activeSelf)
+        //            currentDialogue.gameObject.SetActive(true);
+        //    }
+        //}
         if (interactable)
         {
             if ((!StartSequence.noControl || overrideNoControl) && !playerHolding.inDialogue && !MainTattooMenu.tatMenuOn)
@@ -234,38 +234,53 @@ public class NPCControl : MonoBehaviour
         }
     }
 
+    public void ColorActualNPC()
+    {
+        stageColoring = true;
+    }
+
 
     public void ActivateAll(Transform obj)
     {
-        if (obj.GetComponent<Renderer>() != null)
+        if(matColorVal > 0f)
         {
-            Material mat = obj.GetComponent<Renderer>().material;
-            if (mat.HasProperty("_WhiteDegree"))
+            matColorVal -= 0.5f * Time.deltaTime;
+            if (obj.GetComponent<Renderer>() != null)
             {
-                mat.EnableKeyword("_WhiteDegree");
-                if (mat.GetFloat("_WhiteDegree") >= 0)
-                    TurnOnColor(mat);
-            }
-
-        }
-        foreach (Transform child in obj)
-        {
-            if (child.childCount <= 0 && child.GetComponent<Renderer>() != null)
-            {
-                Material childMat = child.GetComponent<Renderer>().material;
-                if (childMat.HasProperty("_WhiteDegree"))
+                Material mat = obj.GetComponent<Renderer>().material;
+                if (mat.HasProperty("_WhiteDegree"))
                 {
-                    childMat.EnableKeyword("_WhiteDegree");
-                    if (childMat.GetFloat("_WhiteDegree") >= 0)
-                        TurnOnColor(childMat);
+                    mat.EnableKeyword("_WhiteDegree");
+                    if (mat.GetFloat("_WhiteDegree") >= 0)
+                        TurnOnColor(mat);
                 }
 
             }
-            else
+            foreach (Transform child in obj)
             {
-                ActivateAll(child);
+                if (child.childCount <= 0 && child.GetComponent<Renderer>() != null)
+                {
+                    Material childMat = child.GetComponent<Renderer>().material;
+                    if (childMat.HasProperty("_WhiteDegree"))
+                    {
+                        childMat.EnableKeyword("_WhiteDegree");
+                        if (childMat.GetFloat("_WhiteDegree") >= 0)
+                            TurnOnColor(childMat);
+                    }
+
+                }
+                else
+                {
+                    ActivateAll(child);
+                }
             }
         }
+        else
+        {
+            matColorVal = 0;
+            stageColoring = false;
+        }
+
     }
 
     public void DeactivateAll(Transform obj)
@@ -303,15 +318,7 @@ public class NPCControl : MonoBehaviour
 
     protected virtual void TurnOnColor(Material material)
     {
-        if (matColorVal > 0)
-        {
-            matColorVal -= 0.2f * Time.deltaTime;
-            material.SetFloat("_WhiteDegree", matColorVal);
-        }
-        else
-        {
-            matColorVal = 0;
-        }
+        material.SetFloat("_WhiteDegree", matColorVal);
     }
 
     protected virtual void TurnOffColor(Material material)
@@ -543,13 +550,6 @@ public class NPCControl : MonoBehaviour
 
         talkable = true;
 
-        //if (myTat && !myTat.activated)
-        //{
-        //    myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
-        //    myTat.myPanel.mainTattooMenu.showPanel = true;
-        //    myTat.activated = true;
-        //}
-
         if (transformed)
         {
             if(myTatMenu)
@@ -563,11 +563,16 @@ public class NPCControl : MonoBehaviour
     #region Tattoo Region
     protected virtual void ActivateTattooMenu()
     {
-        myTatMenu.TurnOnMenu();
+        Invoke(nameof(DelayTurnOnMenu), 1f);
     }
     protected virtual void ActivateFinalTattoo()
     {
 
+    }
+
+    void DelayTurnOnMenu()
+    {
+        myTatMenu.TurnOnMenu();
     }
     public void ChangeCharMeshMat(Material mat)
     {

@@ -24,4 +24,14 @@ public class Ron : NPCControl
         noLookInConvo = true;
         noTalkStage = true;
     }
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        base.OnConversationEnd(other);
+        if (!menuFirstTriggered)
+        {
+            menuFirstTriggered = true;
+            ActivateTattooMenu();
+        }
+    }
 }

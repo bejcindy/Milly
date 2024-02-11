@@ -98,7 +98,7 @@ public class TattooMesh : MonoBehaviour
     #region Drag Related
     void OnMouseDown()
     {
-        if (draggable)
+        if (draggable && !myMenu.mindPalace.noControl)
         {
             SwitchBurnMat();
             myMenu.mindPalace.noControl = true;
@@ -119,7 +119,7 @@ public class TattooMesh : MonoBehaviour
 
     void OnMouseDrag()
     {
-        if (draggable)
+        if (dragging)
         {
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
@@ -163,7 +163,7 @@ public class TattooMesh : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        if (draggable)
+        if (draggable && !myMenu.mindPalace.noControl)
         {
             if (!characterTatMesh.rotatingNPC && !dragging)
             {

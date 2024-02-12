@@ -204,6 +204,7 @@ public class MindPalace : MonoBehaviour
     {        
         playerHand.transform.SetParent(null);
         playerLeftHand.HideHandRelatedHints();
+        DataHolder.HideHint(DataHolder.hints.soccerHint);
     }
 
     public void PausePlayer()

@@ -16,6 +16,8 @@ public class TrashSoccerScoreBoard : LookingObject
 
     bool firstTransformed;
     bool showedMillyScore;
+    bool showedHint;
+
     protected override void Start()
     {
         base.Start();
@@ -28,17 +30,27 @@ public class TrashSoccerScoreBoard : LookingObject
         if (inGameZone)
         {
             scorePanel.SetActive(true);
+            if (!showedHint && !MindPalace.hideHint)
+            {
+                DataHolder.ShowHint(DataHolder.hints.soccerHint);
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    DataHolder.HideHint(DataHolder.hints.soccerHint);
+                    showedHint = true;
+                }
+            }
 
         }
         else
         {
             scorePanel.SetActive(false);
+            DataHolder.HideHint(DataHolder.hints.soccerHint);
         }
 
         if (focusingThis)
         {
             scoreText.gameObject.layer = 13;
-            foreach(Transform t in otherScores)
+            foreach (Transform t in otherScores)
             {
                 t.gameObject.layer = 13;
             }
@@ -47,7 +59,7 @@ public class TrashSoccerScoreBoard : LookingObject
         {
             if (activated)
             {
-                if(scoreText.gameObject.layer != 17)
+                if (scoreText.gameObject.layer != 17)
                 {
                     scoreText.gameObject.layer = 17;
                     foreach (Transform t in otherScores)

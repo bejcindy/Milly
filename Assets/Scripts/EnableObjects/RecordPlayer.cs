@@ -53,8 +53,9 @@ public class RecordPlayer : LivableObject
 
         if(activated && !recordplayerTatTriggered)
         {
+            Invoke(nameof(TriggerRecordPlayerTattoo), 1f);
             recordplayerTatTriggered = true;
-            recordPlayerTat.triggered = true;
+
         }
 
         if(vinylListenCount == totalVinylCount && !vinylTatTriggered)
@@ -117,6 +118,11 @@ public class RecordPlayer : LivableObject
         }
     }
 
+    void TriggerRecordPlayerTattoo()
+    {
+        recordPlayerTat.triggered = true;
+    }
+
 
     public void TriggerPlay()
     {
@@ -131,6 +137,13 @@ public class RecordPlayer : LivableObject
 
             StartCoroutine(LerpRotation(playingRot, 1f));
         }
+    }
+
+    public void StopInitialPlay()
+    {
+        TriggerPlay();
+        hasRecord = false;
+        currentRecord = null;
     }
 
     public void PlaceRecord(Vinyl vinyl)

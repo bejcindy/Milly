@@ -706,7 +706,7 @@ public class NPCControl : MonoBehaviour
     public void SetDialogue()
     {
 
-
+        currentDialogue.gameObject.SetActive(false);
         currentDialogue = dialogueHolder.GetChild(_counter);
         SetMainTalkFalse();
 

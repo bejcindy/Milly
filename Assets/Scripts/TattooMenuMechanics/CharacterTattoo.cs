@@ -101,6 +101,16 @@ public class CharacterTattoo : MonoBehaviour
         
     }
 
+    public void TriggerTattoo()
+    {
+        Invoke(nameof(DelayTrigger), 1f);
+    }
+
+    void DelayTrigger()
+    {
+        triggered = true;
+    }
+
     void ActivateTatMesh()
     {
         tatMesh.ColorTattooMesh();

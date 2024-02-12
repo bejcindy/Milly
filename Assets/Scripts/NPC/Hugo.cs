@@ -1,21 +1,41 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VInspector;
 
 public class Hugo : NPCControl 
 {
+    public static bool trashThrown;
+    public static PickUpObject thrownObject;
     public GameObject broom;
     public Transform broomPlacePos;
     public TrashSoccerScoreBoard scoreBoard;
 
     public GameObject cigButtConvo;
     public CharacterTattoo willowTat;
+
+    [Foldout("TrashDialogues")]
+    public GameObject drinkTalk;
+    public GameObject foodTalk;
+    public GameObject cigTalk;
+    public GameObject trashTalk;
     protected override void Start()
     {
         base.Start();
 
         noMoveAfterTalk = true;
         noLookInConvo = true;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (trashThrown)
+        {
+            HugoTrashDetection();
+        }
+
     }
 
     public void HugoAction1()
@@ -52,6 +72,35 @@ public class Hugo : NPCControl
         broom.transform.position = broomPlacePos.position + new Vector3(0, 1, 0);
         broom.GetComponent<Rigidbody>().isKinematic = false;
         broom.transform.rotation = Quaternion.identity;
+    }
+
+    void HugoTrashDetection()
+    {
+        if(Vector3.Distance(transform.position, thrownObject.transform.position) <= 5)
+        {
+            switch (thrownObject.objType)
+            {
+                case HandObjectType.DRINK:
+                    drinkTalk.SetActive(true);
+                    break;
+                case HandObjectType.TRASH:
+                    trashTalk.SetActive(true);
+                    break;
+                case HandObjectType.FOOD:
+                    foodTalk.SetActive(true);
+                    break;
+                default:
+                    trashTalk.SetActive(true);
+                    break;
+            }
+            trashThrown = false;
+            thrownObject = null;
+        }
+        else
+        {
+            trashThrown = false;
+            thrownObject = null;
+        }
     }
 
     protected override void OnConversationEnd(Transform other)

@@ -125,6 +125,41 @@ public class LookingObject : LivableObject
 
     }
 
+    float allowedAngle = .2f;
+    protected override bool IsObjectVisible(Renderer renderer)
+    {
+        Transform go = renderer.transform;
+        if (go.GetComponent<LookingObject>() && go.GetComponent<LookingObject>().onlyFront)
+        {
+            if (GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds))
+            {
+                Transform playerT = ReferenceTool.player.transform;
+                LookingObject lo;
+                lo = go.GetComponent<LookingObject>();
+                if (Vector3.Distance(go.position, playerT.position) <= lo.minDist)
+                {
+                    //get direction
+                    if (Vector3.Dot(playerT.position - go.position, go.forward) > allowedAngle)
+                    {
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+                return false;
+        }
+        else
+        {
+            return base.IsObjectVisible(renderer);
+        }
+    }
+
     public void FocusOnObject()
     {
         DataHolder.currentFocus = this.gameObject;

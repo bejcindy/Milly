@@ -65,7 +65,7 @@ public class LivableObject : MonoBehaviour
     public bool centerFocused;
     public bool noRend;
     public bool onlyFront = true;
-    static float allowedAngle = .2f;
+    
 
     [Foldout("Special")]
     public bool overrideStartSequence;
@@ -102,7 +102,7 @@ public class LivableObject : MonoBehaviour
             mat.SetFloat("_WhiteDegree", matColorVal);
         }
 
-        if(GetComponent<GroupMaster>() != null)
+        if (GetComponent<GroupMaster>() != null)
         {
             hasGroupControl = true;
             groupControl = GetComponent<GroupMaster>();
@@ -178,7 +178,7 @@ public class LivableObject : MonoBehaviour
                 }
 
                 //change layer related code
-                if ((!StartSequence.noControl || overrideStartSequence) && !izaProp && !noChangeLayer) 
+                if ((!StartSequence.noControl || overrideStartSequence) && !izaProp && !noChangeLayer)
                 {
                     if (gameObject.layer != 17 && gameObject.layer != 18)
                     {
@@ -316,7 +316,6 @@ public class LivableObject : MonoBehaviour
             Vector3 pointG = rend.bounds.max - new Vector3(0, 0, rend.bounds.size.z);
             Vector3 pointH = rend.bounds.max;
 
-
             checkBoundVisible[0] = CheckPointInView(pointA);
             checkBoundVisible[1] = CheckPointInView(pointB);
             checkBoundVisible[2] = CheckPointInView(pointC);
@@ -383,38 +382,9 @@ public class LivableObject : MonoBehaviour
         }
         return true;
     }
-    public static bool IsObjectVisible(Renderer renderer)
+    protected virtual bool IsObjectVisible(Renderer renderer)
     {
-        Transform go = renderer.transform;
-        if (go.GetComponent<LookingObject>() && go.GetComponent<LookingObject>().onlyFront)
-        {
-            if (GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds))
-            {
-                Transform playerT = ReferenceTool.player.transform;
-                LookingObject lo;
-                lo = go.GetComponent<LookingObject>();
-                if ( Vector3.Distance(go.position, playerT.position) <= lo.minDist)
-                {
-                    //get direction
-                    if (Vector3.Dot(playerT.position - go.position, go.forward) > allowedAngle)
-                    {
-                        return true;
-                    }
-                    else
-                        return false;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-                return false;
-        }
-        else
-        {
-            return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds);
-        }
+        return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), renderer.bounds);
     }
     protected virtual bool isDoorHandleVisible(Collider col)
     {

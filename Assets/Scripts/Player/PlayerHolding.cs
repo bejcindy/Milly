@@ -44,17 +44,17 @@ public class PlayerHolding : MonoBehaviour
     public Image objectUI;
     public GameObject dragUIAnimation;
     public String dragAnimDirection;
-    public Sprite pickUpSprite, dragSprite, grabingSprite, lookingSprite, talkSprite, kickSprite, sitSprite, clickSprite, catSprite;
+    public Sprite pickUpSprite, dragSprite, grabingSprite, lookingSprite, talkSprite, kickSprite, sitSprite, clickSprite, catSprite, sweepSprite;
     RectTransform objectUIRect, objectUIRect2;
     public RectTransform CanvasRect;
 
     //[HideInInspector]
-    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj, catboxObj,vinylObj;
+    public GameObject doorHandle, kickableObj, talkingTo, lidObj, sitObj, clickableObj, catboxObj, vinylObj, dirtObj;
     bool noControlReset;
     bool displayedLeftHandUI;
     bool displayedFocusHint;
     bool hintDone;
-    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden, catHidden, doorHidden,vinylHidden;
+    bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden, catHidden, doorHidden, vinylHidden, dirtHidden;
     List<GameObject> trackedObjs;
     List<GameObject> UIs;
     List<Sprite> usedSprites;
@@ -117,7 +117,7 @@ public class PlayerHolding : MonoBehaviour
 
             if ((pickUpObjects.Count == 1 && pickUpObjects[0].GetComponent<PickUpObject>().inHand == false) || pickUpObjects.Count > 1 || midAirKickable)
                 DetectKick();
-            
+
 
             #region UI and Hints
             if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo && !kickableObj && !lidObj && !sitObj && !catboxObj)
@@ -194,8 +194,9 @@ public class PlayerHolding : MonoBehaviour
             UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
             //if(catboxObj)
             UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
-            if(vinylObj)
+            if (vinylObj)
                 UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
+            UITriggerdByOtherObj(dirtObj, sweepSprite, dirtHidden);
             #endregion
 
 
@@ -287,7 +288,7 @@ public class PlayerHolding : MonoBehaviour
                     if (interactionSprite == grabingSprite)
                         InstantiateDragUIAnimation(instantiatedUI.transform);
                     instantiatedUI.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
-                    if (interactionSprite == talkSprite)
+                    if (interactionSprite == talkSprite || interactionSprite == sweepSprite)
                         instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.15f, .15f, .15f);
                     else
                         instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.1f, .1f, .1f);
@@ -684,7 +685,7 @@ public class PlayerHolding : MonoBehaviour
                 {
                     Rigidbody rigid = obj.GetComponent<Rigidbody>();
                     Vector3 kickDir = Vector3.ProjectOnPlane(obj.transform.position - transform.position, Vector3.up);
-                    rigid.AddForce(kickDir * kickForce+Vector3.up*2f, ForceMode.Impulse);
+                    rigid.AddForce(kickDir * kickForce + Vector3.up * 2f, ForceMode.Impulse);
                 }
             }
             if (midAirKickable)

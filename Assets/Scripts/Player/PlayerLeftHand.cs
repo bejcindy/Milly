@@ -4,6 +4,7 @@ using FMODUnity;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using VInspector;
+using FMODUnity;
 
 public class PlayerLeftHand : MonoBehaviour
 {
@@ -65,6 +66,8 @@ public class PlayerLeftHand : MonoBehaviour
     bool notHoldingAnyThing;
     bool resetAlready;
     public string containerHint = "<b>LeftClick</b> Put In Container";
+
+    string sweepSF= "event:/Sound Effects/ObjectInteraction/BroomSweep";
 
     #region UI variables
     bool aimHinted, smokingHinted, drinkHinted;
@@ -156,6 +159,16 @@ public class PlayerLeftHand : MonoBehaviour
                 DataHolder.ShowHint(DataHolder.hints.pizzaHint);
                 DataHolder.HideHint(DataHolder.hints.throwHint);
             }
+            else if (isHolding && holdingObj.GetComponent<Broom>()&&!playerHolding.dirtObj)
+            {
+                DataHolder.ShowHint(DataHolder.hints.broomHint);
+                DataHolder.HideHint(DataHolder.hints.sweepHint);
+            }
+            else if (isHolding && holdingObj.GetComponent<Broom>()&& playerHolding.dirtObj)
+            {
+                DataHolder.HideHint(DataHolder.hints.broomHint);
+                DataHolder.ShowHint(DataHolder.hints.sweepHint);
+            }
             else if (currentChop && !chopAiming)
             {
                 //DataHolder.HideHint(DataHolder.hints.pickFoodHint);
@@ -220,32 +233,13 @@ public class PlayerLeftHand : MonoBehaviour
             }
             else if (isHolding && playerHolding.atInterior && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
             {
-                DataHolder.HideHint(DataHolder.hints.powderHint);
-                DataHolder.HideHint(DataHolder.hints.drinkHint);
-                DataHolder.HideHint(DataHolder.hints.throwHint);
-                DataHolder.HideHint(DataHolder.hints.inhaleHint);
-                DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
-                DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
-                DataHolder.HideHint(DataHolder.hints.pizzaHint);
-                DataHolder.HideHint(DataHolder.hints.inhaleHint);
-                DataHolder.HideHint(DataHolder.hints.eatHint);
-                DataHolder.HideHint(DataHolder.hints.exhaleHint);
+                HideHandRelatedHints();
                 DataHolder.ShowHint(containerHint);
                 drinkHintDone = true;
             }
             else if (!holdingObj || (isHolding && playerHolding.atInterior))
             {
-                DataHolder.HideHint(DataHolder.hints.powderHint);
-                DataHolder.HideHint(DataHolder.hints.drinkHint);
-                DataHolder.HideHint(DataHolder.hints.throwHint);
-                DataHolder.HideHint(DataHolder.hints.inhaleHint);
-                DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
-                DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
-                DataHolder.HideHint(DataHolder.hints.pizzaHint);
-                DataHolder.HideHint(DataHolder.hints.inhaleHint);
-                DataHolder.HideHint(DataHolder.hints.eatHint);
-                DataHolder.HideHint(DataHolder.hints.exhaleHint);
-                DataHolder.HideHint(containerHint);
+                HideHandRelatedHints();
                 drinkHintDone = true;
             }
             if (!playerHolding.atContainer)
@@ -254,6 +248,22 @@ public class PlayerLeftHand : MonoBehaviour
             }
         }
         #endregion
+    }
+    public void HideHandRelatedHints()
+    {
+        DataHolder.HideHint(DataHolder.hints.powderHint);
+        DataHolder.HideHint(DataHolder.hints.drinkHint);
+        DataHolder.HideHint(DataHolder.hints.throwHint);
+        DataHolder.HideHint(DataHolder.hints.inhaleHint);
+        DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
+        DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
+        DataHolder.HideHint(DataHolder.hints.pizzaHint);
+        DataHolder.HideHint(DataHolder.hints.inhaleHint);
+        DataHolder.HideHint(DataHolder.hints.eatHint);
+        DataHolder.HideHint(DataHolder.hints.exhaleHint);
+        DataHolder.HideHint(containerHint);
+        DataHolder.HideHint(DataHolder.hints.broomHint);
+        DataHolder.HideHint(DataHolder.hints.sweepHint);
     }
 
     public void AssignRefs(PickUpObject obj)
@@ -784,6 +794,7 @@ public class PlayerLeftHand : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 handAnim.Play("Broom_Sweep");
+                RuntimeManager.PlayOneShot(sweepSF);
             }
         }
     }

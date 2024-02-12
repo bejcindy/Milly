@@ -4,7 +4,6 @@ using FMODUnity;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using VInspector;
-using FMODUnity;
 
 public class PlayerLeftHand : MonoBehaviour
 {
@@ -282,6 +281,10 @@ public class PlayerLeftHand : MonoBehaviour
 
     public void HoldingAction()
     {
+        if (objPickUp.canPutOnSurface)
+        {
+            PutOnSurface();
+        }
         switch (objPickUp.objType)
         {
             case HandObjectType.DRINK:
@@ -454,7 +457,24 @@ public class PlayerLeftHand : MonoBehaviour
 
 
 
-
+    float detectPlaceDist = 10f;
+    LayerMask noPlayer = ~(1 << 8);
+    void PutOnSurface()
+    {
+        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * detectPlaceDist, Color.red);
+        if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit hit;
+            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,out hit, detectPlaceDist, noPlayer, QueryTriggerInteraction.Ignore))
+           {
+                if (hit.transform.CompareTag("Placable"))
+                {                    
+                    StartCoroutine(LerpSurfacePosition(hit.point + objPickUp.putOffset, Quaternion.Euler(new Vector3(0, holdingObj.eulerAngles.y, 0)), 1f));
+                    //RemoveHandObj();
+                }
+            }
+        }
+    }
 
     private void Smoke()
     {
@@ -827,6 +847,29 @@ public class PlayerLeftHand : MonoBehaviour
         holdingObj.localPosition = targetPosition;
         if (objPickUp.GetComponent<Cigarette>())
             movingCig = false;
+    }
+
+    IEnumerator LerpSurfacePosition(Vector3 targetPosition, Quaternion endValue, float duration)
+    {        
+        float time = 0;
+        holdingObj.GetComponent<Collider>().enabled = false;
+        Vector3 startPosition = holdingObj.position;
+        Quaternion startValue = holdingObj.rotation;
+        while (time < duration)
+        {
+            Debug.Log("running");
+            holdingObj.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            holdingObj.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        holdingObj.position = targetPosition;
+        holdingObj.rotation = endValue;
+        holdingObj.GetComponent<Collider>().enabled = true;
+        holdingObj.GetComponent<PickUpObject>().inHand = false;
+        holdingObj.GetComponent<Rigidbody>().isKinematic = false;
+        holdingObj.parent = null;
+        RemoveHandObj();
     }
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)

@@ -39,6 +39,7 @@ public class MindPalace : MonoBehaviour
     public string mainMenuHint;
 
     string changeMenuSF = "event:/Sound Effects/Tattoo/ChangeMenu";
+    PlayerLeftHand playerLeftHand;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,7 @@ public class MindPalace : MonoBehaviour
         focusCam = Camera.main.transform.GetChild(2).GetComponent<Camera>();
         camBrain = ReferenceTool.playerBrain;
         GetComponentsInChildren<CharacterTattooMenu>(tattooMenuList);
+        playerLeftHand = ReferenceTool.playerLeftHand;
     }
 
     // Update is called once per frame
@@ -201,17 +203,7 @@ public class MindPalace : MonoBehaviour
     public void HandOff()
     {        
         playerHand.transform.SetParent(null);
-        DataHolder.HideHint(DataHolder.hints.powderHint);
-        DataHolder.HideHint(DataHolder.hints.drinkHint);
-        DataHolder.HideHint(DataHolder.hints.throwHint);
-        DataHolder.HideHint(DataHolder.hints.inhaleHint);
-        DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
-        DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
-        DataHolder.HideHint(DataHolder.hints.pizzaHint);
-        DataHolder.HideHint(DataHolder.hints.inhaleHint);
-        DataHolder.HideHint(DataHolder.hints.eatHint);
-        DataHolder.HideHint(DataHolder.hints.exhaleHint);
-        DataHolder.HideHint(ReferenceTool.playerLeftHand.containerHint);
+        playerLeftHand.HideHandRelatedHints();
     }
 
     public void PausePlayer()

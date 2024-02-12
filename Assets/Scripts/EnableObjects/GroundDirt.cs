@@ -21,6 +21,7 @@ public class GroundDirt : MonoBehaviour
     Renderer rend;
     bool[] checkBoundVisible;
     Vector3 pointOnScreen;
+    PlayerHolding playerHolding;
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class GroundDirt : MonoBehaviour
         startAlphaVal = alphaVal;
         stageAlphaVal = startAlphaVal;
         broom = ReferenceTool.broom;
+        playerHolding = ReferenceTool.playerHolding;
     }
 
 
@@ -45,6 +47,7 @@ public class GroundDirt : MonoBehaviour
         {
             sweepable = true;
             broom.selectedDirt = this;
+            playerHolding.dirtObj = gameObject;
 
         }
         else
@@ -53,6 +56,7 @@ public class GroundDirt : MonoBehaviour
             if(broom.selectedDirt == this)
             {
                 broom.selectedDirt = null;
+                playerHolding.dirtObj = null;
             }
         }
     }

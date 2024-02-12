@@ -122,17 +122,7 @@ public class Hugo : NPCControl
         }
     }
 
-    protected override void OnTriggerEnter(Collider other) 
-    {
-        base.OnTriggerEnter(other);
-        if (other.CompareTag("CigButt"))
-        {
-            if(!cigButtConvo.activeSelf)
-            {
-                cigButtConvo.SetActive(true);
-            }
-        }
-    }
+
 
 
 }

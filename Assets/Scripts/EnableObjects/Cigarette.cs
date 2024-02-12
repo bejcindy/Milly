@@ -113,9 +113,14 @@ public class Cigarette : PickUpObject
 
     public void FinishSmoking()
     {
-        objType = HandObjectType.TRASH;
+        Invoke(nameof(DelayChangeTag), 1f);
         cigStage = Random.Range(4, 7);
         activeCigObj.tag = "CigButt";
         gameObject.tag = "CigButt";
+    }
+
+    void DelayChangeTag()
+    {
+        objType = HandObjectType.TRASH;
     }
 }

@@ -34,7 +34,8 @@ public class PickUpObject : LivableObject
     public bool freezeRotation;
     public float throwCD;
     public bool thrownByPlayer;
-
+    public bool canPutOnSurface;
+    public Vector3 putOffset;
 
     DialogueSystemTrigger dialogue;
     public string pickUpEventName;
@@ -49,6 +50,8 @@ public class PickUpObject : LivableObject
         rb = GetComponent<Rigidbody>();
         throwCD = 1f;
         dialogue = GetComponent<DialogueSystemTrigger>();
+        if (objType == HandObjectType.DRINK)
+            canPutOnSurface = true;
     }
     protected override void Update()
     {

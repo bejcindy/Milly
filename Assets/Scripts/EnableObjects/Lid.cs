@@ -60,6 +60,12 @@ public class Lid : LivableObject
             {
                 controlledContainer.interactable = false;
                 controlledContainer.enabled = false;
+                BoxCollider containerTrigger = controlledContainer.GetComponent<BoxCollider>();
+                if(containerTrigger != null)
+                {
+                    if (containerTrigger.isTrigger)
+                        containerTrigger.enabled = false;
+                }
             }
         }
         else
@@ -67,6 +73,12 @@ public class Lid : LivableObject
             if (controlledContainer != null)
             {
                 controlledContainer.enabled = true;
+                BoxCollider containerTrigger = controlledContainer.GetComponent<BoxCollider>();
+                if (containerTrigger != null)
+                {
+                    if (containerTrigger.isTrigger)
+                        containerTrigger.enabled = true;
+                }
             }
         }
     }

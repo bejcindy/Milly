@@ -134,7 +134,6 @@ public class PlayerHolding : MonoBehaviour
             else
                 FakeDisplayUI();
 
-            atContainer = CheckContainer();
 
             if (focusedObj != null)
             {
@@ -560,19 +559,6 @@ public class PlayerHolding : MonoBehaviour
         DataHolder.HideHint(DataHolder.hints.lookHint);
     }
 
-    bool CheckContainer()
-    {
-        foreach (GameObject obj in containers)
-        {
-            if (obj.GetComponent<ContainerObject>().interactable)
-            {
-                currentContainer = obj.GetComponent<ContainerObject>();
-                return true;
-            }
-        }
-        currentContainer = null;
-        return false;
-    }
 
     #region Hands Related
     public bool GetLeftHand()
@@ -712,6 +698,12 @@ public class PlayerHolding : MonoBehaviour
                 leftHand.enabled = false;
         }
 
+        if (other.CompareTag("Container"))
+        {
+            atContainer = true;
+            currentContainer = other.GetComponent<ContainerObject>();
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -721,6 +713,12 @@ public class PlayerHolding : MonoBehaviour
 
         if (other.CompareTag("DoorDetector"))
             leftHand.enabled = true;
+
+        if (other.CompareTag("Container"))
+        {
+            atContainer = false;
+            currentContainer = null;
+        }
     }
 
     public void ClearPickUp()

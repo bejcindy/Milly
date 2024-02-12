@@ -76,6 +76,8 @@ public class Hugo : NPCControl
 
     void HugoTrashDetection()
     {
+        bool talkVar = DialogueLua.GetVariable("NPC/Hugo/ThrowTalk").asBool;
+        DialogueLua.SetVariable("NPC/Hugo/ThrowTalk", !talkVar);
         if(Vector3.Distance(transform.position, thrownObject.transform.position) <= 5)
         {
             switch (thrownObject.objType)
@@ -88,6 +90,9 @@ public class Hugo : NPCControl
                     break;
                 case HandObjectType.FOOD:
                     foodTalk.SetActive(true);
+                    break;
+                case HandObjectType.CIGARETTE:
+                    cigButtConvo.SetActive(true);
                     break;
                 default:
                     trashTalk.SetActive(true);

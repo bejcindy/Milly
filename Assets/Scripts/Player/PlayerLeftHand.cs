@@ -618,8 +618,7 @@ public class PlayerLeftHand : MonoBehaviour
                     objPickUp.thrown = true;
                     objPickUp.thrownByPlayer = true;
                     holdingObj.SetParent(null);
-                    Hugo.trashThrown = true;
-                    Hugo.thrownObject = objPickUp;
+
 
                     if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
                     {
@@ -638,6 +637,8 @@ public class PlayerLeftHand : MonoBehaviour
                         Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwForceUp;
                         holdingObj.GetComponent<Rigidbody>().AddForce(forceToAdd, ForceMode.Impulse);
                         FMODUnity.RuntimeManager.PlayOneShot(objPickUp.throwEventName, transform.position);
+                        Hugo.trashThrown = true;
+                        Hugo.thrownObject = objPickUp;
                     }
 
                     noThrow = true;

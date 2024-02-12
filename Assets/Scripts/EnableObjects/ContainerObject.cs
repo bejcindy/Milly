@@ -2,10 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContainerObject : CollisionObject
+public class ContainerObject : LivableObject
 {
+    public string tagName;
+    public List<string> tagList;
     public Vector3 containedPos;
     public bool table;
+
+    protected override void Start()
+    {
+        base.Start();
+        if (tagName.Contains(","))
+        {
+            string[] tags = tagName.Split(",");
+            for (int i = 0; i < tags.Length; i++)
+            {
+                tagList.Add(tags[i]);
+            }
+        }
+        else
+        {
+            tagList.Add(tagName);
+        }
+    }
 
     protected override void Update()
     {
@@ -15,11 +34,16 @@ public class ContainerObject : CollisionObject
 
     public bool CheckMatchingObject(GameObject obj)
     {
-        if (tagList.Contains(obj.tag))
+        if (isVisible)
         {
-            return true;
+            if (tagList.Contains(obj.tag))
+            {
+                return true;
+            }
+            return false;
         }
-        return false;
+        else
+            return false;
     }
 
     public IEnumerator MoveAcceptedObject(Transform obj, float duration)
@@ -44,4 +68,6 @@ public class ContainerObject : CollisionObject
         if(!StartSequence.noControl || overrideStartSequence)
             activated = true;
     }
+
+
 }

@@ -14,6 +14,7 @@ public class MindPalace : MonoBehaviour
     public static bool showTatHint;
     public bool noControl;
     public bool mainMenuOn;
+    public bool firstTriggered;
     public CharacterTattooMenu currentMenu;
     public CharacterTattooMenu mainTatMenu;
     public CharacterTattooMenu selectedMenu;
@@ -66,7 +67,7 @@ public class MindPalace : MonoBehaviour
             mainMenuOn = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && !noControl)
+        if (Input.GetKeyDown(KeyCode.Tab) && !noControl && firstTriggered)
         {
             SwitchMindPalaceOnOff();
         }

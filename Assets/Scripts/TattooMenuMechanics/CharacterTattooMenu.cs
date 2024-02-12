@@ -216,6 +216,7 @@ public class CharacterTattooMenu : MonoBehaviour
 
     protected virtual IEnumerator MenuOnBlink()
     {
+        mindPalace.firstTriggered = true;
         mindPalace.noControl = true;
         MindPalace.hideHint = true;
         ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = false;

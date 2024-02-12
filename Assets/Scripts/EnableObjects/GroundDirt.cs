@@ -88,6 +88,10 @@ public class GroundDirt : MonoBehaviour
                 cleaned = true;
                 if (broom.selectedDirt == this)
                     broom.selectedDirt = null;
+                if (playerHolding.dirtObj == this)
+                {
+                    playerHolding.dirtObj = null;
+                }
                 this.enabled = false;
             }
 

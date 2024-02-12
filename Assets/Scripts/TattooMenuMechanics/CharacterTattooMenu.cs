@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VInspector;
 using FMODUnity;
+using PixelCrushers.DialogueSystem;
 
 public class CharacterTattooMenu : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class CharacterTattooMenu : MonoBehaviour
 
     [Foldout("Values")]
     public float blinkDuration = 1f;
+    public string finishedDialogue;
+    bool finishedDialogueDone;
 
 
     protected Camera frontCam;
@@ -285,9 +288,18 @@ public class CharacterTattooMenu : MonoBehaviour
             yield return null;
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
+
         mindPalace.noControl = false;
         MindPalace.hideHint = false;
         ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = true;
+
+        mindPalace.FirstMindPalaceDialogue();
+
+        if (finished && !finishedDialogueDone)
+        {
+            finishedDialogueDone = true;
+            StartCompleteDialogue();
+        }
         yield break;
     }
 
@@ -322,6 +334,11 @@ public class CharacterTattooMenu : MonoBehaviour
         {
             fadeOutAllTats = true;
         }
+    }
+
+    void StartCompleteDialogue()
+    {
+        DialogueManager.StartConversation(finishedDialogue);
     }
 
 

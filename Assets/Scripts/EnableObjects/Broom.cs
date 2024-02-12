@@ -33,11 +33,25 @@ public class Broom : PickUpObject
 
         if (selectedDirt)
         {
-            if (Input.GetMouseButtonDown(0))
+            ReferenceTool.playerHolding.dirtObj = selectedDirt.gameObject;
+            if (!selectedDirt.cleaned)
             {
-                Invoke(nameof(SweepDirt), 0.5f);   
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Invoke(nameof(SweepDirt), 0.5f);
+                }
+            }
+            else
+            {
+                selectedDirt = null;
+                ReferenceTool.playerHolding.dirtObj = null;
             }
 
+
+        }
+        else
+        {
+            ReferenceTool.playerHolding.dirtObj = null;
         }
 
 

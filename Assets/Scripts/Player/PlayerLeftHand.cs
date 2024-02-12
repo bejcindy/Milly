@@ -69,7 +69,7 @@ public class PlayerLeftHand : MonoBehaviour
     string sweepSF= "event:/Sound Effects/ObjectInteraction/BroomSweep";
 
     #region UI variables
-    bool aimHinted, smokingHinted, drinkHinted;
+    bool aimHinted, smokeHintOn, drinkHinted;
     public bool aimHintDone, smokingHintDone, drinkHintDone;
     bool chophinted;
     public bool canSmoke;
@@ -221,13 +221,12 @@ public class PlayerLeftHand : MonoBehaviour
                 DataHolder.HideHint(DataHolder.hints.pizzaHint);
                 aimHintDone = false;
             }
-            else if (canSmoke && !smokingHinted)
+            else if (smokeHintOn)
             {
-                DataHolder.ShowHint(DataHolder.hints.cigHint);
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     DataHolder.HideHint(DataHolder.hints.cigHint);
-                    smokingHinted = true;
+                    smokeHintOn = false;
                 }
             }
             else if (isHolding && playerHolding.atInterior && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
@@ -307,10 +306,10 @@ public class PlayerLeftHand : MonoBehaviour
                 else if (playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
                     InteriorContainer();
 
-                if (!smokingHinted)
+                if (!smokeHintOn)
                 {
                     DataHolder.HideHint(DataHolder.hints.cigHint);
-                    smokingHinted = true;
+                    smokeHintOn = true;
                 }
                 break;
 
@@ -361,8 +360,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     public void ShowSmokeHint()
     {
-        canSmoke = true;
-        smokingHinted = false;
+        smokeHintOn = true;
         DataHolder.ShowHint(DataHolder.hints.cigHint);
     }
 
@@ -457,14 +455,7 @@ public class PlayerLeftHand : MonoBehaviour
 
     #endregion
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.name == "CigHint" && !smokingHinted)
-        {
-            canSmoke = true;
-            other.gameObject.SetActive(false);
-        }
-    }
+
 
     float detectPlaceDist = 10f;
     LayerMask noPlayer = ~(1 << 8);
@@ -627,6 +618,8 @@ public class PlayerLeftHand : MonoBehaviour
                     objPickUp.thrown = true;
                     objPickUp.thrownByPlayer = true;
                     holdingObj.SetParent(null);
+                    Hugo.trashThrown = true;
+                    Hugo.thrownObject = objPickUp;
 
                     if (playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
                     {

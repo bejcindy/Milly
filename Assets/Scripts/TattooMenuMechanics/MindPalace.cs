@@ -32,6 +32,8 @@ public class MindPalace : MonoBehaviour
     Camera colorCam;
     Camera focusCam;
 
+    bool firstThought;
+
     [TextArea]
     public string regularHint;
     [TextArea]
@@ -225,6 +227,15 @@ public class MindPalace : MonoBehaviour
         foreach (StandardUISubtitlePanel panel in DialogueManager.standardDialogueUI.conversationUIElements.subtitlePanels)
         {
             if (panel.continueButton != null) panel.continueButton.interactable = true;
+        }
+    }
+
+    public void FirstMindPalaceDialogue()
+    {
+        if (!firstThought)
+        {
+            firstThought = true;
+            DialogueManager.StartConversation("Thoughts/FirstTattooMenu");
         }
     }
 }

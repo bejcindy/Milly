@@ -35,7 +35,6 @@ public class Akihito : NPCControl
 
     public void AkihitoAction1()
     {
-        noMoveAfterTalk = true;
     }
 
     public void AkihitoAction2()
@@ -52,6 +51,7 @@ public class Akihito : NPCControl
 
     public void MoveAkiToPizza()
     {
+        _counter = 1;
         StopIdle();
         remainInAnim = false;
         noMoveAfterTalk = false;

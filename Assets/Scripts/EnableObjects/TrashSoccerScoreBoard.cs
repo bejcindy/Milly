@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TrashSoccerScoreBoard : LookingObject
 {
+    public bool gameActivated;
     public int score;
     public GarbageScore garBageScore;
     public bool inGameZone;
@@ -103,7 +104,8 @@ public class TrashSoccerScoreBoard : LookingObject
     {
         if (other.CompareTag("Player"))
         {
-            inGameZone = true;
+            if(gameActivated)
+                inGameZone = true;
         }
 
     }
@@ -114,6 +116,11 @@ public class TrashSoccerScoreBoard : LookingObject
         {
             inGameZone = false;
         }
+    }
+
+    public void ActivateSoccerGame()
+    {
+        gameActivated = true;
     }
 
     void ChangeTextColor(TextMeshPro text)

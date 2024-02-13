@@ -20,7 +20,7 @@ public class StairColliderTrigger : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            transform.parent.GetComponent<LivableObject>().activated = true;
+            transform.parent.GetComponent<PassiveActivation>().activated = true;
         }
     }
 }

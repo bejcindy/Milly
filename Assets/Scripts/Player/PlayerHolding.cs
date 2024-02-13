@@ -672,6 +672,7 @@ public class PlayerHolding : MonoBehaviour
                     Rigidbody rigid = obj.GetComponent<Rigidbody>();
                     Vector3 kickDir = Vector3.ProjectOnPlane(obj.transform.position - transform.position, Vector3.up);
                     rigid.AddForce(kickDir * kickForce + Vector3.up * 2f, ForceMode.Impulse);
+                    obj.GetComponent<PickUpObject>().kicked = true;
                 }
             }
             if (midAirKickable)
@@ -681,6 +682,7 @@ public class PlayerHolding : MonoBehaviour
                     Rigidbody rigid = midAirKickable.GetComponent<Rigidbody>();
                     Vector3 kickDir = Vector3.ProjectOnPlane(midAirKickable.transform.position - transform.position, Vector3.up);
                     rigid.AddForce(kickDir * kickForce + Vector3.up * 2f, ForceMode.Impulse);
+                    midAirKickable.GetComponent<PickUpObject>().kicked = true;
                     midAirKickable = null;
                 }
             }

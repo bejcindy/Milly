@@ -35,9 +35,9 @@ public class PickUpObject : LivableObject
     public float throwCD;
     public bool thrownByPlayer;
     public bool canPutOnSurface;
+    public bool kicked;
     public Vector3 putOffset;
 
-    DialogueSystemTrigger dialogue;
     public string pickUpEventName;
     public string throwEventName;
 
@@ -49,7 +49,6 @@ public class PickUpObject : LivableObject
         pickType = true;
         rb = GetComponent<Rigidbody>();
         throwCD = 1f;
-        dialogue = GetComponent<DialogueSystemTrigger>();
         if (objType == HandObjectType.DRINK)
             canPutOnSurface = true;
     }
@@ -68,7 +67,11 @@ public class PickUpObject : LivableObject
         if (selected && !thrown)
             gameObject.layer = 9;
         else if (inHand)
+        {
             gameObject.layer = 7;
+            kicked = false;
+        }
+
         else if (activated)
             gameObject.layer = 17;
         else

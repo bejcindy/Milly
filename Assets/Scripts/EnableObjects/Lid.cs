@@ -81,6 +81,16 @@ public class Lid : LivableObject
                 }
             }
         }
+
+        if (gameObject.name == "dumpster_cover")
+        {
+            if(activated && !lidOpen && matColorVal <= 0)
+            {
+                GetComponent<Collider>().enabled = false;
+                this.enabled = false;
+            }
+
+        }
     }
 
     void LidControl()

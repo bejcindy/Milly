@@ -5,6 +5,7 @@ using UnityEngine;
 public class Vinyl : PickUpObject
 {
     public RecordPlayer recordPlayer;
+    public VinylHolder holder;
     public bool onRecordPlayer;
     public bool onStand;
     public bool standSelect;
@@ -22,6 +23,10 @@ public class Vinyl : PickUpObject
         objType = HandObjectType.DOUBLE; 
         recordPlayer = ReferenceTool.recordPlayer;
         mySong = transform.GetChild(0).gameObject;
+        if (onStand)
+        {
+            holder = transform.parent.GetComponent<VinylHolder>();
+        }
     }
 
     // Update is called once per frame

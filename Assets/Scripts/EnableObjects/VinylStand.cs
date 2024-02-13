@@ -8,8 +8,8 @@ public class VinylStand : LivableObject
     [Foldout("Vinyl Stand")]
     public Vinyl selectedVinyl;
     public Vinyl holdingVinyl;
-    public Transform availableSpot;
-    public Transform[] holdingPositions;
+    public VinylHolder availableSpot;
+    public VinylHolder[] holdingPositions;
     public int selectIndex;
     public bool inScrollCD;
     public float scrollCD;
@@ -74,14 +74,17 @@ public class VinylStand : LivableObject
                     else
                     {
                         if (!inScrollCD)
+                        {
+                            selectIndex = selectedVinyl.transform.parent.GetSiblingIndex();
                             PlayerChooseVinyl();
+                        }
+
                         selectedVinyl.gameObject.layer = 9;
                         playerHolding.vinylObj = selectedVinyl.gameObject;
                         DataHolder.ShowHint(DataHolder.hints.vinylStandHint);
                         if (Input.GetMouseButtonDown(0))
                         {
-                            selectedVinyl.GetComponent<Rigidbody>().isKinematic = true;
-                            selectedVinyl.inHand = true;
+                            selectedVinyl.holder.ReleaseVinyl();
                             playerHolding.OccupyLeft(selectedVinyl.transform);
                             selectedVinyl = null;
                             playerHolding.vinylObj = null;
@@ -135,52 +138,76 @@ public class VinylStand : LivableObject
 
     void SelectInitialVinyl()
     {
-        foreach(Transform t in holdingPositions)
+        foreach(VinylHolder t in holdingPositions)
         {
-            if(t.childCount > 0)
+            if(t.hasVinyl)
             {
-                selectedVinyl = t.GetChild(0).GetComponent<Vinyl>();
+                selectedVinyl = t.myVinyl;
                 return;
             }
         }
     }
 
+    Vinyl FindNextVinyl(int startIndex, bool forward)
+    {
+        if (forward)
+        {
+            for (int i = startIndex; i < holdingPositions.Length; i++)
+            {
+                if (holdingPositions[i].hasVinyl)
+                {
+                    return holdingPositions[i].myVinyl;
+                }
+            }
+            return selectedVinyl;
+
+        }
+        else
+        {
+            for (int i = startIndex; i >= 0; i--)
+            {
+                if (holdingPositions[i].hasVinyl)
+                {
+                    return holdingPositions[i].myVinyl;
+                }
+            }
+            return selectedVinyl;
+        }
+
+    }
+
     void PlayerChooseVinyl()
     {
-        selectIndex = selectedVinyl.transform.parent.GetSiblingIndex();
+        
         if (Input.mouseScrollDelta.y > 0)
         {
             inScrollCD = true;
-            if(selectIndex < holdingPositions.Length - 1)
+            if (selectIndex < holdingPositions.Length - 1)
             {
-                if (holdingPositions[selectIndex++].childCount > 0)
+                if (selectedVinyl.activated)
                 {
-                    if (selectedVinyl.activated)
-                    {
-                        selectedVinyl.gameObject.layer = 17;
-                    }
-                    else
-                    {
-                        selectedVinyl.gameObject.layer = 0;
-                    }
-                    selectedVinyl = holdingPositions[selectIndex++].GetChild(0).GetComponent<Vinyl>();
+                    selectedVinyl.gameObject.layer = 17;
                 }
+                else
+                {
+                    selectedVinyl.gameObject.layer = 0;
+                }
+                selectedVinyl = FindNextVinyl(selectIndex +1, true);
+
             }
             else
             {
-                if (holdingPositions[0].childCount > 0)
+                if (selectedVinyl.activated)
                 {
-                    if (selectedVinyl.activated)
-                    {
-                        selectedVinyl.gameObject.layer = 17;
-                    }
-                    else
-                    {
-                        selectedVinyl.gameObject.layer = 0;
-                    }
-                    selectedVinyl = holdingPositions[0].GetChild(0).GetComponent<Vinyl>();
+                    selectedVinyl.gameObject.layer = 17;
                 }
+                else
+                {
+                    selectedVinyl.gameObject.layer = 0;
+                }
+                selectedVinyl = FindNextVinyl(0, true);
             }
+
 
         }
 
@@ -189,33 +216,28 @@ public class VinylStand : LivableObject
             inScrollCD = true;
             if (selectIndex > 0)
             {
-                if (holdingPositions[selectIndex--].childCount > 0)
+                if (selectedVinyl.activated)
                 {
-                    if (selectedVinyl.activated)
-                    {
-                        selectedVinyl.gameObject.layer = 17;
-                    }
-                    else
-                    {
-                        selectedVinyl.gameObject.layer = 0;
-                    }
-                    selectedVinyl = holdingPositions[selectIndex--].GetChild(0).GetComponent<Vinyl>();
+                    selectedVinyl.gameObject.layer = 17;
                 }
+                else
+                {
+                    selectedVinyl.gameObject.layer = 0;
+                }
+                selectedVinyl = FindNextVinyl(selectIndex - 1, false);
+
             }
             else
             {
-                if (holdingPositions[3].childCount > 0)
+                if (selectedVinyl.activated)
                 {
-                    if (selectedVinyl.activated)
-                    {
-                        selectedVinyl.gameObject.layer = 17;
-                    }
-                    else
-                    {
-                        selectedVinyl.gameObject.layer = 0;
-                    }
-                    selectedVinyl = holdingPositions[3].GetChild(0).GetComponent<Vinyl>();
+                    selectedVinyl.gameObject.layer = 17;
                 }
+                else
+                {
+                    selectedVinyl.gameObject.layer = 0;
+                }
+                selectedVinyl = FindNextVinyl(holdingPositions.Length-1, false);
             }
         }
     }
@@ -225,14 +247,7 @@ public class VinylStand : LivableObject
         gameObject.layer = 9;
         if (Input.GetMouseButtonDown(0))
         {
-            holdingVinyl.gameObject.layer = 17;
-            holdingVinyl.onRecordPlayer = false;
-            holdingVinyl.inHand = false;
-            holdingVinyl.onStand = true;
-            holdingVinyl.selected = false;
-            holdingVinyl.transform.SetParent(availableSpot);
-            holdingVinyl.transform.localPosition = Vector3.zero;
-            holdingVinyl.transform.localRotation = Quaternion.identity;
+            availableSpot.PlaceVinyl(holdingVinyl);
             playerHolding.UnoccupyLeft();
             holdingVinyl = null;
             availableSpot = null;
@@ -243,22 +258,19 @@ public class VinylStand : LivableObject
     public void PlaceVinyl(Vinyl vinyl)
     {
         if (!availableSpot)
+        {
             CheckAvailableSpot();
-        vinyl.onRecordPlayer = false;
-        vinyl.inHand = false;
-        vinyl.onStand = true;
-        vinyl.selected = false;
-        vinyl.transform.SetParent(availableSpot);
-        vinyl.transform.localPosition = Vector3.zero;
-        vinyl.transform.localRotation = Quaternion.identity;
+        }
+        availableSpot.PlaceVinyl(vinyl);
         availableSpot = null;
     }
+
 
     bool CheckAvailableSpot()
     {
         foreach(var obj in holdingPositions)
         {
-            if (obj.childCount <1)
+            if (!obj.hasVinyl)
             {
                 availableSpot = obj;
                 return true;

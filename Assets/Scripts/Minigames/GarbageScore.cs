@@ -4,11 +4,13 @@ using UnityEngine;
 using TMPro;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using Unity.VisualScripting;
+using PixelCrushers.DialogueSystem;
 
 public class GarbageScore : MonoBehaviour
 {
     [SerializeField]
     public int score;
+    public bool throwValid;
     public Material dumpsterMat;
     public GameObject dumpsterBody;
     public PhysicMaterial highFriction;
@@ -17,6 +19,7 @@ public class GarbageScore : MonoBehaviour
     float matColorVal = 1f;
     float fadeInterval = 10f;
     bool firstActivated,firstTrashIn;
+    bool throwValidCheckDiaDone;
 
     public List<PickUpObject> trashList = new List<PickUpObject>();
     // Start is called before the first frame update
@@ -46,19 +49,49 @@ public class GarbageScore : MonoBehaviour
         PickUpObject pickUp = other.GetComponent<PickUpObject>();
         if (pickUp)
         {
-            score++;
-            pickUp.dumped = true;
-            pickUp.GetComponent<Collider>().material = highFriction;
+            if (pickUp.kicked)
+            {
+                score++;
+                pickUp.dumped = true;
+                pickUp.GetComponent<Collider>().material = highFriction;
+            }
+            else
+            {
+                if (!throwValidCheckDiaDone)
+                {
+                    throwValidCheckDiaDone = true;
+                    DialogueManager.StartConversation("SoccerGame/ThrownObject");
+                    pickUp.dumped = true;
+                    pickUp.GetComponent<Collider>().material = highFriction;
+                }
+
+                if (throwValid)
+                {
+                    score++;
+                    pickUp.dumped = true;
+                    pickUp.GetComponent<Collider>().material = highFriction;
+                }
+
+            }
+
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        //if (other.GetComponent<PickUpObject>())
-        //{
-        //    score--;
-        //}
 
+    public void ValidateThrow()
+    {
+        throwValid = true;
     }
+
+    public void InvalidateThrow()
+    {
+        throwValid = false;
+    }
+
+    public void AddScore()
+    {
+        score++;
+    }
+
     void TurnOnColor(Material material)
     {
         if (matColorVal > 0)

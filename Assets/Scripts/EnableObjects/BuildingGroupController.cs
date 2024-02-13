@@ -49,6 +49,11 @@ public class BuildingGroupController : MonoBehaviour
         }
     }
 
+    public void Activate()
+    {
+        activateAll = true;
+    }
+
     void ActivateAll(Transform obj)
     {
         if(obj.GetComponent<Renderer>()!= null)

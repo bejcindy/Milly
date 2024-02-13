@@ -116,7 +116,13 @@ public class PlayerHolding : MonoBehaviour
                 ChooseLookable();
 
             if ((pickUpObjects.Count == 1 && pickUpObjects[0].GetComponent<PickUpObject>().inHand == false) || pickUpObjects.Count > 1 || midAirKickable)
+            {
                 DetectKick();
+                if (TrashSoccerScoreBoard.startedSoccerGame)
+                    DataHolder.ShowHint(DataHolder.hints.kickHint);
+            }
+            else
+                DataHolder.HideHint(DataHolder.hints.kickHint);
 
 
             #region UI and Hints

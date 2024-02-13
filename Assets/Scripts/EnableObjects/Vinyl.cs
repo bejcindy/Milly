@@ -10,11 +10,19 @@ public class Vinyl : PickUpObject
     public bool onStand;
     public bool standSelect;
     public GameObject mySong;
+    public GameObject songInfo;
     public bool listened;
     bool listneCountAdded;
 
     bool notInCD;
     float placedCDVal = 2f;
+
+    private void Awake()
+    {
+        songInfo = transform.GetChild(1).gameObject;
+        songInfo.SetActive(false);
+    }
+
     // Start is called before the first frame update
     protected override void Start()
     {

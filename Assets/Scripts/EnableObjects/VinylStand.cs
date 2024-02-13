@@ -80,14 +80,16 @@ public class VinylStand : LivableObject
                         }
 
                         selectedVinyl.gameObject.layer = 9;
+                        selectedVinyl.songInfo.SetActive(true);
                         playerHolding.vinylObj = selectedVinyl.gameObject;
                         DataHolder.ShowHint(DataHolder.hints.vinylStandHint);
                         if (Input.GetMouseButtonDown(0))
                         {
                             selectedVinyl.holder.ReleaseVinyl();
                             playerHolding.OccupyLeft(selectedVinyl.transform);
+                            selectedVinyl.songInfo.SetActive(false);
                             selectedVinyl = null;
-                            playerHolding.vinylObj = null;
+                            playerHolding.vinylObj = null;                                                      
                             DataHolder.HideHint(DataHolder.hints.vinylStandHint);
                         }
                     }
@@ -107,6 +109,7 @@ public class VinylStand : LivableObject
                 {
                     selectedVinyl.gameObject.layer = 0;
                 }
+                selectedVinyl.songInfo.SetActive(false);
             }
             selectedVinyl = null;
             holdingVinyl = null;
@@ -187,11 +190,13 @@ public class VinylStand : LivableObject
                 if (selectedVinyl.activated)
                 {
                     selectedVinyl.gameObject.layer = 17;
+
                 }
                 else
                 {
                     selectedVinyl.gameObject.layer = 0;
                 }
+                selectedVinyl.songInfo.SetActive(false);
                 selectedVinyl = FindNextVinyl(selectIndex +1, true);
 
             }
@@ -205,6 +210,7 @@ public class VinylStand : LivableObject
                 {
                     selectedVinyl.gameObject.layer = 0;
                 }
+                selectedVinyl.songInfo.SetActive(false);
                 selectedVinyl = FindNextVinyl(0, true);
             }
 
@@ -224,6 +230,7 @@ public class VinylStand : LivableObject
                 {
                     selectedVinyl.gameObject.layer = 0;
                 }
+                selectedVinyl.songInfo.SetActive(false);
                 selectedVinyl = FindNextVinyl(selectIndex - 1, false);
 
             }
@@ -237,6 +244,7 @@ public class VinylStand : LivableObject
                 {
                     selectedVinyl.gameObject.layer = 0;
                 }
+                selectedVinyl.songInfo.SetActive(false);
                 selectedVinyl = FindNextVinyl(holdingPositions.Length-1, false);
             }
         }

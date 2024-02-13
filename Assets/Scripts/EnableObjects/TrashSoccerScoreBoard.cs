@@ -17,11 +17,12 @@ public class TrashSoccerScoreBoard : LookingObject
     bool firstTransformed;
     bool showedMillyScore;
     bool showedHint;
+    public static bool startedSoccerGame;
 
     protected override void Start()
     {
         base.Start();
-
+        startedSoccerGame = false;
     }
 
     protected override void Update()
@@ -30,21 +31,22 @@ public class TrashSoccerScoreBoard : LookingObject
         if (inGameZone)
         {
             scorePanel.SetActive(true);
-            if (!showedHint && !MindPalace.hideHint)
-            {
-                DataHolder.ShowHint(DataHolder.hints.soccerHint);
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    DataHolder.HideHint(DataHolder.hints.soccerHint);
-                    showedHint = true;
-                }
-            }
+            startedSoccerGame = true;
+            //if (!showedHint && !MindPalace.hideHint)
+            //{
+            //    DataHolder.ShowHint(DataHolder.hints.soccerHint);
+            //    if (Input.GetKeyDown(KeyCode.Q))
+            //    {
+            //        DataHolder.HideHint(DataHolder.hints.soccerHint);
+            //        showedHint = true;
+            //    }
+            //}
 
         }
         else
         {
             scorePanel.SetActive(false);
-            DataHolder.HideHint(DataHolder.hints.soccerHint);
+            //DataHolder.HideHint(DataHolder.hints.soccerHint);
         }
 
         if (focusingThis)

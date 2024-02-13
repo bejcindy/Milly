@@ -285,6 +285,7 @@ public class PlayerLeftHand : MonoBehaviour
         {
             PutOnSurface();
         }
+
         switch (objPickUp.objType)
         {
             case HandObjectType.DRINK:
@@ -356,6 +357,7 @@ public class PlayerLeftHand : MonoBehaviour
                 }
                 break;
         }
+
     }
 
     public void ShowSmokeHint()
@@ -513,8 +515,6 @@ public class PlayerLeftHand : MonoBehaviour
 
     private void Drink()
     {
-
-
         if (Input.mouseScrollDelta.y < 0 && !drinking)
         {
             drinking = true;
@@ -570,7 +570,6 @@ public class PlayerLeftHand : MonoBehaviour
         {
             food.Eat();
         }
-
     }
 
 

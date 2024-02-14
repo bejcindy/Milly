@@ -92,8 +92,8 @@ public class CigaretteContainer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-
-            if(cigs.Count>0 && !leftHand.isHolding && !playerHolding.atInterior && !takingOutCig)
+            DataHolder.HideHint(DataHolder.hints.cigHint);
+            if (cigs.Count>0 && !leftHand.isHolding && !playerHolding.atInterior && !takingOutCig)
             {
                 TakeOutBox();
 

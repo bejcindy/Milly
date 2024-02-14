@@ -56,6 +56,14 @@ public class DataHolder : MonoBehaviour
     static List<GameObject> hintPanels;
 
     bool hintOff;
+    //"LeftClick", "Click", "RightClick", "ScrollDown", "ScrollUp", "Scroll", "Drag"
+    [Foldout("MouseUIs")]
+    public Sprite LeftClick;
+    public Sprite RightClick;
+    public Sprite ScrollDown;
+    public Sprite ScrollUp;
+    public Sprite Scroll;
+    public Sprite Drag;
     #endregion
 
     public static bool canMakeSound;
@@ -221,6 +229,7 @@ public class DataHolder : MonoBehaviour
                 hintPanels.Add(instantiatedPanel);
                 currentHints.Add(hint);
                 instantiated = true;
+                Debug.Log("run");
             }
         }
     }

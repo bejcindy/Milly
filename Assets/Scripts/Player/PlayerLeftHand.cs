@@ -92,21 +92,8 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (!MindPalace.tatMenuOn && !PauseMenu.isPaused)
             {
-                if (!inPizzaBox)
-                {
-                    HoldingAction();
-                }
-                else if (inPizzaBox && holdingObj.GetComponent<Pizza>())
-                {
-                    DetectPizzaHolding();
-                }
-                else if (inPizzaBox && !holdingObj.GetComponent<Pizza>())
-                {
-                    readyToThrow = false;
-                    holdingObj.localPosition = Vector3.zero;
-                    aimUI.SetActive(false);
-                    aimUI.transform.localScale = new Vector3(1, 1, 1);
-                }
+                HoldingAction();
+
             }
         }
         else
@@ -286,77 +273,68 @@ public class PlayerLeftHand : MonoBehaviour
             PutOnSurface();
         }
 
-        switch (objPickUp.objType)
+        if (playerHolding.atContainer)
         {
-            case HandObjectType.DRINK:
-                Drink();
-                if (!drinking && !playerHolding.atInterior)
-                    BasicThrow();
-                else if (!drinking && playerHolding.atInterior)
-                    InteriorContainer();
-                break;
-            case HandObjectType.CHOPSTICKS:
-                currentChop = holdingObj.GetComponent<Chopsticks>();
-                UsingChopsticks();
-                ChopUIDetect();
-                break;
-            case HandObjectType.CIGARETTE:
-                Smoke();
-                if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
-                    BasicThrow();
-                else if (playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
-                    InteriorContainer();
-
-                if (!smokeHintOn)
-                {
-                    DataHolder.HideHint(DataHolder.hints.cigHint);
-                    smokeHintOn = true;
-                }
-                break;
-
-            case HandObjectType.DOUBLE:
-                DetectDoubleHand();
-                break;
-
-            case HandObjectType.FOOD:
-                EatHandFood();
-                //if (!playerHolding.atInterior)
-                //{
-                //    BasicThrow();
-                //    resetAlready = false;
-                //}
-                //else
-                //{
-                //    if (!resetAlready && !playerHolding.objectLerping)
-                //    {
-                //        ResetThrow();
-                //        resetAlready = true;
-                //    }
-                //    InteriorContainer();
-                //}
-                break;
-
-            case HandObjectType.BROOM:
-                DetectBroomUse();
-                break;
-
-            default:
-                if (!playerHolding.atInterior)
-                {
-                    BasicThrow();
-                    resetAlready = false;
-                }
-                else
-                {
-                    if (!resetAlready && !playerHolding.objectLerping)
-                    {
-                        ResetThrow();
-                        resetAlready = true;
-                    }
-                    InteriorContainer();
-                }
-                break;
+            ContainerThrow();
         }
+        else
+        {
+            switch (objPickUp.objType)
+            {
+                default:
+                    if (!playerHolding.atInterior)
+                    {
+                        BasicThrow();
+                        resetAlready = false;
+                    }
+                    else
+                    {
+                        if (!resetAlready && !playerHolding.objectLerping)
+                        {
+                            ResetThrow();
+                            resetAlready = true;
+                        }
+                    }
+                    break;
+
+                case HandObjectType.DRINK:
+                    Drink();
+                    if (!drinking && !playerHolding.atInterior)
+                        BasicThrow();
+                    break;
+
+                case HandObjectType.CIGARETTE:
+                    Smoke();
+                    if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
+                        BasicThrow();
+                    break;
+
+                case HandObjectType.CHOPSTICKS:
+                    currentChop = holdingObj.GetComponent<Chopsticks>();
+                    UsingChopsticks();
+                    ChopUIDetect();
+                    break;
+
+
+                case HandObjectType.DOUBLE:
+                    if(!playerHolding.atInterior)
+                        DetectDoubleHand();
+                    break;
+
+                case HandObjectType.FOOD:
+                    EatHandFood();
+                    break;
+
+                case HandObjectType.BROOM:
+                    if(!playerHolding.atInterior)
+                        DetectBroomUse();
+                    break;
+
+
+            }
+
+        }
+
 
     }
 
@@ -694,7 +672,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
     }
 
-    private void InteriorContainer()
+    private void ContainerThrow()
     {
         if (!bypassThrow)
         {
@@ -740,8 +718,6 @@ public class PlayerLeftHand : MonoBehaviour
         else if (bypassThrow)
         {
             readyToThrow = false;
-            if (objPickUp.objType != HandObjectType.CIGARETTE)
-                holdingObj.localPosition = Vector3.zero;
         }
     }
 

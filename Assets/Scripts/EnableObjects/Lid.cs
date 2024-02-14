@@ -87,6 +87,11 @@ public class Lid : LivableObject
             if(activated && !lidOpen && matColorVal <= 0)
             {
                 GetComponent<Collider>().enabled = false;
+                gameObject.layer = 17;
+                if(playerHolding.lidObj == this)
+                {
+                    playerHolding.lidObj = null;
+                }
                 this.enabled = false;
             }
 

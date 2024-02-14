@@ -97,7 +97,17 @@ public class CharacterTattoo : MonoBehaviour
 
 
         if (finalFaded)
-            FinalFadeOutSprite();
+        {
+            if(activated)
+                FinalFadeOutSprite();
+            else
+            {
+                fadeOutText = true;
+                tatMesh.SetMeshDither(true);
+                activated = true;
+            }
+        }
+
         
     }
 
@@ -204,7 +214,7 @@ public class CharacterTattoo : MonoBehaviour
         else
         {
             finalFaded = false;
-            if (!myMenu.fadeInFinalTat)
+            if (!myMenu.finalTattoo.dragged)
                 myMenu.fadeInFinalTat = true;
         }
 

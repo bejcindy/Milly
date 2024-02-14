@@ -20,7 +20,7 @@ public class PizzaScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentImage = transform.GetChild((0)).GetComponent<SpriteRenderer>();
+        currentImage = transform.GetChild(0).GetComponent<SpriteRenderer>();
         alpha = 0;
         showingLight = true;
     }

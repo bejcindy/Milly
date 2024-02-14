@@ -8,6 +8,7 @@ public class ContainerObject : LivableObject
     public List<string> tagList;
     public Vector3 containedPos;
     public bool table;
+    public bool isContainerVisible;
 
     protected override void Start()
     {
@@ -34,7 +35,7 @@ public class ContainerObject : LivableObject
 
     public bool CheckMatchingObject(GameObject obj)
     {
-        if (isVisible)
+        if (isContainerVisible)
         {
             if (tagList.Contains(obj.tag))
             {
@@ -67,6 +68,16 @@ public class ContainerObject : LivableObject
 
         if(!StartSequence.noControl || overrideStartSequence)
             activated = true;
+    }
+
+    public void OnBecameInvisible()
+    {
+        isContainerVisible = false;
+    }
+
+    public void OnBecameVisible()
+    {
+        isContainerVisible = true;
     }
 
 

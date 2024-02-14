@@ -72,6 +72,7 @@ public class Hugo : NPCControl
     public void HugoAction4()
     {
         talkable = true;
+        noMoveAfterTalk = true;
     }
 
     public void HugoAction5()

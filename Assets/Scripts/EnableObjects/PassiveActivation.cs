@@ -16,6 +16,7 @@ public class PassiveActivation : MonoBehaviour
         matColorVal = 1;
         fadeInterval = 10;
         mat = GetComponent<Renderer>().material;
+        mat.SetFloat("_WhiteDegree", matColorVal);
         if (GetComponent<GroupMaster>() != null)
         {
             hasGroupControl = true;
@@ -26,7 +27,7 @@ public class PassiveActivation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(activated)
+        if(activated && !StartSequence.noControl)
         {
             TurnOnColor(mat);
             if (hasGroupControl)

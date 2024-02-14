@@ -20,7 +20,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public bool discovered;
     public bool draggingTat;
     public bool isMainMenu;
-
+    bool finalCalledOnce;
     [Foldout("References")]
     public Transform myTattoos;
     public CharacterTattoo finalTattoo;
@@ -93,8 +93,10 @@ public class CharacterTattooMenu : MonoBehaviour
                 RuntimeManager.PlayOneShot(fadeOutTatSF);
             }
 
-            if (fadeInFinalTat)
+            if (fadeInFinalTat && !finalCalledOnce)
             {
+                Debug.Log("getting called char final change");
+                finalCalledOnce = true;
                 fadeInFinalTat = false;
                 finalTattoo.dragged = true;
                 myChar.CharacterFinalChange();
@@ -148,8 +150,12 @@ public class CharacterTattooMenu : MonoBehaviour
 
             if (!tat.isFinalTat)
             {
-                tat.DitherMeshIn();
-                tat.MenuFadeInText();
+                if(!tat.activated && !finished)
+                {
+                    tat.DitherMeshIn();
+                    tat.MenuFadeInText();
+                }
+
                 if (tat.activated && !finished)
                 {
                     tat.MenuFadeInTatSprite();

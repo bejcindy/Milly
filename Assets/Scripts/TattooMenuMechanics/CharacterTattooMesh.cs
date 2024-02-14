@@ -171,6 +171,7 @@ public class CharacterTattooMesh : MonoBehaviour
         {
             stageChanging = false;
             matColorVal = 0;
+            stage++;
             if (finalChange)
             {
                 myMenu.finalTransition = true;
@@ -219,6 +220,11 @@ public class CharacterTattooMesh : MonoBehaviour
         finalChange = true;
         if(!stageChanging)
             stageChanging = true;
+
+        if (myNPC)
+        {
+            myNPC.ColorActualNPC();
+        }
     }
 
     public void ReadyCharacterChange(CharacterTattoo tat)

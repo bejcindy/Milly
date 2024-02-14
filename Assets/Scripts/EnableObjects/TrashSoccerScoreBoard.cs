@@ -29,6 +29,9 @@ public class TrashSoccerScoreBoard : LookingObject
     protected override void Update()
     {
         base.Update();
+
+        if (firstActivated)
+            gameActivated = true;
         if (inGameZone)
         {
             scorePanel.SetActive(true);

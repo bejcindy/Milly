@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,15 +13,19 @@ public class Vinyl : PickUpObject
     public GameObject mySong;
     public GameObject songInfo;
     public bool listened;
+    public bool loyiAtVinyl;
+    public float playTime;
     bool listneCountAdded;
 
     bool notInCD;
     float placedCDVal = 2f;
+    GameObject vinylDialogue;
 
     private void Awake()
     {
         songInfo = transform.GetChild(1).gameObject;
         songInfo.SetActive(false);
+        vinylDialogue = transform.GetChild(2).gameObject; 
     }
 
     // Start is called before the first frame update
@@ -35,12 +40,21 @@ public class Vinyl : PickUpObject
         {
             holder = transform.parent.GetComponent<VinylHolder>();
         }
+
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        if(listened && !listneCountAdded)
+        loyiAtVinyl = DialogueLua.GetVariable("Vinyl/LoyiInBF").asBool;
+        if (loyiAtVinyl)
+        {
+            if(playTime > 20f)
+            {
+                vinylDialogue.SetActive(true);
+            }
+        }
+        if (listened && !listneCountAdded)
         {
             listneCountAdded = true;
             recordPlayer.vinylListenCount++;
@@ -92,6 +106,9 @@ public class Vinyl : PickUpObject
 
             if (recordPlayer.isPlaying)
             {
+                if(loyiAtVinyl)
+                    playTime += Time.deltaTime;
+
                 if (playerHolding.CheckInteractable(gameObject))
                     playerHolding.RemoveInteractable(gameObject);
                 if (playerHolding.selectedObj == this)
@@ -109,11 +126,19 @@ public class Vinyl : PickUpObject
             }
             else
             {
+                playTime = 0;
                 if(!recordPlayer.moving && !notInCD)
                     base.Update();
                 if (mySong.activeSelf)
                 {
                     mySong.SetActive(false);
+                    
+                    if (loyiAtVinyl)
+                    {
+                        DialogueLua.SetVariable("Vinyl/LoyiSongChange", Random.Range(0, 2));
+                        DialogueManager.StartConversation("Vinyl/CancelSong");
+                    }
+
                 }
             }
         }

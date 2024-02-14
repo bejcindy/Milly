@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,5 +76,14 @@ public class Loyi : NPCControl
 
     public void ExitCutscene()
     {
+    }
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        base.OnConversationEnd(other);
+        if(_counter == 3)
+        {
+            DialogueLua.SetVariable("Vinyl/LoyiInBF", true);
+        }
     }
 }

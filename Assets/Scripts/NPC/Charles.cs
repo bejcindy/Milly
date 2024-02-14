@@ -62,6 +62,7 @@ public class Charles : NPCControl
 
     public void CharlesAction2()
     {
+        charlesFollowDia.SetActive(false);
         charlesPizza.SetActive(true);
         currentDialogue.gameObject.SetActive(true);
     }

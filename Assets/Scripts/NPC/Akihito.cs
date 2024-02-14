@@ -39,9 +39,10 @@ public class Akihito : NPCControl
 
     public void AkihitoAction2()
     {
-        talkable = true;
+        talkable = false;
         noMoveAfterTalk = true;
         noLookInConvo = true;
+        currentDialogue.gameObject.SetActive(true);
     }
 
     public void AkihitoAction3() {

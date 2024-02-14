@@ -98,7 +98,6 @@ public class EatObject : PickUpObject
 
     public void FoodMeshChange()
     {
-        //activated = true;
         if(pizzaEatingDialogue)
             pizzaEatingDialogue.SetActive(true);
         pizzaLid.enabled = true;
@@ -121,8 +120,18 @@ public class EatObject : PickUpObject
         {
             doneEating = true;
             playerHolding.UnoccupyLeft();
+            rend.enabled = false;
             Invoke(nameof(DestroyPizza), 1f);
 
+        }
+        if(gameObject.name == "teriyaki_pizza_milly")
+        {
+            Ron.akiPizzaAte = true;
+        }
+
+        if(gameObject.name == "maegherita_pizza_milly")
+        {
+            Ron.charlesPizzaAte = true;
         }
     }
 
@@ -130,6 +139,8 @@ public class EatObject : PickUpObject
     {
         Destroy(gameObject);
     }
+
+
     bool ran;
 
 

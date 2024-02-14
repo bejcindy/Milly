@@ -8,6 +8,10 @@ public class Hugo : NPCControl
 {
     public static bool trashThrown;
     public static PickUpObject thrownObject;
+    public static int totalFloorCount;
+    public static int totalFloorCleaned;
+    public int floorCount;
+    public int floorCleaned;
     public GameObject broom;
     public Transform broomPlacePos;
     public TrashSoccerScoreBoard scoreBoard;
@@ -31,11 +35,20 @@ public class Hugo : NPCControl
     protected override void Update()
     {
         base.Update();
+        floorCleaned = totalFloorCleaned;
+        floorCount = totalFloorCount;
         if (trashThrown)
         {
             HugoTrashDetection();
         }
 
+        if(totalFloorCleaned == totalFloorCount)
+        {
+            if(_counter == 4)
+            {
+                StopIdle();
+            }
+        }
     }
 
     public void HugoAction1()
@@ -59,6 +72,12 @@ public class Hugo : NPCControl
     public void HugoAction4()
     {
         talkable = true;
+    }
+
+    public void HugoAction5()
+    {
+        noMoveAfterTalk = true;
+        noLookInConvo = true;
     }
 
     public void TriggerWillowTattoo()

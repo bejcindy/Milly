@@ -156,9 +156,9 @@ public class TattooMesh : MonoBehaviour
             myTat.fadeOutText = true;
             dissolving = true;
             characterTatMesh.ReadyCharacterChange(myTat);
-            RuntimeManager.PlayOneShot(dissolveSF, transform.position);
             GetComponent<BoxCollider>().enabled = false;
             myMenu.mindPalace.draggingTat = false;
+            RuntimeManager.PlayOneShot(dissolveSF, transform.position);
         }
     }
     private void OnMouseEnter()
@@ -354,7 +354,6 @@ public class TattooMesh : MonoBehaviour
             characterTatMesh.draggingTattoo = false;
             dissolving = false;
             dissolved = true;
-            characterTatMesh.stage++;
         }
     }
 

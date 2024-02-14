@@ -319,20 +319,20 @@ public class PlayerLeftHand : MonoBehaviour
 
             case HandObjectType.FOOD:
                 EatHandFood();
-                if (!playerHolding.atInterior)
-                {
-                    BasicThrow();
-                    resetAlready = false;
-                }
-                else
-                {
-                    if (!resetAlready && !playerHolding.objectLerping)
-                    {
-                        ResetThrow();
-                        resetAlready = true;
-                    }
-                    InteriorContainer();
-                }
+                //if (!playerHolding.atInterior)
+                //{
+                //    BasicThrow();
+                //    resetAlready = false;
+                //}
+                //else
+                //{
+                //    if (!resetAlready && !playerHolding.objectLerping)
+                //    {
+                //        ResetThrow();
+                //        resetAlready = true;
+                //    }
+                //    InteriorContainer();
+                //}
                 break;
 
             case HandObjectType.BROOM:

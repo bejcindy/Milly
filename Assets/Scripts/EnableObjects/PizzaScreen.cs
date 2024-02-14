@@ -16,6 +16,7 @@ public class PizzaScreen : MonoBehaviour
     public int stage;
 
     float alpha;
+    float lutDuration = 30f;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +47,18 @@ public class PizzaScreen : MonoBehaviour
 
         if(finished)
         {
-            StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToDefaultColor());
-            Invoke(nameof(FadeLastImage), 2f);
+
+            Invoke(nameof(FadeLastImage), 15f);
+            if (lutDuration > 0)
+            {
+                lutDuration -= Time.deltaTime;
+            }
+            else
+            {
+                StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToDefaultColor());
+            }
+            
+
         }
 
     }
@@ -94,10 +105,7 @@ public class PizzaScreen : MonoBehaviour
             currentAlpha.a = 1-alpha;
             currentImage.color = currentAlpha;
         }
-        else
-        {
-            this.enabled = false;
-        }
+
 
     }
 

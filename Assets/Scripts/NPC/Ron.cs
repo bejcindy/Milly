@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Ron : NPCControl
 {
+    public static bool akiPizzaAte;
+    public static bool charlesPizzaAte;
     public EatObject akiPizza;
     public EatObject charlesPizza;
     public CharacterTattoo pizzaTat;
@@ -19,7 +21,7 @@ public class Ron : NPCControl
     protected override void Update()
     {
         base.Update();
-        if(akiPizza.ate && charlesPizza.ate)
+        if(akiPizzaAte && charlesPizzaAte)
         {
             if (!pizzaTatTriggered)
             {

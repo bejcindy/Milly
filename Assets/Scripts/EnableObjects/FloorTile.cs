@@ -8,7 +8,7 @@ public class FloorTile : MonoBehaviour
     Renderer rend;
 
     public bool activated;
-    bool firstActivated;
+    public bool firstActivated;
 
     float matColorVal;
     float fadeInterval;
@@ -20,6 +20,7 @@ public class FloorTile : MonoBehaviour
 
     void Start()
     {
+        Hugo.totalFloorCount++;
         activated = false;
         rend = GetComponent<Renderer>();
         mat = rend.material;
@@ -95,6 +96,7 @@ public class FloorTile : MonoBehaviour
         {
             matColorVal = 0;
             firstActivated = true;
+            Hugo.totalFloorCleaned++;
             ReferenceTool.broom.TriggerTat();
 
         }

@@ -110,7 +110,7 @@ public class TrashSoccerScoreBoard : LookingObject
         score = garBageScore.score;
         if (inGameZone)
         {
-            scoreText.text = "Goals: " + score;
+            scoreText.text = score.ToString();
             boardScoreText.text = "Milly: " + new string('X', score);
         }
 

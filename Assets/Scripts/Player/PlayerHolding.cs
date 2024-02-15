@@ -55,6 +55,7 @@ public class PlayerHolding : MonoBehaviour
     bool displayedFocusHint;
     bool hintDone;
     bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden, catHidden, doorHidden, vinylHidden, dirtHidden;
+    bool showedSoccerHint,soccerHidden;
     List<GameObject> trackedObjs;
     List<GameObject> UIs;
     List<Sprite> usedSprites;
@@ -118,11 +119,18 @@ public class PlayerHolding : MonoBehaviour
             if ((pickUpObjects.Count == 1 && pickUpObjects[0].GetComponent<PickUpObject>().inHand == false) || pickUpObjects.Count > 1 || midAirKickable)
             {
                 DetectKick();
-                if (TrashSoccerScoreBoard.startedSoccerGame)
-                    DataHolder.ShowHint(DataHolder.hints.kickHint);
+                if (TrashSoccerScoreBoard.startedSoccerGame && !showedSoccerHint)
+                {
+                    DataHolder.ShowHint(DataHolder.hints.soccerHint);
+                    showedSoccerHint = true;
+                    soccerHidden = false;
+                }
             }
-            else
-                DataHolder.HideHint(DataHolder.hints.kickHint);
+            else if (!soccerHidden)
+            {
+                DataHolder.HideHint(DataHolder.hints.soccerHint);
+                soccerHidden = true;
+            }
 
 
             #region UI and Hints

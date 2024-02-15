@@ -55,6 +55,10 @@ public class Hugo : NPCControl
     {
 
         currentDialogue.gameObject.SetActive(true);
+        if(MindPalace.tattoosActivated == 3)
+        {
+            StopIdle();
+        }
     }
 
     public void HugoAction2() { }

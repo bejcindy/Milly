@@ -17,6 +17,7 @@ public class ReferenceTool : MonoBehaviour
     public static SMHAdjustTest postProcessingAdjust;
     public static GameObject coloredCamera;
     public static Broom broom;
+    public static DataHolder dataHolder;
 
     public Transform playerRef;
     public CinemachineVirtualCamera playerCamRef;
@@ -24,6 +25,7 @@ public class ReferenceTool : MonoBehaviour
     public SMHAdjustTest smhAdjust;
     public GameObject coloredCamRef;
     public Broom broomReference;
+    public DataHolder dataHolderRef;
 
     public void Awake()
     {
@@ -38,6 +40,7 @@ public class ReferenceTool : MonoBehaviour
         recordPlayer = recordPlayerRef;
         broom = broomReference;
         postProcessingAdjust = smhAdjust;
+        dataHolder = dataHolderRef;
     }
 
 }

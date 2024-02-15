@@ -43,7 +43,18 @@ public class DataHolder : MonoBehaviour
     [SerializeField]
     [InspectorName("Hints")]
     HintTexts hintsReference;
+
+    [Foldout("MouseUIs")]
+    public Sprite LeftClick;
+    public Sprite RightClick;
+    public Sprite ScrollDown;
+    public Sprite ScrollUp;
+    public Sprite Scroll;
+    public Sprite Drag;
+
+    [Foldout("HintPrefabs")]
     public GameObject hintPanelPrefab;
+    public GameObject hintPanelHorizontalPrefab;
     public GameObject hintPrefab;
     public Transform canvasRef;
     
@@ -51,11 +62,14 @@ public class DataHolder : MonoBehaviour
 
     static Transform canvas;
     static GameObject hintPanel;
+    static GameObject hintPanHori;
     static GameObject hintPref;
     static List<string> currentHints;
     static List<GameObject> hintPanels;
 
     bool hintOff;
+    //"LeftClick", "Click", "RightClick", "ScrollDown", "ScrollUp", "Scroll", "Drag"
+    
     #endregion
 
     public static bool canMakeSound;
@@ -81,6 +95,7 @@ public class DataHolder : MonoBehaviour
         cv = chromaticVolume;
 
         hintPanel = hintPanelPrefab;
+        hintPanHori = hintPanelHorizontalPrefab;
         hintPref = hintPrefab;
         hints = hintsReference;
         currentHints = new List<string>();
@@ -224,7 +239,39 @@ public class DataHolder : MonoBehaviour
             }
         }
     }
-    
+
+    public static void ShowHintHorizontal(string hint)
+    {
+        bool instantiated = false;
+        if (!instantiated)
+        {
+            if (currentHints.Count == 0 || !currentHints.Contains(hint))
+            {
+                GameObject instantiatedPanel = Instantiate(hintPanHori, canvas);
+                List<Image> imgs = new List<Image>();
+                List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
+                string[] parsed = hint.Split("\n");
+                foreach (string s in parsed)
+                {
+                    GameObject instantiatedHintGroup = Instantiate(hintPref, instantiatedPanel.transform);
+                    int buttonInt = s.IndexOf(" ");
+                    string button = s.Substring(0, buttonInt);
+                    string usage = s.Replace(button, "");
+                    instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = button;
+                    imgs.Add(instantiatedHintGroup.transform.GetChild(0).GetComponent<Image>());
+                    texts.Add(instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
+                    instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
+                    texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
+                    //instantiatedHintGroup.GetComponent<HorizontalLayoutGroup>().r
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(instantiatedHintGroup.GetComponent<RectTransform>());
+                }
+                hintPanels.Add(instantiatedPanel);
+                currentHints.Add(hint);
+                instantiated = true;
+            }
+        }
+    }
+
     public static void HideHint(string hintToHide)
     {
         bool hidden = false;

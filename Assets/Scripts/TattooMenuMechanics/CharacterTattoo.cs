@@ -199,6 +199,7 @@ public class CharacterTattoo : MonoBehaviour
             dragged = false;
             activated = true;
             myMenu.mindPalace.noControl = false;
+            MindPalace.tattoosActivated++;
         }
 
     }

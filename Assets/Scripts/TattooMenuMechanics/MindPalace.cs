@@ -9,7 +9,10 @@ using PixelCrushers.DialogueSystem;
 
 public class MindPalace : MonoBehaviour
 {
+    public static int tattoosActivated;
+    public int tattoosCount;
     public static bool tatMenuOn;
+    public bool tattooMenuOn;
     public static bool hideHint;
     public static bool showTatHint;
     public bool noControl;
@@ -59,7 +62,8 @@ public class MindPalace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Mind Palace is " + tatMenuOn);
+        tattooMenuOn = tatMenuOn;
+        tattoosCount = tattoosActivated;
         if(currentMenu && currentMenu == mainTatMenu)
         {
             mainMenuOn = true;
@@ -76,22 +80,22 @@ public class MindPalace : MonoBehaviour
 
         if (showTatHint)
         {
-            DataHolder.MoveHintToBottom();         
+            //DataHolder.MoveHintToBottom();         
             if (mainMenuOn)
             {
-                DataHolder.ShowHint(mainMenuHint);
+                DataHolder.ShowHintHorizontal(mainMenuHint);
                 DataHolder.HideHint(regularHint);
                 DataHolder.HideHint(dragHint);
             }
             else if (draggingTat)
             {
-                DataHolder.ShowHint(dragHint);
+                DataHolder.ShowHintHorizontal(dragHint);
                 DataHolder.HideHint(regularHint);
                 DataHolder.HideHint(mainMenuHint);
             }
             else if(!noControl)
             {
-                DataHolder.ShowHint(regularHint);
+                DataHolder.ShowHintHorizontal(regularHint);
                 DataHolder.HideHint(dragHint);
                 DataHolder.HideHint(mainMenuHint);
             }
@@ -104,7 +108,7 @@ public class MindPalace : MonoBehaviour
         }
         else
         {
-            DataHolder.MoveHintToTop();
+            //DataHolder.MoveHintToTop();
             DataHolder.HideHint(regularHint);
             DataHolder.HideHint(dragHint);
             DataHolder.HideHint(mainMenuHint);

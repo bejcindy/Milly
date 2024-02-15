@@ -16,6 +16,7 @@ public class TrashSoccerScoreBoard : LookingObject
 
 
     bool firstTransformed;
+    bool firstTriggerGame;
     bool showedMillyScore;
     bool showedHint;
     public static bool startedSoccerGame;
@@ -31,7 +32,17 @@ public class TrashSoccerScoreBoard : LookingObject
         base.Update();
 
         if (firstActivated)
+        {
             gameActivated = true;
+            if (!firstTriggerGame)
+            {
+                firstTriggerGame = true;
+                gameActivated = true;
+                inGameZone = true;
+            }
+
+        }
+
         if (inGameZone)
         {
             scorePanel.SetActive(true);
@@ -140,6 +151,8 @@ public class TrashSoccerScoreBoard : LookingObject
         {
             text.gameObject.layer = 17;
             firstTransformed = true;
+
         }
     }
 }
+

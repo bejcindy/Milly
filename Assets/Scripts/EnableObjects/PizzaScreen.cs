@@ -16,7 +16,8 @@ public class PizzaScreen : MonoBehaviour
     public int stage;
 
     float alpha;
-    float lutDuration = 30f;
+    float lutDuration = 60f;
+    bool lutBack;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +56,12 @@ public class PizzaScreen : MonoBehaviour
             }
             else
             {
-                StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToDefaultColor());
+                if (!lutBack)
+                {
+                    lutBack = true;
+                    StartCoroutine(ReferenceTool.postProcessingAdjust.LerpToDefaultColor());
+                }
+
             }
             
 

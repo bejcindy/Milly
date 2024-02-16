@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class VinylStand : LivableObject
     public bool inScrollCD;
     public float scrollCD;
     float scrollCDVal;
-
+    readonly string vinylPlaceSFX = "event:/Sound Effects/ObjectInteraction/Vinyls/Vinyl_Stand";
     protected override void Start()
     {
         base.Start();
@@ -85,6 +86,7 @@ public class VinylStand : LivableObject
                         DataHolder.ShowHint(DataHolder.hints.vinylStandHint);
                         if (Input.GetMouseButtonDown(0))
                         {
+                            RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Vinyls/Vinyl_Grab", Camera.main.transform.position);
                             selectedVinyl.holder.ReleaseVinyl();
                             playerHolding.OccupyLeft(selectedVinyl.transform);
                             selectedVinyl.songInfo.SetActive(false);
@@ -255,6 +257,7 @@ public class VinylStand : LivableObject
         gameObject.layer = 9;
         if (Input.GetMouseButtonDown(0))
         {
+            RuntimeManager.PlayOneShot(vinylPlaceSFX, Camera.main.transform.position);
             availableSpot.PlaceVinyl(holdingVinyl);
             playerHolding.UnoccupyLeft();
             holdingVinyl = null;

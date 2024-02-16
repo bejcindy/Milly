@@ -115,9 +115,10 @@ public class PlayerHolding : MonoBehaviour
         if (!inDialogue)
             ChooseLookable();
 
-        if(!selectedObj && !doorHandle)
+        if(!selectedObj && !doorHandle && !lidObj)
         {
             HideUI(pickUpSprite);
+            HideUI(dragSprite);
         }
 
         if (pickUpObjects.Count >= 1 || midAirKickable)
@@ -197,21 +198,98 @@ public class PlayerHolding : MonoBehaviour
             }
 
         }
-        //if(kickableObj)
-        UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
-        //if(talkingTo)
-        UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
-        //if (lidObj)
-        UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
-        //if(sitObj)
-        UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
-        //if (clickableObj)
-        UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
-        //if(catboxObj)
-        UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
+
+        if (kickableObj)
+            DisplayUI(kickableObj, kickSprite);
+        else
+            HideUI(kickSprite);
+
+
+        //UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
+
+        if (talkingTo)
+            DisplayUI(talkingTo, talkSprite);
+        else
+            HideUI(talkSprite);
+        //UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
+        if (lidObj)
+        {
+            dragHidden = false;
+            GrabDragSpriteSwap(lidObj);
+        }
+
+        else
+        {
+            if(!selectedObj && !doorHandle)
+            {
+                HideUI(grabingSprite);
+                HideUI(dragSprite);
+            }
+            else if(!doorHandle)
+            {
+                if (!dragHidden)
+                {
+                    dragHidden = true;
+                    HideUI(dragSprite);
+                }
+
+            }
+        }
+
+        if (sitObj)
+        {
+            DisplayUI(sitObj, sitSprite);
+        }
+        else
+        {
+            HideUI(sitSprite);
+        }
+        if (clickableObj)
+        {
+            DisplayUI(clickableObj, clickSprite);
+        }
+        else
+        {
+            HideUI(clickSprite);
+        }
+        if (catboxObj)
+        {
+            DisplayUI(catboxObj, catSprite);
+        }
+        else
+        {
+            HideUI(catSprite);
+        }
         if (vinylObj)
-            UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
-        UITriggerdByOtherObj(dirtObj, sweepSprite, dirtHidden);
+        {
+            DisplayUI(vinylObj, pickUpSprite);
+        }
+        else 
+        {
+            if (!selectedObj && !doorHandle && !lidObj)
+            {
+                HideUI(pickUpSprite);
+            }
+        }
+        if (dirtObj)
+        {
+            DisplayUI(dirtObj, sweepSprite);
+        }
+        else
+        {
+            HideUI(sweepSprite);
+        }
+
+        //    //UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
+        //    //if(sitObj)
+        //    UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
+        ////if (clickableObj)
+        //UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
+        ////if(catboxObj)
+        //UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
+        //if (vinylObj)
+        //    UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
+        //UITriggerdByOtherObj(dirtObj, sweepSprite, dirtHidden);
         #endregion
 
 
@@ -316,54 +394,6 @@ public class PlayerHolding : MonoBehaviour
             instantiatedIcons[interactionSprite].GetComponent<TrackObject>().trackThis = trackingObject;
         }
         
-        //if (trackedObjs.Count == 0 || !trackedObjs.Contains(trackingObject))
-        //{
-        //    if (usedSprites.Count == 0 || !usedSprites.Contains(interactionSprite))
-        //    {
-        //        Debug.Log("checking how much we are calling this 111");
-        //        Vector2 ViewportPosition;
-        //        ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
-        //        Vector2 WorldObject_ScreenPosition = new Vector2(
-        //        ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-        //        ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-
-        //        GameObject instantiatedUI = Instantiate(objectUI.gameObject, CanvasRect.transform);
-
-        //        if (interactionSprite == grabingSprite)
-        //            InstantiateDragUIAnimation(instantiatedUI.transform);
-        //        instantiatedUI.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
-        //        if (interactionSprite == talkSprite || interactionSprite == sweepSprite)
-        //            instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.15f, .15f, .15f);
-        //        else
-        //            instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.1f, .1f, .1f);
-
-        //        instantiatedUI.SetActive(true);
-        //        instantiatedUI.GetComponent<TrackObject>().sprite = interactionSprite;
-        //        instantiatedUI.GetComponent<TrackObject>().trackThis = trackingObject;
-        //        UIs.Add(instantiatedUI);
-        //        trackedObjs.Add(trackingObject);
-        //        usedSprites.Add(interactionSprite);
-
-        //        if(!instantiatedIcons.TryGetValue(interactionSprite, out _))
-        //        {
-        //            instantiatedIcons.Add(interactionSprite, instantiatedUI);
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < UIs.Count; i++)
-        //        {
-        //            if (UIs[i].GetComponent<TrackObject>().sprite == interactionSprite)
-        //            {
-        //                Debug.Log("checking how much we are calling this 222");
-        //                trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
-        //                UIs[i].GetComponent<TrackObject>().trackThis = trackingObject;
-        //                trackedObjs.Add(trackingObject);
-        //            }
-        //        }
-        //    }
-        //}
     }
 
     void HideUI(Sprite toHide)
@@ -387,6 +417,7 @@ public class PlayerHolding : MonoBehaviour
         {
             if(instantiatedIcons.TryGetValue(toHide, out _))
             {
+                Debug.Log("Something is hidden");
                 GameObject target = instantiatedIcons[toHide];
                 instantiatedIcons.Remove(toHide);
                 usedSprites.Remove(target.GetComponent<TrackObject>().sprite);
@@ -396,21 +427,7 @@ public class PlayerHolding : MonoBehaviour
                 UIs.Remove(target);
                 Destroy(target);
 
-
             }
-            //for (int i = 0; i < UIs.Count; i++)
-            //{
-            //    Debug.Log("HIDING HOW MUCH");
-            //    if (UIs[i].GetComponent<TrackObject>().sprite == toHide)
-            //    {
-            //        Destroy(UIs[i]);
-            //        usedSprites.Remove(UIs[i].GetComponent<TrackObject>().sprite);
-            //        trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
-            //        if (toHide == grabingSprite)
-            //            dragAnimDirection = "";
-            //        UIs.Remove(UIs[i]);
-            //    }
-            //}
         }
     }
     void FakeHideUI()
@@ -429,8 +446,24 @@ public class PlayerHolding : MonoBehaviour
             img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
         }
     }
+
+
+    void GrabDragSpriteSwap(GameObject obj)
+    {
+        if (Input.GetMouseButton(0))
+        {
+            DisplayUI(obj, grabingSprite);
+            HideUI(dragSprite);
+        }
+        else
+        {
+            DisplayUI(obj, dragSprite);
+            HideUI(grabingSprite);
+        }
+    }
     void UITriggerdByOtherObj(GameObject obj, Sprite sprite, bool hidden)
     {
+
         if (obj)
         {
             if (obj == lidObj)
@@ -445,43 +478,18 @@ public class PlayerHolding : MonoBehaviour
                     DisplayUI(obj, dragSprite);
                     HideUI(grabingSprite);
                 }
-                //if (obj.GetComponent<PizzaLid>())
-                //{
-                //    if (Input.GetMouseButton(0))
-                //    {
-                //        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, grabingSprite);
-                //        HideUI(dragSprite);
-                //    }
-                //    else
-                //    {
-                //        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, dragSprite);
-                //        HideUI(grabingSprite);
-                //    }
-                //}
-                //else
-                //{
-                //    if (Input.GetMouseButton(0))
-                //    {
-                //        DisplayUI(obj, grabingSprite);
-                //        HideUI(dragSprite);
-                //    }
-                //    else
-                //    {
-                //        DisplayUI(obj, dragSprite);
-                //        HideUI(grabingSprite);
-                //    }
-                //}
             }
             else
                 DisplayUI(obj, sprite);
-            //hidden = false;
+            hidden = false;
         }
         else
         {
             if (!hidden)
             {
+                Debug.Log("setting hidden to true");
                 HideUI(sprite);
-                //hidden = true;
+                hidden = true;
             }
         }
     }

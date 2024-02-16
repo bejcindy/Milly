@@ -69,6 +69,9 @@ public class DataHolder : MonoBehaviour
     static List<string> currentHints;
     static List<GameObject> hintPanels;
 
+    static Dictionary<string, GameObject> hintPanelsDict = new Dictionary<string, GameObject>();
+    static Dictionary<string, bool> hintState = new Dictionary<string, bool>();
+
     bool hintOff;
     //"LeftClick", "Click", "RightClick", "ScrollDown", "ScrollUp", "Scroll", "Drag"
     
@@ -103,6 +106,7 @@ public class DataHolder : MonoBehaviour
         hints = hintsReference;
         currentHints = new List<string>();
         hintPanels = new List<GameObject>();
+
         canvas = canvasRef;
         pov = ReferenceTool.playerPOV;
         originalHorizontalSpeed = pov.m_HorizontalAxis.m_MaxSpeed;
@@ -213,85 +217,91 @@ public class DataHolder : MonoBehaviour
     /// <param name="hint"></param>
     public static void ShowHint(string hint)
     {
-        bool instantiated = false;
-        if (!instantiated)
+        if(!hintPanelsDict.TryGetValue(hint, out _))
+//        if (currentHints.Count == 0 || !currentHints.Contains(hint))
         {
-            if (currentHints.Count == 0 || !currentHints.Contains(hint))
+            GameObject instantiatedPanel = Instantiate(hintPanel, canvas);
+            List<Image> imgs = new List<Image>();
+            List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
+            string[] parsed = hint.Split("\n");
+            foreach (string s in parsed)
             {
-                GameObject instantiatedPanel = Instantiate(hintPanel, canvas);
-                List<Image> imgs = new List<Image>();
-                List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
-                string[] parsed = hint.Split("\n");
-                foreach (string s in parsed)
-                {
-                    GameObject instantiatedHintGroup = Instantiate(hintPref, instantiatedPanel.transform);
-                    int buttonInt = s.IndexOf(" ");
-                    string button = s.Substring(0, buttonInt);
-                    string usage = s.Replace(button, "");
-                    instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = button;
-                    imgs.Add(instantiatedHintGroup.transform.GetChild(0).GetComponent<Image>());
-                    texts.Add(instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
-                    instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
-                    texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
-                    //instantiatedHintGroup.GetComponent<HorizontalLayoutGroup>().r
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(instantiatedHintGroup.GetComponent<RectTransform>());
-                }
-                hintPanels.Add(instantiatedPanel);
-                currentHints.Add(hint);
-                instantiated = true;
+                GameObject instantiatedHintGroup = Instantiate(hintPref, instantiatedPanel.transform);
+                int buttonInt = s.IndexOf(" ");
+                string button = s.Substring(0, buttonInt);
+                string usage = s.Replace(button, "");
+                instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = button;
+                imgs.Add(instantiatedHintGroup.transform.GetChild(0).GetComponent<Image>());
+                texts.Add(instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
+                instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
+                texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
+                //instantiatedHintGroup.GetComponent<HorizontalLayoutGroup>().r
+                LayoutRebuilder.ForceRebuildLayoutImmediate(instantiatedHintGroup.GetComponent<RectTransform>());
             }
+            //hintPanels.Add(instantiatedPanel);
+            //currentHints.Add(hint);
+            hintPanelsDict.Add(hint, instantiatedPanel);
+
         }
+
     }
 
     public static void ShowHintHorizontal(string hint)
     {
-        bool instantiated = false;
-        if (!instantiated)
+
+        if (!hintPanelsDict.TryGetValue(hint, out _))
+            //if (currentHints.Count == 0 || !currentHints.Contains(hint))
         {
-            if (currentHints.Count == 0 || !currentHints.Contains(hint))
+            GameObject instantiatedPanel = Instantiate(hintPanHori, canvas);
+            List<Image> imgs = new List<Image>();
+            List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
+            string[] parsed = hint.Split("\n");
+            foreach (string s in parsed)
             {
-                GameObject instantiatedPanel = Instantiate(hintPanHori, canvas);
-                List<Image> imgs = new List<Image>();
-                List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
-                string[] parsed = hint.Split("\n");
-                foreach (string s in parsed)
-                {
-                    GameObject instantiatedHintGroup = Instantiate(tatHint, instantiatedPanel.transform);
-                    int buttonInt = s.IndexOf(" ");
-                    string button = s.Substring(0, buttonInt);
-                    string usage = s.Replace(button, "");
-                    instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = button;
-                    imgs.Add(instantiatedHintGroup.transform.GetChild(0).GetComponent<Image>());
-                    texts.Add(instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
-                    instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
-                    texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
-                    //instantiatedHintGroup.GetComponent<HorizontalLayoutGroup>().r
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(instantiatedHintGroup.GetComponent<RectTransform>());
-                }
-                hintPanels.Add(instantiatedPanel);
-                currentHints.Add(hint);
-                instantiated = true;
+                GameObject instantiatedHintGroup = Instantiate(tatHint, instantiatedPanel.transform);
+                int buttonInt = s.IndexOf(" ");
+                string button = s.Substring(0, buttonInt);
+                string usage = s.Replace(button, "");
+                instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = button;
+                imgs.Add(instantiatedHintGroup.transform.GetChild(0).GetComponent<Image>());
+                texts.Add(instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
+                instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
+                texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
+                //instantiatedHintGroup.GetComponent<HorizontalLayoutGroup>().r
+                LayoutRebuilder.ForceRebuildLayoutImmediate(instantiatedHintGroup.GetComponent<RectTransform>());
             }
+            //hintPanels.Add(instantiatedPanel);
+            //currentHints.Add(hint);
+
+            hintPanelsDict.Add(hint, instantiatedPanel);
         }
     }
 
     public static void HideHint(string hintToHide)
     {
-        Debug.Log("JUST SEEING HOW MUCH WE ARE CALLING THIS");
-        bool hidden = false;
-        if (hintPanels.Count != 0 && !hidden)
+        if (hintPanelsDict.TryGetValue(hintToHide, out _))
         {
-            for (int i = 0; i < hintPanels.Count; i++)
-            {
-                if (currentHints[i] == hintToHide)
-                {
-                    Destroy(hintPanels[i]);
-                    currentHints.Remove(hintToHide);
-                    hintPanels.Remove(hintPanels[i]);
-                    hidden = true;
-                }
-            }
+            Debug.Log("JUST SEEING HOW MUCH WE ARE CALLING THIS");
+            GameObject hint = hintPanelsDict[hintToHide];
+            hintPanelsDict.Remove(hintToHide);
+            hintState.Remove(hintToHide);
+            Destroy(hint);
+            //if (hintPanels.Count != 0)
+            //{
+
+            //    for (int i = 0; i < hintPanels.Count; i++)
+            //    {
+            //        if (currentHints[i] == hintToHide)
+            //        {
+            //            Destroy(hintPanels[i]);
+            //            currentHints.Remove(hintToHide);
+            //            hintPanels.Remove(hintPanels[i]);
+            //            hintState[hintToHide] = false;
+            //        }
+            //    }
+            //}
         }
+
     }
 
     public static void HideHintExceptThis(string hintToExclude)

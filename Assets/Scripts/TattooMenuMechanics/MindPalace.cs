@@ -38,9 +38,6 @@ public class MindPalace : MonoBehaviour
     public CinemachineBlenderSettings playerBlend;
     public CinemachineBlenderSettings tatMenuBlend;
     CinemachineBrain camBrain;
-    Camera frontCam;
-    Camera colorCam;
-    Camera focusCam;
 
     bool firstThought;
 
@@ -59,7 +56,7 @@ public class MindPalace : MonoBehaviour
     [TextArea]
     public string mainMenuHoverHint;
 
-    string changeMenuSF = "event:/Sound Effects/Tattoo/ChangeMenu";
+    readonly string changeMenuSF = "event:/Sound Effects/Tattoo/ChangeMenu";
     PlayerLeftHand playerLeftHand;
 
     public GameObject cursorAnimation;
@@ -68,9 +65,6 @@ public class MindPalace : MonoBehaviour
     void Start()
     {
         tatMenuOn = false;
-        frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
-        colorCam = Camera.main.transform.GetChild(1).GetComponent<Camera>();
-        focusCam = Camera.main.transform.GetChild(2).GetComponent<Camera>();
         camBrain = ReferenceTool.playerBrain;
         GetComponentsInChildren<CharacterTattooMenu>(tattooMenuList);
         playerLeftHand = ReferenceTool.playerLeftHand;

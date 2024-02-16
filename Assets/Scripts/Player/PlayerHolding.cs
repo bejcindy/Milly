@@ -201,8 +201,8 @@ public class PlayerHolding : MonoBehaviour
         UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
         //if(talkingTo)
         UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
-        //if (lidObj)
-        UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
+        if (lidObj)
+            UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
         //if(sitObj)
         UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
         //if (clickableObj)
@@ -316,54 +316,6 @@ public class PlayerHolding : MonoBehaviour
             instantiatedIcons[interactionSprite].GetComponent<TrackObject>().trackThis = trackingObject;
         }
         
-        //if (trackedObjs.Count == 0 || !trackedObjs.Contains(trackingObject))
-        //{
-        //    if (usedSprites.Count == 0 || !usedSprites.Contains(interactionSprite))
-        //    {
-        //        Debug.Log("checking how much we are calling this 111");
-        //        Vector2 ViewportPosition;
-        //        ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
-        //        Vector2 WorldObject_ScreenPosition = new Vector2(
-        //        ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-        //        ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-
-        //        GameObject instantiatedUI = Instantiate(objectUI.gameObject, CanvasRect.transform);
-
-        //        if (interactionSprite == grabingSprite)
-        //            InstantiateDragUIAnimation(instantiatedUI.transform);
-        //        instantiatedUI.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
-        //        if (interactionSprite == talkSprite || interactionSprite == sweepSprite)
-        //            instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.15f, .15f, .15f);
-        //        else
-        //            instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.1f, .1f, .1f);
-
-        //        instantiatedUI.SetActive(true);
-        //        instantiatedUI.GetComponent<TrackObject>().sprite = interactionSprite;
-        //        instantiatedUI.GetComponent<TrackObject>().trackThis = trackingObject;
-        //        UIs.Add(instantiatedUI);
-        //        trackedObjs.Add(trackingObject);
-        //        usedSprites.Add(interactionSprite);
-
-        //        if(!instantiatedIcons.TryGetValue(interactionSprite, out _))
-        //        {
-        //            instantiatedIcons.Add(interactionSprite, instantiatedUI);
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < UIs.Count; i++)
-        //        {
-        //            if (UIs[i].GetComponent<TrackObject>().sprite == interactionSprite)
-        //            {
-        //                Debug.Log("checking how much we are calling this 222");
-        //                trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
-        //                UIs[i].GetComponent<TrackObject>().trackThis = trackingObject;
-        //                trackedObjs.Add(trackingObject);
-        //            }
-        //        }
-        //    }
-        //}
     }
 
     void HideUI(Sprite toHide)
@@ -396,21 +348,7 @@ public class PlayerHolding : MonoBehaviour
                 UIs.Remove(target);
                 Destroy(target);
 
-
             }
-            //for (int i = 0; i < UIs.Count; i++)
-            //{
-            //    Debug.Log("HIDING HOW MUCH");
-            //    if (UIs[i].GetComponent<TrackObject>().sprite == toHide)
-            //    {
-            //        Destroy(UIs[i]);
-            //        usedSprites.Remove(UIs[i].GetComponent<TrackObject>().sprite);
-            //        trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
-            //        if (toHide == grabingSprite)
-            //            dragAnimDirection = "";
-            //        UIs.Remove(UIs[i]);
-            //    }
-            //}
         }
     }
     void FakeHideUI()
@@ -474,14 +412,14 @@ public class PlayerHolding : MonoBehaviour
             }
             else
                 DisplayUI(obj, sprite);
-            //hidden = false;
+            hidden = false;
         }
         else
         {
             if (!hidden)
             {
                 HideUI(sprite);
-                //hidden = true;
+                hidden = true;
             }
         }
     }

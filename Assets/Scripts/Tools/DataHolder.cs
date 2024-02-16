@@ -250,7 +250,6 @@ public class DataHolder : MonoBehaviour
     {
 
         if (!hintPanelsDict.TryGetValue(hint, out _))
-            //if (currentHints.Count == 0 || !currentHints.Contains(hint))
         {
             GameObject instantiatedPanel = Instantiate(hintPanHori, canvas);
             List<Image> imgs = new List<Image>();
@@ -267,11 +266,9 @@ public class DataHolder : MonoBehaviour
                 texts.Add(instantiatedHintGroup.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
                 instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = usage;
                 texts.Add(instantiatedHintGroup.transform.GetChild(1).GetComponent<TextMeshProUGUI>());
-                //instantiatedHintGroup.GetComponent<HorizontalLayoutGroup>().r
                 LayoutRebuilder.ForceRebuildLayoutImmediate(instantiatedHintGroup.GetComponent<RectTransform>());
             }
-            //hintPanels.Add(instantiatedPanel);
-            //currentHints.Add(hint);
+
 
             hintPanelsDict.Add(hint, instantiatedPanel);
         }
@@ -281,25 +278,10 @@ public class DataHolder : MonoBehaviour
     {
         if (hintPanelsDict.TryGetValue(hintToHide, out _))
         {
-            Debug.Log("JUST SEEING HOW MUCH WE ARE CALLING THIS");
             GameObject hint = hintPanelsDict[hintToHide];
             hintPanelsDict.Remove(hintToHide);
             hintState.Remove(hintToHide);
             Destroy(hint);
-            //if (hintPanels.Count != 0)
-            //{
-
-            //    for (int i = 0; i < hintPanels.Count; i++)
-            //    {
-            //        if (currentHints[i] == hintToHide)
-            //        {
-            //            Destroy(hintPanels[i]);
-            //            currentHints.Remove(hintToHide);
-            //            hintPanels.Remove(hintPanels[i]);
-            //            hintState[hintToHide] = false;
-            //        }
-            //    }
-            //}
         }
 
     }

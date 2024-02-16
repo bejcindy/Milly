@@ -5,6 +5,7 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
 using System;
+using PixelCrushers;
 
 public class PlayerHolding : MonoBehaviour
 {
@@ -59,6 +60,10 @@ public class PlayerHolding : MonoBehaviour
     List<GameObject> trackedObjs;
     List<GameObject> UIs;
     List<Sprite> usedSprites;
+
+    Dictionary<Sprite, GameObject> instantiatedIcons = new Dictionary<Sprite, GameObject> ();
+
+
     #endregion
     public bool objectLerping;
 
@@ -92,133 +97,130 @@ public class PlayerHolding : MonoBehaviour
             selectedObj = null;
             focusedObj = null;
         }
+
         holdingObject = leftHand.holdingObj;
-        if (!looking)
+
+
+        //BASIC HAND AND LOOK SELECTION
+        if (!leftHand.gettingCig)
+            ChooseInteractable();
+        else if (leftHand.gettingCig)
         {
-            GetFullHand();
-            if (!leftHand.inPizzaBox && !leftHand.gettingCig)
-                ChooseInteractable();
-            else if (leftHand.gettingCig)
-            {
-                if (selectedObj)
-                    selectedObj.GetComponent<PickUpObject>().selected = false;
-                selectedObj = null;
-                pickUpObjects.Clear();
-            }
-
-
             if (selectedObj)
-                DisplayUI(selectedObj, pickUpSprite);
-            else
-                HideUI(pickUpSprite);
+                selectedObj.GetComponent<PickUpObject>().selected = false;
+            selectedObj = null;
+            pickUpObjects.Clear();
+        }
 
+        if (!inDialogue)
+            ChooseLookable();
 
-            if (!inDialogue)
-                ChooseLookable();
+        if(!selectedObj && !doorHandle)
+        {
+            HideUI(pickUpSprite);
+        }
 
-            if ((pickUpObjects.Count == 1 && pickUpObjects[0].GetComponent<PickUpObject>().inHand == false) || pickUpObjects.Count > 1 || midAirKickable)
+        if (pickUpObjects.Count >= 1 || midAirKickable)
+        {
+            DetectKick();
+            if (TrashSoccerScoreBoard.startedSoccerGame && !showedSoccerHint)
             {
-                DetectKick();
-                if (TrashSoccerScoreBoard.startedSoccerGame && !showedSoccerHint)
-                {
-                    DataHolder.ShowHint(DataHolder.hints.soccerHint);
-                    showedSoccerHint = true;
-                    soccerHidden = false;
-                }
+                DataHolder.ShowHint(DataHolder.hints.soccerHint);
+                showedSoccerHint = true;
+                soccerHidden = false;
             }
-            else if (!soccerHidden)
-            {
-                DataHolder.HideHint(DataHolder.hints.soccerHint);
-                soccerHidden = true;
-            }
+        }
+        else if (!soccerHidden)
+        {
+            DataHolder.HideHint(DataHolder.hints.soccerHint);
+            soccerHidden = true;
+        }
 
 
-            #region UI and Hints
-            if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo && !kickableObj && !lidObj && !sitObj && !catboxObj)
-            {
-                HideUI(null);
-            }
-            if (atTable)
-            {
-                if (!tableControl)
-                    FakeHideUI();
-                else
-                    FakeDisplayUI();
-            }
+        #region UI and Hints
+        //if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo && !kickableObj && !lidObj && !sitObj && !catboxObj)
+        //{
+        //    HideUI(null);
+        //}
+        if (atTable)
+        {
+            if (!tableControl)
+                FakeHideUI();
             else
                 FakeDisplayUI();
-
-
-            if (focusedObj != null)
-            {
-                if (!displayedFocusHint)
-                {
-                    //Debug.Log("trying");
-                    DataHolder.ShowHint(DataHolder.hints.lookHint);
-                    //displayedFocusHint = true;
-                    hintHiden = false;
-                    if (focusedObj.GetComponent<LookingObject>().focusingThis)
-                        displayedFocusHint = true;
-                }
-                else
-                {
-                    DataHolder.HideHint(DataHolder.hints.lookHint);
-                }
-            }
-            else
-            {
-                if (!hintHiden)
-                {
-                    DataHolder.HideHint(DataHolder.hints.lookHint);
-                    hintHiden = true;
-                    displayedFocusHint = false;
-                }
-            }
-
-            if (doorHandle)
-            {
-
-                if (Input.GetMouseButton(0))
-                {
-                    DisplayUI(doorHandle, grabingSprite);
-                    HideUI(dragSprite);
-                }
-                else if (!doorHandle.GetComponentInParent<Door>().doorMoving)
-                {
-                    DisplayUI(doorHandle, dragSprite);
-                    HideUI(grabingSprite);
-                }
-                else
-                {
-                    HideUI(dragSprite);
-                    HideUI(grabingSprite);
-                }
-
-            }
-            //if(kickableObj)
-            UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
-            //if(talkingTo)
-            UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
-            if (lidObj)
-                UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
-            //if(sitObj)
-            UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
-            //if (clickableObj)
-            UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
-            //if(catboxObj)
-            UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
-            if (vinylObj)
-                UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
-            UITriggerdByOtherObj(dirtObj, sweepSprite, dirtHidden);
-            #endregion
-
-
-
-            if (leftHand.smoking)
-                smoking = true;
-            else
-                smoking = false;
         }
+        else
+            FakeDisplayUI();
+
+        //LOOKING HINT
+        if (focusedObj != null)
+        {
+            if (!displayedFocusHint)
+            {
+                DataHolder.ShowHint(DataHolder.hints.lookHint);
+                hintHiden = false;
+                if (focusedObj.GetComponent<LookingObject>().focusingThis)
+                    displayedFocusHint = true;
+            }
+            else
+            {
+                DataHolder.HideHint(DataHolder.hints.lookHint);
+            }
+        }
+        else
+        {
+            if (!hintHiden)
+            {
+                DataHolder.HideHint(DataHolder.hints.lookHint);
+                hintHiden = true;
+                displayedFocusHint = false;
+            }
+        }
+
+        //DOOR HANDLE UI
+        if (doorHandle)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                DisplayUI(doorHandle, grabingSprite);
+                HideUI(dragSprite);
+            }
+            else if (!doorHandle.GetComponentInParent<Door>().doorMoving)
+            {
+                DisplayUI(doorHandle, dragSprite);
+                HideUI(grabingSprite);
+            }
+            else
+            {
+                HideUI(dragSprite);
+                HideUI(grabingSprite);
+            }
+
+        }
+        //if(kickableObj)
+        UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
+        //if(talkingTo)
+        UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
+        //if (lidObj)
+        UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
+        //if(sitObj)
+        UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
+        //if (clickableObj)
+        UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
+        //if(catboxObj)
+        UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
+        if (vinylObj)
+            UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
+        UITriggerdByOtherObj(dirtObj, sweepSprite, dirtHidden);
+        #endregion
+
+
+
+        if (leftHand.smoking)
+            smoking = true;
+        else
+            smoking = false;
+        
         if (DialogueManager.IsConversationActive)
         {
             inDialogue = true;
@@ -284,50 +286,84 @@ public class PlayerHolding : MonoBehaviour
     #region Object-Tracking UI
     void DisplayUI(GameObject trackingObject, Sprite interactionSprite)
     {
-        //check if current object is tracked already
-        bool instantiated = false;
-        if (!instantiated)
+
+        if(!instantiatedIcons.TryGetValue(interactionSprite, out _))
         {
-            if (trackedObjs.Count == 0 || !trackedObjs.Contains(trackingObject))
-            {
-                if (usedSprites.Count == 0 || !usedSprites.Contains(interactionSprite))
-                {
-                    Vector2 ViewportPosition;
-                    ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
-                    Vector2 WorldObject_ScreenPosition = new Vector2(
-                    ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-                    ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-                    GameObject instantiatedUI = Instantiate(objectUI.gameObject, CanvasRect.transform);
-                    if (interactionSprite == grabingSprite)
-                        InstantiateDragUIAnimation(instantiatedUI.transform);
-                    instantiatedUI.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
-                    if (interactionSprite == talkSprite || interactionSprite == sweepSprite)
-                        instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.15f, .15f, .15f);
-                    else
-                        instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.1f, .1f, .1f);
-                    instantiatedUI.SetActive(true);
-                    instantiatedUI.GetComponent<TrackObject>().sprite = interactionSprite;
-                    instantiatedUI.GetComponent<TrackObject>().trackThis = trackingObject;
-                    UIs.Add(instantiatedUI);
-                    trackedObjs.Add(trackingObject);
-                    usedSprites.Add(interactionSprite);
-                    instantiated = true;
-                }
-                else
-                {
-                    for (int i = 0; i < UIs.Count; i++)
-                    {
-                        if (UIs[i].GetComponent<TrackObject>().sprite == interactionSprite)
-                        {
-                            trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
-                            UIs[i].GetComponent<TrackObject>().trackThis = trackingObject;
-                            trackedObjs.Add(trackingObject);
-                            instantiated = true;
-                        }
-                    }
-                }
-            }
+            Vector2 ViewportPosition;
+            ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
+            Vector2 WorldObject_ScreenPosition = new Vector2(
+            ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+            ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+
+            GameObject instantiatedUI = Instantiate(objectUI.gameObject, CanvasRect.transform);
+
+            if (interactionSprite == grabingSprite)
+                InstantiateDragUIAnimation(instantiatedUI.transform);
+            instantiatedUI.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
+            if (interactionSprite == talkSprite || interactionSprite == sweepSprite)
+                instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.15f, .15f, .15f);
+            else
+                instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.1f, .1f, .1f);
+
+            instantiatedUI.SetActive(true);
+            instantiatedUI.GetComponent<TrackObject>().sprite = interactionSprite;
+            instantiatedUI.GetComponent<TrackObject>().trackThis = trackingObject;
+
+            instantiatedIcons.Add(interactionSprite, instantiatedUI);
         }
+        else
+        {
+            instantiatedIcons[interactionSprite].GetComponent<TrackObject>().trackThis = trackingObject;
+        }
+        
+        //if (trackedObjs.Count == 0 || !trackedObjs.Contains(trackingObject))
+        //{
+        //    if (usedSprites.Count == 0 || !usedSprites.Contains(interactionSprite))
+        //    {
+        //        Debug.Log("checking how much we are calling this 111");
+        //        Vector2 ViewportPosition;
+        //        ViewportPosition = Camera.main.WorldToViewportPoint(trackingObject.transform.position);
+        //        Vector2 WorldObject_ScreenPosition = new Vector2(
+        //        ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+        //        ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+
+        //        GameObject instantiatedUI = Instantiate(objectUI.gameObject, CanvasRect.transform);
+
+        //        if (interactionSprite == grabingSprite)
+        //            InstantiateDragUIAnimation(instantiatedUI.transform);
+        //        instantiatedUI.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
+        //        if (interactionSprite == talkSprite || interactionSprite == sweepSprite)
+        //            instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.15f, .15f, .15f);
+        //        else
+        //            instantiatedUI.GetComponent<RectTransform>().localScale = new Vector3(.1f, .1f, .1f);
+
+        //        instantiatedUI.SetActive(true);
+        //        instantiatedUI.GetComponent<TrackObject>().sprite = interactionSprite;
+        //        instantiatedUI.GetComponent<TrackObject>().trackThis = trackingObject;
+        //        UIs.Add(instantiatedUI);
+        //        trackedObjs.Add(trackingObject);
+        //        usedSprites.Add(interactionSprite);
+
+        //        if(!instantiatedIcons.TryGetValue(interactionSprite, out _))
+        //        {
+        //            instantiatedIcons.Add(interactionSprite, instantiatedUI);
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < UIs.Count; i++)
+        //        {
+        //            if (UIs[i].GetComponent<TrackObject>().sprite == interactionSprite)
+        //            {
+        //                Debug.Log("checking how much we are calling this 222");
+        //                trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
+        //                UIs[i].GetComponent<TrackObject>().trackThis = trackingObject;
+        //                trackedObjs.Add(trackingObject);
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     void HideUI(Sprite toHide)
@@ -336,6 +372,7 @@ public class PlayerHolding : MonoBehaviour
         {
             if (UIs.Count != 0)
             {
+                instantiatedIcons.Clear();
                 for (int i = 0; i < UIs.Count; i++)
                 {
                     Destroy(UIs[i]);
@@ -348,18 +385,32 @@ public class PlayerHolding : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < UIs.Count; i++)
+            if(instantiatedIcons.TryGetValue(toHide, out _))
             {
-                if (UIs[i].GetComponent<TrackObject>().sprite == toHide)
-                {
-                    Destroy(UIs[i]);
-                    usedSprites.Remove(UIs[i].GetComponent<TrackObject>().sprite);
-                    trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
-                    if (toHide == grabingSprite)
-                        dragAnimDirection = "";
-                    UIs.Remove(UIs[i]);
-                }
+                GameObject target = instantiatedIcons[toHide];
+                instantiatedIcons.Remove(toHide);
+                usedSprites.Remove(target.GetComponent<TrackObject>().sprite);
+                trackedObjs.Remove(target.GetComponent<TrackObject>().trackThis);
+                if (toHide == grabingSprite)
+                    dragAnimDirection = "";
+                UIs.Remove(target);
+                Destroy(target);
+
+
             }
+            //for (int i = 0; i < UIs.Count; i++)
+            //{
+            //    Debug.Log("HIDING HOW MUCH");
+            //    if (UIs[i].GetComponent<TrackObject>().sprite == toHide)
+            //    {
+            //        Destroy(UIs[i]);
+            //        usedSprites.Remove(UIs[i].GetComponent<TrackObject>().sprite);
+            //        trackedObjs.Remove(UIs[i].GetComponent<TrackObject>().trackThis);
+            //        if (toHide == grabingSprite)
+            //            dragAnimDirection = "";
+            //        UIs.Remove(UIs[i]);
+            //    }
+            //}
         }
     }
     void FakeHideUI()
@@ -384,43 +435,53 @@ public class PlayerHolding : MonoBehaviour
         {
             if (obj == lidObj)
             {
-                if (obj.GetComponent<PizzaLid>())
+                if (Input.GetMouseButton(0))
                 {
-                    if (Input.GetMouseButton(0))
-                    {
-                        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, grabingSprite);
-                        HideUI(dragSprite);
-                    }
-                    else
-                    {
-                        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, dragSprite);
-                        HideUI(grabingSprite);
-                    }
+                    DisplayUI(obj, grabingSprite);
+                    HideUI(dragSprite);
                 }
                 else
                 {
-                    if (Input.GetMouseButton(0))
-                    {
-                        DisplayUI(obj, grabingSprite);
-                        HideUI(dragSprite);
-                    }
-                    else
-                    {
-                        DisplayUI(obj, dragSprite);
-                        HideUI(grabingSprite);
-                    }
+                    DisplayUI(obj, dragSprite);
+                    HideUI(grabingSprite);
                 }
+                //if (obj.GetComponent<PizzaLid>())
+                //{
+                //    if (Input.GetMouseButton(0))
+                //    {
+                //        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, grabingSprite);
+                //        HideUI(dragSprite);
+                //    }
+                //    else
+                //    {
+                //        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, dragSprite);
+                //        HideUI(grabingSprite);
+                //    }
+                //}
+                //else
+                //{
+                //    if (Input.GetMouseButton(0))
+                //    {
+                //        DisplayUI(obj, grabingSprite);
+                //        HideUI(dragSprite);
+                //    }
+                //    else
+                //    {
+                //        DisplayUI(obj, dragSprite);
+                //        HideUI(grabingSprite);
+                //    }
+                //}
             }
             else
                 DisplayUI(obj, sprite);
-            hidden = false;
+            //hidden = false;
         }
         else
         {
             if (!hidden)
             {
                 HideUI(sprite);
-                hidden = true;
+                //hidden = true;
             }
         }
     }
@@ -596,13 +657,7 @@ public class PlayerHolding : MonoBehaviour
 
 
 
-    public void GetFullHand()
-    {
-        if (leftHand.isHolding)
-            fullHand = true;
-        else
-            fullHand = false;
-    }
+
 
     public void OccupyLeft(Transform obj)
     {

@@ -103,10 +103,7 @@ public class PickUpObject : LivableObject
         {
             if (playerHolding.GetLeftHand())
             {
-                if (!StartSequence.noControl||overrideStartSequence)
-                {
-                    playerHolding.AddInteractable(gameObject);
-                }
+                playerHolding.AddInteractable(gameObject);
 
                 if (Input.GetMouseButtonDown(0) && selected)
                 {

@@ -39,7 +39,17 @@ public class Lid : LivableObject
         base.Update();
         if (interactable && !lidMoving)
         {
-            LidControl();
+            if (playerHolding.lidObj == null)
+                LidControl();
+            else if (playerHolding.lidObj == transform.GetChild(0).gameObject)
+                LidControl();
+            else
+            {
+                if (activated)
+                    gameObject.layer = 17;
+                else
+                    gameObject.layer = 0;
+            }
         }
         else
         {
@@ -47,7 +57,7 @@ public class Lid : LivableObject
                 gameObject.layer = 17;
             else
                 gameObject.layer = 0;
-            if (!iconHidden)
+            if (!iconHidden && playerHolding.lidObj == transform.GetChild(0).gameObject)
             {
                 playerHolding.lidObj = null;
                 iconHidden = true;

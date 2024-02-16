@@ -97,7 +97,7 @@ public class MindPalace : MonoBehaviour
 
         if (showTatHint)
         {
-            //DataHolder.MoveHintToBottom();         
+            DataHolder.MoveHintToTop();         
             if (mainMenuOn)
             {
                 if (selectedMenu)
@@ -160,7 +160,7 @@ public class MindPalace : MonoBehaviour
         }
         else
         {
-            //DataHolder.MoveHintToTop();
+            DataHolder.MoveHintToLower();
             DataHolder.HideHint(regularHint);
             DataHolder.HideHint(hasLeftHint);
             DataHolder.HideHint(hasRightHint);

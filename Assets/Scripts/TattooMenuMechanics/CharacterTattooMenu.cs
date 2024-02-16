@@ -32,6 +32,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public float blinkDuration = 1f;
     public string finishedDialogue;
     bool finishedDialogueDone;
+    //public GameObject currentCursorAnimMesh;
 
 
     protected Camera frontCam;

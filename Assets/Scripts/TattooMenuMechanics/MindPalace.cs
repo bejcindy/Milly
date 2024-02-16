@@ -12,6 +12,7 @@ public class MindPalace : MonoBehaviour
     public static bool tatMenuOn;
     public static bool hideHint;
     public static bool showTatHint;
+    public static bool showedCursorAnimation;
     public bool noControl;
     public bool mainMenuOn;
     public bool firstTriggered;
@@ -43,6 +44,8 @@ public class MindPalace : MonoBehaviour
 
     string changeMenuSF = "event:/Sound Effects/Tattoo/ChangeMenu";
     PlayerLeftHand playerLeftHand;
+
+    public GameObject cursorAnimation;
 
     // Start is called before the first frame update
     void Start()

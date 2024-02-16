@@ -43,7 +43,6 @@ public class CharacterTattoo : MonoBehaviour
     float tatAlphaTarget = 0.2f;
     CharacterTattooMenu myMenu;
 
-
     void Start()
     {
         tatAlpha = 1;

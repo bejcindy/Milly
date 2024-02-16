@@ -120,7 +120,7 @@ public class EatObject : PickUpObject
         {
             doneEating = true;
             playerHolding.UnoccupyLeft();
-            rend.enabled = false;
+            rend.enabled = false;            
             Invoke(nameof(DestroyPizza), 1f);
 
         }

@@ -33,6 +33,8 @@ public class TattooMesh : MonoBehaviour
     string dissolveSF = "event:/Sound Effects/Tattoo/Dissolve";
     string hoverSF= "event:/Sound Effects/Tattoo/HoverObject";
     string pressSF = "event:/Sound Effects/Tattoo/PressDown";
+    MindPalace myPalace;
+    GameObject cursorAnimChild;
 
     void Start()
     {
@@ -46,6 +48,7 @@ public class TattooMesh : MonoBehaviour
         originalPos = transform.localPosition;
         ditherIn = false;
         ditherOut = false;
+        myPalace = myMenu.mindPalace;
     }
 
 
@@ -227,6 +230,13 @@ public class TattooMesh : MonoBehaviour
 
             }
             myTat.triggered = false;
+            if (!MindPalace.showedCursorAnimation)
+            {
+                cursorAnimChild = Instantiate(myPalace.cursorAnimation, myTat.transform);
+                cursorAnimChild.GetComponent<CursorAnimation>().targetPos = characterTatMesh.transform.GetChild(0).position;
+                //cursorAnimChild.GetComponent<CursorAnimation>().startingPos = myTat.transform.position;
+                MindPalace.showedCursorAnimation = true;
+            }
             draggable = true;
         }
     }
@@ -369,6 +379,8 @@ public class TattooMesh : MonoBehaviour
                 {
                     child.gameObject.layer = 16;
                 }
+                if (cursorAnimChild)
+                    Destroy(cursorAnimChild);
                 reachedNPC = true;
             }
 

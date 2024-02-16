@@ -304,20 +304,22 @@ public class DataHolder : MonoBehaviour
         }
     }
 
-    public static void MoveHintToBottom()
+    public static void MoveHintToLower()
     {
-        canvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
-        canvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
-        canvas.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
-        canvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 30f);
+        //canvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+        //canvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+        //canvas.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
+        //canvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 30f);
+        canvas.GetComponent<VerticalLayoutGroup>().padding.top = 100;
     }
 
     public static void MoveHintToTop()
     {
-        canvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
-        canvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
-        canvas.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
-        canvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        //canvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
+        //canvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
+        //canvas.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
+        //canvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        canvas.GetComponent<VerticalLayoutGroup>().padding.top = 20;
     }
 
     #endregion

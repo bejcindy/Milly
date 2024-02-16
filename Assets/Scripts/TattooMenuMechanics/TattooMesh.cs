@@ -235,12 +235,12 @@ public class TattooMesh : MonoBehaviour
 
             }
             myTat.triggered = false;
-            if (!MindPalace.showedCursorAnimation)
+            if (!MindPalace.showedCursorAnimation && !myMenu.cursorAnim)
             {
                 cursorAnimChild = Instantiate(myPalace.cursorAnimation, myTat.transform);
                 cursorAnimChild.GetComponent<CursorAnimation>().targetPos = characterTatMesh.transform.GetChild(0).position;
-                //cursorAnimChild.GetComponent<CursorAnimation>().startingPos = myTat.transform.position;
-                MindPalace.showedCursorAnimation = true;
+                myMenu.cursorAnim = cursorAnimChild;
+                //cursorAnimChild.GetComponent<CursorAnimation>().startingPos = myTat.transform.position;                
             }
             draggable = true;
         }
@@ -385,7 +385,11 @@ public class TattooMesh : MonoBehaviour
                     child.gameObject.layer = 16;
                 }
                 if (cursorAnimChild)
+                {
                     Destroy(cursorAnimChild);
+                    myMenu.cursorAnim = null;
+                    MindPalace.showedCursorAnimation = true;
+                }
                 reachedNPC = true;
             }
 

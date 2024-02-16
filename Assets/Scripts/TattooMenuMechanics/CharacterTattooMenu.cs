@@ -34,6 +34,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public CharacterTattooMenu nextChar;
     public bool leftable;
     public bool rightable;
+    public GameObject cursorAnim;
 
     [Foldout("Values")]
     public float blinkDuration = 1f;
@@ -229,7 +230,8 @@ public class CharacterTattooMenu : MonoBehaviour
             }
             tat.MenuFadeOutTatSprite();
         }
-
+        if (cursorAnim)
+            cursorAnim.SetActive(false);
     }
 
     public void SwitchMainTatMenuOn()
@@ -250,7 +252,9 @@ public class CharacterTattooMenu : MonoBehaviour
         }
 
         mindPalace.SelectMenu(this);
-
+        if (cursorAnim)
+            cursorAnim.SetActive(true);
+        //Debug.Log("selected");
     }
 
     public void DeselectMyMenu()
@@ -259,6 +263,9 @@ public class CharacterTattooMenu : MonoBehaviour
         myCam.m_Priority = 0;
         SwitchTattoosOff();
         myChar.SetDither(true);
+        if (cursorAnim)
+            cursorAnim.SetActive(false);
+        //Debug.Log("deselected");
     }
 
 

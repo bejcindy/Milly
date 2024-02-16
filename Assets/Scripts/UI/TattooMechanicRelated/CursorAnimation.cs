@@ -21,7 +21,21 @@ public class CursorAnimation : MonoBehaviour
         
         //startingPos = transform.position;
         sr = GetComponent<SpriteRenderer>();
+        
+        if (MindPalace.showedCursorAnimation)
+            Destroy(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        transform.localPosition = Vector3.zero;
+        sr.enabled = false;
         InvokeRepeating("CursorMove", duration, gap);
+    }
+    private void OnDisable()
+    {
+        CancelInvoke();
+        StopAllCoroutines();
     }
 
     void CursorMove()

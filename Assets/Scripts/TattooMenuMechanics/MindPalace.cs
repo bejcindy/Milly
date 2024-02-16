@@ -6,22 +6,31 @@ using UnityEngine;
 using FMODUnity;
 using Cinemachine;
 using PixelCrushers.DialogueSystem;
+using VInspector;
 
 public class MindPalace : MonoBehaviour
 {
+    [Foldout("States")]
+    public static int tattoosActivated;
+    public int tattoosCount;
     public static bool tatMenuOn;
+    public bool tattooMenuOn;
     public static bool hideHint;
     public static bool showTatHint;
     public static bool showedCursorAnimation;
     public bool noControl;
     public bool mainMenuOn;
     public bool firstTriggered;
+
+    [Foldout("References")]
     public CharacterTattooMenu currentMenu;
     public CharacterTattooMenu mainTatMenu;
     public CharacterTattooMenu selectedMenu;
     public Transform playerHand;
 
     public List<CharacterTattooMenu> tattooMenuList = new List<CharacterTattooMenu>();
+    public GameObject leftChooseUI;
+    public GameObject rightChooseUI;
 
     [HideInInspector]
     public bool draggingTat;
@@ -38,9 +47,17 @@ public class MindPalace : MonoBehaviour
     [TextArea]
     public string regularHint;
     [TextArea]
+    public string hasLeftHint;
+    [TextArea]
+    public string hasRightHint;
+    [TextArea]
+    public string hasBothHint;
+    [TextArea]
     public string dragHint;
     [TextArea]
     public string mainMenuHint;
+    [TextArea]
+    public string mainMenuHoverHint;
 
     string changeMenuSF = "event:/Sound Effects/Tattoo/ChangeMenu";
     PlayerLeftHand playerLeftHand;
@@ -62,8 +79,9 @@ public class MindPalace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Mind Palace is " + tatMenuOn);
-        if(currentMenu && currentMenu == mainTatMenu)
+        tattooMenuOn = tatMenuOn;
+        tattoosCount = tattoosActivated;
+        if(currentMenu && currentMenu == mainTatMenu && tatMenuOn)
         {
             mainMenuOn = true;
         }
@@ -71,6 +89,12 @@ public class MindPalace : MonoBehaviour
         {
             mainMenuOn = false;
         }
+
+        if (tatMenuOn)
+        {
+            MenuMouseHintOn();
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Tab) && !noControl && firstTriggered)
         {
@@ -82,25 +106,59 @@ public class MindPalace : MonoBehaviour
             //DataHolder.MoveHintToBottom();         
             if (mainMenuOn)
             {
-                DataHolder.ShowHintHorizontal(mainMenuHint);
+                if (selectedMenu)
+                {
+                    DataHolder.ShowHintHorizontal(mainMenuHoverHint);
+                    DataHolder.HideHint(mainMenuHint);
+                }
+                else
+                {
+                    DataHolder.ShowHintHorizontal(mainMenuHint);
+                    DataHolder.HideHint(mainMenuHoverHint);
+                }
+
                 DataHolder.HideHint(regularHint);
+                DataHolder.HideHint(hasLeftHint);
+                DataHolder.HideHint(hasRightHint);
+                DataHolder.HideHint(hasBothHint);
                 DataHolder.HideHint(dragHint);
             }
             else if (draggingTat)
             {
                 DataHolder.ShowHintHorizontal(dragHint);
                 DataHolder.HideHint(regularHint);
+                DataHolder.HideHint(hasLeftHint);
+                DataHolder.HideHint(hasRightHint);
+                DataHolder.HideHint(hasBothHint);
                 DataHolder.HideHint(mainMenuHint);
             }
             else if(!noControl)
             {
-                DataHolder.ShowHintHorizontal(regularHint);
+                if (currentMenu.leftable && currentMenu.rightable)
+                {
+                    DataHolder.ShowHintHorizontal(hasBothHint);
+                }
+                else if(currentMenu.leftable)
+                {
+                    DataHolder.ShowHintHorizontal(hasLeftHint);
+                }
+                else if (currentMenu.rightable)
+                {
+                    DataHolder.ShowHintHorizontal(hasRightHint);
+                }
+                else
+                {
+                    DataHolder.ShowHintHorizontal(regularHint);
+                }
                 DataHolder.HideHint(dragHint);
                 DataHolder.HideHint(mainMenuHint);
             }
             else
             {
                 DataHolder.HideHint(regularHint);
+                DataHolder.HideHint(hasLeftHint);
+                DataHolder.HideHint(hasRightHint);
+                DataHolder.HideHint(hasBothHint);
                 DataHolder.HideHint(dragHint);
                 DataHolder.HideHint(mainMenuHint);
             }
@@ -109,6 +167,9 @@ public class MindPalace : MonoBehaviour
         {
             //DataHolder.MoveHintToTop();
             DataHolder.HideHint(regularHint);
+            DataHolder.HideHint(hasLeftHint);
+            DataHolder.HideHint(hasRightHint);
+            DataHolder.HideHint(hasBothHint);
             DataHolder.HideHint(dragHint);
             DataHolder.HideHint(mainMenuHint);
         }
@@ -133,14 +194,14 @@ public class MindPalace : MonoBehaviour
             UnpausePlayer();
             MenuMouseHintOff();
             if (currentMenu)
-                currentMenu.TurnOffMenu();
+                currentMenu.BlinkMenuOff();
         }
         else
         {
             PausePlayer();
             if (currentMenu)
             {
-                currentMenu.TurnOnMenu();
+                currentMenu.BlinkMenuOn();
             }
         }
     }
@@ -150,7 +211,7 @@ public class MindPalace : MonoBehaviour
         mainTatMenu.myCam.m_Priority = 20;
         foreach (CharacterTattooMenu charMenu in tattooMenuList)
         {
-            if (charMenu != mainTatMenu && charMenu != currentMenu)
+            if (charMenu != mainTatMenu)
                 charMenu.myChar.SetDither(false);
         }
         currentMenu = mainTatMenu;
@@ -183,6 +244,8 @@ public class MindPalace : MonoBehaviour
         
     }
 
+    #region UI Region
+
     public void MenuMouseHintOn()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -196,8 +259,53 @@ public class MindPalace : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-
     }
+
+    public void LeftChooseUIOn()
+    {
+        leftChooseUI.SetActive(true);
+    }
+
+    public void RightChooseUIOn()
+    {
+        rightChooseUI.SetActive(true);
+    }
+
+    public void BothChooseUIOn()
+    {
+        leftChooseUI.SetActive(true);
+        rightChooseUI.SetActive(true);
+    }
+
+    public void LeftChooseUIOff()
+    {
+        leftChooseUI.SetActive(false);
+    }
+
+    public void RightChooseUIOff()
+    {
+        rightChooseUI.SetActive(false);
+    }
+
+    public void BothChooseUIOff()
+    {
+        leftChooseUI.SetActive(false);
+        rightChooseUI.SetActive(false);
+    }
+
+    public void ChooseCurrentMenuLeft()
+    {
+        currentMenu.ChooseMyLeft();
+    }
+
+    public void ChooseCurrentMenuRight()
+    {
+        currentMenu.ChooseMyRight();
+    }
+
+    #endregion
+
+
 
     public void HandOn()
     {

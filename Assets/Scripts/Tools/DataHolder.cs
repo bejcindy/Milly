@@ -56,6 +56,7 @@ public class DataHolder : MonoBehaviour
     public GameObject hintPanelPrefab;
     public GameObject hintPanelHorizontalPrefab;
     public GameObject hintPrefab;
+    public GameObject tatHintPrefab;
     public Transform canvasRef;
     
     public static HintTexts hints;
@@ -64,6 +65,7 @@ public class DataHolder : MonoBehaviour
     static GameObject hintPanel;
     static GameObject hintPanHori;
     static GameObject hintPref;
+    static GameObject tatHint;
     static List<string> currentHints;
     static List<GameObject> hintPanels;
 
@@ -97,6 +99,7 @@ public class DataHolder : MonoBehaviour
         hintPanel = hintPanelPrefab;
         hintPanHori = hintPanelHorizontalPrefab;
         hintPref = hintPrefab;
+        tatHint = tatHintPrefab;
         hints = hintsReference;
         currentHints = new List<string>();
         hintPanels = new List<GameObject>();
@@ -253,7 +256,7 @@ public class DataHolder : MonoBehaviour
                 string[] parsed = hint.Split("\n");
                 foreach (string s in parsed)
                 {
-                    GameObject instantiatedHintGroup = Instantiate(hintPref, instantiatedPanel.transform);
+                    GameObject instantiatedHintGroup = Instantiate(tatHint, instantiatedPanel.transform);
                     int buttonInt = s.IndexOf(" ");
                     string button = s.Substring(0, buttonInt);
                     string usage = s.Replace(button, "");
@@ -274,6 +277,7 @@ public class DataHolder : MonoBehaviour
 
     public static void HideHint(string hintToHide)
     {
+        Debug.Log("JUST SEEING HOW MUCH WE ARE CALLING THIS");
         bool hidden = false;
         if (hintPanels.Count != 0 && !hidden)
         {

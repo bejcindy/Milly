@@ -273,67 +273,96 @@ public class PlayerLeftHand : MonoBehaviour
             PutOnSurface();
         }
 
-        if (playerHolding.atContainer)
+
+
+        switch (objPickUp.objType)
         {
-            ContainerThrow();
-        }
-        else
-        {
-            switch (objPickUp.objType)
-            {
-                default:
-                    if (!playerHolding.atInterior)
+            default:
+                if (!playerHolding.atInterior)
+                {
+                    BasicThrow();
+                    resetAlready = false;
+                }
+                else
+                {
+                    if (playerHolding.atContainer)
                     {
-                        BasicThrow();
-                        resetAlready = false;
+                        ContainerThrow();
                     }
-                    else
+                    if (!resetAlready && !playerHolding.objectLerping)
                     {
-                        if (!resetAlready && !playerHolding.objectLerping)
-                        {
-                            ResetThrow();
-                            resetAlready = true;
-                        }
+                        ResetThrow();
+                        resetAlready = true;
                     }
-                    break;
+                }
+                break;
 
-                case HandObjectType.DRINK:
-                    Drink();
-                    if (!drinking && !playerHolding.atInterior)
-                        BasicThrow();
-                    break;
+            case HandObjectType.DRINK:
+                Drink();
+                if (!drinking && !playerHolding.atInterior)
+                    BasicThrow();
+                else if (playerHolding.atInterior)
+                {
+                    if (playerHolding.atContainer)
+                    {
+                        ContainerThrow();
+                    }
+                }
+                break;
 
-                case HandObjectType.CIGARETTE:
-                    Smoke();
-                    if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
-                        BasicThrow();
-                    break;
+            case HandObjectType.CIGARETTE:
+                Smoke();
+                if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
+                    BasicThrow();
 
-                case HandObjectType.CHOPSTICKS:
-                    currentChop = holdingObj.GetComponent<Chopsticks>();
-                    UsingChopsticks();
-                    ChopUIDetect();
-                    break;
+                else if(playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
+                {
+                    if (playerHolding.atContainer)
+                    {
+                        ContainerThrow();
+                    }
+                }
+                break;
 
-
-                case HandObjectType.DOUBLE:
-                    if(!playerHolding.atInterior)
-                        DetectDoubleHand();
-                    break;
-
-                case HandObjectType.FOOD:
-                    EatHandFood();
-                    break;
-
-                case HandObjectType.BROOM:
-                    if(!playerHolding.atInterior)
-                        DetectBroomUse();
-                    break;
+            case HandObjectType.CHOPSTICKS:
+                currentChop = holdingObj.GetComponent<Chopsticks>();
+                UsingChopsticks();
+                ChopUIDetect();
+                break;
 
 
-            }
+            case HandObjectType.DOUBLE:
+                if(!playerHolding.atInterior)
+                    DetectDoubleHand();
+                else if (playerHolding.atInterior)
+                {
+                    if (playerHolding.atContainer)
+                    {
+                        ContainerThrow();
+                    }
+                }
+                break;
+
+            case HandObjectType.FOOD:
+                EatHandFood();
+                break;
+
+            case HandObjectType.BROOM:
+                if(!playerHolding.atInterior)
+                    DetectBroomUse();
+                else if (playerHolding.atInterior)
+                {
+                    if (playerHolding.atContainer)
+                    {
+                        ContainerThrow();
+                    }
+                }
+                break;
+
 
         }
+
+        
 
 
     }

@@ -86,7 +86,7 @@ public class GroceryBoxGame : MonoBehaviour
         {
             scorePanel.SetActive(true);
             boxScore = FindHighest();
-            score.text = "Stacks: "+boxScore +"/"+boxes.Count;
+            score.text = boxScore +"/"+boxes.Count;
 
         }
     }

@@ -572,7 +572,7 @@ public class NPCControl : MonoBehaviour
 
     void DelayTurnOnMenu()
     {
-        myTatMenu.TurnOnMenu();
+        myTatMenu.BlinkMenuOn();
     }
     public void ChangeCharMeshMat(Material mat)
     {

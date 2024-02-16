@@ -95,9 +95,10 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        if (selectable)
+        if (selectable && !myMenu.mindPalace.noControl)
         {
             ChangeLayer(9);
+            myMenu.mindPalace.selectedMenu = myMenu;
             RuntimeManager.PlayOneShot(hoverSF, transform.position);
         }
     }
@@ -106,6 +107,10 @@ public class CharacterTattooMesh : MonoBehaviour
     {
         if (selectable)
         {
+            if(myMenu.mindPalace.selectedMenu == myMenu)
+            {
+                myMenu.mindPalace.selectedMenu = null;
+            }
             ChangeLayer(17);
         }
     }
@@ -120,9 +125,11 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void OnMouseUp()
     {
-        if (selectable)
+        if (selectable && !myMenu.mindPalace.noControl)
         {
             ChangeLayer(17);
+            DataHolder.HideHint(myMenu.mindPalace.mainMenuHoverHint);
+            DataHolder.HideHint(myMenu.mindPalace.mainMenuHint);
             myMenu.SelectMyMenu();
         }
     }

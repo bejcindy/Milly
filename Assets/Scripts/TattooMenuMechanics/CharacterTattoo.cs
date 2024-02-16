@@ -125,7 +125,7 @@ public class CharacterTattoo : MonoBehaviour
     {
         tatMesh.ColorTattooMesh();
         if(!hiddenTat)
-            myMenu.TurnOnMenu();
+            myMenu.BlinkMenuOn();
     }
 
     public void MenuFadeOutText()

@@ -6,6 +6,7 @@ using UnityEngine;
 using VInspector;
 using FMODUnity;
 using PixelCrushers.DialogueSystem;
+using TMPro;
 
 public class CharacterTattooMenu : MonoBehaviour
 {
@@ -21,18 +22,26 @@ public class CharacterTattooMenu : MonoBehaviour
     public bool draggingTat;
     public bool isMainMenu;
     bool finalCalledOnce;
+
     [Foldout("References")]
     public Transform myTattoos;
+    public Transform myInfo;
     public CharacterTattoo finalTattoo;
     public TattooMesh draggedTat;
     public CharacterTattooMesh myChar;
     public CinemachineVirtualCamera myCam;
+    public CharacterTattooMenu previousChar;
+    public CharacterTattooMenu nextChar;
+    public bool leftable;
+    public bool rightable;
 
     [Foldout("Values")]
     public float blinkDuration = 1f;
+    public float infoFadeVal;
     public string finishedDialogue;
     bool finishedDialogueDone;
-
+    bool fadeinInfo;
+    bool fadeOutInfo;
 
     protected Camera frontCam;
     protected Camera colorCam;
@@ -55,6 +64,7 @@ public class CharacterTattooMenu : MonoBehaviour
             myCam = transform.GetChild(0).GetComponent<CinemachineVirtualCamera>();
             myChar = transform.GetChild(1).GetComponent<CharacterTattooMesh>();
             myTattoos = transform.GetChild(2);
+            myInfo = transform.GetChild(3);
         }
         frontCam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
         colorCam = Camera.main.transform.GetChild(1).GetComponent<Camera>();
@@ -73,12 +83,35 @@ public class CharacterTattooMenu : MonoBehaviour
             draggingTat=false;
         }
 
+        if(previousChar && previousChar.discovered)
+        {
+            leftable = true;
+        }
+        if(nextChar && nextChar.discovered)
+        {
+            rightable = true;
+        }
+
         if (menuOn)
         {
             if(myChar.myNPC)
                 myChar.myNPC.colored = true;
             MindPalace.tatMenuOn = true;
-            mindPalace.MenuMouseHintOn();
+
+            if (!mindPalace.noControl)
+            {
+                if(leftable && Input.GetKeyDown(KeyCode.A))
+                {
+                    ChooseMyLeft();
+
+                }
+
+                if(rightable && Input.GetKeyDown(KeyCode.D))
+                {
+                    ChooseMyRight();
+
+                }
+            }
 
 
             if (fadeOutAllTats)
@@ -119,23 +152,27 @@ public class CharacterTattooMenu : MonoBehaviour
                 SwitchMainTatMenuOn();
             }
         }
+
+        if (fadeinInfo)
+        {
+            TurnOnCharInfo();
+        }
+
+        if (fadeOutInfo)
+        {
+            TurnOffCharInfo();
+        }
     }
 
-    public void TurnOnMenu()
+    public void BlinkMenuOn()
     {
         mindPalace.PausePlayer();
         discovered = true;
-        mindPalace.currentMenu = this;
         mindPalace.SelectMenu(this);
-        if (!isMainMenu)
-        {
-            myChar.SetDither(false);
-            SwitchTattoosOn();
-        }
         StartCoroutine(MenuOnBlink());
     }
 
-    public void TurnOffMenu()
+    public void BlinkMenuOff()
     {
         if(!isMainMenu)
             SwitchTattoosOff();
@@ -144,6 +181,9 @@ public class CharacterTattooMenu : MonoBehaviour
 
     void SwitchTattoosOn()
     {
+        fadeinInfo = true;
+        myChar.SetDither(false);
+        StartCoroutine(LerpPosition(tatOnPos, 1f));
         foreach (Transform t in myTattoos)
         {
             CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
@@ -175,6 +215,8 @@ public class CharacterTattooMenu : MonoBehaviour
 
     void SwitchTattoosOff()
     {
+        fadeOutInfo = true;
+        StartCoroutine(LerpPosition(tatOffPos, 1f));
         foreach (Transform t in myTattoos)
         {
             CharacterTattoo tat = t.GetComponent<CharacterTattoo>();
@@ -194,9 +236,6 @@ public class CharacterTattooMenu : MonoBehaviour
     {
         mindPalace.SwitchMainMenuOn();
         myChar.AfterFinalCharFrontRotate();
-        //if(finished)
-        //    finalTattoo.FinalTatFrontRotate();
-        StartCoroutine(LerpPosition(tatOffPos, 1f));
         myCam.m_Priority = 0;
     }
 
@@ -210,16 +249,56 @@ public class CharacterTattooMenu : MonoBehaviour
             myChar.AfterFinalCharFinishedRotate();
         }
 
-        StartCoroutine(LerpPosition(tatOnPos, 1f));
         mindPalace.SelectMenu(this);
 
     }
 
+    public void DeselectMyMenu()
+    {
+        mindPalace.noControl = true;
+        myCam.m_Priority = 0;
+        SwitchTattoosOff();
+        myChar.SetDither(true);
+    }
+
+
+    public void ChooseMyLeft()
+    {
+        DeselectMyMenu();
+        previousChar.SelectMyMenu();
+    }
+
+    public void ChooseMyRight()
+    {
+        DeselectMyMenu();
+        nextChar.SelectMyMenu();
+    }
+
     public void StartFinalTattoo()
     {
-        TurnOnMenu();
+        BlinkMenuOn();
         inFinalStage = true;
 
+    }
+
+
+    void ArrowButtonsOn()
+    {
+
+        if(leftable && rightable)
+        {
+            mindPalace.LeftChooseUIOn();
+            mindPalace.RightChooseUIOn();
+        }
+        else if (leftable)
+        {
+            mindPalace.LeftChooseUIOn();
+
+        }
+        else if (rightable)
+        {
+            mindPalace.RightChooseUIOn();
+        }
     }
 
 
@@ -238,11 +317,15 @@ public class CharacterTattooMenu : MonoBehaviour
         }
         if (t >= blinkDuration)
         {
-            StartCoroutine(LerpPosition(tatOnPos, 1f));
             if (!finished)
                 myChar.transform.localRotation = Quaternion.identity;
             else
                 myChar.transform.localRotation = Quaternion.Euler(myChar.finalCharRot);
+            if (!isMainMenu)
+            {
+                myChar.SetDither(false);
+                SwitchTattoosOn();
+            }
             myCam.m_Priority = 20;
             frontCam.fieldOfView = 35;
             colorCam.fieldOfView = 35;
@@ -265,10 +348,10 @@ public class CharacterTattooMenu : MonoBehaviour
 
     protected virtual IEnumerator MenuOffBlink()
     {
+        myChar.SetDither(true);
         MindPalace.showTatHint = false;
         mindPalace.SwitchPlayerCamBlend();
         mindPalace.noControl = true;
-        StartCoroutine(LerpPosition(tatOffPos, 1f));
         float t = 0;
         RuntimeManager.PlayOneShot(blinkSF);
         while (t < blinkDuration)
@@ -317,6 +400,7 @@ public class CharacterTattooMenu : MonoBehaviour
         if (targetPosition == tatOffPos)
         {
             menuOn = false;
+            mindPalace.BothChooseUIOff();
         }
 
         float time = 0;
@@ -332,7 +416,7 @@ public class CharacterTattooMenu : MonoBehaviour
         if(targetPosition == tatOnPos)
         {
             menuOn = true;
-            SwitchTattoosOn();
+            ArrowButtonsOn();
         }
 
         mindPalace.noControl = false;
@@ -345,6 +429,74 @@ public class CharacterTattooMenu : MonoBehaviour
     void StartCompleteDialogue()
     {
         DialogueManager.StartConversation(finishedDialogue);
+    }
+
+    void TurnOnCharInfo()
+    {
+        if(infoFadeVal < 1)
+        {
+            infoFadeVal += Time.deltaTime;
+            foreach (Transform t in myInfo)
+            {
+                SpriteRenderer infoSprite = t.GetComponent<SpriteRenderer>();
+                TextMeshPro infoText = t.GetComponent<TextMeshPro>();
+                if (infoSprite != null)
+                {
+                    Color temp = infoSprite.color;
+                    temp.a = infoFadeVal;
+                    infoSprite.color = temp;
+                }
+
+                if(infoText != null)
+                {
+                    Color temp = infoText.color;
+                    temp.a = infoFadeVal;
+                    infoText.color = temp;
+
+                }
+            }
+
+        }
+        else
+        {
+            fadeinInfo = false;
+            infoFadeVal = 1;
+        }
+
+    }
+
+    void TurnOffCharInfo()
+    {
+        if (infoFadeVal > 0)
+        {
+            infoFadeVal -= Time.deltaTime;
+            foreach (Transform t in myInfo)
+            {
+                SpriteRenderer infoSprite = t.GetComponent<SpriteRenderer>();
+                TextMeshPro infoText = t.GetComponent<TextMeshPro>();
+                if (infoSprite != null)
+                {
+                    Color temp = infoSprite.color;
+                    temp.a = infoFadeVal;
+                    infoSprite.color = temp;
+                }
+
+                if (infoText != null)
+                {
+                    Color temp = infoText.color;
+                    temp.a = infoFadeVal;
+                    infoText.color = temp;
+
+                }
+            }
+
+        }
+        else
+        {
+            fadeOutInfo = false;
+            infoFadeVal = 0;
+        }
+
     }
 
 

@@ -12,7 +12,7 @@ public class MainCharactersMenu : CharacterTattooMenu
     {
         if (menuOn)
         {
-            mindPalace.MenuMouseHintOn();
+            MindPalace.tatMenuOn = true;
             mindPalace.currentMenu = this;
 
             if(!mindPalace.noControl && Input.GetKeyDown(KeyCode.Escape))
@@ -56,6 +56,7 @@ public class MainCharactersMenu : CharacterTattooMenu
         mindPalace.noControl = false;
         mindPalace.SwitchTatMenuBlend();
         MindPalace.showTatHint = true;
+        mindPalace.MenuMouseHintOn();
         yield break;
     }
 
@@ -91,6 +92,11 @@ public class MainCharactersMenu : CharacterTattooMenu
         }
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.noControl = false;
+
+        MindPalace.hideHint = false;
+        ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = true;
+
+        mindPalace.FirstMindPalaceDialogue();
 
         yield break;
     }

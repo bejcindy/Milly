@@ -29,6 +29,8 @@ public class CursorAnimation : MonoBehaviour
     private void OnEnable()
     {
         transform.localPosition = Vector3.zero;
+        if(!sr)
+            sr = GetComponent<SpriteRenderer>();
         sr.enabled = false;
         InvokeRepeating("CursorMove", duration, gap);
     }

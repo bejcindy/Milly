@@ -17,6 +17,7 @@ public class Lid : LivableObject
     public LivableObject controlledContainer;
     public EventReference lidSound;
     bool iconHidden;
+    bool resetHand;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -37,14 +38,38 @@ public class Lid : LivableObject
     protected override void Update()
     { 
         base.Update();
+
+
+
         if (interactable && !lidMoving)
         {
-            if (playerHolding.lidObj == null)
-                LidControl();
-            else if (playerHolding.lidObj == transform.GetChild(0).gameObject)
-                LidControl();
+            if (playerHolding.LidUsable(this))
+            {
+                resetHand = false;
+                if (playerLeftHand.isHolding && !lidOpen)
+                {
+                    playerLeftHand.bypassThrow = true;
+                    LidControl();
+                }
+                else if(playerLeftHand.isHolding && lidOpen)
+                {
+                    playerLeftHand.bypassThrow = false;
+                }
+                else
+                {
+                    playerLeftHand.bypassThrow = false;
+                    LidControl();
+                }
+
+            }
+
             else
             {
+                if (!iconHidden && playerHolding.lidObj == transform.GetChild(0).gameObject)
+                {
+                    playerHolding.lidObj = null;
+                    iconHidden = true;
+                }
                 if (activated)
                     gameObject.layer = 17;
                 else
@@ -53,6 +78,14 @@ public class Lid : LivableObject
         }
         else
         {
+            if (!interactable)
+            {
+                if (!resetHand)
+                {
+                    resetHand = true;
+                    playerLeftHand.bypassThrow = false;
+                }
+            }
             if (activated)
                 gameObject.layer = 17;
             else

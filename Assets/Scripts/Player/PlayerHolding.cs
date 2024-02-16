@@ -138,11 +138,7 @@ public class PlayerHolding : MonoBehaviour
         }
 
 
-        #region UI and Hints
-        //if (lookingObjects.Count <= 0 && pickUpObjects.Count <= 0 && !doorHandle && !talkingTo && !kickableObj && !lidObj && !sitObj && !catboxObj)
-        //{
-        //    HideUI(null);
-        //}
+
         if (atTable)
         {
             if (!tableControl)
@@ -178,6 +174,27 @@ public class PlayerHolding : MonoBehaviour
             }
         }
 
+
+        ObjectUICheck();
+
+
+        if (leftHand.smoking)
+            smoking = true;
+        else
+            smoking = false;
+        
+        if (DialogueManager.IsConversationActive)
+        {
+            inDialogue = true;
+        }
+        else
+        {
+            inDialogue = false;
+        }
+    }
+
+    void ObjectUICheck()
+    {
         //DOOR HANDLE UI
         if (doorHandle)
         {
@@ -205,13 +222,10 @@ public class PlayerHolding : MonoBehaviour
             HideUI(kickSprite);
 
 
-        //UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
-
         if (talkingTo)
             DisplayUI(talkingTo, talkSprite);
         else
             HideUI(talkSprite);
-        //UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
         if (lidObj)
         {
             dragHidden = false;
@@ -220,12 +234,12 @@ public class PlayerHolding : MonoBehaviour
 
         else
         {
-            if(!selectedObj && !doorHandle)
+            if (!selectedObj && !doorHandle)
             {
                 HideUI(grabingSprite);
                 HideUI(dragSprite);
             }
-            else if(!doorHandle)
+            else if (!doorHandle)
             {
                 if (!dragHidden)
                 {
@@ -264,7 +278,7 @@ public class PlayerHolding : MonoBehaviour
         {
             DisplayUI(vinylObj, pickUpSprite);
         }
-        else 
+        else
         {
             if (!selectedObj && !doorHandle && !lidObj)
             {
@@ -278,34 +292,6 @@ public class PlayerHolding : MonoBehaviour
         else
         {
             HideUI(sweepSprite);
-        }
-
-        //    //UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
-        //    //if(sitObj)
-        //    UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
-        ////if (clickableObj)
-        //UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
-        ////if(catboxObj)
-        //UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
-        //if (vinylObj)
-        //    UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
-        //UITriggerdByOtherObj(dirtObj, sweepSprite, dirtHidden);
-        #endregion
-
-
-
-        if (leftHand.smoking)
-            smoking = true;
-        else
-            smoking = false;
-        
-        if (DialogueManager.IsConversationActive)
-        {
-            inDialogue = true;
-        }
-        else
-        {
-            inDialogue = false;
         }
     }
 
@@ -359,6 +345,20 @@ public class PlayerHolding : MonoBehaviour
         }
         return false;
     }
+
+    public bool LidUsable(Lid lid)
+    {
+        if(lidObj == null && selectedObj == null)
+        {
+            return true;
+        } 
+        else if(lidObj == lid.transform.GetChild(0).gameObject && selectedObj == null) {
+
+            return true;
+        }
+        return false;
+    }
+
     #endregion
 
     #region Object-Tracking UI

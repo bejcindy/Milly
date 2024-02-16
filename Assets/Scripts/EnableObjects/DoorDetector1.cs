@@ -34,6 +34,14 @@ public class DoorDetector1 : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("NPC") || other.CompareTag("Player"))
+        {
+            hasHuman = true;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("NPC") || other.CompareTag("Player"))

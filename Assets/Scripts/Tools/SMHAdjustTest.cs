@@ -28,7 +28,7 @@ public class SMHAdjustTest : MonoBehaviour
     
 
     public IEnumerator LerpToPizzaColor(Texture2D pizzaLUT)
-    {
+    {        
         float t = 0;
         BeautifySettings.settings.lut.Override(true);
         BeautifySettings.settings.lutTexture.Override(pizzaLUT);
@@ -44,6 +44,7 @@ public class SMHAdjustTest : MonoBehaviour
             }
 
             t += Time.deltaTime;
+            Debug.Log(intensity);
             yield return null;
         }
 

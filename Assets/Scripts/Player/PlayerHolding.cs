@@ -115,9 +115,10 @@ public class PlayerHolding : MonoBehaviour
         if (!inDialogue)
             ChooseLookable();
 
-        if(!selectedObj && !doorHandle)
+        if(!selectedObj && !doorHandle && !lidObj)
         {
             HideUI(pickUpSprite);
+            HideUI(dragSprite);
         }
 
         if (pickUpObjects.Count >= 1 || midAirKickable)
@@ -197,21 +198,98 @@ public class PlayerHolding : MonoBehaviour
             }
 
         }
-        //if(kickableObj)
-        UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
-        //if(talkingTo)
-        UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
+
+        if (kickableObj)
+            DisplayUI(kickableObj, kickSprite);
+        else
+            HideUI(kickSprite);
+
+
+        //UITriggerdByOtherObj(kickableObj, kickSprite, kickHidden);
+
+        if (talkingTo)
+            DisplayUI(talkingTo, talkSprite);
+        else
+            HideUI(talkSprite);
+        //UITriggerdByOtherObj(talkingTo, talkSprite, talknHidden);
         if (lidObj)
-            UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
-        //if(sitObj)
-        UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
-        //if (clickableObj)
-        UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
-        //if(catboxObj)
-        UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
+        {
+            dragHidden = false;
+            GrabDragSpriteSwap(lidObj);
+        }
+
+        else
+        {
+            if(!selectedObj && !doorHandle)
+            {
+                HideUI(grabingSprite);
+                HideUI(dragSprite);
+            }
+            else if(!doorHandle)
+            {
+                if (!dragHidden)
+                {
+                    dragHidden = true;
+                    HideUI(dragSprite);
+                }
+
+            }
+        }
+
+        if (sitObj)
+        {
+            DisplayUI(sitObj, sitSprite);
+        }
+        else
+        {
+            HideUI(sitSprite);
+        }
+        if (clickableObj)
+        {
+            DisplayUI(clickableObj, clickSprite);
+        }
+        else
+        {
+            HideUI(clickSprite);
+        }
+        if (catboxObj)
+        {
+            DisplayUI(catboxObj, catSprite);
+        }
+        else
+        {
+            HideUI(catSprite);
+        }
         if (vinylObj)
-            UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
-        UITriggerdByOtherObj(dirtObj, sweepSprite, dirtHidden);
+        {
+            DisplayUI(vinylObj, pickUpSprite);
+        }
+        else 
+        {
+            if (!selectedObj && !doorHandle && !lidObj)
+            {
+                HideUI(pickUpSprite);
+            }
+        }
+        if (dirtObj)
+        {
+            DisplayUI(dirtObj, sweepSprite);
+        }
+        else
+        {
+            HideUI(sweepSprite);
+        }
+
+        //    //UITriggerdByOtherObj(lidObj, dragSprite, dragHidden);
+        //    //if(sitObj)
+        //    UITriggerdByOtherObj(sitObj, sitSprite, sitHidden);
+        ////if (clickableObj)
+        //UITriggerdByOtherObj(clickableObj, clickSprite, clickHidden);
+        ////if(catboxObj)
+        //UITriggerdByOtherObj(catboxObj, catSprite, catHidden);
+        //if (vinylObj)
+        //    UITriggerdByOtherObj(vinylObj, pickUpSprite, vinylHidden);
+        //UITriggerdByOtherObj(dirtObj, sweepSprite, dirtHidden);
         #endregion
 
 
@@ -339,6 +417,7 @@ public class PlayerHolding : MonoBehaviour
         {
             if(instantiatedIcons.TryGetValue(toHide, out _))
             {
+                Debug.Log("Something is hidden");
                 GameObject target = instantiatedIcons[toHide];
                 instantiatedIcons.Remove(toHide);
                 usedSprites.Remove(target.GetComponent<TrackObject>().sprite);
@@ -367,8 +446,24 @@ public class PlayerHolding : MonoBehaviour
             img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
         }
     }
+
+
+    void GrabDragSpriteSwap(GameObject obj)
+    {
+        if (Input.GetMouseButton(0))
+        {
+            DisplayUI(obj, grabingSprite);
+            HideUI(dragSprite);
+        }
+        else
+        {
+            DisplayUI(obj, dragSprite);
+            HideUI(grabingSprite);
+        }
+    }
     void UITriggerdByOtherObj(GameObject obj, Sprite sprite, bool hidden)
     {
+
         if (obj)
         {
             if (obj == lidObj)
@@ -383,32 +478,6 @@ public class PlayerHolding : MonoBehaviour
                     DisplayUI(obj, dragSprite);
                     HideUI(grabingSprite);
                 }
-                //if (obj.GetComponent<PizzaLid>())
-                //{
-                //    if (Input.GetMouseButton(0))
-                //    {
-                //        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, grabingSprite);
-                //        HideUI(dragSprite);
-                //    }
-                //    else
-                //    {
-                //        DisplayUI(obj.GetComponent<PizzaLid>().uiHint, dragSprite);
-                //        HideUI(grabingSprite);
-                //    }
-                //}
-                //else
-                //{
-                //    if (Input.GetMouseButton(0))
-                //    {
-                //        DisplayUI(obj, grabingSprite);
-                //        HideUI(dragSprite);
-                //    }
-                //    else
-                //    {
-                //        DisplayUI(obj, dragSprite);
-                //        HideUI(grabingSprite);
-                //    }
-                //}
             }
             else
                 DisplayUI(obj, sprite);
@@ -418,6 +487,7 @@ public class PlayerHolding : MonoBehaviour
         {
             if (!hidden)
             {
+                Debug.Log("setting hidden to true");
                 HideUI(sprite);
                 hidden = true;
             }

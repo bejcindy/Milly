@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Beautify.Universal;
+using FMODUnity;
 
 public class MainCharactersMenu : CharacterTattooMenu
 {
@@ -43,6 +44,7 @@ public class MainCharactersMenu : CharacterTattooMenu
             colorCam.fieldOfView = 35;
             focusCam.fieldOfView = 35;
             mindPalace.HandOff();
+            RuntimeManager.PlayOneShot(blinkSF);
         }
 
 
@@ -66,6 +68,7 @@ public class MainCharactersMenu : CharacterTattooMenu
         MindPalace.showTatHint = false;
         mindPalace.SwitchPlayerCamBlend();
         mindPalace.noControl = true;
+        RuntimeManager.PlayOneShot(blinkSF);
         float t = 0;
         while (t < blinkDuration)
         {

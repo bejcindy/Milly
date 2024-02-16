@@ -124,6 +124,11 @@ public class TattooMesh : MonoBehaviour
     {
         if (dragging)
         {
+            if(cursorAnimChild != null)
+            {
+                cursorAnimChild.gameObject.SetActive(false);
+                Destroy(cursorAnimChild.gameObject);
+            }
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
             transform.position = curPosition;

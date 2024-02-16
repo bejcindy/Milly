@@ -331,8 +331,9 @@ public class CharacterTattooMenu : MonoBehaviour
             colorCam.fieldOfView = 35;
             focusCam.fieldOfView = 35;
             mindPalace.HandOff();
+            RuntimeManager.PlayOneShot(blinkSF);
         }
-        RuntimeManager.PlayOneShot(blinkSF);
+
 
         while (t >= blinkDuration && t < blinkDuration * 2)
         {

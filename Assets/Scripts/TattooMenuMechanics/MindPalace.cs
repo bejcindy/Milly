@@ -84,7 +84,7 @@ public class MindPalace : MonoBehaviour
             mainMenuOn = false;
         }
 
-        if (tatMenuOn)
+        if (tatMenuOn && currentMenu.menuOn)
         {
             MenuMouseHintOn();
         }
@@ -155,6 +155,7 @@ public class MindPalace : MonoBehaviour
                 DataHolder.HideHint(hasBothHint);
                 DataHolder.HideHint(dragHint);
                 DataHolder.HideHint(mainMenuHint);
+                DataHolder.HideHint(mainMenuHoverHint);
             }
         }
         else
@@ -166,6 +167,7 @@ public class MindPalace : MonoBehaviour
             DataHolder.HideHint(hasBothHint);
             DataHolder.HideHint(dragHint);
             DataHolder.HideHint(mainMenuHint);
+            DataHolder.HideHint(mainMenuHoverHint);
         }
     }
 

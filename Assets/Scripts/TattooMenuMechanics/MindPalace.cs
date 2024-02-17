@@ -174,6 +174,7 @@ public class MindPalace : MonoBehaviour
             DataHolder.HideHint(dragHint);
             DataHolder.HideHint(mainMenuHint);
             DataHolder.HideHint(mainMenuHoverHint);
+            DataHolder.HideHint(DataHolder.hints.cigHint);
         }
 
         if (firstThought)

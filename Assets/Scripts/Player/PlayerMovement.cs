@@ -542,7 +542,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("Fog"))
         {
-            Debug.Log("Entered fog");
+            //Debug.Log("Entered fog");
             foreach(GameObject glass in glasses)
             {
                 gameObject.layer = 0;
@@ -554,13 +554,13 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    public void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Fog"))
-        {
-            Debug.Log("In fog");
-        }
-    }
+    //public void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Fog"))
+    //    {
+    //        Debug.Log("In fog");
+    //    }
+    //}
 
     private void OnTriggerExit(Collider other)
     {

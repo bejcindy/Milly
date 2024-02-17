@@ -94,6 +94,7 @@ public class GroceryBox : PickUpObject
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.up, out hit, upDetectDist))
         {
+
             if (hit.collider.gameObject.CompareTag("GroceryBox"))
             {
                 boxAbove = true;
@@ -116,6 +117,7 @@ public class GroceryBox : PickUpObject
 
         if (Physics.Raycast(transform.position, Vector3.down, out hit, upDetectDist))
         {
+
             if (hit.collider.gameObject.CompareTag("GroceryBox"))
             {
                 if (!boxAbove && !boxBelow && !groundBox)

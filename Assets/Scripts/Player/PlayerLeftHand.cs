@@ -587,7 +587,19 @@ public class PlayerLeftHand : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && holdingObj && !PauseMenu.isPaused)
             {
-                readyToThrow = true;
+                if(!GarbageScore.dumpsterAimed)
+                    readyToThrow = true;
+                else
+                {
+                    if (GarbageScore.CheckAcceptableObject(objPickUp.objType))
+                    {
+                        readyToThrow = true;
+                    }
+                    else
+                    {
+                        DialogueManager.StartConversation("DumpsterSoccer/NotAccepted");
+                    }
+                }
             }
 
             if (readyToThrow && !noThrow)

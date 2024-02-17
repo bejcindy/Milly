@@ -547,7 +547,6 @@ public class NPCControl : MonoBehaviour
             StopCoroutine(lookCoroutine);
         inCD = true;
         currentDialogue.gameObject.SetActive(false);
-
         talkable = true;
 
         if (transformed)

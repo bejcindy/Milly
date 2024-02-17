@@ -8,6 +8,7 @@ using PixelCrushers.DialogueSystem;
 
 public class GarbageScore : MonoBehaviour
 {
+    public static bool dumpsterAimed;
     [SerializeField]
     public int score;
     public bool throwValid;
@@ -20,6 +21,7 @@ public class GarbageScore : MonoBehaviour
     float fadeInterval = 10f;
     bool firstActivated,firstTrashIn;
     bool throwValidCheckDiaDone;
+    HandObjectType[] acceptedTypes;
 
     public List<PickUpObject> trashList = new List<PickUpObject>();
     // Start is called before the first frame update
@@ -39,6 +41,24 @@ public class GarbageScore : MonoBehaviour
             TurnOnColor(dumpsterMat);
         }
 
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.name == gameObject.name)
+            {
+                dumpsterAimed = true;
+            }
+            else
+            {
+                dumpsterAimed = false;
+            }
+        }
+        else
+        {
+            dumpsterAimed = false;
+        }
+
 
 
     }
@@ -49,32 +69,45 @@ public class GarbageScore : MonoBehaviour
         PickUpObject pickUp = other.GetComponent<PickUpObject>();
         if (pickUp)
         {
-            if (pickUp.kicked)
+            if (CheckAcceptableObject(pickUp.objType))
             {
-                score++;
-                pickUp.dumped = true;
-                pickUp.GetComponent<Collider>().material = highFriction;
-            }
-            else
-            {
-                if (!throwValidCheckDiaDone)
-                {
-                    throwValidCheckDiaDone = true;
-                    DialogueManager.StartConversation("SoccerGame/ThrownObject");
-                    pickUp.dumped = true;
-                    pickUp.GetComponent<Collider>().material = highFriction;
-                }
-
-                if (throwValid)
+                if (pickUp.kicked)
                 {
                     score++;
                     pickUp.dumped = true;
                     pickUp.GetComponent<Collider>().material = highFriction;
                 }
+                else
+                {
+                    if (!throwValidCheckDiaDone)
+                    {
+                        throwValidCheckDiaDone = true;
+                        DialogueManager.StartConversation("SoccerGame/ThrownObject");
+                        pickUp.dumped = true;
+                        pickUp.GetComponent<Collider>().material = highFriction;
+                    }
 
+                    if (throwValid)
+                    {
+                        score++;
+                        pickUp.dumped = true;
+                        pickUp.GetComponent<Collider>().material = highFriction;
+                    }
+
+                }
             }
 
+
         }
+    }
+
+    public static bool CheckAcceptableObject(HandObjectType handObjectType)
+    {
+        if(handObjectType == HandObjectType.TRASH || handObjectType == HandObjectType.DRINK || handObjectType == HandObjectType.CATFOOD || handObjectType == HandObjectType.CIGARETTE)
+        {
+            return true;
+        }
+        return false;
     }
 
     public void ValidateThrow()

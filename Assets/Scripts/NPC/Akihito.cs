@@ -14,6 +14,7 @@ public class Akihito : NPCControl
     [Foldout("Special Dialogues")]
     public Transform akiConfrontation;
 
+
     protected override void Update()
     {
         base.Update();
@@ -28,6 +29,8 @@ public class Akihito : NPCControl
             StopIdle();
 
         }
+
+
     }
 
 
@@ -48,6 +51,8 @@ public class Akihito : NPCControl
     public void AkihitoAction3() {
 
         currentDialogue.gameObject.SetActive(true);
+        bathroomDoor.CloseDoor();
+        bathroomDoor.enabled = false;
     }
 
     public void MoveAkiToPizza()

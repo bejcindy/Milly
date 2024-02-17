@@ -313,6 +313,7 @@ public class CharacterTattooMenu : MonoBehaviour
     {
         mindPalace.firstTriggered = true;
         mindPalace.noControl = true;
+        mindPalace.HideIcon();
         MindPalace.hideHint = true;
         ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = false;
         float t = 0;
@@ -333,11 +334,13 @@ public class CharacterTattooMenu : MonoBehaviour
                 myChar.SetDither(false);
                 SwitchTattoosOn();
             }
+
             myCam.m_Priority = 20;
             frontCam.fieldOfView = 35;
             colorCam.fieldOfView = 35;
             focusCam.fieldOfView = 35;
             mindPalace.HandOff();
+
             RuntimeManager.PlayOneShot(blinkSF);
         }
 
@@ -391,7 +394,7 @@ public class CharacterTattooMenu : MonoBehaviour
         ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = true;
 
         mindPalace.FirstMindPalaceDialogue();
-
+        mindPalace.ShowIcon();
         if (finished && !finishedDialogueDone)
         {
             finishedDialogueDone = true;

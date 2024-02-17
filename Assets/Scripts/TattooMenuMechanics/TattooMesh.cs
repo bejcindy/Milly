@@ -127,7 +127,7 @@ public class TattooMesh : MonoBehaviour
             if(cursorAnimChild != null)
             {
                 cursorAnimChild.gameObject.SetActive(false);
-                Destroy(cursorAnimChild.gameObject);
+                //Destroy(cursorAnimChild.gameObject);
             }
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
@@ -153,6 +153,11 @@ public class TattooMesh : MonoBehaviour
             characterTatMesh.ChangeLayer(0);
             SwitchDitherMat();
             StartCoroutine(LerpBack());
+            if (cursorAnimChild != null)
+            {
+                cursorAnimChild.gameObject.SetActive(true);
+                //Destroy(cursorAnimChild.gameObject);
+            }
             myMenu.mindPalace.draggingTat = false;
         }
         else if(draggable && reachedNPC)
@@ -346,7 +351,13 @@ public class TattooMesh : MonoBehaviour
 
     public void Dissolve()
     {
-        
+        if (cursorAnimChild)
+        {
+            myMenu.cursorAnim = null;
+            MindPalace.showedCursorAnimation = true;
+            Debug.Log(MindPalace.showedCursorAnimation);
+            Destroy(cursorAnimChild);
+        }
         if (dissolveVal < 1)
         {
             dissolveVal += 0.5f * Time.deltaTime;
@@ -384,12 +395,7 @@ public class TattooMesh : MonoBehaviour
                 {
                     child.gameObject.layer = 16;
                 }
-                if (cursorAnimChild)
-                {
-                    Destroy(cursorAnimChild);
-                    myMenu.cursorAnim = null;
-                    MindPalace.showedCursorAnimation = true;
-                }
+                
                 reachedNPC = true;
             }
 

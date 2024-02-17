@@ -245,8 +245,8 @@ public class LivableObject : MonoBehaviour
         {
             matColorVal = 0;
             firstActivated = true;
-            //if (myTattoo && !delayTat && !myTattoo.triggered)
-            //    Invoke(nameof(TurnOnTat), 1f);
+            if (myTattoo && !delayTat && !myTattoo.triggered)
+                Invoke(nameof(TurnOnTat), 1f);
             if (specialEffect != null)
                 specialEffect.SetActive(true);
         }

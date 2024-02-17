@@ -7,6 +7,7 @@ public class Vinyl : PickUpObject
 {
     public RecordPlayer recordPlayer;
     public VinylHolder holder;
+    public LocationController tattooZone;
     public bool onRecordPlayer;
     public bool onStand;
     public bool standSelect;
@@ -47,7 +48,7 @@ public class Vinyl : PickUpObject
     protected override void Update()
     {
         loyiAtVinyl = DialogueLua.GetVariable("Vinyl/LoyiInBF").asBool;
-        if (loyiAtVinyl)
+        if (loyiAtVinyl && tattooZone.inZone)
         {
             if(playTime > 20f)
             {

@@ -8,7 +8,7 @@ public class LocationController : MonoBehaviour
     public Animator myTitle;
     public bool inZone;
     public Transform playerSpawnPos;
-
+    public bool firstShown;
 
     bool showZoneName;
     bool hideZoneName;
@@ -61,7 +61,12 @@ public class LocationController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inZone = true;
-            showZoneName = true;
+            if (!firstShown)
+            {
+                showZoneName = true;
+                firstShown = true;
+            }
+
         }
     }
 

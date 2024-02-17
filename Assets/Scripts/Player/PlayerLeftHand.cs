@@ -140,7 +140,12 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 DataHolder.ShowHint(DataHolder.hints.pizzaHint);
             }
-            else if (isHolding && holdingObj.GetComponent<GroceryBox>() && GroceryBoxGame.hasPlaceableBox)
+            else if (isHolding && holdingObj.GetComponent<GroceryBox>())
+            {
+                DataHolder.ShowHint(DataHolder.hints.pizzaHint);
+                DataHolder.HideHint(DataHolder.hints.throwHint);
+            }
+            else if (isHolding && holdingObj.GetComponent<Vinyl>())
             {
                 DataHolder.ShowHint(DataHolder.hints.pizzaHint);
                 DataHolder.HideHint(DataHolder.hints.throwHint);

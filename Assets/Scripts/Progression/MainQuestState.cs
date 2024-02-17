@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class MainQuestState: MonoBehaviour
 {
+    public bool finalGloriaHotKey;
+    public static int demoProgress;
+    public int demoFinishCount;
+    bool demoFinalGloriaMove;
 
-    [Header("First Gloria Talk")]
     public static bool firstGloriaTalk;
     bool afterGloThought;
     public static bool readyAkiConfrontation;
@@ -26,6 +29,8 @@ public class MainQuestState: MonoBehaviour
     public Charles charles;
     public Felix felix;
 
+    public NPCControl[] allNPCs;
+
 
     private void Start()
     {
@@ -39,6 +44,7 @@ public class MainQuestState: MonoBehaviour
 
     public void Update()
     {
+        demoFinishCount = demoProgress;
         CheckParentCallTrigger();
         if (readyAkiConfrontation && izakayaHighChair.isInteracting && !AkiConfrontation.activeSelf && !akiConfronted)
         {
@@ -64,7 +70,37 @@ public class MainQuestState: MonoBehaviour
             Invoke(nameof(StartGloAfterThought), 1f);
         }
 
+        if(demoProgress == 6)
+        {
+            if (!demoFinalGloriaMove)
+            {
+                demoFinalGloriaMove = true;
+                gloria.StopIdle();
+            }
+        }
+
+        if (finalGloriaHotKey)
+        {
+            demoProgress = 6;
+        }
+
+        
+
     }
+
+    bool CheckDemoFinished()
+    {
+        foreach(NPCControl npc in allNPCs)
+        {
+            if (npc._counter != npc.destinations.Length)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    
 
     public void CheckParentCallTrigger()
     {
@@ -77,6 +113,8 @@ public class MainQuestState: MonoBehaviour
             }
         }
     }
+
+
 
     void StartParentsCallingConvo()
     {

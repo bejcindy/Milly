@@ -63,6 +63,7 @@ public class CharacterTattoo : MonoBehaviour
         if (triggered && !triggeredOnce && !ReferenceTool.playerHolding.inDialogue)
         {
             triggeredOnce = true;
+            MindPalace.tattoosActivated++;
             myChar.gameObject.SetActive(true);
             tatMesh.gameObject.SetActive(true);
             tatSprite.gameObject.SetActive(true);
@@ -198,7 +199,6 @@ public class CharacterTattoo : MonoBehaviour
             dragged = false;
             activated = true;
             myMenu.mindPalace.noControl = false;
-            MindPalace.tattoosActivated++;
         }
 
     }

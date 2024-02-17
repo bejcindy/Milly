@@ -58,5 +58,10 @@ public class Ron : NPCControl
             menuFirstTriggered = true;
             ActivateTattooMenu();
         }
+
+        if(_counter == 0)
+        {
+            MainQuestState.demoProgress++;
+        }
     }
 }

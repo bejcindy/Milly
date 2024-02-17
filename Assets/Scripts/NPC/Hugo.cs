@@ -18,6 +18,10 @@ public class Hugo : NPCControl
 
     public GameObject cigButtConvo;
     public CharacterTattoo willowTat;
+    bool willowTatTriggered;
+    bool finalWait;
+
+    float finalWaitTime = 60;
 
     [Foldout("TrashDialogues")]
     public GameObject drinkTalk;
@@ -44,9 +48,24 @@ public class Hugo : NPCControl
 
         if(totalFloorCleaned == totalFloorCount)
         {
-            if(_counter == 4)
+            if(_counter == 3 && willowTatTriggered)
             {
+                finalWait = true;
+            }
+        }
+
+        if(finalWait)
+        {
+            if(finalWaitTime > 0)
+            {
+                finalWaitTime -= Time.deltaTime;
+            }
+            else
+            {
+                finalWaitTime = 0;
+                finalWait = false;
                 StopIdle();
+
             }
         }
     }
@@ -54,17 +73,9 @@ public class Hugo : NPCControl
     public void HugoAction1()
     {
 
-        currentDialogue.gameObject.SetActive(true);
-        if(MindPalace.tattoosActivated == 3)
-        {
-            StopIdle();
-        }
     }
 
-    public void HugoAction2() { }
-
-    public void HugoAction3()
-    {
+    public void HugoAction2() {
         if (inConversation)
         {
             npcActivated = true;
@@ -73,17 +84,19 @@ public class Hugo : NPCControl
         noMoveAfterTalk = false;
     }
 
-    public void HugoAction4()
+    public void HugoAction3()
     {
         talkable = true;
         noMoveAfterTalk = true;
     }
 
-    public void HugoAction5()
+    public void HugoAction4()
     {
         noMoveAfterTalk = true;
         noLookInConvo = true;
     }
+
+
 
     public void TriggerWillowTattoo()
     {
@@ -136,14 +149,16 @@ public class Hugo : NPCControl
     {
         base.OnConversationEnd(other);
 
-        if(_counter == 3)
+        if(_counter == 2)
         {
             ActivateTattooMenu();
         }
-        if(_counter == 4)
+        if(_counter == 3)
         {
             TriggerWillowTattoo();
+            MainQuestState.demoProgress++;
         }
+
     }
 
 

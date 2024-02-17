@@ -85,6 +85,7 @@ public class Charles : NPCControl
         if (_counter == 2)
         {
             pizzaTat.triggered = true;
+            MainQuestState.demoProgress++;
         }
     }
 

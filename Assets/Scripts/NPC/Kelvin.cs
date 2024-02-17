@@ -26,4 +26,9 @@ public class Kelvin : NPCControl
         noTalkStage = true;
         gameObject.SetActive(false);
     }
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        base.OnConversationEnd(other);
+    }
 }

@@ -53,10 +53,6 @@ public class Gloria : NPCControl
     {
         remainInAnim = false;
         talkable = false;
-        if(MindPalace.tattoosActivated == 3)
-        {
-            StopIdle();
-        }
     }
 
     public void GloriaAction6()

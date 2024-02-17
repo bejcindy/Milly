@@ -84,6 +84,7 @@ public class Loyi : NPCControl
         if(_counter == 3)
         {
             DialogueLua.SetVariable("Vinyl/LoyiInBF", true);
+            MainQuestState.demoProgress++;
         }
     }
 }

@@ -82,5 +82,10 @@ public class Felix : NPCControl
             menuFirstTriggered = true;
             ActivateTattooMenu();
         }
+
+        if(_counter == 1)
+        {
+            MainQuestState.demoProgress++;
+        }
     }
 }

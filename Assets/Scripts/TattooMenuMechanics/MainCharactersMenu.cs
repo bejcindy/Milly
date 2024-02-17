@@ -30,6 +30,7 @@ public class MainCharactersMenu : CharacterTattooMenu
     {
         mindPalace.noControl = true;
         mindPalace.HideIcon();
+        MindPalace.hideHint = true;
         float t = 0;
         while (t < blinkDuration)
         {
@@ -104,6 +105,7 @@ public class MainCharactersMenu : CharacterTattooMenu
 
         mindPalace.FirstMindPalaceDialogue();
         mindPalace.ShowIcon();
+        MindPalace.hideHint = false;
         yield break;
     }
 

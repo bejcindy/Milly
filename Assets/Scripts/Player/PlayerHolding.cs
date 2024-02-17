@@ -112,8 +112,10 @@ public class PlayerHolding : MonoBehaviour
             pickUpObjects.Clear();
         }
 
-        if (!inDialogue)
+        if (!inDialogue && !looking)
             ChooseLookable();
+
+
 
         if(!selectedObj && !doorHandle && !lidObj)
         {

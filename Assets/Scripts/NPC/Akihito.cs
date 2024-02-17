@@ -76,6 +76,10 @@ public class Akihito : NPCControl
         base.OnConversationEnd(other);
         talkable = false;
 
+        if(_counter == 2)
+        {
+            MainQuestState.demoProgress++;
+        }
     }
 
     public void AkiStopLooking()

@@ -189,13 +189,14 @@ public class Lid : LivableObject
         lidMoving = true;
         float time = 0;
         Quaternion startValue = transform.localRotation;
+        RuntimeManager.PlayOneShot(lidSound, transform.position);
         while (time < duration)
         {
             transform.localRotation = Quaternion.Lerp(startValue, endValue, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
-        FMODUnity.RuntimeManager.PlayOneShot(lidSound, transform.position);
+        
         transform.localRotation = endValue;
         lidMoving = false;
 

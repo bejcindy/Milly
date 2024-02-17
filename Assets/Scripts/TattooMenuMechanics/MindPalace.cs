@@ -242,16 +242,13 @@ public class MindPalace : MonoBehaviour
                 charMenu.myChar.SetDither(false);
         }
         currentMenu = mainTatMenu;
-        mainTatMenu.menuOn = true;
-
-        RuntimeManager.PlayOneShot(changeMenuSF, transform.position);
+        mainTatMenu.menuOn = true;        
     }
 
     public void SwitchMainMenuOff()
     {
         mainTatMenu.menuOn = false;
         mainTatMenu.myCam.m_Priority = 0;
-        RuntimeManager.PlayOneShot(changeMenuSF, transform.position);
     }
 
     public void SelectMenu(CharacterTattooMenu menu)
@@ -267,8 +264,8 @@ public class MindPalace : MonoBehaviour
             SwitchMainMenuOff();
             currentMenu.myChar.ChangeLayer(17);
         }
+        RuntimeManager.PlayOneShot(changeMenuSF, transform.position);
 
-        
     }
 
     #region UI Region

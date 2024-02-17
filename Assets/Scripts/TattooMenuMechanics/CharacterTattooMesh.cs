@@ -333,7 +333,7 @@ public class CharacterTattooMesh : MonoBehaviour
             yield return null;
         }
         transform.localPosition = targetPosition;
-
+        myMenu.mindPalace.noControl = false;
     }
 
     IEnumerator LerpRotation(Quaternion endValue, float duration)

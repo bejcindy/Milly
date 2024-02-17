@@ -8,6 +8,8 @@ using FMODUnity;
 using UnityEngine.Events;
 using VInspector;
 using System.Linq;
+using AmplifyShaderEditor;
+using Unity.VisualScripting;
 
 public class NPCControl : MonoBehaviour
 {
@@ -115,6 +117,7 @@ public class NPCControl : MonoBehaviour
         dialogueHolder = transform.GetChild(2);
 
         currentDialogue = dialogueHolder.GetChild(0);
+
 
         playerHolding = ReferenceTool.playerHolding;
 

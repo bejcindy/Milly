@@ -198,7 +198,8 @@ public class CharacterTattoo : MonoBehaviour
         {
             dragged = false;
             activated = true;
-            myMenu.mindPalace.noControl = false;
+            if(!isFinalTat)
+                myMenu.mindPalace.noControl = false;
         }
 
     }

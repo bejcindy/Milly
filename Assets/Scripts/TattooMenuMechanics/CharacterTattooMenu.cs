@@ -118,6 +118,7 @@ public class CharacterTattooMenu : MonoBehaviour
             if (fadeOutAllTats)
             {
                 fadeOutAllTats = false;
+                mindPalace.noControl = true;
                 foreach(Transform t in myTattoos)
                 {
                     CharacterTattoo childTat = t.GetComponent<CharacterTattoo>();

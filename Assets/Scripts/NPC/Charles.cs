@@ -64,6 +64,7 @@ public class Charles : NPCControl
     {
         charlesFollowDia.SetActive(false);
         charlesPizza.SetActive(true);
+        talkable = false;
         currentDialogue.gameObject.SetActive(true);
     }
 

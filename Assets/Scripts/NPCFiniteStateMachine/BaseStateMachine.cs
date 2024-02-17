@@ -272,10 +272,6 @@ namespace NPCFSM
             }
         }
 
-        public void IncreaseCounter()
-        {
-            npcControl._counter++;
-        }
 
         public bool CheckFollowPlayer()
         {

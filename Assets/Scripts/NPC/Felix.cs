@@ -77,11 +77,15 @@ public class Felix : NPCControl
     protected override void OnConversationEnd(Transform other)
     {
         base.OnConversationEnd(other);
-        if (!menuFirstTriggered)
+        if(!StartSequence.noControl)
         {
-            menuFirstTriggered = true;
-            ActivateTattooMenu();
+            if (!menuFirstTriggered)
+            {
+                menuFirstTriggered = true;
+                ActivateTattooMenu();
+            }
         }
+
 
         if(_counter == 1)
         {

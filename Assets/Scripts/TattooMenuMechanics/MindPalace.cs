@@ -7,6 +7,7 @@ using FMODUnity;
 using Cinemachine;
 using PixelCrushers.DialogueSystem;
 using VInspector;
+using UnityEngine.UI;
 
 public class MindPalace : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class MindPalace : MonoBehaviour
     public bool noControl;
     public bool mainMenuOn;
     public bool firstTriggered;
+    public bool iconOn;
 
     [Foldout("References")]
     public CharacterTattooMenu currentMenu;
@@ -31,7 +33,9 @@ public class MindPalace : MonoBehaviour
     public List<CharacterTattooMenu> tattooMenuList = new List<CharacterTattooMenu>();
     public GameObject leftChooseUI;
     public GameObject rightChooseUI;
-
+    public GameObject menuIcon;
+    float iconAlphaVal;
+    bool iconFirstFade;
     [HideInInspector]
     public bool draggingTat;
 
@@ -40,6 +44,8 @@ public class MindPalace : MonoBehaviour
     CinemachineBrain camBrain;
 
     bool firstThought;
+
+    [Foldout("Hints")]
 
     [TextArea]
     public string regularHint;
@@ -168,6 +174,31 @@ public class MindPalace : MonoBehaviour
             DataHolder.HideHint(dragHint);
             DataHolder.HideHint(mainMenuHint);
             DataHolder.HideHint(mainMenuHoverHint);
+        }
+
+        if (firstThought)
+        {
+            if (!iconFirstFade)
+            {
+                if (!ReferenceTool.playerHolding.inDialogue)
+                {
+                    Image iconImage = menuIcon.GetComponent<Image>();
+                    Color iconColor = iconImage.color;
+                    if (iconAlphaVal < 1)
+                    {
+                        iconAlphaVal += Time.deltaTime;
+                        iconColor.a = iconAlphaVal;
+                        iconImage.color = iconColor;
+                    }
+                    else
+                    {
+                        iconAlphaVal = 1;
+                        iconFirstFade = true;
+                    }
+
+                }
+            }
+
         }
     }
 
@@ -344,5 +375,15 @@ public class MindPalace : MonoBehaviour
             firstThought = true;
             DialogueManager.StartConversation("Thoughts/FirstTattooMenu");
         }
+    }
+
+    public void ShowIcon()
+    {
+        menuIcon.SetActive(true);
+    }
+
+    public void HideIcon()
+    {
+        menuIcon.SetActive(false);
     }
 }

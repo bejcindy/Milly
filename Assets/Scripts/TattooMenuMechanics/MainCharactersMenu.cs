@@ -29,6 +29,7 @@ public class MainCharactersMenu : CharacterTattooMenu
     protected override IEnumerator MenuOnBlink()
     {
         mindPalace.noControl = true;
+        mindPalace.HideIcon();
         float t = 0;
         while (t < blinkDuration)
         {
@@ -44,6 +45,7 @@ public class MainCharactersMenu : CharacterTattooMenu
             colorCam.fieldOfView = 35;
             focusCam.fieldOfView = 35;
             mindPalace.HandOff();
+
             RuntimeManager.PlayOneShot(blinkSF);
         }
 
@@ -84,6 +86,7 @@ public class MainCharactersMenu : CharacterTattooMenu
             colorCam.fieldOfView = 60;
             focusCam.fieldOfView = 60;
             mindPalace.HandOn();
+
         }
 
 
@@ -100,7 +103,7 @@ public class MainCharactersMenu : CharacterTattooMenu
         ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = true;
 
         mindPalace.FirstMindPalaceDialogue();
-
+        mindPalace.ShowIcon();
         yield break;
     }
 

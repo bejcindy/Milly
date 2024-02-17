@@ -42,7 +42,7 @@ public class PickUpObject : LivableObject
     public string throwEventName;
 
     public EventReference pickUpSound, collideSound;
-    bool canPlayCollideSF;
+    public bool canPlayCollideSF;
     protected override void Start()
     {
         base.Start();

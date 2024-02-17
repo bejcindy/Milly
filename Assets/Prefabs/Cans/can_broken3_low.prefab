@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2833266769457771253}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 234814488328839003}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8535118583453410368
 SpriteRenderer:
@@ -125,6 +125,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5490015254447347569}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.98721534, z: -0, w: 0.1593924}
   m_LocalPosition: {x: -47.2, y: 3.147, z: 12.791}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
@@ -132,7 +133,6 @@ Transform:
   m_Children:
   - {fileID: 6979647061792847589}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &349704642398224162
 MeshFilter:
@@ -246,39 +246,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2638f8321f93f784f970537cb6a00dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 0
-  isVisible: 0
-  checkVisible: 0
-  tableObj: 0
-  minDist: 3
-  rend: {fileID: 0}
   activated: 0
   transformed: 0
-  firstActivated: 0
+  noChangeLayer: 0
+  interactable: 0
+  isVisible: 0
+  minDist: 3
+  rend: {fileID: 0}
   matColorVal: 1
   fadeInterval: 10
+  myTat: {fileID: 0}
+  delayTat: 0
+  myTattoo: {fileID: 0}
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   rigged: 0
   visibleDetector: {fileID: 0}
   centerFocused: 0
   noRend: 0
-  overrideStartSequence: 0
   onlyFront: 1
+  overrideStartSequence: 0
+  izaProp: 0
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
+  myZone: {fileID: 0}
+  scriptOff: 0
   objType: 1
   targetRot: {x: 0, y: 0, z: 0}
   inHand: 0
   selected: 0
   thrown: 0
-  cigarette: 0
+  dumped: 0
   freezeRotation: 0
   throwCD: 0
   thrownByPlayer: 0
-  npcBound: 0
-  foodObj: 0
+  canPutOnSurface: 0
+  kicked: 0
+  putOffset: {x: 0, y: 0, z: 0}
   pickUpEventName: 
   throwEventName: 
   pickUpSound:
@@ -290,8 +295,9 @@ MonoBehaviour:
     Path: event:/Sound Effects/ObjectInteraction/Can_Grab
   collideSound:
     Guid:
-      Data1: -94279950
-      Data2: 1331065060
-      Data3: -1239153267
-      Data4: 1019548289
-    Path: event:/Sound Effects/ObjectInteraction/SodaCan_Drops
+      Data1: 503954401
+      Data2: 1102837358
+      Data3: -1029122934
+      Data4: -56378995
+    Path: event:/Sound Effects/ObjectInteraction/Can_Throw
+  canPlayCollideSF: 0

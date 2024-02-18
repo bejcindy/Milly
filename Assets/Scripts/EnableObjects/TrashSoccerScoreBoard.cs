@@ -7,12 +7,15 @@ public class TrashSoccerScoreBoard : LookingObject
 {
     public bool gameActivated;
     public int score;
+    public int rank;
     public GarbageScore garBageScore;
     public bool inGameZone;
     public GameObject scorePanel;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI rankText;
     public TextMeshPro boardScoreText;
     public Transform otherScores;
+    public int[] scoreList = { 10, 9, 6, 5, 5, 5, 3, 3, 2, 1, 1, 1, 1 };
 
 
     bool firstTransformed;
@@ -47,21 +50,12 @@ public class TrashSoccerScoreBoard : LookingObject
         {
             scorePanel.SetActive(true);
             startedSoccerGame = true;
-            //if (!showedHint && !MindPalace.hideHint)
-            //{
-            //    DataHolder.ShowHint(DataHolder.hints.soccerHint);
-            //    if (Input.GetKeyDown(KeyCode.Q))
-            //    {
-            //        DataHolder.HideHint(DataHolder.hints.soccerHint);
-            //        showedHint = true;
-            //    }
-            //}
+            CalculateRank();
 
         }
         else
         {
             scorePanel.SetActive(false);
-            //DataHolder.HideHint(DataHolder.hints.soccerHint);
         }
 
         if (focusingThis)
@@ -111,9 +105,45 @@ public class TrashSoccerScoreBoard : LookingObject
         if (inGameZone)
         {
             scoreText.text = score.ToString();
+            rankText.text = GetRankText();
             boardScoreText.text = "Milly: " + new string('X', score);
         }
 
+    }
+
+
+    string GetRankText()
+    {
+        switch (rank)
+        {
+            case 1:
+                return "1st";
+            case 2:
+                return "2nd";
+            case 3:
+                return "3rd";
+            default:
+                return rank.ToString() + "th";
+        }
+    }
+
+
+
+    public void CalculateRank()
+    {
+        for (int i = 0; i < scoreList.Length; i++)
+        {
+            if (score > scoreList[i])
+            {
+                rank = i + 1;
+                return;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        rank = scoreList.Length + 1;
     }
 
     public void OnTriggerEnter(Collider other)

@@ -76,11 +76,15 @@ public class Hugo : NPCControl
     }
 
     public void HugoAction2() {
+        scoreBoard.enabled = true;
+        if (scoreBoard.activated)
+        {
+            currentDialogue.gameObject.SetActive(true);
+        }
         if (inConversation)
         {
             npcActivated = true;
         }
-        scoreBoard.enabled = true;
         noMoveAfterTalk = false;
     }
 

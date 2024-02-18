@@ -17,6 +17,7 @@ public class GarbageScore : MonoBehaviour
     public PhysicMaterial highFriction;
     public CharacterTattoo myTat;
 
+
     float matColorVal = 1f;
     float fadeInterval = 10f;
     bool firstActivated,firstTrashIn;
@@ -35,6 +36,7 @@ public class GarbageScore : MonoBehaviour
     {
         if (score > 0)
             firstTrashIn = true;
+
         if (!firstActivated && firstTrashIn)
         {
             dumpsterBody.gameObject.layer = 17;
@@ -62,6 +64,7 @@ public class GarbageScore : MonoBehaviour
 
 
     }
+
 
 
     private void OnTriggerEnter(Collider other)

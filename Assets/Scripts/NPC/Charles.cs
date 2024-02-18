@@ -13,12 +13,17 @@ public class Charles : NPCControl
     [Foldout("Progression References")]
     public GameObject charlesPizza;
     public GameObject charlesFollowDia;
-    public Ron ron;
+    public EatObject pizzaSlice;
+    public Akihito aki;
+    public Door apartDoor;
+    public Collider windowStepCollider;
     public CharacterTattoo cigTat;
     public CharacterTattoo pizzaTat;
+    public LocationController apartZone;
 
     bool readyfirstMove;
-    float firstWaitTime = 15f;
+    bool readyBathroomMove;
+    float firstWaitTime = 30f;
 
     protected override void Start()
     {
@@ -41,11 +46,11 @@ public class Charles : NPCControl
         {
             readyfirstMove = true;
         }
-        if (readyfirstMove)
+        if (readyfirstMove && !interactable)
         {
             if (!inConversation)
             {
-                if(ron._counter == 2)
+                if(aki._counter == 3)
                 {
                     if (firstWaitTime > 0)
                         firstWaitTime -= Time.deltaTime;
@@ -58,19 +63,35 @@ public class Charles : NPCControl
                 }
             }
         }
+
+        if(readyBathroomMove && !apartZone.inZone)
+        {
+            StopIdle();
+        }
     }
 
     public void CharlesAction2()
     {
+        noLookInConvo = true;
         charlesFollowDia.SetActive(false);
         charlesPizza.SetActive(true);
         talkable = false;
         currentDialogue.gameObject.SetActive(true);
+
+        if (inConversation)
+        {
+            apartDoor.enabled = false;
+            windowStepCollider.enabled = false;
+        }
     }
 
     public void CharlesAction3()
     {
-        noTalkStage = false;
+        noTalkStage = true;
+        if(pizzaSlice != null)
+        {
+            pizzaSlice.enabled = true;
+        }
     }
 
 
@@ -87,6 +108,9 @@ public class Charles : NPCControl
         {
             pizzaTat.triggered = true;
             MainQuestState.demoProgress++;
+            apartDoor.enabled = true;
+            windowStepCollider.enabled = true;
+            readyBathroomMove = true;
         }
     }
 

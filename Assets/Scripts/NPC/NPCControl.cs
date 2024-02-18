@@ -554,7 +554,7 @@ public class NPCControl : MonoBehaviour
 
         if (transformed)
         {
-            if(myTatMenu)
+            if(!myTatMenu.finished)
                 myTatMenu.StartFinalTattoo();
 
         }

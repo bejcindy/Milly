@@ -84,9 +84,17 @@ public class GroceryBoxGame : MonoBehaviour
     {
         if (gameStarted)
         {
-            scorePanel.SetActive(true);
-            boxScore = FindHighest();
-            score.text = boxScore +"/"+boxes.Count;
+            if (!MindPalace.tatMenuOn)
+            {
+                scorePanel.SetActive(true);
+                boxScore = FindHighest();
+                score.text = boxScore + "/" + boxes.Count;
+            }
+            else
+            {
+                scorePanel.SetActive(false);
+            }
+
 
         }
     }

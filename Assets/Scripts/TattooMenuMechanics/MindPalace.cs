@@ -42,7 +42,7 @@ public class MindPalace : MonoBehaviour
     public CinemachineBlenderSettings playerBlend;
     public CinemachineBlenderSettings tatMenuBlend;
     CinemachineBrain camBrain;
-
+    PlayerHolding playerHolding;
     bool firstThought;
 
     [Foldout("Hints")]
@@ -74,6 +74,7 @@ public class MindPalace : MonoBehaviour
         camBrain = ReferenceTool.playerBrain;
         GetComponentsInChildren<CharacterTattooMenu>(tattooMenuList);
         playerLeftHand = ReferenceTool.playerLeftHand;
+        playerHolding = ReferenceTool.playerHolding;
     }
 
     // Update is called once per frame
@@ -95,8 +96,17 @@ public class MindPalace : MonoBehaviour
             MenuMouseHintOn();
         }
 
+        if (!playerHolding.inDialogue)
+        {
+            ShowIcon();
+        }
+        else
+        {
+            HideIcon();
+        }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && !noControl && firstTriggered)
+
+        if (Input.GetKeyDown(KeyCode.Tab) && !noControl && firstTriggered && !playerHolding.inDialogue)
         {
             SwitchMindPalaceOnOff();
         }
@@ -177,11 +187,11 @@ public class MindPalace : MonoBehaviour
             DataHolder.HideHint(DataHolder.hints.cigHint);
         }
 
-        if (firstThought)
+        if (firstTriggered)
         {
             if (!iconFirstFade)
             {
-                if (!ReferenceTool.playerHolding.inDialogue)
+                if (!playerHolding.inDialogue)
                 {
                     Image iconImage = menuIcon.GetComponent<Image>();
                     Color iconColor = iconImage.color;
@@ -264,7 +274,7 @@ public class MindPalace : MonoBehaviour
             foreach (CharacterTattooMenu charMenu in tattooMenuList)
             {
                 if (charMenu != mainTatMenu && charMenu != currentMenu)
-                    charMenu.myChar.SetDither(true);
+                    charMenu.DeselectMyMenu();
             }
             SwitchMainMenuOff();
             currentMenu.myChar.ChangeLayer(17);

@@ -26,7 +26,7 @@ public class Felix : NPCControl
 
     protected override void Update()
     {
-        base.Update();
+        base.Update();  
         if (!StartSequence.noControl)
         {
             boxDialogue.gameObject.SetActive(false);
@@ -87,7 +87,8 @@ public class Felix : NPCControl
             if (!menuFirstTriggered)
             {
                 menuFirstTriggered = true;
-                ActivateTattooMenu();
+                if(!myTatMenu.discovered)
+                    ActivateTattooMenu();
             }
         }
 

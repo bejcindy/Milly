@@ -316,9 +316,8 @@ public class CharacterTattooMenu : MonoBehaviour
 
     protected virtual IEnumerator MenuOnBlink()
     {
-        mindPalace.firstTriggered = true;
+        
         mindPalace.noControl = true;
-        mindPalace.HideIcon();
         MindPalace.hideHint = true;
         ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = false;
         float t = 0;
@@ -359,6 +358,7 @@ public class CharacterTattooMenu : MonoBehaviour
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.SwitchTatMenuBlend();
         MindPalace.showTatHint = true;
+        mindPalace.firstTriggered = true;
         yield break;
     }
 
@@ -399,7 +399,6 @@ public class CharacterTattooMenu : MonoBehaviour
         ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = true;
 
         mindPalace.FirstMindPalaceDialogue();
-        mindPalace.ShowIcon();
         if (finished && !finishedDialogueDone)
         {
             finishedDialogueDone = true;

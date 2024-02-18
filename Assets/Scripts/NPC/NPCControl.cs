@@ -8,7 +8,7 @@ using FMODUnity;
 using UnityEngine.Events;
 using VInspector;
 using System.Linq;
-using AmplifyShaderEditor;
+
 using Unity.VisualScripting;
 
 public class NPCControl : MonoBehaviour

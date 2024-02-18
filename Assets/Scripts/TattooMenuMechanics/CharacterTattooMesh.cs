@@ -247,13 +247,13 @@ public class CharacterTattooMesh : MonoBehaviour
         StartCoroutine(LerpRotation(Quaternion.Euler(finalCharRot), 1f));
     }
 
-    public void AfterFinalCharFrontRotate()
+    public void CharacterFrontRotate()
     {
         StartCoroutine(LerpPosition(Vector3.zero, 1f));
         StartCoroutine(LerpRotation(Quaternion.identity, 1f));
     }
 
-    public void AfterFinalCharFinishedRotate()
+    public void CharacterFinishedRotate()
     {
         StartCoroutine(LerpPosition(finalCharPos, 1f));
         StartCoroutine(LerpRotation(Quaternion.Euler(finalCharRot), 1f));

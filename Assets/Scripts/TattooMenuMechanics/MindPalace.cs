@@ -240,7 +240,11 @@ public class MindPalace : MonoBehaviour
         foreach (CharacterTattooMenu charMenu in tattooMenuList)
         {
             if (charMenu != mainTatMenu)
+            {
                 charMenu.myChar.SetDither(false);
+                charMenu.myChar.CharacterFrontRotate();
+            }
+
         }
         currentMenu = mainTatMenu;
         mainTatMenu.menuOn = true;        

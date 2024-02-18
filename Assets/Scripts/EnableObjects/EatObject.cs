@@ -18,6 +18,7 @@ public class EatObject : PickUpObject
     public int foodStage = 1;
     public bool foodMoving = false;
     public EventReference eatSound;
+    public CharacterTattoo pizzaTat;
 
     public Texture2D lutTexture;
 
@@ -120,7 +121,15 @@ public class EatObject : PickUpObject
         {
             doneEating = true;
             playerHolding.UnoccupyLeft();
-            rend.enabled = false;            
+            rend.enabled = false;
+            if (pizzaTat)
+            {
+                if (!pizzaTat.triggeredOnce && !playerHolding.inDialogue)
+                {
+                    pizzaTat.triggered = true;
+                }
+            }
+
             Invoke(nameof(DestroyPizza), 1f);
 
         }

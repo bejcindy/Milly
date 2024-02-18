@@ -8,6 +8,7 @@ public class Akihito : NPCControl
 {
     public Transform akiLantern;
     public Door bathroomDoor;
+    public LocationController izaZone;
     public bool akiToPizza;
     public bool akiPizzaAte;
 
@@ -21,7 +22,7 @@ public class Akihito : NPCControl
         if (akiToPizza)
             MoveAkiToPizza();
 
-        if(akiPizzaAte && !interactable)
+        if(akiPizzaAte && !izaZone.inZone)
         {
             akiPizzaAte = false;
             remainInAnim = false;

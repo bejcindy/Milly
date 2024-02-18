@@ -46,7 +46,7 @@ public class TrashSoccerScoreBoard : LookingObject
 
         }
 
-        if (inGameZone)
+        if (inGameZone && !MindPalace.tatMenuOn)
         {
             scorePanel.SetActive(true);
             startedSoccerGame = true;

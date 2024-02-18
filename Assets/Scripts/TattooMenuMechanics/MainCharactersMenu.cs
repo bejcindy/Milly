@@ -29,7 +29,6 @@ public class MainCharactersMenu : CharacterTattooMenu
     protected override IEnumerator MenuOnBlink()
     {
         mindPalace.noControl = true;
-        mindPalace.HideIcon();
         MindPalace.hideHint = true;
         float t = 0;
         while (t < blinkDuration)
@@ -104,7 +103,6 @@ public class MainCharactersMenu : CharacterTattooMenu
         ReferenceTool.playerCinemachine.m_Transitions.m_InheritPosition = true;
 
         mindPalace.FirstMindPalaceDialogue();
-        mindPalace.ShowIcon();
         MindPalace.hideHint = false;
         yield break;
     }

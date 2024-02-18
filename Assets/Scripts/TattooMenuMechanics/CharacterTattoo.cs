@@ -27,7 +27,7 @@ public class CharacterTattoo : MonoBehaviour
     public bool fadeOutSprite;
     public bool isFinalTat;
     public bool hiddenTat;
-    bool triggeredOnce;
+    public bool triggeredOnce;
 
 
     [Foldout("References")]

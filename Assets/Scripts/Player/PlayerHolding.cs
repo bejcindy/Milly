@@ -6,6 +6,7 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
 using System;
 using PixelCrushers;
+using FMODUnity;
 
 public class PlayerHolding : MonoBehaviour
 {
@@ -751,7 +752,11 @@ public class PlayerHolding : MonoBehaviour
                     Rigidbody rigid = obj.GetComponent<Rigidbody>();
                     Vector3 kickDir = Vector3.ProjectOnPlane(obj.transform.position - transform.position, Vector3.up);
                     rigid.AddForce(kickDir * kickForce + Vector3.up * 2f, ForceMode.Impulse);
-                    obj.GetComponent<PickUpObject>().kicked = true;
+                    PickUpObject pickUpObj = obj.GetComponent<PickUpObject>();
+                    pickUpObj.kicked = true;
+                    pickUpObj.canPlayCollideSF = true;
+                    if(!pickUpObj.collideSound.IsNull)
+                        RuntimeManager.PlayOneShot(pickUpObj.collideSound, obj.transform.position);
                 }
             }
             if (midAirKickable)
@@ -761,7 +766,11 @@ public class PlayerHolding : MonoBehaviour
                     Rigidbody rigid = midAirKickable.GetComponent<Rigidbody>();
                     Vector3 kickDir = Vector3.ProjectOnPlane(midAirKickable.transform.position - transform.position, Vector3.up);
                     rigid.AddForce(kickDir * kickForce + Vector3.up * 2f, ForceMode.Impulse);
-                    midAirKickable.GetComponent<PickUpObject>().kicked = true;
+                    PickUpObject pickUpObj = midAirKickable.GetComponent<PickUpObject>();
+                    pickUpObj.kicked = true;
+                    pickUpObj.canPlayCollideSF = true;
+                    if (!pickUpObj.collideSound.IsNull)
+                        RuntimeManager.PlayOneShot(pickUpObj.collideSound, midAirKickable.transform.position);
                     midAirKickable = null;
                 }
             }

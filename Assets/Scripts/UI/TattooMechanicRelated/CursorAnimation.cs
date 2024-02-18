@@ -49,7 +49,8 @@ public class CursorAnimation : MonoBehaviour
     {
         float t = 0;
         sr.enabled = true;
-        startingPos = transform.parent.position;
+        //startingPos = transform.parent.position;
+        startingPos = transform.parent.GetChild(2).position;
         transform.position = startingPos;
         yield return new WaitForSeconds(.3f);
         while (t < duration)

@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 646018298084334560}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.12619253, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8706245168423780695}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7045704327318941186
 SpriteRenderer:
@@ -127,6 +127,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2458678218551974484}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.98721534, z: -0, w: 0.1593924}
   m_LocalPosition: {x: -48.93, y: 2.7542, z: 1.19}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
@@ -134,7 +135,6 @@ Transform:
   m_Children:
   - {fileID: 5710812893661993993}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3183371534858894254
 MeshFilter:
@@ -221,39 +221,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2638f8321f93f784f970537cb6a00dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 0
-  isVisible: 0
-  checkVisible: 0
-  tableObj: 0
-  minDist: 3
-  rend: {fileID: 0}
   activated: 0
   transformed: 0
-  firstActivated: 0
+  noChangeLayer: 0
+  interactable: 0
+  isVisible: 0
+  minDist: 3
+  rend: {fileID: 0}
   matColorVal: 1
   fadeInterval: 10
+  myTat: {fileID: 0}
+  delayTat: 0
+  myTattoo: {fileID: 0}
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   rigged: 0
   visibleDetector: {fileID: 0}
   centerFocused: 0
   noRend: 0
-  overrideStartSequence: 0
   onlyFront: 1
+  overrideStartSequence: 0
+  izaProp: 0
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
+  myZone: {fileID: 0}
+  scriptOff: 0
   objType: 1
   targetRot: {x: 0, y: 0, z: 0}
   inHand: 0
   selected: 0
   thrown: 0
-  cigarette: 0
+  dumped: 0
   freezeRotation: 0
   throwCD: 0
   thrownByPlayer: 0
-  npcBound: 0
-  foodObj: 0
+  canPutOnSurface: 0
+  kicked: 0
+  putOffset: {x: 0, y: 0, z: 0}
   pickUpEventName: 
   throwEventName: 
   pickUpSound:
@@ -265,11 +270,12 @@ MonoBehaviour:
     Path: event:/Sound Effects/ObjectInteraction/Can_Grab
   collideSound:
     Guid:
-      Data1: -94279950
-      Data2: 1331065060
-      Data3: -1239153267
-      Data4: 1019548289
-    Path: event:/Sound Effects/ObjectInteraction/SodaCan_Drops
+      Data1: 503954401
+      Data2: 1102837358
+      Data3: -1029122934
+      Data4: -56378995
+    Path: event:/Sound Effects/ObjectInteraction/Can_Throw
+  canPlayCollideSF: 0
 --- !u!136 &8722255783428608852
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -332,39 +338,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2638f8321f93f784f970537cb6a00dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 0
-  isVisible: 0
-  checkVisible: 0
-  tableObj: 0
-  minDist: 3
-  rend: {fileID: 0}
   activated: 0
   transformed: 0
-  firstActivated: 0
+  noChangeLayer: 0
+  interactable: 0
+  isVisible: 0
+  minDist: 3
+  rend: {fileID: 0}
   matColorVal: 1
   fadeInterval: 10
+  myTat: {fileID: 0}
+  delayTat: 0
+  myTattoo: {fileID: 0}
   specialEffect: {fileID: 0}
   postProcessingVolume: {fileID: 0}
   rigged: 0
   visibleDetector: {fileID: 0}
   centerFocused: 0
   noRend: 0
-  overrideStartSequence: 0
   onlyFront: 1
+  overrideStartSequence: 0
+  izaProp: 0
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
+  myZone: {fileID: 0}
+  scriptOff: 0
   objType: 0
   targetRot: {x: 0, y: 0, z: 0}
   inHand: 0
   selected: 0
   thrown: 0
-  cigarette: 0
+  dumped: 0
   freezeRotation: 0
   throwCD: 0
   thrownByPlayer: 0
-  npcBound: 0
-  foodObj: 0
+  canPutOnSurface: 0
+  kicked: 0
+  putOffset: {x: 0, y: 0, z: 0}
   pickUpEventName: 
   throwEventName: 
   pickUpSound:
@@ -381,3 +392,4 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  canPlayCollideSF: 0

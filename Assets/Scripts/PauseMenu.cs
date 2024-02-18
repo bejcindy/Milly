@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
     PlayerHolding playerHolding;
 
     readonly string pauseMenuSFX = "event:/Sound Effects/UI/PauseMenuOn";
+    string buttonHoverSFX = "event:/Sound Effects/UI/PauseMenuHover";
     // Start is called before the first frame update
     void Start()
     {
@@ -135,5 +136,15 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(scene.name);
         StartSequence.noControl = false;
         MainQuestState.ResetVars();
+    }
+
+    public void PlayHoverSound()
+    {
+        RuntimeManager.PlayOneShot(buttonHoverSFX);
+    }
+
+    public void PlayMenuSound()
+    {
+        RuntimeManager.PlayOneShot(pauseMenuSFX);
     }
 }

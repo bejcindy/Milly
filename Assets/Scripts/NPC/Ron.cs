@@ -8,6 +8,7 @@ public class Ron : NPCControl
     public static bool charlesPizzaAte;
     public EatObject akiPizza;
     public EatObject charlesPizza;
+    public PizzaBoard pizzaBoard;
     public CharacterTattoo pizzaTat;
     bool pizzaTatTriggered;
     protected override void Start()
@@ -61,6 +62,7 @@ public class Ron : NPCControl
 
         if(_counter == 0)
         {
+            pizzaBoard.enabled = true;
             MainQuestState.demoProgress++;
         }
     }

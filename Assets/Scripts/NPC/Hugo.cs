@@ -19,9 +19,9 @@ public class Hugo : NPCControl
     public GameObject cigButtConvo;
     public CharacterTattoo willowTat;
     bool willowTatTriggered;
-    bool finalWait;
+    public bool finalWait;
 
-    float finalWaitTime = 60;
+    public float finalWaitTime = 60;
 
     [Foldout("TrashDialogues")]
     public GameObject drinkTalk;
@@ -100,6 +100,7 @@ public class Hugo : NPCControl
 
     public void TriggerWillowTattoo()
     {
+        willowTatTriggered = true;
         willowTat.triggered = true;
     }
 

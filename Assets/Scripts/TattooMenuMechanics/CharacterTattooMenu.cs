@@ -238,7 +238,7 @@ public class CharacterTattooMenu : MonoBehaviour
     public void SwitchMainTatMenuOn()
     {
         mindPalace.SwitchMainMenuOn();
-        myChar.AfterFinalCharFrontRotate();
+        myChar.CharacterFrontRotate();
         myCam.m_Priority = 0;
     }
 
@@ -249,7 +249,11 @@ public class CharacterTattooMenu : MonoBehaviour
         SwitchTattoosOn();
         if (finished)
         {
-            myChar.AfterFinalCharFinishedRotate();
+            myChar.CharacterFinishedRotate();
+        }
+        else
+        {
+            myChar.CharacterFrontRotate();
         }
 
         mindPalace.SelectMenu(this);

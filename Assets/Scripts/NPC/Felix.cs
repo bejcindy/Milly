@@ -12,6 +12,7 @@ public class Felix : NPCControl
     [Foldout("Special Dialogues")]
     public Transform questAcceptDia;
     public Transform questCompleteDia;
+    public Transform boxDialogue;
 
     protected override void Start()
     {
@@ -26,6 +27,10 @@ public class Felix : NPCControl
     protected override void Update()
     {
         base.Update();
+        if (!StartSequence.noControl)
+        {
+            boxDialogue.gameObject.SetActive(false);
+        }
     }
     public void FelixAction1()
     {

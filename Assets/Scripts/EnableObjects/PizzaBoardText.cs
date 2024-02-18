@@ -21,9 +21,18 @@ public class PizzaBoardText : MonoBehaviour
 
     void Update()
     {
-        if (!myPizzaQueued)
+        if (!myPizzaOn)
         {
             if (myPizza.enabled)
+            {
+                myPizzaOn = true;
+            }
+        }
+
+
+        if (!myPizzaQueued)
+        {
+            if (myPizzaOn && pizzaBoard.activated)
             {
                 myPizzaQueued = true;
                 QueueMyPizza();

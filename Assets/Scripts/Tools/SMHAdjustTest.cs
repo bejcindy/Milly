@@ -5,11 +5,13 @@ using VInspector;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Beautify.Universal;
+using PixelCrushers.DialogueSystem;
 
 public class SMHAdjustTest : MonoBehaviour
 {
     public VolumeProfile monoProfile;
     public float lerpDuration;
+    bool afterLutDiaDone;
 
     ColorAdjustments colorAdjust;
 
@@ -82,6 +84,12 @@ public class SMHAdjustTest : MonoBehaviour
         {
             colorAdjust.saturation.value = -100f;
         }
+        if (!afterLutDiaDone)
+        {
+            afterLutDiaDone = true;
+            DialogueManager.StartConversation("Pizza/AfterLut");
+        }
+
         yield break;
     }
 

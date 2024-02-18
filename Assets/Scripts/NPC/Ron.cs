@@ -60,9 +60,9 @@ public class Ron : NPCControl
             ActivateTattooMenu();
         }
 
-        if(_counter == 0)
+        if(_counter == 1)
         {
-            pizzaBoard.enabled = true;
+            pizzaBoard.enabled = true;  
             MainQuestState.demoProgress++;
         }
     }

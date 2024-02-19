@@ -53,6 +53,7 @@ public class CharacterTattooMenu : MonoBehaviour
     protected string blinkSF = "event:/Sound Effects/Tattoo/Blink";
     protected string charcterFinalSF = "event:/Sound Effects/Tattoo/CharacterFinalChange";
     protected string fadeOutTatSF = "event:/Sound Effects/Tattoo/FadeOutTattoo";
+    protected string changeMenuSF = "event:/Sound Effects/Tattoo/ChangeMenu";
 
     protected virtual void Start()
     {
@@ -237,6 +238,7 @@ public class CharacterTattooMenu : MonoBehaviour
 
     public void SwitchMainTatMenuOn()
     {
+        RuntimeManager.PlayOneShot(changeMenuSF, transform.position);
         mindPalace.SwitchMainMenuOn();
         myChar.CharacterFrontRotate();
         myCam.m_Priority = 0;

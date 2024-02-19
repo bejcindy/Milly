@@ -66,6 +66,8 @@ public class MindPalace : MonoBehaviour
     PlayerLeftHand playerLeftHand;
 
     public GameObject cursorAnimation;
+    bool movedToTop;
+    bool zeroCamSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -82,7 +84,7 @@ public class MindPalace : MonoBehaviour
     {
         tattooMenuOn = tatMenuOn;
         tattoosCount = tattoosActivated;
-        if(currentMenu && currentMenu == mainTatMenu && tatMenuOn)
+        if (currentMenu && currentMenu == mainTatMenu && tatMenuOn)
         {
             mainMenuOn = true;
         }
@@ -105,6 +107,19 @@ public class MindPalace : MonoBehaviour
             HideIcon();
         }
 
+        if (hideHint && !zeroCamSpeed)
+        {
+            ReferenceTool.playerPOV.m_HorizontalAxis.m_MaxSpeed = 0;
+            ReferenceTool.playerPOV.m_VerticalAxis.m_MaxSpeed = 0;
+            zeroCamSpeed = true;
+        }
+        else if (!hideHint && zeroCamSpeed)
+        {
+            ReferenceTool.playerPOV.m_HorizontalAxis.m_MaxSpeed = 200;
+            ReferenceTool.playerPOV.m_VerticalAxis.m_MaxSpeed = 200;
+            zeroCamSpeed = false;
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Tab) && !noControl && firstTriggered && !playerHolding.inDialogue)
         {
@@ -113,7 +128,11 @@ public class MindPalace : MonoBehaviour
 
         if (showTatHint)
         {
-            DataHolder.MoveHintToTop();         
+            if (!movedToTop)
+            {
+                DataHolder.MoveHintToTop();
+                movedToTop = true;
+            }
             if (mainMenuOn)
             {
                 if (selectedMenu)
@@ -142,13 +161,13 @@ public class MindPalace : MonoBehaviour
                 DataHolder.HideHint(hasBothHint);
                 DataHolder.HideHint(mainMenuHint);
             }
-            else if(!noControl)
+            else if (!noControl)
             {
                 if (currentMenu.leftable && currentMenu.rightable)
                 {
                     DataHolder.ShowHintHorizontal(hasBothHint);
                 }
-                else if(currentMenu.leftable)
+                else if (currentMenu.leftable)
                 {
                     DataHolder.ShowHintHorizontal(hasLeftHint);
                 }
@@ -176,7 +195,11 @@ public class MindPalace : MonoBehaviour
         }
         else
         {
-            DataHolder.MoveHintToLower();
+            if (movedToTop)
+            {
+                DataHolder.MoveHintToLower();
+                movedToTop = false;
+            }
             DataHolder.HideHint(regularHint);
             DataHolder.HideHint(hasLeftHint);
             DataHolder.HideHint(hasRightHint);
@@ -257,7 +280,7 @@ public class MindPalace : MonoBehaviour
 
         }
         currentMenu = mainTatMenu;
-        mainTatMenu.menuOn = true;        
+        mainTatMenu.menuOn = true;
     }
 
     public void SwitchMainMenuOff()
@@ -354,7 +377,7 @@ public class MindPalace : MonoBehaviour
     }
 
     public void HandOff()
-    {        
+    {
         playerHand.transform.SetParent(null);
         playerLeftHand.HideHandRelatedHints();
         DataHolder.HideHint(DataHolder.hints.soccerHint);

@@ -311,6 +311,7 @@ public class DataHolder : MonoBehaviour
         //canvas.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
         //canvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 30f);
         canvas.GetComponent<VerticalLayoutGroup>().padding.top = 100;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(canvas.GetComponent<RectTransform>());
     }
 
     public static void MoveHintToTop()
@@ -320,6 +321,7 @@ public class DataHolder : MonoBehaviour
         //canvas.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
         //canvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         canvas.GetComponent<VerticalLayoutGroup>().padding.top = 20;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(canvas.GetComponent<RectTransform>());
     }
 
     #endregion

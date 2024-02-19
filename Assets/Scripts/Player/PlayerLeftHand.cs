@@ -212,18 +212,10 @@ public class PlayerLeftHand : MonoBehaviour
                 DataHolder.ShowHint(DataHolder.hints.throwHint);
                 DataHolder.HideHint(DataHolder.hints.pizzaHint);
                 aimHintDone = false;
-            }
-            else if (smokeHintOn)
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    DataHolder.HideHint(DataHolder.hints.cigHint);
-                    smokeHintOn = false;
-                }
-            }
+            }            
             else if (isHolding && playerHolding.atInterior && playerHolding.atContainer && playerHolding.currentContainer.CheckMatchingObject(holdingObj.gameObject))
             {
-                HideHandRelatedHints();
+                HideHandRelatedHintsExceptContainer();
                 DataHolder.ShowHint(containerHint);
                 drinkHintDone = true;
             }
@@ -235,6 +227,14 @@ public class PlayerLeftHand : MonoBehaviour
             if (!playerHolding.atContainer)
             {
                 DataHolder.HideHint(containerHint);
+            }
+            if (smokeHintOn)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    DataHolder.HideHint(DataHolder.hints.cigHint);
+                    smokeHintOn = false;
+                }
             }
         }
         #endregion
@@ -252,6 +252,22 @@ public class PlayerLeftHand : MonoBehaviour
         DataHolder.HideHint(DataHolder.hints.eatHint);
         DataHolder.HideHint(DataHolder.hints.exhaleHint);
         DataHolder.HideHint(containerHint);
+        DataHolder.HideHint(DataHolder.hints.broomHint);
+        DataHolder.HideHint(DataHolder.hints.sweepHint);
+    }
+
+    public void HideHandRelatedHintsExceptContainer()
+    {
+        DataHolder.HideHint(DataHolder.hints.powderHint);
+        DataHolder.HideHint(DataHolder.hints.drinkHint);
+        DataHolder.HideHint(DataHolder.hints.throwHint);
+        DataHolder.HideHint(DataHolder.hints.inhaleHint);
+        DataHolder.HideHint(DataHolder.hints.tableDrinkHint);
+        DataHolder.HideHint(DataHolder.hints.drinkAndThrowHint);
+        DataHolder.HideHint(DataHolder.hints.pizzaHint);
+        DataHolder.HideHint(DataHolder.hints.inhaleHint);
+        DataHolder.HideHint(DataHolder.hints.eatHint);
+        DataHolder.HideHint(DataHolder.hints.exhaleHint);
         DataHolder.HideHint(DataHolder.hints.broomHint);
         DataHolder.HideHint(DataHolder.hints.sweepHint);
     }

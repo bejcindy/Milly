@@ -214,6 +214,8 @@ public class CharacterTattooMenu : MonoBehaviour
 
 
         }
+        if (cursorAnim)
+            cursorAnim.SetActive(true);
     }
 
     void SwitchTattoosOff()

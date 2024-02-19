@@ -97,7 +97,6 @@ public class FloorTile : MonoBehaviour
             matColorVal = 0;
             firstActivated = true;
             Hugo.totalFloorCleaned++;
-            ReferenceTool.broom.TriggerTat();
 
         }
        

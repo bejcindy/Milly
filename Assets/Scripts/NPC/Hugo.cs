@@ -28,6 +28,8 @@ public class Hugo : NPCControl
     public GameObject foodTalk;
     public GameObject cigTalk;
     public GameObject trashTalk;
+    bool triggerBroomTat;
+    bool broomDiaDone;
     protected override void Start()
     {
         base.Start();
@@ -46,15 +48,20 @@ public class Hugo : NPCControl
             HugoTrashDetection();
         }
 
-        if(totalFloorCleaned == totalFloorCount)
+        if(totalFloorCleaned > totalFloorCount *2 / 3 && !broomDiaDone)
         {
-            if(_counter == 3 && willowTatTriggered)
-            {
-                finalWait = true;
-            }
+            DialogueManager.StartConversation("Thoughts/FloorCleaned");
+            broomDiaDone = true;
+
         }
 
-        if(finalWait)
+
+        if (_counter == 3 && willowTatTriggered)
+        {
+            finalWait = true;
+        }
+
+        if (finalWait && !interactable)
         {
             if(finalWaitTime > 0)
             {

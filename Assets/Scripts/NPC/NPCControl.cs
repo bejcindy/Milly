@@ -54,6 +54,7 @@ public class NPCControl : MonoBehaviour
     [Foldout("CharRefs")]
     public Transform npcMesh;
     public RiggedVisibleDetector visibleDetector;
+    public GameObject iconPos;
 
 
     [Foldout("Quests")]
@@ -90,7 +91,7 @@ public class NPCControl : MonoBehaviour
 
     bool lookCoroutineRuning;
     protected Coroutine lookCoroutine;
-    GameObject bone;
+
 
 
     [Foldout("OnActivate")]
@@ -120,8 +121,7 @@ public class NPCControl : MonoBehaviour
 
 
         playerHolding = ReferenceTool.playerHolding;
-
-        bone = transform.GetChild(3).gameObject;
+    
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name.Contains("Head") && !child.name.Contains("HeadTop"))
@@ -137,16 +137,30 @@ public class NPCControl : MonoBehaviour
         {
             finalStop = true;
         }
-        //Basic visible and interactable detection
+
         isVisible = visibleDetector.isVisible;
         interactable = CheckInteractable();
-        if (!noLookInConvo && allowLookPlayer)
+        if (allowLookPlayer)
         {
             LookAtPlayer();
         }
-        //CheckNPCActivation();
+
+        if (inLookCooldown)
+        {
+            if (lookCooldown > 0)
+            {
+                lookCooldown -= Time.deltaTime;
+            }
+            else
+            {
+                inLookCooldown = false;
+                allowLookPlayer = false;
+                lookCooldown = 10f;
+            }
+        }
+
         CheckTalkCD();
-        //CheckIdle();
+
 
 
         #region Door Region
@@ -173,28 +187,6 @@ public class NPCControl : MonoBehaviour
             ActivateAll(npcMesh);
         }
 
-        //if (npcActivated)
-        //{
-        //    if (matColorVal > 0f)
-        //    {
-        //        if (OnActivateEvent != null)
-        //        {
-        //            OnActivateEvent.Invoke();
-        //        }
-        //        if (!currentDialogue.gameObject.activeSelf)
-        //            currentDialogue.gameObject.SetActive(true);
-        //    }
-
-        //}
-
-        //if (fakeActivated)
-        //{
-        //    if (matColorVal > 0f)
-        //    {
-        //        if (!currentDialogue.gameObject.activeSelf)
-        //            currentDialogue.gameObject.SetActive(true);
-        //    }
-        //}
         if (interactable)
         {
             if ((!StartSequence.noControl || overrideNoControl) && !playerHolding.inDialogue && !MainTattooMenu.tatMenuOn)
@@ -387,7 +379,7 @@ public class NPCControl : MonoBehaviour
     {
         if (layerNumber == 9 || layerNumber == 21)
         {
-            playerHolding.talkingTo = bone;
+            playerHolding.talkingTo = iconPos;
             iconHidden = false;
         }
         else if (layerNumber == 0 || layerNumber == 17)
@@ -520,6 +512,8 @@ public class NPCControl : MonoBehaviour
     protected virtual void OnConversationStart(Transform other)
     {
         inConversation = true;
+        allowLookPlayer = true;
+        inLookCooldown = false;
         if (colored)
         {
             ChangeLayer(17);
@@ -544,6 +538,7 @@ public class NPCControl : MonoBehaviour
 
     protected virtual void OnConversationEnd(Transform other)
     {
+        inLookCooldown = true;
         player.GetComponent<PlayerMovement>().enabled = true;
         inConversation = false;
         if (lookCoroutine != null)
@@ -599,30 +594,31 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("PlayerLook")]
     public bool allowLookPlayer;
+    bool inLookCooldown;
+    float lookCooldown = 10f;
     public float lookPlayerDist = 20;
     public float lookPlayerAngle = 45;
     public float lookPlayerSpeed = 2;
 
     void LookAtPlayer()
     {
-        if (allowLookPlayer)
-        {
-            if ((player.position - transform.position).sqrMagnitude < lookPlayerDist)
-            {
-                inDistance = true;
-                if (Mathf.Abs(Vector3.SignedAngle(transform.forward, player.position - head.position, Vector3.up)) < lookPlayerAngle)
-                    inAngle = true;
-                else
-                    inAngle = false;
-            }
-            else
-                inDistance = false;
 
-            if (inDistance && inAngle)
-                lookWeight = Mathf.Lerp(lookWeight, 1, lookPlayerSpeed * Time.deltaTime);
+        if ((Camera.main.transform.position - transform.position).sqrMagnitude < lookPlayerDist)
+        {
+            inDistance = true;
+            if (Mathf.Abs(Vector3.SignedAngle(transform.forward, Camera.main.transform.position - head.position, Vector3.up)) < lookPlayerAngle)
+                inAngle = true;
             else
-                lookWeight = Mathf.Lerp(lookWeight, 0, lookPlayerSpeed * Time.deltaTime);
+                inAngle = false;
         }
+        else
+            inDistance = false;
+
+        if (inDistance && inAngle)
+            lookWeight = Mathf.Lerp(lookWeight, 1, lookPlayerSpeed * Time.deltaTime);
+        else
+            lookWeight = Mathf.Lerp(lookWeight, 0, lookPlayerSpeed * Time.deltaTime);
+
 
     }
     private void OnAnimatorIK()

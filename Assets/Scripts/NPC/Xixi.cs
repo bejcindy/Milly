@@ -18,14 +18,13 @@ public class Xixi : NPCControl
     protected override void Start()
     {
         base.Start();
-        talkable = true;
+        talkable = false;
         playerLeftHand = ReferenceTool.playerLeftHand;
     }
 
     public void XixiAction1()
     {
         noTalkStage = true;
-
         waitTime -= Time.deltaTime;
         if (waitTime < 0)
         {
@@ -38,6 +37,7 @@ public class Xixi : NPCControl
     public void XixiAction2()
     {
         noTalkStage = false;
+        talkable = true;
         noLookInConvo = true;
 
     }
@@ -111,6 +111,7 @@ public class Xixi : NPCControl
             GetComponent<BoxCollider>().enabled = false;
         }
     }
+
 
 
 }

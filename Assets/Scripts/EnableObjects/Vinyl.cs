@@ -50,7 +50,7 @@ public class Vinyl : PickUpObject
         loyiAtVinyl = DialogueLua.GetVariable("Vinyl/LoyiInBF").asBool;
         if (loyiAtVinyl && tattooZone.inZone)
         {
-            if(playTime > 20f)
+            if(playTime > 20f && !MindPalace.tatMenuOn)
             {
                 vinylDialogue.SetActive(true);
             }
@@ -134,7 +134,7 @@ public class Vinyl : PickUpObject
                 {
                     mySong.SetActive(false);
                     
-                    if (loyiAtVinyl)
+                    if (loyiAtVinyl && !MindPalace.tatMenuOn)
                     {
                         DialogueLua.SetVariable("Vinyl/LoyiSongChange", Random.Range(0, 2));
                         DialogueManager.StartConversation("Vinyl/CancelSong");

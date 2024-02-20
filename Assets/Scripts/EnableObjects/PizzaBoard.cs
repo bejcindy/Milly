@@ -50,6 +50,11 @@ public class PizzaBoard : LookingObject
                     currentPizzaText.ChangeTextLayer(17);
                 }
                 currentPizzaText.TriggerTextOn();
+
+                if (!myTattoo.triggeredOnce)
+                {
+                    myTattoo.triggered = true;
+                }
             }
         }
 

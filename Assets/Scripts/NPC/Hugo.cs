@@ -105,6 +105,8 @@ public class Hugo : NPCControl
     {
         noMoveAfterTalk = true;
         noLookInConvo = true;
+        talkable = true;
+        noTalkStage = false;
     }
 
 

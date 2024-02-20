@@ -22,21 +22,8 @@ public class Ron : NPCControl
     protected override void Update()
     {
         base.Update();
-        if(akiPizzaAte && charlesPizzaAte)
-        {
-            if (!pizzaTatTriggered)
-            {
-                pizzaTatTriggered = true;
-                Invoke(nameof(TriggerPizzaTat), 1f);
-            }
-
-        }
     }
 
-    void TriggerPizzaTat()
-    {
-        pizzaTat.triggered = true;
-    }
 
     public void RonAction1()
     {

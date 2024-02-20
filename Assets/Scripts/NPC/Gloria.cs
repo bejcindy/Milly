@@ -58,6 +58,8 @@ public class Gloria : NPCControl
     public void GloriaAction6()
     {
         noMoveAfterTalk = false;
+        talkable = true;
+        noTalkStage = false;
     }
 
 
@@ -66,6 +68,7 @@ public class Gloria : NPCControl
         StopIdle();
         remainInAnim = false;
         noMoveAfterTalk = false;
+        noLookInConvo = false;
     }
 
 

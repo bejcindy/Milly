@@ -14,6 +14,7 @@ public class Door : LivableObject
     public bool isInteracting;
 
     public bool slidingDoor;
+    public bool rightCheckDoor;
     public bool barDoor;
     public bool invertControl;
 
@@ -246,10 +247,21 @@ public class Door : LivableObject
 
     bool CheckPlayerForward()
     {
-        float angle = Vector3.Angle(transform.forward, player.position - transform.position);
-        if (Mathf.Abs(angle) < 90)
-            return true;
-        return false;
+        if (!rightCheckDoor)
+        {
+            float angle = Vector3.Angle(transform.forward, player.position - transform.position);
+            if (Mathf.Abs(angle) < 90)
+                return true;
+            return false;
+        }
+        else
+        {
+            float angle = Vector3.Angle(-transform.right, player.position - transform.position);
+            if (Mathf.Abs(angle) < 90)
+                return true;
+            return false;
+        }
+
     }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)

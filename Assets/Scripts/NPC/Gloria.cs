@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -77,6 +78,15 @@ public class Gloria : NPCControl
         talkable = true;
         noLookInConvo = false;
         noTalkStage = false;
+    }
+
+    protected override void OnConversationEnd(Transform other)
+    {
+        base.OnConversationEnd(other);
+        if(_counter == 6)
+        {
+            DialogueManager.ShowAlert("You have completed all story related content in the current demo. \n Feel free to continue exploring the environment! \n Thank you for playing our game!");
+        }
     }
 
 

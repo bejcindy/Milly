@@ -98,7 +98,7 @@ public class MindPalace : MonoBehaviour
             MenuMouseHintOn();
         }
 
-        if (!playerHolding.inDialogue)
+        if (!playerHolding.inDialogue&&!hideHint)
         {
             ShowIcon();
         }

@@ -335,6 +335,14 @@ public class PlayerLeftHand : MonoBehaviour
                 Smoke();
                 if (!playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
                     BasicThrow();
+                else if (playerHolding.atInterior)
+                {
+                    if (playerHolding.atContainer && !objPickUp.GetComponent<Cigarette>().inhaling)
+                    {
+                        ContainerThrow();
+                        Debug.Log("here");
+                    }
+                }
 
                 else if(playerHolding.atInterior && !objPickUp.GetComponent<Cigarette>().inhaling)
                 {
@@ -742,7 +750,6 @@ public class PlayerLeftHand : MonoBehaviour
             {
                 readyToThrow = true;
             }
-
             if (readyToThrow && !noThrow)
             {
                 if (Input.GetMouseButtonUp(0))

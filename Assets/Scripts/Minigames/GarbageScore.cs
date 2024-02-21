@@ -128,6 +128,11 @@ public class GarbageScore : MonoBehaviour
         score++;
     }
 
+    public void TriggerMyTat()
+    {
+        myTat.triggered = true;
+    }
+
     void TurnOnColor(Material material)
     {
         if (matColorVal > 0)
@@ -141,7 +146,6 @@ public class GarbageScore : MonoBehaviour
         {
             matColorVal = 0;
             firstActivated = true;
-            myTat.triggered = true;
         }
     }
 

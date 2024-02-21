@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -22,6 +23,7 @@ public class TrashSoccerScoreBoard : LookingObject
     bool firstTriggerGame;
     bool showedMillyScore;
     bool showedHint;
+    bool soccerGameTatTriggered;
     public static bool startedSoccerGame;
 
     protected override void Start()
@@ -33,6 +35,15 @@ public class TrashSoccerScoreBoard : LookingObject
     protected override void Update()
     {
         base.Update();
+
+        if(rank == 1)
+        {
+            if (!soccerGameTatTriggered)
+            {
+                soccerGameTatTriggered = true;
+                DialogueManager.StartConversation("SoccerGame/GameComplete");
+            }
+        }
 
         if (firstActivated)
         {

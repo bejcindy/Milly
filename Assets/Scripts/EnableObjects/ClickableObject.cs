@@ -12,11 +12,13 @@ public class ClickableObject : LivableObject
     public BuildingGroupController buildingGroup;
 
     [Header("Bell Binding")]
+    public static int bellRingCount;
+    public static bool doorActivated;
     public bool bellBinding;
     public Usable dialogueUsable;
     public FixedCameraObject bindedObject;
     DialogueSystemTrigger dialogue;
-
+    bool bellPressCounted;
     bool iconHidden;
     public EventReference buzzSound;
     bool playedSound;
@@ -56,6 +58,11 @@ public class ClickableObject : LivableObject
                         {
                             activated = true;
                             dialogueUsable.OnUseUsable();
+                            if (!bellPressCounted)
+                            {
+                                bellPressCounted = true;
+                                ClickableObject.bellRingCount++;
+                            }
                         }
                     }
                 }
@@ -66,6 +73,20 @@ public class ClickableObject : LivableObject
             else
                 dialogueUsable.enabled = false;
         }
+
+        if(bellBinding && !ClickableObject.doorActivated)
+        {
+            if (ClickableObject.bellRingCount >= 6)
+            {
+                BuildingGroupController buildingControl = bindedObject.GetComponent<GroupMaster>().bgc;
+                if (buildingControl && buildingControl.enabled)
+                {
+                    buildingControl.activateAll = true;
+                    ClickableObject.doorActivated = true;
+                }
+            }
+        }
+
     }
 
     void ResetAnimTrigger()

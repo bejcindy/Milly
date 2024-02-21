@@ -15,6 +15,7 @@ public class FloorTile : MonoBehaviour
 
     public List<GroundDirt> myDirts;
     public List<Transform> myTiles;
+    public List<Transform> additionalTiles;
     public bool overrideStartSequence;
     bool layerChanged;
 
@@ -23,7 +24,11 @@ public class FloorTile : MonoBehaviour
         Hugo.totalFloorCount++;
         activated = false;
         rend = GetComponent<Renderer>();
-        mat = rend.material;
+        if (rend)
+        {
+            mat = rend.material;
+        }
+
         matColorVal = 1;
         fadeInterval = 10;
         GetComponentsInChildren<GroundDirt>(myDirts);
@@ -63,7 +68,8 @@ public class FloorTile : MonoBehaviour
         {
             gameObject.layer = 18;
             matColorVal = 1;
-            material.SetFloat("_WhiteDegree", matColorVal);
+            if(rend)
+                material.SetFloat("_WhiteDegree", matColorVal);
             foreach (Transform tile in myTiles)
             {
                 tile.gameObject.layer = 18;
@@ -73,14 +79,31 @@ public class FloorTile : MonoBehaviour
                     tileRend.material.SetFloat("_WhiteDegree", matColorVal);
                 }
             }
+
+            foreach(Transform tile in additionalTiles)
+            {
+                foreach(Transform childTile in tile)
+                {
+                    childTile.gameObject.layer = 18;
+                    Renderer tileRend = childTile.GetComponent<Renderer>();
+                    if (tileRend)
+                    {
+                        tileRend.material.SetFloat("_WhiteDegree", matColorVal);
+                    }
+                }
+            }
             layerChanged = true;
         }
 
         if (matColorVal > 0)
         {
             matColorVal -= 0.1f * fadeInterval * Time.deltaTime;
-            if (material.HasFloat("_WhiteDegree"))
-                material.SetFloat("_WhiteDegree", matColorVal);
+            if (rend)
+            {
+                if (material.HasFloat("_WhiteDegree"))
+                    material.SetFloat("_WhiteDegree", matColorVal);
+            }
+
 
             foreach(Transform tile in myTiles)
             {
@@ -88,6 +111,18 @@ public class FloorTile : MonoBehaviour
                 if (tileRend)
                 {
                     tileRend.material.SetFloat("_WhiteDegree", matColorVal);
+                }
+            }
+
+            foreach (Transform tile in additionalTiles)
+            {
+                foreach (Transform childTile in tile)
+                {
+                    Renderer tileRend = childTile.GetComponent<Renderer>();
+                    if (tileRend)
+                    {
+                        tileRend.material.SetFloat("_WhiteDegree", matColorVal);
+                    }
                 }
             }
 

@@ -91,7 +91,8 @@ public class GarbageScore : MonoBehaviour
                         throwValidCheckDiaDone = true;
                         DialogueManager.StartConversation("SoccerGame/ThrownObject");
                         pickUp.dumped = true;
-                        pickUp.GetComponent<Collider>().material = highFriction;
+                        if (pickUp.GetComponent<Collider>() != null)
+                            pickUp.GetComponent<Collider>().material = highFriction;
                     }
 
                     if (throwValid)

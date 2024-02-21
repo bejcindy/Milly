@@ -412,7 +412,6 @@ public class PlayerHolding : MonoBehaviour
         {
             if(instantiatedIcons.TryGetValue(toHide, out _))
             {
-                Debug.Log("Something is hidden");
                 GameObject target = instantiatedIcons[toHide];
                 instantiatedIcons.Remove(toHide);
                 if (toHide == grabingSprite)
@@ -464,7 +463,6 @@ public class PlayerHolding : MonoBehaviour
         {
             if (!hidden)
             {
-                Debug.Log("setting hidden to true");
                 HideUI(sprite);
                 hidden = true;
             }

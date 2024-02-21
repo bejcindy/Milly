@@ -340,7 +340,6 @@ public class PlayerLeftHand : MonoBehaviour
                     if (playerHolding.atContainer && !objPickUp.GetComponent<Cigarette>().inhaling)
                     {
                         ContainerThrow();
-                        Debug.Log("here");
                     }
                 }
 
@@ -499,7 +498,6 @@ public class PlayerLeftHand : MonoBehaviour
     LayerMask noPlayer = ~(1 << 8);
     void PutOnSurface()
     {
-        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * detectPlaceDist, Color.red);
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
@@ -902,7 +900,6 @@ public class PlayerLeftHand : MonoBehaviour
         Quaternion startValue = holdingObj.rotation;
         while (time < duration)
         {
-            Debug.Log("running");
             holdingObj.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
             holdingObj.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
             time += Time.deltaTime;

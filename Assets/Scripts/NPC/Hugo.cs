@@ -113,7 +113,6 @@ public class Hugo : NPCControl
 
     public void TriggerWillowTattoo()
     {
-        Debug.Log("Triggering willow tat");
         willowTatTriggered = true;
         willowTat.triggered = true;
     }

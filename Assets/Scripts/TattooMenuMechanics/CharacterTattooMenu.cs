@@ -131,7 +131,6 @@ public class CharacterTattooMenu : MonoBehaviour
 
             if (fadeInFinalTat && !finalCalledOnce)
             {
-                Debug.Log("getting called char final change");
                 finalCalledOnce = true;
                 fadeInFinalTat = false;
                 finalTattoo.dragged = true;
@@ -263,7 +262,6 @@ public class CharacterTattooMenu : MonoBehaviour
         mindPalace.SelectMenu(this);
         if (cursorAnim)
             cursorAnim.SetActive(true);
-        //Debug.Log("selected");
     }
 
     public void DeselectMyMenu()
@@ -274,7 +272,6 @@ public class CharacterTattooMenu : MonoBehaviour
         myChar.SetDither(true);
         if (cursorAnim)
             cursorAnim.SetActive(false);
-        //Debug.Log("deselected");
     }
 
 

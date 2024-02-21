@@ -54,7 +54,6 @@ namespace NPCFSM
         private void Start()
         {
             initialState = ChooseInitialState(initialStateChar);
-            //Debug.Log(initialState);
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
             npcControl = GetComponent<NPCControl>();
@@ -68,8 +67,7 @@ namespace NPCFSM
 
         private void Update()
         {
-            if (CheckNPCActivation() && gameObject.name == "Charles")
-                Debug.Log(currentState);
+
             if (currentState != null)
                 currentState.OnStateUpdate();
         }
@@ -139,7 +137,6 @@ namespace NPCFSM
 
         public IEnumerator RotateTowards(Transform target)
         {
-            Debug.Log("Rotating towards " + target);
             Vector3 direction = target.position - transform.position;
             direction.y = 0;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -266,7 +263,6 @@ namespace NPCFSM
         {
             if (!npcControl.FinalStop())
             {
-                Debug.Log("Setting new destination");
                 agent.SetDestination(npcControl.GetNext().position);
                 npcControl._counter++;
             }

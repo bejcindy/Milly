@@ -11,7 +11,6 @@ public class MoveState : State
     float timer;
     protected override void OnEnter()
     {
-        Debug.Log("Entered move state");
         if (!machine.CheckFollowPlayer())
         {
             if (!machine.CheckReachDestination())

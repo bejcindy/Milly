@@ -130,7 +130,6 @@ public class PlayerHolding : MonoBehaviour
             if (TrashSoccerScoreBoard.startedSoccerGame && !showedSoccerHint)
             {
                 DataHolder.ShowHint(DataHolder.hints.soccerHint);
-                showedSoccerHint = true;
                 soccerHidden = false;
             }
         }
@@ -745,6 +744,7 @@ public class PlayerHolding : MonoBehaviour
         //DataHolder.ShowHint(DataHolder.hints.kickHint);
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            showedSoccerHint = true;
             foreach (GameObject obj in pickUpObjects)
             {
                 if (obj.GetComponent<Rigidbody>())
@@ -752,6 +752,7 @@ public class PlayerHolding : MonoBehaviour
                     Rigidbody rigid = obj.GetComponent<Rigidbody>();
                     Vector3 kickDir = Vector3.ProjectOnPlane(obj.transform.position - transform.position, Vector3.up);
                     rigid.AddForce(kickDir * kickForce + Vector3.up * 2f, ForceMode.Impulse);
+                    rigid.AddTorque(transform.right * 2f, ForceMode.Impulse);
                     PickUpObject pickUpObj = obj.GetComponent<PickUpObject>();
                     pickUpObj.kicked = true;
                     pickUpObj.canPlayCollideSF = true;
@@ -766,6 +767,7 @@ public class PlayerHolding : MonoBehaviour
                     Rigidbody rigid = midAirKickable.GetComponent<Rigidbody>();
                     Vector3 kickDir = Vector3.ProjectOnPlane(midAirKickable.transform.position - transform.position, Vector3.up);
                     rigid.AddForce(kickDir * kickForce + Vector3.up * 2f, ForceMode.Impulse);
+                    rigid.AddTorque(transform.right * 2f, ForceMode.Impulse);
                     PickUpObject pickUpObj = midAirKickable.GetComponent<PickUpObject>();
                     pickUpObj.kicked = true;
                     pickUpObj.canPlayCollideSF = true;

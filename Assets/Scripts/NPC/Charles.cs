@@ -112,6 +112,8 @@ public class Charles : NPCControl
             windowStepCollider.enabled = true;
             readyBathroomMove = true;
         }
+
+
     }
 
     public void MoveCharlesUpstairs()

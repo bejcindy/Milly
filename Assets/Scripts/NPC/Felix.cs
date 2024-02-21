@@ -27,10 +27,6 @@ public class Felix : NPCControl
     protected override void Update()
     {
         base.Update();  
-        if (!StartSequence.noControl)
-        {
-            boxDialogue.gameObject.SetActive(false);
-        }
     }
     public void FelixAction1()
     {

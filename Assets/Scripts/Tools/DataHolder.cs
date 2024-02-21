@@ -278,7 +278,6 @@ public class DataHolder : MonoBehaviour
     {
         if (hintPanelsDict.TryGetValue(hintToHide, out _))
         {
-            Debug.Log("Something is hidden");
             GameObject hint = hintPanelsDict[hintToHide];
             hintPanelsDict.Remove(hintToHide);
             hintState.Remove(hintToHide);

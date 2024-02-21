@@ -849,7 +849,7 @@ public class PlayerLeftHand : MonoBehaviour
         }
         else
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(1))
             {
                 handAnim.Play("Broom_Sweep");
                 RuntimeManager.PlayOneShot(sweepSF);

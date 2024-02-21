@@ -3890,8 +3890,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.34000042
+    canvasScrollPosition: {x: 597.0758, y: 0}
+    canvasZoom: 0.76000017
   - id: 3
     fields:
     - title: Title
@@ -42353,8 +42353,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Until I'm so done listening to her nonsense that I start smashing
-          shit upstairs?
+        value: I'm good. Don't wanna end up smashing things in your restaurant.
         type: 0
         typeString: 
       - title: Sequence
@@ -42409,8 +42408,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Aki, this lady for real has gone mad already. Why'd I wanna even waste
-          any more time on her??
+        value: Nope. I'm good. She's crazy.
         type: 0
         typeString: 
       - title: Sequence
@@ -42465,7 +42463,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: The wilder it sounds, the more cautious you've gotta be.
+        value: The crazier it sounds, the more cautious you've gotta be.
         type: 0
         typeString: 
       - title: Sequence
@@ -42520,7 +42518,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: There's gotta be more to it.
+        value: There just might be some levels of truth in what she says.
         type: 0
         typeString: 
       - title: Sequence
@@ -42716,7 +42714,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1.8181763, y: 68.18118}
+    canvasScrollPosition: {x: 0, y: 886.3626}
     canvasZoom: 0.88000035
   - id: 71
     fields:
@@ -57169,7 +57167,9 @@ MonoBehaviour:
       userScript: 'Variable["NPC_Felix_Other_Interacted"] = true;
 
         Variable["NPC_Felix_Main_Talked"]
-        = true'
+        = true;
+
+        SetQuestState("Felix was nice. ", "success")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -69779,7 +69779,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 553.65784, y: 416.5523}
+    canvasScrollPosition: {x: 589.5199, y: 0}
     canvasZoom: 0.5799992
   - id: 125
     fields:
@@ -82897,7 +82897,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Can't believe you actually remember that.
+        value: Can't believe you actually remembered that.
         type: 0
         typeString: 
       - title: Sequence
@@ -82926,7 +82926,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 722.83923
-        y: 916.1387
+        y: 914.75934
         width: 160
         height: 30
     - id: 39
@@ -83712,7 +83712,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 682.07434}
+    canvasScrollPosition: {x: 0, y: 1100.6888}
     canvasZoom: 0.58000034
   - id: 146
     fields:
@@ -84396,7 +84396,7 @@ MonoBehaviour:
       type: 5
       typeString: CustomFieldType_Actor
     - title: Conversant
-      value: 19
+      value: -1
       type: 5
       typeString: CustomFieldType_Actor
     overrideSettings:
@@ -84442,7 +84442,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 19
+        value: -1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -84497,7 +84497,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 19
+        value: -1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -84510,6 +84510,10 @@ MonoBehaviour:
         typeString: 
       - title: Sequence
         value: 
+        type: 0
+        typeString: 
+      - title: EventGuid
+        value: 5af9f2e4-94e2-4e8b-abe0-d59793296425
         type: 0
         typeString: 
       conversationID: 150
@@ -84534,7 +84538,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 308.80002
-        y: 170.40001
+        y: 169.60002
         width: 160
         height: 30
     - id: 2
@@ -84552,7 +84556,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 19
+        value: -1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text

@@ -36,6 +36,7 @@ public class Hugo : NPCControl
 
         noMoveAfterTalk = true;
         noLookInConvo = true;
+        willowTatTriggered = false;
     }
 
     protected override void Update()
@@ -51,12 +52,11 @@ public class Hugo : NPCControl
         if(totalFloorCleaned > totalFloorCount *2 / 3 && !broomDiaDone)
         {
             DialogueManager.StartConversation("Thoughts/FloorCleaned");
-            broomDiaDone = true;
 
         }
 
 
-        if (_counter == 3 && willowTatTriggered)
+        if (_counter == 3 && willowTatTriggered && broomDiaDone)
         {
             finalWait = true;
         }
@@ -113,6 +113,7 @@ public class Hugo : NPCControl
 
     public void TriggerWillowTattoo()
     {
+        Debug.Log("Triggering willow tat");
         willowTatTriggered = true;
         willowTat.triggered = true;
     }
@@ -159,6 +160,11 @@ public class Hugo : NPCControl
         }
     }
 
+    public void SetBroomDiaDone()
+    { 
+        broomDiaDone = true;
+    }
+
     protected override void OnConversationEnd(Transform other)
     {
         base.OnConversationEnd(other);
@@ -170,6 +176,11 @@ public class Hugo : NPCControl
         if(_counter == 3)
         {
             TriggerWillowTattoo();
+
+        }
+
+        if(_counter == 4)
+        {
             MainQuestState.demoProgress++;
         }
 

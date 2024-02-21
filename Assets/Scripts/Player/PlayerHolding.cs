@@ -7,42 +7,49 @@ using UnityEngine.UI;
 using System;
 using PixelCrushers;
 using FMODUnity;
+using VInspector;
 
 public class PlayerHolding : MonoBehaviour
 {
+    PlayerLeftHand leftHand;
+    PlayerMovement pm;
+    [Foldout("State")]
     public bool smoking;
     public bool fullHand;
     public bool inDialogue;
     public bool throwing;
     public bool looking;
     public bool atContainer;
+    public bool atInterior;
     public bool atTable;
-
     public bool positionFixedWithMouse;
 
-
+    [Foldout("References")]
     public Transform handContainer;
     public Transform chopsticksContainer;
     public Transform doubleHandContainer;
-    public bool atInterior;
 
 
+    [Foldout("Object Holders")]
     public List<GameObject> pickUpObjects;
     public List<GameObject> lookingObjects;
     List<GameObject> kickObjects;
     public GameObject[] containers;
     public GameObject selectedObj;
     public GameObject focusedObj;
+    public GameObject midAirKickable;
     public Transform holdingObject;
-    PlayerLeftHand leftHand;
+
 
     public ContainerObject currentContainer;
     public bool tableControl;
 
-    PlayerMovement pm;
+
     float kickForce = 6f;
-    public GameObject midAirKickable;
+
+    [Foldout("UI")]
     #region For Object Tracking UI
+    public GameObject centerAim;
     public Image objectUI;
     public GameObject dragUIAnimation;
     public String dragAnimDirection;
@@ -58,9 +65,6 @@ public class PlayerHolding : MonoBehaviour
     bool hintDone;
     bool hintHiden, kickHidden, talknHidden, dragHidden, sitHidden, clickHidden, catHidden, doorHidden, vinylHidden, dirtHidden;
     bool showedSoccerHint,soccerHidden;
-    List<GameObject> trackedObjs;
-    List<GameObject> UIs;
-    List<Sprite> usedSprites;
 
     Dictionary<Sprite, GameObject> instantiatedIcons = new Dictionary<Sprite, GameObject> ();
 
@@ -77,9 +81,6 @@ public class PlayerHolding : MonoBehaviour
         lookingObjects = new List<GameObject>();
         containers = GameObject.FindGameObjectsWithTag("Container");
         objectUIRect = objectUI.GetComponent<RectTransform>();
-        trackedObjs = new List<GameObject>();
-        UIs = new List<GameObject>();
-        usedSprites = new List<Sprite>();
     }
 
     // Update is called once per frame
@@ -100,6 +101,15 @@ public class PlayerHolding : MonoBehaviour
         }
 
         holdingObject = leftHand.holdingObj;
+
+        //if((pickUpObjects.Count > 0 || lookingObjects.Count > 0 ) && !MindPalace.tatMenuOn || leftHand.chopAiming)
+        //{
+        //    centerAim.SetActive(true);
+        //}
+        //else
+        //{
+        //    centerAim.SetActive(false);
+        //}
 
 
         //BASIC HAND AND LOOK SELECTION
@@ -141,16 +151,6 @@ public class PlayerHolding : MonoBehaviour
         }
 
 
-
-        if (atTable)
-        {
-            if (!tableControl)
-                FakeHideUI();
-            else
-                FakeDisplayUI();
-        }
-        else
-            FakeDisplayUI();
 
         //LOOKING HINT
         if (focusedObj != null)
@@ -403,16 +403,9 @@ public class PlayerHolding : MonoBehaviour
     {
         if (!toHide)
         {
-            if (UIs.Count != 0)
+            if (instantiatedIcons.Count > 0)
             {
                 instantiatedIcons.Clear();
-                for (int i = 0; i < UIs.Count; i++)
-                {
-                    Destroy(UIs[i]);
-                }
-                usedSprites.Clear();
-                trackedObjs.Clear();
-                UIs.Clear();
                 dragAnimDirection = "";
             }
         }
@@ -423,32 +416,14 @@ public class PlayerHolding : MonoBehaviour
                 Debug.Log("Something is hidden");
                 GameObject target = instantiatedIcons[toHide];
                 instantiatedIcons.Remove(toHide);
-                usedSprites.Remove(target.GetComponent<TrackObject>().sprite);
-                trackedObjs.Remove(target.GetComponent<TrackObject>().trackThis);
                 if (toHide == grabingSprite)
                     dragAnimDirection = "";
-                UIs.Remove(target);
                 Destroy(target);
 
             }
         }
     }
-    void FakeHideUI()
-    {
-        for (int i = 0; i < UIs.Count; i++)
-        {
-            Image img = UIs[i].GetComponent<Image>();
-            img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
-        }
-    }
-    void FakeDisplayUI()
-    {
-        for (int i = 0; i < UIs.Count; i++)
-        {
-            Image img = UIs[i].GetComponent<Image>();
-            img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
-        }
-    }
+
 
 
     void GrabDragSpriteSwap(GameObject obj)

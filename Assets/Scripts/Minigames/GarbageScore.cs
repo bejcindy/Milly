@@ -69,7 +69,11 @@ public class GarbageScore : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PickUpObject pickUp = other.GetComponent<PickUpObject>();
+        PickUpObject pickUp;
+        if (other.gameObject.tag != "CigButt")
+            pickUp = other.GetComponent<PickUpObject>();
+        else
+            pickUp = other.transform.parent.GetComponent<PickUpObject>();
         if (pickUp)
         {
             if (CheckAcceptableObject(pickUp.objType))
@@ -94,7 +98,8 @@ public class GarbageScore : MonoBehaviour
                     {
                         score++;
                         pickUp.dumped = true;
-                        pickUp.GetComponent<Collider>().material = highFriction;
+                        if(pickUp.GetComponent<Collider>() != null)
+                            pickUp.GetComponent<Collider>().material = highFriction;
                     }
 
                 }

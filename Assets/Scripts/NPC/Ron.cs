@@ -50,6 +50,11 @@ public class Ron : NPCControl
         if(_counter == 1)
         {
             pizzaBoard.enabled = true;  
+
+        }
+
+        if(_counter == 2)
+        {
             MainQuestState.demoProgress++;
         }
     }

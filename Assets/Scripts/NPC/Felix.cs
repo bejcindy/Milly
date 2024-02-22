@@ -31,6 +31,7 @@ public class Felix : NPCControl
     public void FelixAction1()
     {
         noMoveAfterTalk = true;
+        remainInAnim = true;
     }
 
     public void FelixAction2()

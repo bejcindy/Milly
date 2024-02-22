@@ -52,8 +52,12 @@ public class Akihito : NPCControl
     public void AkihitoAction3() {
 
         currentDialogue.gameObject.SetActive(true);
-        bathroomDoor.CloseDoor();
-        bathroomDoor.enabled = false;
+        if (bathroomDoor.doorOpen)
+        {
+            bathroomDoor.CloseDoor();
+            bathroomDoor.enabled = false;
+        }
+
     }
 
     public void MoveAkiToPizza()

@@ -19,6 +19,7 @@ public class EatObject : PickUpObject
     public bool foodMoving = false;
     public EventReference eatSound;
     public CharacterTattoo pizzaTat;
+    public FixedCameraObject akiPizzaChair;
 
     public Texture2D lutTexture;
 
@@ -37,6 +38,14 @@ public class EatObject : PickUpObject
         base.Update();
         LayerDetection();
 
+        if (inHand)
+        {
+            if(gameObject.name == "teriyaki_pizza_milly")
+            {
+                akiPizzaChair.enabled = false;
+                DataHolder.HideHint(DataHolder.hints.standHint);
+            }
+        }
 
     }
 

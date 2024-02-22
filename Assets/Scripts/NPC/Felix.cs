@@ -20,7 +20,6 @@ public class Felix : NPCControl
         questTriggered = true;
         talkable = true;
         hasFakeActivate = true;
-        noLookInConvo = true;
 
     }
 
@@ -37,6 +36,7 @@ public class Felix : NPCControl
     public void FelixAction2()
     {
         noTalkStage = true;
+        noLookInConvo = true;
         gameObject.SetActive(false);
     }
 

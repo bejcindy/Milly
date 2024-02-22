@@ -19,8 +19,8 @@ public class SMHAdjustTest : MonoBehaviour
     void ResetToDefault()
     {
         BeautifySettings.settings.lutIntensity.Override(0);
-        BeautifySettings.settings.lut.Override(false);
-        BeautifySettings.settings.lutTexture.Override(null);
+        //BeautifySettings.settings.lut.Override(false);
+        //BeautifySettings.settings.lutTexture.Override(null);
         BeautifySettings.settings.vignettingBlink.value = 0;
         if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
         {
@@ -32,7 +32,8 @@ public class SMHAdjustTest : MonoBehaviour
     public IEnumerator LerpToPizzaColor(Texture2D pizzaLUT)
     {        
         float t = 0;
-        //BeautifySettings.settings.lut.Override(true);
+        BeautifySettings.UnloadBeautify();
+        BeautifySettings.settings.lut.Override(true);
         BeautifySettings.settings.lutTexture.Override(pizzaLUT);
         while (t < lerpDuration)
         {
@@ -78,7 +79,7 @@ public class SMHAdjustTest : MonoBehaviour
             yield return null;
         }
         BeautifySettings.settings.lutIntensity.Override(0);
-        //BeautifySettings.settings.lut.Override(false);
+        BeautifySettings.settings.lut.Override(false);
         BeautifySettings.settings.lutTexture.Override(null);
         if (monoProfile.TryGet<ColorAdjustments>(out colorAdjust))
         {

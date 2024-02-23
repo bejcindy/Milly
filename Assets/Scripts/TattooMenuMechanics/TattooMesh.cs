@@ -355,7 +355,6 @@ public class TattooMesh : MonoBehaviour
         {
             myMenu.cursorAnim = null;
             MindPalace.showedCursorAnimation = true;
-            Debug.Log(MindPalace.showedCursorAnimation);
             Destroy(cursorAnimChild);
         }
         if (dissolveVal < 1)
@@ -366,8 +365,6 @@ public class TattooMesh : MonoBehaviour
                 if (child.GetComponent<Renderer>())
                 {
                     Material mat = child.GetComponent<Renderer>().material;
-                    
-                    Debug.Log(mat.name);
                     mat.EnableKeyword("_Surface_BurnAmount");
                     mat.SetFloat("_Surface_BurnAmount", dissolveVal);
                 }

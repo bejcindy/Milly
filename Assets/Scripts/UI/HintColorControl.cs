@@ -30,7 +30,6 @@ public class HintColorControl : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
         c = new Color(c.r, c.g, c.b, 1);
-        Debug.Log(c);
     }
     IEnumerator ChangeImageColor(Image i)
     {

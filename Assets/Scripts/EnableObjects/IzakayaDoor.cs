@@ -88,7 +88,6 @@ public class IzakayaDoor : LivableObject
 
     public void OpenDoor()
     {
-        Debug.Log("NPC opening door");
         if (!doorOpen && !doorOpening)
         {
             StartCoroutine(LerpPosition(doorOpenPos, 1f));

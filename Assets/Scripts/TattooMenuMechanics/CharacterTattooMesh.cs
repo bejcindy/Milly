@@ -323,7 +323,6 @@ public class CharacterTattooMesh : MonoBehaviour
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
-        Debug.Log("moving character");
         float time = 0;
         Vector3 startPosition = transform.localPosition;
         while (time < duration)

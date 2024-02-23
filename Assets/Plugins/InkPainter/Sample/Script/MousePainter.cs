@@ -36,7 +36,6 @@ namespace Es.InkPainter.Sample
 				{
 					
 					var paintObject = hitInfo.transform.GetComponent<InkCanvas>();
-					Debug.Log(paintObject.name);
 					if(paintObject != null)
 						switch(useMethodType)
 						{

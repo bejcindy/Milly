@@ -30,11 +30,6 @@ public class CSVReader : MonoBehaviour
     void ReadCSV()
     {
         string[] data = csvFile.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
-        //string[] data = csvFile.text.Split(",", System.StringSplitOptions.None);
-        foreach (string s in data)
-        {
-            Debug.Log(s);
-        }
         int tableSize = data.Length / columns - 1;
         myOL.content = new csvContent[tableSize];
         for(int i = 0; i < tableSize; i++)

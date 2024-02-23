@@ -152,10 +152,10 @@ public class FirstPersonOcclusion : MonoBehaviour
         if (hit.collider)
         {
             lineCastHitCount++;
-            UnityEngine.Debug.DrawLine(Start, End, Color.red);
+            //UnityEngine.Debug.DrawLine(Start, End, Color.red);
         }
-        else
-            UnityEngine.Debug.DrawLine(Start, End, colour);
+        //else
+        //    UnityEngine.Debug.DrawLine(Start, End, colour);
     }
 
     private void SetParameter()

@@ -47,7 +47,6 @@ public class SMHAdjustTest : MonoBehaviour
             }
 
             t += Time.deltaTime;
-            Debug.Log(intensity);
             yield return null;
         }
 

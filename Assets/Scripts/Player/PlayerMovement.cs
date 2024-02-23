@@ -583,7 +583,6 @@ public class PlayerMovement : MonoBehaviour
             if ((other.transform.position - transform.position).y < 0)
             {
                 rb.AddForce(Vector3.ProjectOnPlane(orientation.forward, Vector3.up) * 200f);
-                Debug.Log("added");
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             }
         }
@@ -600,7 +599,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("Fog"))
         {
-            Debug.Log("Exited Fog");
             foreach (GameObject glass in glasses)
             {
                 gameObject.layer = 17;

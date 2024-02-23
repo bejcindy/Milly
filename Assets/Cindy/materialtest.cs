@@ -14,7 +14,6 @@ public class materialtest : MonoBehaviour
     {
         correctMaterials = Resources.LoadAll<Material>("Assets/3D");
         //correctMaterials= AssetDatabase.LoadAllAssetsAtPath<Material>("Assets/3D")
-        Debug.Log(correctMaterials.Length);
         //if (gameObject.GetComponent<Renderer>())
         //{
         //    wrong = GetComponent<Renderer>().material;

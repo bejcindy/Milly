@@ -56,7 +56,6 @@ public class GroceryBoxGame : MonoBehaviour
             scorePanel.SetActive(false);
             felix.ChangeFelixCompleteDialogue();
             string reTriggerName = "NPC/Frank/Main_Talked";
-            Debug.Log(DialogueLua.GetVariable(reTriggerName).asBool);
             GetComponent<BoxCollider>().enabled = false;
             this.enabled = false;
         }

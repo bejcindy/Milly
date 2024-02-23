@@ -332,7 +332,6 @@ GetComponent<ConnectionManager>().ActivateLines(currentTattoo.GetComponent<Tatto
                             {
                                 Image imgChild = img.transform.GetChild(0).GetComponent<Image>();
                                 imgChild.color = AlphaBasedOnScale(imgChild.color, 1f);
-                                Debug.Log(img.name);
                             }
                             else
                             {

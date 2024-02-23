@@ -128,8 +128,6 @@ public class Charles : NPCControl
 
     public void FinishSmoking()
     {
-        Debug.Log("finishing smoking");
-        //machine.ResetAnimTrigger("Special1");
         machine.SetAnimatorTrigger("Finish");
     }
 

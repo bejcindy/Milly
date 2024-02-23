@@ -115,8 +115,6 @@ public class MainTattooMenu : MonoBehaviour
                 {
                     Cursor.lockState = modeBeforePanel;
                     Cursor.visible = cursorVisibility;
-                    Debug.Log(Cursor.lockState);
-                    Debug.Log(Cursor.visible);
                     gotCursor = false;
                 }
             }

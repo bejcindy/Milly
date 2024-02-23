@@ -53,14 +53,15 @@ public class MainQuestState: MonoBehaviour
         }
 
 
-        if (gloriaArrivesIza && izakayaHighChair.isInteracting)
+        if (gloriaArrivesIza && izakayaHighChair.isInteracting && !ReferenceTool.playerHolding.inDialogue)
         {
             bool izaTalked = DialogueLua.GetVariable("MainQuest/BackToIzaTalked").asBool;
             if (!izaTalked)
             {
                 DialogueManager.StartConversation("MainQuest/BackToMiyoshiya");
+                backToIzaAlt.gameObject.SetActive(false);
             }
-            backToIzaAlt.gameObject.SetActive(false);
+            
             gloriaArrivesIza = false;
         }
 

@@ -41,15 +41,6 @@ public class CatFood : PickUpObject
                     PlaceCan();
                 }
 
-                if (!finishDiaDone && opened)
-                {
-                    if (overrideStartSequence)
-                    {
-                        DialogueManager.StartConversation("NPC/Xixi/FirstEat");
-                        finishDiaDone = true;
-                    }
-
-                }
             }
 
             if (opened)
@@ -61,6 +52,17 @@ public class CatFood : PickUpObject
                     rend = openCan.GetComponent<Renderer>();
                     openCan.gameObject.SetActive(true);
                     closeCan.gameObject.SetActive(false);
+                }
+
+                if(MainQuestState.firstGloriaTalk && selected)
+                {
+                    rb.isKinematic = false;
+                    DataHolder.ShowHint(DataHolder.hints.soccerHint);
+                }
+
+                if(kicked || inHand || !selected)
+                {
+                    DataHolder.HideHint(DataHolder.hints.soccerHint);
                 }
             }
 

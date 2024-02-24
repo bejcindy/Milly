@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Gloria : NPCControl
 {
-    float waitTime = 3f;
     public FixedCameraObject chair;
 
     public Transform gloriaHugoDia;

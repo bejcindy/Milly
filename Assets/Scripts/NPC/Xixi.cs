@@ -101,17 +101,12 @@ public class Xixi : NPCControl
         noMoveAfterTalk = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnConversationEnd(Transform other)
     {
-        if (other.CompareTag("Player"))
-        {
-            if (!npcActivated)
-                npcActivated = true;
-            ChangeLayer(17);
-            StartTalking();
-            GetComponent<BoxCollider>().enabled = false;
-        }
+        base.OnConversationEnd(other);
+        npcActivated = true;
     }
+
 
 
 

@@ -94,13 +94,6 @@ public class CatFood : PickUpObject
     }
 
 
-    public void TurnOnTattoo()
-    {
-        delayTat = false;
-        myTat.myPanel.mainTattooMenu.activePanel = myTat.myPanel;
-        myTat.myPanel.mainTattooMenu.showPanel = true;
-        myTat.activated = true;
-    }
     public void FinishEating()
     {
         transform.SetParent(null);

@@ -7,7 +7,6 @@ using VInspector;
 
 public class PlayerLeftHand : MonoBehaviour
 {
-    float xOffset = -50;
     PlayerHolding playerHolding;
     PlayerMovement playerMovement;
     LayerMask playerLayer;

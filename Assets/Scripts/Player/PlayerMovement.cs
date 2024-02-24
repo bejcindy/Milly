@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject upperRay;
     [SerializeField] GameObject lowerRay;
     [SerializeField] float stepHeight = 0.5f;
-    [SerializeField] float stepSmooth = 15f;
     [SerializeField] float upperDetect = .7f;
     [SerializeField] float lowerDetect = .7f;
     public bool onLadder;

@@ -30,31 +30,6 @@ public class InitialActivation : MonoBehaviour
 
     }
 
-    public void ChangeIzaOutsideLayer()
-    {
-        LivableObject[] izaOutsideObjs = izaOutside.GetComponentsInChildren<LivableObject>();
-        foreach (LivableObject obj in izaOutsideObjs)
-            obj.transformed = true;
-
-        ChangeIzaLayer(izaOutside);
-    }
-
-    private void ChangeIzaLayer(Transform item)
-    {
-        foreach (Transform obj in item)
-        {
-            if (obj.gameObject.layer == 6)
-                obj.gameObject.layer = 18;
-            else
-                obj.gameObject.layer = 17;
-
-            if (obj.childCount > 0)
-            {
-                ChangeIzaLayer(obj);
-            }
-
-        }
-    }
 
     void ActivateAll(Transform obj)
     {

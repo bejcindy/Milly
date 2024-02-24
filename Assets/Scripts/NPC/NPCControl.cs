@@ -45,7 +45,6 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("Tattoo")]
     [SerializeField] protected bool tatOn;
-    [SerializeField] protected CenterTattoo myTat;
     public CharacterTattooMenu myTatMenu;
     public bool menuFirstTriggered;
     public bool stageColoring;
@@ -352,7 +351,11 @@ public class NPCControl : MonoBehaviour
 
     public void InvokeIdleFunction()
     {
-        Invoke(idleAction, 0);
+        if(_counter > 0)
+        {
+            Invoke(idleAction, 0);
+        }
+
     }
 
     #endregion
@@ -644,7 +647,7 @@ public class NPCControl : MonoBehaviour
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
 
-        if (destinations.Length > 0)
+        if (destinations.Length > 0 && _counter > 0)
             lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter - 1].transform.GetChild(0).transform));
     }
 

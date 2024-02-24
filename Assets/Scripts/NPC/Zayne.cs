@@ -13,6 +13,7 @@ public class Zayne : NPCControl
     {
         base.Start();
         talkable = true;
+        noCameraLock = true;
     }
 
     protected override void Update()
@@ -30,6 +31,7 @@ public class Zayne : NPCControl
     public void ZayneAction2()
     {
         noTalkStage = true;
+        gameObject.SetActive(false);
     }
 
 

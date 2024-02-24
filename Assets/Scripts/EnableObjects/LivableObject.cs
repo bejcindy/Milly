@@ -47,7 +47,6 @@ public class LivableObject : MonoBehaviour
     [SerializeField] protected float fadeInterval;
 
     [Foldout("Tattoo")]
-    [SerializeField] protected Tattoo myTat;
     [SerializeField] protected bool delayTat;
     public CharacterTattoo myTattoo;
 

@@ -94,7 +94,7 @@ public class PauseMenu : MonoBehaviour
         }
 
 
-        if (!isPaused)
+        if (!isPaused && pauseMenuAnim.isActiveAndEnabled)
         {
             if(pauseMenuAnim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
             {

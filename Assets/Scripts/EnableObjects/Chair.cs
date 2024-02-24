@@ -7,7 +7,7 @@ using PixelCrushers.DialogueSystem;
 public class Chair : FixedCameraObject
 {
     [SerializeField]
-    bool stand, sit;
+    bool sit;
 
     protected override void Start()
     {
@@ -25,18 +25,12 @@ public class Chair : FixedCameraObject
             {
                 RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Chair_Pull", transform.position);
                 sit = true;
-                stand = false;
+
             }
         }
         else
         {
             playerHolding.atTable = false;
-            //if (!stand)
-            //{
-            //    RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Chair_Pull", transform.position);
-            //    sit = false;
-            //    stand = true;
-            //}
         }
     }
 }

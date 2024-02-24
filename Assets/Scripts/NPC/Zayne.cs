@@ -47,7 +47,7 @@ public class Zayne : NPCControl
     public void ChangeMainQuestDialogue()
     {
         //StopIdle();
-        noLookInConvo = true;
+        noCameraLock = true;
         noTalkStage = false;
         currentDialogue.gameObject.SetActive(false);
         currentDialogue = dialogueHolder.GetChild(2);

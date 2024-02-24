@@ -38,7 +38,7 @@ public class Xixi : NPCControl
     {
         noTalkStage = false;
         talkable = true;
-        noLookInConvo = true;
+        noCameraLock = true;
 
     }
 
@@ -46,7 +46,8 @@ public class Xixi : NPCControl
     {
         remainInAnim = true;
         noMoveAfterTalk = true;
-        noLookInConvo = false;
+        noCameraLock = false;
+        noPlayerRotate = true;
 
         if(playerLeftHand.isHolding && playerLeftHand.holdingObj.name.Contains("Cat_can"))
         {

@@ -72,7 +72,7 @@ public class Charles : NPCControl
 
     public void CharlesAction2()
     {
-        noLookInConvo = true;
+        noCameraLock = true;
         charlesFollowDia.SetActive(false);
         charlesPizza.SetActive(true);
         talkable = false;

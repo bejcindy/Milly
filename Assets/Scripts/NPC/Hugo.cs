@@ -35,7 +35,7 @@ public class Hugo : NPCControl
         base.Start();
 
         noMoveAfterTalk = true;
-        noLookInConvo = true;
+        noCameraLock = true;
         willowTatTriggered = false;
     }
 
@@ -104,7 +104,7 @@ public class Hugo : NPCControl
     public void HugoAction4()
     {
         noMoveAfterTalk = true;
-        noLookInConvo = true;
+        noCameraLock = true;
         talkable = true;
         noTalkStage = false;
     }

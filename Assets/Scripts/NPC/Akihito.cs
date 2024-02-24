@@ -45,7 +45,7 @@ public class Akihito : NPCControl
     {
         talkable = false;
         noMoveAfterTalk = true;
-        noLookInConvo = true;
+        noCameraLock = true;
         currentDialogue.gameObject.SetActive(true);
     }
 

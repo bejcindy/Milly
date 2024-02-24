@@ -365,7 +365,7 @@ namespace NPCFSM
 
         public bool CheckNoLookInTalk()
         {
-            return npcControl.noLookInConvo;
+            return npcControl.noCameraLock;
         }
 
         public void TurnOnCam()

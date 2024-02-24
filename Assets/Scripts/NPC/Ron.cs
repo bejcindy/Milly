@@ -15,7 +15,7 @@ public class Ron : NPCControl
     {
         base.Start();
 
-        noLookInConvo = true;
+        noCameraLock = true;
 
     }
 
@@ -28,13 +28,13 @@ public class Ron : NPCControl
     public void RonAction1()
     {
         talkable = true;
-        noLookInConvo = false;
+        noCameraLock = false;
         remainInAnim = false;
     }
 
     public void RonAction2()
     {
-        noLookInConvo = true;
+        noCameraLock = true;
         noTalkStage = true;
     }
 

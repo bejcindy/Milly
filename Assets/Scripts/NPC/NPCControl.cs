@@ -79,7 +79,8 @@ public class NPCControl : MonoBehaviour
     public bool talkable;
     public bool inConversation;
     public bool noMoveAfterTalk;
-    public bool noLookInConvo;
+    public bool noCameraLock;
+    public bool noPlayerRotate;
     public bool noTalkStage;
     public bool remainInAnim;
     protected string idleAction;
@@ -406,7 +407,7 @@ public class NPCControl : MonoBehaviour
         direction.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         float time = 0;
-        while (time < 1)
+        while (time < 2)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, time);
             time += Time.deltaTime * 0.1f;
@@ -523,7 +524,7 @@ public class NPCControl : MonoBehaviour
         }
         if (agent.isActiveAndEnabled)
         {
-            if (HasReached(agent) && !noLookInConvo && gameObject.name!="Zayne")
+            if (HasReached(agent) && !noCameraLock && !noPlayerRotate && gameObject.name!="Zayne")
             {
                 if (lookCoroutine != null)
                     StopCoroutine(lookCoroutine);

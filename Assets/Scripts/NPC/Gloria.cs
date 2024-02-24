@@ -26,7 +26,7 @@ public class Gloria : NPCControl
      
     public void GloriaAction2()
     {
-        noLookInConvo = true;
+        noCameraLock = true;
     }
 
     public void GloriaAction3()
@@ -34,7 +34,7 @@ public class Gloria : NPCControl
 
         noTalkStage = true;
         currentDialogue.gameObject.SetActive(true);
-        noLookInConvo = true;
+        noCameraLock = true;
 
     }
 
@@ -69,14 +69,14 @@ public class Gloria : NPCControl
         StopIdle();
         remainInAnim = false;
         noMoveAfterTalk = false;
-        noLookInConvo = false;
+        noCameraLock = false;
     }
 
 
     public void GloriaFifthConversationActive()
     {
         talkable = true;
-        noLookInConvo = false;
+        noCameraLock = false;
         noTalkStage = false;
     }
 
@@ -85,7 +85,7 @@ public class Gloria : NPCControl
         base.OnConversationEnd(other);
         if(_counter == 6)
         {
-            DialogueManager.ShowAlert("You have completed all story related content in the current demo. \n Feel free to continue exploring the environment! \n Thank you for playing our game!");
+            DialogueManager.ShowAlert("You have completed all Main Story related content in the current demo. \n Feel free to continue exploring the environment. \n Thank you for playing Inkression!");
         }
     }
 

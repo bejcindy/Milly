@@ -49,7 +49,7 @@ public class Loyi : NPCControl
             turnChar = true;
         }
 
-        noLookInConvo = true; 
+        noCameraLock = true; 
     }
 
     public void LoyiAction2()
@@ -65,7 +65,7 @@ public class Loyi : NPCControl
         phone.SetActive(false);
         remainInAnim = false;
         noMoveAfterTalk = false;
-        noLookInConvo = true;
+        noCameraLock = true;
 
     }
 

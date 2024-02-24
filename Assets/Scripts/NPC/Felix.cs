@@ -20,7 +20,7 @@ public class Felix : NPCControl
         questTriggered = true;
         talkable = true;
         hasFakeActivate = true;
-        noLookInConvo = true;
+        noCameraLock = true;
     }
 
     protected override void Update()

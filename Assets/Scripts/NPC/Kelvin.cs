@@ -13,7 +13,7 @@ public class Kelvin : NPCControl
 
     public void KelvinAction1()
     {
-        noLookInConvo = true;
+        noCameraLock = true;
     }
 
     public void KelvinAction2()

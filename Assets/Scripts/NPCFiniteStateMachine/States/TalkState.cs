@@ -51,7 +51,8 @@ public class TalkState : State
     protected override void OnExit()
     {
         machine.TurnOffCam();
-        machine.ResetCam();
+        if(!ReferenceTool.playerBrain.IsBlending)
+            machine.ResetCam();
         //machine.ResetAnimTrigger("Stop");
     }
 

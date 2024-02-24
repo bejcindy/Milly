@@ -386,6 +386,11 @@ namespace NPCFSM
 
         public void ResetCam()
         {
+            Invoke(nameof(ResetCamAxis), 2f);
+        }
+
+        void ResetCamAxis()
+        {
             charCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = camYAxis;
             charCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = camXAxis;
         }

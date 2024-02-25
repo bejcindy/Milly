@@ -23,6 +23,7 @@ public class EatObject : PickUpObject
 
     public Texture2D lutTexture;
 
+    bool akiPizzaDisableChair;
     Animator foodAnim;
     Transform currentMesh;
     protected override void Start()
@@ -42,8 +43,13 @@ public class EatObject : PickUpObject
         {
             if(gameObject.name == "teriyaki_pizza_milly")
             {
-                akiPizzaChair.enabled = false;
-                DataHolder.HideHint(DataHolder.hints.standHint);
+                if (!akiPizzaDisableChair)
+                {
+                    akiPizzaDisableChair = true;
+                    akiPizzaChair.enabled = false;
+                    DataHolder.HideHint(DataHolder.hints.standHint);
+                }
+
             }
         }
 

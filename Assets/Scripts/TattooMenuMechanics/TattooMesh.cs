@@ -162,6 +162,8 @@ public class TattooMesh : MonoBehaviour
         }
         else if(draggable && reachedNPC)
         {
+            draggable = false;
+            GetComponent<BoxCollider>().enabled = false;
             if (myMenu.draggedTat != null && myMenu.draggedTat == this)
             {
                 myMenu.draggedTat = null;
@@ -169,7 +171,6 @@ public class TattooMesh : MonoBehaviour
             myTat.fadeOutText = true;
             dissolving = true;
             characterTatMesh.ReadyCharacterChange(myTat);
-            GetComponent<BoxCollider>().enabled = false;
             myMenu.mindPalace.draggingTat = false;
             RuntimeManager.PlayOneShot(dissolveSF, transform.position);
         }

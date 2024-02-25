@@ -87,11 +87,13 @@ public class CharacterTattoo : MonoBehaviour
 
         if (fadeInSprite)
         {
+            fadeOutSprite = false;
             FadeInSprite();
         }
 
         if (fadeOutSprite)
         {
+            fadeInSprite = false;
             FadeOutSprite();
         }
 
@@ -241,6 +243,9 @@ public class CharacterTattoo : MonoBehaviour
         }
         else
         {
+            Color temp = tatSprite.color;
+            temp.a = 0;
+            tatSprite.color = temp;
             fadeOutSprite = false;
         }
     }
@@ -255,6 +260,9 @@ public class CharacterTattoo : MonoBehaviour
         }
         else
         {
+            Color temp = tatSprite.color;
+            temp.a = 1;
+            tatSprite.color = temp;
             fadeInSprite = false;
         }
     }

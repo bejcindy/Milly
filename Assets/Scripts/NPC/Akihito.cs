@@ -52,7 +52,7 @@ public class Akihito : NPCControl
     public void AkihitoAction3() {
 
         currentDialogue.gameObject.SetActive(true);
-        if (bathroomDoor.doorOpen)
+        if (bathroomDoor.enabled)
         {
             bathroomDoor.CloseDoor();
             bathroomDoor.enabled = false;

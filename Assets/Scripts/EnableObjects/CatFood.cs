@@ -14,7 +14,7 @@ public class CatFood : PickUpObject
     Transform openCan;
     Transform closeCan;
     Transform wetFood;
-
+    bool startCatEat;
     protected override void Start()
     {
         base.Start();
@@ -38,6 +38,8 @@ public class CatFood : PickUpObject
                     transform.SetParent(cat.transform);
                     objType = HandObjectType.CATFOOD;
                     playerLeftHand.RemoveHandObj();
+                    opened = true;
+
                     PlaceCan();
                 }
 
@@ -45,16 +47,22 @@ public class CatFood : PickUpObject
 
             if (opened)
             {
-
                 if (!openCan.gameObject.activeSelf)
                 {
-                    cat.EatCan();
                     rend = openCan.GetComponent<Renderer>();
                     openCan.gameObject.SetActive(true);
                     closeCan.gameObject.SetActive(false);
                 }
+                else
+                {
+                    if (!startCatEat)
+                    {
+                        startCatEat = true;
+                        cat.EatCan();
+                    }
+                }
 
-                if(MainQuestState.firstGloriaTalk && selected)
+                if (MainQuestState.firstGloriaTalk && selected)
                 {
                     rb.isKinematic = false;
                     DataHolder.ShowHint(DataHolder.hints.soccerHint);

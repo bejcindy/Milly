@@ -7,21 +7,9 @@ public class IdleState : State
 
     protected override void OnEnter()
     {
-        //if (!machine.CheckNPCActivation())
-        //    machine.ActivateNPC();
         machine.SetIdleRotation();
-        machine.ResetAnimTrigger("Move");
-        if(!machine.CheckSpecialIdleAnim() && !machine.CheckRemainInAnim())
-            machine.SetAnimatorTrigger("Stop");
-        else if(machine.CheckSpecialIdleAnim() && !machine.CheckRemainInAnim())
-        {
-            machine.SetSpecialIdleAnim();
-        }
+        machine.PlayIdleAnimation();
 
-        if (machine.CheckNavOn())
-        {
-            machine.StopNavigation();
-        }
 
         if (!machine.GetIdling())
             machine.BeginIdling();
@@ -36,8 +24,7 @@ public class IdleState : State
             if (!machine.CheckPathFinished())
             {
                 machine.StopRotation();
-                machine.SetMainTalkTrue();
-                machine.ChangeState(machine.moveState);
+                machine.DelayMove();
             }
         }
         else
@@ -53,7 +40,7 @@ public class IdleState : State
 
     protected override void OnExit()
     {
-
+        machine.SetMainTalkTrue();
     }
 }
  

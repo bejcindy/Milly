@@ -39,8 +39,6 @@ public class Charles : NPCControl
     {
 
         talkable = true;
-        remainInAnim = true;
-        noMoveAfterTalk = true;
 
         if (inConversation)
         {
@@ -72,7 +70,6 @@ public class Charles : NPCControl
 
     public void CharlesAction2()
     {
-        noCameraLock = true;
         charlesFollowDia.SetActive(false);
         charlesPizza.SetActive(true);
         talkable = false;
@@ -87,7 +84,7 @@ public class Charles : NPCControl
 
     public void CharlesAction3()
     {
-        noTalkStage = true;
+        talkable = true;
         if(pizzaSlice != null)
         {
             pizzaSlice.enabled = true;

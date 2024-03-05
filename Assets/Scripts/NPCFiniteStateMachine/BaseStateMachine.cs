@@ -26,7 +26,7 @@ namespace NPCFSM
 
         [SerializeField] private float toPlayerDistance;
 
-
+        public Destination[] destinationData;
         private Dictionary<Type, Component> _cachedComponents;
 
         private Animator anim;
@@ -45,7 +45,7 @@ namespace NPCFSM
         public float moveWait = 2f;
 
         public EventReference footStepSF;
-
+        int destCounter;
         private void Awake()
         {
             _cachedComponents = new Dictionary<Type, Component>();
@@ -53,6 +53,7 @@ namespace NPCFSM
 
         private void Start()
         {
+ 
             initialState = ChooseInitialState(initialStateChar);
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
@@ -63,11 +64,12 @@ namespace NPCFSM
             ChangeState(initialState);
             camXAxis = charCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value;
             camYAxis = charCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value;
+
         }
 
         private void Update()
         {
-
+            destCounter = npcControl._counter;
             if (currentState != null)
                 currentState.OnStateUpdate();
         }
@@ -213,15 +215,7 @@ namespace NPCFSM
             npcControl.InvokeIdleFunction();
         }
 
-        public bool CheckSpecialIdleAnim()
-        {
-            return npcControl.GetSpecialIdleAnim();
-        }
 
-        public bool CheckRemainInAnim()
-        {
-            return npcControl.remainInAnim;
-        }
 
         public void SetIdleRotation()
         {
@@ -269,16 +263,6 @@ namespace NPCFSM
         }
 
 
-        public bool CheckFollowPlayer()
-        {
-            return npcControl.followingPlayer;
-        }
-
-        public void StopFollowPlayer()
-        {
-            npcControl.followingPlayer = false;
-            agent.stoppingDistance = 0;
-        }
 
         public void ResetPath()
         {
@@ -310,27 +294,38 @@ namespace NPCFSM
             return npcControl.FinalStop();
         }
 
-        public void StopRemainInAnim()
-        {
-            npcControl.remainInAnim = false;
-        }
 
         #endregion
 
         #region AnimationControlRegion
+
+        public void PlayIdleAnimation()
+        {
+            if (destinationData[destCounter].talkTrigger != "")
+                anim.SetTrigger(destinationData[npcControl._counter].idleTrigger);
+        }
+
+        public void PlayTalkAnimation()
+        {
+            if (destinationData[destCounter].talkTrigger != "")
+                anim.SetTrigger(destinationData[npcControl._counter].talkTrigger);
+        }
+
         public void SetAnimatorTrigger(string trigger)
         {
 
             anim.SetTrigger(trigger);
         }
 
-        public void ResetAnimTrigger(string trigger)
-        {
-            anim.ResetTrigger(trigger);
-        }
+
         #endregion
 
         #region DialogueSystemRegion
+
+        public bool TurnOnCharCam()
+        {
+            return destinationData[destCounter].talkLockCam;
+        }
         public bool CheckInConversation()
         {
             return npcControl.inConversation;
@@ -339,6 +334,16 @@ namespace NPCFSM
         public bool CheckTalkable()
         {
             return npcControl.CheckTalkable();
+        }
+
+        public bool CheckTalkRotate()
+        {
+            return destinationData[destCounter].lookInTalk;
+        }
+
+        public void TalkRotate()
+        {
+            npcControl.TalkRotate();
         }
 
 
@@ -358,15 +363,7 @@ namespace NPCFSM
             return npcControl.GetMainTalked();
         }
 
-        public bool CheckNoMoveAfterTalk()
-        {
-            return npcControl.CheckNoMoveAfterTalk();
-        }
 
-        public bool CheckNoLookInTalk()
-        {
-            return npcControl.noCameraLock;
-        }
 
         public void TurnOnCam()
         {

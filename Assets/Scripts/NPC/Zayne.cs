@@ -13,7 +13,6 @@ public class Zayne : NPCControl
     {
         base.Start();
         talkable = true;
-        noCameraLock = true;
     }
 
     protected override void Update()
@@ -23,14 +22,13 @@ public class Zayne : NPCControl
     }
     public void ZayneAction1()
     {
-        noTalkStage = true;
+        talkable =false;
         currentDialogue.gameObject.SetActive(true);
-        noMoveAfterTalk = true;
     }
 
     public void ZayneAction2()
     {
-        noTalkStage = true;
+        talkable = false;
         gameObject.SetActive(false);
     }
 
@@ -48,33 +46,17 @@ public class Zayne : NPCControl
 
     public void ChangeMainQuestDialogue()
     {
-        //StopIdle();
-        noCameraLock = true;
-        noTalkStage = false;
+        talkable = true;
         currentDialogue.gameObject.SetActive(false);
         currentDialogue = dialogueHolder.GetChild(2);
         currentDialogue.gameObject.SetActive(true);
         SetMainTalkFalse();
-        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
-        DialogueLua.SetVariable(reTriggerName, false);
-        noMoveAfterTalk = false;
     }
 
-    public void ChangePizzaDialogue()
-    {
-        StopIdle();
-        noTalkStage = false;
-        currentDialogue = dialogueHolder.GetChild(3);
-        SetMainTalkFalse();
-        string reTriggerName = "NPC/" + gameObject.name + "/Other_Interacted";
-        DialogueLua.SetVariable(reTriggerName, false);
-        noMoveAfterTalk = true;
-    }
 
 
     public void MoveZayneAfterWindow()
     {
-        noMoveAfterTalk = false;
         StopIdle();
     }
 

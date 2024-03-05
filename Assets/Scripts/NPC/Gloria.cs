@@ -25,22 +25,21 @@ public class Gloria : NPCControl
      
     public void GloriaAction2()
     {
-        noCameraLock = true;
+
     }
 
     public void GloriaAction3()
     {
 
-        noTalkStage = true;
+        talkable = false;
         currentDialogue.gameObject.SetActive(true);
-        noCameraLock = true;
+
 
     }
 
     public void GloriaAction4()
     {
-        noMoveAfterTalk = true;
-        remainInAnim = true;
+
         if (chair.positionFixed && !gloriaIzaConfront)
         {
             gloriaIzaConfront = true;
@@ -51,32 +50,25 @@ public class Gloria : NPCControl
 
     public void GloriaAction5()
     {
-        remainInAnim = false;
-        talkable = false;
+
     }
 
     public void GloriaAction6()
     {
-        noMoveAfterTalk = false;
         talkable = true;
-        noTalkStage = false;
     }
 
 
     public void GloriaBathroomMove()
     {
         StopIdle();
-        remainInAnim = false;
-        noMoveAfterTalk = false;
-        noCameraLock = false;
+
     }
 
 
     public void GloriaFifthConversationActive()
     {
         talkable = true;
-        noCameraLock = false;
-        noTalkStage = false;
     }
 
     protected override void OnConversationEnd(Transform other)

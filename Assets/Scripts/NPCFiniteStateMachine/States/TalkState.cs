@@ -6,21 +6,12 @@ public class TalkState : State
 {
     protected override void OnEnter()
     {        
-        if(!machine.CheckNoLookInTalk())
+        if(machine.TurnOnCharCam())
             machine.TurnOnCam();
 
-        if (machine.CheckNavOn())
-        {
-            if (machine.CheckReachDestination())
-            {
-                if (machine.CheckTalkable() && !machine.CheckSpecialIdleAnim())
-                {
-                    machine.StopNavigation();
-                    if(!!machine.CheckRemainInAnim())
-                        machine.SetAnimatorTrigger("Talk");
-                }
-            }
-        }
+        if(machine.CheckTalkRotate())
+            machine.TalkRotate();
+        machine.PlayTalkAnimation();
     }
     protected override void OnUpdate()
     {
@@ -30,30 +21,15 @@ public class TalkState : State
             machine.SetMainTalkTrue();
             machine.TurnOffCam();
 
-            if (!machine.CheckNoMoveAfterTalk())
-            {
-                machine.StopIdling();
-                if (!machine.CheckBrainBlending())
-                    machine.DelayMove();
-            }
-            else
-            {
-                machine.ChangeState(machine.idleState);
-            }
+            machine.ChangeState(machine.idleState);
         }
     }
 
-    public void ChangeToMove()
-    {
-        machine.ChangeState(machine.moveState);
-    }
 
     protected override void OnExit()
     {
-        machine.TurnOffCam();
         if(!ReferenceTool.playerBrain.IsBlending)
             machine.ResetCam();
-        //machine.ResetAnimTrigger("Stop");
     }
 
 }

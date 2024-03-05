@@ -93,7 +93,7 @@ public class MainQuestState: MonoBehaviour
     {
         foreach(NPCControl npc in allNPCs)
         {
-            if (npc._counter != npc.destinations.Length)
+            if (npc._counter != npc.destinations.Count)
             {
                 return false;
             }

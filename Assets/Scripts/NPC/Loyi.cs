@@ -28,8 +28,6 @@ public class Loyi : NPCControl
     {
         _counter = 2;
         StopIdle();
-        remainInAnim = false;
-        noMoveAfterTalk = false;
         phone.SetActive(false);
     }
 
@@ -49,29 +47,24 @@ public class Loyi : NPCControl
             turnChar = true;
         }
 
-        noCameraLock = true; 
     }
 
     public void LoyiAction2()
     {
         phone.SetActive(true);
         allowLookPlayer = false;
-        remainInAnim = true;
-        noMoveAfterTalk = true;
+
     }
 
     public void LoyiAction3()
     {
         phone.SetActive(false);
-        remainInAnim = false;
-        noMoveAfterTalk = false;
-        noCameraLock = true;
 
     }
 
     public void LoyiAction4()
     {
-        noTalkStage = true;
+        talkable = false;
     }
 
     public void ExitCutscene()

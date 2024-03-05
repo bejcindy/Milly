@@ -13,7 +13,6 @@ public class Kelvin : NPCControl
 
     public void KelvinAction1()
     {
-        noCameraLock = true;
     }
 
     public void KelvinAction2()
@@ -23,7 +22,7 @@ public class Kelvin : NPCControl
 
     public void KelvinAction3()
     {
-        noTalkStage = true;
+        talkable = false;
         gameObject.SetActive(false);
     }
 

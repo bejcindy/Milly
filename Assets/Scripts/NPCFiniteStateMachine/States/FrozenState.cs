@@ -7,21 +7,21 @@ public class FrozenState : State
 {
     protected override void OnUpdate()
     {
-        if (machine.CheckNPCActivation())
-        {
-            machine.ChangeState(machine.talkState);
-        }
-        else
-        {
-            if (machine.CheckInConversation() && !machine.CheckQuestActivated())
-            {
-                machine.FakeActivateNPC();
-            }
-            else
-            {
-                machine.FakeDeactivateNPC();
-            }
-        }
+        //if (machine.CheckNPCActivation())
+        //{
+        //    machine.ChangeState(machine.talkState);
+        //}
+        //else
+        //{
+        //    if (machine.CheckInConversation() && !machine.CheckQuestActivated())
+        //    {
+        //        machine.FakeActivateNPC();
+        //    }
+        //    else
+        //    {
+        //        machine.FakeDeactivateNPC();
+        //    }
+        //}
     }
 
 

@@ -53,14 +53,6 @@ public class CatFood : PickUpObject
                     openCan.gameObject.SetActive(true);
                     closeCan.gameObject.SetActive(false);
                 }
-                else
-                {
-                    if (!startCatEat)
-                    {
-                        startCatEat = true;
-                        cat.EatCan();
-                    }
-                }
 
                 if (MainQuestState.firstGloriaTalk && selected)
                 {
@@ -121,6 +113,11 @@ public class CatFood : PickUpObject
         }
         transform.localPosition = targetPosition;
         opened = true;
+        if (!startCatEat)
+        {
+            startCatEat = true;
+            cat.EatCan();
+        }
     }
 
     IEnumerator LerpRotation(Quaternion targetRot, float duration)

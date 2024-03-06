@@ -58,18 +58,6 @@ public class Felix : NPCControl
         currentDialogue = questCompleteDia;
     }
 
-    public void CanActivate()
-    {
-        if (questAccepted)
-        {
-            npcActivated = true;
-        }
-        else
-        {
-            fakeActivated = true;
-        }
-    }
-
     protected override void OnConversationEnd(Transform other)
     {
         base.OnConversationEnd(other);
@@ -83,18 +71,10 @@ public class Felix : NPCControl
             }
         }
 
-        if(_counter == 0)
-        {
-            if(currentDialogue == questAcceptDia)
-            {
-                StopIdle();
-            }
-        }
 
         if(_counter == 1)
         {
             MainQuestState.demoProgress++;
-           
         }
     }
 }

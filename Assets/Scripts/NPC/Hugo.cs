@@ -86,10 +86,6 @@ public class Hugo : NPCControl
         {
             currentDialogue.gameObject.SetActive(true);
         }
-        if (inConversation)
-        {
-            npcActivated = true;
-        }
 
     }
 

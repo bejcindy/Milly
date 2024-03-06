@@ -15,12 +15,12 @@ public class Gloria : NPCControl
     {
         base.Start();
         overrideNoControl = true;
-        talkable = true;
+        talkable = false;
     }
 
     public void GloriaAction1()
     {
-
+        talkable = true;
     }
      
     public void GloriaAction2()
@@ -56,6 +56,11 @@ public class Gloria : NPCControl
     public void GloriaAction6()
     {
         talkable = true;
+    }
+
+    public void GloriaAction7()
+    {
+        talkable = false;
     }
 
 

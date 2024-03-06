@@ -24,6 +24,7 @@ public class Xixi : NPCControl
 
     public void XixiAction1()
     {
+        talkable = false;
         waitTime -= Time.deltaTime;
         if (waitTime < 0)
         {
@@ -42,7 +43,6 @@ public class Xixi : NPCControl
     public void XixiAction3()
     {
 
-
         if(playerLeftHand.isHolding && playerLeftHand.holdingObj.name.Contains("Cat_can"))
         {
             talkable = true;
@@ -56,12 +56,12 @@ public class Xixi : NPCControl
     
     public void XixiAction4()
     {
-        talkable = true;
+        talkable = false;
     }
 
     public void XixiAction5()
     {
-        talkable = true;
+
     }
     public void Meow()
     {
@@ -96,7 +96,6 @@ public class Xixi : NPCControl
     protected override void OnConversationEnd(Transform other)
     {
         base.OnConversationEnd(other);
-        npcActivated = true;
     }
 
 

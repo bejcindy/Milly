@@ -7,19 +7,23 @@ public class IdleState : State
 
     protected override void OnEnter()
     {
-        machine.SetIdleRotation();
-        machine.PlayIdleAnimation();
-
-
-        if (!machine.GetIdling())
+        if (!machine.IsIdling())
+        {
             machine.BeginIdling();
+            machine.SetIdleRotation();
+            machine.PlayIdleAnimation();
+        }
         else
-            machine.StartIdling();
+        {
+            machine.ResumeIdling();
+            machine.ResumeIdleAnimation();
+        }
+
     }
     
     protected override void OnUpdate()
     {
-        if (machine.CheckNotIdling())
+        if (!machine.IsIdling())
         {
             if (!machine.CheckPathFinished())
             {

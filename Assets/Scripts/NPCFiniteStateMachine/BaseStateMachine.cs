@@ -153,15 +153,7 @@ namespace NPCFSM
         #endregion
 
         #region NPCStateCheckRegion
-        public void ActivateNPC()
-        {
-            npcControl.npcActivated = true;
-        }
 
-        public bool CheckNPCActivation()
-        {
-            return npcControl.npcActivated;
-        }
 
         public bool CheckIfQuestTrigger()
         {
@@ -197,12 +189,12 @@ namespace NPCFSM
             npcControl.SetDialogue();
         }
 
-        public void StartIdling()
+        public void ResumeIdling()
         {
             npcControl.idling = true;
         }
 
-        public bool GetIdling()
+        public bool IsIdling()
         {
             return npcControl.idling;
         }
@@ -232,10 +224,6 @@ namespace NPCFSM
             SetAnimatorTrigger("Special" + npcControl._counter);
         }
 
-        public bool CheckNotIdling()
-        {
-            return !npcControl.idling;
-        }
         #endregion
 
         #region NavMeshControlRegion
@@ -257,8 +245,9 @@ namespace NPCFSM
         {
             if (!npcControl.FinalStop())
             {
-                agent.SetDestination(npcControl.GetNext().position);
                 npcControl._counter++;
+                agent.SetDestination(npcControl.GetNext().position);
+
             }
         }
 
@@ -301,13 +290,19 @@ namespace NPCFSM
 
         public void PlayIdleAnimation()
         {
-            if (destinationData[destCounter].talkTrigger != "")
+
+            anim.SetTrigger(destinationData[npcControl._counter].idleTrigger);
+        }
+
+        public void ResumeIdleAnimation()
+        {
+            if (!String.IsNullOrEmpty(destinationData[destCounter].talkTrigger))
                 anim.SetTrigger(destinationData[npcControl._counter].idleTrigger);
         }
 
         public void PlayTalkAnimation()
         {
-            if (destinationData[destCounter].talkTrigger != "")
+            if (!String.IsNullOrEmpty(destinationData[destCounter].talkTrigger))
                 anim.SetTrigger(destinationData[npcControl._counter].talkTrigger);
         }
 

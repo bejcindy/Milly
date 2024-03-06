@@ -35,7 +35,6 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("Activate")]
     public bool colored;
-    public bool npcActivated;
     public bool transformed;
 
     public bool hasFakeActivate;
@@ -61,8 +60,7 @@ public class NPCControl : MonoBehaviour
     [Foldout("Destinations")]
     public int _counter = 0;
     public Transform destinationRef;
-    public List<Transform> destinations = new List<Transform>();
-    public Transform[] dialogues;
+    protected List<Transform> destinations = new List<Transform>();
 
     [Foldout("Dialogue")]
     public Transform currentDialogue;
@@ -324,15 +322,6 @@ public class NPCControl : MonoBehaviour
     }
 
 
-    public void ActivateNPC()
-    {
-        npcActivated = true;
-    }
-
-    public void FakeActivateNPC()
-    {
-        fakeActivated = true;
-    }
 
 
     #region Idle Region
@@ -433,17 +422,6 @@ public class NPCControl : MonoBehaviour
                 //check player interaction command
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (!questTriggered)
-                    {
-                        if (!npcActivated)
-                            npcActivated = true;
-                    }
-                    else if (questAccepted)
-                    {
-                        if (!npcActivated)
-                            npcActivated = true;
-                    }
-
                     StartTalking();
                 }
             }
@@ -619,7 +597,7 @@ public class NPCControl : MonoBehaviour
             StopCoroutine(lookCoroutine);
 
         if (destinations.Count > 0 && _counter > 0)
-            lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter - 1].transform.GetChild(0).transform));
+            lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter].transform.GetChild(0).transform));
     }
 
     public void TalkRotate()
@@ -674,13 +652,16 @@ public class NPCControl : MonoBehaviour
         idleAction = gameObject.name + "Action" + _counter;
     }
 
+    public bool AtLastStop()
+    {
+        return _counter == destinations.Count;
+    }
+
     public void SetDialogue()
     {
 
-        currentDialogue.gameObject.SetActive(false);
         currentDialogue = dialogueHolder.GetChild(_counter);
         SetMainTalkFalse();
-
 
     }
 

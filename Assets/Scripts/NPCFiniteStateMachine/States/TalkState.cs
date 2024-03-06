@@ -21,7 +21,19 @@ public class TalkState : State
             machine.SetMainTalkTrue();
             machine.TurnOffCam();
 
-            machine.ChangeState(machine.idleState);
+            if (!machine.IsIdling())
+            {
+                if (!machine.CheckPathFinished())
+                {
+                    machine.StopRotation();
+                    machine.DelayMove();
+                }
+            }
+            else
+            {
+                machine.ChangeState(machine.idleState);
+            }
+
         }
     }
 

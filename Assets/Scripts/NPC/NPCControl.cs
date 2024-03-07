@@ -18,6 +18,7 @@ public class NPCControl : MonoBehaviour
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
+    protected Rigidbody rb;
 
 
 
@@ -60,6 +61,7 @@ public class NPCControl : MonoBehaviour
     [Foldout("Destinations")]
     public int _counter = 0;
     public Transform destinationRef;
+    public Transform currentDestination;
     protected List<Transform> destinations = new List<Transform>();
 
     [Foldout("Dialogue")]
@@ -91,6 +93,7 @@ public class NPCControl : MonoBehaviour
     public Door currentDoor;
     bool doorAnimSet;
 
+
     protected virtual void Start()
     {
         //Setting up basic components
@@ -100,16 +103,17 @@ public class NPCControl : MonoBehaviour
         machine = GetComponent<BaseStateMachine>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
 
         for(int i = 0; i < destinationRef.childCount; i++)
         {
             destinations.Add(destinationRef.GetChild(i));
         }
-
-        transform.position = destinations[_counter].position;
+        currentDestination = destinations[_counter];
+        transform.position = currentDestination.position;
+        agent.enabled = true;
         anim.SetTrigger(machine.destinationData[_counter].idleTrigger);
         dialogueHolder = transform.GetChild(2);
-
         currentDialogue = dialogueHolder.GetChild(0);
 
 
@@ -125,7 +129,8 @@ public class NPCControl : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(_counter == destinations.Count)
+        currentDestination = destinations[_counter];
+        if (_counter == destinations.Count)
         {
             finalStop = true;
         }
@@ -497,7 +502,6 @@ public class NPCControl : MonoBehaviour
             StopCoroutine(lookCoroutine);
         inCD = true;
         currentDialogue.gameObject.SetActive(false);
-        talkable = true;
 
         if (transformed)
         {
@@ -650,6 +654,11 @@ public class NPCControl : MonoBehaviour
     public void SetWaitAction()
     {
         idleAction = gameObject.name + "Action" + _counter;
+    }
+
+    public void SetNPCPosition()
+    {
+        transform.position = destinations[_counter].position;
     }
 
     public bool AtLastStop()

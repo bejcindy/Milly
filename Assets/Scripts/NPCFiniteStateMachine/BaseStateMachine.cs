@@ -53,14 +53,18 @@ namespace NPCFSM
 
         private void Start()
         {
- 
-            initialState = ChooseInitialState(initialStateChar);
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
             npcControl = GetComponent<NPCControl>();
             dialogue = GetComponent<DialogueSystemTrigger>();
             player = ReferenceTool.player;
             camBrain = ReferenceTool.playerBrain;
+
+            if (npcControl._counter == 0)
+                initialState = ChooseInitialState(initialStateChar);
+            else
+                initialState = idleState;
+
             ChangeState(initialState);
             camXAxis = charCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value;
             camYAxis = charCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value;
@@ -185,6 +189,7 @@ namespace NPCFSM
         public void BeginIdling()
         {
             npcControl.idling = true;
+            npcControl.SetNPCPosition();
             npcControl.SetWaitAction();
             npcControl.SetDialogue();
         }
@@ -193,6 +198,8 @@ namespace NPCFSM
         {
             npcControl.idling = true;
         }
+
+
 
         public bool IsIdling()
         {
@@ -227,6 +234,11 @@ namespace NPCFSM
         #endregion
 
         #region NavMeshControlRegion
+
+        public void TurnOnNavMesh()
+        {
+            agent.enabled = true;
+        }
         public bool CheckNavOn()
         {
             return agent.isActiveAndEnabled;
@@ -278,10 +290,6 @@ namespace NPCFSM
             return npcControl.HasReached(agent);
         }
 
-        public bool CheckPathFinished()
-        {
-            return npcControl.FinalStop();
-        }
 
 
         #endregion

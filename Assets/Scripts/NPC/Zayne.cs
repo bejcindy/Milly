@@ -15,11 +15,11 @@ public class Zayne : NPCControl
         talkable = true;
     }
 
-    protected override void Update()
+    public void ZayneAction0()
     {
-        base.Update();
 
     }
+
     public void ZayneAction1()
     {
         talkable =false;

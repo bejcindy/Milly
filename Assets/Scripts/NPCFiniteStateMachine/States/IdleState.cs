@@ -25,11 +25,8 @@ public class IdleState : State
     {
         if (!machine.IsIdling())
         {
-            if (!machine.CheckPathFinished())
-            {
-                machine.StopRotation();
-                machine.DelayMove();
-            }
+            machine.StopRotation();
+            machine.DelayMove();
         }
         else
         {

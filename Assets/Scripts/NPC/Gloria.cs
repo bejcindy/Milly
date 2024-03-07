@@ -39,7 +39,7 @@ public class Gloria : NPCControl
 
     public void GloriaAction4()
     {
-
+        talkable = false;
         if (chair.positionFixed && !gloriaIzaConfront)
         {
             gloriaIzaConfront = true;

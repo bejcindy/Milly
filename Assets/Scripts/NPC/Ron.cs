@@ -23,6 +23,11 @@ public class Ron : NPCControl
         base.Update();
     }
 
+    public void RonAction0()
+    {
+        talkable = false;
+    }
+
 
     public void RonAction1()
     {

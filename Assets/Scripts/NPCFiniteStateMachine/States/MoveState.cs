@@ -11,7 +11,7 @@ public class MoveState : State
     float timer;
     protected override void OnEnter()
     {
-
+        machine.TurnOnNavMesh();
         if (!machine.CheckReachDestination())
             machine.BeginNavigation();
         else

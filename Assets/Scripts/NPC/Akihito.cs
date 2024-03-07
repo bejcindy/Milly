@@ -34,10 +34,14 @@ public class Akihito : NPCControl
     }
 
 
-
+    public void AkihitoAction0()
+    {
+        talkable = false;
+    }
 
     public void AkihitoAction1()
     {
+
     }
 
     public void AkihitoAction2()
@@ -104,6 +108,12 @@ public class Akihito : NPCControl
         overrideNoControl = true;
         currentDialogue = akiConfrontation;
         SetMainTalkFalse();
+    }
+
+    public void AkiTalkable()
+    {
+        talkable = true;
+        overrideNoControl = true;
     }
 
     public void LanternFall()

@@ -7,7 +7,6 @@ public class CatFood : PickUpObject
 {
     public Xixi cat;
     public bool opened;
-    public bool finishedEating;
 
     public bool finishDiaDone;
     string openCanSound = "event:/Sound Effects/ObjectInteraction/CatCan/CanOpen";
@@ -97,7 +96,6 @@ public class CatFood : PickUpObject
     public void FinishEating()
     {
         transform.SetParent(null);
-        finishedEating = true;
         wetFood.gameObject.SetActive(false);
     }
 

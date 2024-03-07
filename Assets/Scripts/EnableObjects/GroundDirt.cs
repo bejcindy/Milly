@@ -5,7 +5,6 @@ using UnityEngine;
 public class GroundDirt : MonoBehaviour
 {
     public int sweepTimes;
-    public int dirtStage;
     public bool sweepable;
     public bool cleaned;
     public bool sweeped;

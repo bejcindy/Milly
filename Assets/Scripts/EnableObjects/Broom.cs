@@ -14,7 +14,7 @@ public class Broom : PickUpObject
     {
         base.Start();
         objType = HandObjectType.BROOM;
-
+        hasBroom = false;
     }
 
     protected override void Update()

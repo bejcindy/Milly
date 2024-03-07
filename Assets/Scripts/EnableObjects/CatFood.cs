@@ -136,4 +136,21 @@ public class CatFood : PickUpObject
         transform.localRotation = targetRot;
         opened = true;
     }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);        
+        if(data.catFoodDict.TryGetValue(id, out bool savedOpened))
+            opened = savedOpened;
+        if (opened)
+            startCatEat = true;
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (data.catFoodDict.ContainsKey(id))
+            data.catFoodDict.Remove(id);        
+        data.catFoodDict.Add(id, opened);
+    }
 }

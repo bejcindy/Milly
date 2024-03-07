@@ -135,7 +135,7 @@ public class PickUpObject : LivableObject
             selected = false;
         }
 
-        if(interactable && !inHand && thrown)
+        if (interactable && !inHand && thrown)
         {
             playerHolding.midAirKickable = gameObject;
         }
@@ -162,12 +162,30 @@ public class PickUpObject : LivableObject
 
     void ThrowCoolDown()
     {
-        if(throwCD >0)
+        if (throwCD > 0)
             throwCD -= Time.deltaTime;
         else
         {
             throwCD = 1f;
             thrown = false;
         }
+    }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (activated)
+        {
+            if (data.pickupDict.TryGetValue(id, out Vector3 savedPos))
+                transform.position = savedPos;
+        }
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (data.pickupDict.ContainsKey(id))
+            data.pickupDict.Remove(id);
+        data.pickupDict.Add(id, transform.position);
     }
 }

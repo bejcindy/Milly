@@ -311,4 +311,19 @@ public class Door : LivableObject
 
         doorMoving = false;
     }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (data.doorDict.TryGetValue(id, out bool savedEnabled))
+            enabled = savedEnabled;
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (data.doorDict.ContainsKey(id))
+            data.doorDict.Remove(id);
+        data.doorDict.Add(id, enabled);
+    }
 }

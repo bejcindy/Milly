@@ -79,7 +79,6 @@ public class DataHolder : MonoBehaviour
 
     public static bool canMakeSound;
     float beginningAudioCoolDownTimer;
-
     bool tatPanelOn;
     public Animator tatCanvasAnim;
 

@@ -35,7 +35,6 @@ public class Faucet : LivableObject
         {
             FaucetControl();
         }
-
         else
         {
             gameObject.layer = 0;

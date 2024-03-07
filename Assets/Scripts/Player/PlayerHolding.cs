@@ -9,7 +9,7 @@ using PixelCrushers;
 using FMODUnity;
 using VInspector;
 
-public class PlayerHolding : MonoBehaviour
+public class PlayerHolding : MonoBehaviour,ISaveSystem
 {
     PlayerLeftHand leftHand;
     PlayerMovement pm;
@@ -71,6 +71,9 @@ public class PlayerHolding : MonoBehaviour
 
     #endregion
     public bool objectLerping;
+    Vector3 loadedPos;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -829,5 +832,14 @@ public class PlayerHolding : MonoBehaviour
             yield return null;
         }
         obj.localRotation = endValue;
+    }
+
+    public void LoadData(GameData data)
+    {
+        GetComponent<Rigidbody>().position = data.playerPosition;
+    }
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = transform.position;
     }
 }

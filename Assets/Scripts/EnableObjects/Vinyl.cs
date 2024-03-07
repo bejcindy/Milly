@@ -22,8 +22,9 @@ public class Vinyl : PickUpObject
     float placedCDVal = 2f;
     GameObject vinylDialogue;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         songInfo = transform.GetChild(1).gameObject;
         songInfo.SetActive(false);
         vinylDialogue = transform.GetChild(2).gameObject; 

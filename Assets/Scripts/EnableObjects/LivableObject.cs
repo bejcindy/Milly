@@ -8,8 +8,9 @@ using UnityEngine.Rendering.Universal;
 using Cinemachine;
 using static Cinemachine.CinemachineOrbitalTransposer;
 using VInspector;
+using static GameData;
 
-public class LivableObject : MonoBehaviour
+public class LivableObject : MonoBehaviour, ISaveSystem
 {
 
     protected Transform player;
@@ -27,6 +28,15 @@ public class LivableObject : MonoBehaviour
     protected GroupMaster groupControl;
     protected Vector3 pointOnScreen;
     protected bool tableObj;
+
+    //[Foldout("ID")]
+    protected string id;
+    //[ContextMenu("Generate Guid for id")]
+    //void GenerateGuid()
+    //{
+    //    id = System.Guid.NewGuid().ToString();
+    //}
+    //public string id;
 
     [Foldout("State")]
 
@@ -64,7 +74,7 @@ public class LivableObject : MonoBehaviour
     public bool centerFocused;
     public bool noRend;
     public bool onlyFront = true;
-    
+
 
     [Foldout("Special")]
     public bool overrideStartSequence;
@@ -83,13 +93,12 @@ public class LivableObject : MonoBehaviour
     [SerializeField] private ScriptController myZone;
     public bool scriptOff;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
-        fadeInterval = 5;
-        player = ReferenceTool.player;
-        playerHolding = ReferenceTool.playerHolding;
-        playerLeftHand = ReferenceTool.playerLeftHand;
-        postProcessingVolume = GameObject.Find("GlowVolume");
+        if (GetComponent<ObjectID>())
+            id = GetComponent<ObjectID>().id;
+        else
+            Debug.LogError(gameObject.name + " doesn't have ObjectID Component.");
         if (GetComponent<Renderer>() != null)
         {
             rend = GetComponent<Renderer>();
@@ -100,6 +109,16 @@ public class LivableObject : MonoBehaviour
             mat.EnableKeyword("_WhiteDegree");
             mat.SetFloat("_WhiteDegree", matColorVal);
         }
+    }
+
+    protected virtual void Start()
+    {
+        fadeInterval = 5;
+        player = ReferenceTool.player;
+        playerHolding = ReferenceTool.playerHolding;
+        playerLeftHand = ReferenceTool.playerLeftHand;
+        postProcessingVolume = GameObject.Find("GlowVolume");
+
 
         if (GetComponent<GroupMaster>() != null)
         {
@@ -108,6 +127,8 @@ public class LivableObject : MonoBehaviour
         }
         checkBoundVisible = new bool[8];
         playerCam = ReferenceTool.playerCinemachine;
+
+
     }
 
     protected virtual void Update()
@@ -243,6 +264,8 @@ public class LivableObject : MonoBehaviour
         else
         {
             matColorVal = 0;
+            if (material.HasFloat("_WhiteDegree"))
+                material.SetFloat("_WhiteDegree", matColorVal);
             firstActivated = true;
             if (myTattoo && !delayTat && !myTattoo.triggered)
                 Invoke(nameof(TurnOnTat), 1f);
@@ -390,6 +413,30 @@ public class LivableObject : MonoBehaviour
         return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), col.bounds);
     }
 
-
-
+    public virtual void LoadData(GameData data)
+    {
+        if (data.livableDict.TryGetValue(id, out LivableValues values))
+        {
+            activated = values.activated;
+            transformed = values.transformed;
+            if (activated)
+            {
+                matColorVal = 0;
+                if (mat.HasFloat("_WhiteDegree"))
+                    mat.SetFloat("_WhiteDegree", matColorVal);
+                firstActivated = true;
+            }
+        }
+    }
+    public virtual void SaveData(ref GameData data)
+    {
+        if (id == null)
+            Debug.LogError(gameObject.name + " ID is null.");
+        if (id == "")
+            Debug.LogError(gameObject.name + " ID is empty.");
+        if (data.livableDict.ContainsKey(id))
+            data.livableDict.Remove(id);
+        LivableValues values = new LivableValues(activated, transformed);
+        data.livableDict.Add(id, values);
+    }
 }

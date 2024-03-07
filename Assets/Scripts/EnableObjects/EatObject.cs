@@ -161,7 +161,8 @@ public class EatObject : PickUpObject
 
     void DestroyPizza()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
 
@@ -195,5 +196,18 @@ public class EatObject : PickUpObject
             yield return null;
         }
         transform.rotation = Quaternion.identity;
+    }
+
+    public override void LoadData(GameData data)
+    {
+        if (data.pizzaDict.TryGetValue(id, out bool savedActive))
+            gameObject.SetActive(savedActive);
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        if (data.pizzaDict.ContainsKey(id))
+            data.pizzaDict.Remove(id);
+        data.pizzaDict.Add(id, gameObject.activeSelf);
     }
 }

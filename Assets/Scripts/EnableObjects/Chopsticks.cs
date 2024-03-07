@@ -128,4 +128,32 @@ public class Chopsticks : PickUpObject
         }
         transform.parent.localRotation = targetRot;
     }
+
+    public override void LoadData(GameData data)
+    {
+        if (data.livableDict.TryGetValue(id, out LivableValues values))
+        {
+            activated = values.activated;
+            transformed = values.transformed;
+            if (activated)
+            {
+                matColorVal = 0;
+                if (mat.HasFloat("_WhiteDegree"))
+                    mat.SetFloat("_WhiteDegree", matColorVal);
+                firstActivated = true;
+            }
+        }
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        if (id == null)
+            Debug.LogError(gameObject.name + " ID is null.");
+        if (id == "")
+            Debug.LogError(gameObject.name + " ID is empty.");
+        if (data.livableDict.ContainsKey(id))
+            data.livableDict.Remove(id);
+        LivableValues values = new LivableValues(activated, transformed);
+        data.livableDict.Add(id, values);
+    }
 }

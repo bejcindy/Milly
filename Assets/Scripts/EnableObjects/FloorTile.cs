@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloorTile : MonoBehaviour
+public class FloorTile : MonoBehaviour,ISaveSystem
 {
     Material mat;
     Renderer rend;
@@ -18,16 +18,26 @@ public class FloorTile : MonoBehaviour
     public List<Transform> additionalTiles;
     public bool overrideStartSequence;
     bool layerChanged;
+    string id;
 
-    void Start()
+    private void Awake()
     {
-        Hugo.totalFloorCount++;
-        activated = false;
+        if (GetComponent<ObjectID>())
+            id = GetComponent<ObjectID>().id;
+        else
+            Debug.LogError(gameObject.name + " doesn't have ObjectID Component.");
         rend = GetComponent<Renderer>();
         if (rend)
         {
             mat = rend.material;
         }
+    }
+
+    void Start()
+    {
+        Hugo.totalFloorCount++;
+        activated = false;
+        
 
         matColorVal = 1;
         fadeInterval = 10;
@@ -43,8 +53,7 @@ public class FloorTile : MonoBehaviour
         if (AllDirtCleaned())
         {
             activated = true;
-        }
-        
+        }        
     }
 
     bool AllDirtCleaned()
@@ -58,9 +67,6 @@ public class FloorTile : MonoBehaviour
         }
         return true;
     }
-
-
-
 
     private void TurnOnColor(Material material)
     {
@@ -134,6 +140,15 @@ public class FloorTile : MonoBehaviour
             Hugo.totalFloorCleaned++;
 
         }
+       
+    }
+
+    public void LoadData(GameData data)
+    {
+
+    }
+    public void SaveData(ref GameData data)
+    {
        
     }
 }

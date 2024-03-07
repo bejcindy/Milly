@@ -23,7 +23,10 @@ public class IDAssigner : MonoBehaviour
                 livable.gameObject.GetComponent<ObjectID>().GenerateGuid();
             }
             else
+            {
                 livable.gameObject.GetComponent<ObjectID>().GenerateGuid();
+                //Debug.Log("1");
+            }
         }
     }
 
@@ -39,7 +42,10 @@ public class IDAssigner : MonoBehaviour
                 controller.gameObject.GetComponent<ObjectID>().GenerateGuid();
             }
             else
+            {
                 controller.gameObject.GetComponent<ObjectID>().GenerateGuid();
+                //Debug.Log("1");
+            }
         }
     }
 
@@ -55,7 +61,10 @@ public class IDAssigner : MonoBehaviour
                 controller.gameObject.GetComponent<ObjectID>().GenerateGuid();
             }
             else
+            {
                 controller.gameObject.GetComponent<ObjectID>().GenerateGuid();
+                //Debug.Log("1");
+            }
         }
     }
 
@@ -70,8 +79,11 @@ public class IDAssigner : MonoBehaviour
                 tile.gameObject.AddComponent<ObjectID>();
                 tile.gameObject.GetComponent<ObjectID>().GenerateGuid();
             }
-            else            
-                tile.gameObject.GetComponent<ObjectID>().GenerateGuid();            
+            else
+            {
+                tile.gameObject.GetComponent<ObjectID>().GenerateGuid();
+                //Debug.Log("1");
+            }
         }
     }
 }

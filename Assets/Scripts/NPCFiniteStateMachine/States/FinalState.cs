@@ -8,6 +8,5 @@ public class FinalState : State
     protected override void OnEnter()
     {
         machine.FinishNpc();
-        machine.ResetAnimTrigger("Stop");
     }
 }

@@ -20,7 +20,6 @@ public class Felix : NPCControl
         questTriggered = true;
         talkable = true;
         hasFakeActivate = true;
-        noCameraLock = true;
     }
 
     protected override void Update()
@@ -29,13 +28,10 @@ public class Felix : NPCControl
     }
     public void FelixAction1()
     {
-        noMoveAfterTalk = true;
-        remainInAnim = true;
     }
 
     public void FelixAction2()
     {
-        noTalkStage = true;
         gameObject.SetActive(false);
     }
 
@@ -60,19 +56,6 @@ public class Felix : NPCControl
     {
         SetMainTalkFalse();
         currentDialogue = questCompleteDia;
-        noMoveAfterTalk = false;
-    }
-
-    public void CanActivate()
-    {
-        if (questAccepted)
-        {
-            npcActivated = true;
-        }
-        else
-        {
-            fakeActivated = true;
-        }
     }
 
     protected override void OnConversationEnd(Transform other)

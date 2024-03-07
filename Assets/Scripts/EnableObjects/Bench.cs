@@ -32,12 +32,6 @@ public class Bench : FixedCameraObject
             {
                 GetComponent<DialogueSystemTrigger>().enabled = true;
             }
-            else
-            {
-                if(npcControl.gameObject.name == "Kelvin")
-                    DialogueLua.SetVariable("NPC/Kelvin/PlayerAtRock", true);
-                npcControl.npcActivated = true;
-            }
 
             thoughtDone = true;
         }

@@ -7,38 +7,26 @@ public class IdleState : State
 
     protected override void OnEnter()
     {
-        //if (!machine.CheckNPCActivation())
-        //    machine.ActivateNPC();
-        machine.SetIdleRotation();
-        machine.ResetAnimTrigger("Move");
-        if(!machine.CheckSpecialIdleAnim() && !machine.CheckRemainInAnim())
-            machine.SetAnimatorTrigger("Stop");
-        else if(machine.CheckSpecialIdleAnim() && !machine.CheckRemainInAnim())
+        if (!machine.IsIdling())
         {
-            machine.SetSpecialIdleAnim();
-        }
-
-        if (machine.CheckNavOn())
-        {
-            machine.StopNavigation();
-        }
-
-        if (!machine.GetIdling())
             machine.BeginIdling();
+            machine.SetIdleRotation();
+            machine.PlayIdleAnimation();
+        }
         else
-            machine.StartIdling();
+        {
+            machine.ResumeIdling();
+            machine.ResumeIdleAnimation();
+        }
+
     }
     
     protected override void OnUpdate()
     {
-        if (machine.CheckNotIdling())
+        if (!machine.IsIdling())
         {
-            if (!machine.CheckPathFinished())
-            {
-                machine.StopRotation();
-                machine.SetMainTalkTrue();
-                machine.ChangeState(machine.moveState);
-            }
+            machine.StopRotation();
+            machine.DelayMove();
         }
         else
         {
@@ -53,7 +41,7 @@ public class IdleState : State
 
     protected override void OnExit()
     {
-
+        machine.SetMainTalkTrue();
     }
 }
  

@@ -13,13 +13,14 @@ using Unity.VisualScripting;
 
 public class NPCControl : MonoBehaviour
 {
+    PlayerHolding playerHolding;
     protected Transform player;
-
     protected Animator anim;
     protected NavMeshAgent agent;
     protected BaseStateMachine machine;
+    protected Rigidbody rb;
 
-    PlayerHolding playerHolding;
+
 
     [Foldout("Default")]
 
@@ -29,14 +30,12 @@ public class NPCControl : MonoBehaviour
     [SerializeField] protected bool isVisible;
     [SerializeField] protected bool interactable;
     [SerializeField] public float npcVincinity;
-    [SerializeField] public bool followingPlayer;
     public bool finalStop;
 
     protected bool initialActivated;
 
     [Foldout("Activate")]
     public bool colored;
-    public bool npcActivated;
     public bool transformed;
 
     public bool hasFakeActivate;
@@ -44,7 +43,6 @@ public class NPCControl : MonoBehaviour
     public bool overrideNoControl;
 
     [Foldout("Tattoo")]
-    [SerializeField] protected bool tatOn;
     public CharacterTattooMenu myTatMenu;
     public bool menuFirstTriggered;
     public bool stageColoring;
@@ -62,31 +60,21 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("Destinations")]
     public int _counter = 0;
-    public Transform destReference;
-    public Transform diaReference;
-    public Transform[] destinations;
-    public Transform[] dialogues;
-    public bool[] destSpecialAnim;
-
-
-    protected Transform dialogueHolder;
-    private bool inCD;
-    private float talkCD = 1.5f;
+    public Transform destinationRef;
+    public Transform currentDestination;
+    protected List<Transform> destinations = new List<Transform>();
 
     [Foldout("Dialogue")]
     public Transform currentDialogue;
     public bool talkable;
     public bool inConversation;
-    public bool noMoveAfterTalk;
-    public bool noCameraLock;
-    public bool noPlayerRotate;
-    public bool noTalkStage;
-    public bool remainInAnim;
-    protected string idleAction;
+    protected Transform dialogueHolder;
+    private bool inCD;
+    private float talkCD = 1.5f;
 
     [Foldout("Idle")]
     public bool idling;
-
+    protected string idleAction;
 
 
     bool lookCoroutineRuning;
@@ -105,22 +93,30 @@ public class NPCControl : MonoBehaviour
     public Door currentDoor;
     bool doorAnimSet;
 
+
     protected virtual void Start()
     {
         //Setting up basic components
         player = ReferenceTool.player;
+        playerHolding = ReferenceTool.playerHolding;
 
         machine = GetComponent<BaseStateMachine>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
 
-
+        for(int i = 0; i < destinationRef.childCount; i++)
+        {
+            destinations.Add(destinationRef.GetChild(i));
+        }
+        currentDestination = destinations[_counter];
+        transform.position = currentDestination.position;
+        agent.enabled = true;
+        anim.SetTrigger(machine.destinationData[_counter].idleTrigger);
         dialogueHolder = transform.GetChild(2);
-
         currentDialogue = dialogueHolder.GetChild(0);
 
 
-        playerHolding = ReferenceTool.playerHolding;
     
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
@@ -133,7 +129,8 @@ public class NPCControl : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(_counter == destinations.Length)
+        currentDestination = destinations[_counter];
+        if (_counter == destinations.Count)
         {
             finalStop = true;
         }
@@ -191,7 +188,7 @@ public class NPCControl : MonoBehaviour
         {
             if ((!StartSequence.noControl || overrideNoControl) && !playerHolding.inDialogue && !MainTattooMenu.tatMenuOn)
             {
-                CheckTriggerConversation();
+                TriggerConversation();
             }
         }
         else if (!inConversation)
@@ -330,15 +327,6 @@ public class NPCControl : MonoBehaviour
     }
 
 
-    public void ActivateNPC()
-    {
-        npcActivated = true;
-    }
-
-    public void FakeActivateNPC()
-    {
-        fakeActivated = true;
-    }
 
 
     #region Idle Region
@@ -405,7 +393,6 @@ public class NPCControl : MonoBehaviour
 
     public IEnumerator RotateTowards(Transform target)
     {
-        lookCoroutineRuning = true;
         Vector3 direction = target.position - transform.position;
         direction.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -416,19 +403,18 @@ public class NPCControl : MonoBehaviour
             time += Time.deltaTime * 0.1f;
             yield return null;
         }
-        lookCoroutineRuning = false;
     }
     #endregion
 
 
     #region Conversation Control
 
-    void CheckTriggerConversation()
+    void TriggerConversation()
     {
         string reTriggerName = "NPC_" + gameObject.name + "_Other_Interacted";
 
         //check npc conditions to trigger conversation
-        if (talkable && !noTalkStage && !inCD && !inConversation)
+        if (talkable && !inCD && !inConversation)
         {
             //if npc in idle states are already talked once 
             if (!DialogueLua.GetVariable(reTriggerName).asBool)
@@ -441,17 +427,6 @@ public class NPCControl : MonoBehaviour
                 //check player interaction command
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (!questTriggered)
-                    {
-                        if (!npcActivated)
-                            npcActivated = true;
-                    }
-                    else if (questAccepted)
-                    {
-                        if (!npcActivated)
-                            npcActivated = true;
-                    }
-
                     StartTalking();
                 }
             }
@@ -463,10 +438,6 @@ public class NPCControl : MonoBehaviour
         currentDialogue.gameObject.SetActive(true);
     }
 
-    public void StopRemainAnimation()
-    {
-        remainInAnim = false;
-    }
     void CheckTalkCD()
     {
         if (inCD && talkCD > 0)
@@ -496,15 +467,7 @@ public class NPCControl : MonoBehaviour
         questAccepted = true;
     }
 
-    public bool CheckNoMoveAfterTalk()
-    {
-        return noMoveAfterTalk;
-    }
 
-    public void MoveAfterTalk()
-    {
-        noMoveAfterTalk = false;
-    }
 
     protected virtual void QuestAcceptChange()
     {
@@ -525,15 +488,6 @@ public class NPCControl : MonoBehaviour
         {
             ChangeLayer(0);
         }
-        if (agent.isActiveAndEnabled)
-        {
-            if (HasReached(agent) && !noCameraLock && !noPlayerRotate && gameObject.name!="Zayne")
-            {
-                if (lookCoroutine != null)
-                    StopCoroutine(lookCoroutine);
-                lookCoroutine = StartCoroutine(RotateTowards(player));
-            }
-        }
 
     }
 
@@ -548,7 +502,6 @@ public class NPCControl : MonoBehaviour
             StopCoroutine(lookCoroutine);
         inCD = true;
         currentDialogue.gameObject.SetActive(false);
-        talkable = true;
 
         if (transformed)
         {
@@ -647,8 +600,16 @@ public class NPCControl : MonoBehaviour
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
 
-        if (destinations.Length > 0 && _counter > 0)
-            lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter - 1].transform.GetChild(0).transform));
+        if (destinations.Count > 0 && _counter > 0)
+            lookCoroutine = StartCoroutine(RotateTowards(destinations[_counter].transform.GetChild(0).transform));
+    }
+
+    public void TalkRotate()
+    {
+
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
+        lookCoroutine = StartCoroutine(RotateTowards(player));
     }
 
     public void StopLookRotation()
@@ -661,7 +622,7 @@ public class NPCControl : MonoBehaviour
 
     public bool FinalStop()
     {
-        if (_counter == destinations.Length)
+        if (_counter == destinations.Count)
             return true;
         return false;
     }
@@ -673,11 +634,6 @@ public class NPCControl : MonoBehaviour
         return point;
     }
 
-    public void SetNPCFollow()
-    {
-        followingPlayer = true;
-        agent.stoppingDistance = 4;
-    }
 
 
     public bool HasReached(NavMeshAgent agent)
@@ -693,10 +649,6 @@ public class NPCControl : MonoBehaviour
         return false;
     }
 
-    public Transform[] GetDestinations()
-    {
-        return destinations;
-    }
 
 
     public void SetWaitAction()
@@ -704,13 +656,21 @@ public class NPCControl : MonoBehaviour
         idleAction = gameObject.name + "Action" + _counter;
     }
 
+    public void SetNPCPosition()
+    {
+        transform.position = destinations[_counter].position;
+    }
+
+    public bool AtLastStop()
+    {
+        return _counter == destinations.Count;
+    }
+
     public void SetDialogue()
     {
 
-        currentDialogue.gameObject.SetActive(false);
         currentDialogue = dialogueHolder.GetChild(_counter);
         SetMainTalkFalse();
-
 
     }
 
@@ -734,13 +694,6 @@ public class NPCControl : MonoBehaviour
         return DialogueLua.GetVariable(seTalkName).asBool;
     }
 
-    public bool GetSpecialIdleAnim()
-    {
-        if (_counter > 0)
-            return destSpecialAnim[_counter - 1];
-        else
-            return destSpecialAnim[_counter];
-    }
 
     public void NPCOpenDoor(Door door)
     {

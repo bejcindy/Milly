@@ -25,22 +25,15 @@ public class Charles : NPCControl
     bool readyBathroomMove;
     float firstWaitTime = 30f;
 
-    protected override void Start()
+    public void CharlesAction0()
     {
-        base.Start();
 
-    }
-    protected override void Update()
-    {
-        base.Update();
     }
 
     public void CharlesAction1()
     {
 
         talkable = true;
-        remainInAnim = true;
-        noMoveAfterTalk = true;
 
         if (inConversation)
         {
@@ -64,18 +57,13 @@ public class Charles : NPCControl
             }
         }
 
-        if(readyBathroomMove && !apartZone.inZone)
-        {
-            StopIdle();
-        }
     }
 
     public void CharlesAction2()
     {
-        noCameraLock = true;
+        talkable = false;
         charlesFollowDia.SetActive(false);
         charlesPizza.SetActive(true);
-        talkable = false;
         currentDialogue.gameObject.SetActive(true);
 
         if (inConversation)
@@ -87,10 +75,16 @@ public class Charles : NPCControl
 
     public void CharlesAction3()
     {
-        noTalkStage = true;
+        talkable = false;
         if(pizzaSlice != null)
         {
             pizzaSlice.enabled = true;
+        }
+
+
+        if (readyBathroomMove && !apartZone.inZone)
+        {
+            StopIdle();
         }
     }
 

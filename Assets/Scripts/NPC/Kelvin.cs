@@ -4,31 +4,26 @@ using UnityEngine;
 
 public class Kelvin : NPCControl
 {
-    protected override void Start()
+
+    public void KelvinAction0()
     {
-        base.Start();
         talkable = true;
-        matColorVal = 1;
     }
 
     public void KelvinAction1()
     {
-        noCameraLock = true;
+        talkable = true;
     }
 
     public void KelvinAction2()
     {
-
+        talkable = true;
     }
 
     public void KelvinAction3()
     {
-        noTalkStage = true;
+        talkable = false;
         gameObject.SetActive(false);
     }
 
-    protected override void OnConversationEnd(Transform other)
-    {
-        base.OnConversationEnd(other);
-    }
 }

@@ -24,7 +24,7 @@ public class Xixi : NPCControl
 
     public void XixiAction1()
     {
-        noTalkStage = true;
+        talkable = false;
         waitTime -= Time.deltaTime;
         if (waitTime < 0)
         {
@@ -36,38 +36,32 @@ public class Xixi : NPCControl
 
     public void XixiAction2()
     {
-        noTalkStage = false;
         talkable = true;
-        noCameraLock = true;
 
     }
 
     public void XixiAction3()
     {
-        remainInAnim = true;
-        noMoveAfterTalk = true;
-        noCameraLock = false;
-        noPlayerRotate = true;
 
         if(playerLeftHand.isHolding && playerLeftHand.holdingObj.name.Contains("Cat_can"))
         {
-            noTalkStage = false;
+            talkable = true;
         }
         else
         {
-            noTalkStage = true;
+            talkable = false;
         }
 
     }
     
     public void XixiAction4()
     {
-        noTalkStage = true;
+        talkable = false;
     }
 
     public void XixiAction5()
     {
-        noTalkStage = true;
+
     }
     public void Meow()
     {
@@ -97,14 +91,11 @@ public class Xixi : NPCControl
     public void MoveCatIntoBox()
     {
         StopIdle();
-        remainInAnim = false;
-        noMoveAfterTalk = false;
     }
 
     protected override void OnConversationEnd(Transform other)
     {
         base.OnConversationEnd(other);
-        npcActivated = true;
     }
 
 

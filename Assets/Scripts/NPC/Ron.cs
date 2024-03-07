@@ -15,7 +15,6 @@ public class Ron : NPCControl
     {
         base.Start();
 
-        noCameraLock = true;
 
     }
 
@@ -24,18 +23,20 @@ public class Ron : NPCControl
         base.Update();
     }
 
+    public void RonAction0()
+    {
+        talkable = false;
+    }
+
 
     public void RonAction1()
     {
         talkable = true;
-        noCameraLock = false;
-        remainInAnim = false;
     }
 
     public void RonAction2()
     {
-        noCameraLock = true;
-        noTalkStage = true;
+        talkable = false;
     }
 
     protected override void OnConversationEnd(Transform other)

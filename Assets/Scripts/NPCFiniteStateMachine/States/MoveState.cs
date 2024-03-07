@@ -11,53 +11,26 @@ public class MoveState : State
     float timer;
     protected override void OnEnter()
     {
-        if (!machine.CheckFollowPlayer())
-        {
-            if (!machine.CheckReachDestination())
-                machine.BeginNavigation();
-            else
-                machine.SetNPCDestination();
-        }
-
+        machine.TurnOnNavMesh();
+        if (!machine.CheckReachDestination())
+            machine.BeginNavigation();
         else
         {
-            machine.FollowPlayer();
-            isFollowing = true;
+            machine.SetNPCDestination();
+            machine.BeginNavigation();
         }
-
-        machine.StopRemainInAnim();
-        machine.BeginNavigation();
         machine.SetAnimatorTrigger("Move");
     }
 
     protected override void OnUpdate()
     {
-        if (!machine.CheckFollowPlayer())
-        {
-            if (!isFollowing)
-            {
-                if (machine.CheckReachDestination())
-                {
-                    machine.SetMainTalkFalse();
-                    machine.ChangeState(machine.idleState);
-                }
-            }
-            else
-            {
-                isFollowing = false;
-                machine.SetNPCDestination();
-            }
 
-        }
-        else
+        if (machine.CheckReachDestination())
         {
-            isFollowing = true;
-            if(machine.CheckReachDestination())
-                machine.ChangeState(machine.followState);
+            machine.SetMainTalkFalse();
+            machine.ChangeState(machine.idleState);
         }
 
-        if (machine.CheckInConversation() && machine.CheckReachDestination())
-            machine.ChangeState(machine.talkState);
         FootstepSF();
     }
 

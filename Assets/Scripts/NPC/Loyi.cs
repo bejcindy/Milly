@@ -12,66 +12,57 @@ public class Loyi : NPCControl
     {
         base.Start();
         overrideNoControl = true;
-        if (overrideLoyi)
-        {
-            ExitIzaCutsceneStage();
-        }
-    }
-
-    protected override void Update()
-    {
-        base.Update();
 
     }
+
 
     public void MoveLoyiToVinyl()
     {
         _counter = 2;
         StopIdle();
-        remainInAnim = false;
-        noMoveAfterTalk = false;
         phone.SetActive(false);
     }
 
-    public void ExitIzaCutsceneStage()
+    public void LoyiAction0()
     {
-        talkable = true;
-        agent.enabled = true;
-        machine.ChangeState(machine.moveState);
 
     }
 
+
     public void LoyiAction1()
     {
+        talkable = true;
         if (!turnChar)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 1f);
             turnChar = true;
         }
 
-        noCameraLock = true; 
     }
 
     public void LoyiAction2()
     {
-        phone.SetActive(true);
-        allowLookPlayer = false;
-        remainInAnim = true;
-        noMoveAfterTalk = true;
+        talkable = true;
+        if (!phone.activeSelf)
+        {
+            phone.SetActive(true);
+        }
+
     }
 
     public void LoyiAction3()
     {
-        phone.SetActive(false);
-        remainInAnim = false;
-        noMoveAfterTalk = false;
-        noCameraLock = true;
+        if (phone.activeSelf)
+        {
+            phone.SetActive(false);
+        }
+
 
     }
 
     public void LoyiAction4()
     {
-        noTalkStage = true;
+        talkable = false;
     }
 
     public void ExitCutscene()

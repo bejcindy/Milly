@@ -175,7 +175,6 @@ public class Lid : LivableObject
 
     }
 
-
     IEnumerator LerpRotation(Quaternion endValue, float duration)
     {
         activated = true;
@@ -209,5 +208,23 @@ public class Lid : LivableObject
             lidOpen = false;
         }
         
+    }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (activated)
+        {
+            if (data.lidDict.TryGetValue(id, out bool savedLidOpen))
+                lidOpen = savedLidOpen;
+        }
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (data.lidDict.ContainsKey(id))
+            data.lidDict.Remove(id);
+        data.lidDict.Add(id, lidOpen);
     }
 }

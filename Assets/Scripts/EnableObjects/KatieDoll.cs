@@ -89,4 +89,15 @@ public class KatieDoll : LivableObject
         }
 
     }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        katieDiaDone = data.katieDollDiaDone;
+    }
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        data.katieDollDiaDone = katieDiaDone;
+    }
 }

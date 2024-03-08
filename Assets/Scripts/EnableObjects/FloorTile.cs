@@ -145,10 +145,50 @@ public class FloorTile : MonoBehaviour,ISaveSystem
 
     public void LoadData(GameData data)
     {
+        if (data.floorTileDict.TryGetValue(id, out bool savedActivated))
+        {
+            activated = savedActivated;
+            if (activated)
+            {
+                matColorVal = 0;
+                if(rend)
+                    if (mat.HasFloat("_WhiteDegree"))
+                        mat.SetFloat("_WhiteDegree", matColorVal);
+                
+                foreach (Transform tile in myTiles)
+                {
+                    tile.gameObject.layer = 18;
+                    Renderer tileRend = tile.GetComponent<Renderer>();
+                    if (tileRend)
+                    {
+                        tileRend.material.SetFloat("_WhiteDegree", matColorVal);
+                    }
+                }
 
+                foreach (Transform tile in additionalTiles)
+                {
+                    foreach (Transform childTile in tile)
+                    {
+                        childTile.gameObject.layer = 18;
+                        Renderer tileRend = childTile.GetComponent<Renderer>();
+                        if (tileRend)
+                        {
+                            tileRend.material.SetFloat("_WhiteDegree", matColorVal);
+                        }
+                    }
+                }
+                firstActivated = true;
+            }
+        }
     }
     public void SaveData(ref GameData data)
     {
-       
+        if (id == null)
+            Debug.LogError(gameObject.name + " ID is null.");
+        if (id == "")
+            Debug.LogError(gameObject.name + " ID is empty.");
+        if (data.floorTileDict.ContainsKey(id))
+            data.floorTileDict.Remove(id);
+        data.floorTileDict.Add(id, activated);
     }
 }

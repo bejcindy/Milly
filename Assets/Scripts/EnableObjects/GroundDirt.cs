@@ -1,8 +1,9 @@
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundDirt : MonoBehaviour
+public class GroundDirt : MonoBehaviour,ISaveSystem
 {
     public int sweepTimes;
     public bool sweepable;
@@ -18,13 +19,22 @@ public class GroundDirt : MonoBehaviour
     float stageAlphaVal;
     Material dirtMat;
     Renderer rend;
+    string id;
 
+    void Awake()
+    {
+        if (GetComponent<ObjectID>())
+            id = GetComponent<ObjectID>().id;
+        else
+            Debug.LogError(gameObject.name + " doesn't have ObjectID Component.");
+        dirtMat = rend.material;
+    }
 
     void Start()
     {
         sweepTimes = Random.Range(2, 4);
         rend = GetComponent<Renderer>();
-        dirtMat = rend.material;
+        
         alphaVal = dirtMat.GetFloat("_AlphaClipThreshold");
         startAlphaVal = alphaVal;
         stageAlphaVal = startAlphaVal;
@@ -122,5 +132,26 @@ public class GroundDirt : MonoBehaviour
     public void OnBecameInvisible()
     {
         isVisible = false;
+    }
+
+    public void LoadData(GameData data)
+    {
+        if (data.groundDirtDict.TryGetValue(id, out bool savedCleaned))
+        {
+            cleaned = savedCleaned;
+            if (cleaned)
+            {
+                alphaVal = 0;
+                dirtMat.SetFloat("_AlphaClipThreshold", alphaVal);
+                enabled = false;
+            }
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if (data.groundDirtDict.ContainsKey(id))
+            data.groundDirtDict.Remove(id);
+        data.groundDirtDict.Add(id, cleaned);
     }
 }

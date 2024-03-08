@@ -87,8 +87,6 @@ public class GroceryBox : PickUpObject
         }
     }
 
-
-
     void BoxCollisionDetection()
     {
         RaycastHit hit;
@@ -163,6 +161,4 @@ public class GroceryBox : PickUpObject
             return (CalculateBoxChain(1+count, box.upperBox));
         }
     }
-
-
 }

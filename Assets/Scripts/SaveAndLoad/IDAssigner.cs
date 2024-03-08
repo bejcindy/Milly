@@ -86,4 +86,40 @@ public class IDAssigner : MonoBehaviour
             }
         }
     }
+    [Button]
+    void AssignGroundDirtID()
+    {
+        GroundDirt[] dirts = FindObjectsOfType<GroundDirt>();
+        foreach (GroundDirt dirt in dirts)
+        {
+            if (!dirt.gameObject.GetComponent<ObjectID>())
+            {
+                dirt.gameObject.AddComponent<ObjectID>();
+                dirt.gameObject.GetComponent<ObjectID>().GenerateGuid();
+            }
+            else
+            {
+                dirt.gameObject.GetComponent<ObjectID>().GenerateGuid();
+                //Debug.Log("1"); 
+            }
+        }
+    }
+    [Button]
+    void AssignPassiveActivationID()
+    {
+        PassiveActivation[] passives = FindObjectsOfType<PassiveActivation>();
+        foreach (PassiveActivation passive in passives)
+        {
+            if (!passive.gameObject.GetComponent<ObjectID>())
+            {
+                passive.gameObject.AddComponent<ObjectID>();
+                passive.gameObject.GetComponent<ObjectID>().GenerateGuid();
+            }
+            else
+            {
+                passive.gameObject.GetComponent<ObjectID>().GenerateGuid(); 
+                //Debug.Log("1"); 
+            }
+        }
+    }
 }

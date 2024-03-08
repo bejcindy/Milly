@@ -201,7 +201,22 @@ public class LookingObject : LivableObject
 
             }
         }
-
     }
 
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (activated)
+        {
+            if (data.lookingDict.TryGetValue(id, out bool savedPosterLinkAct))
+                posterLinkAct = savedPosterLinkAct;
+        }
+    }
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (data.lookingDict.ContainsKey(id))
+            data.lookingDict.Remove(id);
+        data.lookingDict.Add(id, posterLinkAct);
+    }
 }

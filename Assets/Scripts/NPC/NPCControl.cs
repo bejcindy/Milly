@@ -10,6 +10,7 @@ using VInspector;
 using System.Linq;
 
 using Unity.VisualScripting;
+using System;
 
 public class NPCControl : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class NPCControl : MonoBehaviour
     public bool questAccepted;
 
     [Foldout("Destinations")]
-    public int _counter = 0;
+    public int _counter;
     public Transform destinationRef;
     public Transform currentDestination;
     protected List<Transform> destinations = new List<Transform>();
@@ -94,9 +95,12 @@ public class NPCControl : MonoBehaviour
     bool doorAnimSet;
 
 
+
     protected virtual void Start()
     {
         //Setting up basic components
+
+
         player = ReferenceTool.player;
         playerHolding = ReferenceTool.playerHolding;
 
@@ -115,8 +119,6 @@ public class NPCControl : MonoBehaviour
         anim.SetTrigger(machine.destinationData[_counter].idleTrigger);
         dialogueHolder = transform.GetChild(2);
         currentDialogue = dialogueHolder.GetChild(0);
-
-
     
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
@@ -126,10 +128,21 @@ public class NPCControl : MonoBehaviour
         fadeInterval = 5;
     }
 
+    public void OnEnable()
+    {
+        NPCSaveControl.npcActiveDict[this].activeNPC = true;
+    }
+
+    public void OnDisable()
+    {
+        NPCSaveControl.npcActiveDict[this].activeNPC = false;
+    }
+
 
     protected virtual void Update()
     {
         currentDestination = destinations[_counter];
+        NPCSaveControl.npcActiveDict[this].stage = _counter;
         if (_counter == destinations.Count)
         {
             finalStop = true;
@@ -767,4 +780,8 @@ public class NPCControl : MonoBehaviour
             atDoorTime = 0;
         }
     }
+
+
+
+
 }

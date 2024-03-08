@@ -19,6 +19,10 @@ public class GameData
     public SerializableDictionary<string, bool> groupMasterDict;
     public SerializableDictionary<string, bool> buildingGroupControllerDict;
 
+
+    public SerializableDictionary<string, NPCData> npcStage;
+    public SerializableDictionary<string, bool> onOffState;
+
     //Default values when there is no saved data
     public GameData()
     {
@@ -29,6 +33,8 @@ public class GameData
         buildingGroupControllerDict = new SerializableDictionary<string, bool>();
         doorDict = new SerializableDictionary<string, bool>();
         pizzaDict = new SerializableDictionary<string, bool>();
+        catFoodDict = new SerializableDictionary<string, bool>();
+        npcStage = new SerializableDictionary<string, NPCData>();
     }
     
 }
@@ -44,4 +50,7 @@ public class LivableValues
         transformed = _transformed;
     }
 }
+
+
+
 

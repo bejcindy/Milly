@@ -6,6 +6,8 @@ using VInspector;
 
 public class IDAssigner : MonoBehaviour
 {
+    [Foldout("Object Active Control")]
+    public List<GameObject> controlledObjects = new();
 
     //private void OnEnable()
     //{
@@ -31,6 +33,24 @@ public class IDAssigner : MonoBehaviour
     }
 
     [Button]
+    void AssignNPCID()
+    {
+        NPCControl[] characters = FindObjectsOfType<NPCControl>();
+        foreach (NPCControl character in characters)
+        {
+            if (!character.gameObject.GetComponent<ObjectID>()) 
+            {
+                character.gameObject.AddComponent<ObjectID>();
+                character.gameObject.GetComponent<ObjectID>().GenerateGuid();
+            }
+            else
+            {
+                character.gameObject.GetComponent<ObjectID>().GenerateGuid();
+            }
+        }
+    }
+
+    [Button]
     void AssignGroupMasterID()
     {
         GroupMaster[] controllers = FindObjectsOfType<GroupMaster>();
@@ -39,7 +59,7 @@ public class IDAssigner : MonoBehaviour
             if (!controller.gameObject.GetComponent<ObjectID>())
             {
                 controller.gameObject.AddComponent<ObjectID>();
-                controller.gameObject.GetComponent<ObjectID>().GenerateGuid();
+                controller.gameObject.GetComponent<ObjectID>().GenerateGuid(); 
             }
             else
             {
@@ -83,6 +103,23 @@ public class IDAssigner : MonoBehaviour
             {
                 tile.gameObject.GetComponent<ObjectID>().GenerateGuid();
                 //Debug.Log("1");
+            }
+        }
+    }
+
+    [Button]
+    void AssignOnOffID()
+    {
+        foreach(GameObject obj in controlledObjects)
+        {
+            if (!obj.GetComponent<ObjectID>())
+            {
+                obj.gameObject.AddComponent<ObjectID>();
+                obj.GetComponent<ObjectID>().GenerateGuid();
+            }
+            else
+            {
+                obj.GetComponent<ObjectID>().GenerateGuid();
             }
         }
     }

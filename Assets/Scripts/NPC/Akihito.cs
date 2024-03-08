@@ -6,7 +6,7 @@ using VInspector;
 
 public class Akihito : NPCControl 
 {
-    public Transform akiLantern;
+    public Transform akiPizza;
     public Door bathroomDoor;
     public LocationController izaZone;
     public bool akiToPizza;
@@ -48,6 +48,7 @@ public class Akihito : NPCControl
     {
         talkable = false;
         currentDialogue.gameObject.SetActive(true);
+        akiPizza.gameObject.SetActive(true);
     }
 
     public void AkihitoAction3() {
@@ -116,14 +117,6 @@ public class Akihito : NPCControl
         overrideNoControl = true;
     }
 
-    public void LanternFall()
-    {
-        akiLantern.GetComponent<HingeJoint>().breakForce = 0;
-        akiLantern.GetComponent<HingeJoint>().connectedBody = null;
-        akiLantern.GetComponent<CollisionObject>().enabled = false;
-        akiLantern.GetComponent<GroupMaster>().enabled = false;
-        akiLantern.GetComponent<PickUpObject>().enabled = true;
-    }
 
 
 }

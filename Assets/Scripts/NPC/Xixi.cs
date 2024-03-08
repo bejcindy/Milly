@@ -22,6 +22,11 @@ public class Xixi : NPCControl
         playerLeftHand = ReferenceTool.playerLeftHand;
     }
 
+    public void XiXiAction0()
+    {
+
+    }
+
     public void XixiAction1()
     {
         talkable = false;

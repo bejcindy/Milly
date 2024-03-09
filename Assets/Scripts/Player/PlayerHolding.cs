@@ -837,9 +837,11 @@ public class PlayerHolding : MonoBehaviour,ISaveSystem
     public void LoadData(GameData data)
     {
         GetComponent<Rigidbody>().position = data.playerPosition;
+        transform.rotation = data.playerRotation;
     }
     public void SaveData(ref GameData data)
     {
         data.playerPosition = transform.position;
+        data.playerRotation = transform.rotation;
     }
 }

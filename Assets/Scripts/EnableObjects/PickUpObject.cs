@@ -176,8 +176,13 @@ public class PickUpObject : LivableObject
         base.LoadData(data);
         if (activated)
         {
-            if (data.pickupDict.TryGetValue(id, out Vector3 savedPos))
-                transform.position = savedPos;
+            if (data.pickupDict.TryGetValue(id, out PickUpValues values))
+            {
+                transform.position = values.pos;
+                dumped = values.dumped;
+                if (GetComponent<Collider>() && values.physicMat != null)
+                    GetComponent<Collider>().material = values.physicMat;
+            }
         }
     }
 
@@ -186,6 +191,15 @@ public class PickUpObject : LivableObject
         base.SaveData(ref data);
         if (data.pickupDict.ContainsKey(id))
             data.pickupDict.Remove(id);
-        data.pickupDict.Add(id, transform.position);
+        if (GetComponent<Collider>())
+        {
+            PickUpValues values = new PickUpValues(transform.position, dumped, GetComponent<Collider>().material);
+            data.pickupDict.Add(id, values);
+        }
+        else
+        {
+            PickUpValues values = new PickUpValues(transform.position, dumped, null);
+            data.pickupDict.Add(id, values);
+        }        
     }
 }

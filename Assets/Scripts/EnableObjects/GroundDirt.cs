@@ -27,14 +27,13 @@ public class GroundDirt : MonoBehaviour,ISaveSystem
             id = GetComponent<ObjectID>().id;
         else
             Debug.LogError(gameObject.name + " doesn't have ObjectID Component.");
+        rend = GetComponent<Renderer>();
         dirtMat = rend.material;
     }
 
     void Start()
     {
-        sweepTimes = Random.Range(2, 4);
-        rend = GetComponent<Renderer>();
-        
+        sweepTimes = Random.Range(2, 4);       
         alphaVal = dirtMat.GetFloat("_AlphaClipThreshold");
         startAlphaVal = alphaVal;
         stageAlphaVal = startAlphaVal;
@@ -141,7 +140,7 @@ public class GroundDirt : MonoBehaviour,ISaveSystem
             cleaned = savedCleaned;
             if (cleaned)
             {
-                alphaVal = 0;
+                alphaVal = 1;
                 dirtMat.SetFloat("_AlphaClipThreshold", alphaVal);
                 enabled = false;
             }

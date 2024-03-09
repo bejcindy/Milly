@@ -32,7 +32,7 @@ public class RecordPlayer : LivableObject
 
     private void OnEnable()
     {
-        foreach(var vinyl in otherVinyls)
+        foreach (var vinyl in otherVinyls)
         {
             vinyl.enabled = true;
         }
@@ -44,21 +44,21 @@ public class RecordPlayer : LivableObject
         //hasRecord = true;
         playingRot = Quaternion.identity;
         stopRot = Quaternion.Euler(0f, -20f, 0f);
-        recordPos = new Vector3(0.04f, 0.1f, 0.015f) ;
+        recordPos = new Vector3(0.04f, 0.1f, 0.015f);
     }
 
     protected override void Update()
     {
         base.Update();
 
-        if(activated && !recordplayerTatTriggered)
+        if (activated && !recordplayerTatTriggered)
         {
             Invoke(nameof(TriggerRecordPlayerTattoo), 1f);
             recordplayerTatTriggered = true;
 
         }
 
-        if(vinylListenCount == totalVinylCount && !vinylTatTriggered)
+        if (vinylListenCount == totalVinylCount && !vinylTatTriggered)
         {
             vinylTatTriggered = true;
             vinylTat.triggered = true;
@@ -81,7 +81,7 @@ public class RecordPlayer : LivableObject
         }
         else
         {
-            if(!activated)
+            if (!activated)
                 recordPlacer.gameObject.layer = 0;
             else
                 recordPlacer.gameObject.layer = 17;
@@ -197,11 +197,29 @@ public class RecordPlayer : LivableObject
         transform.localRotation = targetRot;
         moving = false;
 
-        if(targetRot == playingRot)
+        if (targetRot == playingRot)
         {
             RuntimeManager.PlayOneShot(needleSound, transform.position);
             isPlaying = true;
         }
     }
 
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (data.vinylOnRecordPlayer)
+        {
+            currentRecord = data.vinylOnRecordPlayer.GetComponent<Vinyl>();
+            currentRecord.transform.SetParent(recordPlacer.transform);
+            currentRecord.transform.localPosition = recordPos;
+            currentRecord.transform.localRotation = Quaternion.identity;
+        }
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (currentRecord)
+            data.vinylOnRecordPlayer = currentRecord.gameObject;
+    }
 }

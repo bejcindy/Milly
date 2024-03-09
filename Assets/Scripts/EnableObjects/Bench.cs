@@ -36,4 +36,19 @@ public class Bench : FixedCameraObject
             thoughtDone = true;
         }
     }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (data.benchDict.TryGetValue(id, out bool savedThoughtDone))        
+            thoughtDone = savedThoughtDone;        
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (data.benchDict.ContainsKey(id))
+            data.benchDict.Remove(id);        
+        data.benchDict.Add(id, thoughtDone);
+    }
 }

@@ -93,8 +93,8 @@ public class SMHAdjustTest : MonoBehaviour
         yield break;
     }
 
-    private void OnDisable()
-    {
-        ResetToDefault();
-    }
+    //private void OnDisable()
+    //{
+    //    ResetToDefault();
+    //}
 }

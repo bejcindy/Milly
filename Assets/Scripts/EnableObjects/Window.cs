@@ -183,4 +183,29 @@ public class Window : LivableObject
         windowMoving = false;
         soundPlayed = false;
     }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (data.windowDict.TryGetValue(id, out bool savedOpen))
+        {
+            windowOpen = savedOpen;
+            if (windowOpen)
+                transform.localPosition = openPos;
+            else
+                transform.localPosition = closePos;
+        }
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (id == null)
+            Debug.LogError(gameObject.name + " ID is null.");
+        if (id == "")
+            Debug.LogError(gameObject.name + " ID is empty.");
+        if (data.windowDict.ContainsKey(id))
+            data.windowDict.Remove(id);
+        data.windowDict.Add(id, windowOpen);
+    }
 }

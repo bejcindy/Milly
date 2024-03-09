@@ -146,10 +146,10 @@ public class DataHolder : MonoBehaviour
 
     }
 
-    private void OnDisable()
-    {
-        BeautifySettings.settings.blurIntensity.Override(0f);
-    }
+    //private void OnDisable()
+    //{
+    //    BeautifySettings.settings.blurIntensity.Override(0f);
+    //}
 
     #region Focusing and Unfocusing
     public static void FocusOnThis(float matColorVal)

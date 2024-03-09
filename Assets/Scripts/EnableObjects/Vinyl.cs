@@ -17,6 +17,7 @@ public class Vinyl : PickUpObject
     public bool loyiAtVinyl;
     public float playTime;
     bool listneCountAdded;
+    bool hadDialogue;
 
     bool notInCD;
     float placedCDVal = 2f;
@@ -42,18 +43,21 @@ public class Vinyl : PickUpObject
         {
             holder = transform.parent.GetComponent<VinylHolder>();
         }
-
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         loyiAtVinyl = DialogueLua.GetVariable("Vinyl/LoyiInBF").asBool;
-        if (loyiAtVinyl && tattooZone.inZone)
+        if (!hadDialogue)
         {
-            if(playTime > 20f && !MindPalace.tatMenuOn)
+            if (loyiAtVinyl && tattooZone.inZone)
             {
-                vinylDialogue.SetActive(true);
+                if (playTime > 20f && !MindPalace.tatMenuOn)
+                {
+                    vinylDialogue.SetActive(true);
+                    hadDialogue = true;
+                }
             }
         }
         if (listened && !listneCountAdded)
@@ -176,5 +180,42 @@ public class Vinyl : PickUpObject
             rb.isKinematic = true;
             recordPlayer.PlaceRecord(this);
         }
+    }
+
+    public override void LoadData(GameData data)
+    {
+        if (data.livableDict.TryGetValue(id, out LivableValues values))
+        {
+            activated = values.activated;
+            transformed = values.transformed;
+            if (activated)
+            {
+                matColorVal = 0;
+                if (mat.HasFloat("_WhiteDegree"))
+                    mat.SetFloat("_WhiteDegree", matColorVal);
+                firstActivated = true;
+            }            
+        }
+        if (data.vinylDict.TryGetValue(id, out bool savedHadDialogue))
+        {
+            hadDialogue = savedHadDialogue;
+        }
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        if (id == null)
+            Debug.LogError(gameObject.name + " ID is null.");
+        if (id == "")
+            Debug.LogError(gameObject.name + " ID is empty.");
+
+        if (data.livableDict.ContainsKey(id))
+            data.livableDict.Remove(id);
+        LivableValues values = new LivableValues(activated, transformed);
+        data.livableDict.Add(id, values);
+
+        if (data.vinylDict.ContainsKey(id))
+            data.vinylDict.Remove(id);
+        data.vinylDict.Add(id, hadDialogue);
     }
 }

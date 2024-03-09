@@ -228,7 +228,7 @@ public class IDAssigner : MonoBehaviour
             else
             {
                 obj.gameObject.GetComponent<ObjectID>().GenerateGuid();
-                //Debug.Log("1"); 
+                //Debug.Log("1");  
             }
         } 
     }

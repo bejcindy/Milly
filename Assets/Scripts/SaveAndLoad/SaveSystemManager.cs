@@ -40,6 +40,8 @@ public class SaveSystemManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.O))
+            SaveGame();
         if (Input.GetKeyDown(KeyCode.L))
             LoadGame();
     }
@@ -52,13 +54,14 @@ public class SaveSystemManager : MonoBehaviour
     public void NewGame()
     {
         gameData = new GameData();
+        Debug.Log("New Game");
     }
 
     public void LoadGame()
     {
         //Load any saved data from a file using the data handler
         gameData = dataHandler.Load();
-
+        Debug.Log("Load Game");
         //If there is no data to be loaded, initialize a new game
         if (gameData == null)
         {
@@ -82,6 +85,7 @@ public class SaveSystemManager : MonoBehaviour
 
         //Save the data to a file using the data handler
         dataHandler.Save(gameData);
+        Debug.Log("SaveGame");
     }
 
     List<ISaveSystem> FindAllSaveSystemObjs()

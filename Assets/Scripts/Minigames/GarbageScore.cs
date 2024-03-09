@@ -6,7 +6,7 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using Unity.VisualScripting;
 using PixelCrushers.DialogueSystem;
 
-public class GarbageScore : MonoBehaviour
+public class GarbageScore : MonoBehaviour,ISaveSystem
 {
     public static bool dumpsterAimed;
     [SerializeField]
@@ -64,8 +64,6 @@ public class GarbageScore : MonoBehaviour
 
 
     }
-
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -155,5 +153,20 @@ public class GarbageScore : MonoBehaviour
         }
     }
 
+    public void LoadData(GameData data)
+    {
+        firstActivated = data.soccerDumpsterOn;
+        score = data.soccerScore;
+        if (firstActivated)
+        {
+            matColorVal = 0;
+            dumpsterMat.SetFloat("_WhiteDegree", matColorVal);
+        }
+    }
 
+    public void SaveData(ref GameData data)
+    {
+        data.soccerDumpsterOn = firstActivated;
+        data.soccerScore = score;
+    }
 }

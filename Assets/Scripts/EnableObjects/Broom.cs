@@ -103,4 +103,14 @@ public class Broom : PickUpObject
             }
         }
     }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (activated)
+        {
+            transform.parent = null;
+            rb.isKinematic = false;
+        }
+    }
 }

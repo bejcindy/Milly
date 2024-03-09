@@ -26,11 +26,11 @@ public class Cigarette : PickUpObject
     }
     protected override void Update()
     {
-        if(!inBox)
+        if (!inBox)
             base.Update();
         SwitchCig();
 
-        if(cigStage > 3)
+        if (cigStage > 3)
             objType = HandObjectType.TRASH;
 
         if (!inHand)
@@ -51,7 +51,7 @@ public class Cigarette : PickUpObject
 
         if (inhaling)
         {
-            if(inhalingTime < 30f)
+            if (inhalingTime < 30f)
             {
                 inhalingTime += Time.deltaTime;
             }
@@ -73,10 +73,10 @@ public class Cigarette : PickUpObject
         mat = rend.material;
         visibleDetector = activeCigObj.GetComponent<RiggedVisibleDetector>();
         activeCigObj.gameObject.SetActive(true);
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
-            if(child != activeCigObj)
-                child.gameObject.SetActive(false);            
+            if (child != activeCigObj)
+                child.gameObject.SetActive(false);
         }
     }
 
@@ -122,5 +122,47 @@ public class Cigarette : PickUpObject
     void DelayChangeTag()
     {
         objType = HandObjectType.TRASH;
+    }
+
+    public override void LoadData(GameData data)
+    {
+        if (data.livableDict.TryGetValue(id, out LivableValues values))
+        {
+            activated = values.activated;
+            transformed = values.transformed;
+            if (activated)
+            {
+                matColorVal = 0;
+                if (mat.HasFloat("_WhiteDegree"))
+                    mat.SetFloat("_WhiteDegree", matColorVal);
+                firstActivated = true;
+            }
+        }
+        if (data.cigDict.TryGetValue(id, out int savedCigStage))
+        {
+            if (savedCigStage > 3)
+            {
+                cigStage = savedCigStage;
+                SwitchCig();
+                transform.parent = null;
+            }
+        }
+
+        if (data.pickupDict.TryGetValue(id, out PickUpValues puvalues))
+        {
+            if (cigStage > 3)
+                transform.position = puvalues.pos;
+            dumped = puvalues.dumped;
+            if (GetComponent<Collider>() && puvalues.physicMat != null)
+                GetComponent<Collider>().material = puvalues.physicMat;
+        }
+
+    }
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        if (data.cigDict.ContainsKey(id))
+            data.cigDict.Remove(id);
+        data.cigDict.Add(id, cigStage);
     }
 }

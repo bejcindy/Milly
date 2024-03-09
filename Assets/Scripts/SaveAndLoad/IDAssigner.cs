@@ -11,7 +11,7 @@ public class IDAssigner : MonoBehaviour
 
     //private void OnEnable()
     //{
-    //    GenerateGuid();
+    //    GenerateGuid(); 
     //}
     [Button]
     void AssignLivableObjectID()
@@ -213,5 +213,23 @@ public class IDAssigner : MonoBehaviour
                 mesh.gameObject.GetComponent<ObjectID>().GenerateGuid();
             }
         }
+    }
+    [Button]
+    void AssignVinylHolderID()
+    {
+        VinylHolder[] objs = FindObjectsOfType<VinylHolder>();
+        foreach (VinylHolder obj in objs)
+        {
+            if (!obj.gameObject.GetComponent<ObjectID>())
+            {
+                obj.gameObject.AddComponent<ObjectID>();
+                obj.gameObject.GetComponent<ObjectID>().GenerateGuid(); 
+            }
+            else
+            {
+                obj.gameObject.GetComponent<ObjectID>().GenerateGuid();
+                //Debug.Log("1"); 
+            }
+        } 
     }
 }

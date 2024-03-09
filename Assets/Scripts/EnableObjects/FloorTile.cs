@@ -26,6 +26,7 @@ public class FloorTile : MonoBehaviour,ISaveSystem
             id = GetComponent<ObjectID>().id;
         else
             Debug.LogError(gameObject.name + " doesn't have ObjectID Component.");
+
         rend = GetComponent<Renderer>();
         if (rend)
         {
@@ -151,7 +152,8 @@ public class FloorTile : MonoBehaviour,ISaveSystem
             if (activated)
             {
                 matColorVal = 0;
-                if(rend)
+                gameObject.layer = 18;
+                if (rend)
                     if (mat.HasFloat("_WhiteDegree"))
                         mat.SetFloat("_WhiteDegree", matColorVal);
                 

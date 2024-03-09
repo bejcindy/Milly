@@ -8,8 +8,10 @@ using Cinemachine;
 using PixelCrushers.DialogueSystem;
 using VInspector;
 using UnityEngine.UI;
+using UnityEngine.TextCore.Text;
+using System;
 
-public class MindPalace : MonoBehaviour
+public class MindPalace : MonoBehaviour, ISaveSystem
 {
     [Foldout("States")]
     public static int tattoosActivated;
@@ -21,7 +23,7 @@ public class MindPalace : MonoBehaviour
     public static bool showedCursorAnimation;
     public bool noControl;
     public bool mainMenuOn;
-    public bool firstTriggered;
+    public bool discovered;
     public bool iconOn;
 
     [Foldout("References")]
@@ -121,7 +123,7 @@ public class MindPalace : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Tab) && !noControl && firstTriggered && !playerHolding.inDialogue)
+        if (Input.GetKeyDown(KeyCode.Tab) && !noControl && discovered && !playerHolding.inDialogue)
         {
             SwitchMindPalaceOnOff();
         }
@@ -209,7 +211,7 @@ public class MindPalace : MonoBehaviour
             DataHolder.HideHint(mainMenuHoverHint);
         }
 
-        if (firstTriggered)
+        if (discovered)
         {
             if (!iconFirstFade)
             {
@@ -419,5 +421,32 @@ public class MindPalace : MonoBehaviour
     public void HideIcon()
     {
         menuIcon.SetActive(false);
+    }
+
+
+    public void SaveData(ref GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+
+        if (String.IsNullOrEmpty(id))
+            Debug.LogError(gameObject.name + " ID is null.");
+
+        if (data.tatSpaceDict.ContainsKey(id))
+        {
+            data.tatSpaceDict.Remove(id);
+        }
+        data.tatSpaceDict.Add(id, discovered);
+    }
+
+    public void LoadData(GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if(data.tatSpaceDict.TryGetValue(id, out bool isDiscovered))
+        {
+            discovered = isDiscovered;
+            if (discovered)
+                firstThought = true;
+            currentMenu = mainTatMenu;
+        }
     }
 }

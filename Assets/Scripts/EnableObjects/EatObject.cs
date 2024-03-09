@@ -139,7 +139,7 @@ public class EatObject : PickUpObject
             rend.enabled = false;
             if (pizzaTat)
             {
-                if (!pizzaTat.triggeredOnce && !playerHolding.inDialogue)
+                if (!pizzaTat.discovered && !playerHolding.inDialogue)
                 {
                     pizzaTat.triggered = true;
                 }

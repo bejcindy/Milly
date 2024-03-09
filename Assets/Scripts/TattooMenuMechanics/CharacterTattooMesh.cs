@@ -8,7 +8,7 @@ using UnityEngine.XR;
 using VInspector;
 using FMODUnity;
 
-public class CharacterTattooMesh : MonoBehaviour
+public class CharacterTattooMesh : MonoBehaviour, ISaveSystem
 {
     CharacterTattooMenu myMenu;
 
@@ -27,6 +27,7 @@ public class CharacterTattooMesh : MonoBehaviour
     public int stage;
     public Material[] materials;
     public bool stageChanging;
+    public bool stageColored;
     public bool finalChange;
     public bool ditherOut;
     public bool ditherIn;
@@ -152,6 +153,7 @@ public class CharacterTattooMesh : MonoBehaviour
             child.GetComponent<Renderer>().material = materials[stage];
         }
         stageChanging = true;
+        stageColored = false;
         if (myNPC)
         {
             myNPC.ColorActualNPC();
@@ -160,8 +162,6 @@ public class CharacterTattooMesh : MonoBehaviour
 
     public void ChangeCharMatColor()
     {
-
-
         if(matColorVal > 0)
         {
             matColorVal -= 0.5f * Time.deltaTime;
@@ -177,6 +177,7 @@ public class CharacterTattooMesh : MonoBehaviour
         else
         {
             stageChanging = false;
+            stageColored = true;
             matColorVal = 0;
             stage++;
             if (finalChange)
@@ -189,8 +190,22 @@ public class CharacterTattooMesh : MonoBehaviour
                 currentTat = null;
             }
         }
+    }
 
+    public void LoadCharMat()
+    {
+        if (myNPC)
+        {
+            myNPC.LoadCharMat(materials[stage-1], stageColored);
+        }
 
+        foreach (Transform child in npcMesh)
+        {
+            Renderer renderer = child.GetComponent<Renderer>();
+            renderer.material = materials[stage-1];
+            if (stageColored)
+                renderer.material.SetFloat("_WhiteDegree", 0);
+        }
     }
 
     public void ChangeLayer(int layerNumber)
@@ -346,5 +361,31 @@ public class CharacterTattooMesh : MonoBehaviour
             yield return null;
         }
         transform.localRotation = endValue;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (String.IsNullOrEmpty(id))
+            Debug.LogError(gameObject.name + " ID is null.");
+
+        if (data.tatCharDict.ContainsKey(id)) 
+            data.tatCharDict.Remove(id);
+        data.tatCharDict.Add(id, new TatCharData(stage, stageColored));
+    }
+
+    public void LoadData(GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (String.IsNullOrEmpty(id))
+            Debug.LogError(gameObject.name + " ID is null.");
+
+        if(data.tatCharDict.TryGetValue(id, out TatCharData save))
+        {
+            stage = save.stage;
+            stageColored = save.stageColored;
+            if(stage>0)
+                LoadCharMat();
+        }
     }
 }

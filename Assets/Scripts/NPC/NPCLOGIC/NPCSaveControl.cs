@@ -19,7 +19,7 @@ public class NPCSaveControl : MonoBehaviour, ISaveSystem
 
         foreach(NPCControl character in characters)
         {
-            npcActiveDict.Add(character, new NPCData(character._counter, character.gameObject.activeSelf));
+            npcActiveDict.Add(character, new NPCData(character._counter, character.gameObject.activeSelf, character.colored));
         }
     }
 
@@ -48,7 +48,7 @@ public class NPCSaveControl : MonoBehaviour, ISaveSystem
 
             if (data.onOffState.ContainsKey(charID))
                 data.onOffState.Remove(charID);
-            data.onOffState.Add(charID, temp.gameObject.activeSelf);
+            data.onOffState.Add(charID, temp.activeSelf);
 
         }
     }
@@ -62,14 +62,17 @@ public class NPCSaveControl : MonoBehaviour, ISaveSystem
             if (data.npcStage.TryGetValue(charID, out NPCData values))
             {
                 character._counter = values.stage;
-                if (values.activeNPC)
-                {
-                    character.gameObject.SetActive(true);
-                }
-                else
-                {
-                    character.gameObject.SetActive(false);
-                }
+                character.gameObject.SetActive(values.activeNPC);
+                character.colored = values.colored;
+            }
+        }
+
+        foreach(GameObject temp in tempChars)
+        {
+            string charID = temp.GetComponent<ObjectID>().id;
+            if (data.onOffState.TryGetValue(charID, out bool activeState))
+            {
+                gameObject.SetActive(activeState);
             }
         }
 
@@ -84,10 +87,12 @@ public class NPCData
 {
     public int stage;
     public bool activeNPC;
+    public bool colored;
 
-    public NPCData(int counter, bool activeNPC)
+    public NPCData(int counter, bool activeNPC, bool isColored)
     {
         stage = counter;
         this.activeNPC = activeNPC;
+        this.colored = isColored;
     }
 }

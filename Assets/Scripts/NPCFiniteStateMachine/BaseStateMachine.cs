@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
 using FMODUnity;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace NPCFSM
 {
@@ -258,6 +259,7 @@ namespace NPCFSM
             if (!npcControl.FinalStop())
             {
                 npcControl._counter++;
+                NPCSaveControl.npcActiveDict[npcControl].stage = npcControl._counter;
                 agent.SetDestination(npcControl.GetNext().position);
 
             }

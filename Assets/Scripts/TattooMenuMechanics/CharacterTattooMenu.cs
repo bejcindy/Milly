@@ -7,8 +7,9 @@ using VInspector;
 using FMODUnity;
 using PixelCrushers.DialogueSystem;
 using TMPro;
+using System;
 
-public class CharacterTattooMenu : MonoBehaviour
+public class CharacterTattooMenu : MonoBehaviour, ISaveSystem
 {
     public MindPalace mindPalace;
     [Foldout("State")]
@@ -96,8 +97,12 @@ public class CharacterTattooMenu : MonoBehaviour
 
         if (menuOn)
         {
-            if(myChar.myNPC)
+            if (myChar.myNPC)
+            {
                 myChar.myNPC.colored = true;
+                NPCSaveControl.npcActiveDict[myChar.myNPC].colored = true;
+            }
+
             MindPalace.tatMenuOn = true;
 
             if (!mindPalace.noControl)
@@ -359,7 +364,7 @@ public class CharacterTattooMenu : MonoBehaviour
         BeautifySettings.settings.vignettingBlink.value = 0;
         mindPalace.SwitchTatMenuBlend();
         MindPalace.showTatHint = true;
-        mindPalace.firstTriggered = true;
+        mindPalace.discovered = true;
         yield break;
     }
 
@@ -515,6 +520,39 @@ public class CharacterTattooMenu : MonoBehaviour
 
     }
 
+    public virtual void SaveData(ref GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (String.IsNullOrEmpty(id))
+            Debug.LogError(gameObject.name + " ID is null.");
 
+        if (data.tattooMenuDict.ContainsKey(id))
+            data.tattooMenuDict.Remove(id);
+        data.tattooMenuDict.Add(id, new TattooMenuData(discovered, finished));
+
+    }
+
+    public virtual void LoadData(GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (String.IsNullOrEmpty(id))
+            Debug.LogError(gameObject.name + " ID is null.");
+
+        if (data.tattooMenuDict.TryGetValue(id, out TattooMenuData save))
+        {
+            discovered = save.isDiscovered;
+            finished = save.isFinished;
+
+            if (discovered && !isMainMenu)
+            {
+                myChar.EnableCollider();
+            }
+
+            if (finished)
+            {
+                finalTattoo.FinalTattooFinalTransition();
+            }
+        }
+    }
 
 }

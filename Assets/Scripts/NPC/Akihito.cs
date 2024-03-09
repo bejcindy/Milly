@@ -6,7 +6,9 @@ using VInspector;
 
 public class Akihito : NPCControl 
 {
+    [Foldout("Progression Refs")]
     public Transform akiPizza;
+    public FixedCameraObject izaChair;
     public Door bathroomDoor;
     public LocationController izaZone;
     public bool akiToPizza;

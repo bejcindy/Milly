@@ -5,9 +5,10 @@ using UnityEngine.UI;
 using VInspector;
 using TMPro;
 using static System.Net.Mime.MediaTypeNames;
+using System;
 
 
-public class CharacterTattoo : MonoBehaviour
+public class CharacterTattoo : MonoBehaviour, ISaveSystem
 {
     [Foldout("Components")]
     public TattooMesh tatMesh;
@@ -27,7 +28,7 @@ public class CharacterTattoo : MonoBehaviour
     public bool fadeOutSprite;
     public bool isFinalTat;
     public bool hiddenTat;
-    public bool triggeredOnce;
+    public bool discovered;
 
 
     [Foldout("References")]
@@ -60,9 +61,9 @@ public class CharacterTattoo : MonoBehaviour
 
     void Update()
     {
-        if (triggered && !triggeredOnce && !ReferenceTool.playerHolding.inDialogue)
+        if (triggered && !discovered && !ReferenceTool.playerHolding.inDialogue)
         {
-            triggeredOnce = true;
+            discovered = true;
             MindPalace.tattoosActivated++;
             myChar.gameObject.SetActive(true);
             tatMesh.gameObject.SetActive(true);
@@ -273,17 +274,7 @@ public class CharacterTattoo : MonoBehaviour
         StartCoroutine(LerpRotation(Quaternion.Euler(finalTatRot), 1f));    
     }
 
-    public void FinalTatFrontRotate()
-    {
-        StartCoroutine(LerpPosition(finalTatStartPos, 1f));
-        StartCoroutine(LerpRotation(Quaternion.Euler(finalTatStartRot), 1f));
-    }
 
-    public void FinalTatInMenuRotate()
-    {
-        StartCoroutine(LerpPosition(finalTatPos, 1f));
-        StartCoroutine(LerpRotation(Quaternion.Euler(finalTatRot), 1f));
-    }
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
@@ -310,5 +301,35 @@ public class CharacterTattoo : MonoBehaviour
             yield return null;
         }
         transform.localRotation = endValue;
+    }
+
+
+    public virtual void SaveData(ref GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (String.IsNullOrEmpty(id))
+            Debug.LogError(gameObject.name + " ID is null.");
+
+        if (data.tattooDict.ContainsKey(id))
+            data.tattooDict.Remove(id);
+        data.tattooDict.Add(id, new TattooData(discovered, activated));
+    }
+
+    public virtual void LoadData(GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (String.IsNullOrEmpty(id))
+            Debug.LogError(gameObject.name + " ID is null.");
+
+        if(data.tattooDict.TryGetValue(id, out TattooData save))
+        {
+            discovered = save.isDiscovered;
+            activated = save.isActivated;
+
+            if(discovered && !activated)
+            {
+                tatMesh.LoadColorTattooMesh();
+            }
+        }
     }
 }

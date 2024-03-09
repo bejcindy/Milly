@@ -159,4 +159,59 @@ public class IDAssigner : MonoBehaviour
             }
         }
     }
+
+    [Button]
+    void AssignTattooID()
+    { 
+        MindPalace tatSpace = FindObjectOfType<MindPalace>();
+        CharacterTattooMenu[] charMenus = FindObjectsOfType<CharacterTattooMenu>();
+        CharacterTattoo[] charTats = FindObjectsOfType<CharacterTattoo>();
+        CharacterTattooMesh[] charMeshes = FindObjectsOfType<CharacterTattooMesh>();
+
+        if (!tatSpace.gameObject.GetComponent<ObjectID>())
+        {
+            tatSpace.gameObject.AddComponent<ObjectID>();
+            tatSpace.gameObject.GetComponent <ObjectID>().GenerateGuid();
+        }
+        else
+        {
+            tatSpace.gameObject.GetComponent<ObjectID>().GenerateGuid();
+        }
+
+        foreach(CharacterTattooMenu menu in charMenus)
+        {
+            if (!menu.gameObject.GetComponent<ObjectID>())
+            {
+                menu.gameObject.AddComponent<ObjectID>();
+            }
+            else
+            {
+                menu.gameObject.GetComponent<ObjectID>().GenerateGuid();
+            }
+        }
+
+        foreach(CharacterTattoo tat in charTats)
+        {
+            if(!tat.gameObject.GetComponent<ObjectID>())
+            {
+                tat.gameObject.AddComponent<ObjectID>().GenerateGuid();
+            }
+            else
+            {
+                tat.gameObject.GetComponent<ObjectID>().GenerateGuid();
+            }
+        }
+
+        foreach(CharacterTattooMesh mesh in charMeshes)
+        {
+            if (!mesh.GetComponent<ObjectID>())
+            {
+                mesh.gameObject.AddComponent<ObjectID>().GenerateGuid();
+            }
+            else
+            {
+                mesh.gameObject.GetComponent<ObjectID>().GenerateGuid();
+            }
+        }
+    }
 }

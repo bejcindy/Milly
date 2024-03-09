@@ -51,7 +51,7 @@ public class PizzaBoard : LookingObject
                 }
                 currentPizzaText.TriggerTextOn();
 
-                if (!myTattoo.triggeredOnce)
+                if (!myTattoo.discovered)
                 {
                     myTattoo.triggered = true;
                 }

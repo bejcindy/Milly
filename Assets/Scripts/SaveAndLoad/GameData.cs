@@ -26,11 +26,17 @@ public class GameData
     public SerializableDictionary<string, bool> groupMasterDict;
     public SerializableDictionary<string, bool> buildingGroupControllerDict;
 
-
+    //NPC
     public SerializableDictionary<string, NPCData> npcStage;
     public SerializableDictionary<string, bool> onOffState;
     public SerializableDictionary<string, bool> floorTileDict;
     public SerializableDictionary<string, bool> groundDirtDict;
+
+    //Tattoo
+    public SerializableDictionary<string, bool> tatSpaceDict;
+    public SerializableDictionary<string, TattooData> tattooDict;
+    public SerializableDictionary<string, TattooMenuData> tattooMenuDict;
+    public SerializableDictionary<string, TatCharData> tatCharDict;
 
     public SerializableDictionary<string, bool> passiveActivationDict;
 
@@ -54,12 +60,19 @@ public class GameData
         doorDict = new SerializableDictionary<string, bool>();
         pizzaDict = new SerializableDictionary<string, bool>();
         catFoodDict = new SerializableDictionary<string, bool>();
-        npcStage = new SerializableDictionary<string, NPCData>();
+
         
         floorTileDict = new SerializableDictionary<string, bool>();
         groundDirtDict = new SerializableDictionary<string, bool>();
 
         passiveActivationDict = new SerializableDictionary<string, bool>();
+
+        npcStage = new();
+        onOffState = new();
+        tatSpaceDict = new();
+        tattooDict = new();
+        tattooMenuDict = new();
+        tatCharDict = new();
     }
     
 }
@@ -75,6 +88,47 @@ public class LivableValues
         transformed = _transformed;
     }
 }
+
+[System.Serializable]
+public class TattooData
+{
+    public bool isDiscovered;
+    public bool isActivated;
+    public TattooData(bool _isDiscovered, bool _isActivated)
+    {
+        isDiscovered = _isDiscovered;
+        isActivated = _isActivated;
+    }
+}
+
+[System.Serializable]
+public class TattooMenuData
+{
+    public bool isDiscovered;
+    public bool isFinished;
+
+    public TattooMenuData(bool _isDiscovered, bool _isFinished)
+    {
+        isDiscovered= _isDiscovered;
+        isFinished= _isFinished;
+    }
+}
+
+[System.Serializable]
+public class TatCharData
+{
+    public int stage;
+    public bool stageColored;
+
+    public TatCharData(int stage, bool stageColored)
+    {
+        this.stage = stage;
+        this.stageColored = stageColored;
+    }
+}
+
+
+
 
 
 

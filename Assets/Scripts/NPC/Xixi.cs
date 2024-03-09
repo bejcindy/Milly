@@ -79,6 +79,7 @@ public class Xixi : NPCControl
     public void ChangeIntialActivate()
     {
         colored = true;
+        NPCSaveControl.npcActiveDict[this].colored = colored;
         ChangeLayer(17);
     }
 

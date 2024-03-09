@@ -142,7 +142,7 @@ public class NPCControl : MonoBehaviour
     protected virtual void Update()
     {
         currentDestination = destinations[_counter];
-        NPCSaveControl.npcActiveDict[this].stage = _counter;
+        
         if (_counter == destinations.Count)
         {
             finalStop = true;
@@ -550,6 +550,28 @@ public class NPCControl : MonoBehaviour
         {
             if(child.GetComponent<Renderer>())
                 child.GetComponent<Renderer>().material = mat;
+        }
+    }
+
+    public void LoadCharMat(Material mat, bool colored)
+    {
+        if (npcMesh.GetComponent<Renderer>())
+        {
+            Renderer rend = npcMesh.GetComponent<Renderer>();
+            rend.material = mat;
+            if(colored)
+                rend.material.SetFloat("_WhiteDegree", 0);
+        }
+        foreach (Transform child in npcMesh)
+        {
+            Renderer rend = child.GetComponent<Renderer>();
+            if (rend)
+            {
+                rend.material = mat;
+                if(colored)
+                    rend.material.SetFloat("_WhiteDegree", 0);
+            }
+                
         }
     }
 

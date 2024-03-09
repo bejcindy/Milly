@@ -252,6 +252,23 @@ public class TattooMesh : MonoBehaviour
         }
     }
 
+    public void LoadColorTattooMesh()
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = 17;
+
+            if (child.GetComponent<Renderer>())
+            {
+                Material mat = child.GetComponent<Renderer>().material;
+                mat.EnableKeyword("_WhiteDegree");
+                mat.SetFloat("_WhiteDegree", 0);
+            }
+
+        }
+        draggable = true;
+    }
+
     void SwitchDitherMat()
     {
         foreach (Transform child in transform)

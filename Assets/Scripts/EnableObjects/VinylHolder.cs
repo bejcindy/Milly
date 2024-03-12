@@ -72,8 +72,12 @@ public class VinylHolder : MonoBehaviour, ISaveSystem
             if (savedVinyl != null)
             {
                 myVinyl = savedVinyl.GetComponent<Vinyl>();
+                myVinyl.GetComponent<Rigidbody>().isKinematic = false;
                 PlaceVinyl(myVinyl);
+                hasVinyl = true;
             }
+            else
+                hasVinyl = false;
         }
     }
 

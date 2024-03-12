@@ -196,6 +196,11 @@ public class Vinyl : PickUpObject
                 firstActivated = true;
             }            
         }
+        if (data.pickupDict.TryGetValue(id, out PickUpValues puValues))
+        {
+            if (puValues.pos != Vector3.zero)
+                transform.position = puValues.pos;
+        }
         if (data.vinylDict.TryGetValue(id, out bool savedHadDialogue))
         {
             hadDialogue = savedHadDialogue;
@@ -204,18 +209,29 @@ public class Vinyl : PickUpObject
 
     public override void SaveData(ref GameData data)
     {
-        if (id == null)
-            Debug.LogError(gameObject.name + " ID is null.");
-        if (id == "")
-            Debug.LogError(gameObject.name + " ID is empty.");
+        if (!onRecordPlayer && !onStand)
+        {
+            base.SaveData(ref data);            
+        }
+        else
+        {
+            if (id == null)
+                Debug.LogError(gameObject.name + " ID is null.");
+            if (id == "")
+                Debug.LogError(gameObject.name + " ID is empty.");
 
-        if (data.livableDict.ContainsKey(id))
-            data.livableDict.Remove(id);
-        LivableValues values = new LivableValues(activated, transformed);
-        data.livableDict.Add(id, values);
+            if (data.livableDict.ContainsKey(id))
+                data.livableDict.Remove(id);
+            LivableValues values = new LivableValues(activated, transformed);
+            data.livableDict.Add(id, values);
 
-        if (data.vinylDict.ContainsKey(id))
-            data.vinylDict.Remove(id);
-        data.vinylDict.Add(id, hadDialogue);
+            if (data.vinylDict.ContainsKey(id))
+                data.vinylDict.Remove(id);
+            data.vinylDict.Add(id, hadDialogue);
+
+            if (data.pickupDict.ContainsKey(id))
+                data.pickupDict.Remove(id);
+            data.pickupDict.Add(id, null);
+        }
     }
 }

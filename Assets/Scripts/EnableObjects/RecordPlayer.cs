@@ -207,12 +207,16 @@ public class RecordPlayer : LivableObject
     public override void LoadData(GameData data)
     {
         base.LoadData(data);
-        if (data.vinylOnRecordPlayer)
+        if (data.recordPlayerOn)
+            enabled = true;
+        if (data.vinylOnRecordPlayer != null)
         {
             currentRecord = data.vinylOnRecordPlayer.GetComponent<Vinyl>();
+            currentRecord.GetComponent<Rigidbody>().isKinematic = true;
             currentRecord.transform.SetParent(recordPlacer.transform);
             currentRecord.transform.localPosition = recordPos;
             currentRecord.transform.localRotation = Quaternion.identity;
+            currentRecord.onRecordPlayer = true;
         }
     }
 
@@ -221,5 +225,9 @@ public class RecordPlayer : LivableObject
         base.SaveData(ref data);
         if (currentRecord)
             data.vinylOnRecordPlayer = currentRecord.gameObject;
+        if (enabled)
+            data.recordPlayerOn = true;
+        else
+            data.recordPlayerOn = false;
     }
 }

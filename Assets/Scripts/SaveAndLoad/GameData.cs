@@ -49,6 +49,7 @@ public class GameData
     public SerializableDictionary<string, bool> passiveActivationDict;
 
     public GameObject vinylOnRecordPlayer;
+    public bool recordPlayerOn;
     public SerializableDictionary<string, GameObject> vinylHolderDict;
     public SerializableDictionary<string, bool> vinylDict;
 

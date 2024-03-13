@@ -40,47 +40,49 @@ public class CigaretteContainer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetCig();
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!PauseMenu.isPaused)
         {
-            DataHolder.HideHint(DataHolder.hints.cigHint);
+            GetCig();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                DataHolder.HideHint(DataHolder.hints.cigHint);
+            }
+
+            if (takingOutCig)
+            {
+                if (cigWait > 0)
+                {
+                    cigWait -= Time.deltaTime;
+                    selectedCig.transform.position += 0.5f * Time.deltaTime * cigContainer.up;
+                }
+                else
+                {
+                    cigWait = 0.5f;
+                    takingOutCig = false;
+                    RuntimeManager.PlayOneShot(cigLightSound, transform.position);
+                    playerHolding.OccupyLeft(selectedCig.transform);
+                    RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Cigarette/CigBox_Close");
+                    leftHand.gettingCig = false;
+                    Invoke(nameof(TurnOffBox), 0.5f);
+                }
+
+            }
+
+            if (cigs.Count <= 0 && cigBox.activeSelf)
+            {
+                if (cigBox.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+                {
+                    cigBox.SetActive(false);
+                    leftHand.gettingCig = false;
+                    this.enabled = false;
+                }
+                else
+                {
+                    leftHand.gettingCig = true;
+                }
+            }
         }
-
-        if (takingOutCig)
-        {
-            if (cigWait > 0)
-            {
-                cigWait -= Time.deltaTime;
-                selectedCig.transform.position += 0.5f * Time.deltaTime * cigContainer.up;
-            }
-            else
-            {
-                cigWait = 0.5f;
-                takingOutCig = false;
-                RuntimeManager.PlayOneShot(cigLightSound, transform.position);
-                playerHolding.OccupyLeft(selectedCig.transform);
-                RuntimeManager.PlayOneShot("event:/Sound Effects/ObjectInteraction/Cigarette/CigBox_Close");
-                leftHand.gettingCig = false;
-                Invoke(nameof(TurnOffBox), 0.5f);
-            }
-
-        }
-
-        if(cigs.Count<=0 && cigBox.activeSelf)
-        {
-            if (cigBox.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-            {
-                cigBox.SetActive(false);
-                leftHand.gettingCig = false;
-                this.enabled = false;
-            }
-            else
-            {
-                leftHand.gettingCig = true;
-            }
-        }
-
     }
 
     public void ShowCigHint()

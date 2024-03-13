@@ -19,6 +19,7 @@ public class PauseMenu : MonoBehaviour
 
     readonly string pauseMenuSFX = "event:/Sound Effects/UI/PauseMenuOn";
     string buttonHoverSFX = "event:/Sound Effects/UI/PauseMenuHover";
+    string songBus = "bus:/Ambience/Songs";
     // Start is called before the first frame update
     void Start()
     {
@@ -55,16 +56,17 @@ public class PauseMenu : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 pauseMenu.SetActive(true);
-
+                RuntimeManager.GetBus(songBus).setPaused(true);
             }
             else
             {
                 Time.timeScale = 1.0f;
+                RuntimeManager.GetBus(songBus).setPaused(false);
                 pauseMenuAnim.SetTrigger("Off");
                 PixelCrushers.UIPanel.monitorSelection = true; // Allow dialogue UI to steal back input focus again.
                 PixelCrushers.UIButtonKeyTrigger.monitorInput = true; // Re-enable hotkeys.
                 PixelCrushers.DialogueSystem.DialogueManager.Unpause(); // Resume DS timers (e.g., sequencer commands).
-
+                
                 if (!playerHolding.positionFixedWithMouse && !MindPalace.tatMenuOn)
                 {
                     Cursor.lockState = CursorLockMode.Locked;
@@ -74,7 +76,7 @@ public class PauseMenu : MonoBehaviour
                 {
                     pauseMenu.SetActive(false);
                 }
-
+                
 
 
             }
@@ -115,12 +117,22 @@ public class PauseMenu : MonoBehaviour
             isPaused = false;
             Time.timeScale = 1.0f;
             pauseMenu.SetActive(false);
+            RuntimeManager.GetBus(songBus).setPaused(false);
+            PixelCrushers.UIPanel.monitorSelection = true; // Allow dialogue UI to steal back input focus again.
+            PixelCrushers.UIButtonKeyTrigger.monitorInput = true; // Re-enable hotkeys.
+            PixelCrushers.DialogueSystem.DialogueManager.Unpause(); // Resume DS timers (e.g., sequencer commands).
 
+            if (!playerHolding.positionFixedWithMouse && !MindPalace.tatMenuOn)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
         else
         {
             isPaused = true;
             Time.timeScale = 0.0f;
+            RuntimeManager.GetBus(songBus).setPaused(true);
         }
     }
 

@@ -254,7 +254,7 @@ public class LivableObject : MonoBehaviour, ISaveSystem
             if (!played)
             {
                 if (pickType)
-                {
+                {                    
                     snapshot = FMODUnity.RuntimeManager.CreateInstance("snapshot:/EnableObject");
                     snapshot.start();
                 }

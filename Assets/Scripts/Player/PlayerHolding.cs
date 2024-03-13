@@ -137,21 +137,23 @@ public class PlayerHolding : MonoBehaviour,ISaveSystem
             HideUI(dragSprite);
         }
 
-        if (pickUpObjects.Count >= 1 || midAirKickable)
+        if (!PauseMenu.isPaused)
         {
-            DetectKick();
-            if (TrashSoccerScoreBoard.startedSoccerGame && !showedSoccerHint)
+            if (pickUpObjects.Count >= 1 || midAirKickable)
             {
-                DataHolder.ShowHint(DataHolder.hints.soccerHint);
-                soccerHidden = false;
+                DetectKick();
+                if (TrashSoccerScoreBoard.startedSoccerGame && !showedSoccerHint)
+                {
+                    DataHolder.ShowHint(DataHolder.hints.soccerHint);
+                    soccerHidden = false;
+                }
+            }
+            else if (!soccerHidden)
+            {
+                DataHolder.HideHint(DataHolder.hints.soccerHint);
+                soccerHidden = true;
             }
         }
-        else if (!soccerHidden)
-        {
-            DataHolder.HideHint(DataHolder.hints.soccerHint);
-            soccerHidden = true;
-        }
-
 
 
         //LOOKING HINT
@@ -620,7 +622,6 @@ public class PlayerHolding : MonoBehaviour,ISaveSystem
         DataHolder.HideHint(DataHolder.hints.lookHint);
     }
 
-
     #region Hands Related
     public bool GetLeftHand()
     {
@@ -641,78 +642,74 @@ public class PlayerHolding : MonoBehaviour,ISaveSystem
         return true;
     }
 
-
-
-
-
     public void OccupyLeft(Transform obj)
     {
-        RemoveInteractable(obj.gameObject);
-        leftHand.isHolding = true;
-        leftHand.holdingObj = obj;
-        PickUpObject pickUp = obj.GetComponent<PickUpObject>();
-        leftHand.AssignRefs(pickUp);
-
-        if (selectedObj != null)
+        if (!PauseMenu.isPaused)
         {
-            selectedObj.GetComponent<PickUpObject>().selected = false;
-            selectedObj = null;
+            RemoveInteractable(obj.gameObject);
+            leftHand.isHolding = true;
+            leftHand.holdingObj = obj;
+            PickUpObject pickUp = obj.GetComponent<PickUpObject>();
+            leftHand.AssignRefs(pickUp);
+
+            if (selectedObj != null)
+            {
+                selectedObj.GetComponent<PickUpObject>().selected = false;
+                selectedObj = null;
+            }
+            switch (pickUp.objType)
+            {
+                case HandObjectType.CHOPSTICKS:
+                    obj.parent.SetParent(chopsticksContainer);
+                    StartCoroutine(LerpPosition(obj.parent, Vector3.zero, 1f));
+                    StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(pickUp.targetRot), 1f));
+                    break;
+                case HandObjectType.DOUBLE:
+                    obj.SetParent(doubleHandContainer);
+                    StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+                    Quaternion objRot = Quaternion.Euler(new Vector3(0, -90, 0));
+                    StartCoroutine(LerpRotation(obj, objRot, 1f));
+                    break;
+                case HandObjectType.CIGARETTE:
+                    obj.SetParent(handContainer);
+                    StartCoroutine(LerpRotation(obj, Quaternion.Euler(new Vector3(0, 160, 0)), 1f));
+                    //obj.localEulerAngles = new Vector3(0, 160, 0);
+                    StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+                    leftHand.smoking = true;
+                    break;
+
+                default:
+                    obj.SetParent(handContainer);
+                    StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
+                    StartCoroutine(LerpRotation(obj, Quaternion.Euler(pickUp.targetRot), 1f));
+                    break;
+
+            }
+
+
+            if (obj.GetComponent<PickUpObject>().freezeRotation)
+            {
+                obj.localRotation = Quaternion.Euler(0, 0, 0);
+            }
+
+            pickUpObjects.Clear();
         }
-        switch (pickUp.objType)
-        {
-            case HandObjectType.CHOPSTICKS:
-                obj.parent.SetParent(chopsticksContainer);
-                StartCoroutine(LerpPosition(obj.parent, Vector3.zero, 1f));
-                StartCoroutine(LerpRotation(obj.parent, Quaternion.Euler(pickUp.targetRot), 1f));
-                break;
-            case HandObjectType.DOUBLE:
-                obj.SetParent(doubleHandContainer);
-                StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
-                Quaternion objRot = Quaternion.Euler(new Vector3(0, -90, 0));
-                StartCoroutine(LerpRotation(obj, objRot, 1f));
-                break;
-            case HandObjectType.CIGARETTE:
-                obj.SetParent(handContainer);
-                StartCoroutine(LerpRotation(obj, Quaternion.Euler(new Vector3(0, 160, 0)), 1f));
-                //obj.localEulerAngles = new Vector3(0, 160, 0);
-                StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
-                leftHand.smoking = true;
-                break;
-
-            default:
-                obj.SetParent(handContainer);
-                StartCoroutine(LerpPosition(obj, Vector3.zero, 1f));
-                StartCoroutine(LerpRotation(obj, Quaternion.Euler(pickUp.targetRot), 1f));
-                break;
-
-        }
-
-
-        if (obj.GetComponent<PickUpObject>().freezeRotation)
-        {
-            obj.localRotation = Quaternion.Euler(0, 0, 0);
-        }
-
-        pickUpObjects.Clear();
     }
-
-
 
     public void UnoccupyLeft()
     {
-        leftHand.isHolding = false;
-        leftHand.holdingObj = null;
-        leftHand.noThrow = true;
+        if (!PauseMenu.isPaused)
+        {
+            leftHand.isHolding = false;
+            leftHand.holdingObj = null;
+            leftHand.noThrow = true;
+        }
     }
-
-
 
     public void EnableThrowLeft()
     {
         leftHand.noThrow = false;
     }
-
-
     #endregion
 
     void DetectKick()

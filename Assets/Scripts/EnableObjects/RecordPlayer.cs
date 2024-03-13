@@ -94,7 +94,7 @@ public class RecordPlayer : LivableObject
                 if (!CurrentRecordSelected() && !moving && !MainTattooMenu.tatMenuOn)
                 {
                     gameObject.layer = 9;
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0)&&!PauseMenu.isPaused)
                     {
                         activated = true;
                         TriggerPlay();

@@ -41,88 +41,91 @@ public class LookingObject : LivableObject
     {
         //Debug.Log(matColorVal);
         base.Update();
-        if (matColorVal > 0)
+        if (!PauseMenu.isPaused)
         {
-            if (focusingThis)
+            if (matColorVal > 0)
             {
-                //DataHolder.currentFocus = gameObject;
-                DataHolder.FocusOnThis(matColorVal);
-                if (!playedSF && DataHolder.camBlended && DataHolder.camBlendDone)
+                if (focusingThis)
                 {
-                    RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
-                    
-                    playedSF = true;
-                }
-            }
-            if (!designatedSpot)
-            {
-                if (interactable && !MainTattooMenu.tatMenuOn)
-                {
-                    playerHolding.AddLookable(gameObject);
-                    if (selected)
+                    //DataHolder.currentFocus = gameObject;
+                    DataHolder.FocusOnThis(matColorVal);
+                    if (!playedSF && DataHolder.camBlended && DataHolder.camBlendDone)
                     {
-                        if (Input.GetKeyDown(KeyCode.Space) && !focusingThis)
-                        {
-                            gameObject.layer = 13;
-                            if(gameObject.tag.Contains("Poster"))
-                                RuntimeManager.PlayOneShot(lookSound, transform.position);
+                        RuntimeManager.PlayOneShot("event:/Sound Effects/Focus", transform.position);
 
-                            activated = true;
-                            focusingThis = true;
-                            FocusOnObject();
-                        }
+                        playedSF = true;
                     }
+                }
+                if (!designatedSpot)
+                {
+                    if (interactable && !MainTattooMenu.tatMenuOn)
+                    {
+                        playerHolding.AddLookable(gameObject);
+                        if (selected)
+                        {
+                            if (Input.GetKeyDown(KeyCode.Space) && !focusingThis)
+                            {
+                                gameObject.layer = 13;
+                                if (gameObject.tag.Contains("Poster"))
+                                    RuntimeManager.PlayOneShot(lookSound, transform.position);
 
+                                activated = true;
+                                focusingThis = true;
+                                FocusOnObject();
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        playerHolding.RemoveLookable(gameObject);
+                        selected = false;
+                    }
+                }
+
+            }
+            else
+            {
+                if (activated)
+                {
+                    if (specialEffect != null)
+                        specialEffect.SetActive(true);
+                    if (dialogue != null && !posterLinkAct)
+                        dialogue.enabled = true;
+                    playerHolding.RemoveLookable(gameObject);
+                    if (sameTypePosters.Length > 0)
+                    {
+                        ActivateAll();
+                    }
                 }
                 else
                 {
-                    playerHolding.RemoveLookable(gameObject);
-                    selected = false;
+                    if (interactable && !playerHolding.inDialogue)
+                    {
+                        activated = true;
+                    }
                 }
+
             }
 
-        }
-        else
-        {
-            if (activated)
+            if (!focusingThis && !DataHolder.camBlendDone && !DataHolder.camBlended)
             {
-                if (specialEffect != null)
-                    specialEffect.SetActive(true);
-                if (dialogue != null && !posterLinkAct)
-                    dialogue.enabled = true;
-                playerHolding.RemoveLookable(gameObject);
-                if (sameTypePosters.Length > 0)
+                if (selected)
                 {
-                    ActivateAll();
+                    gameObject.layer = 9;
                 }
-            }
-            else
-            {
-                if(interactable && !playerHolding.inDialogue)
+                else if (activated || transformed)
+                    gameObject.layer = 17;
+                else
                 {
-                    activated = true;
+                    gameObject.layer = 0;
                 }
             }
-
-        }
-
-        if (!focusingThis&&!DataHolder.camBlendDone&&!DataHolder.camBlended)
-        {
-            if (selected)
+            else if (focusingThis)
             {
-                gameObject.layer = 9;
-            }
-            else if (activated || transformed)
-                gameObject.layer = 17;
-            else
-            {
-                gameObject.layer = 0;
+                gameObject.layer = 13;
             }
         }
-        else if (focusingThis){
-            gameObject.layer = 13;
-        }
-
     }
 
     float allowedAngle = .2f;

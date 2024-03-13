@@ -162,11 +162,13 @@ public class GarbageScore : MonoBehaviour,ISaveSystem
             matColorVal = 0;
             dumpsterMat.SetFloat("_WhiteDegree", matColorVal);
         }
+        throwValidCheckDiaDone = data.trashThrowDiaDone;
     }
 
     public void SaveData(ref GameData data)
     {
         data.soccerDumpsterOn = firstActivated;
         data.soccerScore = score;
+        data.trashThrowDiaDone = throwValidCheckDiaDone;
     }
 }

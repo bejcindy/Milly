@@ -192,8 +192,21 @@ public class TrashSoccerScoreBoard : LookingObject
         {
             text.gameObject.layer = 17;
             firstTransformed = true;
-
         }
+    }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+        if (data.trashScoreBoardEnabled)
+            enabled = true;
+        soccerGameTatTriggered = data.trashGameCompleteDiaDone;
+    }
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+        data.trashScoreBoardEnabled = enabled;
+        data.trashGameCompleteDiaDone = soccerGameTatTriggered;
     }
 }
 

@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 [System.Serializable]
 public class GameData
 {
@@ -12,7 +10,13 @@ public class GameData
     public bool katieDollDiaDone;
 
     public bool soccerDumpsterOn;
+    public bool trashScoreBoardEnabled;
+    public bool trashThrowDiaDone;
+    public bool trashGameCompleteDiaDone;
     public int soccerScore;
+    
+    public bool groceryBoxQuestAccepted;
+    public bool groceryBoxGameSucceeded;
 
     public Vector3 playerPosition;
     public Quaternion playerRotation;
@@ -147,11 +151,6 @@ public class TatCharData
         this.stageColored = stageColored;
     }
 }
-
-
-
-
-
 
 [System.Serializable]
 public class PickUpValues

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class GroceryBoxGame : MonoBehaviour
+public class GroceryBoxGame : MonoBehaviour, ISaveSystem
 {
     public bool inGameZone;
     public bool gameStarted;
@@ -169,5 +169,23 @@ public class GroceryBoxGame : MonoBehaviour
 
 
     }
-    
+
+    public void LoadData(GameData data)
+    {
+        questAccepted = data.groceryBoxQuestAccepted;
+        gameSucceeded = data.groceryBoxGameSucceeded;
+
+        if (gameSucceeded)
+        {
+            scorePanel.SetActive(false);            
+            GetComponent<BoxCollider>().enabled = false;
+            enabled = false;
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.groceryBoxQuestAccepted = questAccepted;
+        data.groceryBoxGameSucceeded = gameSucceeded;
+    }
 }

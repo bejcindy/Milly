@@ -118,7 +118,15 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 1.0f;
             pauseMenu.SetActive(false);
             RuntimeManager.GetBus(songBus).setPaused(false);
+            PixelCrushers.UIPanel.monitorSelection = true; // Allow dialogue UI to steal back input focus again.
+            PixelCrushers.UIButtonKeyTrigger.monitorInput = true; // Re-enable hotkeys.
+            PixelCrushers.DialogueSystem.DialogueManager.Unpause(); // Resume DS timers (e.g., sequencer commands).
 
+            if (!playerHolding.positionFixedWithMouse && !MindPalace.tatMenuOn)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
         else
         {

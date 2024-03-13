@@ -216,7 +216,13 @@ public class Lid : LivableObject
         if (activated)
         {
             if (data.lidDict.TryGetValue(id, out bool savedLidOpen))
+            {
                 lidOpen = savedLidOpen;
+                if (lidOpen)
+                    transform.localRotation = openRotation;
+                else
+                    transform.localRotation = closeRotation;
+            }
         }
     }
 

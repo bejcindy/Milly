@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainQuestState: MonoBehaviour
+public class MainQuestState: MonoBehaviour, ISaveSystem
 {
     public bool finalGloriaHotKey;
     public static int demoProgress;
@@ -173,5 +173,34 @@ public class MainQuestState: MonoBehaviour
     public void HideConversationHint()
     {
         DataHolder.HideHint(DataHolder.hints.convoHint);
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (string.IsNullOrEmpty(id))
+        {
+            Debug.LogError(gameObject.name + " ID is null.");
+        }
+
+        if(data.progressDict.ContainsKey(id))
+            data.progressDict.Remove(id);
+        data.progressDict.Add(id, new ProgressData(StartSequence.noControl, demoProgress, Hugo.totalFloorCleaned));
+    }
+
+    public void LoadData(GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (string.IsNullOrEmpty(id))
+        {
+            Debug.LogError(gameObject.name + " ID is null.");
+        }
+        
+        if(data.progressDict.TryGetValue(id, out ProgressData saveData))
+        {
+            StartSequence.noControl = saveData.noControl;
+            demoProgress = saveData.demoProgress;
+            Hugo.totalFloorCleaned = saveData.totalFloorCleaned;
+        }
     }
 }

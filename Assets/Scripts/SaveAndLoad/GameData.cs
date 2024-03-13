@@ -52,6 +52,11 @@ public class GameData
     public SerializableDictionary<string, GameObject> vinylHolderDict;
     public SerializableDictionary<string, bool> vinylDict;
 
+
+    //Progress
+    public SerializableDictionary<string, ProgressData> progressDict;
+    public SerializableDictionary<string, bool> startDataDict;
+
     //Default values when there is no saved data
     public GameData()
     {
@@ -91,6 +96,8 @@ public class GameData
         tattooDict = new();
         tattooMenuDict = new();
         tatCharDict = new();
+        progressDict = new();
+        startDataDict = new();
         vinylHolderDict = new SerializableDictionary<string, GameObject>();
         vinylDict = new SerializableDictionary<string, bool>();
     }
@@ -165,3 +172,20 @@ public class PickUpValues
         physicMat = _physicMat;
     }
 }
+
+[System.Serializable]
+public class ProgressData
+{
+    public bool noControl;
+    public int demoProgress;
+    public int totalFloorCleaned;
+
+    public ProgressData(bool cutsceneFinished, int demoProgress, int totalFloorCleaned)
+    {
+        this.noControl = cutsceneFinished;
+        this.demoProgress = demoProgress;
+        this.totalFloorCleaned = totalFloorCleaned;
+    }
+}
+
+

@@ -9,9 +9,13 @@ using PixelCrushers.DialogueSystem;
 using VolumetricFogAndMist2;
 using VInspector;
 
-public class StartGame : MonoBehaviour
+
+
+public class StartGame : MonoBehaviour, ISaveSystem
 {
-    public bool noSkip;
+    public bool ignoreSave;
+    public bool skipStart;
+    public bool startFinished;
     [Foldout("After Cutscene")]
 
 
@@ -26,52 +30,32 @@ public class StartGame : MonoBehaviour
     public VolumetricFogProfile fogProfile;
 
     float startDelay = 5f;
-    bool startCountDown;
+    public bool startCountDown;
 
     PlayerMovement playerMovement;
-    PlayerCam playerCam;
-    PlayerHolding playerHolding;
     DialogueSystemTrigger bathroomMonologue;
-    // Start is called before the first frame update
     public EventReference playerSigns;
-    FMOD.Studio.EventInstance izakayaAmbienceEvent;
-    FMOD.Studio.EventInstance outsideAmbienceEvent;
 
     public void Awake()
     {
-
-    }
-    void Start()
-    {
-        fogProfile.albedo.a = 1;
-        outsideAmbienceEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Static/Outside_Ambience");
-        bathroomMonologue = GetComponent<DialogueSystemTrigger>();
-        playerMovement = ReferenceTool.playerMovement;
-        playerHolding = ReferenceTool.playerHolding;
-        playerCam = ReferenceTool.player.GetComponent<PlayerCam>();
-        if (noSkip)
-        {
-            startFade.SetActive(true);
-            izakayaStartCam.m_Priority = 10;
-            playerCinemachine.m_Priority = 9;
-            playerMovement.enabled = false;
-            startCountDown = true;
-            door.enabled = false;
-            prologue1.SetActive(true);
-            prologue2.SetActive(true);
-
-        }
-        else
+        if(skipStart) 
         {
             startFade.SetActive(false);
             playerCinemachine.m_Priority = 10;
+            izakayaStartCam.enabled = false;
             izakayaStartCam.m_Priority = 0;
-            playerMovement.enabled = true;
             door.enabled = true;
             prologue1.SetActive(false);
             prologue2.SetActive(false);
-
         }
+    }
+    void Start()
+    {
+        bathroomMonologue = GetComponent<DialogueSystemTrigger>();
+        playerMovement = ReferenceTool.playerMovement;
+        fogProfile.albedo.a = 1;
+
+        skipStart = false;
 
     }
 
@@ -95,6 +79,11 @@ public class StartGame : MonoBehaviour
         }
     }
 
+    public void FinishStart()
+    {
+        startFinished = true;
+    }
+
     public void ActivateGame()
     {
         playerMovement.enabled = true;
@@ -108,20 +97,70 @@ public class StartGame : MonoBehaviour
         playerCinemachine.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 200;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-    }
+    } 
 
-    public void StopAmbience()
-    {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Sound Effects/Slide_Door", playerCam.transform.position);
-        izakayaAmbienceEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        izakayaAmbienceEvent.release();
-        outsideAmbienceEvent.start();
-    }
 
     public void PlayerSigns()
     {
         FMODUnity.RuntimeManager.PlayOneShot(playerSigns, playerMovement.transform.position);
     }
 
+    public void SaveData(ref GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (string.IsNullOrEmpty(id))
+        {
+            Debug.LogError(gameObject.name + " ID is null.");
+        }
 
+        if(data.startDataDict.ContainsKey(id))
+            data.startDataDict.Remove(id);
+        data.startDataDict.Add(id, startFinished);
+    }
+
+    public void LoadData(GameData data)
+    {
+        string id = GetComponent<ObjectID>().id;
+        if (string.IsNullOrEmpty(id))
+        {
+            Debug.LogError(gameObject.name + " ID is null.");
+        }
+
+        if(data.startDataDict.TryGetValue(id, out bool startFinished))
+        {
+            this.startFinished = startFinished;
+            if (startFinished)
+            {
+                izakayaStartCam.enabled = false;
+                startCountDown = false;
+                playerCinemachine.m_Priority = 10;
+                izakayaStartCam.m_Priority = 0;
+
+                door.enabled = true;
+                prologue1.SetActive(false);
+                prologue2.SetActive(false);
+            }
+        }
+    }
+}
+
+[System.Serializable]
+public class StartData
+{
+    public bool playerMovable;
+    public bool initialDialogueOn;
+    public bool proFinished1;
+    public bool proFinished2;
+    public int startCamPriority;
+    public int playerCamPriority;
+
+    public StartData(bool proFinished1, bool proFinished2, int startCamPriority, int playerCamPriority, bool playerMovable, bool initialDialogueOn)
+    {
+        this.proFinished1 = proFinished1;
+        this.proFinished2 = proFinished2;
+        this.startCamPriority = startCamPriority;
+        this.playerCamPriority = playerCamPriority;
+        this.playerMovable = playerMovable;
+        this.initialDialogueOn = initialDialogueOn;
+    }
 }

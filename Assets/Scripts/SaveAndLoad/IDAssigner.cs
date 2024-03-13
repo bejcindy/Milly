@@ -232,4 +232,31 @@ public class IDAssigner : MonoBehaviour
             }
         } 
     }
+
+    [Button]
+    void AssignProgressDataID()
+    {
+        MainQuestState mainQuest = FindObjectOfType<MainQuestState>();
+        if (!mainQuest.gameObject.GetComponent<ObjectID>())
+        {
+            mainQuest.gameObject.AddComponent<ObjectID>();
+            mainQuest.gameObject.GetComponent <ObjectID>().GenerateGuid();  
+        }
+        else
+        {
+            mainQuest.gameObject.GetComponent<ObjectID>().GenerateGuid();
+        }
+
+        StartGame startData = FindAnyObjectByType<StartGame>();
+        if (!startData.gameObject.GetComponent<ObjectID>())
+        {
+            startData.gameObject.AddComponent<ObjectID>();
+            startData.gameObject.GetComponent<ObjectID>().GenerateGuid();
+        }
+        else
+        {
+            startData.gameObject.GetComponent<ObjectID>().GenerateGuid();
+        }
+
+    }
 }

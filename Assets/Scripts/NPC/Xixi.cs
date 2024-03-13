@@ -22,7 +22,7 @@ public class Xixi : NPCControl
         playerLeftHand = ReferenceTool.playerLeftHand;
     }
 
-    public void XiXiAction0()
+    public void XixiAction0()
     {
 
     }
@@ -99,10 +99,6 @@ public class Xixi : NPCControl
         StopIdle();
     }
 
-    protected override void OnConversationEnd(Transform other)
-    {
-        base.OnConversationEnd(other);
-    }
 
 
 

@@ -48,14 +48,15 @@ public class StartGame : MonoBehaviour, ISaveSystem
             prologue1.SetActive(false);
             prologue2.SetActive(false);
         }
+        bathroomMonologue = GetComponent<DialogueSystemTrigger>();
     }
     void Start()
     {
-        bathroomMonologue = GetComponent<DialogueSystemTrigger>();
+        
         playerMovement = ReferenceTool.playerMovement;
         fogProfile.albedo.a = 1;
 
-        skipStart = false;
+        //skipStart = false;
 
     }
 
@@ -136,12 +137,21 @@ public class StartGame : MonoBehaviour, ISaveSystem
                 izakayaStartCam.m_Priority = 0;
                 playerCinemachine.m_Priority = 10;
                 izakayaStartCam.gameObject.SetActive(false);
-
+                bathroomMonologue.enabled = false;
                 door.enabled = true;
                 prologue1.SetActive(false);
                 prologue2.SetActive(false);
+                Camera.main.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = 0;
+                StartCoroutine(ChangeCamBlendBack());
             }
         }
+    }
+
+    IEnumerator ChangeCamBlendBack()
+    {
+        yield return new WaitForSeconds(.3f);
+        Camera.main.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = 2;
+        yield break;
     }
 }
 

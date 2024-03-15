@@ -75,7 +75,7 @@ public class NPCControl : MonoBehaviour
 
     [Foldout("Idle")]
     public bool idling;
-    protected string idleAction;
+    public string idleAction;
 
 
     bool lookCoroutineRuning;

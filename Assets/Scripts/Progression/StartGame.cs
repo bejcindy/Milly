@@ -133,8 +133,9 @@ public class StartGame : MonoBehaviour, ISaveSystem
             {
                 izakayaStartCam.enabled = false;
                 startCountDown = false;
-                playerCinemachine.m_Priority = 10;
                 izakayaStartCam.m_Priority = 0;
+                playerCinemachine.m_Priority = 10;
+                izakayaStartCam.gameObject.SetActive(false);
 
                 door.enabled = true;
                 prologue1.SetActive(false);

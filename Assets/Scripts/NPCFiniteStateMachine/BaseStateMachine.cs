@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
 using FMODUnity;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace NPCFSM
 {

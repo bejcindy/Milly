@@ -140,10 +140,10 @@ public class StartGame : MonoBehaviour, ISaveSystem
                 bathroomMonologue.enabled = false;
                 door.enabled = true;
                 prologue1.SetActive(false);
-                prologue2.SetActive(false);
-                Camera.main.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = 0;
-                StartCoroutine(ChangeCamBlendBack());
+                prologue2.SetActive(false);                
             }
+            Camera.main.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = 0;
+            StartCoroutine(ChangeCamBlendBack());
         }
     }
 

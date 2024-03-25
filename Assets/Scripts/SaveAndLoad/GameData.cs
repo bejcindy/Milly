@@ -67,6 +67,7 @@ public class GameData
     {
         playerPosition = new Vector3(-35.5f, 7.5f, 18.5f);
         playerRotation = new Quaternion(0, 0.866f, 0, 0.5f);
+        round1FoodActive = true;
 
         livableDict = new SerializableDictionary<string, LivableValues>();
         doorDict = new SerializableDictionary<string, bool>();

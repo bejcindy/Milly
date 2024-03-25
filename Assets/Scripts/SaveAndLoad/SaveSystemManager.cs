@@ -31,11 +31,12 @@ public class SaveSystemManager : MonoBehaviour
     {
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         saveSystemObjs = FindAllSaveSystemObjs();
-        if (!newGame)
-            LoadGame();
-        else
-            NewGame();
+        //if (!newGame)
+        //    LoadGame();
+        //else
+        //    NewGame();
         //NewGame();
+        LoadGame();
     }
 
     private void Update()

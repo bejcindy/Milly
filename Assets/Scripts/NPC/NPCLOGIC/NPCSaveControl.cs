@@ -62,6 +62,7 @@ public class NPCSaveControl : MonoBehaviour, ISaveSystem
             if (data.npcStage.TryGetValue(charID, out NPCData values))
             {
                 character._counter = values.stage;
+                character.transform.position = character.destinationRef.GetChild(values.stage).transform.position;
                 character.gameObject.SetActive(values.activeNPC);
                 character.colored = values.colored;
             }
@@ -72,7 +73,7 @@ public class NPCSaveControl : MonoBehaviour, ISaveSystem
             string charID = temp.GetComponent<ObjectID>().id;
             if (data.onOffState.TryGetValue(charID, out bool activeState))
             {
-                gameObject.SetActive(activeState);
+                temp.SetActive(activeState);
             }
         }
 

@@ -119,7 +119,7 @@ public class IDAssigner : MonoBehaviour
             }
             else
             {
-                obj.GetComponent<ObjectID>().GenerateGuid();
+                obj.GetComponent<ObjectID>().GenerateGuid(); 
             }
         }
     }

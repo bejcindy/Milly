@@ -189,7 +189,7 @@ namespace NPCFSM
         public void BeginIdling()
         {
             npcControl.idling = true;
-            npcControl.SetNPCPosition();
+            //npcControl.SetNPCPosition();
             npcControl.SetWaitAction();
             npcControl.SetDialogue();
         }
@@ -258,7 +258,7 @@ namespace NPCFSM
             if (!npcControl.FinalStop())
             {
                 npcControl._counter++;
-                NPCSaveControl.npcActiveDict[npcControl].stage = npcControl._counter;
+                
                 agent.SetDestination(npcControl.GetNext().position);
 
             }

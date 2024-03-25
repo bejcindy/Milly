@@ -94,28 +94,29 @@ public class NPCControl : MonoBehaviour
     public Door currentDoor;
     bool doorAnimSet;
 
-
-
-    protected virtual void Start()
+    protected virtual void Awake()
     {
-        //Setting up basic components
-
-
-        player = ReferenceTool.player;
-        playerHolding = ReferenceTool.playerHolding;
-
         machine = GetComponent<BaseStateMachine>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
 
-        for(int i = 0; i < destinationRef.childCount; i++)
+        for (int i = 0; i < destinationRef.childCount; i++)
         {
             destinations.Add(destinationRef.GetChild(i));
         }
         currentDestination = destinations[_counter];
         transform.position = currentDestination.position;
-        agent.enabled = true;
+
+    }
+
+    protected virtual void Start()
+    {
+        //Setting up basic components
+
+        player = ReferenceTool.player;
+        playerHolding = ReferenceTool.playerHolding;
+
         anim.SetTrigger(machine.destinationData[_counter].idleTrigger);
         dialogueHolder = transform.GetChild(2);
         currentDialogue = dialogueHolder.GetChild(0);
@@ -126,6 +127,7 @@ public class NPCControl : MonoBehaviour
                 head = child;
         }
         fadeInterval = 5;
+        //agent.enabled = true;
     }
 
     public void OnEnable()
@@ -142,7 +144,8 @@ public class NPCControl : MonoBehaviour
     protected virtual void Update()
     {
         currentDestination = destinations[_counter];
-        
+        NPCSaveControl.npcActiveDict[this].stage = _counter;
+
         if (_counter == destinations.Count)
         {
             finalStop = true;

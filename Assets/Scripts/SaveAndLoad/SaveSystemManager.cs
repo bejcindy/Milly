@@ -31,12 +31,14 @@ public class SaveSystemManager : MonoBehaviour
     {
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         saveSystemObjs = FindAllSaveSystemObjs();
-        //if (!newGame)
-        //    LoadGame();
-        //else
-        //    NewGame();
-        //NewGame();
+#if UNITY_EDITOR
+        if (!newGame)
+            LoadGame();
+        else
+            NewGame();
+#else
         LoadGame();
+#endif              
     }
 
     private void Update()
